@@ -1,0 +1,184 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>ViewMPEG2</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>ViewMPEG2</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>1</y>
+            <width>320</width>
+            <height>320</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>0</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>300</width>
+            <height>320</height>
+        </size>
+    </property>
+    <property name="maximumSize">
+        <size>
+            <width>320</width>
+            <height>320</height>
+        </size>
+    </property>
+    <property name="sizeIncrement">
+        <size>
+            <width>0</width>
+            <height>0</height>
+        </size>
+    </property>
+    <property name="baseSize">
+        <size>
+            <width>0</width>
+            <height>0</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>k9Copy - Title Preview</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QFrame" row="1" column="0">
+            <property name="name">
+                <cstring>frame7</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="maximumSize">
+                <size>
+                    <width>32767</width>
+                    <height>50</height>
+                </size>
+            </property>
+            <property name="frameShape">
+                <enum>StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QToolButton" row="0" column="0">
+                    <property name="name">
+                        <cstring>bStop</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>1</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="iconSet">
+                        <iconset>image1</iconset>
+                    </property>
+                </widget>
+                <widget class="QToolButton" row="0" column="1">
+                    <property name="name">
+                        <cstring>bPlay</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>1</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="iconSet">
+                        <iconset>image2</iconset>
+                    </property>
+                </widget>
+                <widget class="QSlider" row="0" column="2">
+                    <property name="name">
+                        <cstring>slider</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QWidget" row="0" column="0">
+            <property name="name">
+                <cstring>label</cstring>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<images>
+    <image name="image0">
+        <data format="XPM.GZ" length="8450">789c85d95b53e33a1207f0f7f914d4d1dba92d9dd8b113bbb6f6814b200102843b6ced43aba54002e19604484eed775fa1feb767cea99ad94a85e237b66ca9d56acbcc1fbf6f5c9f0c377effe3db7c418b096ff03dbd6dfcee97b3d9eadffff9d79fdf7ecbab8dbcbb51e4c546fedb3fbefd365a6cf0c6d1f353f8029d4698acfafa249f7d396fe545defa32a7e3799db5b2641a8973ceeb2ffb8eb8dd6a67c9a97d3b6bdc858bb69c6fe14acc5572dd62b93eafc47a3faec5b13fd2de88e3f5d2f5e9a1713a4e5b30aeef4fd585f407f76bb398d3788a2cde2f8d9fcfc4da9ece619cef07e2a205efc35541c9b5ba4cc10e565cb64a393e4926bd9f9fc205bc236ee2750e33e2f9aac6fddfc44d7f7a7081fef461eddf1ecc7029d6fe719acf32d7fe70a9967cf00f70056f8a73eddf9638cebff47f1bc678780d6bff2fc4858e771766891f3f2693de9f87b0de5f8f6b3ecec44dbe3c8b9b78bec07aff4b7181f93699b82c251ec1883b5947e293f2b9d38c9f8f60bdff93b819ff95b8d4f9b9866b893fdfa865bc7e24d6fb051277b3aa9dce3f4e6ec6cf4b18f7379fe2d83e5dcf1cc235fafffee56e5bcfe713715cf1d2df1b712743be12eca5bd395277537fe851dccdc4a10f7be96f786eec929db8caea2299e1b2e6d49f14efae6bfa772fd6fef14cdc29657c7c0b7b7820eeeaf80bb8eecafdb760eddf4adcf46713f6e84f8a67d5c4873fd492ef3c81518ffcb158efcfe77029f1e1377185f934077029b6b3c6a9bf94c1b5d83eaaa5bfb40f7bb12fd4241e8beb4c1c70bfbaa6343e97d67be59af13cc0188f3b13b70bd44b126b7e052fee22bffc5c8d7cd8135719e2ffa646fcb7618cdf2c618c97a630f2c73ea965bcee595c6798af03d8cbf882c4c751e67c3a3faddfba68c6578ab55ef342acebc54ec49a3ff604d67cde1557c87fbe8631df6107ae31be1cd6fe3f89eb4cae67066a396e8ee152cc73d83b695f88e3f8e4781b2e65bca42671c0f5297099daa7f55cb3c683a78d53bebb0a467d744b717cde483db91397587f56c6c71dcd77e91feb7cfbfbc612bf1eacf1d5e39aefcfb0e6f75aacf1a1018cf8980fb8967c306d18ebd96e8a355e6e0897e2f00293c427bc8a5dce923fe9f94e45138f7798b15fd8167733c4e710c6fcf3beb8f2580f9fe21af1a2198cf56b707dc2fa750b35fa6fe120f67762d791feb21cff3e7fc730faebe4fe71be50ef57e2d87fd95f5d8a2b8cc7bec0980f6e896bac6f3a80317f6e17c67af14e2deded9d5ac667c7622a65fd9a054c62ba8083d806b58cdf4c1ba7f1dbb6d8e572dcfac6729ce18ecc37e7b0cebfcc1f73ee65bda4fc72dfe7ff14463ced5a2df1b33be236f65b765baccf771fc45d8ffd981757359e1f6371cc0f891fc3787eb99e98b09ef8428df5f0aa96f8f2264cc8af168cf8118e6bbce81e46fda05a2df1b10e0e926f762a6ee295eaa5f36dec7f48e2e13b5ef69741c6efbb35e23951231f3fc55526f5995a308edb5718eb3bdc896b7dfe668d65fff202d7783eb6615d8f4f62d2fdc5154c785e4dd4d82f2c1ba7fbfb05acf939126bfcec96382e40895f5a8f5c6a7cdca8b18cef0cc67ede9e8a4becc7a827d678d295b89bc1bb7029fbc5301657d86fda3735eaeb91b889df2b8cfa649ed588f71cd6fdd5bd98b4de7fc0d8cf18f4c7e5c8bf0077b07e6fc54d7c0c1c7c7a5fb5a93e71934ff608c6fec47e364ef171d21f5fb6643c742d6ee2d31757d88fdbb91acf978598b03fa1020e98ffa9d87564bef912463eb83d35ead944cc583f661fc6faa13bb1cf315e82297492d37ed2976dbccfd91eacf565282e5a98df0fb8c27a3984197e1797d8ef984771479fc7058cf56197627d1fb10b58f7370f627d3e98a7c652bf5fc435ea1be17a44c89f851acf8f1c0ea8773b6297e338c6e33a982fdccfa1beb997c692af88870ba8a743359e2f6b31a3fe05c48731bfbeb1ac677f00637d9b120e52ff0caeef510fcdb8719a5f7307939872b5cc77407f421e241f523df3a18df7637b216ee67717d6f92dd5d89fed89cb12fbdb4b58f7bb0730ea8bed8b3bd8dfda018c7a606f61ecf76d1746be38195fe8eafee006d67a85f65526f589d0bfaa94fda899a9914f06d6fc7262ddffd3338cfd8c43fb26df5ec584f1b8368ce7ab6135f2612e8ef926f98dfe3bac7f877869be38a7c67e621b46fe04f48709fbe32d35f22987f5fafb6aecdf657d069fe379b3544bfd080f30f67ffe568dfc7b6b9cf2c9239f3cd68b3f54cbf974d258f2f51e463df638aef969307fa1837c4dcfeb982ef87b81ed889b7cda87359fae1a4bbdb986b5fedc88bbfabe5cc1fa7e588bf5fdc24de152dedfdd588dfcb130eabd21b1e6930b30f60bce8bf57dc19dc3984fc762dd5fd21b8cfd82f16ae407aedfe45326e61ccf0bc42be6871c9fc3fafe86eb7be49b43ff75be3ce2eff17c71468df9ecabf17c7910c7f94c76e2b8de10bf951aefcf6b715d627ff72e76a8df24f1feca7f197f05ebf3b0a7c6fb2bc35a8f65fc31bf71dc3796f1bcaa65fc84eb7b8def5363397fa0c6feb40f6bbd3e692cf1c17803493ed3040e6297d6e3b8a3e3779b62d2fdeaa158e7979d98b17ee903ee20dfae60ec1ff8458d7875d5d89f7bb1d77cb986f17c32576ac48761ddcf77d588571f467fcd8e38a0be7063c4ef06463de16718f9e4527d1b8fe3e34ceaf185d8e5f0368ce7bfbb14339eef54c29a0f9f621d2f0518fb471ac2189fbb5663fc2b18f5948ed4387e2cd6f19a1ad6f7e93d58f727b76a192f3918d73323b5e40bef8ac7da7f524b7fb8a7c6fd2fd5a8c706d6f9b46ae4efa91af9d9528f53ff0ce23d463e9bb57a3c4e3e87c7b8de456339ff4c2de3355b8de5f8a61af79b374ed71f2d7ef5b1e66747feded6927596e3c7db60c7f6cededb899dfebcad7db08f76669fecb37db1aff6cdceedc22eedbbfdb09f7665d776f3176db7ecb6dd89e7f5ecaeddb37d3bb0fbf17b600fedd01ed9637bf28bb6237b6acfecb9bdb097f6ca5edb9bf4b9b5ad78ad2cde39ff45dbb62de2d5335bda8eeddacad6c61a63c8b8f861e34d30637367eecd24dec5fcb5ad999a07f36866e6c93c9b17f36adeccdc2cccd2bc9b0ff36956661dbd69b6ccb6d9313db36bf67e8cb3e9c7e32b3330fbe6c01cc6efd01c451dc77f3b3123736aceccb9b93097b1ed95b93637967f687b1bdbb64c167fe6a66d8ad8be8c57284cc7744d656ab26488283e002916e1f89e3ca63b6d4bf734a1293dd063ece5dadcd22cf672454ff44c2ff44a6ff1fc392d6849eff4419fb1ed8ad6dad67a8ceade8e624fdf69d37cd0166dd30ef56897f6a84f03da8f9f033a8c6d877444c7dfdbd209cd6844a77446e7b1dd451ced922ee98aaee9866ea94519e5d48ead8bb833ec50972aaaa5adb3661827849c731cdff3831bbb3b77ef2674e3a6eec13dba997b32c7eed92cdd0b75dcab7b7373db46db855bba77f71167f938e6d767cc93984feed3addcda6dba2db7ed765ccfedba3dd77703b7ef0edca119a2ed30b63d8aad8fdd893bb15f3f47eed49db9737711db5dba2b77ed6edcad6bc54fdf657147d2d6f1bac27dbd71775de5ead83e7ed9c6afe1af3f7c7d30c7f7d5be6b498eb8dbb8f79cf1f87b5bbee37b9ea4f65d9ea6ab74f9811f7966d2f8f8899f63cb8b982397fcc2affca66d79ce0b5ef27b6c6ff8833ff135f1df56bce64ddee26ddee11eeff21ef75d8f07bcdfb43de0431ef2111fc7f6f239493f8fe3bf8ef894cff89c2ff892aff89a6ff8965b9c31fec39be3eb31c777b678e62377e3cf6efa0ce327d6d1d87ac415d73ea6504c49e7e3eb767cfea35ef93b7fef275cfaa97f88673fc6df1efdcc3ff967ff12fbbcf6affe8dcefddc2ffcd2bffb0fffe957dfeb955ffb4dbfe5b7fd4e3cafe777fd9eeffb019dc7cc3cf783f8fb7ebce3813f4c9fa13ff2c7fea4693b8ae77d9dd5fbfac4df4efd193df8737fe12ffd95bff63734f0b774e25b3e8bef936d5ffc70dfd29fc53d7ef7eb0f63c106139f4f2e7cfd11258471b80bf76112a6fe3d3c84c7300b4fe1f9c71a1b5eb81d5eff5e915c11dec23c2ca830bb6119a6e13d7c84cfb092aafbff6a7b5887cdb015b6c34ee885ddb017fa7cf0b3dafe932b0cc27e38883d3bfc4b9dfcef3fbffd0ffb912001</data>
+    </image>
+    <image name="image1">
+        <data format="XPM.GZ" length="1226">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523236520022230543251d2e253d856405bffcbc54105b19c856360003b0140130aa867835ca686054cda81a52d4e002c3564dad351700743ece59</data>
+    </image>
+    <image name="image2">
+        <data format="XPM.GZ" length="1226">789cd3d7528808f055d0d2e72a2e492cc94c5648ce482c52d04a29cdcdad8c8eb5ade6523236520022230543251d2e253d856405bffcbc54105b19c856360003b0140130aa860435cacac4a8c1aa085d0d3655986a3055615383ae0abb1a5455b8d420abc2ad46992ae650c35f7a7a84d4a0ab202bbeb02919dc697530a8a9b5e602000088d473</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bStop</sender>
+        <signal>clicked()</signal>
+        <receiver>ViewMPEG2</receiver>
+        <slot>bStopClick()</slot>
+    </connection>
+    <connection>
+        <sender>bPlay</sender>
+        <signal>clicked()</signal>
+        <receiver>ViewMPEG2</receiver>
+        <slot>bPlayClick()</slot>
+    </connection>
+    <connection>
+        <sender>slider</sender>
+        <signal>sliderReleased()</signal>
+        <receiver>ViewMPEG2</receiver>
+        <slot>sliderReleased()</slot>
+    </connection>
+    <connection>
+        <sender>slider</sender>
+        <signal>sliderPressed()</signal>
+        <receiver>ViewMPEG2</receiver>
+        <slot>sliderPressed()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>sliderReleased()</slot>
+    <slot>bStopClick()</slot>
+    <slot>bPlayClick()</slot>
+    <slot>sliderPressed()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
