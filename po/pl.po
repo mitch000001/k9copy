@@ -1,0 +1,387 @@
+# translation of pl.po to Polski
+# translation of pl.po to Polish
+# translation of k9copy.po to Polish
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Wojciech Nawrocki <wojtasin@o2.pl>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pl\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-06-03 17:33+0200\n"
+"PO-Revision-Date: 2006-02-06 20:57+0100\n"
+"Last-Translator: Wojciech Nawrocki <wojtasin@o2.pl>\n"
+"Language-Team: Polski <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10\n"
+
+#: kdvdauthor.cpp:99 kdvdauthor.cpp:255
+#, c-format
+msgid "Title %d not selected"
+msgstr "Nie wybrano żadnego tytułu"
+
+#: kdvdauthor.cpp:100 kdvdauthor.cpp:256 kdvdauthor.cpp:650 kdvdauthor.cpp:655
+#: kdvdauthor.cpp:661 kdvdauthor.cpp:662 kdvdauthor.cpp:778
+msgid "authoring"
+msgstr "authoring"
+
+#: kdvdauthor.cpp:426 kdvdauthor.cpp:449 kdvdauthor.cpp:471
+msgid "Making menu"
+msgstr "Budowanie menu"
+
+#: kdvdauthor.cpp:426
+msgid "Error Converting jpeg"
+msgstr "Błąd konwersji jpeg"
+
+#: kdvdauthor.cpp:449
+msgid "Error creating audio stream"
+msgstr "Błąd tworzenia strumienia audio"
+
+#: kdvdauthor.cpp:471
+msgid "Error Converting to mpeg"
+msgstr "Błąd konwersji do mpeg"
+
+#: kdvdauthor.cpp:550
+msgid "Multiplex"
+msgstr ""
+
+#: kdvdauthor.cpp:550
+msgid "spumux error"
+msgstr "Błąd spumux"
+
+#: kdvdauthor.cpp:624
+msgid "Creation of the DVD Menu"
+msgstr "Budowanie menu DVD"
+
+#: kdvdauthor.cpp:632 kdvdauthor.cpp:741
+msgid "Authoring"
+msgstr "Authoring"
+
+#: kdvdauthor.cpp:650
+msgid "Dvdauthor error :\n"
+msgstr "Błąd programu Dvdauthor:\n"
+
+#: kdvdauthor.cpp:655
+msgid "Insert a blank DVD in the recorder"
+msgstr "Włóż pustą płytę DVD do nagrywarki"
+
+#: kdvdauthor.cpp:661
+msgid "Authoring canceled"
+msgstr "Authoring przerwany"
+
+#: kdvdauthor.cpp:662
+msgid "An error occured while running DVDAuthor:\n"
+msgstr "Wystąpił błąd podczas pracy programu DVDAuthor:\n"
+
+#: kdvdauthor.cpp:742
+msgid "Burning DVD"
+msgstr "Wypalanie DVD"
+
+#: kdvdauthor.cpp:765 kdvdauthor.cpp:771
+msgid "DVD burning"
+msgstr "Nagrywanie DVD"
+
+#: kdvdauthor.cpp:765
+msgid "Error burning DVD :\n"
+msgstr "Błąd zapisu DVD:\n"
+
+#: kdvdauthor.cpp:771
+msgid "DVD Burning finished"
+msgstr "Nagrywanie DVD zakończone pomyślnie"
+
+#: kdvdauthor.cpp:776
+msgid "An error occured while Burning DVD :\n"
+msgstr "Błąd w trakcie wypalania DVD :\n"
+
+#: kdvdauthor.cpp:777
+msgid "Insert an other DVD"
+msgstr "Włóż do innego DVD"
+
+#: kdvdauthor.cpp:801
+#, c-format
+msgid ""
+"Burning DVD\n"
+"Current write speed :%2.1fx"
+msgstr ""
+"Nagrywanie DVD\n"
+"Aktualna szybkość zapisu :%2.1fx"
+
+#: kdvd.cpp:427
+#, c-format
+msgid "Couldn't open %s for title\n"
+msgstr "Nie mogę otworzyć %s tytułu\n"
+
+#: kdvd.cpp:436
+#, c-format
+msgid "Couldn't seek in %s for title\n"
+msgstr "Nie mogę szukać tytułu w %s\n"
+
+#: kdvd.cpp:445
+msgid "Couldn't read enough bytes for title.\n"
+msgstr "Nie mogę odczytać wystarczająco danych dla tytułu.\n"
+
+#: kdvd.cpp:549
+#, c-format
+msgid "Can't find device %s\n"
+msgstr "Nie mogę znaleźć napędu %s\n"
+
+#: kdvd.cpp:557 kviewmpeg2.cpp:111
+#, c-format
+msgid "Can't open disc %s!\n"
+msgstr "Nie mogę otworzyć płyty %s!\n"
+
+#: kdvd.cpp:564
+msgid "Can't open main ifo!\n"
+msgstr "Nie mogę otworzyć głównego pliku IFO!\n"
+
+#: kdvd.cpp:575
+msgid "unknown"
+msgstr "nieznany"
+
+#: kdvd.cpp:579
+#, c-format
+msgid "Title %d"
+msgstr "Tytul: %d"
+
+#: kdvd.cpp:607
+#, c-format
+msgid "Title: %02d, Length: %02x:%02x:%02x "
+msgstr "Tytul: %02d, Długość: %02x:%02x:%02x "
+
+#: kdvd.cpp:803
+#, c-format
+msgid "Title %02d"
+msgstr "Tytul: %02d"
+
+#: kdvd.cpp:887
+msgid "reading title"
+msgstr "Czytanie tytułu"
+
+#: kdvd.cpp:1033
+#, c-format
+msgid "Error opening vobs for title %d\n"
+msgstr "Błąd otwarcia pliku VOB dla tytułu %d\n"
+
+#: kdvd.cpp:1046
+#, c-format
+msgid "ERROR reading block %d\n"
+msgstr "Błąd odczytu w bloku %d\n"
+
+#: kmaindlg.cpp:97
+msgid "Open the DVD"
+msgstr "Otwórz DVD"
+
+#: kmaindlg.cpp:104
+msgid "Play title"
+msgstr "Odtwórz tytuł"
+
+#: kmaindlg.cpp:105
+msgid "Preview DVD Menu"
+msgstr "Podgląd Menu DVD"
+
+#: kmaindlg.cpp:114 kmaindlg.cpp:263
+msgid "DVD is not opened"
+msgstr "DVD nie jest otwarte"
+
+#: kmaindlg.cpp:413 kmaindlg.cpp:414
+msgid "Main menu"
+msgstr "Główne menu"
+
+#: main.cpp:28
+msgid "A KDE KPart Application"
+msgstr "Aplikacja środowiska KDE"
+
+#: main.cpp:40
+msgid "k9copy"
+msgstr ""
+
+#: rc.cpp:2
+#, no-c-format
+msgid "C&ustom"
+msgstr "W&łasne"
+
+#: rc.cpp:4
+#, no-c-format
+msgid "k9copy - Devices"
+msgstr "k9copy - Napędy"
+
+#: rc.cpp:8
+#, no-c-format
+msgid "Alt+R"
+msgstr ""
+
+#: rc.cpp:10
+#, no-c-format
+msgid "&Add"
+msgstr "&Dodaj"
+
+#: rc.cpp:12
+#, no-c-format
+msgid "Alt+A"
+msgstr ""
+
+#: rc.cpp:14
+#, no-c-format
+msgid "device"
+msgstr "Napęd"
+
+#: rc.cpp:16
+#, no-c-format
+msgid "label"
+msgstr "Etykieta"
+
+#: rc.cpp:18
+#, no-c-format
+msgid "Input"
+msgstr "Odczyt"
+
+#: rc.cpp:20
+#, no-c-format
+msgid "Output"
+msgstr "Zapis"
+
+#: rc.cpp:22
+#, no-c-format
+msgid "<p align=\"center\">Manage devices not detected by k9copy</p>"
+msgstr "<p align=\"center\">Zarządzanie napędami nie wykrytymi przez k9copy</p>"
+
+#: rc.cpp:30
+#, no-c-format
+msgid "k9Copy - DVD Analyze"
+msgstr "k9Copy - Analiza DVD"
+
+#: rc.cpp:35
+#, no-c-format
+msgid "k9Copy - DVD backup"
+msgstr "k9Copy - Kopiowanie DVD"
+
+#: rc.cpp:37
+#, no-c-format
+msgid "Output device "
+msgstr "Zapis"
+
+#: rc.cpp:39
+#, no-c-format
+msgid "..."
+msgstr ""
+
+#: rc.cpp:41
+#, no-c-format
+msgid "Input device "
+msgstr "Odczytu"
+
+#: rc.cpp:43
+#, no-c-format
+msgid "DVD"
+msgstr "DVD"
+
+#: rc.cpp:45
+#, no-c-format
+msgid "Title"
+msgstr "Tytuł"
+
+#: rc.cpp:47
+#, no-c-format
+msgid "Size"
+msgstr "Rozmiar"
+
+#: rc.cpp:49
+#, no-c-format
+msgid "Display title preview"
+msgstr "Pokaż podgląd tytułu"
+
+#: rc.cpp:51
+#, no-c-format
+msgid "Display selected title preview"
+msgstr "Pokaż podgląd wybranego tytułu"
+
+#: rc.cpp:53
+#, no-c-format
+msgid "At start"
+msgstr "Na starcie"
+
+#: rc.cpp:55
+#, no-c-format
+msgid "<b>DVD playback options</b>"
+msgstr "<b>Opcje odtwarzania DVD</b>"
+
+#: rc.cpp:57
+#, no-c-format
+msgid "At title end"
+msgstr "Na końcu tytułu"
+
+#: rc.cpp:59
+#, no-c-format
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: rc.cpp:62
+#, no-c-format
+msgid "DVD Item Font"
+msgstr "Kolor czcionki menu"
+
+#: rc.cpp:64
+#, no-c-format
+msgid "Output directory"
+msgstr "Katalog docelowy"
+
+#: rc.cpp:66
+#, no-c-format
+msgid "Background picture"
+msgstr "Obraz tła"
+
+#: rc.cpp:70
+#, no-c-format
+msgid "Alt+S"
+msgstr ""
+
+#: rc.cpp:72
+#, no-c-format
+msgid "DVD Title Font"
+msgstr "Kolor czcionki tytułu"
+
+#: rc.cpp:74
+#, no-c-format
+msgid "Background Color"
+msgstr "Kolor tła"
+
+#: rc.cpp:76 rc.cpp:78
+#, no-c-format
+msgid "&Open"
+msgstr "&Otwórz"
+
+#: rc.cpp:84 rc.cpp:86
+#, no-c-format
+msgid "Preview &Menu"
+msgstr "Podgląd Menu"
+
+#: rc.cpp:88 rc.cpp:90
+#, no-c-format
+msgid "Show &title"
+msgstr "Pokaż &tytuł"
+
+#: rc.cpp:96
+#, no-c-format
+msgid "k9Copy - Menu Preview"
+msgstr "k9Copy - Podgląd Menu"
+
+#: rc.cpp:101
+#, no-c-format
+msgid "k9Copy - Title Preview"
+msgstr "k9Copy - Podgląd tytułu"
+
+#: _translatorinfo.cpp:1
+msgid ""
+"_: NAME OF TRANSLATORS\n"
+"Your names"
+msgstr "Wojciech Nawrocki"
+
+#: _translatorinfo.cpp:3
+msgid ""
+"_: EMAIL OF TRANSLATORS\n"
+"Your emails"
+msgstr "wojtasin@o2.pl"
+
