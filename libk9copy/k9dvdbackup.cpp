@@ -355,14 +355,6 @@ void k9DVDBackup::getOutput(uchar * buffer, uint32_t buflen) {
                 }
             }
         } 
-  /*else {
-            streamType_t st;
-            int packetType;
-            st=k9Cell::identifyStream((uchar*)(temp+itemp),&packetType);
-	    if (st==stVideo) 
-		backupDlg->setImage(temp+itemp);
-	}
-*/
 //JMP        cellOut->addNewVobus((char*)(temp+itemp),DVD_VIDEO_LB_LEN,m_position,currVOB,outputFile->at());
         cellOut->addNewVobus((char*)(temp+itemp),DVD_VIDEO_LB_LEN,cellOut->cellList->getPosition() ,currVOB,outputFile->at());
         outputFile->writeBlock((char*)(temp+itemp),DVD_VIDEO_LB_LEN);
@@ -491,6 +483,9 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
             if (error) {
 		vamps->abort();
                 break;
+	    } else if (vamps->geterror()) {
+			seterror( vamps->geterrMsg());
+			break;
 	    }
             dsi_next_vobu= copyVobu(dvdfile,sector,NULL);
         }
@@ -645,6 +640,9 @@ void k9DVDBackup::playCell (int vts_num, k9Cell *_cell) {
         if (error) {
 	    vamps->abort();
             break;
+	} else if (vamps->geterror()) {
+		seterror( vamps->geterrMsg());
+		break;
 	}
         dsi_next_vobu= copyVobu(dvdfile,sector,NULL);
     }
@@ -1406,8 +1404,6 @@ void k9DVDBackup::execute() {
     }
 
     k9CellCopyList *cellCopyList =new k9CellCopyList(&m_dvdread,DVD);
-
-    inject = locateLocal("tmp", "k9v" + (QTime::currentTime()).toString("hhmmss"));
 
     double totalSize=DVD->getmenuSize() *2048 ;
     totalSize+=cellCopyList->gettotalSize();

@@ -116,7 +116,6 @@ private:
     k9BackupDlg *backupDlg;
     void clearOutput(QString name);
     uint  getLastCell(k9CellCopyList *_cellCopyList,uint _index);
-    QString inject;
     bool error;
     void seterror(const QString &_msg);
     k9vamps *vamps;

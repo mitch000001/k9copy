@@ -28,7 +28,7 @@
 static const char description[] =
     I18N_NOOP("A DVD Backup tool for KDE");
 
-static const char version[] = "1.0.3b";
+static const char version[] = "1.0.4";
 
 static KCmdLineOptions options[] =
 {
@@ -38,8 +38,8 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char **argv)
 {
-    KAboutData about("k9copy", I18N_NOOP("k9copy"), version, description,
-                     KAboutData::License_GPL, "(C) 2004 Jean-Michel PETIT", 0, 0, "k9copy@free.fr");
+    KAboutData about("k9copy", I18N_NOOP("k9copy"), version,description,
+                     KAboutData::License_GPL, "(C) 2004-2006 Jean-Michel PETIT", 0, 0, "k9copy@free.fr");
     about.addAuthor( "Jean-Michel PETIT", 0, "k9copy@free.Fr" );
     about.setTranslator(I18N_NOOP("_: NAME OF TRANSLATORS\\nYour names")
  ,I18N_NOOP("_: EMAIL OF TRANSLATORS\\nYour emails"));

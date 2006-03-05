@@ -595,7 +595,7 @@ clean-metasources:
 	-rm -f  k3bdevicemanager.moc
 
 #>+ 2
-KDE_DIST=k3bcrc.h k3bscsicommand.h configure.in.in k3bmmc.h libk3bdevice.doxy 
+KDE_DIST=k3bcrc.h k3bscsicommand.h k3bmmc.h configure.in.in 
 
 #>+ 2
 docs-am:

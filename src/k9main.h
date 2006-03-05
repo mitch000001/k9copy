@@ -134,6 +134,7 @@ private slots:
   virtual void          cbStartActivated( int );
   virtual void          bDevicesClick();
   virtual void          bSaveClick();
+  virtual void	  cbOutputDevActivated(int);
 
 public slots:
   /*$PUBLIC_SLOTS$*/

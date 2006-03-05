@@ -18,7 +18,7 @@
 	pthread_cond_t  condw=PTHREAD_COND_INITIALIZER; 
 	pthread_mutex_t mutr=PTHREAD_MUTEX_INITIALIZER ; 
 	pthread_mutex_t mutw=PTHREAD_MUTEX_INITIALIZER ; 
-
+ 
 	uchar      *rqt_rptr;			// ptr to cur char in requant read buf
 	uchar      *rqt_wptr;			// ptr to first unused char in rqt wbuf
 	int         rqt_rcnt;			// no. bytes in requant read buffer
@@ -31,195 +31,187 @@
 	bool 	rqt_run;
 */
 
-	uint32_t k9fifo::count() {
-		if (head >queue)
-			return (INPUT_SIZE - head +queue);
-		else
-			return queue - head;
-	}
+uint32_t k9fifo::count() {
+    if (head >queue)
+        return (INPUT_SIZE - head +queue);
+    else
+        return queue - head;
+}
 
-	void k9fifo::enqueue (uchar *_buffer, uint32_t _size) {
-		if (_size+queue > INPUT_SIZE) {
-			uint32_t s1,s2;
-			s1=INPUT_SIZE-queue;
-			tc_memcpy(array+queue,_buffer,s1);
-			s2=_size-s1;
-			tc_memcpy(array,_buffer+s1,s2);
-		} else
-			tc_memcpy(array+queue,_buffer,_size);
-		queue=(queue+_size) %INPUT_SIZE;
-	}
-	
-	void k9fifo::dequeue(uchar *_buffer,uint32_t _size) {
-		if ( _size+head >INPUT_SIZE) {
-			uint32_t s1,s2;
-			s1=INPUT_SIZE - head;
-			tc_memcpy(_buffer,array+head,s1);
-			s2=_size-s1;
-			tc_memcpy(_buffer+s1,array,s2);
-		} else 
-			tc_memcpy(_buffer,array+head,_size);
-		head =(head+_size)%INPUT_SIZE;
-	}
+void k9fifo::enqueue (uchar *_buffer, uint32_t _size) {
+    if (_size+queue > INPUT_SIZE) {
+        uint32_t s1,s2;
+        s1=INPUT_SIZE-queue;
+        tc_memcpy(array+queue,_buffer,s1);
+        s2=_size-s1;
+        tc_memcpy(array,_buffer+s1,s2);
+    } else
+        tc_memcpy(array+queue,_buffer,_size);
+    queue=(queue+_size) %INPUT_SIZE;
+}
+
+void k9fifo::dequeue(uchar *_buffer,uint32_t _size) {
+    if ( _size+head >INPUT_SIZE) {
+        uint32_t s1,s2;
+        s1=INPUT_SIZE - head;
+        tc_memcpy(_buffer,array+head,s1);
+        s2=_size-s1;
+        tc_memcpy(_buffer+s1,array,s2);
+    } else
+        tc_memcpy(_buffer,array+head,_size);
+    head =(head+_size)%INPUT_SIZE;
+}
 
 
 void k9vamps::addData(uchar *data,uint size) {
-	while (1) {
-			if (m_fifo.freespace()>size){
-				mutex.lock();
-				m_fifo.enqueue(data,size);
-				wDataReady.wakeAll();
-				mutex.unlock();
-				break;
-			} else  
-				wDataRead.wait();
-	}
+    while (1) {
+        if (m_fifo.freespace()>size) {
+            mutex.lock();
+            m_fifo.enqueue(data,size);
+            wDataReady.wakeAll();
+            mutex.unlock();
+            break;
+        } else
+            wDataRead.wait();
+    }
 }
 
 
 int k9vamps::readData(uchar * data,uint size) {
 
-	while (1){
-			if(noData || (m_fifo.count() >=size)) {
-				break;
-			} else
-				wDataReady.wait();
-	}
-	mutex.lock();
-	uint32_t readSize= (m_fifo.count()) <size ? (m_fifo.count()) : size;
+    while (1) {
+        if(noData || (m_fifo.count() >=size)) {
+            break;
+        } else
+            wDataReady.wait();
+    }
+    mutex.lock();
+    uint32_t readSize= (m_fifo.count()) <size ? (m_fifo.count()) : size;
 
-	if (readSize>0 ) {
-		m_fifo.dequeue(data,readSize);
-		wDataRead.wakeAll();
-		mutex.unlock();
-		return readSize;
-	} else {
-		wDataRead.wakeAll();
-		mutex.unlock();
-		return 0;
-	}
+    if (readSize>0 ) {
+        m_fifo.dequeue(data,readSize);
+        wDataRead.wakeAll();
+        mutex.unlock();
+        return readSize;
+    } else {
+        wDataRead.wakeAll();
+        mutex.unlock();
+        return 0;
+    }
 
 }
 
 void k9vamps::addSubpicture(uint id) {
-	spu_track_map[id-1]=1;
+    spu_track_map[id-1]=1;
 }
 
-void k9vamps::addAudio(uint id){
-	audio_track_map[id-1]=1;
+void k9vamps::addAudio(uint id) {
+    audio_track_map[id-1]=1;
 }
 
 void k9vamps::setInputSize(uint64_t size) {
-	ps_size=size;
+    ps_size=size;
 }
 
 void k9vamps::setVapFactor(float factor) {
-	vap_fact=factor;
+    vap_fact=factor;
 }
 
 void k9vamps::reset() {
-	rptr = rbuf;
-	rhwp = rbuf;		
-	wptr =  wbuf;		
-	vbuf_size = VBUF_SIZE;	
-	vap_fact= 1.0f;		
+    rptr = rbuf;
+    rhwp = rbuf;
+    wptr =  wbuf;
+    vbuf_size = VBUF_SIZE;
+    vap_fact= 1.0f;
 
-	preserve = 1;
-//	inbuffw=inbuff;
-	for (uint i=0; i<8;i++)
-		audio_track_map[i]=0;
-	for (uint i=0; i<32;i++)
-		spu_track_map[i]=0;
+    preserve = 1;
+    //	inbuffw=inbuff;
+    for (uint i=0; i<8;i++)
+        audio_track_map[i]=0;
+    for (uint i=0; i<32;i++)
+        spu_track_map[i]=0;
 
-	calc_ps_vap = 1;
-	vap_fact=1.0;
-	ps_size=0;
-	noData=false;
+    calc_ps_vap = 1;
+    vap_fact=1.0;
+    ps_size=0;
+    noData=false;
 
-	avgdiff=1;
-	m_totfact=m_nbfact=m_avgfact=0;
+    avgdiff=1;
+    m_totfact=m_nbfact=m_avgfact=0;
 
-	vin_bytes=0;
-	vout_bytes=0;
+    vin_bytes=0;
+    vout_bytes=0;
 
 }
 
 k9vamps::k9vamps(k9DVDBackup *dvdbackup) {
-	bytes_read =0;
-	bytes_written=0;
-	padding_bytes=0;
-	total_packs=0;
-	video_packs=0;
-	skipped_video_packs=0;
-	aux_packs=0;
-	skipped_aux_packs=0;
-	sequence_headers=0;
-	nav_packs=0;
+    bytes_read =0;
+    bytes_written=0;
+    padding_bytes=0;
+    total_packs=0;
+    video_packs=0;
+    skipped_video_packs=0;
+    aux_packs=0;
+    skipped_aux_packs=0;
+    sequence_headers=0;
+    nav_packs=0;
 
-	m_dvdbackup=dvdbackup;
-	reset();
-	m_requant=NULL;
-	m_bgUpdate = new k9bgUpdate(dvdbackup);
+    m_dvdbackup=dvdbackup;
+    reset();
+    m_requant=NULL;
+    m_bgUpdate = new k9bgUpdate(dvdbackup);
 }
 k9vamps::~k9vamps() {
-	delete m_bgUpdate;
+    delete m_bgUpdate;
 }
-
-
-const char  progname [] = "vamps";	// we're sucking bytes!
-
-
-// this one lives in requant.c
-extern void *requant_thread (void *);
 
 
 void k9vamps::setNoData() {
-	mutex.lock();
-	noData=true;
-	wDataRead.wakeAll();
-	wDataReady.wakeAll();
-	mutex.unlock();
+    mutex.lock();
+    noData=true;
+    wDataRead.wakeAll();
+    wDataReady.wakeAll();
+    mutex.unlock();
 
 }
 
-void k9vamps::run ()
-{
-  struct stat          st;
-   m_requant=new k9requant();
-  eof=0;
+void k9vamps::run () {
+    m_error=false;
+   m_errMsg="";
+    m_requant=new k9requant();
+    eof=0;
+
+    // allocate video buffers
+    vibuf =(uchar*) malloc (vbuf_size);
+    vobuf = (uchar*) malloc (vbuf_size);
+
+    if (vibuf == NULL || vobuf == NULL)
+        fatal ("Allocation of video buffers failed: %s", strerror (errno));
 
 
-  // allocate video buffers
-  vibuf =(uchar*) malloc (vbuf_size);
-  vobuf = (uchar*) malloc (vbuf_size);
-
-  if (vibuf == NULL || vobuf == NULL)
-    fatal ("Allocation of video buffers failed: %s", strerror (errno));
+    // actually do vaporization
+    vaporize ();
 
 
-  // actually do vaporization
-  vaporize ();
- 
+    flush();
 
-  flush();
+    if (m_requant !=NULL) {
+        m_requant->mutr.unlock();
+        m_requant->mutw.unlock();
+        m_requant->rqt_stop=true;
+        m_requant->condr.wakeAll();
+        m_requant->condw.wakeAll();
+        if (m_requant->running())
+            m_requant->terminate();
+        m_requant->wait();
 
-  if (m_requant !=NULL) {
-	m_requant->mutr.unlock();
-	m_requant->mutw.unlock();
-  	m_requant->rqt_stop=true;
-	m_requant->condr.wakeAll();
-	m_requant->condw.wakeAll();
-	if (m_requant->running())
-		m_requant->terminate();
-	m_requant->wait();
-
-  }
-  delete m_requant;
-  m_requant=NULL;
-free (vibuf);
-free(vobuf);
-m_bgUpdate->wait();
-mutex.unlock();
+    }
+    delete m_requant;
+    m_requant=NULL;
+    free (vibuf);
+    free(vobuf);
+    m_bgUpdate->wait();
+    mutex.unlock();
 }
 
 
@@ -227,193 +219,179 @@ mutex.unlock();
 // lock `size' bytes in read buffer
 // i.e. ensure the next `size' input bytes are available in buffer
 // returns nonzero on EOF
-int k9vamps::lock (int size)
-{
-  int avail, n;
+int k9vamps::lock (int size) {
+    int avail, n;
 
-  avail = rhwp - rptr;
+    avail = rhwp - rptr;
 
-  if (avail >= size)
-    return 0;
+    if (avail >= size)
+        return 0;
 
-  if (avail)
-  {
-    tc_memcpy (rbuf, rptr, avail);
-    rptr = rbuf;
-    rhwp = rptr + avail;
-  }
+    if (avail) {
+        tc_memcpy (rbuf, rptr, avail);
+        rptr = rbuf;
+        rhwp = rptr + avail;
+    }
 
-  n = readData(rhwp,RBUF_SIZE - avail); //read (0, rhwp, RBUF_SIZE - avail);
+    n = readData(rhwp,RBUF_SIZE - avail); //read (0, rhwp, RBUF_SIZE - avail);
 
-  if (n % SECT_SIZE)
-    fatal ("Premature EOF");
+    if (n % SECT_SIZE)
+        fatal ("Premature EOF");
 
-  rhwp       += n;
-  bytes_read += n;
+    rhwp       += n;
+    bytes_read += n;
 
-  return !n;
+    return !n;
 }
 
 
 // copy `size' bytes from rbuf to wbuf
-void k9vamps::copy (int size)
-{
-  if (!size)
-    return;
+void k9vamps::copy (int size) {
+    if (!size)
+        return;
 
-  if ((wptr - wbuf) + size > WBUF_SIZE)
-    fatal ("Write buffer overflow");
+    if ((wptr - wbuf) + size > WBUF_SIZE)
+        fatal ("Write buffer overflow");
 
-  tc_memcpy (wptr, rptr, size);
-  rptr += size;
-  wptr += size;
+    tc_memcpy (wptr, rptr, size);
+    rptr += size;
+    wptr += size;
 }
 
 
 // skip `size' bytes in rbuf
-void k9vamps::skip (int size)
-{
-  rptr += size;
+void k9vamps::skip (int size) {
+    rptr += size;
 }
 
 
 // flush wbuf
-void k9vamps::flush (void)
-{
-  int size;
-  mutex.lock();
-  size = wptr - wbuf;
+void k9vamps::flush (void) {
+    int size;
+    mutex.lock();
+    size = wptr - wbuf;
 
-  if (!size) {
-      mutex.unlock();
-      return;
-  }
-  //m_dvdbackup->getOutput(wbuf,size);
-  // wait for a preceding update to finish
-  m_bgUpdate->wait();
-  m_bgUpdate->update( wbuf,size);
+    if (!size) {
+        mutex.unlock();
+        return;
+    }
+    //m_dvdbackup->getOutput(wbuf,size);
+    // wait for a preceding update to finish
+    m_bgUpdate->wait();
+    m_bgUpdate->update( wbuf,size);
 
-  wptr           = wbuf;
-  bytes_written += size;
-  mutex.unlock();
+    wptr           = wbuf;
+    bytes_written += size;
+    mutex.unlock();
 }
 
 
 // returns no. bytes read up to where `ptr' points
-uint64_t k9vamps::rtell (uchar *ptr)
-{
-  return bytes_read - (rhwp - ptr);
+uint64_t k9vamps::rtell (uchar *ptr) {
+    return bytes_read - (rhwp - ptr);
 }
 
 
 // returns no. bytes written up to where `ptr' points
 // (including those in buffer which are not actually written yet)
-uint64_t k9vamps::wtell (uchar *ptr)
-{
-  return bytes_written + (ptr - wbuf);
+uint64_t k9vamps::wtell (uchar *ptr) {
+    return bytes_written + (ptr - wbuf);
 }
 
 
 // some pack header consistency checking
-void k9vamps::check_pack (uchar *ptr)
-{
-  uint32_t pack_start_code;
-  int    pack_stuffing_length;
+void k9vamps::check_pack (uchar *ptr) {
+    uint32_t pack_start_code;
+    int    pack_stuffing_length;
 
-  pack_start_code  = (uint32_t) (ptr [0]) << 24;
-  pack_start_code |= (uint32_t) (ptr [1]) << 16;
-  pack_start_code |= (uint32_t) (ptr [2]) <<  8;
-  pack_start_code |= (uint32_t) (ptr [3]);
+    pack_start_code  = (uint32_t) (ptr [0]) << 24;
+    pack_start_code |= (uint32_t) (ptr [1]) << 16;
+    pack_start_code |= (uint32_t) (ptr [2]) <<  8;
+    pack_start_code |= (uint32_t) (ptr [3]);
 
-  if (pack_start_code != 0x000001ba)
-    fatal ("Bad pack start code at %llu: %08lx", rtell (ptr), pack_start_code);
+    if (pack_start_code != 0x000001ba)
+        fatal ("Bad pack start code at %llu: %08lx", rtell (ptr), pack_start_code);
 
-  if ((ptr [4] & 0xc0) != 0x40)
-    fatal ("Not an MPEG2 program stream pack at %llu", rtell (ptr));
+    if ((ptr [4] & 0xc0) != 0x40)
+        fatal ("Not an MPEG2 program stream pack at %llu", rtell (ptr));
 
-  // we rely on a fixed pack header size of 14
-  // so better to ensure this is true
-  pack_stuffing_length = ptr [13] & 7;
+    // we rely on a fixed pack header size of 14
+    // so better to ensure this is true
+    pack_stuffing_length = ptr [13] & 7;
 
-  if (pack_stuffing_length)
-    fatal ("Non-zero pack stuffing length at %llu: %d\n",
-	   rtell (ptr), pack_stuffing_length);
+    if (pack_stuffing_length)
+        fatal ("Non-zero pack stuffing length at %llu: %d\n",
+               rtell (ptr), pack_stuffing_length);
 }
 
 
 // video packet consistency checking
-int k9vamps::check_video_packet (uchar *ptr)
-{
-  int    vid_packet_length, pad_packet_length, rc = 0;
-  uint32_t vid_packet_start_code, pad_packet_start_code, sequence_header_code;
+int k9vamps::check_video_packet (uchar *ptr) {
+    int    vid_packet_length, pad_packet_length, rc = 0;
+    uint32_t vid_packet_start_code, pad_packet_start_code, sequence_header_code;
 
-  vid_packet_start_code  = (uint32_t) (ptr [0]) << 24;
-  vid_packet_start_code |= (uint32_t) (ptr [1]) << 16;
-  vid_packet_start_code |= (uint32_t) (ptr [2]) <<  8;
-  vid_packet_start_code |= (uint32_t) (ptr [3]);
+    vid_packet_start_code  = (uint32_t) (ptr [0]) << 24;
+    vid_packet_start_code |= (uint32_t) (ptr [1]) << 16;
+    vid_packet_start_code |= (uint32_t) (ptr [2]) <<  8;
+    vid_packet_start_code |= (uint32_t) (ptr [3]);
 
-  if (vid_packet_start_code != 0x000001e0)
-    fatal ("Bad video packet start code at %llu: %08lx",
-	   rtell (ptr), vid_packet_start_code);
+    if (vid_packet_start_code != 0x000001e0)
+        fatal ("Bad video packet start code at %llu: %08lx",
+               rtell (ptr), vid_packet_start_code);
 
-  vid_packet_length  = ptr [4] << 8;
-  vid_packet_length |= ptr [5];
-  vid_packet_length += 6;
+    vid_packet_length  = ptr [4] << 8;
+    vid_packet_length |= ptr [5];
+    vid_packet_length += 6;
 
-  if ((ptr [6] & 0xc0) != 0x80)
-    fatal ("Not an MPEG2 video packet at %llu", rtell (ptr));
+    if ((ptr [6] & 0xc0) != 0x80)
+        fatal ("Not an MPEG2 video packet at %llu", rtell (ptr));
 
-  if (ptr [7])
-  {
-    if ((ptr [7] & 0xc0) != 0xc0)
-      fatal ("First video packet in sequence starting at %llu "
-	     "misses PTS or DTS, flags=%02x", rtell (ptr), ptr [7]);
+    if (ptr [7]) {
+        if ((ptr [7] & 0xc0) != 0xc0)
+            fatal ("First video packet in sequence starting at %llu "
+                   "misses PTS or DTS, flags=%02x", rtell (ptr), ptr [7]);
 
-    sequence_header_code  = (uint32_t) (ptr [6 + 3 + ptr [8] + 0]) << 24;
-    sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 1]) << 16;
-    sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 2]) <<  8;
-    sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 3]);
+        sequence_header_code  = (uint32_t) (ptr [6 + 3 + ptr [8] + 0]) << 24;
+        sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 1]) << 16;
+        sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 2]) <<  8;
+        sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 3]);
 
-    if (sequence_header_code == 0x000001b3)
-    {
-      rc = 1;
+        if (sequence_header_code == 0x000001b3) {
+            rc = 1;
+        } else {
+            //fprintf (stderr, "Start of GOP at %llu not on sector boundary\n",
+            //         rtell (ptr + 6 + 3 + ptr [8]));
+            sequence_headers++;
+        }
     }
-    else
-    {
-      //fprintf (stderr, "Start of GOP at %llu not on sector boundary\n",
-      //         rtell (ptr + 6 + 3 + ptr [8]));
-      sequence_headers++;
+
+    pad_packet_length = 0;
+
+    if (14 + vid_packet_length < SECT_SIZE - 6) {
+        // video packet does not fill whole sector
+        // check for padding packet
+        ptr += vid_packet_length;
+
+        pad_packet_start_code  = (uint32_t) (ptr [0]) << 24;
+        pad_packet_start_code |= (uint32_t) (ptr [1]) << 16;
+        pad_packet_start_code |= (uint32_t) (ptr [2]) <<  8;
+        pad_packet_start_code |= (uint32_t) (ptr [3]);
+
+        if (pad_packet_start_code != 0x000001be)
+            fatal ("Bad padding packet start code at %llu: %08lx",
+                   rtell (ptr + vid_packet_length), pad_packet_start_code);
+
+        pad_packet_length  = ptr [4] << 8;
+        pad_packet_length |= ptr [5];
+        pad_packet_length += 6;
     }
-  }
 
-  pad_packet_length = 0;
+    // length of video packet plus padding packet must always match sector size
+    if (14 + vid_packet_length + pad_packet_length != SECT_SIZE)
+        fatal ("Bad video packet length at %llu: %d",
+               rtell (ptr), vid_packet_length);
 
-  if (14 + vid_packet_length < SECT_SIZE - 6)
-  {
-    // video packet does not fill whole sector
-    // check for padding packet
-    ptr += vid_packet_length;
-
-    pad_packet_start_code  = (uint32_t) (ptr [0]) << 24;
-    pad_packet_start_code |= (uint32_t) (ptr [1]) << 16;
-    pad_packet_start_code |= (uint32_t) (ptr [2]) <<  8;
-    pad_packet_start_code |= (uint32_t) (ptr [3]);
-
-    if (pad_packet_start_code != 0x000001be)
-      fatal ("Bad padding packet start code at %llu: %08lx",
-	     rtell (ptr + vid_packet_length), pad_packet_start_code);
-
-    pad_packet_length  = ptr [4] << 8;
-    pad_packet_length |= ptr [5];
-    pad_packet_length += 6;
-  }
-
-  // length of video packet plus padding packet must always match sector size
-  if (14 + vid_packet_length + pad_packet_length != SECT_SIZE)
-    fatal ("Bad video packet length at %llu: %d",
-	   rtell (ptr), vid_packet_length);
-
-  return rc;
+    return rc;
 }
 
 
@@ -422,61 +400,60 @@ int k9vamps::check_video_packet (uchar *ptr)
 // note that this and the requant thread never run concurrently (apart
 // from a very short time) so a dual CPU box does not give an advantage
 // returns size of evaporated GOP
-int k9vamps::requant (uchar *dst, uchar *src, int n, float fact)
-{
-  int rv;
-  if (! m_requant->running()) {
-  	m_requant->initvar();
-  }
-  m_requant->rqt_stop=false;
-  // this ensures for the requant thread to stop at this GOP's end
-  tc_memcpy (src + n, "\0\0\1", 3);
+int k9vamps::requant (uchar *dst, uchar *src, int n, float fact) {
+    int rv;
+    if (! m_requant->running()) {
+        m_requant->initvar();
+    }
+    m_requant->rqt_stop=false;
+    // this ensures for the requant thread to stop at this GOP's end
+    tc_memcpy (src + n, "\0\0\1", 3);
 
- m_requant->mutr.lock();
+    m_requant->mutr.lock();
 
-  m_requant->rqt_rptr     = src;
-  m_requant->rqt_wptr     = dst;
-  m_requant->rqt_rcnt     = n;
-  m_requant->rqt_wcnt     = 0;
-  m_requant->rqt_fact     =  fact  ;
-  m_requant->rqt_inbytes  = vin_bytes;
-  m_requant->rqt_outbytes = vout_bytes;
-  m_requant->rqt_visize   = (uint64_t) ((float) ps_size * (float) vin_bytes / ((float) total_packs * (float) SECT_SIZE));
+    m_requant->rqt_rptr     = src;
+    m_requant->rqt_wptr     = dst;
+    m_requant->rqt_rcnt     = n;
+    m_requant->rqt_wcnt     = 0;
+    m_requant->rqt_fact     =  fact  ;
+    m_requant->rqt_inbytes  = vin_bytes;
+    m_requant->rqt_outbytes = vout_bytes;
+    m_requant->rqt_visize   = (uint64_t) ((float) ps_size * (float) vin_bytes / ((float) total_packs * (float) SECT_SIZE));
 
-  // create requantization thread
-  if (! m_requant->running()) {
-	m_requant->start();
-	m_requant->rqt_run=true;
-  }
+    // create requantization thread
+    if (! m_requant->running()) {
+        m_requant->start();
+        m_requant->rqt_run=true;
+    }
 
-  m_requant->condr.wakeAll();
-  m_requant->mutr.unlock();
+    m_requant->condr.wakeAll();
+    m_requant->mutr.unlock();
 
-  // now the requant thread should be running
+    // now the requant thread should be running
 
-  m_requant->mutw.lock();
+    m_requant->mutw.lock();
 
-  // wait for requant thread to finish
-  while (!m_requant->rqt_wcnt)
-    m_requant->condw.wait( &m_requant->mutw);
+    // wait for requant thread to finish
+    while (!m_requant->rqt_wcnt)
+        m_requant->condw.wait( &m_requant->mutw);
 
-  rv = m_requant->rqt_wcnt;
+    rv = m_requant->rqt_wcnt;
 
-  m_requant->mutw.unlock();
-  if ((m_requant->rbuf-m_requant->cbuf -3) >0 )  {
-	tc_memcpy(dst+m_requant->rqt_wcnt,m_requant->cbuf,m_requant->rbuf-m_requant->cbuf -3);
-	rv +=m_requant->rbuf-m_requant->cbuf -3;
-  }
+    m_requant->mutw.unlock();
+    if ((m_requant->rbuf-m_requant->cbuf -3) >0 )  {
+        tc_memcpy(dst+m_requant->rqt_wcnt,m_requant->cbuf,m_requant->rbuf-m_requant->cbuf -3);
+        rv +=m_requant->rbuf-m_requant->cbuf -3;
+    }
 
-  if (rv>n)
-	qDebug("requant error");
+    if (rv>n)
+        qDebug("requant error");
 
-  double realrqtfact=(double)(vin_bytes) / (double)(vout_bytes+rv);
-  avgdiff = ((m_avgfact) /realrqtfact);
-  
-  qDebug ("factor : " +QString::number(m_avgfact) +"  --> " +QString::number((float)n/(float)rv) +" avgdiff : " + QString::number(avgdiff) +" rqt_visize :" +QString::number(m_requant->rqt_visize) +" ps_size :" +QString::number(ps_size) + " vin_bytes :" + QString::number(vin_bytes)) ;
+    double realrqtfact=(double)(vin_bytes) / (double)(vout_bytes+rv);
+    avgdiff = ((m_avgfact) /realrqtfact);
 
-  return rv;
+    //qDebug ("factor : " +QString::number(m_avgfact) +"  --> " +QString::number((float)n/(float)rv) +" avgdiff : " + QString::number(avgdiff) +" rqt_visize :" +QString::number(m_requant->rqt_visize) +" ps_size :" +QString::number(ps_size) + " vin_bytes :" + QString::number(vin_bytes)) ;
+
+    return rv;
 
 }
 
@@ -485,68 +462,57 @@ int k9vamps::requant (uchar *dst, uchar *src, int n, float fact)
 // according to the track translation maps
 // returns new track type (e.g. 0x80 for first AC3 audio
 // track in cmd line) or zero if track is not to be copied
-int k9vamps::new_private_1_type (uchar *ptr)
-{
-  int type, track, abase;
+int k9vamps::new_private_1_type (uchar *ptr) {
+    int type, track, abase;
 
-  type = ptr [6 + 3 + ptr [8]];
-  //fprintf (stderr, "type=%02x\n", type);
+    type = ptr [6 + 3 + ptr [8]];
+    //fprintf (stderr, "type=%02x\n", type);
 
-  if (type >= 0x20 && type <= 0x3f)
-  {
-    // subpicture
-    track = spu_track_map [type - 0x20];
+    if (type >= 0x20 && type <= 0x3f) {
+        // subpicture
+        track = spu_track_map [type - 0x20];
 
-    return track ? track - 1 + 0x20 : 0;
-  }
+        return track ? track - 1 + 0x20 : 0;
+    }
 
-  if (type >= 0x80 && type <= 0x87)
-  {
-    // AC3 audio
-    abase = 0x80;
-  }
-  else if (type >= 0x88 && type <= 0x8f)
-  {
-    // DTS audio
-    abase = 0x88;
-  }
-  else if (type >= 0xa0 && type <= 0xa7)
-  {
-    // LPCM audio
-    abase = 0xa0;
-  }
-  else
-  {
-    fatal ("Unknown private stream 1 type at %llu: %02x", rtell (ptr), type);
-    abase = 0;
-  }
+    if (type >= 0x80 && type <= 0x87) {
+        // AC3 audio
+        abase = 0x80;
+    } else if (type >= 0x88 && type <= 0x8f) {
+        // DTS audio
+        abase = 0x88;
+    } else if (type >= 0xa0 && type <= 0xa7) {
+        // LPCM audio
+        abase = 0xa0;
+    } else {
+        fatal ("Unknown private stream 1 type at %llu: %02x", rtell (ptr), type);
+        abase = 0;
+    }
 
-  track = audio_track_map [type - abase];
+    track = audio_track_map [type - abase];
 
-  return track ? track - 1 + abase : 0;
+    return track ? track - 1 + abase : 0;
 }
 
 
 // selectivly copy private stream 1 packs
 // patches track type to reflect new track
 // mapping unless user opted to preserve them
-void k9vamps::copy_private_1 (uchar *ptr)
-{
-  int type;
+void k9vamps::copy_private_1 (uchar *ptr) {
+    int type;
 
-  type = new_private_1_type (ptr);
+    type = new_private_1_type (ptr);
 
-  if (type)
-  {
-    if (!preserve)
-      ptr [6 + 3 + ptr [8]] = type;
+    if (type) {
+        if (!preserve)
+            ptr [6 + 3 + ptr [8]] = type;
 
-    copy (SECT_SIZE);
+        copy (SECT_SIZE);
 
-    return;
-  }
+        return;
+    }
 
-  skip (SECT_SIZE);
+    skip (SECT_SIZE);
 }
 
 
@@ -554,35 +520,32 @@ void k9vamps::copy_private_1 (uchar *ptr)
 // according to the audio track translation map
 // returns new ID (e.g. 0xc0 for first MPEG audio
 // track in cmd line) or zero if track is not to be copied
-int k9vamps::new_mpeg_audio_id (int id)
-{
-  int track;
+int k9vamps::new_mpeg_audio_id (int id) {
+    int track;
 
-  track = audio_track_map [id - 0xc0];
+    track = audio_track_map [id - 0xc0];
 
-  return track ? track - 1 + 0xc0 : 0;
+    return track ? track - 1 + 0xc0 : 0;
 }
 
 
 // selectivly copy MPEG audio packs
 // patches ID to reflect new track mapping unless user opted to preserve them
-void k9vamps::copy_mpeg_audio (uchar *ptr)
-{
-  int id;
+void k9vamps::copy_mpeg_audio (uchar *ptr) {
+    int id;
 
-  id = new_mpeg_audio_id (ptr [3]);
+    id = new_mpeg_audio_id (ptr [3]);
 
-  if (id)
-  {
-    if (!preserve)
-      ptr [3] = id;
+    if (id) {
+        if (!preserve)
+            ptr [3] = id;
 
-    copy (SECT_SIZE);
+        copy (SECT_SIZE);
 
-    return;
-  }
+        return;
+    }
 
-  skip (SECT_SIZE);
+    skip (SECT_SIZE);
 }
 
 
@@ -592,121 +555,109 @@ void k9vamps::copy_mpeg_audio (uchar *ptr)
 // necessarily begin at a GOP boundary (although it should?)
 // nevertheless the unwanted private stream 1 and MPEG audio
 // packs are skipped since some players could get confused otherwise
-void k9vamps::vap_leader ()
-{
-  uchar *ptr;
-  int    id, data_length;
+void k9vamps::vap_leader () {
+    uchar *ptr;
+    int    id, data_length;
 
-  while (!lock (SECT_SIZE))
-  {
-    ptr = rptr;
-    check_pack (ptr);
+    while (!lock (SECT_SIZE)) {
+        ptr = rptr;
+        check_pack (ptr);
 
-    ptr += 14;
-    id   = ptr [3];
+        ptr += 14;
+        id   = ptr [3];
 
-    switch (id)
-    {
-      case 0xe0:
-	// video
-	if (check_video_packet (ptr))
-	  // sequence header
-	  return;
+        switch (id) {
+        case 0xe0:
+            // video
+            if (check_video_packet (ptr))
+                // sequence header
+                return;
 
-	copy (SECT_SIZE);
-	break;
+            copy (SECT_SIZE);
+            break;
 
-      case 0xbd:
-	// private 1: audio/subpicture
-	copy_private_1 (ptr);
-	break;
+        case 0xbd:
+            // private 1: audio/subpicture
+            copy_private_1 (ptr);
+            break;
 
-      case 0xc0:
-      case 0xc1:
-      case 0xc2:
-      case 0xc3:
-      case 0xc4:
-      case 0xc5:
-      case 0xc6:
-      case 0xc7:
-	// MPEG audio
-	copy_mpeg_audio (ptr);
-	break;
+        case 0xc0:
+        case 0xc1:
+        case 0xc2:
+        case 0xc3:
+        case 0xc4:
+        case 0xc5:
+        case 0xc6:
+        case 0xc7:
+            // MPEG audio
+            copy_mpeg_audio (ptr);
+            break;
 
-      case 0xbb:
-	// system header/private 2: PCI/DSI
-	copy (SECT_SIZE);
-	break;
+        case 0xbb:
+            // system header/private 2: PCI/DSI
+            copy (SECT_SIZE);
+            break;
 
-      case 0xbe:
-	// padding
-	data_length  = ptr [4] << 8;
-	data_length |= ptr [5];
+        case 0xbe:
+            // padding
+            data_length  = ptr [4] << 8;
+            data_length |= ptr [5];
 
-	if (14 + data_length != SECT_SIZE - 6)
-	  fatal ("Bad padding packet length at %llu: %d",
-		 rtell (ptr), data_length);
+            if (14 + data_length != SECT_SIZE - 6)
+                fatal ("Bad padding packet length at %llu: %d",
+                       rtell (ptr), data_length);
 
-	break;
+            break;
 
-      default:
-	fatal ("Encountered stream ID %02x at %llu, "
-	       "probably bad MPEG2 program stream", id, rtell (ptr));
+        default:
+            fatal ("Encountered stream ID %02x at %llu, "
+                   "probably bad MPEG2 program stream", id, rtell (ptr));
+        }
+
+        if (wptr == wbuf + WBUF_SIZE)
+            flush ();
     }
 
-    if (wptr == wbuf + WBUF_SIZE)
-      flush ();
-  }
+    eof = 1;
+    flush ();
 
-  eof = 1;
-  flush ();
-
-  return;
+    return;
 }
 
 
 // process end of program stream
 // the same counts here as for the PS' beginning
-void k9vamps::vap_trailer (int length)
-{
-  uchar *ptr;
-  int    i, id, data_length;
+void k9vamps::vap_trailer (int length) {
+    uchar *ptr;
+    int    i, id, data_length;
 
-  for (i = 0; i < length; i += SECT_SIZE)
-  {
-    ptr = rptr + 14;
-    id  = ptr [3];
+    for (i = 0; i < length; i += SECT_SIZE) {
+        ptr = rptr + 14;
+        id  = ptr [3];
 
-    if (id == 0xbd)
-    {
-      // private 1: audio/subpicture
-      copy_private_1 (ptr);
-    }
-    else if (id >= 0xc0 && id <= 0xc7)
-    {
-      // MPEG audio
-      copy_mpeg_audio (ptr);
-    }
-    else if (id == 0xbe)
-    {
-      // padding
-      data_length  = ptr [4] << 8;
-      data_length |= ptr [5];
+        if (id == 0xbd) {
+            // private 1: audio/subpicture
+            copy_private_1 (ptr);
+        } else if (id >= 0xc0 && id <= 0xc7) {
+            // MPEG audio
+            copy_mpeg_audio (ptr);
+        } else if (id == 0xbe) {
+            // padding
+            data_length  = ptr [4] << 8;
+            data_length |= ptr [5];
 
-      if (14 + data_length != SECT_SIZE - 6)
-	fatal ("Bad padding packet length at %llu: %d",
-	       rtell (ptr), data_length);
-    }
-    else
-    {
-      copy (SECT_SIZE);
+            if (14 + data_length != SECT_SIZE - 6)
+                fatal ("Bad padding packet length at %llu: %d",
+                       rtell (ptr), data_length);
+        } else {
+            copy (SECT_SIZE);
+        }
+
+        if (wptr == wbuf + WBUF_SIZE)
+            flush ();
     }
 
-    if (wptr == wbuf + WBUF_SIZE)
-      flush ();
-  }
-
-  flush ();
+    flush ();
 }
 
 
@@ -718,124 +669,118 @@ void k9vamps::vap_trailer (int length)
 // not to be copied are counted. This is to forecast the video
 // vaporization factor in case the user specified a PS shrink factor.
 // returns GOP length in bytes
-int k9vamps::vap_phase1 (void)
-{
-  uchar *ptr, *viptr = vibuf;
-  int    seq_length, id, data_length, opt_length, seqhdr;
+int k9vamps::vap_phase1 (void) {
+    uchar *ptr, *viptr = vibuf;
+    int    seq_length, id, data_length, opt_length, seqhdr;
 
-  for (seq_length = 0;
-       !lock (seq_length + SECT_SIZE); seq_length += SECT_SIZE)
-  {
-    ptr = rptr + seq_length;
-    check_pack (ptr);
+    for (seq_length = 0;
+            !lock (seq_length + SECT_SIZE); seq_length += SECT_SIZE) {
+        ptr = rptr + seq_length;
+        check_pack (ptr);
 
-    // avoid duplicate counts for sequence headers
-    if (seq_length)
-      total_packs++;
+        // avoid duplicate counts for sequence headers
+        if (seq_length)
+            total_packs++;
 
-    ptr += 14;
-    id   = ptr [3];
+        ptr += 14;
+        id   = ptr [3];
 
-    //fprintf (stderr, "id=%02x\n", id);
+        //fprintf (stderr, "id=%02x\n", id);
 
-    switch (id)
-    {
-      case 0xe0:
-	// video
-	seqhdr = check_video_packet (ptr);
+        switch (id) {
+        case 0xe0:
+            // video
+            seqhdr = check_video_packet (ptr);
 
-	if (seq_length)
-	{
-	  video_packs++;
+            if (seq_length) {
+                video_packs++;
 
-	  if (seqhdr)
-	  {
-	    sequence_headers++;
-	    vilen = viptr - vibuf;
+                if (seqhdr) {
+                    sequence_headers++;
+                    vilen = viptr - vibuf;
 
-	    return seq_length;
-	  }
-	}
+                    return seq_length;
+                }
+            }
 
-	// copy contained video ES fragment to vibuf
-	data_length  = ptr [4] << 8;
-	data_length |= ptr [5];
-	opt_length   = 3 + ptr [8];
-	data_length -= opt_length;
+            // copy contained video ES fragment to vibuf
+            data_length  = ptr [4] << 8;
+            data_length |= ptr [5];
+            opt_length   = 3 + ptr [8];
+            data_length -= opt_length;
 
-	if ((viptr - vibuf) + data_length > vbuf_size - 3)
-	{
-	  // reallocate video buffers
-	  int i = viptr - vibuf;
+            if ((viptr - vibuf) + data_length > vbuf_size - 3) {
+                // reallocate video buffers
+                int i = viptr - vibuf;
 
-	  // grow by another VBUF_SIZE bytes
-	  vbuf_size += VBUF_SIZE;
-	  vibuf      = (uchar*)realloc (vibuf, vbuf_size);
-	  vobuf      = (uchar*)realloc (vobuf, vbuf_size);
+                // grow by another VBUF_SIZE bytes
+                vbuf_size += VBUF_SIZE;
+                vibuf      = (uchar*)realloc (vibuf, vbuf_size);
+                vobuf      = (uchar*)realloc (vobuf, vbuf_size);
 
-	  if (vibuf == NULL || vobuf == NULL)
-	    fatal ("Reallocation of video buffers failed");
+                if (vibuf == NULL || vobuf == NULL)
+                    fatal ("Reallocation of video buffers failed");
 
-	  viptr = vibuf + i;
-	}
+                viptr = vibuf + i;
+            }
 
-	//fprintf (stderr, "data_length=%d\n", data_length);
-	tc_memcpy (viptr, ptr + 6 + opt_length, data_length);
-	viptr += data_length;
-	break;
+            //fprintf (stderr, "data_length=%d\n", data_length);
+            tc_memcpy (viptr, ptr + 6 + opt_length, data_length);
+            viptr += data_length;
+            break;
 
-      case 0xbd:
-	// private 1: audio/subpicture
-	aux_packs++;
+        case 0xbd:
+            // private 1: audio/subpicture
+            aux_packs++;
 
-	if (!new_private_1_type (ptr))
-	  skipped_aux_packs++;
+            if (!new_private_1_type (ptr))
+                skipped_aux_packs++;
 
-	break;
+            break;
 
-      case 0xc0:
-      case 0xc1:
-      case 0xc2:
-      case 0xc3:
-      case 0xc4:
-      case 0xc5:
-      case 0xc6:
-      case 0xc7:
-	// MPEG audio
-	aux_packs++;
+        case 0xc0:
+        case 0xc1:
+        case 0xc2:
+        case 0xc3:
+        case 0xc4:
+        case 0xc5:
+        case 0xc6:
+        case 0xc7:
+            // MPEG audio
+            aux_packs++;
 
-	if (!new_mpeg_audio_id (id))
-	  skipped_aux_packs++;
+            if (!new_mpeg_audio_id (id))
+                skipped_aux_packs++;
 
-	break;
+            break;
 
-      case 0xbb:
-	// system header/private 2: PCI/DSI
-	nav_packs++;
-	break;
+        case 0xbb:
+            // system header/private 2: PCI/DSI
+            nav_packs++;
+            break;
 
-      case 0xbe:
-	// padding
-	skipped_aux_packs++;
-	data_length  = ptr [4] << 8;
-	data_length |= ptr [5];
+        case 0xbe:
+            // padding
+            skipped_aux_packs++;
+            data_length  = ptr [4] << 8;
+            data_length |= ptr [5];
 
-	if (14 + data_length != SECT_SIZE - 6)
-	  fatal ("Bad padding packet length at %llu: %d",
-		 rtell (ptr), data_length);
+            if (14 + data_length != SECT_SIZE - 6)
+                fatal ("Bad padding packet length at %llu: %d",
+                       rtell (ptr), data_length);
 
-	break;
+            break;
 
-      default:
-	fatal ("Encountered stream ID %02x at %llu, "
-	       "probably bad MPEG2 program stream", id, rtell (ptr));
+        default:
+            fatal ("Encountered stream ID %02x at %llu, "
+                   "probably bad MPEG2 program stream", id, rtell (ptr));
+        }
+
     }
 
-  }
+    eof = 1;
 
-  eof = 1;
-
-  return seq_length;
+    return seq_length;
 }
 
 
@@ -844,61 +789,58 @@ int k9vamps::vap_phase1 (void)
 // `voptr' points to first unpacketized byte in vobuf
 // `avail' specifies number of bytes remaining in vobuf
 // returns number of ES bytes in generated PES packet
-int k9vamps::gen_video_packet (uchar *ptr, uchar *voptr, int avail)
-{
-  int i, header_data_length, data_length, padding_length;
+int k9vamps::gen_video_packet (uchar *ptr, uchar *voptr, int avail) {
+    int i, header_data_length, data_length, padding_length;
 
-  // if original PES holds optional data (e.g. DTS/PTS) we must keep it
-  header_data_length = (ptr [7] & 0xc0) == 0xc0 ? ptr [8] : 0;
-  data_length        = SECT_SIZE - (14 + 6 + 3 + header_data_length);
+    // if original PES holds optional data (e.g. DTS/PTS) we must keep it
+    header_data_length = (ptr [7] & 0xc0) == 0xc0 ? ptr [8] : 0;
+    data_length        = SECT_SIZE - (14 + 6 + 3 + header_data_length);
 
-  if (avail >= data_length)
-  {
-    // write out a full video packet (usually 2025 byte)
-    tc_memcpy (ptr + 6 + 3 + header_data_length, voptr, data_length);
+    if (avail >= data_length) {
+        // write out a full video packet (usually 2025 byte)
+        tc_memcpy (ptr + 6 + 3 + header_data_length, voptr, data_length);
+        ptr [4] = (SECT_SIZE - (14 + 6)) >> 8;
+        ptr [5] = (SECT_SIZE - (14 + 6)) & 0xff;
+        ptr [8] = header_data_length;
+
+        return data_length;
+    }
+
+    if (avail < data_length - 6) {
+        // write a short video packet and a padding packet
+        tc_memcpy (ptr + 6 + 3 + header_data_length, voptr, avail);
+        ptr [4] = (3 + header_data_length + avail) >> 8;
+        ptr [5] =  3 + header_data_length + avail;
+        ptr [8] = header_data_length;
+
+        // generate padding packet
+        ptr           += 6 + 3 + header_data_length + avail;
+        padding_length = data_length - (avail + 6);
+        padding_bytes += padding_length + 6;
+        ptr [0]        = 0;
+        ptr [1]        = 0;
+        ptr [2]        = 1;
+        ptr [3]        = 0xbe;
+        ptr [4]        = padding_length >> 8;
+        ptr [5]        = padding_length;
+
+        for (i = 0; i < padding_length; i++)
+            ptr [6+i] = 0xff;
+
+        return avail;
+    }
+
+    // write a padded video packet (1 to 6 padding bytes)
+    padding_length = data_length - avail;
+    padding_bytes += padding_length;
+    memset (ptr + 6 + 3 + header_data_length, 0xff, padding_length);
+    header_data_length += padding_length;
+    tc_memcpy (ptr + 6 + 3 + header_data_length, voptr, avail);
     ptr [4] = (SECT_SIZE - (14 + 6)) >> 8;
     ptr [5] = (SECT_SIZE - (14 + 6)) & 0xff;
     ptr [8] = header_data_length;
 
-    return data_length;
-  }
-
-  if (avail < data_length - 6)
-  {
-    // write a short video packet and a padding packet
-    tc_memcpy (ptr + 6 + 3 + header_data_length, voptr, avail);
-    ptr [4] = (3 + header_data_length + avail) >> 8;
-    ptr [5] =  3 + header_data_length + avail;
-    ptr [8] = header_data_length;
-
-    // generate padding packet
-    ptr           += 6 + 3 + header_data_length + avail;
-    padding_length = data_length - (avail + 6);
-    padding_bytes += padding_length + 6;
-    ptr [0]        = 0;
-    ptr [1]        = 0;
-    ptr [2]        = 1;
-    ptr [3]        = 0xbe;
-    ptr [4]        = padding_length >> 8;
-    ptr [5]        = padding_length;
-
-    for (i = 0; i < padding_length; i++)
-      ptr [6+i] = 0xff;
-
     return avail;
-  }
-
-  // write a padded video packet (1 to 6 padding bytes)
-  padding_length = data_length - avail;
-  padding_bytes += padding_length;
-  memset (ptr + 6 + 3 + header_data_length, 0xff, padding_length);
-  header_data_length += padding_length;
-  tc_memcpy (ptr + 6 + 3 + header_data_length, voptr, avail);
-  ptr [4] = (SECT_SIZE - (14 + 6)) >> 8;
-  ptr [5] = (SECT_SIZE - (14 + 6)) & 0xff;
-  ptr [8] = header_data_length;
-
-  return avail;
 }
 
 
@@ -907,228 +849,214 @@ int k9vamps::gen_video_packet (uchar *ptr, uchar *voptr, int avail)
 // unused PS packs are skipped
 // only wanted private stream 1 and MPEG audio packs are copied
 // all nav packs are copied
-void k9vamps::vap_phase2 (int seq_length)
-{
-  int    i, id, avail, data_length;
-  uchar *ptr, *voptr = vobuf, *vohwp = vobuf + volen;
+void k9vamps::vap_phase2 (int seq_length) {
+    int    i, id, avail, data_length;
+    uchar *ptr, *voptr = vobuf, *vohwp = vobuf + volen;
 
-  for (i = 0; i < seq_length; i += SECT_SIZE)
-  {
-    ptr = rptr + 14;
-    id  = ptr [3];
+    for (i = 0; i < seq_length; i += SECT_SIZE) {
+        ptr = rptr + 14;
+        id  = ptr [3];
 
-    switch (id)
-    {
-      case 0xe0:
-	// video
-	avail = vohwp - voptr;
+        switch (id) {
+        case 0xe0:
+            // video
+            avail = vohwp - voptr;
 
-	if (avail)
-	{
-	  // still some video output data left
-	  voptr += gen_video_packet (ptr, voptr, avail);
-	  copy (SECT_SIZE);
-	}
-	else
-	{
-	  // no video output data left - skip input sector
-	  skip (SECT_SIZE);
-	  skipped_video_packs++;
-	}
+            if (avail) {
+                // still some video output data left
+                voptr += gen_video_packet (ptr, voptr, avail);
+                copy (SECT_SIZE);
+            } else {
+                // no video output data left - skip input sector
+                skip (SECT_SIZE);
+                skipped_video_packs++;
+            }
 
-	break;
+            break;
 
-      case 0xbd:
-	// private 1: audio/subpicture
-	copy_private_1 (ptr);
-	break;
+        case 0xbd:
+            // private 1: audio/subpicture
+            copy_private_1 (ptr);
+            break;
 
-      case 0xc0:
-      case 0xc1:
-      case 0xc2:
-      case 0xc3:
-      case 0xc4:
-      case 0xc5:
-      case 0xc6:
-      case 0xc7:
-	// MPEG audio
-	copy_mpeg_audio (ptr);
-	break;
+        case 0xc0:
+        case 0xc1:
+        case 0xc2:
+        case 0xc3:
+        case 0xc4:
+        case 0xc5:
+        case 0xc6:
+        case 0xc7:
+            // MPEG audio
+            copy_mpeg_audio (ptr);
+            break;
 
-      case 0xbb:
-	// system header/private 2: PCI/DSI
-	copy (SECT_SIZE);
-	break;
+        case 0xbb:
+            // system header/private 2: PCI/DSI
+            copy (SECT_SIZE);
+            break;
 
-      case 0xbe:
-	// padding
-	data_length  = ptr [4] << 8;
-	data_length |= ptr [5];
+        case 0xbe:
+            // padding
+            data_length  = ptr [4] << 8;
+            data_length |= ptr [5];
 
-	if (14 + data_length != SECT_SIZE - 6)
-	  fatal ("Bad padding packet length at %llu: %d",
-		 rtell (ptr), data_length);
+            if (14 + data_length != SECT_SIZE - 6)
+                fatal ("Bad padding packet length at %llu: %d",
+                       rtell (ptr), data_length);
 
-	break;
+            break;
 
-      default:
-	fatal ("Encountered stream ID %02x at %llu, "
-	       "probably bad MPEG2 program stream", id, rtell (ptr));
+        default:
+            fatal ("Encountered stream ID %02x at %llu, "
+                   "probably bad MPEG2 program stream", id, rtell (ptr));
+        }
+
+        if (wptr == wbuf + WBUF_SIZE)
+            // end of write buffer reached --> flush it to disk
+            flush ();
     }
-
-    if (wptr == wbuf + WBUF_SIZE)
-      // end of write buffer reached --> flush it to disk
-      flush ();
-  }
 }
 
 QString & k9vamps::geterrMsg() {
-	return m_errMsg;
+    return m_errMsg;
 }
 
 bool k9vamps::geterror() {
-	return m_error;
+    return m_error;
 }
 
 // entry point from main()
 // the requant thread already has been started
-void k9vamps::vaporize (void)
-{
-  int   seq_length;
-  float fact = vap_fact;
+void k9vamps::vaporize (void) {
+    int   seq_length;
+    float fact = vap_fact;
 
-  // process PS up to but not including first sequence header
-  vap_leader ();
+    // process PS up to but not including first sequence header
+    vap_leader ();
 
-  // just in case - maybe should spit out a warning/error here
-  if (eof)
-    return;
-
-  total_packs++;
-  nav_packs++;
-  total_packs++;
-  video_packs++;
-
-  // main loop
-  while (1)
-  {
-    // do phase 1 of vaporization
-    seq_length = vap_phase1 ();
-
+    // just in case - maybe should spit out a warning/error here
     if (eof)
-    {
-      // EOF on source PS
-      // process packs after and including last sequence header
-      vap_trailer (seq_length);
+        return;
 
-      // only exit point from main loop
-      return;
+    total_packs++;
+    nav_packs++;
+    total_packs++;
+    video_packs++;
+
+    // main loop
+    while (1) {
+        // do phase 1 of vaporization
+        seq_length = vap_phase1 ();
+
+        if (eof) {
+            // EOF on source PS
+            // process packs after and including last sequence header
+            vap_trailer (seq_length);
+
+            // only exit point from main loop
+            return;
+        }
+
+        //fprintf (stderr, "seq_length=%d\n", seq_length);
+
+        if (calc_ps_vap && vap_fact > 1.0f) {
+            // forecast video ES vaporization factor
+            // the basic formulars look like:
+            // vap_fact  = total_packs/(restpacks+vop)
+            // restpacks = total_packs-(video_packs+skipped_aux_packs)
+            // fact      = (video_packs*net-(gops*net/2+10))/(vop*net-(gops*net/2+10))
+            // net       = SECT_SIZE-(14+9)
+            // 14: pack header size
+            // 9:  PES header size
+            // 10: PTS+DTS size in PES header of sequence header
+            // You are welcome to double check everything here!
+            float vop, net;
+            net  = (float) (SECT_SIZE - (14+9));
+            vop  = video_packs + skipped_aux_packs -
+                   (float) total_packs * (1.0f-1.0f/vap_fact);
+            fact = ((float) video_packs * net -
+                    ((float) sequence_headers * net/2.0f + 10.0f)) /
+                   (vop * net - ((float) sequence_headers * net/2.0f + 10.0f));
+
+            //JMP
+            m_totfact+=fact ;
+            m_nbfact++;
+            m_avgfact=m_totfact/m_nbfact;
+
+            // requant seems to get stuck on factors < 1
+            if (fact < 1.0f)
+                fact = 1.0f;
+
+            if (verbose >= 2)
+                fprintf (stderr, "Info: Target video ES vaporization factor: %.3f\n",
+                         fact);
+        }
+
+        vin_bytes += vilen;
+
+        if (fact > 1.0f) {
+            // do requantization
+            volen = requant (vobuf, vibuf, vilen, fact);
+        } else {
+            // don't do requantization
+            tc_memcpy (vobuf, vibuf, vilen);
+            volen = vilen;
+        }
+
+        vout_bytes += volen;
+
+        // do phase 2 of vaporization
+        vap_phase2 (seq_length);
+
+        //fprintf (stderr,
+        //	       "tot=%d, vid=%d, ps1=%d, nav=%d, sv=%d, sp1=%d, fact=%.3f\n",
+        //	       total_packs, video_packs, aux_packs, nav_packs,
+        //	       skipped_video_packs, skipped_aux_packs, fact);
     }
-
-    //fprintf (stderr, "seq_length=%d\n", seq_length);
-
-    if (calc_ps_vap && vap_fact > 1.0f)
-    {
-      // forecast video ES vaporization factor
-      // the basic formulars look like:
-      // vap_fact  = total_packs/(restpacks+vop)
-      // restpacks = total_packs-(video_packs+skipped_aux_packs)
-      // fact      = (video_packs*net-(gops*net/2+10))/(vop*net-(gops*net/2+10))
-      // net       = SECT_SIZE-(14+9)
-      // 14: pack header size
-      // 9:  PES header size
-      // 10: PTS+DTS size in PES header of sequence header
-      // You are welcome to double check everything here!
-      float vop, net;
-      net  = (float) (SECT_SIZE - (14+9));
-      vop  = video_packs + skipped_aux_packs -
-	     (float) total_packs * (1.0f-1.0f/vap_fact);
-      fact = ((float) video_packs * net -
-	      ((float) sequence_headers * net/2.0f + 10.0f)) /
-	     (vop * net - ((float) sequence_headers * net/2.0f + 10.0f));
-
-    //JMP
-    m_totfact+=fact ;
-    m_nbfact++;
-    m_avgfact=m_totfact/m_nbfact;
-
-      // requant seems to get stuck on factors < 1
-      if (fact < 1.0f)
-	fact = 1.0f;
-
-      if (verbose >= 2)
-	fprintf (stderr, "Info: Target video ES vaporization factor: %.3f\n",
-		 fact);
-    }
-
-    vin_bytes += vilen;
-
-    if (fact > 1.0f)
-    {
-      // do requantization
-      volen = requant (vobuf, vibuf, vilen, fact);
-    }
-    else
-    {
-      // don't do requantization
-      tc_memcpy (vobuf, vibuf, vilen);
-      volen = vilen;
-    }
-
-    vout_bytes += volen;
-
-    // do phase 2 of vaporization
-    vap_phase2 (seq_length);
-
-    //fprintf (stderr,
-    //	       "tot=%d, vid=%d, ps1=%d, nav=%d, sv=%d, sp1=%d, fact=%.3f\n",
-    //	       total_packs, video_packs, aux_packs, nav_packs,
-    //	       skipped_video_packs, skipped_aux_packs, fact);
-  }
 }
 
 void k9vamps::abort() {
-	//fatal("vamps stopped");
-	setNoData();
-	if (m_requant !=NULL)
-		m_requant->wait();
-	if (m_bgUpdate!=NULL)
-		m_bgUpdate->wait();
+    //fatal("vamps stopped");
+    setNoData();
+    if (m_requant !=NULL)
+        m_requant->wait();
+    if (m_bgUpdate!=NULL)
+        m_bgUpdate->wait();
 }
 
 // this is a *very* sophisticated kind of error handling :-)
 void
-k9vamps::fatal (char *fmt, ...)
-{
-  char tmp[255];
-  va_list ap;
-  va_start (ap, fmt);
-  vsprintf (tmp,fmt, ap);
-  va_end (ap);
-  m_errMsg.setLatin1(tmp);
-  m_error=true;
-  if (m_requant !=NULL)
-  	m_requant->terminate();
-  if (m_bgUpdate !=NULL)
-  	m_bgUpdate->terminate();
-  terminate();
+k9vamps::fatal (char *fmt, ...) {
+    char tmp[255];
+    va_list ap;
+    va_start (ap, fmt);
+    vsprintf (tmp,fmt, ap);
+    va_end (ap);
+    m_errMsg.setLatin1(tmp);
+    m_error=true;
+    if (m_requant !=NULL)
+        m_requant->terminate();
+    if (m_bgUpdate !=NULL)
+        m_bgUpdate->terminate();
+    terminate();
 }
 
 /****************************  BACKGROUND UPDATE **********************/
 
 k9bgUpdate::k9bgUpdate(k9DVDBackup * _backup) {
-	m_backup = _backup;
+    m_backup = _backup;
 
 }
 
 void k9bgUpdate::update(uchar *_buffer,uint32_t _size) {
-	m_buffer=(uchar*)malloc(_size);
-	tc_memcpy(m_buffer,_buffer,_size);
-	m_size=_size;
-	start();
+    m_buffer=(uchar*)malloc(_size);
+    tc_memcpy(m_buffer,_buffer,_size);
+    m_size=_size;
+    start();
 }
 
 void k9bgUpdate::run() {
-	m_backup->getOutput(m_buffer,m_size);
-	free(m_buffer);
+    m_backup->getOutput(m_buffer,m_size);
+    free(m_buffer);
 }

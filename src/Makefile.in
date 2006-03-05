@@ -319,7 +319,7 @@ k9copy_final_OBJECTS = k9copy.o k9copy.all_cpp.o
 k9copy_nofinal_OBJECTS = kcddrive.$(OBJEXT) kviewmpeg2.$(OBJEXT) \
 	main.$(OBJEXT) kconfigdlg.$(OBJEXT) kburndvd.$(OBJEXT) \
 	k9copy.$(OBJEXT) k9main.$(OBJEXT) menupreview.$(OBJEXT) viewmpeg2.$(OBJEXT) configDlg.$(OBJEXT) k9mainw.$(OBJEXT)\
-k9copy.moc.o kviewmpeg2.moc.o k9main.moc.o kcddrive.moc.o 
+kviewmpeg2.moc.o k9copy.moc.o k9main.moc.o kcddrive.moc.o 
 @KDE_USE_FINAL_FALSE@k9copy_OBJECTS = $(k9copy_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@k9copy_OBJECTS = $(k9copy_final_OBJECTS)
 k9copy_DEPENDENCIES = $(top_builddir)/k9decmpeg/libk9decmpeg.la \
@@ -339,11 +339,11 @@ am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@	./$(DEPDIR)/kconfigdlg.Po ./$(DEPDIR)/kviewmpeg2.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/main.Po
 #>+ 8
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/menupreview.P $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/kviewmpeg2.moc.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P  $(DEPDIR)/k9copy.all_cpp.P ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/menupreview.P $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/kviewmpeg2.moc.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P  $(DEPDIR)/k9copy.all_cpp.P ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/kburndvd.Po ./$(DEPDIR)/kcddrive.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/kconfigdlg.Po ./$(DEPDIR)/kviewmpeg2.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/main.Po
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/menupreview.P $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/kviewmpeg2.moc.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/menupreview.P $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/kviewmpeg2.moc.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/kburndvd.Po ./$(DEPDIR)/kcddrive.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/kconfigdlg.Po ./$(DEPDIR)/kviewmpeg2.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/main.Po
@@ -672,18 +672,18 @@ uninstall-am: uninstall-kde-icons  uninstall-applnkMultimediaDATA uninstall-binP
 .NOEXPORT:
 
 #>+ 3
-k9copy.moc.cpp: $(srcdir)/k9copy.h
-	$(MOC) $(srcdir)/k9copy.h -o k9copy.moc.cpp
-
-#>+ 2
-mocs: k9copy.moc.cpp
-
-#>+ 3
 kviewmpeg2.moc.cpp: $(srcdir)/kviewmpeg2.h
 	$(MOC) $(srcdir)/kviewmpeg2.h -o kviewmpeg2.moc.cpp
 
 #>+ 2
 mocs: kviewmpeg2.moc.cpp
+
+#>+ 3
+k9copy.moc.cpp: $(srcdir)/k9copy.h
+	$(MOC) $(srcdir)/k9copy.h -o k9copy.moc.cpp
+
+#>+ 2
+mocs: k9copy.moc.cpp
 
 #>+ 3
 kburndvd.moc: $(srcdir)/kburndvd.h
@@ -708,10 +708,10 @@ mocs: kcddrive.moc.cpp
 
 #>+ 3
 clean-metasources:
-	-rm -f  k9copy.moc.cpp kviewmpeg2.moc.cpp kburndvd.moc k9main.moc.cpp kcddrive.moc.cpp
+	-rm -f  kviewmpeg2.moc.cpp k9copy.moc.cpp kburndvd.moc k9main.moc.cpp kcddrive.moc.cpp
 
 #>+ 2
-KDE_DIST=viewmpeg2.ui hi32-app-k9copy.png configDlg.ui.h configDlg.ui k9mainw.ui k9copyui.rc k9copy.lsm k9copy.desktop hi16-app-k9copy.png MainDlg.ui.h MainDlg.ui hi48-app-k9copy.png menupreview.ui 
+KDE_DIST=viewmpeg2.ui hi32-app-k9copy.png configDlg.ui.h configDlg.ui k9mainw.ui k9copyui.rc k9copy.desktop hi16-app-k9copy.png MainDlg.ui.h hi48-app-k9copy.png menupreview.ui 
 
 #>+ 7
 clean-ui:
@@ -726,17 +726,17 @@ docs-am:
 
 #>+ 13
 install-kde-icons:
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps
+	$(INSTALL_DATA) $(srcdir)/hi32-app-k9copy.png $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/k9copy.png
 	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps
 	$(INSTALL_DATA) $(srcdir)/hi16-app-k9copy.png $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/k9copy.png
 	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps
 	$(INSTALL_DATA) $(srcdir)/hi48-app-k9copy.png $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps/k9copy.png
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps
-	$(INSTALL_DATA) $(srcdir)/hi32-app-k9copy.png $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/k9copy.png
 
 uninstall-kde-icons:
+	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/k9copy.png
 	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/k9copy.png
 	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps/k9copy.png
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/k9copy.png
 
 #>+ 6
 force-reedit:
@@ -768,11 +768,11 @@ bcheck-am:
 
 
 #>+ 11
-k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/kburndvd.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp kcddrive.moc.cpp k9main.moc.cpp k9copy.moc.cpp kviewmpeg2.moc.cpp  kburndvd.moc menupreview.moc configDlg.moc viewmpeg2.moc k9mainw.moc
+k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/kburndvd.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp  kburndvd.moc menupreview.moc configDlg.moc viewmpeg2.moc k9mainw.moc
 	@echo 'creating k9copy.all_cpp.cpp ...'; \
 	rm -f k9copy.all_cpp.files k9copy.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> k9copy.all_cpp.final; \
-	for file in kcddrive.cpp kviewmpeg2.cpp main.cpp kconfigdlg.cpp kburndvd.cpp k9copy.cpp k9main.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp kcddrive.moc.cpp k9main.moc.cpp k9copy.moc.cpp kviewmpeg2.moc.cpp ; do \
+	for file in kcddrive.cpp kviewmpeg2.cpp main.cpp kconfigdlg.cpp kburndvd.cpp k9copy.cpp k9main.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> k9copy.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> k9copy.all_cpp.final; \
 	done; \

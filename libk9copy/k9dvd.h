@@ -88,7 +88,7 @@ public:
    * @param device input device
    * @return return code (0=ok)
    */
-  virtual int scandvd (const QString & device);
+  virtual int scandvd (const QString & device,bool _quickScan);
  
   /**
    * gets the title of the DVD

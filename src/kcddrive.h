@@ -28,6 +28,7 @@
 
 #include <qstring.h>
 #include <qstringlist.h>
+#include <qvaluelist.h>
 
 
 /**
@@ -48,7 +49,12 @@ public:
     bool canWriteDVD;
     K3bDevice::Device *getk3bDev() {return k3bDev;};
     void setk3bDev(K3bDevice::Device *_dev) {k3bDev=_dev;};
+
+    void setWriteSpeeds(const QValueList< int >& _value);
+    QValueList< int > getWriteSpeeds() const;
+	
 private:
+   QValueList <int> writeSpeeds;
    K3bDevice::Device *k3bDev;
 };
 

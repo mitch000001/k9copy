@@ -274,7 +274,7 @@ bool k9DVD::isTitleIndex(ifo_handle_t *ifo,int _vts,int _ttn) {
 
 }
 
-int k9DVD::scandvd (const QString & device) {
+int k9DVD::scandvd (const QString & device,bool _quickScan) {
     char ctitle[255];
     k9DVDChapter::setcptChapter(0);
     ifo_handle_t *ifo_zero, *ifo;
@@ -307,7 +307,9 @@ int k9DVD::scandvd (const QString & device) {
     progressDlg= new k9DVDProgress(qApp->mainWidget(),"progress",true);
     progressDlg->setpbTitleStep(0);
     progressDlg->setpbTotalStep(0);
-    progressDlg->show();
+     
+    if (!_quickScan)
+	 progressDlg->show();
     qApp->processEvents();
 
     k9DVDTitle *l_track;
@@ -482,7 +484,7 @@ int k9DVD::scandvd (const QString & device) {
                     if (i == pgc->nr_of_programs - 1)
                         next = pgc->nr_of_cells + 1;
 
-		    uint angleStart=0,angleEnd=0;
+		    int angleStart=-1,angleEnd=-1;
                     while (cell < next - 1) {
                         //using c2 otherwise the value of cell were lost
                         //int c2=cell;
@@ -501,7 +503,6 @@ int k9DVD::scandvd (const QString & device) {
 
                         l_chap->endSector= pgc->cell_playback[cell].last_sector;
                         //last sector
-                        sectors += pgc->cell_playback[cell].last_sector - pgc->cell_playback[cell].first_sector + 1;
 
                         /* Check if we're entering an angle block. (vamp_play-title) */
 			int cell2=cell;
@@ -515,19 +516,24 @@ int k9DVD::scandvd (const QString & device) {
 					chapterCell->setangleBlock(angleStart);
 				else 
 					chapterCell->setangleBlock(angleInside);
-                                if( pgc->cell_playback[ cell2 + idc ].block_mode
+                               if( pgc->cell_playback[ cell2 + idc ].block_mode
                                         == BLOCK_MODE_LAST_CELL ) {
-				    angleEnd=cell2+idc+1;
+				    angleEnd=cell2+idc;
 				    chapterCell->setangleBlock(angleEnd);
+		                    sectors += pgc->cell_playback[angleEnd].last_sector - pgc->cell_playback[angleStart].first_sector + 1;
+
                                     break;
                                 }
                             }
                         } else {
-			    if (!(cell>=angleStart  && cell <angleEnd)) {
+			    if (!(cell>=angleStart  && cell <=angleEnd)) {
 				l_chap->cells.append(new k9ChapterCell(cell,1));
+	                        sectors += pgc->cell_playback[cell].last_sector - pgc->cell_playback[cell].first_sector + 1;
+
 			    }
                         }
-			cell++;
+ 			cell++;
+
                     }
 
                     l_track->vobusize_mb += calcVobuSize(ifo,l_chap);
@@ -581,7 +587,7 @@ int k9DVD::scandvd (const QString & device) {
                         }
                     }
                 }
-                if (isTitleIndex(ifo_zero,ts,vts_ttn))
+                if (isTitleIndex(ifo_zero,ts,vts_ttn) && !_quickScan)
                     calcStreamSize(*l_track);
             }
 
@@ -596,6 +602,7 @@ int k9DVD::scandvd (const QString & device) {
     delete progressDlg;
     progressDlg=0;
     opened=true;
+    m_dvd.close();
     return 0;
 }
 
@@ -898,9 +905,10 @@ float k9DVD::getsizeSelected() {
 
 float k9DVD::getfactor(bool _withMenus,bool _streams) {
     if (_withMenus) {
+	m_dvd.openDevice(Device);
         k9CellCopyList *cellCopyList =new k9CellCopyList(&m_dvd,this);
         double factor=cellCopyList->getfactor(_withMenus,_streams);
-
+	m_dvd.close();
         return (factor);
     } else {
         float selstreams=0,vidstreams=0,l_factor;

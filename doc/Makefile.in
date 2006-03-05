@@ -264,7 +264,7 @@ KDE_LANG = en
 KDE_DOCS = k9copy
 #>- SUBDIRS = $(AUTODIRS)  
 #>+ 1
-SUBDIRS =. en
+SUBDIRS =.
 subdir = doc
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h

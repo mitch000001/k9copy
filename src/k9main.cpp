@@ -233,10 +233,12 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
                 break;
             }
         case 3: {
-                double size=getstreamSize();
-                QString c;
-                c.sprintf("%.2f mb",size);
-                p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c);
+		if ( ! mainDlg->ckQuickScan->isChecked()) {
+			double size=getstreamSize();
+			QString c;
+			c.sprintf("%.2f mb",size);
+			p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c);
+		}
                 break;
             }
         default:
@@ -337,6 +339,7 @@ void k9Main::Copy() {
         b.setUseK3b(ckK3b->isChecked());
         b.setAutoBurn(ckAutoBurn->isChecked());
         b.setvolId(dvd->getDVDTitle());
+	b.setSpeed( cbBurnSpeed->currentText());
         if (cbOutputDev->currentItem() >0) {
             kCDDrive * drive=(kCDDrive*)recorderList.at(cbOutputDev->currentItem()-1);
             b.setburnDevice(drive->device);
@@ -368,7 +371,7 @@ void k9Main::Open() {
     kCDDrive * drive=(kCDDrive*)driveList.at(cbInputDev->currentItem());
 
     dvd->close();
-    dvd->scandvd(drive->device);
+    dvd->scandvd(drive->device,ckQuickScan->isChecked());
     if (dvd->geterror()) {
         KMessageBox::error( this, dvd->geterrMsg(), i18n("Open DVD"));
         return;
@@ -786,8 +789,11 @@ void k9Main::readSettings() {
     ckMenu->setChecked(settings.readEntry("/options/keepMenus",0).toInt());
 
     ckAutoBurn->setChecked(settings.readEntry("/options/autoburn",0).toInt());
+    ckQuickScan->setChecked(settings.readEntry("/options/quickscan",0).toInt());
     sbSize->setValue(settings.readEntry("/options/dvdsize",QString("4400")).toInt());
-
+    
+     //fill the burn speed combo
+    cbOutputDevActivated( cbOutputDev->currentItem());
 }
 /** No descriptions */
 void k9Main::saveSettings() {
@@ -799,6 +805,7 @@ void k9Main::saveSettings() {
     settings.writeEntry("/options/keepMenus",(int)ckMenu->isChecked());
     settings.writeEntry("/options/autoburn",(int)ckAutoBurn->isChecked());
     settings.writeEntry("/options/dvdsize",(int)sbSize->value());
+    settings.writeEntry("/options/quickscan",(int)ckQuickScan->isChecked());
 }
 /** No descriptions */
 void k9Main::bSaveClick() {
@@ -1031,3 +1038,20 @@ void k9Main::fillLvLanguages() {
     }
 
 }
+
+ void k9Main::cbOutputDevActivated(int _index) {
+
+      if (_index==0) return;
+
+      kCDDrive * drive=(kCDDrive*)recorderList.at(_index-1);
+      QValueList <int>list=drive->getWriteSpeeds();
+      QValueList<int>::iterator it=list.begin();
+
+      cbBurnSpeed->clear();
+      cbBurnSpeed->insertItem(i18n("default"));      
+      while( it !=list.end()) {  
+	cbBurnSpeed->insertItem(QString::number((double)(*it) /1385));
+	it++;
+      }
+}
+

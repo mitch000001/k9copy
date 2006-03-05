@@ -44,6 +44,8 @@ public:
   void setAutoBurn (bool _newVal);
   void burn();
   void makeIso(QString _filename);
+
+  void setSpeed(const QString& _value) { m_speed = _value;}
   
 private:
     KProgressDialog *progress;
@@ -63,6 +65,7 @@ private:
     void burnWithK3b();
     const QString &getImageSize();
     QString imageSize;
+    QString m_speed;
 private slots: // Private slots    
     void growisoStderr();
     void growisoStdout();  

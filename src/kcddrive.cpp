@@ -24,7 +24,6 @@
    #include <sys/param.h>
 #endif
 #include <sys/mount.h>
-
 kCDDrive::kCDDrive() {
     canReadDVD=false;
     canWriteCDR=false;
@@ -37,8 +36,7 @@ kCDDrive::kCDDrive() {
 kCDDrive::~kCDDrive() {}
 
 kCDDrives::kCDDrives() {
-  dm= new K3bDevice::DeviceManager(this);
-
+    dm= new K3bDevice::DeviceManager(this);
     drives.setAutoDelete(true);
     scanDrives();
 }
@@ -123,8 +121,11 @@ void kCDDrives::scanDrives() {
 	drive->canWriteCDRW=it.current()->writesCdrw();;
 	drive->device=it.current()->devicename();
 	drive->name=it.current()->description();
+	drive->setWriteSpeeds(it.current()->determineSupportedWriteSpeeds());
 	drives.append(drive);
+	//ajouter les vitesses autorisée
 	++it;
+
   }
 
     readConfig();
@@ -138,4 +139,14 @@ int kCDDrives::count() {
 /** No descriptions */
 kCDDrive * kCDDrives::getDrive(int num) {
     return (kCDDrive *)drives.at(num);
+}
+
+
+QValueList< int > kCDDrive::getWriteSpeeds() const {
+    return writeSpeeds;
+}
+
+
+void kCDDrive::setWriteSpeeds(const QValueList< int >& _value) {
+    writeSpeeds = _value;
 }

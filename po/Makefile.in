@@ -262,7 +262,7 @@ POFILES = cs.po pt_BR.po ru.po es.po fr.po de.po en_GB.po it.po el.po pl.po
 GMOFILES = cs.gmo pt_BR.gmo ru.gmo es.gmo fr.gmo de.gmo en_GB.gmo it.gmo el.gmo pl.gmo
 
 noinst_HEADERS = en_GB.po fr.po k9copy.pot es.po it.po pt_BR.po cs.po de.po \
-			ru.po el.po pl.po
+	ru.po el.po pl.po
 
 subdir = po
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs

@@ -19,91 +19,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget" row="0" column="0">
-            <property name="name">
-                <cstring>layout3</cstring>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>lblInput_2</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Output device </string>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="0" column="1">
-                    <property name="name">
-                        <cstring>cbInputDev</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>5</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                </widget>
-                <widget class="QToolButton" row="0" column="2">
-                    <property name="name">
-                        <cstring>bDevices</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>...</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>lblInput</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Input device </string>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="1" column="1">
-                    <property name="name">
-                        <cstring>cbOutputDev</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>5</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QTabWidget" row="1" column="0">
+        <widget class="QTabWidget" row="2" column="0" rowspan="1" colspan="5">
             <property name="name">
                 <cstring>tabWidget2</cstring>
             </property>
@@ -502,7 +418,7 @@
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="QPushButton" row="0" column="4">
+                            <widget class="QPushButton" row="0" column="6">
                                 <property name="name">
                                     <cstring>bSave</cstring>
                                 </property>
@@ -521,7 +437,7 @@
                                     <string>Alt+S</string>
                                 </property>
                             </widget>
-                            <spacer row="0" column="3">
+                            <spacer row="0" column="5">
                                 <property name="name">
                                     <cstring>spacer3</cstring>
                                 </property>
@@ -554,34 +470,9 @@
                                     <string>Output directory</string>
                                 </property>
                             </widget>
-                            <widget class="KURLRequester" row="0" column="1" rowspan="1" colspan="2">
+                            <widget class="KURLRequester" row="0" column="1" rowspan="1" colspan="4">
                                 <property name="name">
                                     <cstring>urOutput</cstring>
-                                </property>
-                            </widget>
-                            <spacer row="4" column="4">
-                                <property name="name">
-                                    <cstring>spacer12</cstring>
-                                </property>
-                                <property name="orientation">
-                                    <enum>Vertical</enum>
-                                </property>
-                                <property name="sizeType">
-                                    <enum>Expanding</enum>
-                                </property>
-                                <property name="sizeHint">
-                                    <size>
-                                        <width>20</width>
-                                        <height>230</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                            <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
-                                <property name="name">
-                                    <cstring>ckAutoBurn</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>Auto burn</string>
                                 </property>
                             </widget>
                             <widget class="QLabel" row="1" column="0">
@@ -592,15 +483,7 @@
                                     <string>DVD size</string>
                                 </property>
                             </widget>
-                            <widget class="QLabel" row="1" column="2">
-                                <property name="name">
-                                    <cstring>textLabel2</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>mb</string>
-                                </property>
-                            </widget>
-                            <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
+                            <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="5">
                                 <property name="name">
                                     <cstring>ckK3b</cstring>
                                 </property>
@@ -630,10 +513,186 @@
                                     <number>4400</number>
                                 </property>
                             </widget>
+                            <spacer row="5" column="6">
+                                <property name="name">
+                                    <cstring>spacer12</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>250</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="5">
+                                <property name="name">
+                                    <cstring>ckQuickScan</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Quick scan</string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox" row="3" column="0">
+                                <property name="name">
+                                    <cstring>ckAutoBurn</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="text">
+                                    <string>Auto burn</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="2" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>textLabel2</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>mb</string>
+                                </property>
+                            </widget>
                         </grid>
                     </widget>
                 </grid>
             </widget>
+        </widget>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>lblInput_2</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Output device </string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="2">
+            <property name="name">
+                <cstring>textLabel1_3</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>@</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="4">
+            <property name="name">
+                <cstring>textLabel2_2</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>X</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>lblInput</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Input device </string>
+            </property>
+        </widget>
+        <widget class="QComboBox" row="1" column="1">
+            <property name="name">
+                <cstring>cbOutputDev</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+        </widget>
+        <widget class="QComboBox" row="0" column="1">
+            <property name="name">
+                <cstring>cbInputDev</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+        </widget>
+        <widget class="KComboBox" row="1" column="3">
+            <item>
+                <property name="text">
+                    <string>default</string>
+                </property>
+            </item>
+            <property name="name">
+                <cstring>cbBurnSpeed</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="editable">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QToolButton" row="0" column="3">
+            <property name="name">
+                <cstring>bDevices</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>...</string>
+            </property>
         </widget>
     </grid>
 </widget>
@@ -674,6 +733,12 @@
         <receiver>MainDlg</receiver>
         <slot>ckMenuClick()</slot>
     </connection>
+    <connection>
+        <sender>cbOutputDev</sender>
+        <signal>activated(int)</signal>
+        <receiver>MainDlg</receiver>
+        <slot>cbOutputDevActivated(int)</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>cbInputDev</tabstop>
@@ -692,6 +757,7 @@
     <slot>cbTitleActivated( int )</slot>
     <slot>listView1CurrentChanged( QListViewItem * )</slot>
     <slot>ckMenuClick()</slot>
+    <slot>cbOutputDevActivated(int)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
@@ -699,5 +765,7 @@
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>klineedit.h</includehint>
 </includehints>
 </UI>

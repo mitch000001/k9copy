@@ -157,6 +157,9 @@ void kBurnDVD::burnWithGrowisofs() {
 	    proc->addArgument("-use-the-force-luke=tracksize:"+getImageSize());
             proc->addArgument("-use-the-force-luke=dao:" + imageSize);
             proc->addArgument("-dvd-compat");
+	    if (m_speed !=i18n("default")) 
+	            proc->addArgument("-speed=" + m_speed);
+			
         } else {
 	    QString fileName=m_filename;
 	    if (fileName =="") 
