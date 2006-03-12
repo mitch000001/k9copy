@@ -30,11 +30,14 @@ static const char description[] =
 
 static const char version[] = "1.0.4";
 
-static KCmdLineOptions options[] =
-{
-//    { "+[URL]", I18N_NOOP( "Document to open." ), 0 },
-    KCmdLineLastOption
-};
+ static const KCmdLineOptions options[] =
+  {
+     { "input <device>", I18N_NOOP("input device"), 0 },
+     { "output <device>", I18N_NOOP("output device"), 0 },
+
+     KCmdLineLastOption // End of options.
+  };
+
 
 int main(int argc, char **argv)
 {
@@ -58,14 +61,27 @@ int main(int argc, char **argv)
     }
     else
     {
+        ac_mmtest();
+        tc_memcpy_init( 0, ac_mmflag());
+
         // no session.. just start up normally
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+ 	QString InputOptionArg( args->getOption("input"));
+ 	QString OutputOptionArg( args->getOption("output"));
+	
         k9Copy  *widget = new k9Copy;
+	if (InputOptionArg !="") {
+		widget->setInput( InputOptionArg);
+		widget->fileOpen();
+	}
+	if (OutputOptionArg !="")
+		widget->setOutput( OutputOptionArg);
+
+	if ((InputOptionArg !="") && (OutputOptionArg!="")) 
+		widget->clone( InputOptionArg,OutputOptionArg);
         widget->show();
     }
 
-    ac_mmtest();
-    tc_memcpy_init( 0, ac_mmflag());
 
     return app.exec();
 }

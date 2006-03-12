@@ -106,3 +106,16 @@ void k9Copy::changeCaption(const QString& text)
     setCaption(text);
 }
 
+void k9Copy::clone( QString _input,QString _output) {
+   show();
+   m_k9Main->Clone( _input,_output);
+}
+
+void k9Copy::setInput(QString _input) {
+  m_k9Main->setInput(_input);
+}
+
+void k9Copy::setOutput(QString _output) {
+  m_k9Main->setOutput(_output);
+}
+

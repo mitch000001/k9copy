@@ -143,7 +143,9 @@ public slots:
   virtual void          PreviewTitle();
   virtual void          Copy();
   virtual void          Open();
-
+  virtual void	   Clone(QString _input,QString _output);
+  virtual void	   setInput(QString _input);
+  virtual void 	   setOutput(QString _output);
 protected:
   /*$PROTECTED_FUNCTIONS$*/
   QObjectList items;

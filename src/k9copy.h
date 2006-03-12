@@ -31,6 +31,10 @@ public:
      */
     k9Copy();
 
+    void clone(QString _input,QString _output);
+    void setInput(QString _input);
+    void setOutput(QString _output);
+
     /**
      * Default Destructor
      */
@@ -39,11 +43,12 @@ public:
 protected:
     bool queryClose( );
 private slots:
-    void fileOpen();
     void ActionCopy();
    void ActionPlayTitle();
     void changeStatusbar(const QString& text);
     void changeCaption(const QString& text);
+public slots:
+    void fileOpen();
 
 private:
     void setupAccel();

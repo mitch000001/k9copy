@@ -1085,3 +1085,30 @@ if (result!="")
 	cbInputDev->setCurrentText(result);
 
 }
+
+void k9Main::setInput(QString _input) {
+	cbInputDev->setCurrentText(_input);
+}
+
+void k9Main::setOutput(QString _output) {
+	cbOutputDev->setCurrentItem(0);
+	for (uint i=0 ;i <recorderList.count();i++) {
+	   kCDDrive * drive=(kCDDrive*)recorderList.at(i);  
+          QString c(drive->device);
+	    qDebug ("output=" +c);
+	    if (c==_output) {
+		cbOutputDev->setCurrentItem(i+1);
+		break;
+	    }
+	}
+}
+
+ void k9Main::Clone(QString _input,QString _output) {
+	setInput(_input);
+	setOutput(_output);
+	ckMenu->setChecked(true);
+	ckQuickScan->setChecked(true);
+	Open();
+	checkAll( true);
+	Copy();
+}
