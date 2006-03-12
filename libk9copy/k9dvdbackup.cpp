@@ -283,20 +283,24 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     navRead_DSI (&dsi_pack, buffer + DSI_START_BYTE);
     currCell->vob = dsi_pack.dsi_gi.vobu_vob_idn;
     //vobu->size=1;
-
+/* JMP
     if (dsi_pack.dsi_gi.vobu_ea != 0) {
         nsectors      = 1; //dsi_pack.dsi_gi.vobu_ea;
         dsi_next_vobu = dsi_pack.vobu_sri.next_vobu;
 
         uchar *buf=(uchar*) malloc(nsectors*DVD_VIDEO_LB_LEN);
 
-        /* read VOBU */
         len = dvdfile->readBlocks ( (uint32_t) (sector + 1), nsectors, buf) +len ;
         outputFile->writeBlock((char*)buf,nsectors * DVD_VIDEO_LB_LEN);
         free(buf);
     } else {
         nsectors = 0;
     }
+*/
+   nsectors=0;
+   len=0;
+
+
     vobu->size +=nsectors;
     currCell->lastSector=currCell->startSector+ len;  //JMP *DVD_VIDEO_LB_LEN;
     // position+=DVD_VIDEO_LB_LEN + len*DVD_VIDEO_LB_LEN;
@@ -1292,7 +1296,16 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                             dsiPack.synci.a_synca[i]=0;
                         for (int i =0 ;i <32 ;i++)
                             dsiPack.synci.sp_synca[i] =0;
-
+                        // end block reference frames
+                        dsiPack.dsi_gi.vobu_1stref_ea = 0;
+                        dsiPack.dsi_gi.vobu_2ndref_ea=0;
+                        dsiPack.dsi_gi.vobu_3rdref_ea=0;
+			//JMP for tests
+			pciPack.pci_gi.vobu_s_ptm=0;
+			pciPack.pci_gi.vobu_e_ptm=0;
+			pciPack.pci_gi.vobu_se_e_ptm=0;
+			pciPack.pci_gi.e_eltm.hour = pciPack.pci_gi.e_eltm.minute =pciPack.pci_gi.e_eltm.second=0;
+			dsiPack.dsi_gi.c_eltm.hour=dsiPack.dsi_gi.c_eltm.minute=dsiPack.dsi_gi.c_eltm.second=0;
                     }
                     // mise en place des donnees modifiï¿?s dans le buffer de sortie
                     navRead_DSI((dsi_t*)(buffer + DSI_START_BYTE),(uchar*)&dsiPack);

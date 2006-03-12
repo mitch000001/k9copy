@@ -190,7 +190,7 @@ int k9DVD::get_title_name(const char* dvd_device, char* title) {
     QString c;
     if (! (filehandle = fopen(dvd_device, "r"))) {
 	c=i18n("Couldn't open %1 for title\n").arg(dvd_device);
-        setError(c );
+       // setError(c );
         strcpy(title, "unknown");
         return -1;
     }
@@ -317,14 +317,14 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     k9DVDChapter *l_chap;
     k9DVDSubtitle *l_sub;
     QString sh,sm,ss;
-
+/*
     ret = stat(device.latin1(), &dvd_stat);
     if ( ret < 0 ) {
         c=i18n("Can't find device %1\n").arg( device);
         setError(c);
         return 1;
     }
-
+*/
     m_dvd.openDevice(device);
     if( !m_dvd.opened() ) {
         c=i18n("Can't open disc %1!\n").arg(device);
