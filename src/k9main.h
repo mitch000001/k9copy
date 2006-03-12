@@ -135,6 +135,8 @@ private slots:
   virtual void          bDevicesClick();
   virtual void          bSaveClick();
   virtual void	  cbOutputDevActivated(int);
+  virtual void	  bInputOpenClick();
+  virtual void	  bInputOpenDirClick();
 
 public slots:
   /*$PUBLIC_SLOTS$*/
@@ -166,6 +168,7 @@ protected:
    void closeEvent( QCloseEvent* ce );
    void closeDVD();
    KLibFactory *m_factory;;
+   QString  getDevice(QComboBox *_combo);
 protected slots:
   /*$PROTECTED_SLOTS$*/
   void slot_progress(QString str);

@@ -33,6 +33,7 @@
 #include <kfontcombo.h>
 #include <qcolor.h>
 #include <kurlrequester.h>
+#include <kurl.h>
 #include <qdir.h>
 #include <kstandarddirs.h>
 #include <qspinbox.h>
@@ -51,7 +52,7 @@
 #include <qpainter.h>
 #include <qfont.h>
 #include <klibloader.h>
-
+#include <kdirselectdialog.h>
 k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
         : MainDlg(parent,name),pxVideo((const char **) img_video ),
         pxSound((const char **) img_sound),
@@ -77,8 +78,8 @@ pxText((const char **) img_text) {
     lbTitle->setEnabled(false);
     cbTitle->setEnabled(false);
     ckMenuClick();
-
-
+    bInputOpen->setPixmap(SmallIcon("fileopen"));
+    bInputOpenDir->setPixmap(SmallIcon("folder_open"));
 }
 
 k9DVDListItem::k9DVDListItem(QObject *DVD,ckLvItem *List,eStreamType type) {
@@ -340,7 +341,7 @@ void k9Main::Copy() {
         b.setAutoBurn(ckAutoBurn->isChecked());
         b.setvolId(dvd->getDVDTitle());
 	b.setSpeed( cbBurnSpeed->currentText());
-        if (cbOutputDev->currentItem() >0) {
+        if (cbOutputDev->currentItem() !=0) {
             kCDDrive * drive=(kCDDrive*)recorderList.at(cbOutputDev->currentItem()-1);
             b.setburnDevice(drive->device);
             closeDVD();
@@ -360,6 +361,23 @@ void k9Main::bDevicesClick() {
     readDrives();
 }
 
+QString  k9Main::getDevice(QComboBox *_combo) {
+    int index=-1;
+    for (uint i=0; i<_combo->count();i++) {
+	   QString t =_combo->text(i);
+	   if (_combo->text(i) == _combo->currentText())
+		index=i;
+    }
+    QString res="";
+    if ((index==-1) || (_combo->currentText() ==i18n("ISO Image")))
+	res=_combo->currentText();
+    else {
+	kCDDrive * drive=(kCDDrive*)driveList.at(index);
+	res=drive->device;
+   }
+   return res;
+}
+
 void k9Main::Open() {
     int i;
     k9DVDTitle * l_track;
@@ -368,10 +386,9 @@ void k9Main::Open() {
     connect(this, SIGNAL(sig_progress(QString)), this, SLOT(slot_progress(QString)));
     connect(listView1,SIGNAL(itemRenamed(QListViewItem*,int)),this,SLOT(itemRenamed(QListViewItem *,int)));
 
-    kCDDrive * drive=(kCDDrive*)driveList.at(cbInputDev->currentItem());
 
-    dvd->close();
-    dvd->scandvd(drive->device,ckQuickScan->isChecked());
+    closeDVD();
+    dvd->scandvd(getDevice(cbInputDev),ckQuickScan->isChecked());
     if (dvd->geterror()) {
         KMessageBox::error( this, dvd->geterrMsg(), i18n("Open DVD"));
         return;
@@ -830,9 +847,9 @@ void k9Main::PreviewTitle() {
     if (obj !=NULL) {
         k9DVDTitle *t=(k9DVDTitle*)obj;
 
-        kCDDrive * drive=(kCDDrive*)driveList.at(cbInputDev->currentItem());
+        //JMPkCDDrive * drive=(kCDDrive*)driveList.at(cbInputDev->currentItem());
         viewer.show();
-        viewer.open(drive->device,t);
+        viewer.open(getDevice(cbInputDev),t);
     }
 }
 
@@ -851,12 +868,12 @@ void k9Main::readDrives() {
 
     for (int i=0; i<drives.count();i++) {
         if (drives.getDrive(i)->canReadDVD) {
-            QString c(drives.getDrive(i)->name);
+            QString c(drives.getDrive(i)->name + "  ("+drives.getDrive(i)->device+")");
             cbInputDev->insertItem(c,-1);
             driveList.append(drives.getDrive(i));
         }
         if (drives.getDrive(i)->canWriteDVD) {
-            cbOutputDev->insertItem(drives.getDrive(i)->name,-1);
+            cbOutputDev->insertItem(drives.getDrive(i)->name+ "  ("+drives.getDrive(i)->device+")",-1);
             recorderList.append(drives.getDrive(i));
         }
 
@@ -1055,3 +1072,16 @@ void k9Main::fillLvLanguages() {
       }
 }
 
+ void k9Main::bInputOpenClick() {
+QString result=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Open ISO Image"));
+if (result!="")
+	cbInputDev->setCurrentText(result);
+}
+
+
+ void k9Main::bInputOpenDirClick() {
+QString result= KDirSelectDialog::selectDirectory (QDir::homeDirPath(), false, this,i18n("Open DVD folder")).path();
+if (result!="")
+	cbInputDev->setCurrentText(result);
+
+}

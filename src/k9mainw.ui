@@ -631,32 +631,6 @@
                 <string>Input device </string>
             </property>
         </widget>
-        <widget class="QComboBox" row="1" column="1">
-            <property name="name">
-                <cstring>cbOutputDev</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-        </widget>
-        <widget class="QComboBox" row="0" column="1">
-            <property name="name">
-                <cstring>cbInputDev</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-        </widget>
         <widget class="KComboBox" row="1" column="3">
             <item>
                 <property name="text">
@@ -678,20 +652,130 @@
                 <bool>true</bool>
             </property>
         </widget>
-        <widget class="QToolButton" row="0" column="3">
+        <widget class="QLayoutWidget" row="0" column="2" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>bDevices</cstring>
+                <cstring>layout1</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QToolButton">
+                    <property name="name">
+                        <cstring>bInputOpenDir</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>1</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>22</width>
+                            <height>22</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>22</width>
+                            <height>22</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QToolButton">
+                    <property name="name">
+                        <cstring>bInputOpen</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>1</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>22</width>
+                            <height>22</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>22</width>
+                            <height>22</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QToolButton">
+                    <property name="name">
+                        <cstring>bDevices</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>22</width>
+                            <height>22</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string>...</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QComboBox" row="0" column="1">
+            <property name="name">
+                <cstring>cbInputDev</cstring>
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
-                    <hsizetype>0</hsizetype>
+                    <hsizetype>5</hsizetype>
                     <vsizetype>0</vsizetype>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="text">
-                <string>...</string>
+            <property name="editable">
+                <bool>true</bool>
+            </property>
+            <property name="autoCompletion">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QComboBox" row="1" column="1">
+            <property name="name">
+                <cstring>cbOutputDev</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="editable">
+                <bool>false</bool>
+            </property>
+            <property name="autoCompletion">
+                <bool>true</bool>
             </property>
         </widget>
     </grid>
@@ -739,15 +823,34 @@
         <receiver>MainDlg</receiver>
         <slot>cbOutputDevActivated(int)</slot>
     </connection>
+    <connection>
+        <sender>bInputOpen</sender>
+        <signal>clicked()</signal>
+        <receiver>MainDlg</receiver>
+        <slot>bInputOpenClick()</slot>
+    </connection>
+    <connection>
+        <sender>bInputOpenDir</sender>
+        <signal>clicked()</signal>
+        <receiver>MainDlg</receiver>
+        <slot>bInputOpenDirClick()</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>cbInputDev</tabstop>
     <tabstop>cbOutputDev</tabstop>
+    <tabstop>cbBurnSpeed</tabstop>
     <tabstop>tabWidget2</tabstop>
     <tabstop>listView1</tabstop>
     <tabstop>cbStart</tabstop>
     <tabstop>cbTitle</tabstop>
+    <tabstop>ckMenu</tabstop>
+    <tabstop>lvLanguages</tabstop>
     <tabstop>urOutput</tabstop>
+    <tabstop>sbSize</tabstop>
+    <tabstop>ckK3b</tabstop>
+    <tabstop>ckAutoBurn</tabstop>
+    <tabstop>ckQuickScan</tabstop>
     <tabstop>bSave</tabstop>
 </tabstops>
 <slots>
@@ -758,6 +861,8 @@
     <slot>listView1CurrentChanged( QListViewItem * )</slot>
     <slot>ckMenuClick()</slot>
     <slot>cbOutputDevActivated(int)</slot>
+    <slot>bInputOpenClick()</slot>
+    <slot>bInputOpenDirClick()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
