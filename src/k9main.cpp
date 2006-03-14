@@ -53,6 +53,10 @@
 #include <qfont.h>
 #include <klibloader.h>
 #include <kdirselectdialog.h>
+#include <kio/global.h>
+#include <kio/job.h>
+#include <kio/netaccess.h>
+#include <qvaluelist.h>
 k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
         : MainDlg(parent,name),pxVideo((const char **) img_video ),
         pxSound((const char **) img_sound),
@@ -369,8 +373,19 @@ QString  k9Main::getDevice(QComboBox *_combo) {
 		index=i;
     }
     QString res="";
-    if ((index==-1) || (_combo->currentText() ==i18n("ISO Image")))
+    if ((index==-1) || (_combo->currentText() ==i18n("ISO Image"))) {
 	res=_combo->currentText();
+        KURL url=KURL::fromPathOrURL(res);
+	//KIO::mount(true,0,res,"",true);
+	KIO::UDSEntry entry;
+	if (KIO::NetAccess::stat(url,entry,0) ){
+ 		KIO::UDSEntry::iterator it;
+    		for ( it = entry.begin(); it != entry.end(); ++it ) {
+			if ( (*it).m_uds== KIO::UDS_LOCAL_PATH)
+ 				res=(*it).m_str;
+		}
+	}
+    }
     else {
 	kCDDrive * drive=(kCDDrive*)driveList.at(index);
 	res=drive->device;
@@ -1073,7 +1088,7 @@ void k9Main::fillLvLanguages() {
 }
 
  void k9Main::bInputOpenClick() {
-QString result=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Open ISO Image"));
+QString result=KFileDialog::getOpenFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Open ISO Image"));
 if (result!="")
 	cbInputDev->setCurrentText(result);
 }
