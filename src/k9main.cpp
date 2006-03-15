@@ -57,6 +57,7 @@
 #include <kio/job.h>
 #include <kio/netaccess.h>
 #include <qvaluelist.h>
+#include <kdeversion.h>
 k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
         : MainDlg(parent,name),pxVideo((const char **) img_video ),
         pxSound((const char **) img_sound),
@@ -375,6 +376,7 @@ QString  k9Main::getDevice(QComboBox *_combo) {
     QString res="";
     if ((index==-1) || (_combo->currentText() ==i18n("ISO Image"))) {
 	res=_combo->currentText();
+#if KDE_VERSION >= KDE_MAKE_VERSION(3,4,0)
         KURL url=KURL::fromPathOrURL(res);
 	//KIO::mount(true,0,res,"",true);
 	KIO::UDSEntry entry;
@@ -385,6 +387,7 @@ QString  k9Main::getDevice(QComboBox *_combo) {
  				res=(*it).m_str;
 		}
 	}
+#endif
     }
     else {
 	kCDDrive * drive=(kCDDrive*)driveList.at(index);
