@@ -111,10 +111,10 @@ static const double max_alt_table = 0.0;
 
 
 
-#define MOV_READ \
+/*#define MOV_READ \
 	mloka1 = rbuf - cbuf; if (mloka1) memmove(orbuf, cbuf, mloka1);\
 	cbuf = rbuf = orbuf; rbuf += mloka1;
-
+*/
 
 #ifdef STAT
 
@@ -2381,7 +2381,7 @@ void k9requant::initvar()
 }
 
 
-bool k9requant::lock(uint32_t x)
+bool k9requant::lock(long  x)
 {
   if (unlikely ((x) > (rbuf - cbuf)))
   {
@@ -2396,8 +2396,6 @@ bool k9requant::lock(uint32_t x)
     while (!rqt_rcnt)
     {
       condr.wait( &mutr);
-      if (rqt_stop==true)
-        return false;
     }
     cbuf       = rqt_rptr;
     rbuf =orbuf  = cbuf;
