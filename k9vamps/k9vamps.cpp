@@ -32,13 +32,14 @@
 */
 
 uint32_t k9fifo::count() {
-    if (head >queue)
-        return (INPUT_SIZE - head +queue);
-    else
-        return queue - head;
+    mutex.lock();
+    uint32_t ct=m_count;
+    mutex.unlock();
+    return (ct);
 }
 
 void k9fifo::enqueue (uchar *_buffer, uint32_t _size) {
+   mutex.lock();
     if (_size+queue > INPUT_SIZE) {
         uint32_t s1,s2;
         s1=INPUT_SIZE-queue;
@@ -48,9 +49,12 @@ void k9fifo::enqueue (uchar *_buffer, uint32_t _size) {
     } else
         tc_memcpy(array+queue,_buffer,_size);
     queue=(queue+_size) %INPUT_SIZE;
+    m_count+=_size;
+    mutex.unlock();
 }
 
 void k9fifo::dequeue(uchar *_buffer,uint32_t _size) {
+    mutex.lock();
     if ( _size+head >INPUT_SIZE) {
         uint32_t s1,s2;
         s1=INPUT_SIZE - head;
@@ -60,16 +64,16 @@ void k9fifo::dequeue(uchar *_buffer,uint32_t _size) {
     } else
         tc_memcpy(_buffer,array+head,_size);
     head =(head+_size)%INPUT_SIZE;
+    m_count -=_size;
+    mutex.unlock();
 }
 
 
 void k9vamps::addData(uchar *data,uint size) {
     while (1) {
-        if (m_fifo.freespace()>size) {
-            mutex.lock();
+        if (m_fifo.freespace()>=size) {
             m_fifo.enqueue(data,size);
             wDataReady.wakeAll();
-            mutex.unlock();
             break;
         } else
             wDataRead.wait();
@@ -78,27 +82,30 @@ void k9vamps::addData(uchar *data,uint size) {
 
 
 int k9vamps::readData(uchar * data,uint size) {
-
+    uint size2=size;
+    uint32_t readSize=0,s=0;
+    
     while (1) {
-        if(noData || (m_fifo.count() >=size)) {
+	if (m_fifo.count() >0) {
+		s=(m_fifo.count()) <size2 ? (m_fifo.count()) : size2;
+		readSize+=s;
+		size2-=s;
+		m_fifo.dequeue(data,s);
+		data+=s;
+		wDataRead.wakeAll();
+	}
+        if(noData || (m_fifo.count() >=size2)) {
             break;
         } else
             wDataReady.wait();
     }
-    mutex.lock();
-    uint32_t readSize= (m_fifo.count()) <size ? (m_fifo.count()) : size;
-
-    if (readSize>0 ) {
-        m_fifo.dequeue(data,readSize);
-        wDataRead.wakeAll();
-        mutex.unlock();
-        return readSize;
-    } else {
-        wDataRead.wakeAll();
-        mutex.unlock();
-        return 0;
-    }
-
+    s= (m_fifo.count()) <size2 ? (m_fifo.count()) : size2;
+    readSize+=s;
+    if (s>0 ) 
+        m_fifo.dequeue(data,s);
+   
+    wDataRead.wakeAll();
+    return readSize;
 }
 
 void k9vamps::addSubpicture(uint id) {
