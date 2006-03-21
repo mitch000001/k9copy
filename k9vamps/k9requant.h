@@ -273,7 +273,6 @@ private:
     void putaddrinc(int addrinc);
     int slice_init (int code);
     void mpeg2_slice ( const int code );
-    bool lock(long x);
     void initRequant();
 
 protected:

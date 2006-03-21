@@ -33,7 +33,7 @@
 #define SECT_SIZE 2048
 
 // read buffer size (4MB)
-#define RBUF_SIZE (0x2000*1024)
+#define RBUF_SIZE (0x1000*1024)
 
 // write buffer size (4MB)
 #define WBUF_SIZE (0x1000*1024)
@@ -77,7 +77,7 @@ public:
 class k9vamps:public QThread
 {
 private:
-	uchar       rbuf  [RBUF_SIZE];		// the PS read buffer
+	uchar       *rbuf;//  [RBUF_SIZE];		// the PS read buffer
 	uchar       wbuf  [WBUF_SIZE];		// the PS write buffer
 	uchar      *vibuf;			// the video ES requant input buffer
 	uchar      *vobuf;			// the video ES requant output buffer
@@ -91,6 +91,7 @@ private:
 	uint64_t      vout_bytes;			// total shrinked video ES bytes
 	uint64_t      ps_size;			// total PS size in bytes
 	uint32_t      vbuf_size;			// the video ES requant buffers' size
+	uint32_t	    rbuf_size;
 	uint32_t      vilen;				// current GOP's unshrinked vidES bytes
 	uint32_t      volen;				// current GOP's shrinked vidES bytes
 	int         total_packs;		// total no. PS packs

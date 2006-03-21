@@ -32,10 +32,7 @@
 */
 
 uint32_t k9fifo::count() {
-    mutex.lock();
-    uint32_t ct=m_count;
-    mutex.unlock();
-    return (ct);
+	return m_count;
 }
 
 void k9fifo::enqueue (uchar *_buffer, uint32_t _size) {
@@ -167,19 +164,20 @@ k9vamps::k9vamps(k9DVDBackup *dvdbackup) {
     reset();
     m_requant=NULL;
     m_bgUpdate = new k9bgUpdate(dvdbackup);
+    rbuf_size= RBUF_SIZE;
+    rbuf = (uchar*) malloc(rbuf_size);;
+
 }
 k9vamps::~k9vamps() {
     delete m_bgUpdate;
+    free (rbuf);
 }
 
 
 void k9vamps::setNoData() {
-    mutex.lock();
     noData=true;
     wDataRead.wakeAll();
     wDataReady.wakeAll();
-    mutex.unlock();
-
 }
 
 void k9vamps::run () {
@@ -240,7 +238,17 @@ int k9vamps::lock (int size) {
         rhwp = rptr + avail;
     }
 
-    n = readData(rhwp,RBUF_SIZE - avail); //read (0, rhwp, RBUF_SIZE - avail);
+    if (rbuf_size -avail <=0) {
+	uchar *buffer =(uchar*) malloc (rbuf_size+2048);
+	tc_memcpy (buffer,rbuf,rbuf_size);
+	rptr = buffer +(rptr-rbuf);
+	rhwp=buffer+(rhwp-rbuf);
+	rbuf_size+=2048;
+	free(rbuf);
+	rbuf=buffer;
+   }
+
+    n = readData(rhwp,rbuf_size - avail);
 
     if (n % SECT_SIZE)
         fatal ("Premature EOF");
