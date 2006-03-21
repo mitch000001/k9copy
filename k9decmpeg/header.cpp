@@ -24,6 +24,7 @@
 
 #include "config.h"
 #include "k9common.h"
+#include "ac.h"
 
 #include <stdlib.h>	/* defines NULL */
 #include <string.h>	/* memcmp */
@@ -331,7 +332,7 @@ static void copy_matrix (mpeg2dec_t * mpeg2dec, int index)
 {
     if (memcmp (mpeg2dec->quantizer_matrix[index],
 		mpeg2dec->new_quantizer_matrix[index], 64)) {
-	memcpy (mpeg2dec->quantizer_matrix[index],
+	tc_memcpy (mpeg2dec->quantizer_matrix[index],
 		mpeg2dec->new_quantizer_matrix[index], 64);
 	mpeg2dec->scaled[index] = -1;
     }

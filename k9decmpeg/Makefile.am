@@ -13,4 +13,4 @@ libk9decmpeg_la_SOURCES = alloc.cpp attributes.h bswap.h convert_internal.h\
 	motion_comp_mmx.cpp motion_comp_vis.cpp mpeg2convert.h mpeg2.h\
 	mpeg2_internal.h rgb.cpp rgb_mmx.cpp rgb_vis.cpp slice.cpp tendra.h\
 	uyvy.cpp video_out.h vis.h vlc.h
-INCLUDES = -I$(top_srcdir)/libk9copy
+INCLUDES = -I$(top_srcdir)/k9vamps -I$(top_srcdir)/libk9copy

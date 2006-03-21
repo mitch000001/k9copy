@@ -80,16 +80,16 @@ int kDecMPEG2::demux (uint8_t * buf, uint8_t * end, int flags)
 	if (missing > 0) {					\
 	    if (header == head_buf) {				\
 		if (missing <= end - buf) {			\
-		    memcpy (header + bytes, buf, missing);	\
+		    tc_memcpy (header + bytes, buf, missing);	\
 		    buf += missing;				\
 		    bytes = (x);				\
 		} else {					\
-		    memcpy (header + bytes, buf, end - buf);	\
+		    tc_memcpy (header + bytes, buf, end - buf);	\
 		    state_bytes = bytes + end - buf;		\
 		    return 0;					\
 		}						\
 	    } else {						\
-		memcpy (head_buf, header, bytes);		\
+		tc_memcpy (head_buf, header, bytes);		\
 		state = DEMUX_HEADER;				\
 		state_bytes = bytes;				\
 		return 0;					\
@@ -279,8 +279,8 @@ void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
     sprintf(c,"P6\n%d %d\n255\n", width, height);
     char *s;
     s= (char*) malloc((width*height*3)+strlen(c));
-    memcpy(s,c,strlen(c));
-    memcpy(s+strlen(c),buf, 3 * width *height);
+    tc_memcpy(s,c,strlen(c));
+    tc_memcpy(s+strlen(c),buf, 3 * width *height);
     pix.loadFromData((uchar*)s,strlen(c)+3*width*height);
     free(s);
     pixmapReady(pix);
