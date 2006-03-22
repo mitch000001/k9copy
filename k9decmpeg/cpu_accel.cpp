@@ -29,7 +29,7 @@
 #include "attributes.h"
 #include "mpeg2_internal.h"
 
-#ifdef ACCEL_DETECT
+#ifdef MPEG2_ACCEL_DETECT
 #ifdef ARCH_X86
 static inline uint32_t arch_accel (void)
 {
@@ -211,7 +211,7 @@ uint32_t mpeg2_detect_accel (void)
     uint32_t accel;
 
     accel = 0;
-#ifdef ACCEL_DETECT
+#ifdef MPEG2_ACCEL_DETECT
 #if defined (ARCH_X86) || defined (ARCH_PPC) || defined (ARCH_ALPHA) || defined (ARCH_SPARC)
     accel = arch_accel ();
 #endif
