@@ -34,7 +34,6 @@ static const char version[] = "1.0.4";
   {
      { "input <device>", I18N_NOOP("input device"), 0 },
      { "output <device>", I18N_NOOP("output device"), 0 },
-
      KCmdLineLastOption // End of options.
   };
 
@@ -49,7 +48,6 @@ int main(int argc, char **argv)
 
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );
-	
 
     KApplication app;
 //    kMainDlg *mainWin = 0;

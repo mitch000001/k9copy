@@ -1,5 +1,14 @@
 /* config.h.in.  Generated from configure.in by autoheader.  */
 
+/* 386 architecture */
+#undef ARCH_386
+
+/* x86 architecture */
+#undef ARCH_X86
+
+/* x86_64 architecture */
+#undef ARCH_X86_64
+
 /* Define if you have the CoreAudio API */
 #undef HAVE_COREAUDIO
 

@@ -464,7 +464,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM AWK SET_MAKE CONF_FILES CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE CPP CXX CXXFLAGS ac_ct_CXX CXXDEPMODE WOVERLOADED_VIRTUAL USE_EXCEPTIONS USE_RTTI CXXCPP NOOPT_CXXFLAGS NOOPT_CFLAGS KDE_USE_FINAL_TRUE KDE_USE_FINAL_FALSE KDE_USE_CLOSURE_TRUE KDE_USE_CLOSURE_FALSE KDE_NO_UNDEFINED KDE_USE_NMCHECK_TRUE KDE_USE_NMCHECK_FALSE EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB F77 FFLAGS ac_ct_F77 LIBTOOL KDE_PLUGIN MSGFMT GMSGFMT XGETTEXT LIBUTIL LIBCOMPAT LIBCRYPT LIBRESOLV LIB_POLL FRAMEWORK_COREAUDIO LIBSOCKET X_EXTRA_LIBS LIBUCB LIBDL X_PRE_LIBS LIB_X11 LIB_XRENDER LIBSM X_INCLUDES X_LDFLAGS x_includes x_libraries QTE_NORTTI LIB_XEXT LIBPTHREAD USE_THREADS KDE_MT_LDFLAGS KDE_MT_LIBS USER_INCLUDES USER_LDFLAGS LIBZ LIBPNG LIBJPEG qt_libraries qt_includes QT_INCLUDES QT_LDFLAGS PERL MOC UIC UIC_TR LIB_QT LIB_QPE kde_qtver KDE_EXTRA_RPATH KDE_RPATH X_RPATH kde_libraries kde_includes KDE_LDFLAGS KDE_INCLUDES all_includes all_libraries AUTODIRS include_ARTS_TRUE include_ARTS_FALSE KCONFIG_COMPILER KCFG_DEPENDENCIES DCOPIDLNG DCOPIDL DCOPIDL2CPP DCOP_DEPENDENCIES MCOPIDL ARTSCCONFIG KDECONFIG MEINPROC KDE_XSL_STYLESHEET XMLLINT kde_libs_prefix kde_libs_htmldir kde_htmldir kde_appsdir kde_icondir kde_sounddir kde_datadir kde_locale kde_confdir kde_kcfgdir kde_mimedir kde_wallpaperdir kde_bindir xdg_appsdir xdg_menudir xdg_directorydir kde_templatesdir kde_servicesdir kde_servicetypesdir kde_moduledir kdeinitdir kde_styledir kde_widgetdir LIB_KDECORE LIB_KDEUI LIB_KIO LIB_SMB LIB_KAB LIB_KABC LIB_KHTML LIB_KSPELL LIB_KPARTS LIB_KDEPRINT LIB_KUTILS LIB_KDEPIM LIB_KSYCOCA LIB_KFILE LIB_KFM TOPSUBDIRS LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AMTAR install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM AWK SET_MAKE CONF_FILES CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE CPP CXX CXXFLAGS ac_ct_CXX CXXDEPMODE WOVERLOADED_VIRTUAL USE_EXCEPTIONS USE_RTTI CXXCPP NOOPT_CXXFLAGS NOOPT_CFLAGS KDE_USE_FINAL_TRUE KDE_USE_FINAL_FALSE KDE_USE_CLOSURE_TRUE KDE_USE_CLOSURE_FALSE KDE_NO_UNDEFINED KDE_USE_NMCHECK_TRUE KDE_USE_NMCHECK_FALSE EGREP LN_S ECHO AR ac_ct_AR RANLIB ac_ct_RANLIB F77 FFLAGS ac_ct_F77 LIBTOOL KDE_PLUGIN MSGFMT GMSGFMT XGETTEXT LIBUTIL LIBCOMPAT LIBCRYPT LIBRESOLV LIB_POLL FRAMEWORK_COREAUDIO LIBSOCKET X_EXTRA_LIBS LIBUCB LIBDL X_PRE_LIBS LIB_X11 LIB_XRENDER LIBSM X_INCLUDES X_LDFLAGS x_includes x_libraries QTE_NORTTI LIB_XEXT LIBPTHREAD USE_THREADS KDE_MT_LDFLAGS KDE_MT_LIBS USER_INCLUDES USER_LDFLAGS LIBZ LIBPNG LIBJPEG qt_libraries qt_includes QT_INCLUDES QT_LDFLAGS PERL MOC UIC UIC_TR LIB_QT LIB_QPE kde_qtver KDE_EXTRA_RPATH KDE_RPATH X_RPATH kde_libraries kde_includes KDE_LDFLAGS KDE_INCLUDES all_includes all_libraries AUTODIRS include_ARTS_TRUE include_ARTS_FALSE KCONFIG_COMPILER KCFG_DEPENDENCIES DCOPIDLNG DCOPIDL DCOPIDL2CPP DCOP_DEPENDENCIES MCOPIDL ARTSCCONFIG KDECONFIG MEINPROC KDE_XSL_STYLESHEET XMLLINT kde_libs_prefix kde_libs_htmldir kde_htmldir kde_appsdir kde_icondir kde_sounddir kde_datadir kde_locale kde_confdir kde_kcfgdir kde_mimedir kde_wallpaperdir kde_bindir xdg_appsdir xdg_menudir xdg_directorydir kde_templatesdir kde_servicesdir kde_servicetypesdir kde_moduledir kdeinitdir kde_styledir kde_widgetdir LIB_KDECORE LIB_KDEUI LIB_KIO LIB_SMB LIB_KAB LIB_KABC LIB_KHTML LIB_KSPELL LIB_KPARTS LIB_KDEPRINT LIB_KUTILS LIB_KDEPIM LIB_KSYCOCA LIB_KFILE LIB_KFM ARCH_X86_TRUE ARCH_X86_FALSE ARCH_386_TRUE ARCH_386_FALSE ARCH_X86_64_TRUE ARCH_X86_64_FALSE TOPSUBDIRS LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -30931,6 +30931,88 @@ _ACEOF
 
 
 
+case "$target" in
+    i?86-* | k?-*)
+
+cat >>confdefs.h <<\_ACEOF
+#define ARCH_X86
+_ACEOF
+
+
+cat >>confdefs.h <<\_ACEOF
+#define ARCH_386
+_ACEOF
+
+        ARCH_X86=yes
+        ARCH_386=yes
+        ARCH_X86_64=no
+        ;;
+    x86_64-*)
+
+cat >>confdefs.h <<\_ACEOF
+#define ARCH_X86
+_ACEOF
+
+
+cat >>confdefs.h <<\_ACEOF
+#define ARCH_X86_64
+_ACEOF
+
+        ARCH_X86=yes
+        ARCH_386=no
+        ARCH_X86_64=yes
+        ;;
+    *)
+        ARCH_X86=no
+        ARCH_386=no
+        ARCH_X86_64=no
+        ;;
+esac
+
+echo "$as_me:$LINENO: checking for X86 architecture" >&5
+echo $ECHO_N "checking for X86 architecture... $ECHO_C" >&6
+echo "$as_me:$LINENO: result: $ARCH_X86" >&5
+echo "${ECHO_T}$ARCH_X86" >&6
+
+
+if test "$ARCH_X86" = "yes"; then
+  ARCH_X86_TRUE=
+  ARCH_X86_FALSE='#'
+else
+  ARCH_X86_TRUE='#'
+  ARCH_X86_FALSE=
+fi
+
+
+echo "$as_me:$LINENO: checking for 386 architecture" >&5
+echo $ECHO_N "checking for 386 architecture... $ECHO_C" >&6
+echo "$as_me:$LINENO: result: $ARCH_386" >&5
+echo "${ECHO_T}$ARCH_386" >&6
+
+
+if test "$ARCH_386" = "yes"; then
+  ARCH_386_TRUE=
+  ARCH_386_FALSE='#'
+else
+  ARCH_386_TRUE='#'
+  ARCH_386_FALSE=
+fi
+
+
+echo "$as_me:$LINENO: checking for X86_64 architecture" >&5
+echo $ECHO_N "checking for X86_64 architecture... $ECHO_C" >&6
+echo "$as_me:$LINENO: result: $ARCH_X86_64" >&5
+echo "${ECHO_T}$ARCH_X86_64" >&6
+
+
+if test "$ARCH_X86_64" = "yes"; then
+  ARCH_X86_64_TRUE=
+  ARCH_X86_64_FALSE='#'
+else
+  ARCH_X86_64_TRUE='#'
+  ARCH_X86_64_FALSE=
+fi
+
 
 
 DO_NOT_COMPILE="$DO_NOT_COMPILE CVS debian bsd-port admin"
@@ -31095,6 +31177,27 @@ if test -z "${include_ARTS_TRUE}" && test -z "${include_ARTS_FALSE}"; then
   { { echo "$as_me:$LINENO: error: conditional \"include_ARTS\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 echo "$as_me: error: conditional \"include_ARTS\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${ARCH_X86_TRUE}" && test -z "${ARCH_X86_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"ARCH_X86\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"ARCH_X86\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${ARCH_386_TRUE}" && test -z "${ARCH_386_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"ARCH_386\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"ARCH_386\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${ARCH_X86_64_TRUE}" && test -z "${ARCH_X86_64_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"ARCH_X86_64\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"ARCH_X86_64\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -31816,6 +31919,12 @@ s,@LIB_KDEPIM@,$LIB_KDEPIM,;t t
 s,@LIB_KSYCOCA@,$LIB_KSYCOCA,;t t
 s,@LIB_KFILE@,$LIB_KFILE,;t t
 s,@LIB_KFM@,$LIB_KFM,;t t
+s,@ARCH_X86_TRUE@,$ARCH_X86_TRUE,;t t
+s,@ARCH_X86_FALSE@,$ARCH_X86_FALSE,;t t
+s,@ARCH_386_TRUE@,$ARCH_386_TRUE,;t t
+s,@ARCH_386_FALSE@,$ARCH_386_FALSE,;t t
+s,@ARCH_X86_64_TRUE@,$ARCH_X86_64_TRUE,;t t
+s,@ARCH_X86_64_FALSE@,$ARCH_X86_64_FALSE,;t t
 s,@TOPSUBDIRS@,$TOPSUBDIRS,;t t
 s,@LIBOBJS@,$LIBOBJS,;t t
 s,@LTLIBOBJS@,$LTLIBOBJS,;t t

@@ -18,7 +18,7 @@
 #endif
 
 //exported
-int mm_flag=-1;
+ int mm_flag;
 
 /* ebx saving is necessary for PIC. gcc seems unable to see it alone */
 #define cpuid(index,eax,ebx,ecx,edx)\
@@ -140,7 +140,7 @@ static int mm_support(void)
 
 int ac_mmflag(void)
 {
-  if (mm_flag==-1) {
+  //if (mm_flag==-1) {
     mm_flag = mm_support();
 #ifdef ARCH_X86
     mm_flag |= MM_IA32ASM;
@@ -148,12 +148,13 @@ int ac_mmflag(void)
 #ifdef ARCH_X86_64
     mm_flag |= MM_AMD64ASM;
 #endif
-  }
+  //}
   return(mm_flag);
 }
 
 void ac_mmtest()
 {
+ mm_flag=-1;
   int cc=ac_mmflag();
 
   printf("(%s) available multimedia extensions:", __FILE__);

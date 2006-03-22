@@ -53,7 +53,7 @@ typedef unsigned int uint32_t;
 extern void * (*tc_memcpy)(void *, const void *, size_t);
 extern void tc_memcpy_init(int verbose, int mmflags);
 
-extern int mm_flags;
+extern int mm_flag;
 int ac_mmflag();
 void ac_mmtest();
 char *ac_mmstr(int flag, int mode);

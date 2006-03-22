@@ -239,11 +239,11 @@ int k9vamps::lock (int size) {
     }
 
     if (rbuf_size -avail <=0) {
-	uchar *buffer =(uchar*) malloc (rbuf_size+2048);
+	uchar *buffer =(uchar*) malloc (rbuf_size+20480);
 	tc_memcpy (buffer,rbuf,rbuf_size);
 	rptr = buffer +(rptr-rbuf);
 	rhwp=buffer+(rhwp-rbuf);
-	rbuf_size+=2048;
+	rbuf_size+=20480;
 	free(rbuf);
 	rbuf=buffer;
    }

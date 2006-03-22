@@ -380,6 +380,8 @@ QString  k9Main::getDevice(QComboBox *_combo) {
         KURL url=KURL::fromPathOrURL(res);
 	//KIO::mount(true,0,res,"",true);
 	KIO::UDSEntry entry;
+	//first call to mount the device
+	KIO::NetAccess::stat(KURL::fromPathOrURL(res+"/."),entry,0);
 	if (KIO::NetAccess::stat(url,entry,0) ){
  		KIO::UDSEntry::iterator it;
     		for ( it = entry.begin(); it != entry.end(); ++it ) {
