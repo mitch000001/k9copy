@@ -56,8 +56,10 @@
 #include <kio/global.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
+#include <kdiskfreesp.h>
 #include <qvaluelist.h>
 #include <kdeversion.h>
+
 k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
         : MainDlg(parent,name),pxVideo((const char **) img_video ),
         pxSound((const char **) img_sound),
@@ -318,6 +320,11 @@ void k9Main::Copy() {
 	if (filename =="")
 		return;
     }
+
+   if (getFreeSpace( urOutput->url()) <  sbSize->value()) {
+	if (KMessageBox::warningContinueCancel (this, i18n("Insuffisant disk space on %1\n%2 mb expected.").arg(urOutput->url()).arg(sbSize->value()),i18n("DVD Copy"))==KMessageBox::Cancel)
+		return;
+   }
 
     bool burn=false;
     if (ckMenu->isChecked()) {
@@ -1105,6 +1112,32 @@ if (result!="")
 	cbInputDev->setCurrentText(result);
 
 }
+
+void k9Main::fspDone() {
+	fspFinish=true;
+}
+
+ void k9Main::foundMountPoint( const QString &mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail) {
+	fspAvail=kBAvail;
+}
+
+long k9Main::getFreeSpace(const QString & _path) {
+    fspFinish=false;
+    fspAvail=0;
+   KDiskFreeSp *FreeSp=new KDiskFreeSp();;
+
+    connect(FreeSp,SIGNAL(foundMountPoint (const QString &, unsigned long , unsigned long , unsigned long )),this,SLOT(foundMountPoint (const QString &, unsigned long , unsigned long , unsigned long )));
+    connect(FreeSp,SIGNAL(done ( )),this,SLOT(fspDone ()));
+    QString mountPoint = KIO::findPathMountPoint( _path );
+    FreeSp->readDF(mountPoint);
+    do  {
+	qApp->processEvents();
+     } while (!fspFinish);
+     fspAvail/=1024;
+    return fspAvail;
+
+}
+
 
 void k9Main::setInput(QString _input) {
 	cbInputDev->setCurrentText(_input);

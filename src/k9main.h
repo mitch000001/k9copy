@@ -29,7 +29,6 @@
 #include <kfiledialog.h>
 
 
-
 enum eStreamType {SUB,AUD,VID,NONE};
 
 class LvItem : public QListViewItem
@@ -104,8 +103,6 @@ public:
 };
 
 
-
-
 class k9Main : public MainDlg
 {
   Q_OBJECT
@@ -137,6 +134,8 @@ private slots:
   virtual void	  cbOutputDevActivated(int);
   virtual void	  bInputOpenClick();
   virtual void	  bInputOpenDirClick();
+  virtual void	  foundMountPoint (const QString &mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail);
+  virtual void 	  fspDone();
 
 public slots:
   /*$PUBLIC_SLOTS$*/
@@ -166,6 +165,8 @@ protected:
   QPixmap pxText;
   kViewMPEG2 viewer;
   bool updating;
+  bool fspFinish;
+  long fspAvail;
    void fillTitleList();
    void closeEvent( QCloseEvent* ce );
    void closeDVD();
@@ -182,6 +183,7 @@ signals: // Signals
 private:
     void fillLvLanguages();
     void updateLvLang(const eStreamType streamType,const QString & lang) ;
+   long getFreeSpace(const QString & _path);
 };
 
 #endif
