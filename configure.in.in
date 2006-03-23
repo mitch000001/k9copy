@@ -13,9 +13,8 @@ case "$target" in
         ARCH_X86_64=no
         ;;
     x86_64-*)
-        AC_DEFINE([ARCH_X86],,[x86 architecture])
         AC_DEFINE([ARCH_X86_64],,[x86_64 architecture])
-        ARCH_X86=yes
+        ARCH_X86=no
         ARCH_386=no
         ARCH_X86_64=yes
         ;;
