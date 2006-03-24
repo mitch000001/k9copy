@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-12 11:15+0100\n"
+"POT-Creation-Date: 2006-03-24 14:51+0100\n"
 "PO-Revision-Date: 2006-01-03 15:59+0100\n"
 "Last-Translator: Jan Berndt <Jan.Berndt@web.de>\n"
 "Language-Team: Deutsch <de@li.org>\n"
@@ -168,13 +168,13 @@ msgstr "k9Copy - Burning DVD"
 msgid "Burning DVD"
 msgstr "DVD brennen"
 
-#: src/kburndvd.cpp:160 src/k9main.cpp:1068 debug/src/k9mainw.cpp:323
+#: src/kburndvd.cpp:160 src/k9main.cpp:1095 debug/src/k9mainw.cpp:323
 #: rc.cpp:85
 #, no-c-format
 msgid "default"
 msgstr ""
 
-#: src/kburndvd.cpp:166 src/k9main.cpp:312
+#: src/kburndvd.cpp:166 src/k9main.cpp:319
 msgid "Save image to disk"
 msgstr "Abbild auf Festplatte speichern"
 
@@ -237,71 +237,87 @@ msgstr "Fehler beim Lesen von Block %1\n"
 msgid "A DVD Backup tool for KDE"
 msgstr ""
 
-#: src/main.cpp:41
+#: src/main.cpp:35
+#, fuzzy
+msgid "input device"
+msgstr "Quelllaufwerk "
+
+#: src/main.cpp:36
+#, fuzzy
+msgid "output device"
+msgstr "Ziellaufwerk"
+
+#: src/main.cpp:43
 msgid "k9copy"
 msgstr "k9copy"
 
-#: src/main.cpp:44
+#: src/main.cpp:46
 msgid "_: NAME OF TRANSLATORS\\nYour names"
 msgstr "_: NAME OF TRANSLATORS\\nJan Berndt"
 
-#: src/main.cpp:45
+#: src/main.cpp:47
 msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
 msgstr "_: EMAIL OF TRANSLATORS\\nJan.Berndt@gmx.de"
 
-#: src/k9main.cpp:305
+#: src/k9main.cpp:312
 msgid "DVD is not opened"
 msgstr "DVD nicht geöffnet"
 
-#: src/k9main.cpp:305
+#: src/k9main.cpp:312 src/k9main.cpp:325
 msgid "DVD Copy"
 msgstr ""
 
-#: src/k9main.cpp:372 src/k9main.cpp:867
+#: src/k9main.cpp:325
+msgid ""
+"Insuffisant disk space on %1\n"
+"%2 mb expected."
+msgstr ""
+
+#: src/k9main.cpp:384 src/k9main.cpp:894
 msgid "ISO Image"
 msgstr ""
 
-#: src/k9main.cpp:393
+#: src/k9main.cpp:420
 #, fuzzy
 msgid "Open DVD"
 msgstr "&Oeffnen"
 
-#: src/k9main.cpp:412
+#: src/k9main.cpp:439
 #, fuzzy
 msgid "Titleset %1"
 msgstr "Titel %1"
 
-#: src/k9main.cpp:498
+#: src/k9main.cpp:525
 msgid "video %1 "
 msgstr ""
 
-#: src/k9main.cpp:510
+#: src/k9main.cpp:537
 msgid "audio %1 "
 msgstr ""
 
-#: src/k9main.cpp:527
+#: src/k9main.cpp:554
 #, fuzzy
 msgid "subpicture %1 "
 msgstr "Untertitel"
 
-#: src/k9main.cpp:892
+#: src/k9main.cpp:919
 msgid "Next title"
 msgstr "Nächster Titel"
 
-#: src/k9main.cpp:1037
+#: src/k9main.cpp:1064
 msgid "Audio"
 msgstr "Audio"
 
-#: src/k9main.cpp:1048
+#: src/k9main.cpp:1075
 #, fuzzy
 msgid "Subtitles"
 msgstr "kDVDSubtitle"
 
-#: src/k9main.cpp:1076
+#: src/k9main.cpp:1103
 msgid "Open ISO Image"
 msgstr ""
 
-#: src/k9main.cpp:1083
+#: src/k9main.cpp:1110
 #, fuzzy
 msgid "Open DVD folder"
 msgstr "&Oeffnen"

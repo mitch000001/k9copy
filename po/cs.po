@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: k9copy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-12 11:15+0100\n"
+"POT-Creation-Date: 2006-03-24 14:51+0100\n"
 "PO-Revision-Date: 2006-01-17 06:03+0100\n"
 "Last-Translator: Zdeněk Štěpúánek <zdenek@gavanet.org>\n"
 "Language-Team:  <cs@li.org>\n"
@@ -168,13 +168,13 @@ msgstr "k9copy - Vypalování DVD"
 msgid "Burning DVD"
 msgstr "Vypalování DVD"
 
-#: src/kburndvd.cpp:160 src/k9main.cpp:1068 debug/src/k9mainw.cpp:323
+#: src/kburndvd.cpp:160 src/k9main.cpp:1095 debug/src/k9mainw.cpp:323
 #: rc.cpp:85
 #, no-c-format
 msgid "default"
 msgstr ""
 
-#: src/kburndvd.cpp:166 src/k9main.cpp:312
+#: src/kburndvd.cpp:166 src/k9main.cpp:319
 msgid "Save image to disk"
 msgstr "Uložit obraz na disk"
 
@@ -232,69 +232,85 @@ msgstr "Chyba při čtení bloku %1\n"
 msgid "A DVD Backup tool for KDE"
 msgstr ""
 
-#: src/main.cpp:41
+#: src/main.cpp:35
+#, fuzzy
+msgid "input device"
+msgstr "Vstupní zařízení"
+
+#: src/main.cpp:36
+#, fuzzy
+msgid "output device"
+msgstr "Výstupní zařízení"
+
+#: src/main.cpp:43
 msgid "k9copy"
 msgstr "k9Copy"
 
-#: src/main.cpp:44
+#: src/main.cpp:46
 msgid "_: NAME OF TRANSLATORS\\nYour names"
 msgstr "Zdeněk Štěpánek"
 
-#: src/main.cpp:45
+#: src/main.cpp:47
 msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
 msgstr "zdenek@gavanet.org"
 
-#: src/k9main.cpp:305
+#: src/k9main.cpp:312
 msgid "DVD is not opened"
 msgstr "DVD není otevřeno"
 
-#: src/k9main.cpp:305
+#: src/k9main.cpp:312 src/k9main.cpp:325
 msgid "DVD Copy"
 msgstr "Kopírování DVD"
 
-#: src/k9main.cpp:372 src/k9main.cpp:867
+#: src/k9main.cpp:325
+msgid ""
+"Insuffisant disk space on %1\n"
+"%2 mb expected."
+msgstr ""
+
+#: src/k9main.cpp:384 src/k9main.cpp:894
 msgid "ISO Image"
 msgstr "ISO obraz"
 
-#: src/k9main.cpp:393
+#: src/k9main.cpp:420
 msgid "Open DVD"
 msgstr "Otevřít DVD"
 
-#: src/k9main.cpp:412
+#: src/k9main.cpp:439
 msgid "Titleset %1"
 msgstr "Seznam stop %1"
 
-#: src/k9main.cpp:498
+#: src/k9main.cpp:525
 #, fuzzy
 msgid "video %1 "
 msgstr "zvuk %1 "
 
-#: src/k9main.cpp:510
+#: src/k9main.cpp:537
 msgid "audio %1 "
 msgstr "zvuk %1 "
 
-#: src/k9main.cpp:527
+#: src/k9main.cpp:554
 msgid "subpicture %1 "
 msgstr "podobraz %1 "
 
-#: src/k9main.cpp:892
+#: src/k9main.cpp:919
 msgid "Next title"
 msgstr "Následující stopa"
 
-#: src/k9main.cpp:1037
+#: src/k9main.cpp:1064
 msgid "Audio"
 msgstr "Zvuk"
 
-#: src/k9main.cpp:1048
+#: src/k9main.cpp:1075
 msgid "Subtitles"
 msgstr "Titulky"
 
-#: src/k9main.cpp:1076
+#: src/k9main.cpp:1103
 #, fuzzy
 msgid "Open ISO Image"
 msgstr "ISO obraz"
 
-#: src/k9main.cpp:1083
+#: src/k9main.cpp:1110
 #, fuzzy
 msgid "Open DVD folder"
 msgstr "Otevřít DVD"
