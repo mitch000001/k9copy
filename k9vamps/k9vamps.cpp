@@ -122,6 +122,17 @@ void k9vamps::setVapFactor(float factor) {
 }
 
 void k9vamps::reset() {
+    bytes_read =0;
+    bytes_written=0;
+    padding_bytes=0;
+    total_packs=0;
+    video_packs=0;
+    skipped_video_packs=0;
+    aux_packs=0;
+    skipped_aux_packs=0;
+    sequence_headers=0;
+    nav_packs=0;
+
     rptr = rbuf;
     rhwp = rbuf;
     wptr =  wbuf;
@@ -149,16 +160,6 @@ void k9vamps::reset() {
 }
 
 k9vamps::k9vamps(k9DVDBackup *dvdbackup) {
-    bytes_read =0;
-    bytes_written=0;
-    padding_bytes=0;
-    total_packs=0;
-    video_packs=0;
-    skipped_video_packs=0;
-    aux_packs=0;
-    skipped_aux_packs=0;
-    sequence_headers=0;
-    nav_packs=0;
 
     m_dvdbackup=dvdbackup;
     reset();
