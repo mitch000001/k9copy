@@ -50,7 +50,7 @@ protected:
 class k9CellCopyList : public QObjectList {
 public:
     k9CellCopyList(k9DVDRead  * _dvdHandle,k9DVD *_DVD);
-    double getfactor(bool _withMenus,bool _streams);
+    double getfactor(bool _withMenus,bool _streams,uint64_t _inbytes=0,uint64_t outbytes=0);
     double gettotalSize();
     k9CellVTSList VTSList;
     ~k9CellCopyList();

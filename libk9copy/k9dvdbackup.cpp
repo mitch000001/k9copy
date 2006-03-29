@@ -275,7 +275,6 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     currCell->oldLastSector=_cell->lastSector;
     k9Vobu * vobu=currCell->addVobu(sector);
     vobu->empty=true;
-    //JMP currCell->addNewVobus((char*)buffer,DVD_VIDEO_LB_LEN,m_position,currVOB,outputFile->at());
     currCell->addNewVobus((char*)buffer,DVD_VIDEO_LB_LEN,currCell->cellList->getPosition(),currVOB,outputFile->at());
     outputFile->writeBlock((char*)buffer,DVD_VIDEO_LB_LEN);
 
@@ -310,6 +309,8 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
 
     dvdfile->close();
     backupDlg->setProgressTotal(len+1);
+    m_outbytes+=DVD_VIDEO_LB_LEN;
+    m_inbytes+=DVD_VIDEO_LB_LEN;
 }
 
 
@@ -319,12 +320,15 @@ void k9DVDBackup::getOutput(uchar * buffer, uint32_t buflen) {
     mutex.lock();
      backupDlg->playMovie(buffer,buflen);
      mutex.unlock();
+
+    m_outbytes+=buflen;
+
     uchar *temp =buffer;
     QString sName;
     if ((buflen %2048) !=0)
         qDebug("getOutput, buffer :" +QString::number(buflen));
     uint end=0;
-    ;
+    
      for (uint itemp=0;itemp<buflen;itemp+=DVD_VIDEO_LB_LEN) {
         if (buflen-itemp <DVD_VIDEO_LB_LEN)
             break;
@@ -359,12 +363,10 @@ void k9DVDBackup::getOutput(uchar * buffer, uint32_t buflen) {
                 }
             }
         } 
-//JMP        cellOut->addNewVobus((char*)(temp+itemp),DVD_VIDEO_LB_LEN,m_position,currVOB,outputFile->at());
         cellOut->addNewVobus((char*)(temp+itemp),DVD_VIDEO_LB_LEN,cellOut->cellList->getPosition() ,currVOB,outputFile->at());
         outputFile->writeBlock((char*)(temp+itemp),DVD_VIDEO_LB_LEN);
 	
         backupDlg->setProgressTotal(1);
-//JMP        m_position++;
 	cellOut->cellList->setPosition( cellOut->cellList->getPosition()+1);
         if (!m_copyMenu)
             currTS->lastSector++;
@@ -677,6 +679,7 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     /* generate an MPEG2 program stream (including nav packs) */
     wrote=false;
     vamps->addData(buf,DVD_VIDEO_LB_LEN);
+    m_inbytes+=DVD_VIDEO_LB_LEN;
 
     /* parse contained DSI pack */
     navRead_DSI (&dsi_pack, buf + DSI_START_BYTE);
@@ -693,6 +696,8 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     for (uint32_t i=0;i<nsectors ;i++) {
         vamps->addData(buf + (i*DVD_VIDEO_LB_LEN), DVD_VIDEO_LB_LEN);
     }
+    m_inbytes+=nsectors*DVD_VIDEO_LB_LEN;
+
     free(buf);
 
     mutex.lock();
@@ -1424,7 +1429,10 @@ void k9DVDBackup::execute() {
     totalSize = (totalSize >k9DVDSize::getMaxSize()) ? k9DVDSize::getMaxSize():totalSize;
 
     backupDlg->setTotalMax(totalSize);
-    double factor= cellCopyList->getfactor(true,false);
+    double factor,factor2;
+    factor=factor2= cellCopyList->getfactor(true,false);
+    m_inbytes=m_outbytes=0;
+
     int lastCell;
 
     //VTSList is sorted by size, so it is easyer to ajust the compression factor
@@ -1436,19 +1444,21 @@ void k9DVDBackup::execute() {
             k9Cell *cell=(k9Cell*)cellCopyList->at(iCell);
             if (cell->vts== VTS->getnum() && (!cell->copied)) {
                 //		currCopyCell=cell;
-                if (lastCell <iCell)
+                if (lastCell <iCell) {
                     lastCell=getLastCell( cellCopyList,iCell);
+		    //adjusting factor of compression
+		    factor2=cellCopyList->getfactor(true,false,m_inbytes,m_outbytes);
+		}
 
                 QString sFactor;
-                sFactor.sprintf("%.2f",factor);
+                sFactor.sprintf("%.2f",factor2);
                 backupDlg->setFactor(sFactor);
 
-                argFactor =  factor ;
+                argFactor =  factor2;//<factor?factor:factor2 ;
 
                 copyCell(cell->vts,cell,! cell->selected);
                 if (!error) {
                     cell->copied=true;
-                    //                    cell->newSize= currCell->getnewSize();
                 }
                 //                }
                 if (lastCell==iCell) {

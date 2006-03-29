@@ -93,6 +93,7 @@ private:
     int currVOB;
     k9Cell *currCell,*cellOut;//,*currCopyCell;
     uint32_t m_position,m_vmgSize;
+    uint64_t m_inbytes,m_outbytes;
     k9TitleSetList titleSets;
     float argFactor;
     uint64_t argSize;

@@ -630,8 +630,8 @@ k9DVDTitle* k9DVD::addTitle(k9DVDTitleset *_titleset,int id,int num,int _VTS,int
     track->indexed=_indexed;
     track->id=id;
     track->m_titleset=_titleset;
-    //JMP : à valider.
-    track->forceSelection = !_indexed;
+    //JMP : modification
+    track->forceSelection = false; // !_indexed;
 
     track->ts_nr=_VTS;
     track->pgc=_pgc;

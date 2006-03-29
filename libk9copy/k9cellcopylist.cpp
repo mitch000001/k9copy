@@ -212,7 +212,7 @@ double  k9CellCopyList::gettotalSize() {
     double  totalSize=0;
     for (uint iCell=0;iCell<count();iCell++) {
         k9Cell *cell=(k9Cell*)at(iCell);
-        if (!cell->copied) {
+//        if (!cell->copied) {
             if (cell->selected) {
                 if (cell->angleBlock==angleNone)
                     totalSize += cell->lastSector-cell->startSector;
@@ -227,8 +227,8 @@ double  k9CellCopyList::gettotalSize() {
                     totalSize += end-start;
                 }
             } else
-                totalSize += 2;
-        }
+                totalSize += 1;
+ //       }
     }
     return  (totalSize*2048);
     ;
@@ -236,7 +236,7 @@ double  k9CellCopyList::gettotalSize() {
 }
 
 
-double k9CellCopyList::getfactor(bool _withMenus,bool _streams) {
+double k9CellCopyList::getfactor(bool _withMenus,bool _streams,uint64_t _inbytes,uint64_t _outbytes) {
 
     double totalSize=gettotalSize();
 
@@ -270,10 +270,10 @@ double k9CellCopyList::getfactor(bool _withMenus,bool _streams) {
     dvdSize*=1024*1024;
 
     double factor;
-    double dvdSize2=dvdSize;
+    double dvdSize2=dvdSize-_outbytes;
     //     dvdSize2 -=menuSize;
 
-    factor=(totalSize +menuSize)/ (dvdSize2);
+    factor=(totalSize +menuSize-_inbytes)/ (dvdSize2);
 
     factor = (int)(factor*100);
     factor /=100;
