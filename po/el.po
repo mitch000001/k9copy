@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-24 14:51+0100\n"
-"PO-Revision-Date: 2006-01-19 12:56+0200\n"
+"PO-Revision-Date: 2006-03-24 19:53+0200\n"
 "Last-Translator: Spiros Georgaras <sngeorgaras@otenet.gr>\n"
 "Language-Team: Greek <i18ngr@lists.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:30 libk3bdevice/k3bdeviceglobals.cpp:132
 msgid "CD-R"
@@ -62,7 +62,7 @@ msgstr "DVD+R DL"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:53 libk3bdevice/k3bdeviceglobals.cpp:137
 msgid "Error"
-msgstr ""
+msgstr "Σφάλμα"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:63
 msgid "SAO"
@@ -154,9 +154,8 @@ msgid "Play title"
 msgstr "Αναπαραγωγή τίτλου"
 
 #: src/k9copy.cpp:73
-#, fuzzy
 msgid "Copy"
-msgstr "k9Copy"
+msgstr "Αντιγραφή"
 
 #: src/kburndvd.cpp:134
 msgid "k9Copy - Burning DVD"
@@ -170,7 +169,7 @@ msgstr "Εγγραφή DVD"
 #: rc.cpp:85
 #, no-c-format
 msgid "default"
-msgstr ""
+msgstr "προκαθορισμένο"
 
 #: src/kburndvd.cpp:166 src/k9main.cpp:319
 msgid "Save image to disk"
@@ -231,14 +230,12 @@ msgid "A DVD Backup tool for KDE"
 msgstr "Ένα εργαλείο δημιουργίας αντιγράφων ασφαλείας DVD για το KDE"
 
 #: src/main.cpp:35
-#, fuzzy
 msgid "input device"
-msgstr "Συσκευή εισόδου "
+msgstr "συσκευή εισόδου"
 
 #: src/main.cpp:36
-#, fuzzy
 msgid "output device"
-msgstr "Συσκευή εξόδου "
+msgstr "συσκευή εξόδου"
 
 #: src/main.cpp:43
 msgid "k9copy"
@@ -254,7 +251,7 @@ msgstr "Σπύρος Γεωργαράς"
 
 #: src/k9main.cpp:312
 msgid "DVD is not opened"
-msgstr "Το DVD δεν είναι ανοιχτό"
+msgstr "Το DVD δεν είναι ανοικτό"
 
 #: src/k9main.cpp:312 src/k9main.cpp:325
 msgid "DVD Copy"
@@ -265,6 +262,8 @@ msgid ""
 "Insuffisant disk space on %1\n"
 "%2 mb expected."
 msgstr ""
+"Δεν υπάρχει αρκετός χώρος στο %1\n"
+"Υπολείπεται κατά %2 ΜΒ."
 
 #: src/k9main.cpp:384 src/k9main.cpp:894
 msgid "ISO Image"
@@ -303,14 +302,12 @@ msgid "Subtitles"
 msgstr "Υπότιτλοι"
 
 #: src/k9main.cpp:1103
-#, fuzzy
 msgid "Open ISO Image"
-msgstr "Εικόνα ISO"
+msgstr "Άνοιγμα εικόνας ISO"
 
 #: src/k9main.cpp:1110
-#, fuzzy
 msgid "Open DVD folder"
-msgstr "Άνοιγμα DVD"
+msgstr "Άνοιγμα φακέλου DVD"
 
 #: libk9copy/k9dvdauthor.cpp:104 libk9copy/k9dvdauthor.cpp:244
 msgid "'%1' not selected"
@@ -318,7 +315,7 @@ msgstr "Το '%1' δεν έχει επιλεγεί"
 
 #: libk9copy/k9dvdauthor.cpp:270
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #: libk9copy/k9dvdauthor.cpp:271
 msgid "Authoring"
@@ -404,11 +401,11 @@ msgstr "Mη καθορισμένο"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Afar"
-msgstr ""
+msgstr "Αφάρ"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Abkhazian"
-msgstr ""
+msgstr "Απκαζιανά"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Afrikaans"
@@ -416,7 +413,7 @@ msgstr "Αφρικανικά"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Amharic"
-msgstr ""
+msgstr "Αμαρικανά"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Arabic"
@@ -424,11 +421,11 @@ msgstr "Αραβικά"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Assamese"
-msgstr ""
+msgstr "Ασαμίγια"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Aymara"
-msgstr ""
+msgstr "Αϊμάρα"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Azerbaijani"
@@ -436,7 +433,7 @@ msgstr "Αζερμπαϊτζανικά"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Bashkir"
-msgstr ""
+msgstr "Μπασκίρ"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Byelorussian"
@@ -448,23 +445,23 @@ msgstr "Βουλγαρικά"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Bihari"
-msgstr ""
+msgstr "Μπιχάρι"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Bislama"
-msgstr ""
+msgstr "Μπισλάμα"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Bengali; Bangla"
-msgstr ""
+msgstr "Bengali; Bangla"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Tibetan"
-msgstr ""
+msgstr "Θιβετιανά"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Breton"
-msgstr ""
+msgstr "Μπρετόν"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Catalan"
@@ -480,7 +477,7 @@ msgstr "Τσεχικά"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Welsh"
-msgstr ""
+msgstr "Ουαλικά"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Dansk"
@@ -524,7 +521,7 @@ msgstr "Περσικά"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Suomi"
-msgstr ""
+msgstr "Σουόμι"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Fiji"
@@ -536,11 +533,11 @@ msgstr "Faroese"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Francais"
-msgstr ""
+msgstr "Γαλλικά"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Frisian"
-msgstr ""
+msgstr "Φρυγικά"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Gaelic"
@@ -548,7 +545,7 @@ msgstr "Κελτικά"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Scots Gaelic"
-msgstr ""
+msgstr "Κελτικά Σκωτίας"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Galician"
@@ -564,7 +561,7 @@ msgstr "Gujarati"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Hausa"
-msgstr ""
+msgstr "Χαούζα"
 
 #: libk9copy/k9dvd.cpp:235 libk9copy/k9dvd.cpp:237
 msgid "Hebrew"
@@ -596,7 +593,7 @@ msgstr "Ινδονησιακά"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Interlingue"
-msgstr ""
+msgstr "διεθνής"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Inupiak"
@@ -611,7 +608,6 @@ msgid "Italiano"
 msgstr "1Ιταλικά"
 
 #: libk9copy/k9dvd.cpp:237
-#, fuzzy
 msgid "Inuktitut"
 msgstr "Inuktitut"
 
@@ -625,7 +621,7 @@ msgstr "Γίντις"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Javanese"
-msgstr ""
+msgstr "Ιαβανικά"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Georgian"
@@ -633,7 +629,7 @@ msgstr "Γεωργιανά"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Kazakh"
-msgstr ""
+msgstr "Κοζάκικη"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Greenlandic"
@@ -641,7 +637,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Cambodian"
-msgstr ""
+msgstr "Καμποτζίανά"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Kannada"
@@ -653,15 +649,15 @@ msgstr "Κορεάτικα"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Kashmiri"
-msgstr ""
+msgstr "Κασμιρικά"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Kurdish"
-msgstr ""
+msgstr "Κουρδικά"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Kirghiz"
-msgstr ""
+msgstr "Κιργκιζιστανά"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Latin"
@@ -669,11 +665,11 @@ msgstr "Λατινικά"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Lingala"
-msgstr ""
+msgstr "Λινγκάλα"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Laothian"
-msgstr ""
+msgstr "Λιθουανικά"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Lithuanian"
@@ -681,11 +677,11 @@ msgstr "Λιθουανικά"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Latvian, Lettish"
-msgstr ""
+msgstr "Λιθουανικά"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Malagasy"
-msgstr ""
+msgstr "Μαλαγάσι"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Maori"
@@ -696,7 +692,6 @@ msgid "Macedonian"
 msgstr "Σλαβομακεδονικά"
 
 #: libk9copy/k9dvd.cpp:241
-#, fuzzy
 msgid "Malayalam"
 msgstr "Malayalam"
 
@@ -710,11 +705,11 @@ msgstr "Μολδαβικά"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Marathi"
-msgstr ""
+msgstr "Μαράτι"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Malay"
-msgstr ""
+msgstr "Μαλαισιανά"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Maltese"
@@ -730,11 +725,11 @@ msgstr "Ναουρού"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Nepali"
-msgstr ""
+msgstr "Νεπαλικά"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Nederlands"
-msgstr ""
+msgstr "Ολανδικά"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Norsk"
@@ -742,14 +737,13 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Occitan"
-msgstr ""
+msgstr "Οκιτάν"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Oromo"
-msgstr ""
+msgstr "Ορόμο"
 
 #: libk9copy/k9dvd.cpp:244
-#, fuzzy
 msgid "Oriya"
 msgstr "Oriya"
 
@@ -771,7 +765,7 @@ msgstr "Πορτογαλικά"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Quechua"
-msgstr ""
+msgstr "Κουετσούα"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Rhaeto-Romance"
@@ -791,15 +785,15 @@ msgstr "Ρωσικά"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Kinyarwanda"
-msgstr ""
+msgstr "Κινγιαρουάντα"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Sanskrit"
-msgstr ""
+msgstr "Σανσκριτικά"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Sindhi"
-msgstr ""
+msgstr "Σίντχι"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Sangho"
@@ -811,7 +805,7 @@ msgstr "Σερβοκροάτικα"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Sinhalese"
-msgstr ""
+msgstr "Σινχαλεζικά"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Slovak"
@@ -823,15 +817,15 @@ msgstr "Σλοβενικά"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Samoan"
-msgstr ""
+msgstr "Σαμοάν"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Shona"
-msgstr ""
+msgstr "Σόνα"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Somali"
-msgstr ""
+msgstr "Σομάλι"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Albanian"
@@ -851,7 +845,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Sundanese"
-msgstr ""
+msgstr "Σουντανέζ"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Svenska"
@@ -859,15 +853,13 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Swahili"
-msgstr ""
+msgstr "Σουαχίλι"
 
 #: libk9copy/k9dvd.cpp:249
-#, fuzzy
 msgid "Tamil"
-msgstr "Tamil"
+msgstr "Ταμίλ"
 
 #: libk9copy/k9dvd.cpp:250
-#, fuzzy
 msgid "Telugu"
 msgstr "Telugu"
 
@@ -881,7 +873,7 @@ msgstr "Ταϊλανδικά"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Tigrinya"
-msgstr ""
+msgstr "Τιγρίνια"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Turkmen"
@@ -889,7 +881,7 @@ msgstr "Τουρκμενικά"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Tagalog"
-msgstr ""
+msgstr "Ταγκαλόγκ"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Setswana"
@@ -909,15 +901,15 @@ msgstr "Τσόνγκα"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Tatar"
-msgstr ""
+msgstr "Ταταρικά"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Twi"
-msgstr ""
+msgstr "Τβι"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Uighur"
-msgstr ""
+msgstr "Ουιγκούρ"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Ukrainian"
@@ -925,7 +917,7 @@ msgstr "Ουκρανικά"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Urdu"
-msgstr ""
+msgstr "Ουρντού"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Uzbek"
@@ -941,7 +933,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:253
 msgid "Wolof"
-msgstr ""
+msgstr "Ουόλοφ"
 
 #: libk9copy/k9dvd.cpp:253
 msgid "Xhosa"
@@ -949,11 +941,11 @@ msgstr "Ξόσα"
 
 #: libk9copy/k9dvd.cpp:253
 msgid "Yoruba"
-msgstr ""
+msgstr "Γιορούμπα"
 
 #: libk9copy/k9dvd.cpp:253
 msgid "Zhuang"
-msgstr ""
+msgstr "Χουάνγκ"
 
 #: libk9copy/k9dvd.cpp:254
 msgid "Chinese"
@@ -981,7 +973,7 @@ msgstr "Ανάγνωση τίτλου"
 
 #: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
 msgid "kDecMPEG2"
-msgstr ""
+msgstr "kDecMPEG2"
 
 #: debug/libk9copy/backupdlg.cpp:150 rc.cpp:131
 #, no-c-format
@@ -994,9 +986,9 @@ msgid "A&bort"
 msgstr "Εγ&κατάλειψη"
 
 #: debug/libk9copy/backupdlg.cpp:152 rc.cpp:137
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Alt+B"
-msgstr "Alt+B"
+msgstr "Alt+Κ"
 
 #: debug/libk9copy/backupdlg.cpp:153 rc.cpp:140
 #, no-c-format
@@ -1084,7 +1076,7 @@ msgstr "k9Copy - Προεπισκόπηση μενού"
 #: rc.cpp:99
 #, no-c-format
 msgid "&OK"
-msgstr ""
+msgstr "&Εντάξει"
 
 #: debug/src/viewmpeg2.cpp:631 rc.cpp:10
 #, no-c-format
@@ -1119,13 +1111,12 @@ msgstr "k9Copy - Συσκευές"
 #: debug/src/configDlg.cpp:117 rc.cpp:96
 #, no-c-format
 msgid "<b><p align=\"center\">Devices not detected by k9copy</p></b>"
-msgstr ""
-"<b><p align=\"center\">Συσκευές που δεν εντοπίστηκαν από το k9copy</p></b>"
+msgstr "<b><p align=\"center\">Συσκευές που δεν εντοπίστηκαν από το k9copy</p></b>"
 
 #: debug/src/configDlg.cpp:120 rc.cpp:103
 #, no-c-format
 msgid "&Cancel"
-msgstr ""
+msgstr "&Ακύρωση"
 
 #: debug/src/configDlg.cpp:126 rc.cpp:119
 #, no-c-format
@@ -1140,7 +1131,7 @@ msgstr "Alt+A"
 #: debug/src/configDlg.cpp:128 rc.cpp:125
 #, no-c-format
 msgid "&Remove"
-msgstr ""
+msgstr "Α&φαίρεση"
 
 #: debug/src/configDlg.cpp:129 rc.cpp:128
 #, no-c-format
@@ -1165,7 +1156,7 @@ msgstr "Γλώσσες"
 #: debug/src/k9mainw.cpp:298 rc.cpp:15
 #, no-c-format
 msgid "MainDlg"
-msgstr ""
+msgstr "MainDlg"
 
 #: debug/src/k9mainw.cpp:301 rc.cpp:27
 #, no-c-format
@@ -1200,7 +1191,7 @@ msgstr "D&VD"
 #: debug/src/k9mainw.cpp:309 rc.cpp:49
 #, no-c-format
 msgid "&Save"
-msgstr ""
+msgstr "Απο&θήκευση"
 
 #: debug/src/k9mainw.cpp:310 rc.cpp:52
 #, no-c-format
@@ -1225,7 +1216,7 @@ msgstr "Εγγραφή με το k3b"
 #: debug/src/k9mainw.cpp:314 rc.cpp:64
 #, no-c-format
 msgid "Quick scan"
-msgstr ""
+msgstr "Γρήγορη σάρωση"
 
 #: debug/src/k9mainw.cpp:315 rc.cpp:67
 #, no-c-format
@@ -1250,12 +1241,12 @@ msgstr "Συσκευή εξόδου "
 #: debug/src/k9mainw.cpp:319 rc.cpp:76
 #, no-c-format
 msgid "@"
-msgstr ""
+msgstr "@"
 
 #: debug/src/k9mainw.cpp:320 rc.cpp:79
 #, no-c-format
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: debug/src/k9mainw.cpp:321 rc.cpp:82
 #, no-c-format
@@ -1269,7 +1260,7 @@ msgstr "..."
 
 #: debug/src/kviewmpeg2.moc.cpp:34 debug/src/kviewmpeg2.moc.cpp:42
 msgid "kViewMPEG2"
-msgstr ""
+msgstr "kViewMPEG2"
 
 #: debug/src/k9copy.moc.cpp:34 debug/src/k9copy.moc.cpp:42
 msgid "k9Copy"
@@ -1281,7 +1272,7 @@ msgstr ""
 
 #: debug/src/k9main.moc.cpp:107 debug/src/k9main.moc.cpp:115
 msgid "k9Main"
-msgstr ""
+msgstr "k9Main"
 
 #: debug/src/kcddrive.moc.cpp:34 debug/src/kcddrive.moc.cpp:42
 msgid "kCDDrive"
@@ -1301,58 +1292,3 @@ msgstr "&Ενέργειες"
 msgid "Actions ToolBar"
 msgstr "Γραμμή ενεργειών"
 
-#~ msgid "A KDE KPart Application"
-#~ msgstr "Μία εφαρμογή KPart του KDE"
-
-#, fuzzy
-#~ msgid "kDVDSubtitle"
-#~ msgstr "kDVDSubtitle"
-
-#, fuzzy
-#~ msgid "kDVDChapter"
-#~ msgstr "kDVDChapter"
-
-#, fuzzy
-#~ msgid "kDVDVideoStream"
-#~ msgstr "kDVDVideoStream"
-
-#, fuzzy
-#~ msgid "kDVDAudioStream"
-#~ msgstr "kDVDAudioStream"
-
-#, fuzzy
-#~ msgid "kDVDTrack"
-#~ msgstr "kDVDTrack"
-
-#, fuzzy
-#~ msgid "kDVD"
-#~ msgstr "kDVD"
-
-#, fuzzy
-#~ msgid "kDVDProgress"
-#~ msgstr "kDVDProgress"
-
-#~ msgid "k9Copy - DVD backup"
-#~ msgstr "k9Copy - Αντίγραφο ασφαλείας DVD"
-
-#~ msgid "Display title preview"
-#~ msgstr "Προβολή προεπισκόπησης τίτλου"
-
-#~ msgid "Display selected title preview"
-#~ msgstr "Προβολή της προεπισκόπησης του επιλεγμένου τίτλου"
-
-#~ msgid "&Open"
-#~ msgstr "Άν&οιγμα"
-
-#~ msgid "Preview &Menu"
-#~ msgstr "Προεπισκόπηση &μενού"
-
-#~ msgid "Play &title"
-#~ msgstr "Αναπαραγωγή &τίτλου"
-
-#, fuzzy
-#~ msgid "kDVDAuthor"
-#~ msgstr "Σύνταξη"
-
-#~ msgid "Unable to start vamps"
-#~ msgstr "Αδύνατη η εκκίνηση του vamps"
