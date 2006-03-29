@@ -26,25 +26,23 @@
 #include "k9dvdtitle.h"
 #include "k9dvdbackup.h"
 
+#include <kselect.h>
+#include <kcombobox.h>
 #include <qtextbrowser.h>
 #include <qapplication.h>
 #include <qlistview.h>
-#include <kcolorcombo.h>
-#include <kfontcombo.h>
-#include <qcolor.h>
 #include <kurlrequester.h>
 #include <kurl.h>
 #include <qdir.h>
 #include <kstandarddirs.h>
 #include <qspinbox.h>
 #include <qstatusbar.h>
-#include <qtoolbutton.h>
+#include <kpushbutton.h>
 #include <kiconloader.h>
 #include <qaction.h>
 #include <ktoolbar.h>
 #include <qframe.h>
 #include <qcheckbox.h>
-#include <khelpmenu.h>
 #include <qmenubar.h>
 #include <qlabel.h>
 #include <qpixmap.h>
@@ -129,7 +127,6 @@ int ckLvItem::rtti() const {
 
 int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const {
     ckLvItem *litem = (ckLvItem*)i;
-    k9DVDTitle *title1,*title2;
     k9DVDTitleset *titleset1,*titleset2;
     ckLvItem *l;
     uint id,id2;

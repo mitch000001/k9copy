@@ -660,7 +660,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QToolButton">
+                <widget class="KPushButton">
                     <property name="name">
                         <cstring>bInputOpenDir</cstring>
                     </property>
@@ -688,7 +688,7 @@
                         <string></string>
                     </property>
                 </widget>
-                <widget class="QToolButton">
+                <widget class="KPushButton">
                     <property name="name">
                         <cstring>bInputOpen</cstring>
                     </property>
@@ -716,7 +716,7 @@
                         <string></string>
                     </property>
                 </widget>
-                <widget class="QToolButton">
+                <widget class="KPushButton">
                     <property name="name">
                         <cstring>bDevices</cstring>
                     </property>
@@ -729,6 +729,12 @@
                         </sizepolicy>
                     </property>
                     <property name="minimumSize">
+                        <size>
+                            <width>22</width>
+                            <height>22</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
                         <size>
                             <width>22</width>
                             <height>22</height>
@@ -872,5 +878,8 @@
     <includehint>kpushbutton.h</includehint>
     <includehint>kcombobox.h</includehint>
     <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
 </includehints>
 </UI>
