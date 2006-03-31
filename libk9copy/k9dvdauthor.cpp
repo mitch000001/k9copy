@@ -39,6 +39,10 @@
 #include <qvaluelist.h>
 #include <kstandarddirs.h>
 #include <qapplication.h>
+
+
+class k9Progress;
+
 k9DVDAuthor::k9DVDAuthor(QObject *DVDStruct,const char* name,const QStringList& args)  {
     DVD=(k9DVD*)DVDStruct;
     xml=NULL;
@@ -267,11 +271,11 @@ void k9DVDAuthor::author() {
     //nettoyage du répertoire de sortie
     clearOutput(workDir+"dvd");
 
-    progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
+    //progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
+    progress = new k9Progress(qApp->mainWidget(),"progress",true,0);
     progress->setLabelText(tr2i18n("Authoring"));
     progress->setProgress(100,100);
-    progress->show();
-    qApp->processEvents();
+    //progress->show();
     if (!cancelled && !error)
         createXML();
     if (error || cancelled)
@@ -280,28 +284,28 @@ void k9DVDAuthor::author() {
     //run dvdauthor
     if (!cancelled  && !error) {
         QString c("dvdauthor");
-        proc=new QProcess(c,0);
+        proc=progress->getProcess();//  new QProcess(c,0);
+	proc->addArgument(c);
         proc->addArgument("-x");
         proc->addArgument( locateLocal("tmp", "k9author.xml"));
         connect( proc, SIGNAL(readyReadStderr()),
                  this, SLOT(DVDAuthorStderr()) );
         connect( proc, SIGNAL(readyReadStdout()),
                  this, SLOT(DVDAuthorStdout()) );
-        connect(progress, SIGNAL(cancelled()), this, SLOT(stopProcess()));
+    //    connect(progress, SIGNAL(cancelled()), this, SLOT(stopProcess()));
+
 
         totalSize=(int)DVD->getsizeSelected();
         if (totalSize >k9DVDSize::getMaxSize())
             totalSize=k9DVDSize::getMaxSize();
         QDir dir(workDir);
         proc->setWorkingDirectory(dir);
-        if ( !proc->start() ) {
-            //QMessageBox::critical( 0, tr2i18n("authoring"), tr2i18n("Dvdauthor error :\n") + lastMsg);
+	int result=progress->execute();
+        if ( result==-1 ) {
             KMessageBox::error( 0,  tr2i18n("Dvdauthor error :\n") + lastMsg,tr2i18n("authoring"));
 
         } else {
-            while (proc->isRunning()) {
-                qApp->processEvents();
-	    }
+	    cancelled=(result==0);
             if ((proc->exitStatus()==0) && (proc->normalExit()) && !cancelled && !error) {
                 burnOk=true;
             } else {
@@ -314,7 +318,7 @@ void k9DVDAuthor::author() {
 
             }
         }
-        delete proc;
+//        delete proc;
         delete progress;
         if (!burnOk)
             error=true;
@@ -322,6 +326,8 @@ void k9DVDAuthor::author() {
 
 
 }
+
+
 /** No descriptions */
 void k9DVDAuthor::DVDAuthorStderr() {
     QString c(proc->readStderr());

@@ -25,6 +25,7 @@
 #include <qprocess.h>
 #include <klocale.h>
 
+class k9Progress;
 
 /**
 @author Jean-Michel PETIT
@@ -48,7 +49,7 @@ public:
   void setSpeed(const QString& _value) { m_speed = _value;}
   
 private:
-    KProgressDialog *progress;
+    k9Progress *progress;
     QProcess *proc;
     QProcess *proc2;
     QString volId;

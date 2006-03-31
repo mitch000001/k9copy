@@ -20,6 +20,7 @@
 
 #include "kburndvd.h"
 #include "kburndvd.moc"
+#include "k9progress.h"
 
 #include <qdir.h>
 #include <kmessagebox.h>
@@ -131,12 +132,10 @@ const QString &kBurnDVD::getImageSize() {
 
 void kBurnDVD::burnWithGrowisofs() {
 
-    progress= new KProgressDialog (qApp->mainWidget(),"progress",i18n("k9Copy - Burning DVD"),"",true);
-    progress->setLabel(i18n("Burning DVD"));
-    progress->showCancelButton(true);
-    progress->progressBar()->setTotalSteps(100);
-    progress->show();
-    qApp->processEvents();
+//    progress= new KProgressDialog (qApp->mainWidget(),"progress",i18n("k9Copy - Burning DVD"),"",true);
+    progress=new k9Progress(qApp->mainWidget(),"progress",true,0);
+    progress->setCaption(i18n("k9Copy - Burning DVD"));
+    progress->setLabelText(i18n("Burning DVD"));
     bool bok=false;
 
     int nbTry=0;
@@ -147,7 +146,8 @@ void kBurnDVD::burnWithGrowisofs() {
             c="mkisofs";
         else
             c="growisofs";
-        proc=new QProcess(c,0);
+        proc=progress->getProcess();
+	proc->addArgument(c);
 
         if (!iso) {
             proc->addArgument("-overburn");
@@ -187,14 +187,10 @@ void kBurnDVD::burnWithGrowisofs() {
                 cancelled=true;
         }
         if (!cancelled) {
-            if ( !proc->start() ) {
+	    int res=progress->execute();
+            if ( res==-1 ) {
                 KMessageBox::error( 0, i18n("Error burning DVD :\n", i18n("DVD burning")) +lastMsg);
             } else {
-                while (proc->isRunning()) {
-                    if (progress->wasCancelled())
-                        proc->tryTerminate();
-                    qApp->processEvents();
-                }
                 if (proc->exitStatus()==0) {
                     bok=true;
                     KMessageBox::information( 0, i18n("DVD Burning finished"), i18n("DVD burning") );
@@ -210,7 +206,6 @@ void kBurnDVD::burnWithGrowisofs() {
                 }
             }
         }
-        delete proc;
     }
     delete progress;
 }
@@ -227,13 +222,13 @@ void kBurnDVD::growisoStderr() {
         burnSpeed=a+b/10;
     }
     d=i18n("Burning DVD") +"\n" + i18n("Current write speed :%1 x").arg(burnSpeed);
-    progress->setLabel(d);
+    progress->setLabelText(d);
     if (c.contains("% done")) {
         pos=c.find("%");
         if (pos!=-1) {
             c=c.mid(1,pos-4);
             //progress->setLabelText(c);
-            progress->progressBar()->setProgress(c.toInt());
+            progress->setProgress(c.toInt(),100);
             qApp->processEvents();
         }
     }
@@ -244,7 +239,7 @@ void kBurnDVD::growisoStdout() {
     pos=c.find("STAT");
     if (pos!=-1) {
         c=c.mid(pos);
-        progress->setLabel(c);
+        progress->setLabelText(c);
         qApp->processEvents();
     }
 }

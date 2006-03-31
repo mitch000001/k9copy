@@ -22,6 +22,8 @@
 
 #include "k9common.h"
 #include "k9dvd.h"
+#include "k9progress.h"
+
 #include <qdom.h>
 #include <qprocess.h>
 #include <qdatastream.h>
@@ -50,7 +52,7 @@ private: // Private attributes
   QString lastMsg,totSize,inject;
   QProcess *proc;
   QString workDir;
-  QProgressDialog *progress;
+  k9Progress *progress;
   bool cancelled;
   bool error;
   bool burnDVD;
@@ -67,7 +69,6 @@ private slots: // Private slots
   /** No descriptions */
   void DVDAuthorStderr();
   void DVDAuthorStdout();
-
 
   /** No descriptions */
   void stopProcess();

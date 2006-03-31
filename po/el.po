@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-24 14:51+0100\n"
+"POT-Creation-Date: 2006-03-31 23:50+0200\n"
 "PO-Revision-Date: 2006-03-24 19:53+0200\n"
 "Last-Translator: Spiros Georgaras <sngeorgaras@otenet.gr>\n"
 "Language-Team: Greek <i18ngr@lists.hellug.gr>\n"
@@ -157,21 +157,21 @@ msgstr "Αναπαραγωγή τίτλου"
 msgid "Copy"
 msgstr "Αντιγραφή"
 
-#: src/kburndvd.cpp:134
+#: src/kburndvd.cpp:137
 msgid "k9Copy - Burning DVD"
 msgstr "k9Copy - Εγγραφή DVD"
 
-#: src/kburndvd.cpp:135 src/kburndvd.cpp:229
+#: src/kburndvd.cpp:138 src/kburndvd.cpp:224
 msgid "Burning DVD"
 msgstr "Εγγραφή DVD"
 
-#: src/kburndvd.cpp:160 src/k9main.cpp:1095 debug/src/k9mainw.cpp:323
-#: rc.cpp:85
+#: src/kburndvd.cpp:160 src/k9main.cpp:1092 src/k9mainw.cpp:324
+#: debug/src/k9mainw.cpp:324 rc.cpp:85
 #, no-c-format
 msgid "default"
 msgstr "προκαθορισμένο"
 
-#: src/kburndvd.cpp:166 src/k9main.cpp:319
+#: src/kburndvd.cpp:166 src/k9main.cpp:316
 msgid "Save image to disk"
 msgstr "Αποθήκευση εικόνας στο δίσκο"
 
@@ -179,33 +179,33 @@ msgstr "Αποθήκευση εικόνας στο δίσκο"
 msgid "Insert a recordable DVD"
 msgstr "Εισάγετε ένα εγγράψιμο DVD"
 
-#: src/kburndvd.cpp:186 src/kburndvd.cpp:207 libk9copy/k9dvdauthor.cpp:105
-#: libk9copy/k9dvdauthor.cpp:245 libk9copy/k9dvdauthor.cpp:299
-#: libk9copy/k9dvdauthor.cpp:310 libk9copy/k9dvdauthor.cpp:313
+#: src/kburndvd.cpp:186 src/kburndvd.cpp:203 libk9copy/k9dvdauthor.cpp:109
+#: libk9copy/k9dvdauthor.cpp:249 libk9copy/k9dvdauthor.cpp:306
+#: libk9copy/k9dvdauthor.cpp:315 libk9copy/k9dvdauthor.cpp:318
 msgid "authoring"
 msgstr "Σύνταξη"
 
-#: src/kburndvd.cpp:191
+#: src/kburndvd.cpp:192
 msgid "Error burning DVD :\n"
 msgstr "Σφάλμα εγγραφής DVD :\n"
 
-#: src/kburndvd.cpp:191 src/kburndvd.cpp:200
+#: src/kburndvd.cpp:192 src/kburndvd.cpp:196
 msgid "DVD burning"
 msgstr "Εγγραφή DVD"
 
-#: src/kburndvd.cpp:200
+#: src/kburndvd.cpp:196
 msgid "DVD Burning finished"
 msgstr "Η εγγραφή του DVD ολοκληρώθηκε"
 
-#: src/kburndvd.cpp:206
+#: src/kburndvd.cpp:202
 msgid "An error occured while Burning DVD: %1"
 msgstr "Παρουσιάστηκε σφάλμα κατά την εγγραφή του DVD: %1"
 
-#: src/kburndvd.cpp:206
+#: src/kburndvd.cpp:202
 msgid "Insert an other DVD"
 msgstr "Εισάγετε ένα άλλο DVD"
 
-#: src/kburndvd.cpp:229
+#: src/kburndvd.cpp:224
 msgid "Current write speed :%1 x"
 msgstr "Τρέχουσα ταχύτητα εγγραφής: %1 x"
 
@@ -249,15 +249,15 @@ msgstr "sngeorgaras@otenet.gr"
 msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
 msgstr "Σπύρος Γεωργαράς"
 
-#: src/k9main.cpp:312
+#: src/k9main.cpp:309
 msgid "DVD is not opened"
 msgstr "Το DVD δεν είναι ανοικτό"
 
-#: src/k9main.cpp:312 src/k9main.cpp:325
+#: src/k9main.cpp:309 src/k9main.cpp:322
 msgid "DVD Copy"
 msgstr "Αντιγραφή DVD"
 
-#: src/k9main.cpp:325
+#: src/k9main.cpp:322
 msgid ""
 "Insuffisant disk space on %1\n"
 "%2 mb expected."
@@ -265,76 +265,306 @@ msgstr ""
 "Δεν υπάρχει αρκετός χώρος στο %1\n"
 "Υπολείπεται κατά %2 ΜΒ."
 
-#: src/k9main.cpp:384 src/k9main.cpp:894
+#: src/k9main.cpp:381 src/k9main.cpp:891
 msgid "ISO Image"
 msgstr "Εικόνα ISO"
 
-#: src/k9main.cpp:420
+#: src/k9main.cpp:417
 msgid "Open DVD"
 msgstr "Άνοιγμα DVD"
 
-#: src/k9main.cpp:439
+#: src/k9main.cpp:436
 msgid "Titleset %1"
 msgstr "Τίτλοι %1"
 
-#: src/k9main.cpp:525
+#: src/k9main.cpp:522
 msgid "video %1 "
 msgstr "βίντεο %1 "
 
-#: src/k9main.cpp:537
+#: src/k9main.cpp:534
 msgid "audio %1 "
 msgstr "ήχος %1 "
 
-#: src/k9main.cpp:554
+#: src/k9main.cpp:551
 msgid "subpicture %1 "
 msgstr "υπότιτλος %1 "
 
-#: src/k9main.cpp:919
+#: src/k9main.cpp:916
 msgid "Next title"
 msgstr "Επόμενος τίτλος"
 
-#: src/k9main.cpp:1064
+#: src/k9main.cpp:1061
 msgid "Audio"
 msgstr "Ήχος"
 
-#: src/k9main.cpp:1075
+#: src/k9main.cpp:1072
 msgid "Subtitles"
 msgstr "Υπότιτλοι"
 
-#: src/k9main.cpp:1103
+#: src/k9main.cpp:1100
 msgid "Open ISO Image"
 msgstr "Άνοιγμα εικόνας ISO"
 
-#: src/k9main.cpp:1110
+#: src/k9main.cpp:1107
 msgid "Open DVD folder"
 msgstr "Άνοιγμα φακέλου DVD"
 
-#: libk9copy/k9dvdauthor.cpp:104 libk9copy/k9dvdauthor.cpp:244
+#: src/menupreview.cpp:1084 debug/src/menupreview.cpp:1084 rc.cpp:3
+#, no-c-format
+msgid "k9Copy - Menu Preview"
+msgstr "k9Copy - Προεπισκόπηση μενού"
+
+#: src/menupreview.cpp:1085 src/configDlg.cpp:118
+#: debug/src/menupreview.cpp:1085 debug/src/configDlg.cpp:118 rc.cpp:6
+#: rc.cpp:99
+#, no-c-format
+msgid "&OK"
+msgstr "&Εντάξει"
+
+#: src/viewmpeg2.cpp:631 debug/src/viewmpeg2.cpp:631 rc.cpp:10
+#, no-c-format
+msgid "k9Copy - Title Preview"
+msgstr "k9Copy - Προεπισκόπηση τίτλου"
+
+#: src/configDlg.cpp:62 src/configDlg.cpp:122 debug/src/configDlg.cpp:62
+#: debug/src/configDlg.cpp:122 rc.cpp:107
+#, no-c-format
+msgid "device"
+msgstr "Συσκευή"
+
+#: src/configDlg.cpp:64 src/configDlg.cpp:123 debug/src/configDlg.cpp:64
+#: debug/src/configDlg.cpp:123 rc.cpp:110
+#, no-c-format
+msgid "label"
+msgstr "Ετικέτα"
+
+#: src/configDlg.cpp:66 src/configDlg.cpp:124 debug/src/configDlg.cpp:66
+#: debug/src/configDlg.cpp:124 rc.cpp:113
+#, no-c-format
+msgid "Input"
+msgstr "Είσοδος"
+
+#: src/configDlg.cpp:68 src/configDlg.cpp:125 debug/src/configDlg.cpp:68
+#: debug/src/configDlg.cpp:125 rc.cpp:116
+#, no-c-format
+msgid "Output"
+msgstr "Έξοδος"
+
+#: src/configDlg.cpp:116 debug/src/configDlg.cpp:116 rc.cpp:93
+#, no-c-format
+msgid "k9Copy - Devices"
+msgstr "k9Copy - Συσκευές"
+
+#: src/configDlg.cpp:117 debug/src/configDlg.cpp:117 rc.cpp:96
+#, no-c-format
+msgid "<b><p align=\"center\">Devices not detected by k9copy</p></b>"
+msgstr ""
+"<b><p align=\"center\">Συσκευές που δεν εντοπίστηκαν από το k9copy</p></b>"
+
+#: src/configDlg.cpp:120 libk9copy/progress.cpp:80
+#: debug/libk9copy/progress.cpp:79 debug/src/configDlg.cpp:120 rc.cpp:103
+#: rc.cpp:163
+#, no-c-format
+msgid "&Cancel"
+msgstr "&Ακύρωση"
+
+#: src/configDlg.cpp:126 debug/src/configDlg.cpp:126 rc.cpp:119
+#, no-c-format
+msgid "&Add"
+msgstr "&Προσθήκη"
+
+#: src/configDlg.cpp:127 debug/src/configDlg.cpp:127 rc.cpp:122
+#, no-c-format
+msgid "Alt+A"
+msgstr "Alt+A"
+
+#: src/configDlg.cpp:128 debug/src/configDlg.cpp:128 rc.cpp:125
+#, no-c-format
+msgid "&Remove"
+msgstr "Α&φαίρεση"
+
+#: src/configDlg.cpp:129 debug/src/configDlg.cpp:129 rc.cpp:128
+#, no-c-format
+msgid "Alt+R"
+msgstr "Alt+R"
+
+#: src/k9mainw.cpp:50 src/k9mainw.cpp:300 debug/src/k9mainw.cpp:50
+#: debug/src/k9mainw.cpp:300 rc.cpp:21
+#, no-c-format
+msgid "Title"
+msgstr "Τίτλος"
+
+#: src/k9mainw.cpp:51 src/k9mainw.cpp:301 debug/src/k9mainw.cpp:51
+#: debug/src/k9mainw.cpp:301 rc.cpp:24
+#, no-c-format
+msgid "Size"
+msgstr "Μέγεθος"
+
+#: src/k9mainw.cpp:112 src/k9mainw.cpp:305 debug/src/k9mainw.cpp:112
+#: debug/src/k9mainw.cpp:305 rc.cpp:36
+#, no-c-format
+msgid "Languages"
+msgstr "Γλώσσες"
+
+#: src/k9mainw.cpp:299 debug/src/k9mainw.cpp:299 rc.cpp:15
+#, no-c-format
+msgid "MainDlg"
+msgstr "MainDlg"
+
+#: src/k9mainw.cpp:302 debug/src/k9mainw.cpp:302 rc.cpp:27
+#, no-c-format
+msgid "At title end"
+msgstr "Με το τέλος του τίτλου"
+
+#: src/k9mainw.cpp:303 debug/src/k9mainw.cpp:303 rc.cpp:30
+#, no-c-format
+msgid "At start"
+msgstr "Αρχή με"
+
+#: src/k9mainw.cpp:304 debug/src/k9mainw.cpp:304 rc.cpp:33
+#, no-c-format
+msgid "<b>DVD playback options</b>"
+msgstr "<b>Επιλογές αναπαραγωγής DVD</b>"
+
+#: src/k9mainw.cpp:306 debug/src/k9mainw.cpp:306 rc.cpp:39
+#, no-c-format
+msgid "&Keep original menus"
+msgstr "&Διατήρηση των αρχικών μενού"
+
+#: src/k9mainw.cpp:307 debug/src/k9mainw.cpp:307 rc.cpp:42
+#, no-c-format
+msgid "Alt+K"
+msgstr "Alt+Δ"
+
+#: src/k9mainw.cpp:308 debug/src/k9mainw.cpp:308 rc.cpp:18
+#, no-c-format
+msgid "D&VD"
+msgstr "D&VD"
+
+#: src/k9mainw.cpp:310 debug/src/k9mainw.cpp:310 rc.cpp:49
+#, no-c-format
+msgid "&Save"
+msgstr "Απο&θήκευση"
+
+#: src/k9mainw.cpp:311 debug/src/k9mainw.cpp:311 rc.cpp:52
+#, no-c-format
+msgid "Alt+S"
+msgstr "Alt+S"
+
+#: src/k9mainw.cpp:312 debug/src/k9mainw.cpp:312 rc.cpp:55
+#, no-c-format
+msgid "Output directory"
+msgstr "Κατάλογος εξόδου"
+
+#: src/k9mainw.cpp:313 debug/src/k9mainw.cpp:313 rc.cpp:58
+#, no-c-format
+msgid "DVD size"
+msgstr "Μέγεθος DVD"
+
+#: src/k9mainw.cpp:314 debug/src/k9mainw.cpp:314 rc.cpp:61
+#, no-c-format
+msgid "Burn with k3b"
+msgstr "Εγγραφή με το k3b"
+
+#: src/k9mainw.cpp:315 debug/src/k9mainw.cpp:315 rc.cpp:64
+#, no-c-format
+msgid "Quick scan"
+msgstr "Γρήγορη σάρωση"
+
+#: src/k9mainw.cpp:316 debug/src/k9mainw.cpp:316 rc.cpp:67
+#, no-c-format
+msgid "Auto burn"
+msgstr "Αυτόματη εγγραφή"
+
+#: src/k9mainw.cpp:317 debug/src/k9mainw.cpp:317 rc.cpp:70
+#, no-c-format
+msgid "mb"
+msgstr "mb"
+
+#: src/k9mainw.cpp:318 debug/src/k9mainw.cpp:318 rc.cpp:45
+#, no-c-format
+msgid "Se&ttings"
+msgstr "Ρυ&θμίσεις"
+
+#: src/k9mainw.cpp:319 debug/src/k9mainw.cpp:319 rc.cpp:73
+#, no-c-format
+msgid "Output device "
+msgstr "Συσκευή εξόδου "
+
+#: src/k9mainw.cpp:320 debug/src/k9mainw.cpp:320 rc.cpp:76
+#, no-c-format
+msgid "@"
+msgstr "@"
+
+#: src/k9mainw.cpp:321 debug/src/k9mainw.cpp:321 rc.cpp:79
+#, no-c-format
+msgid "X"
+msgstr "X"
+
+#: src/k9mainw.cpp:322 debug/src/k9mainw.cpp:322 rc.cpp:82
+#, no-c-format
+msgid "Input device "
+msgstr "Συσκευή εισόδου "
+
+#: src/k9mainw.cpp:327 debug/src/k9mainw.cpp:327 rc.cpp:90
+#, no-c-format
+msgid "..."
+msgstr "..."
+
+#: src/kviewmpeg2.moc.cpp:34 src/kviewmpeg2.moc.cpp:42
+#: debug/src/kviewmpeg2.moc.cpp:34 debug/src/kviewmpeg2.moc.cpp:42
+msgid "kViewMPEG2"
+msgstr "kViewMPEG2"
+
+#: src/k9copy.moc.cpp:34 src/k9copy.moc.cpp:42 libk9copy/progress.cpp:78
+#: debug/libk9copy/progress.cpp:77 debug/src/k9copy.moc.cpp:34
+#: debug/src/k9copy.moc.cpp:42 rc.cpp:159
+#, no-c-format
+msgid "k9Copy"
+msgstr "k9Copy"
+
+#: src/k9main.moc.cpp:34 src/k9main.moc.cpp:42 debug/src/k9main.moc.cpp:34
+#: debug/src/k9main.moc.cpp:42
+msgid "k9DVDListItem"
+msgstr ""
+
+#: src/k9main.moc.cpp:107 src/k9main.moc.cpp:115 debug/src/k9main.moc.cpp:107
+#: debug/src/k9main.moc.cpp:115
+msgid "k9Main"
+msgstr "k9Main"
+
+#: src/kcddrive.moc.cpp:34 src/kcddrive.moc.cpp:42
+#: debug/src/kcddrive.moc.cpp:34 debug/src/kcddrive.moc.cpp:42
+msgid "kCDDrive"
+msgstr ""
+
+#: src/kcddrive.moc.cpp:107 src/kcddrive.moc.cpp:115
+#: debug/src/kcddrive.moc.cpp:107 debug/src/kcddrive.moc.cpp:115
+msgid "kCDDrives"
+msgstr ""
+
+#: libk9copy/k9dvdauthor.cpp:108 libk9copy/k9dvdauthor.cpp:248
 msgid "'%1' not selected"
 msgstr "Το '%1' δεν έχει επιλεγεί"
 
-#: libk9copy/k9dvdauthor.cpp:270
-msgid "Cancel"
-msgstr "Ακύρωση"
-
-#: libk9copy/k9dvdauthor.cpp:271
+#: libk9copy/k9dvdauthor.cpp:276
 msgid "Authoring"
 msgstr "Σύνταξη"
 
-#: libk9copy/k9dvdauthor.cpp:299
+#: libk9copy/k9dvdauthor.cpp:306
 msgid "Dvdauthor error :\n"
 msgstr "Σφάλμα του Dvdauthor:\n"
 
-#: libk9copy/k9dvdauthor.cpp:310
+#: libk9copy/k9dvdauthor.cpp:315
 msgid "Authoring cancelled"
 msgstr "Η σύνταξη ακυρώθηκε"
 
-#: libk9copy/k9dvdauthor.cpp:313
+#: libk9copy/k9dvdauthor.cpp:318
 msgid "An error occured while running DVDAuthor:\n"
 msgstr "Παρουσιάστηκε ένα σφάλμα κατά την εκτέλεση του DVDAuthor:\n"
 
 #: libk9copy/k9dvdbackup.cpp:135 libk9copy/k9dvdbackup.cpp:149
-#: libk9copy/k9dvdbackup.cpp:484 libk9copy/k9dvdbackup.cpp:641
+#: libk9copy/k9dvdbackup.cpp:486 libk9copy/k9dvdbackup.cpp:643
 msgid "DVD backup cancelled"
 msgstr "Η δημιουργία αντιγράφου ασφαλείας του DVD ακυρώθηκε"
 
@@ -342,8 +572,8 @@ msgstr "Η δημιουργία αντιγράφου ασφαλείας του D
 msgid "unable to open VIDEO_TS.IFO"
 msgstr "Αδύνατο το άνοιγμα του VIDEO_TS.IFO"
 
-#: libk9copy/k9dvdbackup.cpp:184 libk9copy/k9dvdbackup.cpp:356
-#: libk9copy/k9dvdbackup.cpp:422
+#: libk9copy/k9dvdbackup.cpp:184 libk9copy/k9dvdbackup.cpp:360
+#: libk9copy/k9dvdbackup.cpp:424
 msgid "Unable to open file "
 msgstr "Αδύνατο το άνοιγμα του αρχείου "
 
@@ -351,39 +581,39 @@ msgstr "Αδύνατο το άνοιγμα του αρχείου "
 msgid "Unable to open titleset %1"
 msgstr "Αδύνατο το άνοιγμα των τίτλων %1"
 
-#: libk9copy/k9dvdbackup.cpp:259 libk9copy/k9dvdbackup.cpp:613
+#: libk9copy/k9dvdbackup.cpp:259 libk9copy/k9dvdbackup.cpp:615
 msgid "Extracting titleset %1"
 msgstr "Εξαγωγή των τίτλων %1"
 
-#: libk9copy/k9dvdbackup.cpp:429 libk9copy/k9dvdbackup.cpp:557
+#: libk9copy/k9dvdbackup.cpp:431 libk9copy/k9dvdbackup.cpp:559
 msgid "Unable to open menu for titleset %1"
 msgstr "Αδύνατο το άνοιγμα του μενού για το %1"
 
-#: libk9copy/k9dvdbackup.cpp:451 libk9copy/k9dvdbackup.cpp:564
+#: libk9copy/k9dvdbackup.cpp:453 libk9copy/k9dvdbackup.cpp:566
 msgid "Extracting menu for titleset %1"
 msgstr "Εξαγωγή μενού για τους τίτλους %1"
 
-#: libk9copy/k9dvdbackup.cpp:550
+#: libk9copy/k9dvdbackup.cpp:552
 msgid "Unable to open "
 msgstr "Αδύνατο το άνοιγμα του "
 
-#: libk9copy/k9dvdbackup.cpp:605
+#: libk9copy/k9dvdbackup.cpp:607
 msgid "Unable to open ifo file for titleset %1"
 msgstr "Αδύνατο το άνοιγμα του αρχείου ifo για τους τίτλους %1"
 
-#: libk9copy/k9dvdbackup.cpp:617 libk9copy/k9dvdbackup.cpp:1415
+#: libk9copy/k9dvdbackup.cpp:619 libk9copy/k9dvdbackup.cpp:1420
 msgid "Unable to open DVD"
 msgstr "Αδύνατο το άνοιγμα του DVD"
 
-#: libk9copy/k9dvdbackup.cpp:627
+#: libk9copy/k9dvdbackup.cpp:629
 msgid "Unable to open vobs for titleset %1"
 msgstr "Αδύνατο το άνοιγμα των αρχείων vob για τους τίτλους %1"
 
-#: libk9copy/k9dvdbackup.cpp:1146
+#: libk9copy/k9dvdbackup.cpp:1151
 msgid "Updating vob %1"
 msgstr "Ενημέρωση του vob %1"
 
-#: libk9copy/k9dvdbackup.cpp:1162
+#: libk9copy/k9dvdbackup.cpp:1167
 msgid "DVD backup canceled"
 msgstr "Η δημιουργία αντιγράφου του DVD ακυρώθηκε"
 
@@ -971,324 +1201,128 @@ msgstr "Τίτλος %1"
 msgid "reading title"
 msgstr "Ανάγνωση τίτλου"
 
-#: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
-msgid "kDecMPEG2"
-msgstr "kDecMPEG2"
-
-#: debug/libk9copy/backupdlg.cpp:150 rc.cpp:131
+#: libk9copy/backupdlg.cpp:150 debug/libk9copy/backupdlg.cpp:150 rc.cpp:131
 #, no-c-format
 msgid "k9Copy - Backup progression"
 msgstr "k9Copy - Πρόοδος δημιουργίας αντιγράφου ασφαλείας"
 
-#: debug/libk9copy/backupdlg.cpp:151 rc.cpp:134
+#: libk9copy/backupdlg.cpp:151 debug/libk9copy/backupdlg.cpp:151 rc.cpp:134
 #, no-c-format
 msgid "A&bort"
 msgstr "Εγ&κατάλειψη"
 
-#: debug/libk9copy/backupdlg.cpp:152 rc.cpp:137
+#: libk9copy/backupdlg.cpp:152 debug/libk9copy/backupdlg.cpp:152 rc.cpp:137
 #, no-c-format
 msgid "Alt+B"
 msgstr "Alt+Κ"
 
-#: debug/libk9copy/backupdlg.cpp:153 rc.cpp:140
+#: libk9copy/backupdlg.cpp:153 debug/libk9copy/backupdlg.cpp:153 rc.cpp:140
 #, no-c-format
 msgid "--:--:--"
 msgstr "--:--:--"
 
-#: debug/libk9copy/backupdlg.cpp:154 rc.cpp:143
+#: libk9copy/backupdlg.cpp:154 debug/libk9copy/backupdlg.cpp:154 rc.cpp:143
 #, no-c-format
 msgid "Current step"
 msgstr "Τρέχον βήμα"
 
-#: debug/libk9copy/backupdlg.cpp:155 rc.cpp:146
+#: libk9copy/backupdlg.cpp:155 debug/libk9copy/backupdlg.cpp:155 rc.cpp:146
 #, no-c-format
 msgid "Elapsed Time"
 msgstr "Χρόνος που πέρασε"
 
-#: debug/libk9copy/backupdlg.cpp:156 rc.cpp:149
+#: libk9copy/backupdlg.cpp:156 debug/libk9copy/backupdlg.cpp:156 rc.cpp:149
 #, no-c-format
 msgid "<p align=\"left\"><b>DVD Backup</b></p>"
 msgstr "<p align=\"left\"><b>Αντίγραφο ασφαλείας DVD</b></p>"
 
-#: debug/libk9copy/dvdprogress.cpp:86 rc.cpp:153
+#: libk9copy/dvdprogress.cpp:86 debug/libk9copy/dvdprogress.cpp:86 rc.cpp:153
 #, no-c-format
 msgid "k9Copy - DVD Analyze"
 msgstr "k9Copy - Ανάλυση DVD"
 
+#: libk9copy/progress.cpp:81 debug/libk9copy/progress.cpp:80 rc.cpp:166
+#, fuzzy, no-c-format
+msgid "Alt+C"
+msgstr "Alt+Κ"
+
+#: libk9copy/k9dvdprogress.moc.cpp:34 libk9copy/k9dvdprogress.moc.cpp:42
 #: debug/libk9copy/k9dvdprogress.moc.cpp:34
 #: debug/libk9copy/k9dvdprogress.moc.cpp:42
 msgid "k9DVDProgress"
 msgstr ""
 
+#: libk9copy/k9dvdauthor.moc.cpp:34 libk9copy/k9dvdauthor.moc.cpp:42
 #: debug/libk9copy/k9dvdauthor.moc.cpp:34
 #: debug/libk9copy/k9dvdauthor.moc.cpp:42
 msgid "k9DVDAuthor"
 msgstr ""
 
+#: libk9copy/k9dvdsize.moc.cpp:34 libk9copy/k9dvdsize.moc.cpp:42
 #: debug/libk9copy/k9dvdsize.moc.cpp:34 debug/libk9copy/k9dvdsize.moc.cpp:42
 msgid "k9DVDSize"
 msgstr ""
 
+#: libk9copy/k9dvdtitle.moc.cpp:34 libk9copy/k9dvdtitle.moc.cpp:42
 #: debug/libk9copy/k9dvdtitle.moc.cpp:34 debug/libk9copy/k9dvdtitle.moc.cpp:42
 msgid "k9ChapterCell"
 msgstr ""
 
+#: libk9copy/k9dvdtitle.moc.cpp:107 libk9copy/k9dvdtitle.moc.cpp:115
 #: debug/libk9copy/k9dvdtitle.moc.cpp:107
 #: debug/libk9copy/k9dvdtitle.moc.cpp:115
 msgid "k9DVDChapter"
 msgstr ""
 
+#: libk9copy/k9dvdtitle.moc.cpp:180 libk9copy/k9dvdtitle.moc.cpp:188
 #: debug/libk9copy/k9dvdtitle.moc.cpp:180
 #: debug/libk9copy/k9dvdtitle.moc.cpp:188
 msgid "k9DVDVideoStream"
 msgstr ""
 
+#: libk9copy/k9dvdtitle.moc.cpp:253 libk9copy/k9dvdtitle.moc.cpp:261
 #: debug/libk9copy/k9dvdtitle.moc.cpp:253
 #: debug/libk9copy/k9dvdtitle.moc.cpp:261
 msgid "k9DVDAudioStream"
 msgstr ""
 
+#: libk9copy/k9dvdtitle.moc.cpp:326 libk9copy/k9dvdtitle.moc.cpp:334
 #: debug/libk9copy/k9dvdtitle.moc.cpp:326
 #: debug/libk9copy/k9dvdtitle.moc.cpp:334
 msgid "k9DVDSubtitle"
 msgstr ""
 
+#: libk9copy/k9dvdtitle.moc.cpp:399 libk9copy/k9dvdtitle.moc.cpp:407
 #: debug/libk9copy/k9dvdtitle.moc.cpp:399
 #: debug/libk9copy/k9dvdtitle.moc.cpp:407
 msgid "k9DVDTitle"
 msgstr ""
 
+#: libk9copy/k9dvdtitle.moc.cpp:472 libk9copy/k9dvdtitle.moc.cpp:480
 #: debug/libk9copy/k9dvdtitle.moc.cpp:472
 #: debug/libk9copy/k9dvdtitle.moc.cpp:480
 msgid "k9DVDTitleset"
 msgstr ""
 
+#: libk9copy/k9dvd.moc.cpp:34 libk9copy/k9dvd.moc.cpp:42
 #: debug/libk9copy/k9dvd.moc.cpp:34 debug/libk9copy/k9dvd.moc.cpp:42
 msgid "k9DVD"
 msgstr "k9DVD"
 
-#: debug/src/menupreview.cpp:1084 rc.cpp:3
-#, no-c-format
-msgid "k9Copy - Menu Preview"
-msgstr "k9Copy - Προεπισκόπηση μενού"
+#: k9decmpeg/kdecmpeg2.moc.cpp:34 k9decmpeg/kdecmpeg2.moc.cpp:42
+#: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
+msgid "kDecMPEG2"
+msgstr "kDecMPEG2"
 
-#: debug/src/menupreview.cpp:1085 debug/src/configDlg.cpp:118 rc.cpp:6
-#: rc.cpp:99
-#, no-c-format
-msgid "&OK"
-msgstr "&Εντάξει"
-
-#: debug/src/viewmpeg2.cpp:631 rc.cpp:10
-#, no-c-format
-msgid "k9Copy - Title Preview"
-msgstr "k9Copy - Προεπισκόπηση τίτλου"
-
-#: debug/src/configDlg.cpp:62 debug/src/configDlg.cpp:122 rc.cpp:107
-#, no-c-format
-msgid "device"
-msgstr "Συσκευή"
-
-#: debug/src/configDlg.cpp:64 debug/src/configDlg.cpp:123 rc.cpp:110
-#, no-c-format
-msgid "label"
-msgstr "Ετικέτα"
-
-#: debug/src/configDlg.cpp:66 debug/src/configDlg.cpp:124 rc.cpp:113
-#, no-c-format
-msgid "Input"
-msgstr "Είσοδος"
-
-#: debug/src/configDlg.cpp:68 debug/src/configDlg.cpp:125 rc.cpp:116
-#, no-c-format
-msgid "Output"
-msgstr "Έξοδος"
-
-#: debug/src/configDlg.cpp:116 rc.cpp:93
-#, no-c-format
-msgid "k9Copy - Devices"
-msgstr "k9Copy - Συσκευές"
-
-#: debug/src/configDlg.cpp:117 rc.cpp:96
-#, no-c-format
-msgid "<b><p align=\"center\">Devices not detected by k9copy</p></b>"
-msgstr "<b><p align=\"center\">Συσκευές που δεν εντοπίστηκαν από το k9copy</p></b>"
-
-#: debug/src/configDlg.cpp:120 rc.cpp:103
-#, no-c-format
-msgid "&Cancel"
-msgstr "&Ακύρωση"
-
-#: debug/src/configDlg.cpp:126 rc.cpp:119
-#, no-c-format
-msgid "&Add"
-msgstr "&Προσθήκη"
-
-#: debug/src/configDlg.cpp:127 rc.cpp:122
-#, no-c-format
-msgid "Alt+A"
-msgstr "Alt+A"
-
-#: debug/src/configDlg.cpp:128 rc.cpp:125
-#, no-c-format
-msgid "&Remove"
-msgstr "Α&φαίρεση"
-
-#: debug/src/configDlg.cpp:129 rc.cpp:128
-#, no-c-format
-msgid "Alt+R"
-msgstr "Alt+R"
-
-#: debug/src/k9mainw.cpp:50 debug/src/k9mainw.cpp:299 rc.cpp:21
-#, no-c-format
-msgid "Title"
-msgstr "Τίτλος"
-
-#: debug/src/k9mainw.cpp:51 debug/src/k9mainw.cpp:300 rc.cpp:24
-#, no-c-format
-msgid "Size"
-msgstr "Μέγεθος"
-
-#: debug/src/k9mainw.cpp:112 debug/src/k9mainw.cpp:304 rc.cpp:36
-#, no-c-format
-msgid "Languages"
-msgstr "Γλώσσες"
-
-#: debug/src/k9mainw.cpp:298 rc.cpp:15
-#, no-c-format
-msgid "MainDlg"
-msgstr "MainDlg"
-
-#: debug/src/k9mainw.cpp:301 rc.cpp:27
-#, no-c-format
-msgid "At title end"
-msgstr "Με το τέλος του τίτλου"
-
-#: debug/src/k9mainw.cpp:302 rc.cpp:30
-#, no-c-format
-msgid "At start"
-msgstr "Αρχή με"
-
-#: debug/src/k9mainw.cpp:303 rc.cpp:33
-#, no-c-format
-msgid "<b>DVD playback options</b>"
-msgstr "<b>Επιλογές αναπαραγωγής DVD</b>"
-
-#: debug/src/k9mainw.cpp:305 rc.cpp:39
-#, no-c-format
-msgid "&Keep original menus"
-msgstr "&Διατήρηση των αρχικών μενού"
-
-#: debug/src/k9mainw.cpp:306 rc.cpp:42
-#, no-c-format
-msgid "Alt+K"
-msgstr "Alt+Δ"
-
-#: debug/src/k9mainw.cpp:307 rc.cpp:18
-#, no-c-format
-msgid "D&VD"
-msgstr "D&VD"
-
-#: debug/src/k9mainw.cpp:309 rc.cpp:49
-#, no-c-format
-msgid "&Save"
-msgstr "Απο&θήκευση"
-
-#: debug/src/k9mainw.cpp:310 rc.cpp:52
-#, no-c-format
-msgid "Alt+S"
-msgstr "Alt+S"
-
-#: debug/src/k9mainw.cpp:311 rc.cpp:55
-#, no-c-format
-msgid "Output directory"
-msgstr "Κατάλογος εξόδου"
-
-#: debug/src/k9mainw.cpp:312 rc.cpp:58
-#, no-c-format
-msgid "DVD size"
-msgstr "Μέγεθος DVD"
-
-#: debug/src/k9mainw.cpp:313 rc.cpp:61
-#, no-c-format
-msgid "Burn with k3b"
-msgstr "Εγγραφή με το k3b"
-
-#: debug/src/k9mainw.cpp:314 rc.cpp:64
-#, no-c-format
-msgid "Quick scan"
-msgstr "Γρήγορη σάρωση"
-
-#: debug/src/k9mainw.cpp:315 rc.cpp:67
-#, no-c-format
-msgid "Auto burn"
-msgstr "Αυτόματη εγγραφή"
-
-#: debug/src/k9mainw.cpp:316 rc.cpp:70
-#, no-c-format
-msgid "mb"
-msgstr "mb"
-
-#: debug/src/k9mainw.cpp:317 rc.cpp:45
-#, no-c-format
-msgid "Se&ttings"
-msgstr "Ρυ&θμίσεις"
-
-#: debug/src/k9mainw.cpp:318 rc.cpp:73
-#, no-c-format
-msgid "Output device "
-msgstr "Συσκευή εξόδου "
-
-#: debug/src/k9mainw.cpp:319 rc.cpp:76
-#, no-c-format
-msgid "@"
-msgstr "@"
-
-#: debug/src/k9mainw.cpp:320 rc.cpp:79
-#, no-c-format
-msgid "X"
-msgstr "X"
-
-#: debug/src/k9mainw.cpp:321 rc.cpp:82
-#, no-c-format
-msgid "Input device "
-msgstr "Συσκευή εισόδου "
-
-#: debug/src/k9mainw.cpp:326 rc.cpp:90
-#, no-c-format
-msgid "..."
-msgstr "..."
-
-#: debug/src/kviewmpeg2.moc.cpp:34 debug/src/kviewmpeg2.moc.cpp:42
-msgid "kViewMPEG2"
-msgstr "kViewMPEG2"
-
-#: debug/src/k9copy.moc.cpp:34 debug/src/k9copy.moc.cpp:42
-msgid "k9Copy"
-msgstr "k9Copy"
-
-#: debug/src/k9main.moc.cpp:34 debug/src/k9main.moc.cpp:42
-msgid "k9DVDListItem"
-msgstr ""
-
-#: debug/src/k9main.moc.cpp:107 debug/src/k9main.moc.cpp:115
-msgid "k9Main"
-msgstr "k9Main"
-
-#: debug/src/kcddrive.moc.cpp:34 debug/src/kcddrive.moc.cpp:42
-msgid "kCDDrive"
-msgstr ""
-
-#: debug/src/kcddrive.moc.cpp:107 debug/src/kcddrive.moc.cpp:115
-msgid "kCDDrives"
-msgstr ""
-
-#: rc.cpp:159
+#: rc.cpp:169
 #, no-c-format
 msgid "A&ctions"
 msgstr "&Ενέργειες"
 
-#: rc.cpp:162
+#: rc.cpp:172
 #, no-c-format
 msgid "Actions ToolBar"
 msgstr "Γραμμή ενεργειών"
 
+#~ msgid "Cancel"
+#~ msgstr "Ακύρωση"

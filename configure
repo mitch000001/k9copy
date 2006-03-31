@@ -30950,15 +30950,10 @@ _ACEOF
     x86_64-*)
 
 cat >>confdefs.h <<\_ACEOF
-#define ARCH_X86
-_ACEOF
-
-
-cat >>confdefs.h <<\_ACEOF
 #define ARCH_X86_64
 _ACEOF
 
-        ARCH_X86=yes
+        ARCH_X86=no
         ARCH_386=no
         ARCH_X86_64=yes
         ;;

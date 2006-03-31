@@ -711,7 +711,7 @@ clean-metasources:
 	-rm -f  kviewmpeg2.moc.cpp k9copy.moc.cpp kburndvd.moc k9main.moc.cpp kcddrive.moc.cpp
 
 #>+ 2
-KDE_DIST=viewmpeg2.ui hi32-app-k9copy.png configDlg.ui.h configDlg.ui k9mainw.ui k9copyui.rc k9copy.desktop hi16-app-k9copy.png MainDlg.ui.h hi48-app-k9copy.png menupreview.ui 
+KDE_DIST=viewmpeg2.ui configDlg.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png menupreview.ui hi32-app-k9copy.png configDlg.ui.h k9copy.desktop MainDlg.ui.h 
 
 #>+ 7
 clean-ui:
