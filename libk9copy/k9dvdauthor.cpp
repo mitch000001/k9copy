@@ -274,6 +274,7 @@ void k9DVDAuthor::author() {
     //progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
     progress = new k9Progress(qApp->mainWidget(),"progress",true,0);
     progress->setLabelText(tr2i18n("Authoring"));
+    progress->setCaption(i18n("k9Copy - Backup progression"));
     progress->setProgress(100,100);
     //progress->show();
     if (!cancelled && !error)
