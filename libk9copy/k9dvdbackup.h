@@ -92,6 +92,7 @@ private:
     k9TitleSet *currTS;
     int currVOB;
     k9Cell *currCell,*cellOut;//,*currCopyCell;
+    k9CellCopyList *m_cellCopyList;
     uint32_t m_position,m_vmgSize;
     uint64_t m_inbytes,m_outbytes;
     k9TitleSetList titleSets;
@@ -117,6 +118,7 @@ private:
     k9BackupDlg *backupDlg;
     void clearOutput(QString name);
     uint  getLastCell(k9CellCopyList *_cellCopyList,uint _index);
+    void calcFactor();
     bool error;
     void seterror(const QString &_msg);
     k9vamps *vamps;
