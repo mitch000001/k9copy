@@ -125,6 +125,7 @@ void k9DVDBackup::prepareVTS(int _VTS) {
     if (currTS==NULL) {
         currVTS=0;
         m_vmgSize=copyMenu2(0);
+	calcFactor();
         if (outputFile != NULL) {
             outputFile->close();
             delete outputFile;
@@ -197,6 +198,7 @@ void k9DVDBackup::prepareVTS(int _VTS) {
 
         m_position=0;
         m_copyMenu=false;
+	calcFactor();
     }
 
     currVTS=_VTS;
@@ -1400,6 +1402,14 @@ uint k9DVDBackup::getLastCell(k9CellCopyList *_cellCopyList, uint _index) {
     return result;
 }
 
+void k9DVDBackup::calcFactor() {
+   double factor=m_cellCopyList->getfactor(true,false,m_inbytes,m_outbytes);
+   QString sFactor;
+   sFactor.sprintf("%.2f",factor);
+   backupDlg->setFactor(sFactor);
+   argFactor =  factor;
+}
+
 void k9DVDBackup::execute() {
     QString sOutput=output;
 
@@ -1422,6 +1432,7 @@ void k9DVDBackup::execute() {
     }
 
     k9CellCopyList *cellCopyList =new k9CellCopyList(&m_dvdread,DVD);
+    m_cellCopyList=cellCopyList;
 
     double totalSize=DVD->getmenuSize() *2048 ;
     totalSize+=cellCopyList->gettotalSize();
@@ -1429,11 +1440,10 @@ void k9DVDBackup::execute() {
     totalSize = (totalSize >k9DVDSize::getMaxSize()) ? k9DVDSize::getMaxSize():totalSize;
 
     backupDlg->setTotalMax(totalSize);
-    double factor,factor2;
-    factor=factor2= cellCopyList->getfactor(true,false);
     m_inbytes=m_outbytes=0;
 
     int lastCell;
+    calcFactor();
 
     //VTSList is sorted by size, so it is easyer to ajust the compression factor
     for(uint iTS=0;iTS<cellCopyList->VTSList.count() &&(!error);iTS++) {
@@ -1447,14 +1457,8 @@ void k9DVDBackup::execute() {
                 if (lastCell <iCell) {
                     lastCell=getLastCell( cellCopyList,iCell);
 		    //adjusting factor of compression
-		    factor2=cellCopyList->getfactor(true,false,m_inbytes,m_outbytes);
+		    calcFactor();
 		}
-
-                QString sFactor;
-                sFactor.sprintf("%.2f",factor2);
-                backupDlg->setFactor(sFactor);
-
-                argFactor =  factor2;//<factor?factor:factor2 ;
 
                 copyCell(cell->vts,cell,! cell->selected);
                 if (!error) {
