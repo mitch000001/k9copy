@@ -265,15 +265,14 @@ KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 lib_LTLIBRARIES = libk9copy.la
 
 libk9copy_la_LIBADD = $(top_builddir)/k9vamps/libk9vamps.la -ldvdread
-#>- libk9copy_la_SOURCES = backupdlg.ui dvdprogress.ui k9backupdlg.cpp \
+#>- libk9copy_la_SOURCES = backupdlg.ui dvdprogress.ui progress.ui k9backupdlg.cpp \
 #>- 	k9cellcopylist.cpp k9cell.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvd.cpp k9dvdprogress.cpp \
-#>- 	k9ifo.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp \
-#>- 	progress.ui
-#>+ 4
-libk9copy_la_SOURCES=  k9backupdlg.cpp \
+#>- 	k9ifo.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp 
+#>+ 3
+libk9copy_la_SOURCES=   k9backupdlg.cpp \
 	k9cellcopylist.cpp k9cell.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvd.cpp k9dvdprogress.cpp \
-	k9ifo.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp \
-	 backupdlg.cpp dvdprogress.cpp progress.cpp
+	k9ifo.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp  backupdlg.cpp dvdprogress.cpp progress.cpp
+
 
 include_HEADERS = k9backupdlg.h k9cellcopylist.h k9cell.h k9dvdauthor.h \
 			k9dvdbackup.h k9dvdprogress.h k9ifo.h k9dvd.h k9dvdtitle.h k9dvdsize.h k9common.h
@@ -715,7 +714,7 @@ clean-metasources:
 	-rm -f  k9dvdprogress.moc.cpp k9cell.moc k9dvdauthor.moc.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9ifo.moc k9dvd.moc.cpp k9progress.moc k9backupdlg.moc k9dvdbackup.moc
 
 #>+ 2
-KDE_DIST=dvdprogress.h backupdlg.ui progress.ui backupdlg.h progress.h dvdprogress.ui 
+KDE_DIST=backupdlg.ui progress.ui dvdprogress.ui 
 
 #>+ 6
 clean-ui:
@@ -757,7 +756,7 @@ bcheck-am:
 
 
 #>+ 11
-libk9copy_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9backupdlg.cpp $(srcdir)/k9cellcopylist.cpp $(srcdir)/k9cell.cpp $(srcdir)/k9dvdauthor.cpp $(srcdir)/k9dvdbackup.cpp $(srcdir)/k9dvd.cpp $(srcdir)/k9dvdprogress.cpp $(srcdir)/k9ifo.cpp $(srcdir)/k9dvdtitle.cpp $(srcdir)/dummy.cpp $(srcdir)/k9dvdsize.cpp $(srcdir)/k9dvdread.cpp $(srcdir)/k9progress.cpp $(srcdir)/backupdlg.cpp $(srcdir)/dvdprogress.cpp $(srcdir)/progress.cpp $(srcdir)/k9dvdprogress.moc.cpp $(srcdir)/k9dvdauthor.moc.cpp $(srcdir)/k9dvdsize.moc.cpp $(srcdir)/k9dvdtitle.moc.cpp $(srcdir)/k9dvd.moc.cpp  progress.moc k9cell.moc backupdlg.moc k9ifo.moc k9backupdlg.moc k9progress.moc dvdprogress.moc k9dvdbackup.moc
+libk9copy_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9backupdlg.cpp $(srcdir)/k9cellcopylist.cpp $(srcdir)/k9cell.cpp $(srcdir)/k9dvdauthor.cpp $(srcdir)/k9dvdbackup.cpp $(srcdir)/k9dvd.cpp $(srcdir)/k9dvdprogress.cpp $(srcdir)/k9ifo.cpp $(srcdir)/k9dvdtitle.cpp $(srcdir)/dummy.cpp $(srcdir)/k9dvdsize.cpp $(srcdir)/k9dvdread.cpp $(srcdir)/k9progress.cpp backupdlg.cpp dvdprogress.cpp progress.cpp k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp  progress.moc k9cell.moc backupdlg.moc k9ifo.moc k9backupdlg.moc k9progress.moc dvdprogress.moc k9dvdbackup.moc
 	@echo 'creating libk9copy_la.all_cpp.cpp ...'; \
 	rm -f libk9copy_la.all_cpp.files libk9copy_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9copy_la.all_cpp.final; \
