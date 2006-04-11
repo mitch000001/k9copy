@@ -16,8 +16,8 @@
 #include <qlabel.h>
 #include <qapplication.h>
 
-k9Progress::k9Progress(QWidget* parent, const char* name, bool modal, WFlags fl)
-: Progress(parent,name, modal,fl)
+k9Progress::k9Progress(QWidget* parent, const char* name,const QStringList &args)
+: Progress(parent,name,true,0)
 {
   m_process=new QProcess();
   connect(m_process, SIGNAL(processExited()), this, SLOT(accept()));

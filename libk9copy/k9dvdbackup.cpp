@@ -804,9 +804,9 @@ void k9DVDBackup::updateMainIfo() {
     ifo_handle_t *hifo =ifo.getIFO();
 
     hifo->vmgi_mat->vmg_last_sector= 1+ m_vmgSize+hifo->vmgi_mat->vmgi_last_sector*2;
-    if (hifo->vmgi_mat->vmgm_vobs != hifo->vmgi_mat->vmgi_last_sector +1)
-	qDebug (QString("error in ifo file : vmgm_vobs %1 -> %2)").arg(hifo->vmgi_mat->vmgm_vobs).arg(hifo->vmgi_mat->vmgi_last_sector +1));
     if (m_vmgSize >0) {
+	if (hifo->vmgi_mat->vmgm_vobs != hifo->vmgi_mat->vmgi_last_sector +1)
+	   qDebug (QString("error in ifo file : vmgm_vobs %1 -> %2)").arg(hifo->vmgi_mat->vmgm_vobs).arg(hifo->vmgi_mat->vmgi_last_sector +1));
 	hifo->vmgi_mat->vmgm_vobs=hifo->vmgi_mat->vmgi_last_sector +1;
     }
 
@@ -968,10 +968,12 @@ void k9DVDBackup::updateIfo() {
     hifo->vtsi_mat->vtstt_vobs = hifo->vtsi_mat->vtsi_last_sector + 1 + currTS->menuSize;
 
     //JMP 
-    if (hifo->vtsi_mat->vtsm_vobs != hifo->vtsi_mat->vtsi_last_sector +1)
-	qDebug (QString("error in ifo file %3 : vtsm_vobs %1 -> %2").arg(hifo->vtsi_mat->vtsm_vobs).arg(hifo->vtsi_mat->vtsi_last_sector +1).arg(currTS->VTS));
-    if (currTS->menuSize >0)
+    if (currTS->menuSize >0) {
+	if (hifo->vtsi_mat->vtsm_vobs != hifo->vtsi_mat->vtsi_last_sector +1)
+	   qDebug (QString("error in ifo file %3 : vtsm_vobs %1 -> %2").arg(hifo->vtsi_mat->vtsm_vobs).arg(hifo->vtsi_mat->vtsi_last_sector +1).arg(currTS->VTS));
     	hifo->vtsi_mat->vtsm_vobs= hifo->vtsi_mat->vtsi_last_sector +1 ;
+
+    }
 
     updatePgci_ut(hifo);
 

@@ -6,7 +6,8 @@ METASOURCES = AUTO
 
 lib_LTLIBRARIES = libk9copy.la
 
-libk9copy_la_LIBADD = $(top_builddir)/k9vamps/libk9vamps.la -ldvdread
+libk9copy_la_LIBADD = $(top_builddir)/k9vamps/libk9vamps.la \
+	$(top_builddir)/k9decmpeg/libk9decmpeg.la -ldvdread
 libk9copy_la_SOURCES = backupdlg.ui dvdprogress.ui progress.ui k9backupdlg.cpp \
 	k9cellcopylist.cpp k9cell.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvd.cpp k9dvdprogress.cpp \
 	k9ifo.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp 

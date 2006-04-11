@@ -22,13 +22,13 @@ class k9Progress : public Progress
   Q_OBJECT
 
 public:
-  k9Progress(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+  k9Progress(QWidget* parent = 0, const char* name = 0, const QStringList &args=0);
   ~k9Progress();
 
-   QProcess* getProcess() const;
-   void setProgress(long _position,long _total);
-   void setLabelText(const QString _text);
-   int execute();
+   virtual QProcess* getProcess() const;
+   virtual void setProgress(long _position,long _total);
+   virtual void setLabelText(const QString _text);
+   virtual int execute();
   /*$PUBLIC_FUNCTIONS$*/
 
 public slots:

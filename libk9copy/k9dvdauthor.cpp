@@ -272,7 +272,7 @@ void k9DVDAuthor::author() {
     clearOutput(workDir+"dvd");
 
     //progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
-    progress = new k9Progress(qApp->mainWidget(),"progress",true,0);
+    progress = new k9Progress(qApp->mainWidget(),"progress");
     progress->setLabelText(tr2i18n("Authoring"));
     progress->setCaption(i18n("k9Copy - Backup progression"));
     progress->setProgress(100,100);
