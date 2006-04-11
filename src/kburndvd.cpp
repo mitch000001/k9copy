@@ -26,6 +26,7 @@
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <kfiledialog.h>
+#include <klibloader.h>
 
 kBurnDVD::kBurnDVD()
         : QObject(NULL,"") {
@@ -131,14 +132,16 @@ const QString &kBurnDVD::getImageSize() {
 
 
 void kBurnDVD::burnWithGrowisofs() {
+    KLibFactory *factory;;
+    factory = KLibLoader::self()->factory("libk9copy");
 
 //    progress= new KProgressDialog (qApp->mainWidget(),"progress",i18n("k9Copy - Burning DVD"),"",true);
-    progress=new k9Progress(qApp->mainWidget(),"progress",true,0);
+    progress=static_cast<k9Progress  *>(factory->create(qApp->mainWidget(),"progress", "k9Progress"));
+    //progress=new k9Progress(qApp->mainWidget(),"progress",true,0);
     progress->setCaption(i18n("k9Copy - Burning DVD"));
     progress->setLabelText(i18n("Burning DVD"));
     bool bok=false;
 
-    int nbTry=0;
     while (!cancelled && !bok) {
         burnSpeed=0;
         QString c;

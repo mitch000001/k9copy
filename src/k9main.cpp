@@ -65,10 +65,9 @@ pxText((const char **) img_text) {
 
     m_factory = KLibLoader::self()->factory("libk9copy");
     if (m_factory)      {
-//        dvd=static_cast<k9DVD  *>(m_factory->create(this,"dvd", "k9DVD"));
+        dvd=static_cast<k9DVD  *>(m_factory->create(this,"dvd", "k9DVD"));
     }
-   dvd=new k9DVD(this);
-    //    dvd=new k9DVD;
+ //   dvd=new k9DVD(this);
 
     updating=false;
 
@@ -326,16 +325,16 @@ void k9Main::Copy() {
     bool burn=false;
     if (ckMenu->isChecked()) {
         //copy with k9DVDBackup
-        //k9DVDBackup *backup = static_cast<k9DVDBackup  *>(m_factory->create(dvd,"backup", "k9DVDBackup"));
-        k9DVDBackup *backup=new k9DVDBackup(dvd,"backup");
+        k9DVDBackup *backup = static_cast<k9DVDBackup  *>(m_factory->create(dvd,"backup", "k9DVDBackup"));
+        //k9DVDBackup *backup=new k9DVDBackup(dvd,"backup");
         backup->setOutput(urOutput->url());
         backup->setDevice(dvd->getDevice());
         backup->execute();
         burn=backup->getErrMsg()=="";
         delete backup;
     } else {
-        //k9DVDAuthor *b=static_cast<k9DVDAuthor  *>(m_factory->create(dvd,"dvdauthor", "k9DVDAuthor"));
-        k9DVDAuthor *b=new k9DVDAuthor(dvd,"dvdauthor");
+        k9DVDAuthor *b=static_cast<k9DVDAuthor  *>(m_factory->create(dvd,"dvdauthor", "k9DVDAuthor"));
+        //k9DVDAuthor *b=new k9DVDAuthor(dvd,"dvdauthor");
         b->setworkDir(urOutput->url());
         b->author();
         if (!b->getError())
@@ -470,8 +469,8 @@ void k9Main::Open() {
 }
 
 void k9Main::setDVDSize() {
-    //k9DVDSize *dvdsize=static_cast<k9DVDSize  *>(m_factory->create(this,"dvd", "k9DVDSize"));
-    k9DVDSize *dvdsize=new k9DVDSize(this);
+    k9DVDSize *dvdsize=static_cast<k9DVDSize  *>(m_factory->create(this,"dvd", "k9DVDSize"));
+    //k9DVDSize *dvdsize=new k9DVDSize(this);
     dvdsize->setMaxSizeDyn(sbSize->value());
     delete dvdsize;
 }
