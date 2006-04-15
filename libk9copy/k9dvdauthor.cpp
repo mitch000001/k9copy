@@ -275,7 +275,7 @@ void k9DVDAuthor::author() {
     progress = new k9Progress(qApp->mainWidget(),"progress");
     progress->setLabelText(tr2i18n("Authoring"));
     progress->setCaption(i18n("k9Copy - Backup progression"));
-    progress->setProgress(100,100);
+    progress->setProgress(0,100);
     //progress->show();
     if (!cancelled && !error)
         createXML();
