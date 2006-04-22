@@ -71,37 +71,7 @@ RunLevel;
 #define MOV_READ
 
 // this is where we switch threads
-#define LOCK(x)   \
-  if (unlikely ((x) > (rbuf - cbuf))) \
-  { \
-    if (likely (wbuf))\
-    {\
-      mutw.lock();\
-      rqt_wcnt = wbuf - owbuf;\
-      condw.wakeAll();\
-      mutw.unlock();\
-    }\
-    mutr.lock();\
-    while (!rqt_rcnt)\
-    {\
-      condr.wait( &mutr);\
-    }\
-    cbuf       = rqt_rptr;\
-    rbuf =orbuf  = cbuf;\
-    rbuf      += rqt_rcnt + 3;\
-    rqt_rcnt   = 0;\
-    owbuf      = rqt_wptr;\
-    inbytecnt  = rqt_inbytes;\
-    outbytecnt = rqt_outbytes;\
-    orim2vsize = rqt_visize;\
-    mutr.unlock();\
-    wbuf = owbuf;\
-    if (    fact_x    <  rqt_fact) {\
-	fact_x=rqt_fact;\
-	initRequant();\
-    }\
-    fact_x=rqt_fact;\
-  }\
+#define LOCK(x)   if (! lock(x)) {rqt_run=false;return;}
 
 #define COPY(x)           \
   tc_memcpy (wbuf, cbuf, x); \
@@ -274,6 +244,7 @@ private:
     int slice_init (int code);
     void mpeg2_slice ( const int code );
     void initRequant();
+    bool lock(int64 x);
 
 protected:
     void run ();

@@ -201,16 +201,15 @@ void k9vamps::run () {
 
     flush();
 
-    if (m_requant !=NULL) {
+    if (m_requant !=NULL) {	
+        m_requant->rqt_stop=true;
+	while(m_requant->running()) {
+	    m_requant->condr.wakeAll();
+	    m_requant->condw.wakeAll();
+	    m_requant->wait(10);
+	}
         m_requant->mutr.unlock();
         m_requant->mutw.unlock();
-        m_requant->rqt_stop=true;
-        m_requant->condr.wakeAll();
-        m_requant->condw.wakeAll();
-        if (m_requant->running())
-            m_requant->terminate();
-        m_requant->wait();
-
     }
     delete m_requant;
     m_requant=NULL;
@@ -626,7 +625,7 @@ void k9vamps::vap_leader () {
             break;
 
         default:
-            fatal ("Encountered stream ID %02x at %llu, "
+	    fatal("Encountered stream ID %02x at %llu, "
                    "probably bad MPEG2 program stream", id, rtell (ptr));
         }
 
@@ -788,7 +787,7 @@ int k9vamps::vap_phase1 (void) {
             break;
 
         default:
-            fatal ("Encountered stream ID %02x at %llu, "
+	    fatal("Encountered stream ID %02x at %llu, "
                    "probably bad MPEG2 program stream", id, rtell (ptr));
         }
 
@@ -924,7 +923,7 @@ void k9vamps::vap_phase2 (int seq_length) {
             break;
 
         default:
-            fatal ("Encountered stream ID %02x at %llu, "
+	    fatal("Encountered stream ID %02x at %llu, "
                    "probably bad MPEG2 program stream", id, rtell (ptr));
         }
 
@@ -1066,10 +1065,12 @@ k9bgUpdate::k9bgUpdate(k9DVDBackup * _backup) {
 }
 
 void k9bgUpdate::update(uchar *_buffer,uint32_t _size) {
+    mutex.lock();
     m_buffer=(uchar*)malloc(_size);
     tc_memcpy(m_buffer,_buffer,_size);
     m_size=_size;
     start();
+    mutex.unlock();
 }
 
 void k9bgUpdate::run() {

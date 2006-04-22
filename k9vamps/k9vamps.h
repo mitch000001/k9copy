@@ -50,6 +50,7 @@ private:
 	uchar * m_buffer;
 	k9DVDBackup *m_backup;
 	uint32_t m_size;
+	QMutex mutex;
 public:
 	k9bgUpdate(k9DVDBackup * _backup);
 	void update(uchar *_buffer, uint32_t size);

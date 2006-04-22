@@ -2431,3 +2431,46 @@ void k9requant::initRequant() {
  
 
 }
+
+bool k9requant::lock( int64 x) {
+  if (unlikely ((x) > (rbuf - cbuf))) 
+  { 
+    if (likely (wbuf))
+    {
+      mutw.lock();
+      rqt_wcnt = wbuf - owbuf;
+      condw.wakeAll();
+      mutw.unlock();
+    }
+    mutr.lock();
+    while (!rqt_rcnt)
+    {
+      condr.wait( &mutr);
+      if (rqt_stop==true) {
+	mutr.unlock();
+	return false;
+      }
+    }
+    cbuf       = rqt_rptr;
+    rbuf =orbuf  = cbuf;
+    rbuf      += rqt_rcnt + 3;
+    rqt_rcnt   = 0;
+    owbuf      = rqt_wptr;
+    inbytecnt  = rqt_inbytes;
+    outbytecnt = rqt_outbytes;
+    orim2vsize = rqt_visize;
+    mutr.unlock();
+    wbuf = owbuf;
+    if (    fact_x    <  rqt_fact) {
+	fact_x=rqt_fact;
+	initRequant();
+    }
+    fact_x=rqt_fact;
+  }
+
+  return true;
+
+}
+
+
+
