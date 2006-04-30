@@ -36,10 +36,16 @@ public:
    virtual uint getangle(){return m_angle;};
    virtual uchar getangleBlock() {return m_angleBlock;};
    virtual void setangleBlock(uchar _angleBlock) {m_angleBlock=_angleBlock;};
+   virtual void setstartSector(uint32_t _value) { m_startSector=_value;};
+   virtual uint32_t getstartSector() { return m_startSector;};
+   virtual void setlastSector(uint32_t _value) { m_lastSector=_value;};
+   virtual uint32_t getlastSector() { return m_lastSector;};
+
 private:
    uint m_id;
    uint m_angle;
    uchar m_angleBlock;
+   uint32_t m_startSector,m_lastSector;
 };
 
 class k9DVDChapter : public QObject{
@@ -109,7 +115,7 @@ private: // Private attributes
   bool selected;
     int id;
    k9DVDTitle *title;
-
+  int m_streamId;
 public: // Public methods
   k9DVDAudioStream();
   /** Read property of QString langCod. */
@@ -137,6 +143,9 @@ public: // Public methods
 
   virtual k9DVDTitle* gettitle();
   virtual  int getID();
+
+  virtual int getStreamId() const {return m_streamId;};
+	
 };
 
 class k9DVDSubtitle : public QObject{
@@ -176,6 +185,7 @@ public: // Public methods
   virtual const bool& getselected();
   virtual k9DVDTitle* gettitle();
   virtual  int getID();
+	
 };
   
 
@@ -212,6 +222,11 @@ private: // Public attributes
    k9DVDTitle* nextTitle;
   int id;
   k9DVDTitleset *m_titleset;
+  k9DVDAudioStream *m_defAudio;
+  k9DVDSubtitle *m_defSubtitle;
+  bool m_defAudioSet;
+  bool m_defSubtitleSet;
+
 public: // Public methods
   k9DVDTitle();
   virtual k9DVDTitleset *gettitleset() {return m_titleset;};
@@ -246,6 +261,13 @@ public: // Public methods
   virtual bool getIndexed() {return indexed;};
   virtual void setforceSelection(bool _state);
   virtual int getId() {return id;};
+  virtual void setDefAudio(k9DVDAudioStream* _value);
+  virtual k9DVDAudioStream* getDefAudio() const;
+  virtual void setDefSubtitle(k9DVDSubtitle* _value);
+  virtual k9DVDSubtitle* getDefSubtitle() const;
+  virtual bool getDefAudioSet() const {return m_defAudioSet;};
+  virtual bool getDefSubtitleSet() const {return m_defSubtitleSet;};
+	
 private: // Private methods
   k9DVDAudioStream* addAudioStream();
   k9DVDChapter* addChapter(int num);

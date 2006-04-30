@@ -156,7 +156,7 @@ void ac_mmtest()
 {
  mm_flag=-1;
   int cc=ac_mmflag();
-
+  return;
   printf("(%s) available multimedia extensions:", __FILE__);
 
   if(cc & MM_SSE3) {

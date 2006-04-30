@@ -44,6 +44,8 @@ protected:
     bool queryClose( );
 private slots:
     void ActionCopy();
+    void ActionMP4();
+
    void ActionPlayTitle();
     void changeStatusbar(const QString& text);
     void changeCaption(const QString& text);
@@ -55,6 +57,7 @@ private:
     void setupActions();
     KAction *CopyAction;
     KAction *PlayTitleAction;
+    KAction *mkMP4Action;
 private:
    k9Main  *m_k9Main;
 

@@ -31070,6 +31070,8 @@ done
 
           ac_config_files="$ac_config_files src/Makefile"
 
+          ac_config_files="$ac_config_files src/icons/Makefile"
+
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -31648,6 +31650,7 @@ do
   "libk9copy/Makefile" ) CONFIG_FILES="$CONFIG_FILES libk9copy/Makefile" ;;
   "po/Makefile" ) CONFIG_FILES="$CONFIG_FILES po/Makefile" ;;
   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+  "src/icons/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/icons/Makefile" ;;
   "depfiles" ) CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
   "config.h" ) CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5

@@ -658,7 +658,7 @@ bcheck-am:
 
 
 #>+ 11
-libk9decmpeg_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/alloc.cpp $(srcdir)/cpu_accel.cpp $(srcdir)/cpu_state.cpp $(srcdir)/decode.cpp $(srcdir)/header.cpp $(srcdir)/idct_alpha.cpp $(srcdir)/idct_altivec.cpp $(srcdir)/idct.cpp $(srcdir)/idct_mmx.cpp $(srcdir)/kdecmpeg2.cpp $(srcdir)/motion_comp_alpha.cpp $(srcdir)/motion_comp_altivec.cpp $(srcdir)/motion_comp.cpp $(srcdir)/motion_comp_mmx.cpp $(srcdir)/motion_comp_vis.cpp $(srcdir)/rgb.cpp $(srcdir)/rgb_mmx.cpp $(srcdir)/rgb_vis.cpp $(srcdir)/slice.cpp $(srcdir)/uyvy.cpp kdecmpeg2.moc.cpp 
+libk9decmpeg_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/alloc.cpp $(srcdir)/cpu_accel.cpp $(srcdir)/cpu_state.cpp $(srcdir)/decode.cpp $(srcdir)/header.cpp $(srcdir)/idct_alpha.cpp $(srcdir)/idct_altivec.cpp $(srcdir)/idct.cpp $(srcdir)/idct_mmx.cpp $(srcdir)/kdecmpeg2.cpp $(srcdir)/motion_comp_alpha.cpp $(srcdir)/motion_comp_altivec.cpp $(srcdir)/motion_comp.cpp $(srcdir)/motion_comp_mmx.cpp $(srcdir)/motion_comp_vis.cpp $(srcdir)/rgb.cpp $(srcdir)/rgb_mmx.cpp $(srcdir)/rgb_vis.cpp $(srcdir)/slice.cpp $(srcdir)/uyvy.cpp $(srcdir)/kdecmpeg2.moc.cpp 
 	@echo 'creating libk9decmpeg_la.all_cpp.cpp ...'; \
 	rm -f libk9decmpeg_la.all_cpp.files libk9decmpeg_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9decmpeg_la.all_cpp.final; \

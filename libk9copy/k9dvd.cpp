@@ -75,7 +75,7 @@ const int& k9DVD::gettitlesetCount() {
 }
 
 k9DVDTitleset *k9DVD::gettitleset(int num) {
-	return titlesets.at(num);
+    return titlesets.at(num);
 }
 
 int k9DVD::getmenuSize() {
@@ -164,8 +164,7 @@ k9DVD::k9DVD(QObject  *parent, const char *name,const QStringList args)  {
     connect(this, SIGNAL(sigTotalText(QString&)), this, SLOT(slotTotalText(QString&)));
     start=NULL;
 }
-k9DVD::~k9DVD() {
-}
+k9DVD::~k9DVD() {}
 
 int k9DVD::dvdtime2msec(dvd_time_t *dt) {
     double fps = frames_per_s[(dt->frame_u & 0xc0) >> 6];
@@ -189,8 +188,8 @@ int k9DVD::get_title_name(const char* dvd_device, char* title) {
     int  i;
     QString c;
     if (! (filehandle = fopen(dvd_device, "r"))) {
-	c=i18n("Couldn't open %1 for title\n").arg(dvd_device);
-       // setError(c );
+        c=i18n("Couldn't open %1 for title\n").arg(dvd_device);
+        // setError(c );
         strcpy(title, "unknown");
         return -1;
     }
@@ -205,8 +204,8 @@ int k9DVD::get_title_name(const char* dvd_device, char* title) {
 
     if ( 32 != (i = fread(title, 1, 32, filehandle)) ) {
         fclose(filehandle);
-//        c=tr2i18n("Couldn't read enough bytes for title.\n");
-//        setError(c);
+        //        c=tr2i18n("Couldn't read enough bytes for title.\n");
+        //        setError(c);
         strcpy(title, "unknown");
         return 0;
     }
@@ -225,18 +224,18 @@ QString k9DVD::lang_name(const QString& code) {
     int i=0;
     lng arrLng[] = {
                        { "  ", i18n("Not Specified") }, { "aa", i18n("Afar") },	{ "ab", i18n("Abkhazian") }, { "af", i18n("Afrikaans") },	{ "am", i18n("Amharic")},
-                        { "ar", i18n("Arabic") }, { "as", i18n("Assamese") },	{ "ay", i18n("Aymara") }, { "az", i18n("Azerbaijani") }, { "ba", i18n("Bashkir") },
-                        { "be", i18n("Byelorussian") }, { "bg", i18n("Bulgarian") }, { "bh", i18n("Bihari") }, { "bi", i18n("Bislama") }, { "bn", i18n("Bengali; Bangla") },
-                        { "bo", i18n("Tibetan") }, { "br", i18n("Breton") }, { "ca", i18n("Catalan") }, { "co", i18n("Corsican") }, { "cs", i18n("Czech") },
-                        { "cy", i18n("Welsh") }, { "da", i18n("Dansk") }, { "de", i18n("Deutsch") }, { "dz", i18n("Bhutani") }, { "el", i18n("Greek") }, { "en", i18n("English") },
-                        { "eo", i18n("Esperanto") }, { "es", i18n("Espanol") }, { "et", i18n("Estonian") }, { "eu", i18n("Basque") }, { "fa", i18n("Persian") },
-                        { "fi", i18n("Suomi") }, { "fj", i18n("Fiji") }, { "fo", i18n("Faroese") }, { "fr", i18n("Francais") }, { "fy", i18n("Frisian") }, { "ga", i18n("Gaelic") },
-                        { "gd", i18n("Scots Gaelic") }, { "gl", i18n("Galician") }, { "gn", i18n("Guarani") }, { "gu", i18n("Gujarati") }, { "ha", i18n("Hausa") },
-                        { "he", i18n("Hebrew") }, { "hi", i18n("Hindi") }, { "hr", i18n("Hrvatski") }, { "hu", i18n("Magyar") }, { "hy", i18n("Armenian") },
-                        { "ia", i18n("Interlingua") }, { "id", i18n("Indonesian") }, { "ie", i18n("Interlingue") }, { "ik", i18n("Inupiak") }, { "in", i18n("Indonesian") },
-                        { "is", i18n("Islenska") }, { "it", i18n("Italiano") }, { "iu", i18n("Inuktitut") }, { "iw", i18n("Hebrew") }, { "ja", i18n("Japanese") },
-                        { "ji", i18n("Yiddish") }, { "jw", i18n("Javanese") }, { "ka", i18n("Georgian") }, { "kk", i18n("Kazakh") }, { "kl", i18n("Greenlandic") },
-                        { "km", i18n("Cambodian") }, { "kn", i18n("Kannada") }, { "ko", i18n("Korean") }, { "ks", i18n("Kashmiri") }, { "ku", i18n("Kurdish") },
+                       { "ar", i18n("Arabic") }, { "as", i18n("Assamese") },	{ "ay", i18n("Aymara") }, { "az", i18n("Azerbaijani") }, { "ba", i18n("Bashkir") },
+                       { "be", i18n("Byelorussian") }, { "bg", i18n("Bulgarian") }, { "bh", i18n("Bihari") }, { "bi", i18n("Bislama") }, { "bn", i18n("Bengali; Bangla") },
+                       { "bo", i18n("Tibetan") }, { "br", i18n("Breton") }, { "ca", i18n("Catalan") }, { "co", i18n("Corsican") }, { "cs", i18n("Czech") },
+                       { "cy", i18n("Welsh") }, { "da", i18n("Dansk") }, { "de", i18n("Deutsch") }, { "dz", i18n("Bhutani") }, { "el", i18n("Greek") }, { "en", i18n("English") },
+                       { "eo", i18n("Esperanto") }, { "es", i18n("Espanol") }, { "et", i18n("Estonian") }, { "eu", i18n("Basque") }, { "fa", i18n("Persian") },
+                       { "fi", i18n("Suomi") }, { "fj", i18n("Fiji") }, { "fo", i18n("Faroese") }, { "fr", i18n("Francais") }, { "fy", i18n("Frisian") }, { "ga", i18n("Gaelic") },
+                       { "gd", i18n("Scots Gaelic") }, { "gl", i18n("Galician") }, { "gn", i18n("Guarani") }, { "gu", i18n("Gujarati") }, { "ha", i18n("Hausa") },
+                       { "he", i18n("Hebrew") }, { "hi", i18n("Hindi") }, { "hr", i18n("Hrvatski") }, { "hu", i18n("Magyar") }, { "hy", i18n("Armenian") },
+                       { "ia", i18n("Interlingua") }, { "id", i18n("Indonesian") }, { "ie", i18n("Interlingue") }, { "ik", i18n("Inupiak") }, { "in", i18n("Indonesian") },
+                       { "is", i18n("Islenska") }, { "it", i18n("Italiano") }, { "iu", i18n("Inuktitut") }, { "iw", i18n("Hebrew") }, { "ja", i18n("Japanese") },
+                       { "ji", i18n("Yiddish") }, { "jw", i18n("Javanese") }, { "ka", i18n("Georgian") }, { "kk", i18n("Kazakh") }, { "kl", i18n("Greenlandic") },
+                       { "km", i18n("Cambodian") }, { "kn", i18n("Kannada") }, { "ko", i18n("Korean") }, { "ks", i18n("Kashmiri") }, { "ku", i18n("Kurdish") },
                        { "ky", i18n("Kirghiz") }, { "la", i18n("Latin") }, { "ln", i18n("Lingala") }, { "lo", i18n("Laothian") }, { "lt", i18n("Lithuanian") },
                        { "lv", i18n("Latvian, Lettish") }, { "mg", i18n("Malagasy") }, { "mi", i18n("Maori") }, { "mk", i18n("Macedonian") }, { "ml", i18n("Malayalam") },
                        { "mn", i18n("Mongolian") }, { "mo", i18n("Moldavian") }, { "mr", i18n("Marathi") }, { "ms", i18n("Malay") }, { "mt", i18n("Maltese") },
@@ -264,6 +263,15 @@ QString k9DVD::lang_name(const QString& code) {
     return c;
 }
 
+
+int k9DVD::calcNumTitle(ifo_handle_t *ifo,int _vts,int _ttn) {
+    for (int i=0; i< ifo->tt_srpt->nr_of_srpts;i++) {
+        if (ifo->tt_srpt->title[i].title_set_nr==_vts && ifo->tt_srpt->title[i].vts_ttn == _ttn)
+            return (i+1);
+    }
+   return 0;
+
+}
 
 bool k9DVD::isTitleIndex(ifo_handle_t *ifo,int _vts,int _ttn) {
     for (int i=0; i< ifo->tt_srpt->nr_of_srpts;i++) {
@@ -307,9 +315,9 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     progressDlg= new k9DVDProgress(qApp->mainWidget(),"progress",true);
     progressDlg->setpbTitleStep(0);
     progressDlg->setpbTotalStep(0);
-     
+
     if (!_quickScan)
-	 progressDlg->show();
+        progressDlg->show();
     qApp->processEvents();
 
     k9DVDTitle *l_track;
@@ -317,14 +325,14 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     k9DVDChapter *l_chap;
     k9DVDSubtitle *l_sub;
     QString sh,sm,ss;
-/*
-    ret = stat(device.latin1(), &dvd_stat);
-    if ( ret < 0 ) {
-        c=i18n("Can't find device %1\n").arg( device);
-        setError(c);
-        return 1;
-    }
-*/
+    /*
+        ret = stat(device.latin1(), &dvd_stat);
+        if ( ret < 0 ) {
+            c=i18n("Can't find device %1\n").arg( device);
+            setError(c);
+            return 1;
+        }
+    */
     m_dvd.openDevice(device);
     if( !m_dvd.opened() ) {
         c=i18n("Can't open disc %1!\n").arg(device);
@@ -349,20 +357,20 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
     vmgi_mat = ifo_zero->vmgi_mat;
     titlesetCount = vmgi_mat->vmg_nr_of_title_sets;
-   
+
     menuSizes[0]=vmgi_mat->vmg_last_sector;
 
     title=( has_title ? tr2i18n("unknown") : ctitle);
 
     for (int ts=1;ts <=titlesetCount;ts++) {
         tt_srpt = ifo_zero->tt_srpt;
-	kifo.openIFO(ts);
+        kifo.openIFO(ts);
         ifo = kifo.getIFO();
         if (ifo==NULL)
             continue;
-	//add the titleset in the titleset list
-	k9DVDTitleset *titleset = new k9DVDTitleset(ts,ifo->vtsi_mat->vts_last_sector -ifo->vtsi_mat->vtstt_vobs-1);
-	titlesets.append(titleset);
+        //add the titleset in the titleset list
+        k9DVDTitleset *titleset = new k9DVDTitleset(ts,ifo->vtsi_mat->vts_last_sector -ifo->vtsi_mat->vtstt_vobs-1);
+        titlesets.append(titleset);
 
         for (j=0; j < ifo->vts_pgcit->nr_of_pgci_srp; j++) {
             // tt_srpt->title[j].title_set_nr);
@@ -375,7 +383,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 vts_ttn =  j+1;//ifo->vts_ptt_srpt->title[j].ptt[0].pgcn; //ifo_zero->tt_srpt->title[j].vts_ttn;
                 if (isTitleIndex(ifo_zero,ts,vts_ttn))
                     indexedCount++;
-
+		
                 txt=i18n("Title %1").arg(indexedCount);
                 emit sigTotalText (txt);
                 emit sigTitleProgress(indexedCount,ltitles);
@@ -390,8 +398,9 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 int titleStartSector=pgc->cell_playback[0].first_sector;
                 //l_track=addTitle(j+1,title_set_nr,ifo->vts_ptt_srpt->title[vts_ttn - 1].ptt[0].pgcn - 1,titleStartSector,isTitleIndex(ifo_zero,ts,vts_ttn));
                 bool titleIndexed=isTitleIndex(ifo_zero,ts,vts_ttn);
-                l_track=addTitle(titleset,titleCount, indexedCount,title_set_nr,j,titleStartSector,titleIndexed);
-		titleset->add(l_track);
+                l_track=addTitle(titleset,titleCount, calcNumTitle(ifo_zero,ts,vts_ttn),title_set_nr,j,titleStartSector,titleIndexed);
+                titleset->add
+                (l_track);
 
                 sh.sprintf("%02x",pgc->playback_time.hour);
                 sm.sprintf("%02x",pgc->playback_time.minute);
@@ -436,10 +445,10 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 // AUDIO
                 //       		for (i=0; i<vtsi_mat->nr_of_vts_audio_streams; i++) {
                 l_track->audioStreamCount=0;
-		for (i=0; i<vtsi_mat->nr_of_vts_audio_streams; i++) {
+                for (i=0; i<vtsi_mat->nr_of_vts_audio_streams; i++) {
                     if (pgc->audio_control[i]>>8 !=0) {
-                	l_track->audioStreamCount++;
-		        l_auds=l_track->addAudioStream();
+                        l_track->audioStreamCount++;
+                        l_auds=l_track->addAudioStream();
                         //JMP l_auds->setselected(!titleIndexed);
                         audio_attr = &vtsi_mat->vts_audio_attr[i];
                         sprintf(lang_code, "%c%c", audio_attr->lang_code>>8, audio_attr->lang_code & 0xff);
@@ -457,11 +466,14 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         l_auds->content = (*laudioType.at(audio_attr->lang_extension)).latin1();
                         //if (((pgc->audio_control[i]>>8) & 0x80) ==0x80) {
                         l_auds->id = 1+ ((pgc->audio_control[i]>>8) & 0x7) ;
+			l_auds->m_streamId = (pgc->audio_control[i]>>8);
                         //} else {
                         //    l_auds->id=1;
                         //}
                     }
                 }
+                l_track->m_defAudio=NULL;
+                l_track->m_defSubtitle=NULL;
                 // CHAPTERS
                 cell = 0;
                 unsigned long total_sectors = 0;
@@ -484,7 +496,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                     if (i == pgc->nr_of_programs - 1)
                         next = pgc->nr_of_cells + 1;
 
-		    int angleStart=-1,angleEnd=-1;
+                    int iangleStart=-1,iangleEnd=-1;
                     while (cell < next - 1) {
                         //using c2 otherwise the value of cell were lost
                         //int c2=cell;
@@ -505,34 +517,40 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         //last sector
 
                         /* Check if we're entering an angle block. (vamp_play-title) */
-			int cell2=cell;
+                        int cell2=cell;
                         if ( pgc->cell_playback[ cell ].block_type
-                                == BLOCK_TYPE_ANGLE_BLOCK  && cell>angleEnd ) {
-			    angleStart=cell;
+                                == BLOCK_TYPE_ANGLE_BLOCK  && cell>iangleEnd ) {
+                            iangleStart=cell;
                             for( int idc = 0;; ++idc ) {
-				k9ChapterCell * chapterCell=new k9ChapterCell(cell2+idc,idc+1);
-				l_chap->cells.append(chapterCell);	
-				if (idc==0) 
-					chapterCell->setangleBlock(angleStart);
-				else 
-					chapterCell->setangleBlock(angleInside);
-                               if( pgc->cell_playback[ cell2 + idc ].block_mode
+                                k9ChapterCell * chapterCell=new k9ChapterCell(cell2+idc,idc+1);
+                                l_chap->cells.append(chapterCell);
+                                chapterCell->setstartSector(pgc->cell_playback[cell2+idc].first_sector);
+                                chapterCell->setlastSector(pgc->cell_playback[cell2+idc].last_sector);
+                                if (idc==0)
+                                    chapterCell->setangleBlock(angleStart);
+                                else
+                                    chapterCell->setangleBlock(angleInside);
+                                if( pgc->cell_playback[ cell2 + idc ].block_mode
                                         == BLOCK_MODE_LAST_CELL ) {
-				    angleEnd=cell2+idc;
-				    chapterCell->setangleBlock(angleEnd);
-		                    sectors += pgc->cell_playback[angleEnd].last_sector - pgc->cell_playback[angleStart].first_sector + 1;
+                                    iangleEnd=cell2+idc;
+                                    chapterCell->setangleBlock(angleEnd);
+                                    sectors += pgc->cell_playback[iangleEnd].last_sector - pgc->cell_playback[iangleStart].first_sector + 1;
 
                                     break;
                                 }
                             }
                         } else {
-			    if (!(cell>=angleStart  && cell <=angleEnd)) {
-				l_chap->cells.append(new k9ChapterCell(cell,1));
-	                        sectors += pgc->cell_playback[cell].last_sector - pgc->cell_playback[cell].first_sector + 1;
+                            if (!(cell>=iangleStart  && cell <=iangleEnd)) {
+                                k9ChapterCell * chapterCell=new k9ChapterCell(cell,1);
+                                l_chap->cells.append(chapterCell);
+                                chapterCell->setstartSector(pgc->cell_playback[cell].first_sector);
+                                chapterCell->setlastSector(pgc->cell_playback[cell].last_sector);
 
-			    }
+                                sectors += pgc->cell_playback[cell].last_sector - pgc->cell_playback[cell].first_sector + 1;
+
+                            }
                         }
- 			cell++;
+                        cell++;
 
                     }
 
@@ -553,11 +571,11 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 l_track->size_mb =((float)total_sectors *2048)/(1024*1024);
 
                 // SUBTITLES
-		l_track->subPictureCount=0;
+                l_track->subPictureCount=0;
                 for (i=0; i<vtsi_mat->nr_of_vts_subp_streams; i++) {
                     if (pgc->subp_control[i]>>24 !=0) {
-                	l_track->subPictureCount++;
-		        subp_attr = &vtsi_mat->vts_subp_attr[i];
+                        l_track->subPictureCount++;
+                        subp_attr = &vtsi_mat->vts_subp_attr[i];
                         sprintf(lang_code, "%c%c", subp_attr->lang_code>>8, subp_attr->lang_code & 0xff);
                         if (!lang_code[0]) {
                             lang_code[0] = 'x';
@@ -905,10 +923,10 @@ float k9DVD::getsizeSelected() {
 
 float k9DVD::getfactor(bool _withMenus,bool _streams) {
     if (_withMenus) {
-	m_dvd.openDevice(Device);
+        m_dvd.openDevice(Device);
         k9CellCopyList *cellCopyList =new k9CellCopyList(&m_dvd,this);
         double factor=cellCopyList->getfactor(_withMenus,_streams);
-	m_dvd.close();
+        m_dvd.close();
         return (factor);
     } else {
         float selstreams=0,vidstreams=0,l_factor;
@@ -1050,5 +1068,5 @@ void k9DVD::close() {
     if (m_dvd.opened())
         m_dvd.close();
     titles.clear();
-   titlesets.clear();
+    titlesets.clear();
 }

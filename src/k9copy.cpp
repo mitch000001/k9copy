@@ -74,7 +74,14 @@ void k9Copy::setupActions()
                                   this, SLOT(ActionCopy()),
                                   actionCollection(), "Copy");
     
-   CopyAction->setIcon("exec");
+   CopyAction->setIcon("dvdcopy");
+
+
+   mkMP4Action = new KAction(i18n("Create MPEG-4 from title"),0,
+				  this, SLOT(ActionMP4()),
+				  actionCollection(),"MakeMPEG4");
+
+   mkMP4Action->setIcon("mp4");
 }
 
 void k9Copy::fileOpen()
@@ -91,6 +98,10 @@ void k9Copy::ActionCopy()
 void k9Copy::ActionPlayTitle()
 {
  m_k9Main->PreviewTitle();
+}
+
+void k9Copy::ActionMP4() {
+  m_k9Main->CreateMP4();
 }
 
 

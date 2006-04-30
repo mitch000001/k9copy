@@ -38,8 +38,10 @@ void k9Progress::setProgress(long _position,long _total) {
 }
 
 int k9Progress::execute() {
-   if (!m_process->start())
-	return -1;
+   if(! m_process->isRunning()) {
+	if (!m_process->start())
+		return -1;
+	}
    if (exec()==QDialog::Rejected)
    	return 0;
    else

@@ -369,6 +369,29 @@ k9DVDTitle* k9DVDTitle::getnextTitle() {
     return nextTitle;
 }
 
+
+k9DVDAudioStream* k9DVDTitle::getDefAudio() const {
+    return m_defAudio;
+}
+
+
+void k9DVDTitle::setDefAudio(k9DVDAudioStream* _value) {
+    m_defAudio = _value;
+    m_defAudioSet = true;
+}
+
+
+k9DVDSubtitle* k9DVDTitle::getDefSubtitle() const {
+    return m_defSubtitle;
+}
+
+
+void k9DVDTitle::setDefSubtitle(k9DVDSubtitle* _value) {
+    m_defSubtitle = _value;
+    m_defSubtitleSet=true;
+}
+
+
 k9DVDTitle::k9DVDTitle() {
     audioStreams.setAutoDelete(true);
     chapters.setAutoDelete(true);
@@ -377,6 +400,10 @@ k9DVDTitle::k9DVDTitle() {
     videosize_mb=0;
     vobusize_mb=0;
     nextTitle=NULL;
+    m_defAudio=NULL;
+    m_defSubtitle=NULL;
+    m_defAudioSet=false;
+    m_defSubtitleSet=false;
     forceSelection=false;
 }
 
@@ -451,5 +478,6 @@ const QString k9DVDTitleset::getsize_mb() {
 int k9DVDTitleset::getnum() {
 	return m_num;
 }
+
 
 

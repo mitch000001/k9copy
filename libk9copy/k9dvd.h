@@ -142,7 +142,6 @@ public:
   virtual int getmenuSize();
   virtual void close();
   virtual k9DVDTitleset *gettitleset(int num);
-
 private: // Private methods
   k9DVDRead  m_dvd;
   k9DVDTitle* addTitle(k9DVDTitleset *titleset,int id,int num,int _VTS,int _pgc,int _startSector, bool _indexed);
@@ -156,6 +155,7 @@ private: // Private methods
   void setError(const QString &err);
   int getVampsID(int type);
   bool isTitleIndex(ifo_handle_t *ifo,int _vts,int _ttn);
+  int calcNumTitle(ifo_handle_t *ifo,int _vts,int _ttn);
 public slots: // Public slots
   void slotVobProgress(unsigned int position,unsigned int total);
   void slotTitleProgress(unsigned int position,unsigned int total);

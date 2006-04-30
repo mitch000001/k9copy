@@ -153,7 +153,31 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
         QDomElement pre = xml->createElement("pre");
         pgc.appendChild(pre);
         QDomText precmd=xml->createTextNode("");
-        precmd.setNodeValue("g1=0;jump title 1;");
+	QString txtcmd="subtitle=%1; \n audio=%2; \n g1=0;jump title 1;";
+
+	int subtitle=0,audio=0;	
+	if (l_track->getDefSubtitle() != NULL){
+	   for (uint isub=0;isub<l_track->getsubPictureCount();isub++) {
+		if (l_track->getsubtitle(isub)->getselected()) {
+		  subtitle++;
+		}
+		if (l_track->getsubtitle(isub)==l_track->getDefSubtitle())
+		   break;
+	   }
+	}
+	if (l_track->getDefAudio() != NULL) {
+	   for (uint iaud=0;iaud < l_track->getaudioStreamCount();iaud++) {
+		if (l_track->getaudioStream(iaud)->getselected()) {
+		   audio++;
+		}
+		if(l_track->getaudioStream(iaud)==l_track->getDefAudio())
+		   break;
+	   }
+	}
+
+
+	txtcmd=txtcmd.arg(subtitle+63).arg(audio);
+        precmd.setNodeValue(txtcmd);
         pre.appendChild(precmd);
 
         //create palette for subpictures

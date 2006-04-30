@@ -19,6 +19,7 @@
 ***************************************************************************/
 #include "k9common.h"
 #include "k9copy.h"
+#include "k9play.h"
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
@@ -34,6 +35,8 @@ static const char version[] = "1.0.4";
   {
      { "input <device>", I18N_NOOP("input device"), 0 },
      { "output <device>", I18N_NOOP("output device"), 0 },
+     { "dvdtitle <number>", I18N_NOOP("title to play"), 0 },
+     { "play", I18N_NOOP("play title to stdout"), 0 },
      KCmdLineLastOption // End of options.
   };
 
@@ -64,20 +67,30 @@ int main(int argc, char **argv)
 
         // no session.. just start up normally
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	QString TitleNumber(args->getOption("dvdtitle"));
  	QString InputOptionArg( args->getOption("input"));
- 	QString OutputOptionArg( args->getOption("output"));
-	
-        k9Copy  *widget = new k9Copy;
-	if (InputOptionArg !="") {
-		widget->setInput( InputOptionArg);
-		widget->fileOpen();
-	}
-	if (OutputOptionArg !="")
-		widget->setOutput( OutputOptionArg);
+ 	QString OutputOptionArg( args->getOption("output"));	
 
-	if ((InputOptionArg !="") && (OutputOptionArg!="")) 
-		widget->clone( InputOptionArg,OutputOptionArg);
-        widget->show();
+	if (args->isSet("play")) {
+		k9play player;
+		player.setDevice(InputOptionArg);
+		player.setTitle(TitleNumber.toInt());
+		player.execute();
+		return 1;
+	} else {
+
+		k9Copy  *widget = new k9Copy;
+		if (InputOptionArg !="") {
+			widget->setInput( InputOptionArg);
+			widget->fileOpen();
+		}
+		if (OutputOptionArg !="")
+			widget->setOutput( OutputOptionArg);
+	
+		if ((InputOptionArg !="") && (OutputOptionArg!="")) 
+			widget->clone( InputOptionArg,OutputOptionArg);
+		widget->show();
+	}
     }
 
 
