@@ -30,9 +30,10 @@ void k9MP4Dlg::accept() {
    QDialog::accept();
 }
 
-void k9MP4Dlg::setsize(QString _size) {
-    lblSize->setText(_size);
+void k9MP4Dlg::setTitleLabel(QString _titleLabel) {
+    lblTitle->setText(_titleLabel);
 }
+
 
 void k9MP4Dlg::setfps(QString _fps) {
     lblfps->setText(_fps);

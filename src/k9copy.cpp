@@ -77,7 +77,7 @@ void k9Copy::setupActions()
    CopyAction->setIcon("dvdcopy");
 
 
-   mkMP4Action = new KAction(i18n("Create MPEG-4 from title"),0,
+   mkMP4Action = new KAction(i18n("Create MPEG-4"),0,
 				  this, SLOT(ActionMP4()),
 				  actionCollection(),"MakeMPEG4");
 

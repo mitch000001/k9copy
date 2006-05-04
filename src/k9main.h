@@ -169,7 +169,7 @@ private slots:
     virtual void		bSeqDownClick();
     virtual void	  cbDefAudioActivated(int _index);
     virtual void	  cbDefSubActivated(int _index);
-
+    virtual void          ckMp4AspectRatioClick();
 public slots:
     /*$PUBLIC_SLOTS$*/
     virtual void          PreviewTitle();

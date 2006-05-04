@@ -738,7 +738,7 @@ clean-metasources:
 	-rm -f  k9mp4enc.moc k9dvdprogress.moc.cpp k9cell.moc k9dvdauthor.moc.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9ifo.moc k9dvd.moc.cpp k9progress.moc k9backupdlg.moc k9mp4dlg.moc k9dvdbackup.moc
 
 #>+ 2
-KDE_DIST=dvdprogress.h backupdlg.ui progress.ui backupdlg.h progress.h mp4dlg.h mp4dlg.ui dvdprogress.ui 
+KDE_DIST=backupdlg.ui progress.ui mp4dlg.ui dvdprogress.ui 
 
 #>+ 7
 clean-ui:
@@ -781,7 +781,7 @@ bcheck-am:
 
 
 #>+ 11
-libk9copy_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9backupdlg.cpp $(srcdir)/k9cellcopylist.cpp $(srcdir)/k9cell.cpp $(srcdir)/k9dvdauthor.cpp $(srcdir)/k9dvdbackup.cpp $(srcdir)/k9dvd.cpp $(srcdir)/k9dvdprogress.cpp $(srcdir)/k9ifo.cpp $(srcdir)/k9dvdtitle.cpp $(srcdir)/dummy.cpp $(srcdir)/k9dvdsize.cpp $(srcdir)/k9dvdread.cpp $(srcdir)/k9progress.cpp $(srcdir)/k9mp4enc.cpp $(srcdir)/k9mp4dlg.cpp $(srcdir)/backupdlg.cpp $(srcdir)/dvdprogress.cpp $(srcdir)/progress.cpp $(srcdir)/mp4dlg.cpp $(srcdir)/k9dvdsize.moc.cpp $(srcdir)/k9dvdtitle.moc.cpp $(srcdir)/k9dvd.moc.cpp $(srcdir)/k9dvdprogress.moc.cpp $(srcdir)/k9dvdauthor.moc.cpp  k9cell.moc dvdprogress.moc k9mp4enc.moc progress.moc backupdlg.moc mp4dlg.moc k9ifo.moc k9progress.moc k9backupdlg.moc k9mp4dlg.moc k9dvdbackup.moc
+libk9copy_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9backupdlg.cpp $(srcdir)/k9cellcopylist.cpp $(srcdir)/k9cell.cpp $(srcdir)/k9dvdauthor.cpp $(srcdir)/k9dvdbackup.cpp $(srcdir)/k9dvd.cpp $(srcdir)/k9dvdprogress.cpp $(srcdir)/k9ifo.cpp $(srcdir)/k9dvdtitle.cpp $(srcdir)/dummy.cpp $(srcdir)/k9dvdsize.cpp $(srcdir)/k9dvdread.cpp $(srcdir)/k9progress.cpp $(srcdir)/k9mp4enc.cpp $(srcdir)/k9mp4dlg.cpp backupdlg.cpp dvdprogress.cpp progress.cpp mp4dlg.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp  k9cell.moc dvdprogress.moc k9mp4enc.moc progress.moc backupdlg.moc mp4dlg.moc k9ifo.moc k9progress.moc k9backupdlg.moc k9mp4dlg.moc k9dvdbackup.moc
 	@echo 'creating libk9copy_la.all_cpp.cpp ...'; \
 	rm -f libk9copy_la.all_cpp.files libk9copy_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9copy_la.all_cpp.final; \

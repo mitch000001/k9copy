@@ -23,10 +23,10 @@ public:
   k9MP4Dlg(QWidget* parent = 0, const char* name = 0);
   ~k9MP4Dlg();
   /*$PUBLIC_FUNCTIONS$*/
-  void setsize(QString _size);
   void setfps(QString _fps);
   void setremain(QString _remain);
   void setProgress(int _progress);
+  void setTitleLabel(QString _titleLabel);
   void accept();
 public slots:
   /*$PUBLIC_SLOTS$*/

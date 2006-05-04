@@ -28,7 +28,11 @@ k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
 }
 
 void k9MP4Enc::execute(k9DVDTitle *_title) {
+    time = new QTime(0,0);
+    time->start();
+
    m_stderr="";
+   m_title=_title;
    if (m_height=="") m_height="-2";
    if (m_width=="") m_width="640";
    if (m_audioBitrate=="") m_audioBitrate="128";
@@ -56,11 +60,13 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
    		*m_process << "xvid";
    		*m_process <<"-xvidencopts";
    		*m_process <<":bitrate=" + QString::number(getBitRate(_title));
+		m_progress->setTitleLabel(i18n("Encoding %1").arg("XviD"));
 		break;
 	case lavc_mp4 :
 		*m_process << "lavc";
 		*m_process << "-lavcopts";
 		*m_process << QString("vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=%1").arg(getBitRate(_title)); 
+		m_progress->setTitleLabel(i18n("Encoding %1").arg("lavc MPEG-4"));
 		break;
 
    }
@@ -132,26 +138,50 @@ void k9MP4Enc::getStdout(KProcess *proc, char *buffer, int buflen) {
 	int fsize;
 	sscanf(tmp2.latin1(),"Pos: %f%*s%d",&t,&frame);
 	tmp2=tmp2.mid(tmp2.find("(")+1);
-	sscanf(tmp2.latin1(),"%d",&percent);
+	//sscanf(tmp2.latin1(),"%d",&percent);
 	tmp2=tmp2.mid(tmp2.find(")")+1);
 	sscanf(tmp2.latin1(),"%d",&fps);
 	tmp2=tmp2.mid(tmp2.find("Trem:")+5);
-	sscanf(tmp2.latin1(),"%d",&trem);
+	//sscanf(tmp2.latin1(),"%d",&trem);
 	tmp2=tmp2.mid(tmp2.find("min")+3);
-	sscanf(tmp2.latin1(),"%d",&fsize);
+	//sscanf(tmp2.latin1(),"%d",&fsize);
 
-	m_progress->setProgress(percent);
         m_progress->setfps(QString::number(fps));
-	m_progress->setremain(QString::number(trem) + " "+i18n("min"));
-        m_progress->setsize(QString::number(fsize) + " "+i18n("mb"));
-
+	//m_progress->setremain(QString::number(trem) + " "+i18n("min"));
+        //m_progress->setsize(QString::number(fsize) + " "+i18n("mb"));
   }
 
 }
 
 void k9MP4Enc::getStderr(KProcess *proc, char *buffer, int buflen) {
-  qDebug(QString(buffer));
-  m_stderr.fromLatin1(buffer,buflen);
+  m_stderr=QString(buffer);
+
+int pos=m_stderr.find("INFOPOS:");
+if (pos!=-1) {
+    QString tmp=m_stderr.mid(pos);
+    float percent;
+    uint32_t totalBytes,totalSize;
+    sscanf(tmp.latin1(),"INFOPOS: %d %d",&totalBytes,&totalSize);
+    percent=(float)totalBytes / (float)totalSize;
+
+
+    QTime time2(0,0);
+    time2=time2.addMSecs(time->elapsed());
+    QString remain("--:--:--");
+    if (percent>0) {
+	QTime time3(0,0);
+	time3=time3.addMSecs((uint32_t)(time->elapsed()*(1/percent)));
+	remain=time3.toString("hh:mm:ss");
+    }
+
+    percent*=100;
+    m_progress->setProgress(percent);
+    m_progress->setremain(time2.toString("hh:mm:ss") +" / " +remain);
+
+    m_progress->setProgress(percent);
+} else 
+   qDebug(m_stderr);
+
 }
 
 

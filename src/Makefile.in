@@ -805,7 +805,7 @@ clean-metasources:
 	-rm -f  kviewmpeg2.moc.cpp k9copy.moc.cpp kburndvd.moc k9main.moc.cpp kcddrive.moc.cpp
 
 #>+ 2
-KDE_DIST=viewmpeg2.ui configDlg.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png k9mainw.h hi48-app-k9copy.png menupreview.ui hi32-app-k9copy.png configDlg.ui.h viewmpeg2.h k9copy.desktop MainDlg.ui.h k9copy configDlg.h menupreview.h 
+KDE_DIST=viewmpeg2.ui configDlg.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png menupreview.ui hi32-app-k9copy.png configDlg.ui.h k9copy.desktop MainDlg.ui.h 
 
 #>+ 7
 clean-ui:
@@ -862,7 +862,7 @@ bcheck-am:
 
 
 #>+ 11
-k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/kburndvd.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp $(srcdir)/k9play.cpp $(srcdir)/menupreview.cpp $(srcdir)/viewmpeg2.cpp $(srcdir)/configDlg.cpp $(srcdir)/k9mainw.cpp $(srcdir)/kcddrive.moc.cpp $(srcdir)/k9main.moc.cpp $(srcdir)/kviewmpeg2.moc.cpp $(srcdir)/k9copy.moc.cpp  kburndvd.moc menupreview.moc configDlg.moc viewmpeg2.moc k9mainw.moc
+k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/kburndvd.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp $(srcdir)/k9play.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp  kburndvd.moc menupreview.moc configDlg.moc viewmpeg2.moc k9mainw.moc
 	@echo 'creating k9copy.all_cpp.cpp ...'; \
 	rm -f k9copy.all_cpp.files k9copy.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> k9copy.all_cpp.final; \

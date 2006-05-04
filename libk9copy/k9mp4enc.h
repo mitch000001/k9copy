@@ -16,7 +16,7 @@
 
 #include <qobject.h>
 #include <kprocess.h>
-
+#include <qtimer.h>
 
 class k9MP4Dlg;
 /**
@@ -32,6 +32,7 @@ public:
 private:
     KProcess *m_process;
     k9MP4Dlg  *m_progress;
+    k9DVDTitle *m_title;
     int getBitRate(k9DVDTitle *_title);
     QString m_txt;
     QString m_device;
@@ -43,6 +44,7 @@ private:
     QString m_stderr;
     Codec m_codec;
     int m_cpt;
+    QTime *time;
 private slots:
     void getStdout(KProcess *proc, char *buffer, int buflen);
     void getStderr(KProcess *proc, char *buffer, int buflen);
@@ -54,22 +56,22 @@ public:
     virtual void execute(k9DVDTitle *_title );
 
     virtual void setDevice(const QString& _value) {
-        m_device = _value;
+        m_device = _value.stripWhiteSpace();
     };
     virtual void setFilename(const QString& _value) {
-        m_filename = _value;
+        m_filename = _value.stripWhiteSpace();
     };
     virtual void setHeight(const QString& _value) {
-        m_height = _value;
+        m_height = _value.stripWhiteSpace();
     };
     virtual void setWidth(const QString& _value) {
-        m_width = _value;
+        m_width = _value.stripWhiteSpace();
     };
     virtual void setSize(const QString& _value) {
-        m_size = _value;
+        m_size = _value.stripWhiteSpace();
     };
     virtual void setAudioBitrate(const QString& _value) {
-        m_audioBitrate = _value;
+        m_audioBitrate = _value.stripWhiteSpace();
     };
 
     virtual void setCodec(const Codec& _value) {m_codec = _value;};

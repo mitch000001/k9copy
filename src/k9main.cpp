@@ -826,6 +826,19 @@ void k9Main::readSettings() {
 
     //fill the burn speed combo
     cbOutputDevActivated( cbOutputDev->currentItem());
+
+    cbMp4Codec->setCurrentItem(settings.readEntry("/mp4/codec",0).toInt());
+    sbMp4Size->setValue(settings.readEntry("/mp4/size",QString("700")).toInt());
+    
+    leMp4Width->setText(settings.readEntry("/mp4/width","640"));
+    leMp4Height->setText(settings.readEntry("/mp4/height",""));
+
+    ckMp4AspectRatio->setChecked(settings.readEntry("/mp4/aspectratio",0).toInt());
+    leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
+
+
+    leMp4AudioBitrate->setText(settings.readEntry("/mp4/audiobitrate","128"));
+
 }
 /** No descriptions */
 void k9Main::saveSettings() {
@@ -838,6 +851,13 @@ void k9Main::saveSettings() {
     settings.writeEntry("/options/autoburn",(int)ckAutoBurn->isChecked());
     settings.writeEntry("/options/dvdsize",(int)sbSize->value());
     settings.writeEntry("/options/quickscan",(int)ckQuickScan->isChecked());
+
+    settings.writeEntry("/mp4/codec",cbMp4Codec->currentItem());
+    settings.writeEntry("/mp4/size",(int)sbMp4Size->value());
+    settings.writeEntry("/mp4/width",leMp4Width->text());
+    settings.writeEntry("/mp4/height",leMp4Height->text());
+    settings.writeEntry("/mp4/aspectratio",(int)ckMp4AspectRatio->isChecked());
+    settings.writeEntry("/mp4/audiobitrate",leMp4AudioBitrate->text());
 }
 /** No descriptions */
 void k9Main::bSaveClick() {
@@ -884,6 +904,11 @@ void k9Main::CreateMP4() {
         k9DVDTitle *t=(k9DVDTitle*)obj;
         k9MP4Enc *mp4=new k9MP4Enc();
 	mp4->setDevice(getDevice(cbInputDev));
+	mp4->setAudioBitrate(leMp4AudioBitrate->text());
+	mp4->setCodec((k9MP4Enc::Codec) cbMp4Codec->currentItem());
+ 	mp4->setSize( sbMp4Size->text());
+	mp4->setWidth( leMp4Width->text());
+	mp4->setHeight( leMp4Height->text());
         mp4->execute(t);
         delete mp4;
     }
@@ -1201,7 +1226,9 @@ void k9Main::cbDefSubActivated(int _index) {
     lbi->getTitle()->setDefSubtitle(lstSubDef.at(_index));
 }
 
-
+void k9Main::ckMp4AspectRatioClick() {
+    leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
+}
 
 
 
