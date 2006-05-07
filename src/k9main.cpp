@@ -104,6 +104,8 @@ k9DVDListItem::k9DVDListItem(QObject *DVD,ckLvItem *List,eStreamType type) {
         audioStream=NULL;
         title =(k9DVDTitle*)DVD;
         break;
+    default :
+	break;
     }
     listItem= List;
     streamType=type;
@@ -283,7 +285,7 @@ void ckLvItem::stateChange(bool state) {
         }
         k9DVD *d = mainDlg->dvd;
         mainDlg->setDVDSize();
-        (mainDlg->factor)->setValue( (d->getfactor(mainDlg->ckMenu->isChecked(),true )*100)-100 );
+        (mainDlg->factor)->setValue((int) (d->getfactor(mainDlg->ckMenu->isChecked(),true )*100)-100 );
     }
 }
 
@@ -294,7 +296,7 @@ void ckLvLangItem::stateChange(bool state) {
     mainDlg->updateSelection();
     k9DVD *d = mainDlg->dvd;
     mainDlg->setDVDSize();
-    (mainDlg->factor)->setValue( (d->getfactor(mainDlg->ckMenu->isChecked(),true )*100)-100 );
+    (mainDlg->factor)->setValue((int) (d->getfactor(mainDlg->ckMenu->isChecked(),true )*100)-100 );
 }
 
 bool k9Main::getupdating() {
@@ -372,7 +374,7 @@ void k9Main::bDevicesClick() {
 
 QString  k9Main::getDevice(QComboBox *_combo) {
     int index=-1;
-    for (uint i=0; i<_combo->count();i++) {
+    for (int i=0; i<_combo->count();i++) {
         QString t =_combo->text(i);
         if (_combo->text(i) == _combo->currentText())
             index=i;
@@ -552,7 +554,7 @@ void k9Main::addTitle(k9DVDTitle *track) {
 }
 /** No descriptions */
 void k9Main::updateSelection() {
-    int i;
+    uint i;
     k9DVDListItem *litem;
     for (i=0;i<items.count();i++) {
         litem=(k9DVDListItem*)items.at(i);
@@ -572,6 +574,8 @@ void k9Main::updateSelection() {
             l_title=litem->title;
             l_title->setforceSelection(litem->listItem->isOn());
             break;
+	default :
+	    break;
         }
 
     }
@@ -610,6 +614,8 @@ void k9Main::checkLang(QString lang,eStreamType streamType,bool state) {
                     itemtitleset->setOn(title->gettitleset()->getselected());
                 }
                 break;
+	    default:
+		break;
             }
             //we must check the video item
             if (checked) {
@@ -649,6 +655,8 @@ void k9Main::checkTitle(bool state, ckLvItem *_item) {
                     l_auds->setselected(state);
                     litem->listItem->setOn(state);
                     break;
+		default:
+		    break;
                 }
             } else if ( litem->streamType == VID && state &&  (_item->streamType==SUB || _item->streamType==AUD)) {
                 litem->title->setforceSelection(state);
@@ -699,6 +707,8 @@ void k9Main::updateLvLang(const eStreamType streamType,const QString & lang ) {
                         Selected++;
                 }
                 break;
+	    default:
+		break;
             }
         }
     }
@@ -748,6 +758,8 @@ void k9Main::checkAll(bool state) {
             ckLvItem * itemtitleset=(ckLvItem*)litem -> listItem->parent()->parent();
             l_title->gettitleset()->setselected(state);
             itemtitleset->setOn(l_title->gettitleset()->getselected());
+        default:
+	    break;
         }
     }
 
@@ -987,7 +999,7 @@ void k9Main::ckMenuClick() {
     if (dvd->getopened()) {
         updateSelection();
         setDVDSize();
-        factor->setValue( ( dvd->getfactor(ckMenu->isChecked(),true )*100)-100 );
+        factor->setValue((int) ( dvd->getfactor(ckMenu->isChecked(),true )*100)-100 );
     }
 }
 void k9Main::closeDVD() {
@@ -1008,8 +1020,7 @@ int k9Main::compare(double v1,double v2) {
         return -1;
     if (v1>v2)
         return 1;
-    if (v1==v2)
-        return 0;
+    return 0;
 }
 
 void k9Main::fillLvLanguages() {
@@ -1035,6 +1046,8 @@ void k9Main::fillLvLanguages() {
                         slAudLang.append(l_auds->getlanguage());
                     break;
                 }
+	    default:
+		break;
             }
         }
     }
@@ -1129,7 +1142,7 @@ void k9Main::setOutput(QString _output) {
     for (uint i=0 ;i <recorderList.count();i++) {
         kCDDrive * drive=(kCDDrive*)recorderList.at(i);
         QString c(drive->device);
-        qDebug ("output=" +c);
+//        qDebug ("output=" +c);
         if (c==_output) {
             cbOutputDev->setCurrentItem(i+1);
             break;
@@ -1158,7 +1171,7 @@ void k9Main::bSeqUpClick() {
 }
 
 void k9Main::bSeqDownClick() {
-    int cur=lbSequence->currentItem();
+    uint cur=lbSequence->currentItem();
     if (cur <lbSequence->count()) {
         lbItem *lbi=(lbItem*)lbSequence->item(cur);
         lbSequence->takeItem(lbi);
@@ -1171,7 +1184,7 @@ void k9Main::setSequence() {
     lbItem *lbi = (lbItem*)lbSequence->item(lbSequence->topItem());
     lbItem *lbi2;
     dvd->setstart(lbi->getTitle());
-    for (int i=0 ; i < lbSequence->count()-1;i++) {
+    for (uint i=0 ; i < lbSequence->count()-1;i++) {
         lbi=(lbItem*)lbSequence->item(i);
         lbi2=(lbItem*)lbSequence->item(i+1);
         lbi->getTitle()->setnextTitle(lbi2->getTitle());
@@ -1185,12 +1198,12 @@ void k9Main::lbSequenceChanged(QListBoxItem *_item) {
     cbDefSub->clear();
     lstAudioDef.clear();
     lstSubDef.clear();
-    cbDefAudio->insertItem(i18n("none"));
+    cbDefAudio->insertItem(i18n("default"));
     lstAudioDef.append(NULL);
     cbDefSub->insertItem(i18n("none"));
     lstSubDef.append(NULL);
 
-    for (uint i=0;i < title->getaudioStreamCount();i++) {
+    for (int i=0;i < title->getaudioStreamCount();i++) {
 	if (title->getaudioStream(i)->getselected()) {
 		if ( !title->getDefAudioSet())
 		   title->setDefAudio(title->getaudioStream(i));
@@ -1202,7 +1215,7 @@ void k9Main::lbSequenceChanged(QListBoxItem *_item) {
 	}
     }
 
-    for (uint i=0;i < title->getsubPictureCount();i++) {
+    for (int i=0;i < title->getsubPictureCount();i++) {
 	if (title->getsubtitle(i)->getselected()) {
 		cbDefSub->insertItem(title->getsubtitle(i)->getlanguage());
 		if (title->getsubtitle(i)==title->getDefSubtitle()) {
@@ -1228,6 +1241,7 @@ void k9Main::cbDefSubActivated(int _index) {
 
 void k9Main::ckMp4AspectRatioClick() {
     leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
+    if (ckMp4AspectRatio->isChecked()) leMp4Height->setText("");
 }
 
 

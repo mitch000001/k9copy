@@ -153,11 +153,10 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
         QDomElement pre = xml->createElement("pre");
         pgc.appendChild(pre);
         QDomText precmd=xml->createTextNode("");
-	QString txtcmd="subtitle=%1; \n audio=%2; \n g1=0;jump title 1;";
 
 	int subtitle=0,audio=0;	
 	if (l_track->getDefSubtitle() != NULL){
-	   for (uint isub=0;isub<l_track->getsubPictureCount();isub++) {
+	   for (int isub=0;isub<l_track->getsubPictureCount();isub++) {
 		if (l_track->getsubtitle(isub)->getselected()) {
 		  subtitle++;
 		}
@@ -166,7 +165,7 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
 	   }
 	}
 	if (l_track->getDefAudio() != NULL) {
-	   for (uint iaud=0;iaud < l_track->getaudioStreamCount();iaud++) {
+	   for (int iaud=0;iaud < l_track->getaudioStreamCount();iaud++) {
 		if (l_track->getaudioStream(iaud)->getselected()) {
 		   audio++;
 		}
@@ -175,8 +174,15 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
 	   }
 	}
 
+	QString txtcmd;
+	if (audio !=0) {
+		txtcmd="subtitle=%1;\n audio=%2\n g1=0;jump title 1;";
+		txtcmd=txtcmd.arg(subtitle+63).arg(audio);
+	} else {
+		txtcmd="subtitle=%1;\n audio=%2\n g1=0;jump title 1;";
+		txtcmd=txtcmd.arg(subtitle+63).arg(audio);
+	}
 
-	txtcmd=txtcmd.arg(subtitle+63).arg(audio);
         precmd.setNodeValue(txtcmd);
         pre.appendChild(precmd);
 
