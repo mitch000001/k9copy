@@ -1,6 +1,6 @@
 /*
  *
- * $Id: k3bdevice.cpp 423353 2005-06-08 06:20:40Z trueg $
+ * $Id: k3bdevice.cpp 501293 2006-01-22 15:16:37Z trueg $
  * Copyright (C) 2003 Sebastian Trueg <trueg@k3b.org>
  *
  * This file is part of the K3b project.
@@ -1746,11 +1746,11 @@ K3bDevice::DiskInfo K3bDevice::Device::diskInfo() const
 
 	inf.m_bgFormatState = dInf->bg_f_status&0x3;
 
-	inf.m_numTitles = (dInf->last_track_l & 0xff) | (dInf->last_track_m<<8 & 0xff00);
+	inf.m_numTracks = (dInf->last_track_l & 0xff) | (dInf->last_track_m<<8 & 0xff00);
 	if( inf.diskState() == STATE_EMPTY )
-	  inf.m_numTitles = 0;
+	  inf.m_numTracks = 0;
 	else if( inf.diskState() == STATE_INCOMPLETE )
-	  inf.m_numTitles--;  // do not count the invisible track
+	  inf.m_numTracks--;  // do not count the invisible track
 
 	inf.m_rewritable = dInf->erasable;
 
@@ -1807,31 +1807,7 @@ K3bDevice::DiskInfo K3bDevice::Device::diskInfo() const
 	  eda = ( data[4+9]<<16 | data[4+10] << 8 | data[4+11] );
 	  ea0 = ( data[4+13]<<16 | data[4+14] << 8 | data[4+15] );
 
-	  kdDebug() << "First sec data area: " << sda.toString()
-		    << " (LBA " << QString::number(sda.lba())
-		    << ") (" << QString::number(sda.mode1Bytes()) << " Bytes) ("
-		    << KIO::convertSize(sda.mode1Bytes()) << ")" << endl;
-	  kdDebug() << "Last sec data area: " << eda.toString()
-		    << " (LBA " << QString::number(eda.lba())
-		    << ") (" << QString::number(eda.mode1Bytes()) << " Bytes) ("
-		    << KIO::convertSize(eda.mode1Bytes()) << ")" << endl;
-	  kdDebug() << "Last sec layer 1: " << ea0.toString()
-		    << " (LBA " << QString::number(ea0.lba())
-		    << ") (" << QString::number(ea0.mode1Bytes()) << " Bytes) ("
-		    << KIO::convertSize(ea0.mode1Bytes()) << ")" << endl;
-
-
 	  K3b::Msf da0 = ea0 - sda + 1;
-	  K3b::Msf da1 = eda - ea0;
-	  kdDebug() << "Layer 1 length: " << da0.toString()
-		    << " (LBA " << QString::number(da0.lba())
-		    << ") (" << QString::number(da0.mode1Bytes()) << " Bytes) ("
-		    << KIO::convertSize(da0.mode1Bytes()) << ")" << endl;
-	  kdDebug() << "Layer 2 length: " << da1.toString()
-		    << " (LBA " << QString::number(da1.lba())
-		    << ") (" << QString::number(da1.mode1Bytes()) << " Bytes) ("
-		    << KIO::convertSize(da1.mode1Bytes()) << ")" << endl;
-
 	  inf.m_numLayers = ((data[6]&0x60) == 0 ? 1 : 2);
 	  inf.m_firstLayerSize = da0;
 
@@ -1950,7 +1926,7 @@ K3bDevice::DiskInfo K3bDevice::Device::diskInfo() const
 	  }
 	}
 	else {
-	  if( readTrackInformation( &data, dataLen, 0x1, inf.numTitles() ) ) {
+	  if( readTrackInformation( &data, dataLen, 0x1, inf.numTracks() ) ) {
 	    track_info_t* trackInfo = (track_info_t*)data;
 	    inf.m_capacity = inf.m_usedCapacity
 	      = from4Byte( trackInfo->track_start ) + from4Byte( trackInfo->track_size );
@@ -1968,7 +1944,7 @@ K3bDevice::DiskInfo K3bDevice::Device::diskInfo() const
 	// get data from the incomplete track (which is NOT the invisible track 0xff)
 	// This will fail in case the media is complete!
 	//
-	if( readTrackInformation( &data, dataLen, 0x1, inf.numTitles()+1 ) ) {
+	if( readTrackInformation( &data, dataLen, 0x1, inf.numTracks()+1 ) ) {
 	  track_info_t* trackInfo = (track_info_t*)data;
 	  inf.m_usedCapacity = from4Byte( trackInfo->track_start );
 	  inf.m_capacity = from4Byte( trackInfo->free_blocks ) + from4Byte( trackInfo->track_start );

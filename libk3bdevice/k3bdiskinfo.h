@@ -115,7 +115,7 @@ namespace K3bDevice
        * The number of finished tracks.
        * This does not include the empty track.
        */
-      int numTitles() const;
+      int numTracks() const;
 
       /**
        * Number of layers on a DVD media. For CD media this is always 1.
@@ -158,7 +158,7 @@ namespace K3bDevice
       int m_lastSessionState;
       int m_bgFormatState;
       int m_numSessions;
-      int m_numTitles;
+      int m_numTracks;
       int m_numLayers;  // only for DVD media
       int m_rewritable;
 

@@ -26,6 +26,8 @@
 #include "k9dvdtitle.h"
 #include "k9dvdbackup.h"
 #include "k9mp4enc.h"
+#include "k9settings.h"
+
 #include <kselect.h>
 #include <kcombobox.h>
 #include <qtextbrowser.h>
@@ -64,20 +66,19 @@ k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
         pxSound((const char **) img_sound),
 pxText((const char **) img_text) {
 
-    m_factory = KLibLoader::self()->factory("libk9copy");
+/*    m_factory = KLibLoader::self()->factory("libk9copy");
     if (m_factory)      {
         dvd=static_cast<k9DVD  *>(m_factory->create(this,"dvd", "k9DVD"));
     }
-    //   dvd=new k9DVD(this);
+*/
+    dvd=new k9DVD(this);
 
     updating=false;
 
     items.setAutoDelete(true);
     listView1->setDefaultRenameAction(QListView::Accept);
     KStandardDirs kd;
-    urOutput->setURL(kd.findResource("tmp",""));
-    urOutput->setMode(2);
-    readDrives();
+    m_prefOutput=kd.findResource("tmp","");
     readSettings();
     frPlayback->setEnabled(false);
     ckMenuClick();
@@ -240,7 +241,7 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
                 break;
             }
         case 3: {
-                if ( ! mainDlg->ckQuickScan->isChecked()) {
+                if ( ! mainDlg->getquickScan()) {
                     double size=getstreamSize();
                     QString c;
                     c.sprintf("%.2f mb",size);
@@ -319,26 +320,26 @@ void k9Main::Copy() {
             return;
     }
 
-    if (getFreeSpace( urOutput->url()) <  sbSize->value()) {
-        if (KMessageBox::warningContinueCancel (this, i18n("Insuffisant disk space on %1\n%2 mb expected.").arg(urOutput->url()).arg(sbSize->value()),i18n("DVD Copy"))==KMessageBox::Cancel)
+    if (getFreeSpace( m_prefOutput) <  m_prefSize) {
+        if (KMessageBox::warningContinueCancel (this, i18n("Insuffisant disk space on %1\n%2 mb expected.").arg(m_prefOutput).arg(m_prefSize),i18n("DVD Copy"))==KMessageBox::Cancel)
             return;
     }
 
     bool burn=false;
     if (ckMenu->isChecked()) {
         //copy with k9DVDBackup
-        k9DVDBackup *backup = static_cast<k9DVDBackup  *>(m_factory->create(dvd,"backup", "k9DVDBackup"));
-        //k9DVDBackup *backup=new k9DVDBackup(dvd,"backup");
-        backup->setOutput(urOutput->url());
+        //k9DVDBackup *backup = static_cast<k9DVDBackup  *>(m_factory->create(dvd,"backup", "k9DVDBackup"));
+        k9DVDBackup *backup=new k9DVDBackup(dvd,"backup");
+        backup->setOutput(m_prefOutput);
         backup->setDevice(dvd->getDevice());
         backup->execute();
         burn=backup->getErrMsg()=="";
         delete backup;
     } else {
-        k9DVDAuthor *b=static_cast<k9DVDAuthor  *>(m_factory->create(dvd,"dvdauthor", "k9DVDAuthor"));
-        //k9DVDAuthor *b=new k9DVDAuthor(dvd,"dvdauthor");
+        //k9DVDAuthor *b=static_cast<k9DVDAuthor  *>(m_factory->create(dvd,"dvdauthor", "k9DVDAuthor"));
+        k9DVDAuthor *b=new k9DVDAuthor(dvd,"dvdauthor");
         setSequence();
-        b->setworkDir(urOutput->url());
+        b->setworkDir(m_prefOutput);
         b->author();
         if (!b->getError())
             burn=true;
@@ -347,9 +348,9 @@ void k9Main::Copy() {
 
     if (burn) {
         kBurnDVD b;
-        b.setworkDir(urOutput->url());
-        b.setUseK3b(ckK3b->isChecked());
-        b.setAutoBurn(ckAutoBurn->isChecked());
+        b.setworkDir(m_prefOutput);
+        b.setUseK3b(m_prefK3b);
+        b.setAutoBurn(m_prefAutoBurn);
         b.setvolId(dvd->getDVDTitle());
         b.setSpeed( cbBurnSpeed->currentText());
         if (cbOutputDev->currentItem() !=0) {
@@ -366,11 +367,6 @@ void k9Main::Copy() {
 
 }
 
-void k9Main::bDevicesClick() {
-    kConfigDlg wconfigDlg;
-    wconfigDlg.exec();
-    readDrives();
-}
 
 QString  k9Main::getDevice(QComboBox *_combo) {
     int index=-1;
@@ -415,7 +411,7 @@ void k9Main::Open() {
 
 
     closeDVD();
-    dvd->scandvd(getDevice(cbInputDev),ckQuickScan->isChecked());
+    dvd->scandvd(getDevice(cbInputDev),m_quickScan);
     if (dvd->geterror()) {
         KMessageBox::error( this, dvd->geterrMsg(), i18n("Open DVD"));
         return;
@@ -460,9 +456,9 @@ void k9Main::Open() {
 }
 
 void k9Main::setDVDSize() {
-    k9DVDSize *dvdsize=static_cast<k9DVDSize  *>(m_factory->create(this,"dvd", "k9DVDSize"));
-    //k9DVDSize *dvdsize=new k9DVDSize(this);
-    dvdsize->setMaxSizeDyn(sbSize->value());
+    //k9DVDSize *dvdsize=static_cast<k9DVDSize  *>(m_factory->create(this,"dvd", "k9DVDSize"));
+    k9DVDSize *dvdsize=new k9DVDSize(this);
+    dvdsize->setMaxSizeDyn(m_prefSize);
     delete dvdsize;
 }
 
@@ -748,7 +744,7 @@ void k9Main::checkAll(bool state) {
         case AUD:
             litem->listItem->setOn(state);
             break;
-        case VID:
+        case VID: {
             k9DVDTitle * l_title;
             l_title=litem->title;
             //            l_title->setforceSelection(state);
@@ -758,7 +754,9 @@ void k9Main::checkAll(bool state) {
             ckLvItem * itemtitleset=(ckLvItem*)litem -> listItem->parent()->parent();
             l_title->gettitleset()->setselected(state);
             itemtitleset->setOn(l_title->gettitleset()->getselected());
-        default:
+            }
+	    break;
+	default:
 	    break;
         }
     }
@@ -824,52 +822,54 @@ void k9Main::itemRenamed(QListViewItem * item,int col) {
 
 /** No descriptions */
 void k9Main::readSettings() {
+    readDrives();
+
     KSimpleConfig settings("K9Copy");
     KStandardDirs kd;
-    urOutput->setURL(settings.readEntry("/dir/output",kd.findResource("tmp","")));
+    m_prefOutput=settings.readEntry("/dir/output",kd.findResource("tmp",""));
     cbInputDev->setCurrentItem(settings.readEntry("/dev/input",0).toInt());
     cbOutputDev->setCurrentItem(settings.readEntry("/dev/output",0).toInt());
-    ckK3b->setChecked(settings.readEntry("/options/usek3b",0).toInt());
+
+    m_prefK3b=settings.readEntry("/options/usek3b",0).toInt();
     ckMenu->setChecked(settings.readEntry("/options/keepMenus",0).toInt());
 
-    ckAutoBurn->setChecked(settings.readEntry("/options/autoburn",0).toInt());
-    ckQuickScan->setChecked(settings.readEntry("/options/quickscan",0).toInt());
-    sbSize->setValue(settings.readEntry("/options/dvdsize",QString("4400")).toInt());
+    m_prefAutoBurn=settings.readEntry("/options/autoburn",0).toInt();
+    m_quickScan=settings.readEntry("/options/quickscan",0).toInt();
+    m_prefSize=settings.readEntry("/options/dvdsize",QString("4400")).toInt();
 
     //fill the burn speed combo
     cbOutputDevActivated( cbOutputDev->currentItem());
 
-    cbMp4Codec->setCurrentItem(settings.readEntry("/mp4/codec",0).toInt());
-    sbMp4Size->setValue(settings.readEntry("/mp4/size",QString("700")).toInt());
+    m_prefMp4Codec=settings.readEntry("/mp4/codec",0).toInt();
+    m_prefMp4Size=settings.readEntry("/mp4/size",QString("700")).toInt();
     
-    leMp4Width->setText(settings.readEntry("/mp4/width","640"));
-    leMp4Height->setText(settings.readEntry("/mp4/height",""));
+    m_prefMp4Width=settings.readEntry("/mp4/width","640");
+    m_prefMp4Height=settings.readEntry("/mp4/height","");
 
-    ckMp4AspectRatio->setChecked(settings.readEntry("/mp4/aspectratio",0).toInt());
-    leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
+    m_prefMp4AudioBitrate=settings.readEntry("/mp4/audiobitrate","128");
 
+    m_codecAudio=settings.readListEntry("mencoder/audio");
+    m_codecLabels=settings.readListEntry("mencoder/labels");
+    m_codecVideo=settings.readListEntry("mencoder/video");
 
-    leMp4AudioBitrate->setText(settings.readEntry("/mp4/audiobitrate","128"));
+    if (m_prefMp4Codec -2 <=m_codecLabels.count()) {
+       QStringList::Iterator it=m_codecAudio.at(m_prefMp4Codec);
+       m_prefCodecAudio=*it;
+       it=m_codecVideo.at(m_prefMp4Codec);
+       m_prefCodecVideo=*it;
+       it=m_codecLabels.at(m_prefMp4Codec);	
+       m_prefCodecLabel=*it;
+    }
 
 }
 /** No descriptions */
 void k9Main::saveSettings() {
     KSimpleConfig settings("K9Copy");
-    settings.writeEntry("/dir/output",urOutput->url());
     settings.writeEntry("/dev/input",cbInputDev->currentItem());
     settings.writeEntry("/dev/output",cbOutputDev->currentItem());
-    settings.writeEntry("/options/usek3b",(int)ckK3b->isChecked());
     settings.writeEntry("/options/keepMenus",(int)ckMenu->isChecked());
-    settings.writeEntry("/options/autoburn",(int)ckAutoBurn->isChecked());
-    settings.writeEntry("/options/dvdsize",(int)sbSize->value());
-    settings.writeEntry("/options/quickscan",(int)ckQuickScan->isChecked());
 
-    settings.writeEntry("/mp4/codec",cbMp4Codec->currentItem());
-    settings.writeEntry("/mp4/size",(int)sbMp4Size->value());
-    settings.writeEntry("/mp4/width",leMp4Width->text());
-    settings.writeEntry("/mp4/height",leMp4Height->text());
-    settings.writeEntry("/mp4/aspectratio",(int)ckMp4AspectRatio->isChecked());
-    settings.writeEntry("/mp4/audiobitrate",leMp4AudioBitrate->text());
+
 }
 /** No descriptions */
 void k9Main::bSaveClick() {
@@ -899,30 +899,19 @@ void k9Main::PreviewTitle() {
 }
 
 void k9Main::CreateMP4() {
-    if( listView1->selectedItem()==NULL)
-        return;
-    if (listView1->selectedItem()->depth() <2)
-        return;
-    int rtti=listView1->selectedItem()->rtti();
-    QObject *obj;
-    if (rtti==1000) {
-        LvItem *it=(LvItem*)listView1->selectedItem();
-        obj=it->obj;
-    } else {
-        ckLvItem *it=(ckLvItem*)listView1->selectedItem();
-        obj=it->obj;
-    }
-    if (obj !=NULL) {
-        k9DVDTitle *t=(k9DVDTitle*)obj;
-        k9MP4Enc *mp4=new k9MP4Enc();
-	mp4->setDevice(getDevice(cbInputDev));
-	mp4->setAudioBitrate(leMp4AudioBitrate->text());
-	mp4->setCodec((k9MP4Enc::Codec) cbMp4Codec->currentItem());
- 	mp4->setSize( sbMp4Size->text());
-	mp4->setWidth( leMp4Width->text());
-	mp4->setHeight( leMp4Height->text());
-        mp4->execute(t);
-        delete mp4;
+    for (int i=0; i < dvd->gettitleCount();i++) {
+	k9DVDTitle *t=dvd->gettitle(i);
+	if (t->isSelected() && t->getIndexed() ) {
+		k9MP4Enc *mp4=new k9MP4Enc();
+		mp4->setDevice(getDevice(cbInputDev));
+		mp4->setAudioBitrate(m_prefMp4AudioBitrate);
+		mp4->setCodec((k9MP4Enc::Codec) m_prefMp4Codec);
+		mp4->setSize( QString::number(m_prefMp4Size));
+		mp4->setWidth( m_prefMp4Width);
+		mp4->setHeight( m_prefMp4Height);
+		mp4->execute(t);
+		delete mp4;
+	}       
     }
 }
 
@@ -1154,7 +1143,7 @@ void k9Main::Clone(QString _input,QString _output) {
     setInput(_input);
     setOutput(_output);
     ckMenu->setChecked(true);
-    ckQuickScan->setChecked(true);
+    m_quickScan=true;
     Open();
     checkAll( true);
     Copy();
@@ -1239,10 +1228,6 @@ void k9Main::cbDefSubActivated(int _index) {
     lbi->getTitle()->setDefSubtitle(lstSubDef.at(_index));
 }
 
-void k9Main::ckMp4AspectRatioClick() {
-    leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
-    if (ckMp4AspectRatio->isChecked()) leMp4Height->setText("");
-}
 
 
 

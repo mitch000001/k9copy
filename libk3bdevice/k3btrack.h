@@ -21,7 +21,7 @@
 #include <qcstring.h>
 #include <qvaluevector.h>
 
-#include <k3bmsf.h>
+#include "k3bmsf.h"
 
 
 namespace K3bDevice

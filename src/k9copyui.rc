@@ -14,6 +14,7 @@
 	<Action name="MakeMPEG4"/>	
 	<Action name="Copy"/>
 	<Separator />
+	<Action name="options_configure" />	
 	<Action name="file_quit"/>
 	
 </ToolBar>

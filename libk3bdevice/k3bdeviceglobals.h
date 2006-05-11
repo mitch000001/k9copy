@@ -18,7 +18,7 @@
 #define _K3B_DEVICE_GLOBALS_H_
 
 #include <qstring.h>
-#include <k3bmsf.h>
+#include "k3bmsf.h"
 
 
 namespace K3bDevice 

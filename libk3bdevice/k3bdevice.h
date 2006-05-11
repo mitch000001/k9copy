@@ -1,6 +1,6 @@
 /*
  *
- * $Id: k3bdevice.h 421129 2005-06-02 09:33:12Z trueg $
+ * $Id: k3bdevice.h 475316 2005-10-28 21:04:12Z trueg $
  * Copyright (C) 2003 Sebastian Trueg <trueg@k3b.org>
  *
  * This file is part of the K3b project.
@@ -403,17 +403,11 @@ namespace K3bDevice
       int currentProfile() const;
 
       /**
-       * @returns true if the requested feature is supported and also current.
-       * @deprecated use featureCurrent
-       */
-      bool supportsFeature( unsigned int feature ) const;
-
-      /**
        * Check if a certain feature is current.
        * \see k3bdevicetypes.h for feature constants.
-       * \return true if the feature and false otherwise (this includes errors)
+       * \return 1 if the feature is current, 0 if not, -1 on error
        */
-      bool featureCurrent( unsigned int feature ) const;
+      int featureCurrent( unsigned int feature ) const;
 
       /**
        * This is the method to use!

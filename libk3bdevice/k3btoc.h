@@ -20,7 +20,7 @@
 #include <qvaluelist.h>
 #include <qcstring.h>
 
-#include <k3bmsf.h>
+#include "k3bmsf.h"
 
 #include "k3btrack.h"
 

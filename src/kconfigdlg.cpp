@@ -26,8 +26,8 @@
 #include <kstdguiitem.h>
 #include <kguiitem.h>
 
-kConfigDlg::kConfigDlg()
-    : configDlg()
+kConfigDlg::kConfigDlg(QWidget *parent)
+    : configDlg(parent)
 {
   QStringList ldev;
   QStringList llabels;
@@ -64,8 +64,8 @@ kConfigDlg::kConfigDlg()
   }
 
 
-    buttonCancel->setIconSet(KStdGuiItem::cancel().iconSet());
-    buttonOk->setIconSet(KStdGuiItem::ok().iconSet());
+//    buttonCancel->setIconSet(KStdGuiItem::cancel().iconSet());
+//    buttonOk->setIconSet(KStdGuiItem::ok().iconSet());
 }
 
 
@@ -97,7 +97,7 @@ void kConfigDlg::bRemoveClick()
 }
 
 
-void kConfigDlg::bOkClick()
+void kConfigDlg::save()
 {
   QStringList ldev;
   QStringList llabels;

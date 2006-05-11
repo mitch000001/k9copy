@@ -81,6 +81,10 @@ CONF_FILES = @CONF_FILES@
 CPP = @CPP@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
+DBUSQT_INCS = @DBUSQT_INCS@
+DBUSQT_LIBS = @DBUSQT_LIBS@
+DBUS_INCS = @DBUS_INCS@
+DBUS_LIBS = @DBUS_LIBS@
 DCOPIDL = @DCOPIDL@
 DCOPIDL2CPP = @DCOPIDL2CPP@
 DCOPIDLNG = @DCOPIDLNG@
@@ -101,6 +105,9 @@ GCJFLAGS = @GCJFLAGS@
 GLINC = @GLINC@
 GLLIB = @GLLIB@
 GMSGFMT = @GMSGFMT@
+HAL_DBUS_LIBS = @HAL_DBUS_LIBS@
+HAL_INCS = @HAL_INCS@
+HAL_LIBS = @HAL_LIBS@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 JAR = @JAR@
 JAVAC = @JAVAC@
@@ -256,45 +263,61 @@ x_libraries = @x_libraries@
 xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
-AM_CPPFLAGS = -I$(srcdir) $(all_includes) 
+AM_CPPFLAGS = -I$(srcdir) $(all_includes) $(HAL_INCS) $(DBUS_INCS) $(DBUSQT_INCS)
 
 KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 
 #>- METASOURCES = AUTO
 
+libk3bdevice_la_LIBADD = $(LIB_KIO) $(RESMGR_LIB) $(CAM_LIB) $(HAL_DBUS_LIBS)
 
 # lib version 2 for K3b 0.11.x 
-noinst_HEADERS = k3bcdtext.h k3bdeviceglobals.h k3bdevice.h \
-	k3bdevicemanager.h	k3bdevicetypes.h k3bdiskinfo.h k3bmsf.h k3btoc.h k3btrack.h k3bscsicommand_bsd.cpp \
-	k3bscsicommand_linux.cpp
+libk3bdevice_la_LDFLAGS = $(all_libraries) -version-info 2:1:0 -no-undefined
+
+@include_HAL_TRUE@libk3bdevice_la_SOURCES = k3bdevice.cpp k3bdevice_mmc.cpp k3bscsicommand.cpp \
+@include_HAL_TRUE@	k3btrack.cpp k3btoc.cpp k3bdevicemanager.cpp k3bmsf.cpp k3bdiskinfo.cpp \
+@include_HAL_TRUE@	k3bdeviceglobals.cpp k3bcrc.cpp k3bcdtext.cpp k3bscsicommand_bsd.cpp \
+@include_HAL_TRUE@	k3bscsicommand_linux.cpp
+
+@include_HAL_FALSE@libk3bdevice_la_SOURCES = k3bdevice.cpp k3bdevice_mmc.cpp k3bscsicommand.cpp \
+@include_HAL_FALSE@k3btrack.cpp k3btoc.cpp k3bdevicemanager.cpp k3bmsf.cpp k3bdiskinfo.cpp \
+@include_HAL_FALSE@k3bdeviceglobals.cpp k3bcrc.cpp k3bcdtext.cpp
 
 
-libk3bdevice_la_LDFLAGS = $(all_libraries)
+noinst_HEADERS = k3bdevicemanager.h k3bdevice.h k3btoc.h k3btrack.h \
+	k3bdeviceglobals.h k3bdiskinfo.h k3bcdtext.h k3bmsf.h k3bdevicetypes.h
+
+
 noinst_LTLIBRARIES = libk3bdevice.la
-libk3bdevice_la_SOURCES = k3bcdtext.cpp k3bcrc.cpp k3bdevice.cpp\
-	k3bdeviceglobals.cpp k3bdevicemanager.cpp k3bdevice_mmc.cpp\
-	k3bdiskinfo.cpp k3bmsf.cpp k3bscsicommand.cpp k3btoc.cpp k3btrack.cpp
-
 subdir = libk3bdevice
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 
-libk3bdevice_la_LIBADD =
-am_libk3bdevice_la_OBJECTS = k3bcdtext.lo k3bcrc.lo k3bdevice.lo \
-	k3bdeviceglobals.lo k3bdevicemanager.lo k3bdevice_mmc.lo \
-	k3bdiskinfo.lo k3bmsf.lo k3bscsicommand.lo k3btoc.lo \
-	k3btrack.lo
-#>- libk3bdevice_la_OBJECTS = $(am_libk3bdevice_la_OBJECTS)
-#>+ 7
-libk3bdevice_la_final_OBJECTS = libk3bdevice_la.all_cpp.lo 
-libk3bdevice_la_nofinal_OBJECTS = k3bcdtext.lo k3bcrc.lo k3bdevice.lo \
-	k3bdeviceglobals.lo k3bdevicemanager.lo k3bdevice_mmc.lo \
-	k3bdiskinfo.lo k3bmsf.lo k3bscsicommand.lo k3btoc.lo \
-	k3btrack.lo
-@KDE_USE_FINAL_FALSE@libk3bdevice_la_OBJECTS = $(libk3bdevice_la_nofinal_OBJECTS)
-@KDE_USE_FINAL_TRUE@libk3bdevice_la_OBJECTS = $(libk3bdevice_la_final_OBJECTS)
+libk3bdevice_la_DEPENDENCIES =
+#>- @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS = k3bdevice.lo \
+#>- @include_HAL_TRUE@	k3bdevice_mmc.lo k3bscsicommand.lo \
+#>- @include_HAL_TRUE@	k3btrack.lo k3btoc.lo k3bdevicemanager.lo \
+#>- @include_HAL_TRUE@	k3bmsf.lo k3bdiskinfo.lo k3bdeviceglobals.lo \
+#>- @include_HAL_TRUE@	k3bcrc.lo k3bcdtext.lo k3bscsicommand_bsd.lo \
+#>- @include_HAL_TRUE@	k3bscsicommand_linux.lo
+#>+ 9
+@include_HAL_TRUE@am_libk3bdevice_la_final_OBJECTS = lo lo lo @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.lo 
+@include_HAL_TRUE@am_libk3bdevice_la_nofinal_OBJECTS = k3bdevice.lo \
+@include_HAL_TRUE@	k3bdevice_mmc.lo k3bscsicommand.lo \
+@include_HAL_TRUE@	k3btrack.lo k3btoc.lo k3bdevicemanager.lo \
+@include_HAL_TRUE@	k3bmsf.lo k3bdiskinfo.lo k3bdeviceglobals.lo \
+@include_HAL_TRUE@	k3bcrc.lo k3bcdtext.lo k3bscsicommand_bsd.lo \
+@include_HAL_TRUE@	k3bscsicommand_linux.lo
+@KDE_USE_FINAL_FALSE@@include_HAL_TRUE@am_libk3bdevice_la_OBJECTS = $(@include_HAL_TRUE@am_libk3bdevice_la_nofinal_OBJECTS)
+@KDE_USE_FINAL_TRUE@@include_HAL_TRUE@am_libk3bdevice_la_OBJECTS = $(@include_HAL_TRUE@am_libk3bdevice_la_final_OBJECTS)
+@include_HAL_FALSE@am_libk3bdevice_la_OBJECTS = k3bdevice.lo \
+@include_HAL_FALSE@	k3bdevice_mmc.lo k3bscsicommand.lo \
+@include_HAL_FALSE@	k3btrack.lo k3btoc.lo k3bdevicemanager.lo \
+@include_HAL_FALSE@	k3bmsf.lo k3bdiskinfo.lo k3bdeviceglobals.lo \
+@include_HAL_FALSE@	k3bcrc.lo k3bcdtext.lo
+libk3bdevice_la_OBJECTS = $(am_libk3bdevice_la_OBJECTS)
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
@@ -310,15 +333,19 @@ am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k3bdevicemanager.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k3bdiskinfo.Plo ./$(DEPDIR)/k3bmsf.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_bsd.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_linux.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k3btoc.Plo ./$(DEPDIR)/k3btrack.Plo
-#>+ 16
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =   $(DEPDIR)/libk3bdevice_la.all_cpp.P ./$(DEPDIR)/k3bcdtext.Plo ./$(DEPDIR)/k3bcrc.Plo \
+#>+ 20
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =   $(DEPDIR)/@include_HAL_TRUE@am_libk3bdevice_la.all_cpp.P ./$(DEPDIR)/k3bcdtext.Plo ./$(DEPDIR)/k3bcrc.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevice.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevice_mmc.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdeviceglobals.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevicemanager.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdiskinfo.Plo ./$(DEPDIR)/k3bmsf.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_bsd.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_linux.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3btoc.Plo ./$(DEPDIR)/k3btrack.Plo
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  ./$(DEPDIR)/k3bcdtext.Plo ./$(DEPDIR)/k3bcrc.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevice.Plo \
@@ -327,6 +354,8 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevicemanager.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdiskinfo.Plo ./$(DEPDIR)/k3bmsf.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_bsd.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_linux.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3btoc.Plo ./$(DEPDIR)/k3btrack.Plo
 #>- CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 #>- 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -395,6 +424,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bdiskinfo.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bmsf.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bscsicommand.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bscsicommand_bsd.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bscsicommand_linux.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3btoc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3btrack.Plo@am__quote@
 
@@ -591,11 +622,18 @@ k3bdevicemanager.moc: $(srcdir)/k3bdevicemanager.h
 mocs: k3bdevicemanager.moc
 
 #>+ 3
-clean-metasources:
-	-rm -f  k3bdevicemanager.moc
+k3bhalconnection.moc: $(srcdir)/k3bhalconnection.h
+	$(MOC) $(srcdir)/k3bhalconnection.h -o k3bhalconnection.moc
 
 #>+ 2
-KDE_DIST=k3bcrc.h k3bscsicommand.h k3bmmc.h configure.in.in 
+mocs: k3bhalconnection.moc
+
+#>+ 3
+clean-metasources:
+	-rm -f  k3bdevicemanager.moc k3bhalconnection.moc
+
+#>+ 2
+KDE_DIST=k3bcrc.h k3bscsicommand.h k3bhalconnection.cpp k3bmmc.h configure.in.in libk3bdevice.doxy k3bhalconnection.h 
 
 #>+ 2
 docs-am:
@@ -630,36 +668,36 @@ bcheck-am:
 
 
 #>+ 11
-libk3bdevice_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k3bcdtext.cpp $(srcdir)/k3bcrc.cpp $(srcdir)/k3bdevice.cpp $(srcdir)/k3bdeviceglobals.cpp $(srcdir)/k3bdevicemanager.cpp $(srcdir)/k3bdevice_mmc.cpp $(srcdir)/k3bdiskinfo.cpp $(srcdir)/k3bmsf.cpp $(srcdir)/k3bscsicommand.cpp $(srcdir)/k3btoc.cpp $(srcdir)/k3btrack.cpp  k3bdevicemanager.moc
-	@echo 'creating libk3bdevice_la.all_cpp.cpp ...'; \
-	rm -f libk3bdevice_la.all_cpp.files libk3bdevice_la.all_cpp.final; \
-	echo "#define KDE_USE_FINAL 1" >> libk3bdevice_la.all_cpp.final; \
-	for file in k3bcdtext.cpp k3bcrc.cpp k3bdevice.cpp k3bdeviceglobals.cpp k3bdevicemanager.cpp k3bdevice_mmc.cpp k3bdiskinfo.cpp k3bmsf.cpp k3bscsicommand.cpp k3btoc.cpp k3btrack.cpp ; do \
-	  echo "#include \"$$file\"" >> libk3bdevice_la.all_cpp.files; \
-	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libk3bdevice_la.all_cpp.final; \
+@include_HAL_TRUE@am_libk3bdevice_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k3bdevice.cpp $(srcdir)/k3bdevice_mmc.cpp $(srcdir)/k3bscsicommand.cpp $(srcdir)/k3btrack.cpp $(srcdir)/k3btoc.cpp $(srcdir)/k3bdevicemanager.cpp $(srcdir)/k3bmsf.cpp $(srcdir)/k3bdiskinfo.cpp $(srcdir)/k3bdeviceglobals.cpp $(srcdir)/k3bcrc.cpp $(srcdir)/k3bcdtext.cpp $(srcdir)/k3bscsicommand_bsd.cpp $(srcdir)/k3bscsicommand_linux.cpp  k3bdevicemanager.moc
+	@echo 'creating @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.cpp ...'; \
+	rm -f @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.files @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final; \
+	echo "#define KDE_USE_FINAL 1" >> @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final; \
+	for file in k3bdevice.cpp k3bdevice_mmc.cpp k3bscsicommand.cpp k3btrack.cpp k3btoc.cpp k3bdevicemanager.cpp k3bmsf.cpp k3bdiskinfo.cpp k3bdeviceglobals.cpp k3bcrc.cpp k3bcdtext.cpp k3bscsicommand_bsd.cpp k3bscsicommand_linux.cpp ; do \
+	  echo "#include \"$$file\"" >> @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.files; \
+	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final; \
 	done; \
-	cat libk3bdevice_la.all_cpp.final libk3bdevice_la.all_cpp.files > libk3bdevice_la.all_cpp.cpp; \
-	rm -f libk3bdevice_la.all_cpp.final libk3bdevice_la.all_cpp.files
+	cat @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.files > @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.cpp; \
+	rm -f @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.files
 
 #>+ 3
 clean-final:
-	-rm -f libk3bdevice_la.all_cpp.cpp
+	-rm -f @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.cpp
 
 #>+ 3
 final:
-	$(MAKE) libk3bdevice_la_OBJECTS="$(libk3bdevice_la_final_OBJECTS)" all-am
+	$(MAKE) @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS="$(@include_HAL_TRUE@am_libk3bdevice_la_final_OBJECTS)" all-am
 
 #>+ 3
 final-install:
-	$(MAKE) libk3bdevice_la_OBJECTS="$(libk3bdevice_la_final_OBJECTS)" install-am
+	$(MAKE) @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS="$(@include_HAL_TRUE@am_libk3bdevice_la_final_OBJECTS)" install-am
 
 #>+ 3
 no-final:
-	$(MAKE) libk3bdevice_la_OBJECTS="$(libk3bdevice_la_nofinal_OBJECTS)" all-am
+	$(MAKE) @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS="$(@include_HAL_TRUE@am_libk3bdevice_la_nofinal_OBJECTS)" all-am
 
 #>+ 3
 no-final-install:
-	$(MAKE) libk3bdevice_la_OBJECTS="$(libk3bdevice_la_nofinal_OBJECTS)" install-am
+	$(MAKE) @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS="$(@include_HAL_TRUE@am_libk3bdevice_la_nofinal_OBJECTS)" install-am
 
 #>+ 3
 cvs-clean:
@@ -669,8 +707,10 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 5
+#>+ 7
 nmcheck: 
 k3bdevicemanager.lo: k3bdevicemanager.moc 
 nmcheck-am: nmcheck
+k3bhalconnection.lo: k3bhalconnection.moc 
+k3bhalconnection.o: k3bhalconnection.moc 
 k3bdevicemanager.o: k3bdevicemanager.moc 

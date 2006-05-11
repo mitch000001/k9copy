@@ -16,7 +16,7 @@
 #include "k3bdiskinfo.h"
 #include "k3bdeviceglobals.h"
 
-#include <k3bmsf.h>
+#include "k3bmsf.h"
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -32,7 +32,7 @@ K3bDevice::DiskInfo::DiskInfo()
     m_lastSessionState(STATE_UNKNOWN),
     m_bgFormatState(0),
     m_numSessions(0),
-    m_numTitles(0),
+    m_numTracks(0),
     m_rewritable(false)
 {
 }
@@ -100,12 +100,12 @@ int K3bDevice::DiskInfo::numSessions() const
 }
 
 
-int K3bDevice::DiskInfo::numTitles() const
+int K3bDevice::DiskInfo::numTracks() const
 {
   if( empty() )
     return 0;
   else
-    return m_numTitles;
+    return m_numTracks;
 }
 
 
@@ -178,7 +178,7 @@ void K3bDevice::DiskInfo::debug() const
 	    << "Rewritable:      " << rewritable() << endl
 	    << "Appendable:      " << appendable() << endl
 	    << "Sessions:        " << numSessions() << endl
-	    << "Tracks:          " << numTitles() << endl
+	    << "Tracks:          " << numTracks() << endl
 	    << "Layers:          " << numLayers() << endl
 	    << "Capacity:        " << capacity().toString() 
 	    << " (LBA " << QString::number(capacity().lba())
@@ -224,7 +224,7 @@ void K3bDevice::DiskInfo::debug() const
 //      << "Rewritable:      " << ngInf.rewritable() << endl
 //      << "Appendable:      " << ngInf.appendable() << endl
 //      << "Sessions:        " << ngInf.numSessions() << endl
-//      << "Tracks:          " << ngInf.numTitles() << endl
+//      << "Tracks:          " << ngInf.numTracks() << endl
 //      << "Size:            " << ngInf.capacity().toString() << endl
 //      << "Remaining size:  " << ngInf.remainingSize().toString() << endl;
    

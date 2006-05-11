@@ -32,12 +32,12 @@
 class kConfigDlg : public configDlg
 {
 public:
-    kConfigDlg();
+    kConfigDlg(QWidget *parent);
 
     ~kConfigDlg();
     void bAddClick();
     void bRemoveClick();
-    void bOkClick();
+    void save();
 
 };
 

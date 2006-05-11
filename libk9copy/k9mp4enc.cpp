@@ -19,12 +19,38 @@
 #include <qdir.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
+#include <qstringlist.h>
+#include <ksimpleconfig.h>
 
 k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
  : QObject(parent, name){
    m_height=m_width=m_audioBitrate=m_filename="";
    m_codec=xvid; //lavc_mp4;
    m_cpt=-1;
+
+
+   QStringList laudio;
+   QStringList llabels;
+   QStringList lvideo;
+
+   KSimpleConfig settings("K9Copy");
+   m_lstAudio=settings.readListEntry("mencoder/audio");
+   m_lstCodecs=settings.readListEntry("mencoder/labels");
+   m_lstVideo=settings.readListEntry("mencoder/video");
+/*  
+   int row=0;
+   for ( QStringList::Iterator it = llabels.begin(); it != llabels.end(); ++it )
+   {
+    tblOptions->setNumRows(row+1);
+    tblOptions->setText(row,0,optValue( (*it).latin1()));
+    QStringList::Iterator it3=lvideo.at(row);
+    tblOptions->setText(row,1,optValue((*it3).latin1()));
+    QStringList::Iterator it2=laudio.at(row);
+    tblOptions->setText(row,2,optValue((*it2).latin1()));
+    row++;
+    }
+*/
+
 }
 
 void k9MP4Enc::execute(k9DVDTitle *_title) {
@@ -55,11 +81,14 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
    //QString pgc("dvd://%1 -dvd-device %2");
    //*m_process << pgc.arg(_title->getnumTitle()).arg(m_device);
    *m_process << "-ovc";
+   
+   bool audio=false;
+
    switch (m_codec) {
    	case xvid:
    		*m_process << "xvid";
    		*m_process <<"-xvidencopts";
-   		*m_process <<":bitrate=" + QString::number(getBitRate(_title));
+   		*m_process <<"bitrate=" + QString::number(getBitRate(_title));
 		m_progress->setTitleLabel(i18n("Encoding %1").arg("XviD"));
 		break;
 	case lavc_mp4 :
@@ -68,24 +97,42 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 		*m_process << QString("vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=%1").arg(getBitRate(_title)); 
 		m_progress->setTitleLabel(i18n("Encoding %1").arg("lavc MPEG-4"));
 		break;
+	default:
+		QStringList::Iterator it = m_lstVideo.at((int)m_codec - 2 );
+		*m_process << replaceParams((*it));
+		for (uint i=0;i<_title->getaudioStreamCount();i++) {
+			if (_title->getaudioStream(i)->getselected()) {
+			*m_process << "-oac";
+     			it = m_lstAudio.at((int)m_codec - 2 );
+		    	*m_process << replaceParams((*it));
+			*m_process <<"-aid";
+			*m_process << QString::number(_title->getaudioStream(i)->getStreamId());
+			audio=true;
+			break;
+			}
+		}
+		it = m_lstCodecs.at((int)m_codec - 2 );
+		m_progress->setTitleLabel(i18n("Encoding %1").arg((*it)));
+		break;
 
    }
-
-   *m_process <<"-vf" << QString("pp=de,crop=0:0:0:0,scale=%1:%2").arg(m_width).arg(m_height);
-   bool audio=false;
-   //looking for first audio selected
-   for (uint i=0;i<_title->getaudioStreamCount();i++) {
-  	if (_title->getaudioStream(i)->getselected()) {
-	   *m_process << "-oac";
-   	   *m_process << "mp3lame";
-	   *m_process <<"-lameopts" << QString("abr:br=%1").arg(m_audioBitrate);
-   	   *m_process <<"-aid";
-
-	   *m_process << QString::number(_title->getaudioStream(i)->getStreamId());
-           audio=true;
-	   break;
+  
+   if (m_codec == xvid || m_codec == lavc_mp4) {
+	*m_process <<"-vf" << QString("pp=de,crop=0:0:0:0,scale=%1:%2").arg(m_width).arg(m_height);
+	//looking for first audio selected
+	for (uint i=0;i<_title->getaudioStreamCount();i++) {
+		if (_title->getaudioStream(i)->getselected()) {
+		*m_process << "-oac";
+		*m_process << "mp3lame";
+		*m_process <<"-lameopts" << QString("abr:br=%1").arg(m_audioBitrate);
+		*m_process <<"-aid";
+	
+		*m_process << QString::number(_title->getaudioStream(i)->getStreamId());
+		audio=true;
+		break;
+		}
 	}
-   }
+   } 
    if (!audio) *m_process << "-nosound";
 
    *m_process <<"-o" << m_filename;
@@ -103,6 +150,16 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
    delete m_progress;
    
 }
+
+QString k9MP4Enc::replaceParams(QString _value) {
+   QString str=_value;
+   str.replace("$WIDTH",m_width);
+   str.replace("$HEIGHT",m_height);
+   str.replace("$VIDBR",QString::number(getBitRate(m_title)));
+   str.replace("$AUDBR",QString::number(getBitRate(m_title)));
+   return str;
+}
+
 
 void k9MP4Enc::exited(KProcess * process) {
    m_progress->accept();

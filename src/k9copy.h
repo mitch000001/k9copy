@@ -51,7 +51,7 @@ private slots:
     void changeCaption(const QString& text);
 public slots:
     void fileOpen();
-
+    void preferences();
 private:
     void setupAccel();
     void setupActions();

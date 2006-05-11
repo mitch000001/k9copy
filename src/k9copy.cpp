@@ -11,6 +11,7 @@
 //
 #include "k9main.h"
 #include "k9copy.h"
+#include "k9settings.h"
 
 #include <kdeversion.h>
 #include <kstatusbar.h>
@@ -59,9 +60,9 @@ bool k9Copy::queryClose   (    ) {
 
 void k9Copy::setupActions()
 {
-    KStdAction::open(this, SLOT(fileOpen()), actionCollection());;
+    KStdAction::open(this, SLOT(fileOpen()), actionCollection());
     KStdAction::quit(kapp, SLOT(quit()), actionCollection());
-
+    KStdAction::preferences(this,SLOT(preferences()),actionCollection());
 
     PlayTitleAction = new KAction(i18n("Play title"), 0,
                                   this, SLOT(ActionPlayTitle()),
@@ -89,6 +90,13 @@ void k9Copy::fileOpen()
   m_k9Main->Open();
 
 }
+
+void k9Copy::preferences() {
+  k9settings settings(this,i18n("Settings"));
+  settings.exec();
+  m_k9Main->readSettings();
+}
+
 
 void k9Copy::ActionCopy()
 {

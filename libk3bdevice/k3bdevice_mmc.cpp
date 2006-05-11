@@ -1,6 +1,6 @@
 /* 
  *
- * $Id: k3bdevice_mmc.cpp 419126 2005-05-28 15:52:02Z trueg $
+ * $Id: k3bdevice_mmc.cpp 511304 2006-02-19 14:42:33Z trueg $
  * Copyright (C) 2004 Sebastian Trueg <trueg@k3b.org>
  *
  * This file is part of the K3b project.
@@ -83,27 +83,21 @@ bool K3bDevice::Device::getFeature( unsigned char** data, int& dataLen, unsigned
 }
 
 
-bool K3bDevice::Device::featureCurrent( unsigned int feature ) const
+int K3bDevice::Device::featureCurrent( unsigned int feature ) const
 {
   unsigned char* data = 0;
   int dataLen = 0;
   if( getFeature( &data, dataLen, feature ) ) {
-    bool success = false;
+    int ret = -1;
     if( dataLen >= 11 )
-      success = ( data[8+2]&1 );  // check the current flag
+      ret = ( data[8+2]&1 ? 1 : 0 );  // check the current flag
 
     delete [] data;
 
-    return success;
+    return ret;
   }
   else
-    return false;
-}
-
-
-bool K3bDevice::Device::supportsFeature( unsigned int feature ) const
-{
-  return featureCurrent( feature );
+    return -1;
 }
 
 
@@ -697,7 +691,7 @@ bool K3bDevice::Device::readFormatCapacity( int wantedFormat, K3b::Msf& r,
   bool success = false;
 
   // the maximal length as stated in MMC4
-  static const unsigned int maxLen = 4 + (8*31);
+  static const unsigned int maxLen = 4 + (8*32);
 
   unsigned char buffer[maxLen];
   ::memset( buffer, 0, maxLen );

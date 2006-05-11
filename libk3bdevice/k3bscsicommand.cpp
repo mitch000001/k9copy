@@ -179,6 +179,7 @@ void K3bDevice::ScsiCommand::debugError( int command, int errorCode, int senseKe
 }
 
 
+
 #ifdef Q_OS_LINUX
 #include "k3bscsicommand_linux.cpp"
 #endif

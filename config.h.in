@@ -9,6 +9,9 @@
 /* x86_64 architecture */
 #undef ARCH_X86_64
 
+/* HAL API version 0.4 */
+#undef HAL_0_4
+
 /* Define if you have the CoreAudio API */
 #undef HAVE_COREAUDIO
 
@@ -20,6 +23,9 @@
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
+
+/* compile in HAL support */
+#undef HAVE_HAL
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H

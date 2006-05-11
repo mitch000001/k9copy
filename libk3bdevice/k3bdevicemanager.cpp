@@ -1,6 +1,6 @@
 /*
  *
- * $Id: k3bdevicemanager.cpp 424796 2005-06-13 07:56:48Z trueg $
+ * $Id: k3bdevicemanager.cpp 526655 2006-04-05 10:04:16Z trueg $
  * Copyright (C) 2003 Sebastian Trueg <trueg@k3b.org>
  *
  * This file is part of the K3b project.
@@ -20,6 +20,10 @@
 #include "k3bdeviceglobals.h"
 #include "k3bscsicommand.h"
 #include "k3bmmc.h"
+
+#ifdef HAVE_HAL
+#include "k3bhalconnection.h"
+#endif
 
 #include <qstring.h>
 #include <qstringlist.h>
@@ -645,10 +649,10 @@ bool K3bDevice::DeviceManager::testForCdrom(const QString& devicename)
     cmd[5] = 0;
 
     if( cmd.transport( TR_DIR_READ, buf, sizeof(buf) ) ) {
-      kdError() << "(K3bDevice::Device) Unable to do inquiry." << endl;
+      kdDebug() << "(K3bDevice::Device) Unable to do inquiry. " << devicename << " is not a cdrom device" << endl;
     }
-    else if( (inq->p_device_type&0x1f) != 0x5 ) {
-      kdDebug() << devicename << " seems not to be a cdrom device: " << strerror(errno) << endl;
+    else if( inq->p_device_type != 0x5 ) {
+      kdDebug() << devicename << " seems not to be a cdrom device: " << (int)inq->p_device_type << endl;
     }
     else {
       ret = true;

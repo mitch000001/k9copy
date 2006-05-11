@@ -17,7 +17,7 @@
 #include <qobject.h>
 #include <kprocess.h>
 #include <qtimer.h>
-
+#include <qstringlist.h>
 class k9MP4Dlg;
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
@@ -43,8 +43,10 @@ private:
     QString m_audioBitrate;
     QString m_stderr;
     Codec m_codec;
+    QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
     int m_cpt;
     QTime *time;
+    QString replaceParams(QString _input);
 private slots:
     void getStdout(KProcess *proc, char *buffer, int buflen);
     void getStderr(KProcess *proc, char *buffer, int buflen);

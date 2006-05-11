@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>configDlg</class>
-<widget class="QDialog">
+<widget class="QWidget">
     <property name="name">
         <cstring>configDlg</cstring>
     </property>
@@ -9,16 +9,24 @@
             <x>0</x>
             <y>0</y>
             <width>578</width>
-            <height>336</height>
+            <height>342</height>
         </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>7</hsizetype>
+            <vsizetype>7</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
     </property>
     <property name="caption">
         <string>k9Copy - Devices</string>
     </property>
-    <property name="sizeGripEnabled">
+    <property name="modal" stdset="0">
         <bool>true</bool>
     </property>
-    <property name="modal">
+    <property name="sizeGripEnabled" stdset="0">
         <bool>true</bool>
     </property>
     <grid>
@@ -31,22 +39,6 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>textLabel1</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>7</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>&lt;b&gt;&lt;p align="center"&gt;Devices not detected by k9copy&lt;/p&gt;&lt;/b&gt;</string>
-            </property>
-        </widget>
         <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>Layout1</cstring>
@@ -61,54 +53,6 @@
                 <property name="spacing">
                     <number>6</number>
                 </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>Horizontal Spacing2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="KPushButton">
-                    <property name="name">
-                        <cstring>buttonOk</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;OK</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                    <property name="autoDefault">
-                        <bool>true</bool>
-                    </property>
-                    <property name="default">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-                <widget class="KPushButton">
-                    <property name="name">
-                        <cstring>buttonCancel</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Cancel</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                    <property name="autoDefault">
-                        <bool>true</bool>
-                    </property>
-                </widget>
             </hbox>
         </widget>
         <spacer row="2" column="1">
@@ -195,10 +139,13 @@
                         </sizepolicy>
                     </property>
                     <property name="text">
-                        <string>&amp;Add</string>
+                        <string>Add</string>
                     </property>
                     <property name="accel">
-                        <string>Alt+A</string>
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>27</number>
                     </property>
                 </widget>
                 <widget class="KPushButton">
@@ -214,10 +161,13 @@
                         </sizepolicy>
                     </property>
                     <property name="text">
-                        <string>&amp;Remove</string>
+                        <string>Remove</string>
                     </property>
                     <property name="accel">
-                        <string>Alt+R</string>
+                        <string></string>
+                    </property>
+                    <property name="stdItem" stdset="0">
+                        <number>28</number>
                     </property>
                 </widget>
             </vbox>
@@ -225,18 +175,6 @@
     </grid>
 </widget>
 <connections>
-    <connection>
-        <sender>buttonOk</sender>
-        <signal>clicked()</signal>
-        <receiver>configDlg</receiver>
-        <slot>accept()</slot>
-    </connection>
-    <connection>
-        <sender>buttonCancel</sender>
-        <signal>clicked()</signal>
-        <receiver>configDlg</receiver>
-        <slot>reject()</slot>
-    </connection>
     <connection>
         <sender>bRemove</sender>
         <signal>clicked()</signal>
@@ -249,12 +187,6 @@
         <receiver>configDlg</receiver>
         <slot>bAddClick()</slot>
     </connection>
-    <connection>
-        <sender>buttonOk</sender>
-        <signal>clicked()</signal>
-        <receiver>configDlg</receiver>
-        <slot>bOkClick()</slot>
-    </connection>
 </connections>
 <includes>
     <include location="local" impldecl="in implementation">configDlg.ui.h</include>
@@ -265,4 +197,8 @@
     <slot>bOkClick()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
 </UI>

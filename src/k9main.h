@@ -152,13 +152,13 @@ public:
     void saveSettings();
     void setDVDSize();
     static int compare(double v1,double v2);
-
+    void readSettings();
+    bool getquickScan() {return m_quickScan;};
     //streamanalyze stream;
     k9DVD *dvd;
 private slots:
     virtual void          ckMenuClick();
     virtual void          listView1CurrentChanged( QListViewItem * );
-    virtual void          bDevicesClick();
     virtual void          bSaveClick();
     virtual void	  cbOutputDevActivated(int);
     virtual void	  bInputOpenClick();
@@ -169,7 +169,6 @@ private slots:
     virtual void		bSeqDownClick();
     virtual void	  cbDefAudioActivated(int _index);
     virtual void	  cbDefSubActivated(int _index);
-    virtual void          ckMp4AspectRatioClick();
 public slots:
     /*$PUBLIC_SLOTS$*/
     virtual void          PreviewTitle();
@@ -184,7 +183,6 @@ protected:
     QObjectList items;
     k9DVDListItem *addListItem(QObject *DVD,ckLvItem *List,eStreamType type);
 
-    void readSettings();
     void readDrives();
     QPtrList<QListViewItem> lvItems;
     QPtrList<ckLvItem> tsItems;
@@ -210,6 +208,23 @@ protected:
     void setSequence();
     QPtrList <k9DVDAudioStream> lstAudioDef;
     QPtrList <k9DVDSubtitle> lstSubDef;
+
+    //PREFERENCES
+    QString m_prefOutput;
+    bool m_quickScan;
+    int  m_prefSize;
+    bool m_prefK3b;
+    bool m_prefMenu;
+    bool m_prefAutoBurn;
+    int  m_prefMp4Codec;
+    int  m_prefMp4Size;
+    QString  m_prefMp4Width;
+    QString  m_prefMp4Height;
+    QString  m_prefMp4AudioBitrate;
+    QStringList m_codecAudio;
+    QStringList m_codecLabels;
+    QStringList m_codecVideo;
+    QString m_prefCodecAudio,m_prefCodecVideo,m_prefCodecLabel;
 protected slots:
     /*$PROTECTED_SLOTS$*/
     void slot_progress(QString str);
