@@ -218,6 +218,7 @@ protected:
     bool m_prefAutoBurn;
     int  m_prefMp4Codec;
     int  m_prefMp4Size;
+    int  m_prefMp4NumberCD;
     QString  m_prefMp4Width;
     QString  m_prefMp4Height;
     QString  m_prefMp4AudioBitrate;

@@ -29,6 +29,7 @@ void k9prefMPEG4::load() {
     KSimpleConfig settings("K9Copy");
 
     sbMp4Size->setValue(settings.readEntry("/mp4/size",QString("700")).toInt());
+    sbMp4NumberCD->setValue(settings.readEntry("/mp4/numberCD",QString("1")).toInt());
     
     leMp4Width->setText(settings.readEntry("/mp4/width","640"));
     leMp4Height->setText(settings.readEntry("/mp4/height",""));
@@ -59,6 +60,7 @@ void k9prefMPEG4::save() {
     KSimpleConfig settings("K9Copy");
     settings.writeEntry("/mp4/codec",cbMp4Codec->currentItem());
     settings.writeEntry("/mp4/size",(int)sbMp4Size->value());
+    settings.writeEntry("/mp4/numberCD",(int)sbMp4NumberCD->value());
     settings.writeEntry("/mp4/width",leMp4Width->text());
     settings.writeEntry("/mp4/height",leMp4Height->text());
     settings.writeEntry("/mp4/aspectratio",(int)ckMp4AspectRatio->isChecked());

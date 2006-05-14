@@ -42,6 +42,8 @@ private:
     QString m_size;
     QString m_audioBitrate;
     QString m_stderr;
+    int m_parts;
+
     Codec m_codec;
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
     int m_cpt;
@@ -56,6 +58,11 @@ public:
     ~k9MP4Enc();
 
     virtual void execute(k9DVDTitle *_title );
+
+    virtual void setNumberCD(const QString & _value) {
+	m_parts = _value.toInt();
+	if (m_parts==0) m_parts=1;
+    }
 
     virtual void setDevice(const QString& _value) {
         m_device = _value.stripWhiteSpace();
@@ -78,12 +85,6 @@ public:
 
     virtual void setCodec(const Codec& _value) {m_codec = _value;};
 	
-
-
-
-
-
-
 };
 
 #endif

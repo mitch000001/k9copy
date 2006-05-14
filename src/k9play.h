@@ -29,6 +29,7 @@ private:
     QFile m_output;
     QFile m_stderr;
     uint32_t m_totalBytes;
+    uint32_t m_startSector,m_endSector;
 public:
     k9play();
 
@@ -39,6 +40,8 @@ public:
 
     void setDevice(const QString& _value) {m_device = _value;};
 	
+    void setstartSector(QString _value);
+    void setendSector(QString _value);
 	
 };
 

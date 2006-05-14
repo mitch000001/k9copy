@@ -48,5 +48,12 @@ void k9MP4Dlg::setProgress(int _progress) {
 
 }
 
+void k9MP4Dlg::setbitrate(QString _bitrate) {
+    lblbitrate->setText(_bitrate);
+}
+
+void k9MP4Dlg::setsize( QString _size) {
+    lblsize->setText(_size);
+}
 #include "k9mp4dlg.moc"
 

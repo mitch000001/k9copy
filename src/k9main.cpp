@@ -842,6 +842,7 @@ void k9Main::readSettings() {
 
     m_prefMp4Codec=settings.readEntry("/mp4/codec",0).toInt();
     m_prefMp4Size=settings.readEntry("/mp4/size",QString("700")).toInt();
+    m_prefMp4NumberCD=settings.readEntry("/mp4/numberCD",QString("1")).toInt();
     
     m_prefMp4Width=settings.readEntry("/mp4/width","640");
     m_prefMp4Height=settings.readEntry("/mp4/height","");
@@ -907,6 +908,7 @@ void k9Main::CreateMP4() {
 		mp4->setAudioBitrate(m_prefMp4AudioBitrate);
 		mp4->setCodec((k9MP4Enc::Codec) m_prefMp4Codec);
 		mp4->setSize( QString::number(m_prefMp4Size));
+		mp4->setNumberCD(QString::number(m_prefMp4NumberCD));
 		mp4->setWidth( m_prefMp4Width);
 		mp4->setHeight( m_prefMp4Height);
 		mp4->execute(t);

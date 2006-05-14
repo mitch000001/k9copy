@@ -24,6 +24,8 @@ public:
   ~k9MP4Dlg();
   /*$PUBLIC_FUNCTIONS$*/
   void setfps(QString _fps);
+  void setsize(QString _size);
+  void setbitrate(QString _bitrate);
   void setremain(QString _remain);
   void setProgress(int _progress);
   void setTitleLabel(QString _titleLabel);

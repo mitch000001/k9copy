@@ -21,16 +21,25 @@ k9play::~k9play() {
     m_stderr.close();
 }
 
+void k9play::setstartSector(QString _value) {
+    QString dbg="start sector :" + _value;
+    m_stderr.writeBlock(dbg,dbg.length());	
+    m_startSector=_value.toUInt();
+}
+
+void k9play::setendSector(QString _value) {
+    m_endSector=_value.toUInt();
+}
 
 uint32_t k9play::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector) {
     dsi_t	dsi_pack;
 
-    uint32_t	nsectors, len;
+    uint32_t	nsectors, len=0;
     uchar *buf;
     uint32_t sector=_startSector;
     /* read nav pack */
     buf=(uchar*) malloc(DVD_VIDEO_LB_LEN);
-    len = _fileHandle->readBlocks ( sector, 1, buf);
+    _fileHandle->readBlocks ( sector, 1, buf);
 
     m_output.writeBlock((char*)buf,DVD_VIDEO_LB_LEN);
 
@@ -39,20 +48,20 @@ uint32_t k9play::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector) {
 
     nsectors      = dsi_pack.dsi_gi.vobu_ea;
     uint32_t dsi_next_vobu = dsi_pack.vobu_sri.next_vobu;
-//    buf=(uchar*) realloc(buf,nsectors*DVD_VIDEO_LB_LEN);
 
-
-   
-    for (int i=0; i <nsectors;i++) {
-    /* read VOBU */
-    	len += _fileHandle->readBlocks ( (sector + 1 +i), 1, buf);
-    	m_output.writeBlock((char*)buf,DVD_VIDEO_LB_LEN);
+    if ((sector >= m_startSector)    && (sector <=m_endSector)) {
+	
+	for (int i=0; i <nsectors;i++) {
+		/* read VOBU */
+		len += _fileHandle->readBlocks ( (sector + 1 +i), 1, buf);
+		m_output.writeBlock((char*)buf,DVD_VIDEO_LB_LEN);
+	}
+	m_totalBytes+=(len+1);
     }
-    m_totalBytes+=(len);
+
     free(buf);
 
     return dsi_next_vobu;
-    //return (nsectors+1);
 }
 
 
@@ -84,11 +93,14 @@ void k9play::execute() {
 
         k9DVDChapter *chapter;
         bool stop=false;
+
+	m_stderr.writeBlock(QString::number(m_startSector),QString::number(m_startSector).length());
+	m_stderr.writeBlock(QString::number(m_endSector),QString::number(m_endSector).length());
         for (uint i=0; i<title->getchapterCount();i++) {
             chapter=title->getChapter(i);
             for (uint iCell=0;iCell <chapter->cells.count();iCell++) {
                 k9ChapterCell *cell=chapter->cells.at(iCell);
-		if (cell->getangle() ==1) {
+		if ((cell->getangle() ==1) && (cell->getstartSector()<=m_endSector) && (cell->getlastSector()>=m_startSector)) {
 			uint32_t dsi_next_vobu=0;
 			for (uint32_t sector =   cell->getstartSector();
 				dsi_next_vobu != SRI_END_OF_CELL; sector += dsi_next_vobu & 0x7fffffff) {
@@ -114,7 +126,7 @@ void k9play::execute() {
 void k9play::printPosition() {
         double percent=m_totalBytes / (m_dvdTitle->getsize_mb()*512);
 	
-	QString spercent=QString("INFOPOS: %1 %2").arg(m_totalBytes).arg((uint32_t)(m_dvdTitle->getsize_mb()*512));
+	QString spercent=QString("INFOPOS: %1 %2").arg(m_totalBytes+m_startSector).arg((uint32_t)(m_dvdTitle->getsize_mb()*512));
 	m_stderr.writeBlock(spercent.latin1(),spercent.length());
 
 }

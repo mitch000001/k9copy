@@ -29,7 +29,7 @@
 static const char description[] =
     I18N_NOOP("A DVD Backup tool for KDE");
 
-static const char version[] = "1.0.4";
+static const char version[] = "1.0.5";
 
  static const KCmdLineOptions options[] =
   {
@@ -37,6 +37,8 @@ static const char version[] = "1.0.4";
      { "output <device>", I18N_NOOP("output device"), 0 },
      { "dvdtitle <number>", I18N_NOOP("title to play"), 0 },
      { "play", I18N_NOOP("play title to stdout"), 0 },
+     { "startsector <number>", I18N_NOOP("start sector"),0},
+     { "endsector <number>", I18N_NOOP("end sector"),0},
      KCmdLineLastOption // End of options.
   };
 
@@ -70,11 +72,15 @@ int main(int argc, char **argv)
 	QString TitleNumber(args->getOption("dvdtitle"));
  	QString InputOptionArg( args->getOption("input"));
  	QString OutputOptionArg( args->getOption("output"));	
+	QString startSectorArg(args->getOption("startsector"));
+	QString endSectorArg(args->getOption("endsector"));
 
 	if (args->isSet("play")) {
 		k9play player;
 		player.setDevice(InputOptionArg);
 		player.setTitle(TitleNumber.toInt());
+		player.setstartSector(startSectorArg);
+		player.setendSector(endSectorArg );
 		player.execute();
 		return 1;
 	} else {
