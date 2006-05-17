@@ -131,7 +131,7 @@ private:
 	uint64_t wtell (uchar *ptr);
 
 	uint64_t rtell (uchar *ptr);
-	void check_pack (uchar *ptr);
+	bool check_pack (uchar *ptr);
 	int check_video_packet (uchar *ptr);
 	int requant (uchar *dst, uchar *src, int n, float fact);
 	int new_private_1_type (uchar *ptr);

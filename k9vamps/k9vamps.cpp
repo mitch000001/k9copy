@@ -315,7 +315,7 @@ uint64_t k9vamps::wtell (uchar *ptr) {
 
 
 // some pack header consistency checking
-void k9vamps::check_pack (uchar *ptr) {
+bool k9vamps::check_pack (uchar *ptr) {
     uint32_t pack_start_code;
     int    pack_stuffing_length;
 
@@ -324,19 +324,26 @@ void k9vamps::check_pack (uchar *ptr) {
     pack_start_code |= (uint32_t) (ptr [2]) <<  8;
     pack_start_code |= (uint32_t) (ptr [3]);
 
-    if (pack_start_code != 0x000001ba)
-        fatal ("Bad pack start code at %llu: %08lx", rtell (ptr), pack_start_code);
+    if (pack_start_code != 0x000001ba) {
+//        fatal ("Bad pack start code at %llu: %08lx", rtell (ptr), pack_start_code);
+	return false;
+    }
 
-    if ((ptr [4] & 0xc0) != 0x40)
-        fatal ("Not an MPEG2 program stream pack at %llu", rtell (ptr));
+    if ((ptr [4] & 0xc0) != 0x40) {
+     //   fatal ("Not an MPEG2 program stream pack at %llu", rtell (ptr));
+	return false;
+    }
 
     // we rely on a fixed pack header size of 14
     // so better to ensure this is true
     pack_stuffing_length = ptr [13] & 7;
 
-    if (pack_stuffing_length)
-        fatal ("Non-zero pack stuffing length at %llu: %d\n",
-               rtell (ptr), pack_stuffing_length);
+    if (pack_stuffing_length) {
+        //fatal ("Non-zero pack stuffing length at %llu: %d\n",   rtell (ptr), pack_stuffing_length);
+        return false;
+    }
+
+    return true;
 }
 
 
@@ -576,10 +583,13 @@ void k9vamps::vap_leader () {
 
     while (!lock (SECT_SIZE)) {
         ptr = rptr;
-        check_pack (ptr);
-
-        ptr += 14;
-        id   = ptr [3];
+        if (check_pack (ptr)) {
+	        ptr += 14;
+        	id   = ptr [3];
+	} else {
+		ptr +=14;
+	        id   = 0;
+	}
 
         switch (id) {
         case 0xe0:
@@ -625,8 +635,9 @@ void k9vamps::vap_leader () {
             break;
 
         default:
-	    fatal("Encountered stream ID %02x at %llu, "
-                   "probably bad MPEG2 program stream", id, rtell (ptr));
+	 //   fatal("Encountered stream ID %02x at %llu, "
+         //          "probably bad MPEG2 program stream", id, rtell (ptr));
+		copy (SECT_SIZE);
         }
 
         if (wptr == wbuf + WBUF_SIZE)
@@ -691,16 +702,18 @@ int k9vamps::vap_phase1 (void) {
     for (seq_length = 0;
             !lock (seq_length + SECT_SIZE); seq_length += SECT_SIZE) {
         ptr = rptr + seq_length;
-        check_pack (ptr);
+        if (check_pack (ptr)) {
+	        ptr += 14;
+        	id   = ptr [3];
+	} else {
+		ptr += 14;
+		id   = 0;
+	}
+	
 
         // avoid duplicate counts for sequence headers
         if (seq_length)
             total_packs++;
-
-        ptr += 14;
-        id   = ptr [3];
-
-        //fprintf (stderr, "id=%02x\n", id);
 
         switch (id) {
         case 0xe0:
@@ -787,8 +800,9 @@ int k9vamps::vap_phase1 (void) {
             break;
 
         default:
-	    fatal("Encountered stream ID %02x at %llu, "
-                   "probably bad MPEG2 program stream", id, rtell (ptr));
+//	    fatal("Encountered stream ID %02x at %llu, "
+//                   "probably bad MPEG2 program stream", id, rtell (ptr));	
+		break;
         }
 
     }
@@ -923,8 +937,9 @@ void k9vamps::vap_phase2 (int seq_length) {
             break;
 
         default:
-	    fatal("Encountered stream ID %02x at %llu, "
-                   "probably bad MPEG2 program stream", id, rtell (ptr));
+            copy (SECT_SIZE);
+//	    fatal("Encountered stream ID %02x at %llu, "
+//                   "probably bad MPEG2 program stream", id, rtell (ptr));
         }
 
         if (wptr == wbuf + WBUF_SIZE)
