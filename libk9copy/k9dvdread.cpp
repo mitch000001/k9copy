@@ -37,6 +37,8 @@ k9DVDFile::~k9DVDFile() {
  */
 void k9DVDRead::openDevice(const QString & _device) {
 	m_dvd=DVDOpen(_device.latin1());
+	//turn UDF cache off
+	//DVDUDFCacheLevel(m_dvd, 0 );
 }
 
 /*!
