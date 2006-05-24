@@ -41,6 +41,15 @@ void k9DVDRead::openDevice(const QString & _device) {
 	//DVDUDFCacheLevel(m_dvd, 0 );
 }
 
+QString k9DVDRead::getDiscId() {
+uchar ID[17];
+QString id="";
+if (DVDDiscID(m_dvd,ID) !=-1) {
+	ID[16]=0;
+	id=QString::fromLatin1((const char*)ID);
+}
+return id;
+}
 /*!
     \fn k9DVDRead::close()
  */
@@ -54,6 +63,7 @@ void k9DVDRead::close()
 bool k9DVDRead::opened() {
 	return (m_dvd !=NULL);
 }
+
 
 k9DVDFile * k9DVDRead::openIfo(uint _vts) {
 	k9DVDFile *file =new k9DVDFile(this);
@@ -117,18 +127,18 @@ void k9DVDFile::close()
 /*!
     \fn k9DVDFile::read(uchar *_buffer,uint32_t _size)
  */
-uint32_t k9DVDFile::readBytes(uchar *_buffer,uint32_t _size)
+int k9DVDFile::readBytes(uchar *_buffer,uint32_t _size)
 {
 	if (m_file !=NULL)
 		return  DVDReadBytes(m_file,_buffer,_size);
 	else 
-		return 0;
+		return -1;
 }
 
-uint32_t k9DVDFile::readBlocks(uint32_t _sector,uint32_t _size,uchar*_buffer) {
-	if (m_file !=NULL)
-		return  DVDReadBlocks(m_file,_sector,_size,_buffer);
+int k9DVDFile::readBlocks(uint32_t _sector,uint32_t _size,uchar*_buffer) {
+	if (m_file !=NULL) 
+	    return DVDReadBlocks(m_file,_sector,_size,_buffer);
 	else 
-		return 0;
+		return -1;
 }
 

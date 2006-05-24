@@ -109,6 +109,7 @@ private:
     void updateMainIfo();
     void updatePgci_ut(ifo_handle_t *_hifo);
     void update4Menu(ifo_handle_t *_hifo);
+    void setDummyPack(uchar *_buffer);
     uint32_t copyMenu (int _vts);
     uint32_t copyMenu2(int _vts);
     k9CellList vmgCells;

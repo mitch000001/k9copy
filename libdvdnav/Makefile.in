@@ -263,61 +263,38 @@ x_libraries = @x_libraries@
 xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
-AM_CPPFLAGS = -I$(srcdir) $(all_includes) $(HAL_INCS) $(DBUS_INCS) $(DBUSQT_INCS)
-
-KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
-
+INCLUDES = 
 #>- METASOURCES = AUTO
 
-libk3bdevice_la_LIBADD = $(LIB_KIO) $(RESMGR_LIB) $(CAM_LIB) $(HAL_DBUS_LIBS)
+noinst_LTLIBRARIES = libdvdnav.la
+libdvdnav_la_SOURCES = decoder.c decoder.h dvd_input.c dvd_input.h dvdnav.c \
+	dvdnav_events.h dvdnav.h dvdnav_internal.h highlight.c md5.c md5.h navigation.c \
+	read_cache.c read_cache.h remap.c remap.h searching.c settings.c vm.c vmcmd.c \
+	vmcmd.h vm.h bswap.h dvd_reader.c dvd_reader.h dvdread_internal.h dvd_types.h \
+	dvd_udf.c dvd_udf.h ifo_read.c ifo_read.h ifo_types.h nav_print.c nav_print.h \
+	nav_read.c nav_read.h nav_types.h compat.h
 
-# lib version 2 for K3b 0.11.x 
-libk3bdevice_la_LDFLAGS = $(all_libraries) -version-info 2:1:0 -no-undefined
-
-@include_HAL_TRUE@libk3bdevice_la_SOURCES = k3bdevice.cpp k3bdevice_mmc.cpp k3bscsicommand.cpp \
-@include_HAL_TRUE@	k3btrack.cpp k3btoc.cpp k3bdevicemanager.cpp k3bmsf.cpp k3bdiskinfo.cpp \
-@include_HAL_TRUE@	k3bdeviceglobals.cpp k3bcrc.cpp k3bcdtext.cpp k3bscsicommand_bsd.cpp \
-@include_HAL_TRUE@	k3bscsicommand_linux.cpp
-
-@include_HAL_FALSE@libk3bdevice_la_SOURCES = k3bdevice.cpp k3bdevice_mmc.cpp k3bscsicommand.cpp \
-@include_HAL_FALSE@k3btrack.cpp k3btoc.cpp k3bdevicemanager.cpp k3bmsf.cpp k3bdiskinfo.cpp \
-@include_HAL_FALSE@k3bdeviceglobals.cpp k3bcrc.cpp k3bcdtext.cpp
-
-
-noinst_HEADERS = k3bdevicemanager.h k3bdevice.h k3btoc.h k3btrack.h \
-	k3bdeviceglobals.h k3bdiskinfo.h k3bcdtext.h k3bmsf.h k3bdevicetypes.h
-
-
-noinst_LTLIBRARIES = libk3bdevice.la
-subdir = libk3bdevice
+subdir = libdvdnav
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 
-libk3bdevice_la_DEPENDENCIES =
-#>- @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS = k3bdevice.lo \
-#>- @include_HAL_TRUE@	k3bdevice_mmc.lo k3bscsicommand.lo \
-#>- @include_HAL_TRUE@	k3btrack.lo k3btoc.lo k3bdevicemanager.lo \
-#>- @include_HAL_TRUE@	k3bmsf.lo k3bdiskinfo.lo k3bdeviceglobals.lo \
-#>- @include_HAL_TRUE@	k3bcrc.lo k3bcdtext.lo k3bscsicommand_bsd.lo \
-#>- @include_HAL_TRUE@	k3bscsicommand_linux.lo
-#>+ 9
-@include_HAL_TRUE@am_libk3bdevice_la_final_OBJECTS = lo lo lo @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.lo 
-@include_HAL_TRUE@am_libk3bdevice_la_nofinal_OBJECTS = k3bdevice.lo \
-@include_HAL_TRUE@	k3bdevice_mmc.lo k3bscsicommand.lo \
-@include_HAL_TRUE@	k3btrack.lo k3btoc.lo k3bdevicemanager.lo \
-@include_HAL_TRUE@	k3bmsf.lo k3bdiskinfo.lo k3bdeviceglobals.lo \
-@include_HAL_TRUE@	k3bcrc.lo k3bcdtext.lo k3bscsicommand_bsd.lo \
-@include_HAL_TRUE@	k3bscsicommand_linux.lo
-@KDE_USE_FINAL_FALSE@@include_HAL_TRUE@am_libk3bdevice_la_OBJECTS = $(@include_HAL_TRUE@am_libk3bdevice_la_nofinal_OBJECTS)
-@KDE_USE_FINAL_TRUE@@include_HAL_TRUE@am_libk3bdevice_la_OBJECTS = $(@include_HAL_TRUE@am_libk3bdevice_la_final_OBJECTS)
-@include_HAL_FALSE@am_libk3bdevice_la_OBJECTS = k3bdevice.lo \
-@include_HAL_FALSE@	k3bdevice_mmc.lo k3bscsicommand.lo \
-@include_HAL_FALSE@	k3btrack.lo k3btoc.lo k3bdevicemanager.lo \
-@include_HAL_FALSE@	k3bmsf.lo k3bdiskinfo.lo k3bdeviceglobals.lo \
-@include_HAL_FALSE@	k3bcrc.lo k3bcdtext.lo
-libk3bdevice_la_OBJECTS = $(am_libk3bdevice_la_OBJECTS)
+libdvdnav_la_LDFLAGS =
+libdvdnav_la_LIBADD =
+am_libdvdnav_la_OBJECTS = decoder.lo dvd_input.lo dvdnav.lo highlight.lo \
+	md5.lo navigation.lo read_cache.lo remap.lo searching.lo \
+	settings.lo vm.lo vmcmd.lo dvd_reader.lo dvd_udf.lo ifo_read.lo \
+	nav_print.lo nav_read.lo
+#>- libdvdnav_la_OBJECTS = $(am_libdvdnav_la_OBJECTS)
+#>+ 7
+libdvdnav_la_final_OBJECTS = decoder.lo dvd_input.lo dvdnav.lo highlight.lo md5.lo navigation.lo read_cache.lo remap.lo searching.lo settings.lo vm.lo vmcmd.lo dvd_reader.lo dvd_udf.lo ifo_read.lo nav_print.lo nav_read.lo 
+libdvdnav_la_nofinal_OBJECTS = decoder.lo dvd_input.lo dvdnav.lo highlight.lo \
+	md5.lo navigation.lo read_cache.lo remap.lo searching.lo \
+	settings.lo vm.lo vmcmd.lo dvd_reader.lo dvd_udf.lo ifo_read.lo \
+	nav_print.lo nav_read.lo
+@KDE_USE_FINAL_FALSE@libdvdnav_la_OBJECTS = $(libdvdnav_la_nofinal_OBJECTS)
+@KDE_USE_FINAL_TRUE@libdvdnav_la_OBJECTS = $(libdvdnav_la_final_OBJECTS)
 
 DEFS = @DEFS@
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
@@ -326,75 +303,52 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 am__depfiles_maybe = depfiles
-#>- @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/k3bcdtext.Plo ./$(DEPDIR)/k3bcrc.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bdevice.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bdevice_mmc.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bdeviceglobals.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bdevicemanager.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bdiskinfo.Plo ./$(DEPDIR)/k3bmsf.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_bsd.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_linux.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k3btoc.Plo ./$(DEPDIR)/k3btrack.Plo
-#>+ 20
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =   $(DEPDIR)/@include_HAL_TRUE@am_libk3bdevice_la.all_cpp.P ./$(DEPDIR)/k3bcdtext.Plo ./$(DEPDIR)/k3bcrc.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevice.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevice_mmc.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdeviceglobals.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevicemanager.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdiskinfo.Plo ./$(DEPDIR)/k3bmsf.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_bsd.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_linux.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k3btoc.Plo ./$(DEPDIR)/k3btrack.Plo
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  ./$(DEPDIR)/k3bcdtext.Plo ./$(DEPDIR)/k3bcrc.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevice.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevice_mmc.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdeviceglobals.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdevicemanager.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bdiskinfo.Plo ./$(DEPDIR)/k3bmsf.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_bsd.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3bscsicommand_linux.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k3btoc.Plo ./$(DEPDIR)/k3btrack.Plo
-#>- CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-#>- 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
-#>+ 2
-CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) $(KDE_CXXFLAGS)
-#>- LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) \
-#>- 	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-#>- 	$(AM_CXXFLAGS) $(CXXFLAGS)
-#>+ 3
-LTCXXCOMPILE = $(LIBTOOL) --mode=compile --tag=CXX $(CXX) $(DEFS) \
-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CXXFLAGS) $(CXXFLAGS) $(KDE_CXXFLAGS)
-CXXLD = $(CXX)
-#>- CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
-#>- 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-#>+ 2
-CXXLINK = $(LIBTOOL) --mode=link --tag=CXX $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(KDE_CXXFLAGS) \
+#>- @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/decoder.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/dvd_input.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/dvd_reader.Plo ./$(DEPDIR)/dvd_udf.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/dvdnav.Plo ./$(DEPDIR)/highlight.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/ifo_read.Plo ./$(DEPDIR)/md5.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/nav_print.Plo ./$(DEPDIR)/nav_read.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/navigation.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/read_cache.Plo ./$(DEPDIR)/remap.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/searching.Plo ./$(DEPDIR)/settings.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/vm.Plo ./$(DEPDIR)/vmcmd.Plo
+#>+ 10
+@AMDEP_TRUE@DEP_FILES =  ./$(DEPDIR)/decoder.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/dvd_input.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/dvd_reader.Plo ./$(DEPDIR)/dvd_udf.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/dvdnav.Plo ./$(DEPDIR)/highlight.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/ifo_read.Plo ./$(DEPDIR)/md5.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/nav_print.Plo ./$(DEPDIR)/nav_read.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/navigation.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/read_cache.Plo ./$(DEPDIR)/remap.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/searching.Plo ./$(DEPDIR)/settings.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/vm.Plo ./$(DEPDIR)/vmcmd.Plo
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
+	$(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-CXXFLAGS = @CXXFLAGS@
-DIST_SOURCES = $(libk3bdevice_la_SOURCES)
-HEADERS = $(noinst_HEADERS)
-
-DIST_COMMON = $(noinst_HEADERS) Makefile.am Makefile.in
-SOURCES = $(libk3bdevice_la_SOURCES)
+CFLAGS = @CFLAGS@
+DIST_SOURCES = $(libdvdnav_la_SOURCES)
+DIST_COMMON = Makefile.am Makefile.in
+SOURCES = $(libdvdnav_la_SOURCES)
 
 #>- all: all-am
 #>+ 1
 all: docs-am  all-am
 
 .SUFFIXES:
-.SUFFIXES: .cpp .lo .o .obj
+.SUFFIXES: .c .lo .o .obj
 $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 #>- 	cd $(top_srcdir) && \
-#>- 	  $(AUTOMAKE) --gnu  libk3bdevice/Makefile
+#>- 	  $(AUTOMAKE) --gnu  libdvdnav/Makefile
 #>+ 3
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  libk3bdevice/Makefile
-	cd $(top_srcdir) && perl admin/am_edit libk3bdevice/Makefile.in
+	  $(AUTOMAKE) --gnu  libdvdnav/Makefile
+	cd $(top_srcdir) && perl admin/am_edit libdvdnav/Makefile.in
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 
@@ -406,8 +360,8 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libk3bdevice.la: $(libk3bdevice_la_OBJECTS) $(libk3bdevice_la_DEPENDENCIES) 
-	$(CXXLINK)  $(libk3bdevice_la_LDFLAGS) $(libk3bdevice_la_OBJECTS) $(libk3bdevice_la_LIBADD) $(LIBS)
+libdvdnav.la: $(libdvdnav_la_OBJECTS) $(libdvdnav_la_DEPENDENCIES) 
+	$(LINK)  $(libdvdnav_la_LDFLAGS) $(libdvdnav_la_OBJECTS) $(libdvdnav_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -415,41 +369,45 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bcdtext.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bcrc.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bdevice.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bdevice_mmc.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bdeviceglobals.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bdevicemanager.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bdiskinfo.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bmsf.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bscsicommand.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bscsicommand_bsd.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3bscsicommand_linux.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3btoc.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k3btrack.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decoder.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dvd_input.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dvd_reader.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dvd_udf.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dvdnav.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/highlight.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ifo_read.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/md5.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nav_print.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nav_read.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/navigation.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/read_cache.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/remap.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/searching.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/settings.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vmcmd.Plo@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
 
-.cpp.o:
+.c.o:
 @AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(COMPILE) -c `test -f '$<' || echo '$(srcdir)/'`$<
 
-.cpp.obj:
+.c.obj:
 @AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CXXCOMPILE) -c -o $@ `cygpath -w $<`
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(COMPILE) -c `cygpath -w $<`
 
-.cpp.lo:
+.c.lo:
 @AMDEP_TRUE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Plo' tmpdepfile='$(DEPDIR)/$*.TPlo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(LTCXXCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
-CXXDEPMODE = @CXXDEPMODE@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(LTCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
+CCDEPMODE = @CCDEPMODE@
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -496,9 +454,7 @@ GTAGS:
 
 distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH
-#>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-#>+ 1
-DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST) $(KDE_DIST)
+DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 
 top_distdir = ..
 distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
@@ -526,7 +482,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES)
 
 installdirs:
 
@@ -561,7 +517,7 @@ clean: kde-rpo-clean  clean-am
 #>- clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 #>- 	mostlyclean-am
 #>+ 2
-clean-am: clean-metasources clean-bcheck clean-final  clean-generic clean-libtool clean-noinstLTLIBRARIES \
+clean-am: clean-bcheck  clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -614,35 +570,14 @@ uninstall-am: uninstall-info-am
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
 
-#>+ 3
-k3bdevicemanager.moc: $(srcdir)/k3bdevicemanager.h
-	$(MOC) $(srcdir)/k3bdevicemanager.h -o k3bdevicemanager.moc
-
-#>+ 2
-mocs: k3bdevicemanager.moc
-
-#>+ 3
-k3bhalconnection.moc: $(srcdir)/k3bhalconnection.h
-	$(MOC) $(srcdir)/k3bhalconnection.h -o k3bhalconnection.moc
-
-#>+ 2
-mocs: k3bhalconnection.moc
-
-#>+ 3
-clean-metasources:
-	-rm -f  k3bdevicemanager.moc k3bhalconnection.moc
-
-#>+ 2
-KDE_DIST=k3bcrc.h k3bscsicommand.h k3bhalconnection.cpp k3bmmc.h configure.in.in k3bhalconnection.h libk3bdevice.doxy 
-
 #>+ 2
 docs-am:
 
 #>+ 6
 force-reedit:
 		cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  libk3bdevice/Makefile
-	cd $(top_srcdir) && perl admin/am_edit libk3bdevice/Makefile.in
+	  $(AUTOMAKE) --gnu  libdvdnav/Makefile
+	cd $(top_srcdir) && perl admin/am_edit libdvdnav/Makefile.in
 
 
 #>+ 21
@@ -657,7 +592,7 @@ bcheck-am:
 	        echo "int main() {return 0;}" > $$i.bchecktest.cc ; \
 	        echo "#include \"$$i\"" >> $$i.bchecktest.cc ; \
 	        echo "$$i"; \
-	        if ! $(CXXCOMPILE)  --dump-class-hierarchy $$i.bchecktest.cc; then \
+	        if ! $(CXX) $(DEFS) -I. -I$(srcdir) -I$(top_builddir) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(KDE_CXXFLAGS)  --dump-class-hierarchy $$i.bchecktest.cc; then \
 	            rm -f $$i.bchecktest.cc; exit 1; \
 	        fi ; \
 	        echo "" >> $$i.bchecktest.cc.class; \
@@ -667,37 +602,21 @@ bcheck-am:
 	done
 
 
-#>+ 11
-@include_HAL_TRUE@am_libk3bdevice_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k3bdevice.cpp $(srcdir)/k3bdevice_mmc.cpp $(srcdir)/k3bscsicommand.cpp $(srcdir)/k3btrack.cpp $(srcdir)/k3btoc.cpp $(srcdir)/k3bdevicemanager.cpp $(srcdir)/k3bmsf.cpp $(srcdir)/k3bdiskinfo.cpp $(srcdir)/k3bdeviceglobals.cpp $(srcdir)/k3bcrc.cpp $(srcdir)/k3bcdtext.cpp $(srcdir)/k3bscsicommand_bsd.cpp $(srcdir)/k3bscsicommand_linux.cpp  k3bdevicemanager.moc
-	@echo 'creating @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.cpp ...'; \
-	rm -f @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.files @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final; \
-	echo "#define KDE_USE_FINAL 1" >> @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final; \
-	for file in k3bdevice.cpp k3bdevice_mmc.cpp k3bscsicommand.cpp k3btrack.cpp k3btoc.cpp k3bdevicemanager.cpp k3bmsf.cpp k3bdiskinfo.cpp k3bdeviceglobals.cpp k3bcrc.cpp k3bcdtext.cpp k3bscsicommand_bsd.cpp k3bscsicommand_linux.cpp ; do \
-	  echo "#include \"$$file\"" >> @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.files; \
-	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final; \
-	done; \
-	cat @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.files > @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.cpp; \
-	rm -f @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.final @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.files
-
-#>+ 3
-clean-final:
-	-rm -f @include_HAL_TRUE@am_libk3bdevice_la.all_cpp.cpp
-
 #>+ 3
 final:
-	$(MAKE) @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS="$(@include_HAL_TRUE@am_libk3bdevice_la_final_OBJECTS)" all-am
+	$(MAKE) libdvdnav_la_OBJECTS="$(libdvdnav_la_final_OBJECTS)" all-am
 
 #>+ 3
 final-install:
-	$(MAKE) @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS="$(@include_HAL_TRUE@am_libk3bdevice_la_final_OBJECTS)" install-am
+	$(MAKE) libdvdnav_la_OBJECTS="$(libdvdnav_la_final_OBJECTS)" install-am
 
 #>+ 3
 no-final:
-	$(MAKE) @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS="$(@include_HAL_TRUE@am_libk3bdevice_la_nofinal_OBJECTS)" all-am
+	$(MAKE) libdvdnav_la_OBJECTS="$(libdvdnav_la_nofinal_OBJECTS)" all-am
 
 #>+ 3
 no-final-install:
-	$(MAKE) @include_HAL_TRUE@am_libk3bdevice_la_OBJECTS="$(@include_HAL_TRUE@am_libk3bdevice_la_nofinal_OBJECTS)" install-am
+	$(MAKE) libdvdnav_la_OBJECTS="$(libdvdnav_la_nofinal_OBJECTS)" install-am
 
 #>+ 3
 cvs-clean:
@@ -707,10 +626,6 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 7
+#>+ 3
 nmcheck: 
-k3bdevicemanager.lo: k3bdevicemanager.moc 
 nmcheck-am: nmcheck
-k3bhalconnection.lo: k3bhalconnection.moc 
-k3bhalconnection.o: k3bhalconnection.moc 
-k3bdevicemanager.o: k3bdevicemanager.moc 

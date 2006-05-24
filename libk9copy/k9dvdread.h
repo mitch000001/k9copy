@@ -30,8 +30,8 @@ public:
     k9DVDFile(k9DVDRead *_dvd);
     ~k9DVDFile();
     void close();
-    uint32_t readBytes(uchar *_buffer,uint32_t _size);
-    uint32_t readBlocks(uint32_t _sector,uint32_t _size,uchar*_buffer);
+    int readBytes(uchar *_buffer,uint32_t _size);
+    int readBlocks(uint32_t _sector,uint32_t _size,uchar*_buffer);
 };
 
 
@@ -47,6 +47,7 @@ public:
     k9DVDFile *openIfo(uint _vts);
     k9DVDFile *openMenu(uint _vts);
     k9DVDFile *openTitle(uint _vts);
+    QString getDiscId();
     void close();
     bool opened();
 

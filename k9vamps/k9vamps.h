@@ -13,6 +13,7 @@
 #define K9VAMPS_H
 
 #include "k9common.h"
+#include <qfile.h>
 #include <qthread.h>
 #include <qobject.h>
 #include <stdio.h>
@@ -119,7 +120,7 @@ private:
 
 	double avgdiff;
 	double m_totfact,m_nbfact,m_avgfact;
-
+	QFile *m_output;
 private:
 	// prototypes
 	void vaporize (void);
@@ -162,6 +163,7 @@ public:
 	void reset();
 	void setInputSize(uint64_t size);
 	void setVapFactor(float factor);
+	void setOutput(QFile *_output);
 	QString & geterrMsg();
 	bool geterror();
 	void abort();

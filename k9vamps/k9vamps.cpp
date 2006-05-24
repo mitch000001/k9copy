@@ -164,13 +164,23 @@ k9vamps::k9vamps(k9DVDBackup *dvdbackup) {
     m_dvdbackup=dvdbackup;
     reset();
     m_requant=NULL;
-    m_bgUpdate = new k9bgUpdate(dvdbackup);
+    if (dvdbackup !=NULL)
+    	m_bgUpdate = new k9bgUpdate(dvdbackup);
+    else
+	m_bgUpdate=NULL;
     rbuf_size= RBUF_SIZE;
     rbuf = (uchar*) malloc(rbuf_size);;
-
+    m_output=NULL;
 }
+
+
+void k9vamps::setOutput(QFile *_output) {
+    m_output=_output;
+} 
+
 k9vamps::~k9vamps() {
-    delete m_bgUpdate;
+    if (m_bgUpdate !=NULL)
+	delete m_bgUpdate;
     free (rbuf);
 }
 
@@ -215,7 +225,8 @@ void k9vamps::run () {
     m_requant=NULL;
     free (vibuf);
     free(vobuf);
-    m_bgUpdate->wait();
+    if (m_bgUpdate!=NULL)
+	m_bgUpdate->wait();
     mutex.unlock();
 }
 
@@ -292,8 +303,12 @@ void k9vamps::flush (void) {
     }
     //m_dvdbackup->getOutput(wbuf,size);
     // wait for a preceding update to finish
-    m_bgUpdate->wait();
-    m_bgUpdate->update( wbuf,size);
+    if (m_bgUpdate!=NULL) {
+	m_bgUpdate->wait();
+	m_bgUpdate->update( wbuf,size);
+    } 
+    if (m_output != NULL)
+	m_output->writeBlock((const char*) wbuf,size);
 
     wptr           = wbuf;
     bytes_written += size;

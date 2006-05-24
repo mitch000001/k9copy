@@ -39,6 +39,8 @@ static const char version[] = "1.0.5";
      { "play", I18N_NOOP("play title to stdout"), 0 },
      { "startsector <number>", I18N_NOOP("start sector"),0},
      { "endsector <number>", I18N_NOOP("end sector"),0},
+     { "audiofilter <number,number>", I18N_NOOP("list of audio streams"),0},
+     { "subpicturefilter <number,number>", I18N_NOOP("list of spu streams"),0},
      KCmdLineLastOption // End of options.
   };
 
@@ -74,6 +76,8 @@ int main(int argc, char **argv)
  	QString OutputOptionArg( args->getOption("output"));	
 	QString startSectorArg(args->getOption("startsector"));
 	QString endSectorArg(args->getOption("endsector"));
+	QString audioFilterArg(args->getOption("audiofilter"));
+	QString subpictureFilterArg(args->getOption("subpicturefilter"));
 
 	if (args->isSet("play")) {
 		k9play player;
@@ -81,6 +85,8 @@ int main(int argc, char **argv)
 		player.setTitle(TitleNumber.toInt());
 		player.setstartSector(startSectorArg);
 		player.setendSector(endSectorArg );
+		player.setaudioFilter( audioFilterArg);
+		player.setsubpictureFilter( subpictureFilterArg);
 		player.execute();
 		return 1;
 	} else {

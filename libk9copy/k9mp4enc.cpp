@@ -51,7 +51,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 	
 	uint32_t nbSectors= (_title->getChapter(_title->getchapterCount()-1)->getendSector() - _title->getChapter(0)->getstartSector()) / m_parts   ;
 	
-	uint32_t startSector= nbSectors*(m_part-1) + _title->getChapter(0)->getstartSector();
+	uint32_t startSector= nbSectors*(m_part-1);
 	uint32_t endSector= startSector+nbSectors;
 	
 	//calculer le bitrate en faisant la somme des cells compris entre startSector et endSector

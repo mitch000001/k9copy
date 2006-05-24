@@ -659,7 +659,21 @@ void k9DVDBackup::playCell (int vts_num, k9Cell *_cell) {
 
 
 
+void k9DVDBackup::setDummyPack(uchar *_buffer) {
+  int8_t *ptr = (int8_t*)_buffer;
+  uint8_t dummy_pack [] =
+  {
+    /* pack header: SCR=0, mux rate=10080000bps, stuffing length=0 */
+    0, 0, 1, 0xba, 0x44, 0x00, 0x04, 0x00, 0x04, 0x01, 0x01, 0x89, 0xc3, 0xf8,
+    /* PES header for dummy video packet */
+    0, 0, 1, 0xe0, 0x07, 0xec, 0x81, 0x00, 0x00
+  };
 
+  tc_memcpy (ptr, dummy_pack, sizeof (dummy_pack));
+  ptr += sizeof (dummy_pack);
+  memset (ptr, 0xff, DVD_VIDEO_LB_LEN - sizeof (dummy_pack));
+
+}
 
 uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9Vobu * _vobu) {
     dsi_t	dsi_pack;
@@ -700,17 +714,16 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     /* read VOBU */
     for (uint32_t i=0;i< nsectors;i++) {
     	len = _fileHandle->readBlocks ( (sector + 1)+i, 1, buf +(i*DVD_VIDEO_LB_LEN));
-	if (len==-1)
+	if (len==-1) {
+   	   qDebug (QString("VOBU : %1 Read Error !!!!").arg(sector));
+	   setDummyPack(buf + (i*DVD_VIDEO_LB_LEN));
+	   nsectors=1;
 	   break;
-    }
-    if (len !=-1) {
-	/* write VOBU */
-	for (uint32_t i=0;i<nsectors ;i++) {
-		vamps->addData(buf + (i*DVD_VIDEO_LB_LEN), DVD_VIDEO_LB_LEN);
 	}
-    } else {
-	qDebug (QString("VOBU : %1 Read Error !!!!").arg(sector));
-	nsectors=0;
+    }
+	/* write VOBU */
+    for (uint32_t i=0;i<nsectors ;i++) {
+	vamps->addData(buf + (i*DVD_VIDEO_LB_LEN), DVD_VIDEO_LB_LEN);
     }
     free(buf);
 	
