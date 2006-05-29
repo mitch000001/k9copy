@@ -289,6 +289,7 @@ static int32_t dvdnav_decode_packet(dvdnav_t *this, uint8_t *p, dsi_t *nav_dsi, 
       p += 6;
       navRead_DSI(nav_dsi, p+1);
     } 
+
     return 1;
   }
   return 0;

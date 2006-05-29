@@ -74,7 +74,7 @@ static inline int _private_gettimeofday( struct timeval *tv, void *tz )
 #include "vmcmd.h"
 
 /* where should libdvdnav write its messages (stdout/stderr) */
-#define MSG_OUT stdout
+#define MSG_OUT stderr
 
 /* Maximum length of an error string */
 #define MAX_ERR_LEN 255
