@@ -263,7 +263,7 @@ x_libraries = @x_libraries@
 xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
-SUBDIRS = k9vamps k9decmpeg libk9copy libk3bdevice src po libdvdnav
+SUBDIRS = k9vamps k9decmpeg libk9copy libk3bdevice libdvdnav src po
 
 MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 configure.files 
 
