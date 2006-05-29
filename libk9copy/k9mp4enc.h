@@ -43,6 +43,9 @@ private:
     QString m_audioBitrate;
     QString m_stderr;
     int m_parts;
+    float m_percent;
+    QTimer *timer;
+    QString m_remain;
 
     Codec m_codec;
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
@@ -53,6 +56,8 @@ private slots:
     void getStdout(KProcess *proc, char *buffer, int buflen);
     void getStderr(KProcess *proc, char *buffer, int buflen);
     void exited(KProcess *proc);
+    void timerDone();
+
 public:
     k9MP4Enc(QObject *parent = 0, const char *name = 0,const QStringList& args=0);
     ~k9MP4Enc();

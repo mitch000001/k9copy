@@ -176,10 +176,10 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
 
 	QString txtcmd;
 	if (audio !=0) {
-		txtcmd="subtitle=%1;\n audio=%2\n g1=0;jump title 1;";
+		txtcmd="subtitle=%1;\n audio=%2;\n g1=0;jump title 1;";
 		txtcmd=txtcmd.arg(subtitle+63).arg(audio);
 	} else {
-		txtcmd="subtitle=%1;\n audio=%2\n g1=0;jump title 1;";
+		txtcmd="subtitle=%1;\n audio=%2;\n g1=0;jump title 1;";
 		txtcmd=txtcmd.arg(subtitle+63).arg(audio);
 	}
 
@@ -241,21 +241,31 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
         t.appendChild(pgc);
 
         for (i=0;i<l_track->getchapterCount();i++) {
+	    uint icell=0;
             k9DVDChapter *l_chap=l_track->getChapter(i);
             bool first=true;
            for (k9ChapterCell *cell =l_chap->cells.first();cell ;cell =l_chap->cells.next() ) {
-		if (cell->getangle()==1) {
+		icell++;
+		//test
+		uint32_t itotSize = (cell->getlastSector()-cell->getstartSector())* DVD_VIDEO_LB_LEN;
+//		if (cell->getangle()==1) {
 			QString file;
 			e=xml->createElement("vob");
-			file.sprintf("play_cell %s %d %d %d |vamps ",DVD->getDevice().latin1(), l_track->getVTS() ,l_track->getpgc() +1,cell->getid() +1);
-			if (caud!="")
-			file+=" -a " + caud;
-			if (csub!="")
-			file+=" -s " + csub;
-			file +=c.sprintf(" -E %6.2f", factor);
-			file +=" -i " +inject;
-			file +=" -S " +totSize;
-			file +=" |";
+			//file.sprintf("play_cell %s %d %d %d |vamps ",DVD->getDevice().latin1(), l_track->getVTS() ,l_track->getpgc() +1,cell->getid() +1);
+//			file=QString("play_cell %1 %2 %3 %4 -i |vamps -a %5 -s %6 -E %7 -i %9 -S %8 |")
+			file=QString("k9copy --play --input %1 --dvdtitle %2 --chapter %3 --cell %4 --audiofilter %5 --subpicturefilter %6 --vampsfactor %7 --inputsize %8 |")
+				.arg(DVD->getDevice())
+				//.arg(l_track->getVTS())
+				.arg(l_track->getnumTitle())
+				//.arg(l_track->getpgc()+1)
+				.arg(i+1)
+				//.arg(cell->getid()+1)
+				.arg(icell)
+				.arg(caud)
+				.arg(csub)
+				.arg(factor,0,'f',2)
+				.arg(itotSize);
+				//.arg(inject);
 	
 			e.setAttribute("file",file);
 			//if (first) e.setAttribute("chapters",l_chap->gettime().toString("h:mm:ss"));
@@ -264,7 +274,7 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
 			pgc.appendChild(e);
 			first=false;
 		}
-            }
+  //          }
         }
         QDomElement post = xml->createElement("post");
         pgc.appendChild(post);

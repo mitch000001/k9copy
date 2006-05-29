@@ -106,7 +106,7 @@ void k9Ifo::saveIFO() {
         memset(buffer,0,size);
         //Lecture du fichier IFO original et sauvegarde dans buffer
         if ((dvdfile = m_dvd->openIfo(  numIfo))== 0) {
-            fprintf(stderr, "Failed opending IFO for tile set %d\n", 0);
+            fprintf(stderr, "Failed opening IFO for titleset %d\n", 0);
             free(buffer);
             return;
         }
@@ -117,7 +117,7 @@ void k9Ifo::saveIFO() {
         */
 
         if ( dvdfile->readBytes(buffer,size) != size) {
-            fprintf(stderr, "Error reading IFO for title set %d\n", 0);
+            fprintf(stderr, "Error reading IFO for titleset %d\n", 0);
             free(buffer);
             dvdfile->close();
             return;
