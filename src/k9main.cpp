@@ -329,6 +329,8 @@ void k9Main::Copy() {
     if (ckMenu->isChecked()) {
         //copy with k9DVDBackup
         //k9DVDBackup *backup = static_cast<k9DVDBackup  *>(m_factory->create(dvd,"backup", "k9DVDBackup"));
+        setSequence(); // JMP : temporaire
+
         k9DVDBackup *backup=new k9DVDBackup(dvd,"backup");
         backup->setOutput(m_prefOutput);
         backup->setDevice(dvd->getDevice());

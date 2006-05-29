@@ -29,15 +29,23 @@ private:
     QFile m_stderr;
     uint32_t m_totalBytes;
     uint32_t m_startSector,m_endSector;
+    double m_vampsFactor;
+    uint64_t m_inputSize;
+    uint m_chapter;
+    uint m_cell;
     QStringList m_audioFilter;
     QStringList m_subpictureFilter;
     void kdebug(QString const & _msg);
+    bool readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector, uchar *_buffer);
+    void insert_dummy_pack (int8_t *buf);
+    void insert_nav_pack (int8_t *buf);
 public:
     k9play();
 
     ~k9play();
     void execute();
     void play();
+    void playCell();
     void setTitle(int _value) {m_title = _value;};
 
     void setDevice(const QString& _value) {m_device = _value;};
@@ -46,6 +54,10 @@ public:
     void setendSector(QString _value);
     void setaudioFilter(QString _value);
     void setsubpictureFilter(QString _value);
+    void setvampsFactor(QString _value);
+    void setinputSize(QString _value);
+    void setchapter(QString _value);
+    void setcell(QString _value);
 };
 
 #endif

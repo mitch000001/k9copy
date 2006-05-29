@@ -31,78 +31,92 @@ static const char description[] =
 
 static const char version[] = "1.0.5";
 
- static const KCmdLineOptions options[] =
-  {
-     { "input <device>", I18N_NOOP("input device"), 0 },
-     { "output <device>", I18N_NOOP("output device"), 0 },
-     { "dvdtitle <number>", I18N_NOOP("title to play"), 0 },
-     { "play", I18N_NOOP("play title to stdout"), 0 },
-     { "startsector <number>", I18N_NOOP("start sector"),0},
-     { "endsector <number>", I18N_NOOP("end sector"),0},
-     { "audiofilter <number,number>", I18N_NOOP("list of audio streams"),0},
-     { "subpicturefilter <number,number>", I18N_NOOP("list of spu streams"),0},
-     KCmdLineLastOption // End of options.
-  };
+static const KCmdLineOptions options[] = {
+            { "input <device>", I18N_NOOP("input device"), 0
+            },
+            { "output <device>", I18N_NOOP("output device"), 0 },
+            { "dvdtitle <number>", I18N_NOOP("title to play"), 0 },
+            { "play", I18N_NOOP("play title to stdout"), 0 },
+            { "startsector <number>", I18N_NOOP("start sector"),0},
+            { "endsector <number>", I18N_NOOP("end sector"),0},
+            { "audiofilter <number,number>", I18N_NOOP("list of audio streams"),0},
+            { "subpicturefilter <number,number>", I18N_NOOP("list of spu streams"),0},
+            { "vampsfactor <number>", I18N_NOOP("shrink factor"),0},
+            { "inputsize <number>", I18N_NOOP("total input size"),0},
+            { "chapter <number>", I18N_NOOP("selected chapter"),0},
+	    { "cell <number>", I18N_NOOP("cell number in selected chapter"),0},
 
 
-int main(int argc, char **argv)
-{
+            KCmdLineLastOption // End of options.
+        };
+
+
+int main(int argc, char **argv) {
     KAboutData about("k9copy", I18N_NOOP("k9copy"), version,description,
                      KAboutData::License_GPL, "(C) 2004-2006 Jean-Michel PETIT", 0, 0, "k9copy@free.fr");
     about.addAuthor( "Jean-Michel PETIT", 0, "k9copy@free.Fr" );
     about.setTranslator(I18N_NOOP("_: NAME OF TRANSLATORS\\nYour names")
- ,I18N_NOOP("_: EMAIL OF TRANSLATORS\\nYour emails"));
+                        ,I18N_NOOP("_: EMAIL OF TRANSLATORS\\nYour emails"));
 
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;
-//    kMainDlg *mainWin = 0;
+    //    kMainDlg *mainWin = 0;
 
-     // see if we are starting with session management
-    if (app.isRestored())
-    {
+    // see if we are starting with session management
+    if (app.isRestored()) {
         RESTORE(k9Copy);
-    }
-    else
-    {
+    } else {
         ac_mmtest();
         tc_memcpy_init( 0, ac_mmflag());
 
         // no session.. just start up normally
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-	QString TitleNumber(args->getOption("dvdtitle"));
- 	QString InputOptionArg( args->getOption("input"));
- 	QString OutputOptionArg( args->getOption("output"));	
-	QString startSectorArg(args->getOption("startsector"));
-	QString endSectorArg(args->getOption("endsector"));
-	QString audioFilterArg(args->getOption("audiofilter"));
-	QString subpictureFilterArg(args->getOption("subpicturefilter"));
+        QString TitleNumber(args->getOption("dvdtitle"));
+        QString InputOptionArg( args->getOption("input"));
+        QString OutputOptionArg( args->getOption("output"));
+        QString startSectorArg(args->getOption("startsector"));
+        QString endSectorArg(args->getOption("endsector"));
+        QString audioFilterArg(args->getOption("audiofilter"));
+        QString subpictureFilterArg(args->getOption("subpicturefilter"));
+        QString vampsFactorArg(args->getOption("vampsfactor"));
+        QString inputSizeArg(args->getOption("inputsize"));
+        QString chapterArg(args->getOption("chapter"));
+	QString cellArg(args->getOption("cell"));
 
-	if (args->isSet("play")) {
-		k9play player;
-		player.setDevice(InputOptionArg);
-		player.setTitle(TitleNumber.toInt());
-		player.setstartSector(startSectorArg);
-		player.setendSector(endSectorArg );
-		player.setaudioFilter( audioFilterArg);
-		player.setsubpictureFilter( subpictureFilterArg);
-		player.execute();
-		return 1;
-	} else {
+        //InputOptionArg="/dev/hdb";
+        bool play= args->isSet("play");
+        //play=true;
 
-		k9Copy  *widget = new k9Copy;
-		if (InputOptionArg !="") {
-			widget->setInput( InputOptionArg);
-			widget->fileOpen();
-		}
-		if (OutputOptionArg !="")
-			widget->setOutput( OutputOptionArg);
-	
-		if ((InputOptionArg !="") && (OutputOptionArg!="")) 
-			widget->clone( InputOptionArg,OutputOptionArg);
-		widget->show();
-	}
+        if (play) {
+            k9play player;
+            player.setDevice(InputOptionArg);
+            player.setTitle(TitleNumber.toInt());
+            player.setstartSector(startSectorArg);
+            player.setendSector(endSectorArg );
+            player.setaudioFilter( audioFilterArg);
+            player.setsubpictureFilter( subpictureFilterArg);
+            player.setvampsFactor( vampsFactorArg);
+            player.setinputSize( inputSizeArg);
+            player.setchapter(chapterArg);
+	    player.setcell(cellArg);
+            player.execute();
+            return 0;
+        } else {
+
+            k9Copy  *widget = new k9Copy;
+            if (InputOptionArg !="") {
+                widget->setInput( InputOptionArg);
+                widget->fileOpen();
+            }
+            if (OutputOptionArg !="")
+                widget->setOutput( OutputOptionArg);
+
+            if ((InputOptionArg !="") && (OutputOptionArg!=""))
+                widget->clone( InputOptionArg,OutputOptionArg);
+            widget->show();
+        }
     }
 
 

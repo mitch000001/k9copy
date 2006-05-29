@@ -24,11 +24,14 @@
 #include <fcntl.h>
 
 
-
 k9play::k9play() {
     m_stderr.open(IO_WriteOnly,stderr);
     m_startSector=0xFFFFFFFF;
     m_endSector=0xFFFFFFFF;
+    m_vampsFactor=1;
+    m_inputSize=1;
+    m_chapter=0;
+    m_cell=0;
 }
 
 void k9play::kdebug(QString const & _msg) {
@@ -42,27 +45,49 @@ k9play::~k9play() {
 void k9play::setstartSector(QString _value) {
     QString dbg="start sector :" + _value;
     kdebug(dbg);
-    m_startSector=_value.toUInt();
+    if (_value !="")
+    	m_startSector=_value.toUInt();
 }
 
 void k9play::setendSector(QString _value) {
-    m_endSector=_value.toUInt();
+    if (_value!="")
+    	m_endSector=_value.toUInt();
 }
 
 void k9play::setaudioFilter( QString _value) {
-    m_audioFilter=QStringList::split(",",_value);
+    if (_value!="")
+    	m_audioFilter=QStringList::split(",",_value);
 }
 
 void k9play::setsubpictureFilter( QString _value) {
-    m_subpictureFilter=QStringList::split(",",_value);
+    if (_value!="")
+        m_subpictureFilter=QStringList::split(",",_value);
+}
+
+void k9play::setvampsFactor(QString _value) {
+    if (_value!="")
+    	m_vampsFactor=_value.toDouble();
+}
+
+void k9play::setinputSize( QString _value) {
+    if (_value!="")
+    	m_inputSize=_value.toULongLong();
+}
+
+void k9play::setchapter( QString _value) {
+   if (_value!="")
+	m_chapter=_value.toUInt();
+}
+
+void k9play::setcell(QString _value) {
+   if (_value !="")
+	m_cell=_value.toUInt();
 }
 
 void k9play::execute() {
-
+    //playCell();
     play();
     return;
-
-
 }
 
 
@@ -71,6 +96,52 @@ void k9play::printPosition() {
     m_stderr.writeBlock(spercent.latin1(),spercent.length());
 
 }
+
+void k9play::insert_nav_pack (int8_t *buf)
+{
+  int8_t *ptr = (int8_t*)buf;
+  static uint8_t nav_pack1 [] =
+  {
+    /* pack header: SCR=0, mux rate=10080000bps, stuffing length=0 */
+    0, 0, 1, 0xba, 0x44, 0x00, 0x04, 0x00, 0x04, 0x01, 0x01, 0x89, 0xc3, 0xf8,
+    /* system header */
+    0, 0, 1, 0xbb, 0x00, 0x12,
+    /* contents of system header filled in at run time (18 bytes) */
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    /* PES header for first private stream 2 packet */
+    0, 0, 1, 0xbf, 0x03, 0xd4
+  };
+  static uint8_t nav_pack2 [] =
+  {
+    /* PES header for second private stream 2 packet */
+    0, 0, 1, 0xbf, 0x03, 0xfa
+  };
+
+  memcpy (ptr, nav_pack1, sizeof (nav_pack1));
+  ptr += sizeof (nav_pack1);
+  memset (ptr, 0, DVD_VIDEO_LB_LEN/2 - sizeof (nav_pack1));
+  ptr = buf + DVD_VIDEO_LB_LEN/2;
+  memcpy (ptr, nav_pack2, sizeof (nav_pack2));
+  ptr += sizeof (nav_pack2);
+  memset (ptr, 0, DVD_VIDEO_LB_LEN/2 - sizeof (nav_pack2));
+}
+
+void k9play::insert_dummy_pack (int8_t *buf)
+{
+  int8_t *ptr = buf;
+  static uint8_t dummy_pack [] =
+  {
+    /* pack header: SCR=0, mux rate=10080000bps, stuffing length=0 */
+    0, 0, 1, 0xba, 0x44, 0x00, 0x04, 0x00, 0x04, 0x01, 0x01, 0x89, 0xc3, 0xf8,
+    /* PES header for dummy video packet */
+    0, 0, 1, 0xe0, 0x07, 0xec, 0x81, 0x00, 0x00
+  };
+
+  memcpy (ptr, dummy_pack, sizeof (dummy_pack));
+  ptr += sizeof (dummy_pack);
+  memset (ptr, 0xff, DVD_VIDEO_LB_LEN - sizeof (dummy_pack));
+}
+
 
 
 /* which is the default language for menus/audio/subpictures? */
@@ -85,13 +156,14 @@ void k9play::play() {
 
     int32_t tt = 0,ptt=0;
     uint32_t pos, lgr;
+    uint currCell=0;
 
     m_output.open(IO_WriteOnly,stdout);
     k9vamps vamps(NULL);
     vamps.reset();
     vamps.setOutput(&m_output);
-    vamps.setVapFactor( 1.0);
-    //vamps.setInputSize( 
+    vamps.setVapFactor( m_vampsFactor);
+    vamps.setInputSize(m_inputSize);
     for ( QStringList::Iterator it = m_audioFilter.begin(); it != m_audioFilter.end(); ++it ) {
         vamps.addAudio((*it).toInt());
     }
@@ -127,10 +199,19 @@ void k9play::play() {
         return ;
     }
 
-    dvdnav_title_play(dvdnav , m_title);
-    vamps.start(QThread::NormalPriority);
+    int32_t parts;
+    dvdnav_get_number_of_parts(dvdnav , m_title, &parts);
+    kdebug(QString("number of parts %1 \n").arg(parts));
+
+    if (m_chapter ==0) 
+    	dvdnav_title_play(dvdnav , m_title);
+    else {
+	dvdnav_part_play(dvdnav, m_title, m_chapter);
+	ptt=m_chapter;
+    }
     /* the read loop which regularly calls dvdnav_get_next_block
      * and handles the returned events */
+    bool bcopy=false;
     while (!finished) {
         int result, event, len;
         uint8_t *buf = mem;
@@ -151,24 +232,67 @@ void k9play::play() {
         }
 
         switch (event) {
+        case DVDNAV_NAV_PACKET:
+            {
+
+		dvdnav_current_title_info(dvdnav, &tt, &ptt);
+		dvdnav_get_position(dvdnav, &pos, &lgr);
+
+		if ((m_endSector !=0xFFFFFFFF) && (pos >m_endSector))
+			finished=1;
+		if ((m_chapter !=0 && ptt !=m_chapter) || (tt != m_title))
+			finished=1;
+ 	    	if (m_cell!=0 && currCell>m_cell)
+			finished=1;
+
+	
+		if (m_startSector!=0xFFFFFFFF) {
+			dvdnav_sector_search(dvdnav, m_startSector, SEEK_SET);
+			m_startSector=0xFFFFFFFF;
+		} else {
+			if ((m_cell==0  || (m_cell!=0 && currCell==m_cell)) && finished==0) {
+    			    if (!vamps.running())
+				vamps.start(QThread::NormalPriority);
+			    bcopy=true;
+			    vamps.addData( buf,len);
+			    kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));
+			}
+
+		}
+
+
+                pci_t *pci;
+                dsi_t *dsi;
+
+                /* Applications with fifos should not use these functions to retrieve NAV packets,
+                 * they should implement their own NAV handling, because the packet you get from these
+                 * functions will already be ahead in the stream which can cause state inconsistencies.
+                 * Applications with fifos should therefore pass the NAV packet through the fifo
+                 * and decoding pipeline just like any other data. */
+                pci = dvdnav_get_current_nav_pci(dvdnav);
+                dsi = dvdnav_get_current_nav_dsi(dvdnav);
+
+                if(pci->hli.hl_gi.btn_ns > 0) {
+                    int button;
+                    button = 1;
+                    dvdnav_button_select_and_activate(dvdnav, pci, button);
+                }	    
+
+            }
+	    break;
+	//removed break --> save
         case DVDNAV_BLOCK_OK:
             /* We have received a regular block of the currently playing MPEG stream.*/
-
-            dvdnav_current_title_info(dvdnav, &tt, &ptt);
-            dvdnav_get_position(dvdnav, &pos, &lgr);
-            kdebug(QString("INFOPOS: %1 %2").arg(pos).arg(lgr));
-
-            if (m_startSector!=0xFFFFFFFF) {
-                dvdnav_sector_search(dvdnav, m_startSector, SEEK_SET);
-                m_startSector=0xFFFFFFFF;
-            } else {
-                if (dump || tt_dump)
-                    //m_output.writeBlock((const char*)buf, len);
-		    vamps.addData( buf,len);
-            }
-            if ((m_endSector !=0xFFFFFFFF) && (pos >m_endSector))
-                finished=1;
-
+ 	    if (m_cell==0  || (m_cell!=0 && currCell==m_cell)) {
+ 	        if (!vamps.running())
+		    vamps.start(QThread::NormalPriority);
+		vamps.addData( buf,len);
+                bcopy=true;
+   	        dvdnav_get_position(dvdnav, &pos, &lgr);
+	        kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));
+	    }
+	    if (m_cell!=0 && currCell>m_cell)
+		finished=1;
             break;
         case DVDNAV_NOP:
             /* Nothing to do here. */
@@ -217,48 +341,7 @@ void k9play::play() {
              * accordingly. */
             break;
         case DVDNAV_CELL_CHANGE:
-            /* Some status information like the current Title and Part numbers do not
-             * change inside a cell. Therefore this event can be used to query such
-             * information only when necessary and update the decoding/displaying
-             * accordingly. */
-            {
-
-                //	printf("Cell change: Title %d, Chapter %d\n", tt, ptt);
-                //	printf("At position %.0f%% inside the feature\n", 100 * (double)pos / (double)len);
-                /*
-                              dump = 0;
-                              if (tt_dump && tt != tt_dump)
-                                  tt_dump = 0;
-
-                              if (!dump && !tt_dump) {
-                                  dump = 1;
-                              }
-                */
-            }
-            break;
-        case DVDNAV_NAV_PACKET:
-            /* A NAV packet provides PTS discontinuity information, angle linking information and
-             * button definitions for DVD menus. Angles are handled completely inside libdvdnav.
-             * For the menus to work, the NAV packet information has to be passed to the overlay
-             * engine of the player so that it knows the dimensions of the button areas. */
-            {
-                pci_t *pci;
-                dsi_t *dsi;
-
-                /* Applications with fifos should not use these functions to retrieve NAV packets,
-                 * they should implement their own NAV handling, because the packet you get from these
-                 * functions will already be ahead in the stream which can cause state inconsistencies.
-                 * Applications with fifos should therefore pass the NAV packet through the fifo
-                 * and decoding pipeline just like any other data. */
-                pci = dvdnav_get_current_nav_pci(dvdnav);
-                dsi = dvdnav_get_current_nav_dsi(dvdnav);
-
-                if(pci->hli.hl_gi.btn_ns > 0) {
-                    int button;
-                    button = 1;
-                    dvdnav_button_select_and_activate(dvdnav, pci, button);
-                }
-            }
+	    currCell++;
             break;
         case DVDNAV_HOP_CHANNEL:
             /* This event is issued whenever a non-seamless operation has been executed.
@@ -274,6 +357,7 @@ void k9play::play() {
             finished = 1;
             break;
         }
+	kdebug(QString(dvdnav_err_to_string(dvdnav)));
 #if DVD_READ_CACHE
         dvdnav_free_cache_block(dvdnav, buf);
 #endif
@@ -283,7 +367,116 @@ void k9play::play() {
     vamps.wait();
     /* destroy dvdnav handle */
     dvdnav_close(dvdnav);
+
+    if (! bcopy) {
+        kdebug ("\ninsert dummy pack\n");
+	int8_t buf[DVD_VIDEO_LB_LEN];
+	insert_nav_pack(buf);
+	m_output.writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
+	insert_dummy_pack(buf);
+	m_output.writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
+
+    }
     m_output.close();
 
-    return ;
 }
+
+bool k9play::readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector,uchar *_buffer)
+{
+  int n;
+  /* try max_read_retries+1 times */
+    n = fh->readBlocks( sector, 1,_buffer);
+
+    if (n == 1)
+    {
+      /* read Ok */
+      if (k9Cell::isNavPack (_buffer))
+         /* parse contained DSI pack */
+          navRead_DSI (dsi, _buffer + DSI_START_BYTE);
+          if (sector == dsi -> dsi_gi.nv_pck_lbn) {
+               return true;
+          }
+    }
+    return false;
+}
+
+
+void k9play::playCell() {
+  k9DVDRead dvdreader;
+  k9DVDFile *dvdfile;
+  
+  pgc_t *       pgc;
+  int           sector, first_sector, next_vobu = 0;
+
+  dvdreader.openDevice( m_device); 
+  k9Ifo ifo(&dvdreader);
+  
+  //temporary
+  int vts_num=1;
+  int pgc_num=3;
+  int cell=2;
+
+    m_output.open(IO_WriteOnly,stdout);
+    k9vamps vamps(NULL);
+    vamps.reset();
+    vamps.setOutput(&m_output);
+    vamps.setVapFactor( m_vampsFactor);
+    vamps.setInputSize(m_inputSize);
+    for ( QStringList::Iterator it = m_audioFilter.begin(); it != m_audioFilter.end(); ++it ) {
+        vamps.addAudio((*it).toInt());
+    }
+
+    for ( QStringList::Iterator it = m_subpictureFilter.begin(); it != m_subpictureFilter.end(); ++it ) {
+        vamps.addSubpicture((*it).toInt());
+    }
+
+  ifo.setDevice(m_device);
+  ifo.openIFO( vts_num);
+  dvdfile = dvdreader.openTitle( vts_num);
+   
+
+  pgc = ifo.getIFO()-> vts_pgcit -> pgci_srp [pgc_num - 1].pgc;
+
+  first_sector = pgc -> cell_playback [cell - 1].first_sector;
+
+ // vamps.start(QThread::NormalPriority);
+
+  /* loop until out of the cell */
+  for (sector = first_sector;
+       next_vobu != SRI_END_OF_CELL; sector += next_vobu & 0x7fffffff)
+  {
+    dsi_t dsi;
+    int   nsectors, len;
+    uchar *buf1=(uchar*)malloc (DVD_VIDEO_LB_LEN);
+    /* read nav pack */
+    if (! readNavPack( dvdfile, &dsi, sector, buf1) ) {
+      kdebug("failed to read nav pack");
+      free (buf1);
+      //if reading of nav pack failed, whe should look for the next vobu in ifo file
+      return;
+    }
+
+
+    nsectors  = dsi.dsi_gi.vobu_ea;
+    next_vobu = dsi.vobu_sri.next_vobu;
+    uchar *buf=(uchar*) malloc(nsectors*DVD_VIDEO_LB_LEN);
+    len =  dvdfile->readBlocks(sector + 1, nsectors,buf );
+    if (len !=-1) {
+        m_output.writeBlock((const char*)buf1, DVD_VIDEO_LB_LEN);
+        m_output.writeBlock((const char*)buf,DVD_VIDEO_LB_LEN * nsectors);
+    }
+    free (buf1);
+    free (buf);
+  }    
+//  vamps.setNoData();
+//  vamps.wait();
+
+  m_output.close(); 
+  ifo.closeIFO();
+  dvdfile->close();
+  dvdreader.close();
+
+}
+
+
+

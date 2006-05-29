@@ -813,6 +813,12 @@
         <receiver>MainDlg</receiver>
         <slot>cbDefSubActivated(int)</slot>
     </connection>
+    <connection>
+        <sender>listView1</sender>
+        <signal>itemRenamed(QListViewItem*,int)</signal>
+        <receiver>MainDlg</receiver>
+        <slot>itemRenamed(QListViewItem*,int)</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>cbInputDev</tabstop>
@@ -846,6 +852,7 @@
     <slot>cbDefAudioActivated(int)</slot>
     <slot>cbDefSubActivated(int)</slot>
     <slot>ckMp4AspectRatioClick()</slot>
+    <slot>itemRenamed(QListViewItem*,int)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
