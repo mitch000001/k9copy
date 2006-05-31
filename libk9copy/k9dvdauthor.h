@@ -46,6 +46,7 @@ public:
   virtual const bool& getburnDVD();
 private: // Private attributes
   /**  */
+  QTime *time;
   k9DVD* DVD;
   double factor;
   QDomDocument *xml;

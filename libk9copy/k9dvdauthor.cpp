@@ -48,6 +48,7 @@ k9DVDAuthor::k9DVDAuthor(QObject *DVDStruct,const char* name,const QStringList& 
     xml=NULL;
     cancelled=false;
     error=false;
+
 }
 k9DVDAuthor::~k9DVDAuthor() {
     if (xml!=NULL)
@@ -105,8 +106,8 @@ void k9DVDAuthor::addMenus(QDomElement &titleSet) {
             error=true;
             QString sMsg;
             //sMsg.QString::sprintf(tr2i18n("'%s' not selected"),l_track->getname().latin1());
-           sMsg=i18n("'%1' not selected").arg(l_track->getname());
-	    KMessageBox::error( 0,sMsg, tr2i18n("authoring"));
+            sMsg=i18n("'%1' not selected").arg(l_track->getname());
+            KMessageBox::error( 0,sMsg, tr2i18n("authoring"));
         }
         start.sprintf("jump titleset %d menu;",DVD->getnewTitleNum(l_track));
     }
@@ -154,34 +155,34 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
         pgc.appendChild(pre);
         QDomText precmd=xml->createTextNode("");
 
-	int subtitle=0,audio=0;	
-	if (l_track->getDefSubtitle() != NULL){
-	   for (int isub=0;isub<l_track->getsubPictureCount();isub++) {
-		if (l_track->getsubtitle(isub)->getselected()) {
-		  subtitle++;
-		}
-		if (l_track->getsubtitle(isub)==l_track->getDefSubtitle())
-		   break;
-	   }
-	}
-	if (l_track->getDefAudio() != NULL) {
-	   for (int iaud=0;iaud < l_track->getaudioStreamCount();iaud++) {
-		if (l_track->getaudioStream(iaud)->getselected()) {
-		   audio++;
-		}
-		if(l_track->getaudioStream(iaud)==l_track->getDefAudio())
-		   break;
-	   }
-	}
+        int subtitle=0,audio=-1;
+        if (l_track->getDefSubtitle() != NULL) {
+            for (int isub=0;isub<l_track->getsubPictureCount();isub++) {
+                if (l_track->getsubtitle(isub)->getselected()) {
+                    subtitle++;
+                }
+                if (l_track->getsubtitle(isub)==l_track->getDefSubtitle())
+                    break;
+            }
+        }
+        if (l_track->getDefAudio() != NULL) {
+            for (int iaud=0;iaud < l_track->getaudioStreamCount();iaud++) {
+                if (l_track->getaudioStream(iaud)->getselected()) {
+                    audio++;
+                }
+                if(l_track->getaudioStream(iaud)==l_track->getDefAudio())
+                    break;
+            }
+        }
 
-	QString txtcmd;
-	if (audio !=0) {
-		txtcmd="subtitle=%1;\n audio=%2;\n g1=0;jump title 1;";
-		txtcmd=txtcmd.arg(subtitle+63).arg(audio);
-	} else {
-		txtcmd="subtitle=%1;\n audio=%2;\n g1=0;jump title 1;";
-		txtcmd=txtcmd.arg(subtitle+63).arg(audio);
-	}
+        QString txtcmd;
+        if (audio !=-1) {
+            txtcmd="subtitle=%1;\n audio=%2;\n g1=0;jump title 1;";
+            txtcmd=txtcmd.arg(subtitle+63).arg(audio);
+        } else {
+            txtcmd="subtitle=%1;\n g1=0;jump title 1;";
+            txtcmd=txtcmd.arg(subtitle+63);
+        }
 
         precmd.setNodeValue(txtcmd);
         pre.appendChild(precmd);
@@ -240,41 +241,46 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
         pgc.setAttribute("palette",palette);
         t.appendChild(pgc);
 
+	if (caud !="")
+	   caud="--audiofilter "+caud;
+	if (csub !="")
+	   csub="--subpicturefilter "+csub;
+
         for (i=0;i<l_track->getchapterCount();i++) {
-	    uint icell=0;
+            uint icell=0;
             k9DVDChapter *l_chap=l_track->getChapter(i);
             bool first=true;
-           for (k9ChapterCell *cell =l_chap->cells.first();cell ;cell =l_chap->cells.next() ) {
-		icell++;
-		//test
-		uint32_t itotSize = (cell->getlastSector()-cell->getstartSector())* DVD_VIDEO_LB_LEN;
-//		if (cell->getangle()==1) {
-			QString file;
-			e=xml->createElement("vob");
-			//file.sprintf("play_cell %s %d %d %d |vamps ",DVD->getDevice().latin1(), l_track->getVTS() ,l_track->getpgc() +1,cell->getid() +1);
-//			file=QString("play_cell %1 %2 %3 %4 -i |vamps -a %5 -s %6 -E %7 -i %9 -S %8 |")
-			file=QString("k9copy --play --input %1 --dvdtitle %2 --chapter %3 --cell %4 --audiofilter %5 --subpicturefilter %6 --vampsfactor %7 --inputsize %8 |")
-				.arg(DVD->getDevice())
-				//.arg(l_track->getVTS())
-				.arg(l_track->getnumTitle())
-				//.arg(l_track->getpgc()+1)
-				.arg(i+1)
-				//.arg(cell->getid()+1)
-				.arg(icell)
-				.arg(caud)
-				.arg(csub)
-				.arg(factor,0,'f',2)
-				.arg(itotSize);
-				//.arg(inject);
-	
-			e.setAttribute("file",file);
-			//if (first) e.setAttribute("chapters",l_chap->gettime().toString("h:mm:ss"));
-			if (first)
-			e.setAttribute("chapters",l_chap->gettime().toString("0"));
-			pgc.appendChild(e);
-			first=false;
-		}
-  //          }
+            for (k9ChapterCell *cell =l_chap->cells.first();cell ;cell =l_chap->cells.next() ) {
+                icell++;
+                //test
+                uint32_t itotSize = (cell->getlastSector()-cell->getstartSector())* DVD_VIDEO_LB_LEN;
+                //		if (cell->getangle()==1) {
+                QString file;
+                e=xml->createElement("vob");
+                //file.sprintf("play_cell %s %d %d %d |vamps ",DVD->getDevice().latin1(), l_track->getVTS() ,l_track->getpgc() +1,cell->getid() +1);
+                //			file=QString("play_cell %1 %2 %3 %4 -i |vamps -a %5 -s %6 -E %7 -i %9 -S %8 |")
+                file=QString("k9copy --play --input %1 --dvdtitle %2 --chapter %3 --cell %4  %5  %6 --vampsfactor %7 --inputsize %8 --inject %9 |")
+                     .arg(DVD->getDevice())
+                     //.arg(l_track->getVTS())
+                     .arg(l_track->getnumTitle())
+                     //.arg(l_track->getpgc()+1)
+                     .arg(i+1)
+                     //.arg(cell->getid()+1)
+                     .arg(icell)
+                     .arg(caud)
+                     .arg(csub)
+                     .arg(factor,0,'f',2)
+                     .arg(itotSize)
+                     .arg(inject);
+
+                e.setAttribute("file",file);
+                //if (first) e.setAttribute("chapters",l_chap->gettime().toString("h:mm:ss"));
+                if (first)
+                    e.setAttribute("chapters",l_chap->gettime().toString("0"));
+                pgc.appendChild(e);
+                first=false;
+            }
+            //          }
         }
         QDomElement post = xml->createElement("post");
         pgc.appendChild(post);
@@ -311,6 +317,9 @@ void k9DVDAuthor::author() {
     //nettoyage du répertoire de sortie
     clearOutput(workDir+"dvd");
 
+    time = new QTime(0,0);
+    time->start();
+
     //progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
     progress = new k9Progress(qApp->mainWidget(),"progress");
     progress->setLabelText(tr2i18n("Authoring"));
@@ -326,14 +335,14 @@ void k9DVDAuthor::author() {
     if (!cancelled  && !error) {
         QString c("dvdauthor");
         proc=progress->getProcess();//  new QProcess(c,0);
-	proc->addArgument(c);
+        proc->addArgument(c);
         proc->addArgument("-x");
         proc->addArgument( locateLocal("tmp", "k9author.xml"));
         connect( proc, SIGNAL(readyReadStderr()),
                  this, SLOT(DVDAuthorStderr()) );
         connect( proc, SIGNAL(readyReadStdout()),
                  this, SLOT(DVDAuthorStdout()) );
-    //    connect(progress, SIGNAL(cancelled()), this, SLOT(stopProcess()));
+        //    connect(progress, SIGNAL(cancelled()), this, SLOT(stopProcess()));
 
 
         totalSize=(int)DVD->getsizeSelected();
@@ -341,12 +350,12 @@ void k9DVDAuthor::author() {
             totalSize=k9DVDSize::getMaxSize();
         QDir dir(workDir);
         proc->setWorkingDirectory(dir);
-	int result=progress->execute();
+        int result=progress->execute();
         if ( result==-1 ) {
             KMessageBox::error( 0,  tr2i18n("Dvdauthor error :\n") + lastMsg,tr2i18n("authoring"));
 
         } else {
-	    cancelled=(result==0);
+            cancelled=(result==0);
             if ((proc->exitStatus()==0) && (proc->normalExit()) && !cancelled && !error) {
                 burnOk=true;
             } else {
@@ -359,19 +368,48 @@ void k9DVDAuthor::author() {
 
             }
         }
-//        delete proc;
+        //        delete proc;
         delete progress;
         if (!burnOk)
             error=true;
     }
 
-
+   delete time;
 }
 
 
 /** No descriptions */
 void k9DVDAuthor::DVDAuthorStderr() {
-    QString c(proc->readStderr());
+    //QString c(proc->readStderr());
+
+    QString m_stderr(proc->readStderr());
+    float m_percent;
+    QString m_remain;
+
+    int pos=m_stderr.find("INFOPOS:");
+    if (pos!=-1) {
+        QString tmp=m_stderr.mid(pos);
+        uint32_t totalBytes,totalSize;
+        sscanf(tmp.latin1(),"INFOPOS: %d %d",&totalBytes,&totalSize);
+        m_percent=(float)totalBytes / (float)totalSize;
+
+
+        QTime time2(0,0);
+        time2=time2.addMSecs(time->elapsed());
+        if (m_percent>0) {
+            QTime time3(0,0);
+            time3=time3.addMSecs((uint32_t)(time->elapsed()*(1/m_percent)));
+            m_remain=time3.toString("hh:mm:ss");
+        }
+
+        m_percent*=100;
+        progress->setProgress(m_percent,100);
+        //progress->setremain(time2.toString("hh:mm:ss") +" / " +m_remain);
+
+    } 
+    else qDebug(m_stderr);
+/*
+
     int pos,end;
     lastMsg=c;
     if (c.contains("STAT:")) {
@@ -388,8 +426,9 @@ void k9DVDAuthor::DVDAuthorStderr() {
         }
     }
 
-
+*/
 }
+
 void k9DVDAuthor::DVDAuthorStdout() {
     QString c(proc->readStdout());
     int pos;
