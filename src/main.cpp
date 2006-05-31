@@ -45,6 +45,7 @@ static const KCmdLineOptions options[] = {
             { "inputsize <number>", I18N_NOOP("total input size"),0},
             { "chapter <number>", I18N_NOOP("selected chapter"),0},
 	    { "cell <number>", I18N_NOOP("cell number in selected chapter"),0},
+	    { "inject <filename>", I18N_NOOP("status file name"),0},
 
 
             KCmdLineLastOption // End of options.
@@ -84,11 +85,18 @@ int main(int argc, char **argv) {
         QString inputSizeArg(args->getOption("inputsize"));
         QString chapterArg(args->getOption("chapter"));
 	QString cellArg(args->getOption("cell"));
-
-        //InputOptionArg="/dev/hdb";
+	QString injectArg(args->getOption("inject"));
         bool play= args->isSet("play");
-        //play=true;
 
+   /*     InputOptionArg="/dev/hdb";
+        play=true;
+	TitleNumber="1";
+	chapterArg="1";
+	cellArg="4";
+	audioFilterArg="1";
+	subpictureFilterArg="2";
+	vampsFactorArg="1.49";
+*/
         if (play) {
             k9play player;
             player.setDevice(InputOptionArg);
@@ -101,6 +109,7 @@ int main(int argc, char **argv) {
             player.setinputSize( inputSizeArg);
             player.setchapter(chapterArg);
 	    player.setcell(cellArg);
+	    player.setinject(injectArg);
             player.execute();
             return 0;
         } else {

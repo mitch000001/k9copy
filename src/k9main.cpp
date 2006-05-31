@@ -61,6 +61,8 @@
 #include <kdeversion.h>
 #include <qlistbox.h>
 
+
+
 k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
         : MainDlg(parent,name),pxVideo((const char **) img_video ),
         pxSound((const char **) img_sound),
@@ -1198,8 +1200,8 @@ void k9Main::lbSequenceChanged(QListBoxItem *_item) {
 
     for (int i=0;i < title->getaudioStreamCount();i++) {
 	if (title->getaudioStream(i)->getselected()) {
-		if ( !title->getDefAudioSet())
-		   title->setDefAudio(title->getaudioStream(i));
+//		if ( !title->getDefAudioSet())
+//		   title->setDefAudio(title->getaudioStream(i));
 		cbDefAudio->insertItem(title->getaudioStream(i)->getlanguage());
 		if (title->getaudioStream(i)==title->getDefAudio()) {
 		   cbDefAudio->setCurrentItem(cbDefAudio->count()-1);

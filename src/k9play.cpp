@@ -24,6 +24,28 @@
 #include <fcntl.h>
 
 
+void k9play::saveStatus(k9play_st _status) {
+   QFile fstatus(m_inject);
+   fstatus.open(IO_WriteOnly);
+   fstatus.writeBlock((const char*)&_status,sizeof(k9play_st));
+   fstatus.close();
+   kdebug (QString("saving status : %1 %2 %3 %4 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector));
+
+}
+
+void k9play::readStatus(k9play_st &_status) {
+   QFile fstatus(m_inject);
+   if (fstatus.open(IO_ReadOnly)) {
+	k9play_st status;
+	fstatus.readBlock((char*)&_status,sizeof(k9play_st));
+	fstatus.close();
+   } else memset(&_status,0,sizeof(k9play_st));
+
+   kdebug (QString("reading status : %1 %2 %3 %4 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector));
+
+}
+
+
 k9play::k9play() {
     m_stderr.open(IO_WriteOnly,stderr);
     m_startSector=0xFFFFFFFF;
@@ -47,6 +69,10 @@ void k9play::setstartSector(QString _value) {
     kdebug(dbg);
     if (_value !="")
     	m_startSector=_value.toUInt();
+}
+
+void k9play::setinject(QString _value) {
+    m_inject=_value;
 }
 
 void k9play::setendSector(QString _value) {
@@ -153,10 +179,17 @@ void k9play::play() {
     uint8_t mem[DVD_VIDEO_LB_LEN];
     int finished = 0;
     int dump = 1, tt_dump = 0;
-
+    bool skipped=false;
     int32_t tt = 0,ptt=0;
     uint32_t pos, lgr;
     uint currCell=0;
+
+    k9play_st status;
+
+    if ((m_chapter==1 && m_cell==1))
+	memset(&status,0,sizeof(k9play_st));
+    else
+	readStatus( status);
 
     m_output.open(IO_WriteOnly,stdout);
     k9vamps vamps(NULL);
@@ -212,7 +245,29 @@ void k9play::play() {
     /* the read loop which regularly calls dvdnav_get_next_block
      * and handles the returned events */
     bool bcopy=false;
-    while (!finished) {
+    bool bcell=true;
+
+    /*
+    if (m_chapter !=0 && m_cell !=0 ) {
+	if (status.title == m_title &&
+	    status.chapter == m_chapter &&
+	    status.cell == m_cell) {
+		m_startSector=status.sector;
+		currCell=m_cell-1;
+		kdebug(QString("\nRepositionning on %1\n").arg(m_startSector));
+		bcell=false;
+	}
+    }
+    */
+
+    // if reading of previous cell reached end of chapter, don't seek for cell
+    if (m_chapter !=0 && m_cell !=0) {
+	if (status.title == m_title &&
+	    status.chapter > m_chapter)
+		skipped=true;
+    }
+
+    while (!finished && !skipped) {
         int result, event, len;
         uint8_t *buf = mem;
 
@@ -234,9 +289,12 @@ void k9play::play() {
         switch (event) {
         case DVDNAV_NAV_PACKET:
             {
-
 		dvdnav_current_title_info(dvdnav, &tt, &ptt);
 		dvdnav_get_position(dvdnav, &pos, &lgr);
+		status.title=tt;
+		status.chapter=ptt;
+		status.cell=currCell;
+		status.sector=pos;
 
 		if ((m_endSector !=0xFFFFFFFF) && (pos >m_endSector))
 			finished=1;
@@ -247,8 +305,13 @@ void k9play::play() {
 
 	
 		if (m_startSector!=0xFFFFFFFF) {
-			dvdnav_sector_search(dvdnav, m_startSector, SEEK_SET);
+			kdebug("\nRepositionning ....\n");
+			uint32_t lg2;
+			dvdnav_sector_search(dvdnav,m_startSector , SEEK_SET);
+
 			m_startSector=0xFFFFFFFF;
+			finished=0;
+			bcell=true;
 		} else {
 			if ((m_cell==0  || (m_cell!=0 && currCell==m_cell)) && finished==0) {
     			    if (!vamps.running())
@@ -288,11 +351,11 @@ void k9play::play() {
 		    vamps.start(QThread::NormalPriority);
 		vamps.addData( buf,len);
                 bcopy=true;
-   	        dvdnav_get_position(dvdnav, &pos, &lgr);
-	        kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));
+   	      //  dvdnav_get_position(dvdnav, &pos, &lgr);
+	       // kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));
 	    }
-	    if (m_cell!=0 && currCell>m_cell)
-		finished=1;
+//	    if (m_cell!=0 && currCell>m_cell)
+//		finished=1;
             break;
         case DVDNAV_NOP:
             /* Nothing to do here. */
@@ -341,7 +404,16 @@ void k9play::play() {
              * accordingly. */
             break;
         case DVDNAV_CELL_CHANGE:
-	    currCell++;
+	    if (bcell) {
+		currCell++;
+		dvdnav_get_position(dvdnav, &pos, &lgr);
+		status.title=tt;
+		status.chapter=ptt;
+		status.cell=currCell;
+		status.sector=pos;
+
+		kdebug(QString("\nCell changed: %1  position:%2\n").arg(currCell).arg(pos));
+	    }
             break;
         case DVDNAV_HOP_CHANNEL:
             /* This event is issued whenever a non-seamless operation has been executed.
@@ -357,7 +429,8 @@ void k9play::play() {
             finished = 1;
             break;
         }
-	kdebug(QString(dvdnav_err_to_string(dvdnav)));
+//	kdebug(QString(dvdnav_err_to_string(dvdnav)));
+
 #if DVD_READ_CACHE
         dvdnav_free_cache_block(dvdnav, buf);
 #endif
@@ -377,8 +450,9 @@ void k9play::play() {
 	m_output.writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
 
     }
-    m_output.close();
 
+    m_output.close();
+    saveStatus( status);
 }
 
 bool k9play::readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector,uchar *_buffer)

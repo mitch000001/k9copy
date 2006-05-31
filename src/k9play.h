@@ -18,6 +18,14 @@
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
+
+typedef struct {
+ uint title;
+ uint chapter;
+ uint cell;
+ uint32_t sector;
+} k9play_st;
+
 class k9play{
 private:
     int m_title;
@@ -33,12 +41,15 @@ private:
     uint64_t m_inputSize;
     uint m_chapter;
     uint m_cell;
+    QString m_inject;
     QStringList m_audioFilter;
     QStringList m_subpictureFilter;
     void kdebug(QString const & _msg);
     bool readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector, uchar *_buffer);
     void insert_dummy_pack (int8_t *buf);
     void insert_nav_pack (int8_t *buf);
+    void saveStatus(k9play_st _status);
+    void readStatus(k9play_st &_status);
 public:
     k9play();
 
@@ -58,6 +69,7 @@ public:
     void setinputSize(QString _value);
     void setchapter(QString _value);
     void setcell(QString _value);
+    void setinject(QString _value);
 };
 
 #endif
