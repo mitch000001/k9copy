@@ -1061,6 +1061,10 @@ void k9vamps::vaporize (void) {
     }
 }
 
+uint64_t k9vamps::getOutputBytes() {
+    return bytes_written;
+}
+
 void k9vamps::abort() {
     //fatal("vamps stopped");
     setNoData();

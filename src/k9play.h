@@ -24,6 +24,8 @@ typedef struct {
  uint chapter;
  uint cell;
  uint32_t sector;
+ uint64_t bytesWritten;
+ uint64_t bytesReaden;
 } k9play_st;
 
 class k9play{
@@ -39,6 +41,8 @@ private:
     uint32_t m_startSector,m_endSector;
     double m_vampsFactor;
     uint64_t m_inputSize;
+    uint64_t m_totalSize;
+    uint64_t m_dvdSize;
     uint m_chapter;
     uint m_cell;
     QString m_inject;
@@ -67,9 +71,11 @@ public:
     void setsubpictureFilter(QString _value);
     void setvampsFactor(QString _value);
     void setinputSize(QString _value);
+    void settotalSize(QString _value);
     void setchapter(QString _value);
     void setcell(QString _value);
     void setinject(QString _value);
+    void setdvdSize(QString _value);
 };
 
 #endif

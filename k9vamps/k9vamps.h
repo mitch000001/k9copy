@@ -164,6 +164,7 @@ public:
 	void setInputSize(uint64_t size);
 	void setVapFactor(float factor);
 	void setOutput(QFile *_output);
+	uint64_t getOutputBytes();
 	QString & geterrMsg();
 	bool geterror();
 	void abort();

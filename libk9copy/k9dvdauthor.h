@@ -57,8 +57,8 @@ private: // Private attributes
   bool cancelled;
   bool error;
   bool burnDVD;
-  int totalSize;
-
+  uint32_t m_totalSize;
+  uint32_t m_copied,m_lastPos;
   void clearOutput(QString name);
   void createXML();
   void addTitle(QDomElement &root, int title);

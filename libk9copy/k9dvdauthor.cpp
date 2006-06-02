@@ -254,27 +254,23 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
                 icell++;
                 //test
                 uint32_t itotSize = (cell->getlastSector()-cell->getstartSector())* DVD_VIDEO_LB_LEN;
-                //		if (cell->getangle()==1) {
                 QString file;
                 e=xml->createElement("vob");
-                //file.sprintf("play_cell %s %d %d %d |vamps ",DVD->getDevice().latin1(), l_track->getVTS() ,l_track->getpgc() +1,cell->getid() +1);
-                //			file=QString("play_cell %1 %2 %3 %4 -i |vamps -a %5 -s %6 -E %7 -i %9 -S %8 |")
-                file=QString("k9copy --play --input %1 --dvdtitle %2 --chapter %3 --cell %4  %5  %6 --vampsfactor %7 --inputsize %8 --inject %9 |")
+                file=QString("k9copy --play --input %1 --dvdtitle %2 --chapter %3 --cell %4  %5  %6 --vampsfactor %7 --inputsize %8 ")
                      .arg(DVD->getDevice())
-                     //.arg(l_track->getVTS())
                      .arg(l_track->getnumTitle())
-                     //.arg(l_track->getpgc()+1)
                      .arg(i+1)
-                     //.arg(cell->getid()+1)
                      .arg(icell)
                      .arg(caud)
                      .arg(csub)
                      .arg(factor,0,'f',2)
-                     .arg(itotSize)
-                     .arg(inject);
+                     .arg(itotSize,0,'f',0);
+		file +=QString(" --inject %1 --totalsize %2 --dvdsize %3 |")
+                     .arg(inject)
+		     .arg(DVD->getsizeSelected() *1024 *1024,0,'f',0) 
+		     .arg((uint64_t)k9DVDSize::getMaxSize() *1024 *1024,0,'f',0);
 
                 e.setAttribute("file",file);
-                //if (first) e.setAttribute("chapters",l_chap->gettime().toString("h:mm:ss"));
                 if (first)
                     e.setAttribute("chapters",l_chap->gettime().toString("0"));
                 pgc.appendChild(e);
@@ -322,7 +318,7 @@ void k9DVDAuthor::author() {
 
     //progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
     progress = new k9Progress(qApp->mainWidget(),"progress");
-    progress->setLabelText(tr2i18n("Authoring"));
+    progress->setLabelText(i18n("Authoring"));
     progress->setCaption(i18n("k9Copy - Backup progression"));
     progress->setProgress(0,100);
     //progress->show();
@@ -344,10 +340,10 @@ void k9DVDAuthor::author() {
                  this, SLOT(DVDAuthorStdout()) );
         //    connect(progress, SIGNAL(cancelled()), this, SLOT(stopProcess()));
 
-
-        totalSize=(int)DVD->getsizeSelected();
-        if (totalSize >k9DVDSize::getMaxSize())
-            totalSize=k9DVDSize::getMaxSize();
+ 	m_copied=0;m_lastPos=0;
+        m_totalSize=(int)DVD->getsizeSelected();
+        //if (m_totalSize >k9DVDSize::getMaxSize())
+        //    m_totalSize=k9DVDSize::getMaxSize();
         QDir dir(workDir);
         proc->setWorkingDirectory(dir);
         int result=progress->execute();
@@ -388,10 +384,15 @@ void k9DVDAuthor::DVDAuthorStderr() {
 
     int pos=m_stderr.find("INFOPOS:");
     if (pos!=-1) {
+	progress->setLabelText(i18n("Authoring"));
         QString tmp=m_stderr.mid(pos);
         uint32_t totalBytes,totalSize;
         sscanf(tmp.latin1(),"INFOPOS: %d %d",&totalBytes,&totalSize);
-        m_percent=(float)totalBytes / (float)totalSize;
+	if (totalBytes>m_lastPos)
+	   m_copied+=totalBytes - m_lastPos;
+	m_lastPos=totalBytes;
+        //qDebug(QString("copied : %1   totalSize : %2").arg(m_copied).arg(m_totalSize*512));
+        m_percent=(float)m_copied / (float)(m_totalSize * 512);
 
 
         QTime time2(0,0);
@@ -408,25 +409,25 @@ void k9DVDAuthor::DVDAuthorStderr() {
 
     } 
     else qDebug(m_stderr);
-/*
 
-    int pos,end;
-    lastMsg=c;
-    if (c.contains("STAT:")) {
-        pos=c.find("at ");
+    int end;
+    lastMsg=m_stderr;
+    
+    if (m_stderr.contains("STAT:")) {
+        pos=m_stderr.find("fixing VOBU");
         if (pos!=-1) {
-            pos+=3;
-            end=c.find("MB");
+            progress->setLabelText(i18n("Authoring")+"\n" +i18n("Fixing VOBUS"));
+            end=m_stderr.find("%");
             if (end!=-1) {
-                c=c.mid(pos,end-pos);
+	        pos =end -2;
+                m_stderr=m_stderr.mid(pos,end-pos);
+		m_stderr=m_stderr.stripWhiteSpace();
                 //progress->setLabelText(c);
-                progress->setProgress(c.toInt(),totalSize);
-                qApp->processEvents();
+                progress->setProgress(m_stderr.toInt(),100);
             }
         }
     }
 
-*/
 }
 
 void k9DVDAuthor::DVDAuthorStdout() {

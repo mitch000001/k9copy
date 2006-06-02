@@ -42,10 +42,14 @@ static const KCmdLineOptions options[] = {
             { "audiofilter <number,number>", I18N_NOOP("list of audio streams"),0},
             { "subpicturefilter <number,number>", I18N_NOOP("list of spu streams"),0},
             { "vampsfactor <number>", I18N_NOOP("shrink factor"),0},
-            { "inputsize <number>", I18N_NOOP("total input size"),0},
+            { "inputsize <number>", I18N_NOOP("size of the cell to be copied"),0},
+	    { "totalsize <number>", I18N_NOOP("total size of selected titles"),0},
+	    { "dvdsize <number>", I18N_NOOP("new dvd size"),0},
             { "chapter <number>", I18N_NOOP("selected chapter"),0},
 	    { "cell <number>", I18N_NOOP("cell number in selected chapter"),0},
 	    { "inject <filename>", I18N_NOOP("status file name"),0},
+
+
 
 
             KCmdLineLastOption // End of options.
@@ -86,6 +90,8 @@ int main(int argc, char **argv) {
         QString chapterArg(args->getOption("chapter"));
 	QString cellArg(args->getOption("cell"));
 	QString injectArg(args->getOption("inject"));
+	QString totalSizeArg(args->getOption("totalsize"));
+	QString dvdSizeArg(args->getOption("dvdsize"));
         bool play= args->isSet("play");
 
    /*     InputOptionArg="/dev/hdb";
@@ -110,6 +116,8 @@ int main(int argc, char **argv) {
             player.setchapter(chapterArg);
 	    player.setcell(cellArg);
 	    player.setinject(injectArg);
+	    player.settotalSize(totalSizeArg);
+	    player.setdvdSize(dvdSizeArg);
             player.execute();
             return 0;
         } else {

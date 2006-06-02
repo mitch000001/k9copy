@@ -29,7 +29,7 @@ void k9play::saveStatus(k9play_st _status) {
    fstatus.open(IO_WriteOnly);
    fstatus.writeBlock((const char*)&_status,sizeof(k9play_st));
    fstatus.close();
-   kdebug (QString("saving status : %1 %2 %3 %4 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector));
+   kdebug (QString("saving status : %1 %2 %3 %4 %5 %6 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesReaden));
 
 }
 
@@ -41,7 +41,7 @@ void k9play::readStatus(k9play_st &_status) {
 	fstatus.close();
    } else memset(&_status,0,sizeof(k9play_st));
 
-   kdebug (QString("reading status : %1 %2 %3 %4 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector));
+   kdebug (QString("reading status : %1 %2 %3 %4 %5 %6 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesReaden));
 
 }
 
@@ -98,6 +98,16 @@ void k9play::setvampsFactor(QString _value) {
 void k9play::setinputSize( QString _value) {
     if (_value!="")
     	m_inputSize=_value.toULongLong();
+}
+
+void k9play::settotalSize( QString _value) {
+    if (_value!="")
+    	m_totalSize=_value.toULongLong();
+}
+
+void k9play::setdvdSize( QString _value) {
+    if (_value!="")
+    	m_dvdSize=_value.toULongLong();
 }
 
 void k9play::setchapter( QString _value) {
@@ -195,7 +205,16 @@ void k9play::play() {
     k9vamps vamps(NULL);
     vamps.reset();
     vamps.setOutput(&m_output);
-    vamps.setVapFactor( m_vampsFactor);
+    //vamps.setVapFactor( m_vampsFactor);
+    if (m_totalSize>0) {
+	double factor;
+	factor = (float) (m_totalSize - status.bytesReaden) / (float) (m_dvdSize-status.bytesWritten) ;
+	if (factor <1) factor =1;
+	kdebug( QString("computed factor %2 / %3 :%1").arg(factor).arg((float) (m_totalSize - status.bytesReaden),0,'f',0).arg((float) (m_dvdSize-status.bytesWritten),0,'f',0) );
+	vamps.setVapFactor(factor);
+    } else
+	vamps.setVapFactor(m_vampsFactor);
+
     vamps.setInputSize(m_inputSize);
     for ( QStringList::Iterator it = m_audioFilter.begin(); it != m_audioFilter.end(); ++it ) {
         vamps.addAudio((*it).toInt());
@@ -318,6 +337,7 @@ void k9play::play() {
 				vamps.start(QThread::NormalPriority);
 			    bcopy=true;
 			    vamps.addData( buf,len);
+			    status.bytesReaden +=len;
 			    kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));
 			}
 
@@ -350,6 +370,7 @@ void k9play::play() {
  	        if (!vamps.running())
 		    vamps.start(QThread::NormalPriority);
 		vamps.addData( buf,len);
+		status.bytesReaden +=len;
                 bcopy=true;
    	      //  dvdnav_get_position(dvdnav, &pos, &lgr);
 	       // kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));
@@ -452,6 +473,7 @@ void k9play::play() {
     }
 
     m_output.close();
+    status.bytesWritten +=vamps.getOutputBytes();
     saveStatus( status);
 }
 
