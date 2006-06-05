@@ -31,7 +31,7 @@ void k9play::saveStatus(k9play_st _status) {
    fstatus.close();
    kdebug (QString("saving status : %1 %2 %3 %4 %5 %6 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesReaden));
 
-}
+} 
 
 void k9play::readStatus(k9play_st &_status) {
    QFile fstatus(m_inject);
@@ -204,6 +204,7 @@ void k9play::play() {
     m_output.open(IO_WriteOnly,stdout);
     k9vamps vamps(NULL);
     vamps.reset();
+    vamps.setPreserve( false);
     vamps.setOutput(&m_output);
     //vamps.setVapFactor( m_vampsFactor);
     if (m_totalSize>0) {
