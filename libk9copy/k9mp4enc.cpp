@@ -24,7 +24,7 @@
 
 k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
         : QObject(parent, name) {
-    m_height=m_width=m_audioBitrate=m_filename="";
+    m_fourcc=m_height=m_width=m_audioBitrate=m_filename="";
     m_codec=xvid; //lavc_mp4;
     m_cpt=-1;
     m_parts=1;
@@ -113,6 +113,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
             *m_process << "-lavcopts";
             *m_process << QString("vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=%1").arg(getBitRate(_title));
             m_progress->setTitleLabel(i18n("Encoding %1").arg("lavc MPEG-4"));
+	    m_fourcc="DIVX";  //best compatibility
             break;
         default:
             QStringList::Iterator it = m_lstVideo.at((int)m_codec - 2 );
@@ -122,8 +123,8 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
                     *m_process << "-oac";
                     it = m_lstAudio.at((int)m_codec - 2 );
                     *m_process << replaceParams((*it));
-                    *m_process <<"-aid";
-                    *m_process << QString::number(_title->getaudioStream(i)->getStreamId());
+                    //*m_process <<"-aid";
+                    //*m_process << QString::number(_title->getaudioStream(i)->getStreamId());
                     audio=true;
                     break;
                 }
@@ -134,6 +135,9 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 
         }
 
+	if (m_fourcc !="") 
+	    *m_process << "-ffourcc" << m_fourcc;
+
         if (m_codec == xvid || m_codec == lavc_mp4) {
             *m_process <<"-vf" << QString("pp=de,crop=0:0:0:0,scale=%1:%2").arg(m_width).arg(m_height);
             //looking for first audio selected
@@ -142,9 +146,8 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
                     *m_process << "-oac";
                     *m_process << "mp3lame";
                     *m_process <<"-lameopts" << QString("abr:br=%1").arg(m_audioBitrate);
-                    *m_process <<"-aid";
 
-                    *m_process << QString::number(_title->getaudioStream(i)->getStreamId());
+                    //*m_process << QString::number(_title->getaudioStream(i)->getStreamId());
                     audio=true;
                     break;
                 }
@@ -200,9 +203,12 @@ void k9MP4Enc::exited(KProcess * process) {
 
 int k9MP4Enc::getBitRate(k9DVDTitle *_title) {
     // bitrate video = (MB *8388.608) /SEC    - bitrate audio
+    int size=m_size.toInt();
+    if (_title->getsize_mb() < size)
+	size=_title->getsize_mb();
     QTime t1(0,0);
     int sec=t1.secsTo(_title->getlength());
-    int bitrate=((m_size.toInt()*m_parts) * 8388.608)/sec  - m_audioBitrate.toInt();
+    int bitrate=((size*m_parts) * 8388.608)/sec  - m_audioBitrate.toInt();
     return bitrate;
 
 }

@@ -28,6 +28,15 @@ k9Progress::~k9Progress()
 }
 
 
+void k9Progress::setElapsed(const QString _text) {
+   lblElapsed->setText(_text);
+}
+
+void k9Progress::setTitle(const QString _text) {
+   lblTitle->setText(_text);
+}
+
+
 void k9Progress::setLabelText(const QString _text) {
    LabelText->setText(_text);
 }

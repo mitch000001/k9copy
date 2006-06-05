@@ -30,6 +30,8 @@
 #include <dvdread/ifo_read.h>
 #include <dvdread/ifo_print.h>
 #include <dvdread/nav_read.h>
+#include <dvdread/nav_types.h>
+
 #include <qobject.h>
 #include <qobjectlist.h>
 #include <qptrlist.h>

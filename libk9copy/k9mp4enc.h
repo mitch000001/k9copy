@@ -41,6 +41,7 @@ private:
     QString m_width;
     QString m_size;
     QString m_audioBitrate;
+    QString m_fourcc;
     QString m_stderr;
     int m_parts;
     float m_percent;
@@ -87,6 +88,10 @@ public:
     virtual void setAudioBitrate(const QString& _value) {
         m_audioBitrate = _value.stripWhiteSpace();
     };
+    virtual void setfourcc(const QString& _value) {
+        m_fourcc = _value.stripWhiteSpace();
+    };
+
 
     virtual void setCodec(const Codec& _value) {m_codec = _value;};
 	

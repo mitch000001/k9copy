@@ -28,6 +28,8 @@ public:
    virtual QProcess* getProcess() const;
    virtual void setProgress(long _position,long _total);
    virtual void setLabelText(const QString _text);
+   virtual void setElapsed(const QString _text);
+   virtual void setTitle(const QString _text);
    virtual int execute();
   /*$PUBLIC_FUNCTIONS$*/
 
