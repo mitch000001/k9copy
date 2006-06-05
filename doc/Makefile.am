@@ -2,5 +2,5 @@
 # in this directory they are installed into the english dir
 
 KDE_LANG = en
-KDE_DOCS = k9copy
-SUBDIRS = $(AUTODIRS)  
+KDE_DOCS = AUTO
+SUBDIRS = k9copy
