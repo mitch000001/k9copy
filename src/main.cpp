@@ -94,15 +94,16 @@ int main(int argc, char **argv) {
 	QString dvdSizeArg(args->getOption("dvdsize"));
         bool play= args->isSet("play");
 
-   /*     InputOptionArg="/dev/hdb";
+        /*InputOptionArg="/dev/hdb";
         play=true;
-	TitleNumber="1";
-	chapterArg="1";
-	cellArg="4";
-	audioFilterArg="1";
+	TitleNumber="8";
+	chapterArg="4";
+	cellArg="2";
+	audioFilterArg="1,2,3";
 	subpictureFilterArg="2";
 	vampsFactorArg="1.49";
 */
+
         if (play) {
             k9play player;
             player.setDevice(InputOptionArg);
