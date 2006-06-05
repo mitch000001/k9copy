@@ -24,9 +24,8 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-
+#include "common.h"
 #include <assert.h>
-#include "nav_types.h"
 #include "dvdnav_internal.h"
 
 /*

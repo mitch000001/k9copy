@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2000, 2001 Martin Norbäck, Håkan Hjort
+ * Copyright (C) 2000, 2001 Martin Norbï¿½k, Hï¿½an Hjort
  * 
  * This file is part of libdvdnav, a DVD navigation library. It is modified
  * from a file originally part of the Ogle DVD player.
@@ -25,10 +25,10 @@
 #ifndef DECODER_H_INCLUDED
 #define DECODER_H_INCLUDED
 
-#include <inttypes.h>
+#include "common.h"
 #include <sys/time.h>
 
-#include "ifo_types.h" /*  vm_cmd_t */
+/*  vm_cmd_t */
 #include "dvdnav_internal.h"
 
 /* link command types */

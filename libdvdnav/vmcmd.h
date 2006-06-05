@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2000, 2001 Martin Norbäck, Håkan Hjort
+ * Copyright (C) 2000, 2001 Martin Norbï¿½k, Hï¿½an Hjort
  * 
  * This file is part of libdvdnav, a DVD navigation library. It is modified
  * from a file originally part of the Ogle DVD player.
@@ -25,7 +25,7 @@
 #ifndef VMCMD_H_INCLUDED
 #define VMCMD_H_INCLUDED
 
-#include <inttypes.h>
+#include "common.h"
 
 void vm_print_mnemonic(vm_cmd_t *command);
 void vm_print_cmd(int row, vm_cmd_t *command);
