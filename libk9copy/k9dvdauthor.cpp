@@ -318,11 +318,7 @@ void k9DVDAuthor::author() {
 
     //progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
     progress = new k9Progress(qApp->mainWidget(),"progress");
-<<<<<<< .mine
     progress->setTitle(i18n("Authoring"));
-=======
-    progress->setLabelText(i18n("Authoring"));
->>>>>>> .r75
     progress->setCaption(i18n("k9Copy - Backup progression"));
     progress->setProgress(0,100);
     //progress->show();
@@ -388,11 +384,7 @@ void k9DVDAuthor::DVDAuthorStderr() {
 
     int pos=m_stderr.find("INFOPOS:");
     if (pos!=-1) {
-<<<<<<< .mine
 	progress->setTitle(i18n("Authoring"));
-=======
-	progress->setLabelText(i18n("Authoring"));
->>>>>>> .r75
         QString tmp=m_stderr.mid(pos);
         uint32_t totalBytes,totalSize;
         sscanf(tmp.latin1(),"INFOPOS: %d %d",&totalBytes,&totalSize);
@@ -424,14 +416,9 @@ void k9DVDAuthor::DVDAuthorStderr() {
     if (m_stderr.contains("STAT:")) {
         pos=m_stderr.find("fixing VOBU");
         if (pos!=-1) {
-<<<<<<< .mine
             progress->setTitle(i18n("Authoring"));
 	    progress->setLabelText(i18n("Fixing VOBUS"));
             end=m_stderr.find("%");
-=======
-            progress->setLabelText(i18n("Authoring")+"\n" +i18n("Fixing VOBUS"));
-            end=m_stderr.find("%");
->>>>>>> .r75
             if (end!=-1) {
 	        pos =end -2;
                 m_stderr=m_stderr.mid(pos,end-pos);
