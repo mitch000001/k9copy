@@ -106,11 +106,18 @@ int k9vamps::readData(uchar * data,uint size) {
 }
 
 void k9vamps::addSubpicture(uint id) {
-    spu_track_map[id-1]=1;
+    int cpt=1;
+    for (uint i=0;i<32;i++)
+	if (spu_track_map[i]!=0) cpt++;
+    spu_track_map[id-1]=cpt;
 }
 
 void k9vamps::addAudio(uint id) {
-    audio_track_map[id-1]=1;
+    int cpt=1;
+    for (uint i=0;i <8;i++)
+	if (audio_track_map[i] !=0) cpt++;
+
+    audio_track_map[id-1]=cpt;
 }
 
 void k9vamps::setInputSize(uint64_t size) {
@@ -122,6 +129,7 @@ void k9vamps::setVapFactor(float factor) {
 }
 
 void k9vamps::reset() {
+    m_preserve=true;
     bytes_read =0;
     bytes_written=0;
     padding_bytes=0;
@@ -139,7 +147,6 @@ void k9vamps::reset() {
     vbuf_size = VBUF_SIZE;
     vap_fact= 1.0f;
 
-    preserve = 1;
     //	inbuffw=inbuff;
     for (uint i=0; i<8;i++)
         audio_track_map[i]=0;
@@ -174,6 +181,9 @@ k9vamps::k9vamps(k9DVDBackup *dvdbackup) {
 }
 
 
+void k9vamps::setPreserve(bool _value) {
+    m_preserve = _value;
+}
 void k9vamps::setOutput(QFile *_output) {
     m_output=_output;
 } 
@@ -541,7 +551,7 @@ void k9vamps::copy_private_1 (uchar *ptr) {
     type = new_private_1_type (ptr);
 
     if (type) {
-        if (!preserve)
+        if (!m_preserve)
             ptr [6 + 3 + ptr [8]] = type;
 
         copy (SECT_SIZE);
@@ -574,7 +584,7 @@ void k9vamps::copy_mpeg_audio (uchar *ptr) {
     id = new_mpeg_audio_id (ptr [3]);
 
     if (id) {
-        if (!preserve)
+        if (!m_preserve)
             ptr [3] = id;
 
         copy (SECT_SIZE);

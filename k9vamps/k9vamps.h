@@ -108,7 +108,7 @@ private:
 	int         audio_track_map [8];	// audio track# translation map
 	int         verbose;			// level of verbosity
 	int         calc_ps_vap;		// calc vaporization based on PS size
-	int         preserve;			// preserve audio/spu track numbers
+	bool        m_preserve;			// preserve audio/spu track numbers
 	float       vap_fact;			// vaporization factor from cmd line
 	bool		noData;
 	QMutex		mutex;
@@ -168,8 +168,8 @@ public:
 	QString & geterrMsg();
 	bool geterror();
 	void abort();
+        void setPreserve(bool _value);
 	~k9vamps();
-
 };
 
 
