@@ -17,6 +17,7 @@
 #include <kurlrequester.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
+#include <klocale.h>
 
 k9prefDVD::k9prefDVD(QWidget* parent, const char* name, WFlags fl)
 : prefDVD(parent,name,fl)
@@ -29,6 +30,7 @@ k9prefDVD::k9prefDVD(QWidget* parent, const char* name, WFlags fl)
     ckAutoBurn->setChecked(settings.readEntry("/options/autoburn",0).toInt());
     ckQuickScan->setChecked(settings.readEntry("/options/quickscan",0).toInt());
     sbSize->setValue(settings.readEntry("/options/dvdsize",QString("4400")).toInt());
+    sbSize->setSuffix(" "+ i18n("mb"));
 }
 
 k9prefDVD::~k9prefDVD()

@@ -18,6 +18,7 @@
 #include <qcheckbox.h>
 #include <qlineedit.h>
 #include <qstringlist.h>
+#include <klocale.h>
 
 k9prefMPEG4::k9prefMPEG4(QWidget* parent, const char* name, WFlags fl)
 : prefMPEG4(parent,name,fl)
@@ -29,6 +30,7 @@ void k9prefMPEG4::load() {
     KSimpleConfig settings("K9Copy");
 
     sbMp4Size->setValue(settings.readEntry("/mp4/size",QString("700")).toInt());
+    sbMp4Size->setSuffix(" "+ i18n("mb"));
     sbMp4NumberCD->setValue(settings.readEntry("/mp4/numberCD",QString("1")).toInt());
     
     leMp4Width->setText(settings.readEntry("/mp4/width","640"));

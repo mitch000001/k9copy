@@ -49,6 +49,7 @@ public:
   void setSpeed(const QString& _value) { m_speed = _value;}
   
 private:
+    QTime *time;
     k9Progress *progress;
     QProcess *proc;
     QProcess *proc2;

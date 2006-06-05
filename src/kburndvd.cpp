@@ -120,7 +120,7 @@ const QString &kBurnDVD::getImageSize() {
     if (proc2->start()) {
         while (proc2->isRunning()) {
             qApp->processEvents();
-	}
+        }
         if (proc2->exitStatus()==0) {
             delete proc2;
             return imageSize;
@@ -132,14 +132,16 @@ const QString &kBurnDVD::getImageSize() {
 
 
 void kBurnDVD::burnWithGrowisofs() {
-    KLibFactory *factory;;
-    factory = KLibLoader::self()->factory("libk9copy");
+    time = new QTime(0,0);
+    time->start();
 
-//    progress= new KProgressDialog (qApp->mainWidget(),"progress",i18n("k9Copy - Burning DVD"),"",true);
-    progress=static_cast<k9Progress  *>(factory->create(qApp->mainWidget(),"progress", "k9Progress"));
-    //progress=new k9Progress(qApp->mainWidget(),"progress",true,0);
+    //KLibFactory *factory;
+    //factory = KLibLoader::self()->factory("libk9copy");
+
+//    progress=static_cast<k9Progress  *>(factory->create(qApp->mainWidget(),"progress", "k9Progress"));
+    progress=new k9Progress(qApp->mainWidget(),"progress");
     progress->setCaption(i18n("k9Copy - Burning DVD"));
-    progress->setLabelText(i18n("Burning DVD"));
+    progress->setTitle(i18n("Burning DVD"));
     bool bok=false;
 
     while (!cancelled && !bok) {
@@ -150,23 +152,23 @@ void kBurnDVD::burnWithGrowisofs() {
         else
             c="growisofs";
         proc=progress->getProcess();
-	proc->addArgument(c);
+        proc->addArgument(c);
 
         if (!iso) {
             proc->addArgument("-overburn");
             proc->addArgument("-Z");
             proc->addArgument(burnDevice  );
             proc->addArgument("-use-the-force-luke=tty");
-	    proc->addArgument("-use-the-force-luke=tracksize:"+getImageSize());
+            proc->addArgument("-use-the-force-luke=tracksize:"+getImageSize());
             proc->addArgument("-use-the-force-luke=dao:" + imageSize);
             proc->addArgument("-dvd-compat");
-	    if (m_speed !=i18n("default")) 
-	            proc->addArgument("-speed=" + m_speed);
-			
+            if (m_speed !=i18n("default"))
+                proc->addArgument("-speed=" + m_speed);
+
         } else {
-	    QString fileName=m_filename;
-	    if (fileName =="") 
-                 fileName=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Save image to disk"));
+            QString fileName=m_filename;
+            if (fileName =="")
+                fileName=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Save image to disk"));
             if (fileName !="") {
                 proc->addArgument("-o");
                 proc->addArgument(fileName);
@@ -190,7 +192,7 @@ void kBurnDVD::burnWithGrowisofs() {
                 cancelled=true;
         }
         if (!cancelled) {
-	    int res=progress->execute();
+            int res=progress->execute();
             if ( res==-1 ) {
                 KMessageBox::error( 0, i18n("Error burning DVD :\n", i18n("DVD burning")) +lastMsg);
             } else {
@@ -211,11 +213,12 @@ void kBurnDVD::burnWithGrowisofs() {
         }
     }
     delete progress;
+    delete time;
 }
 
 /** No descriptions */
 void kBurnDVD::growisoStderr() {
-    QString c(proc->readStderr()),d;
+    QString c(proc->readStderr());
     char s[255];
     int a,b;
     int pos;
@@ -224,15 +227,28 @@ void kBurnDVD::growisoStderr() {
         sscanf(c.latin1(),"%s \"Current Write Speed\" is %d.%d",s,&a,&b);
         burnSpeed=a+b/10;
     }
-    d=i18n("Burning DVD") +"\n" + i18n("Current write speed :%1 x").arg(burnSpeed);
-    progress->setLabelText(d);
+    progress->setTitle(i18n("Burning DVD"));
+    progress->setLabelText(i18n("Current write speed :%1 x").arg(burnSpeed));
     if (c.contains("% done")) {
         pos=c.find("%");
         if (pos!=-1) {
             c=c.mid(1,pos-4);
             //progress->setLabelText(c);
             progress->setProgress(c.toInt(),100);
-            qApp->processEvents();
+            float m_percent=c.toFloat()/100;
+            QTime time2(0,0);
+            time2=time2.addMSecs(time->elapsed());
+            if (m_percent>0) {
+                QTime time3(0,0);
+		QString m_remain;
+                time3=time3.addMSecs((uint32_t)(time->elapsed()*(1/m_percent)));
+                m_remain=time3.toString("hh:mm:ss");
+                progress->setElapsed(time2.toString("hh:mm:ss") +" / " +m_remain);
+
+            }
+
+
+
         }
     }
 }
