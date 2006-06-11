@@ -24,7 +24,6 @@ class k9Progress : public Progress
 public:
   k9Progress(QWidget* parent = 0, const char* name = 0, const QStringList &args=0);
   ~k9Progress();
-
    virtual QProcess* getProcess() const;
    virtual void setProgress(long _position,long _total);
    virtual void setLabelText(const QString _text);
@@ -32,7 +31,7 @@ public:
    virtual void setTitle(const QString _text);
    virtual int execute();
   /*$PUBLIC_FUNCTIONS$*/
-
+   
 public slots:
   /*$PUBLIC_SLOTS$*/
 

@@ -73,7 +73,7 @@ void k9DVDAuthor::createXML() {
     inject = locateLocal("tmp", "k9v" + (QTime::currentTime()).toString("hhmmss"));
     totSize.sprintf("%.0f",(double)DVD->getsizeSelected()*1024*1024);
 
-
+    m_firsttitle=true;
     for (i=0;i< DVD->gettitleCount();i++) {
         addTitle(root,i);
     }
@@ -86,8 +86,6 @@ void k9DVDAuthor::createXML() {
         xml->save(stream,1);
         file.close();
     }
-
-
 }
 
 void k9DVDAuthor::addMenus(QDomElement &titleSet) {
@@ -250,13 +248,14 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
             uint icell=0;
             k9DVDChapter *l_chap=l_track->getChapter(i);
             bool first=true;
+	    uint32_t chapterSize= (l_chap->getendSector()-l_chap->getstartSector())*DVD_VIDEO_LB_LEN;
             for (k9ChapterCell *cell =l_chap->cells.first();cell ;cell =l_chap->cells.next() ) {
                 icell++;
                 //test
                 uint32_t itotSize = (cell->getlastSector()-cell->getstartSector())* DVD_VIDEO_LB_LEN;
                 QString file;
                 e=xml->createElement("vob");
-                file=QString("k9copy --play --input %1 --dvdtitle %2 --chapter %3 --cell %4  %5  %6 --vampsfactor %7 --inputsize %8 ")
+                file=QString("k9copy --play --input %1 --dvdtitle %2 --chapter %3 --cell %4  %5  %6 --vampsfactor %7 --inputsize %8 --chaptersize %9 ")
                      .arg(DVD->getDevice())
                      .arg(l_track->getnumTitle())
                      .arg(i+1)
@@ -264,7 +263,12 @@ void k9DVDAuthor::addTitle(QDomElement &root, int title) {
                      .arg(caud)
                      .arg(csub)
                      .arg(factor,0,'f',2)
-                     .arg(itotSize,0,'f',0);
+                     .arg(itotSize,0,'f',0)
+		     .arg(chapterSize,0,'f',0);
+		if (m_firsttitle) {
+		     file +=" --initstatus ";
+		     m_firsttitle=false;
+		}
 		file +=QString(" --inject %1 --totalsize %2 --dvdsize %3 |")
                      .arg(inject)
 		     .arg(DVD->getsizeSelected() *1024 *1024,0,'f',0) 
@@ -310,14 +314,14 @@ void k9DVDAuthor::setworkDir( const QString& _newVal) {
 
 void k9DVDAuthor::author() {
     bool burnOk=false;
-    //nettoyage du r�ertoire de sortie
+    //nettoyage du répertoire de sortie
     clearOutput(workDir+"dvd");
 
     time = new QTime(0,0);
     time->start();
 
     //progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
-    progress = new k9Progress(qApp->mainWidget(),"progress");
+    progress = new k9Progress(qApp->mainWidget(),"progress",NULL);
     progress->setTitle(i18n("Authoring"));
     progress->setCaption(i18n("k9Copy - Backup progression"));
     progress->setProgress(0,100);
@@ -388,8 +392,9 @@ void k9DVDAuthor::DVDAuthorStderr() {
         QString tmp=m_stderr.mid(pos);
         uint32_t totalBytes,totalSize;
         sscanf(tmp.latin1(),"INFOPOS: %d %d",&totalBytes,&totalSize);
-	if (totalBytes>m_lastPos)
-	   m_copied+=totalBytes - m_lastPos;
+	//if (totalBytes>m_lastPos)
+	//   m_copied+=totalBytes - m_lastPos;
+        m_copied=totalBytes;
 	m_lastPos=totalBytes;
         //qDebug(QString("copied : %1   totalSize : %2").arg(m_copied).arg(m_totalSize*512));
         m_percent=(float)m_copied / (float)(m_totalSize * 512);
@@ -404,12 +409,16 @@ void k9DVDAuthor::DVDAuthorStderr() {
         }
 
         m_percent*=100;
+	progress->setLabelText("");
+
         progress->setProgress(m_percent,100);
         progress->setElapsed(time2.toString("hh:mm:ss") +" / " +m_remain);
 
     } 
-    else qDebug(m_stderr);
-
+    else {
+        if (!m_stderr.startsWith("libdvdread") && !m_stderr.startsWith("libdvdnav"))
+	   qDebug(m_stderr);
+    }
     int end;
     lastMsg=m_stderr;
     

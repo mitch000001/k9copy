@@ -23,8 +23,10 @@ k9Progress::k9Progress(QWidget* parent, const char* name,const QStringList &args
   connect(m_process, SIGNAL(processExited()), this, SLOT(accept()));
 }
 
+
 k9Progress::~k9Progress()
 {
+   delete m_process;
 }
 
 

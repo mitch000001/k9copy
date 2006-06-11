@@ -17,64 +17,61 @@
 *   Free Software Foundation, Inc.,                                       *
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
-#ifndef K9DVDAUTHOR_H
-#define K9DVDAUTHOR_H
+#ifndef k9BurnDVD_H
+#define k9BurnDVD_H
 
 #include "k9common.h"
-#include "k9dvd.h"
 #include "k9progress.h"
 
-#include <qdom.h>
 #include <qprocess.h>
-#include <qdatastream.h>
-#include <qprogressdialog.h>
 #include <klocale.h>
-/**
-  *@author
-  */
 
-class k9DVDAuthor : public QObject  {
+/**
+@author Jean-Michel PETIT
+*/
+class k9BurnDVD: public QObject
+{
 Q_OBJECT
 public:
-	k9DVDAuthor(QObject *DVDStruct,const char* name=0,const QStringList& args=0) ;
-	~k9DVDAuthor();
-  virtual void setworkDir( const QString& _newVal);
-  virtual const QString& getworkDir();
-  virtual bool getError();
-  virtual void author();
-  virtual void setburnDVD( const bool& _newVal);
-  virtual const bool& getburnDVD();
-private: // Private attributes
-  /**  */
-  QTime *time;
-  k9DVD* DVD;
-  double factor;
-  QDomDocument *xml;
-  QString lastMsg,totSize,inject;
-  QProcess *proc;
-  QString workDir;
-  k9Progress *progress;
-  bool cancelled;
-  bool error;
-  bool burnDVD;
-  bool m_firsttitle;
-  uint32_t m_totalSize;
-  uint32_t m_copied,m_lastPos;
-  void clearOutput(QString name);
-  void createXML();
-  void addTitle(QDomElement &root, int title);
-  void createMenus(bool preview);
-  void addMenus(QDomElement &titleSet);
-  void processMenu();
-  void spumux();
-private slots: // Private slots
-  /** No descriptions */
-  void DVDAuthorStderr();
-  void DVDAuthorStdout();
+  k9BurnDVD();
 
-  /** No descriptions */
-  void stopProcess();
+  ~k9BurnDVD();
+  virtual void setburnDevice( const QString& _newVal);
+  virtual const QString& getburnDevice();
+  void setworkDir( const QString& _newVal);
+  void setvolId(QString  _newVal);
+  void setUseK3b(bool _newVal);
+  void setAutoBurn (bool _newVal);
+  void burn();
+  void makeIso(QString _filename);
+
+  void setSpeed(const QString& _value) { m_speed = _value;}
+  
+private:
+    QTime *time;
+    k9Progress *progress;
+    QProcess *proc;
+    QProcess *proc2;
+    QString volId;
+    float burnSpeed;
+    QString burnDevice;
+    QString lastMsg;
+    QString workDir;
+    QString m_filename;
+    bool cancelled;
+    bool useK3b;
+    bool autoBurn;
+    bool iso;
+    void burnWithGrowisofs();
+    void burnWithK3b();
+    const QString &getImageSize();
+    QString imageSize;
+    QString m_speed;
+private slots: // Private slots    
+    void growisoStderr();
+    void growisoStdout();  
+    void mkisoSizeStderr();
+    void mkisoSizeStdout();
 };
 
 #endif
-
