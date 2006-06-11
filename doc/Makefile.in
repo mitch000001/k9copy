@@ -625,7 +625,7 @@ uninstall-info: uninstall-info-recursive
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=Makefile.am Makefile.in 
+KDE_DIST=Makefile.in Makefile.am 
 
 #>+ 2
 docs-am:

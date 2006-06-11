@@ -2,7 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1.2-Based Variant V1.0//EN" "dtd/kdex.dtd" [
   <!-- Define an entity for your application if it is not part of KDE
        CVS -->
-  <!ENTITY k9copy "<application>K9Copy</application>">
+  <!ENTITY k9copy "<application>k9copy</application>">
   <!ENTITY kappname "&k9copy;"><!-- replace kmyapplication here
                                             do *not* replace kappname-->
   <!ENTITY package "kde-module"><!-- kdebase, kdeadmin, etc.  Leave
@@ -36,7 +36,7 @@
 <copyright>
 <year>2004</year>
 <year>2006</year>
-<holder>The K9Copy Authors</holder>
+<holder>The k9copy Author</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
 <!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
@@ -178,7 +178,7 @@ If the DVD you want to backup has interactive menus, you can keep them on your b
     </inlinemediaobject>
 </para>
 <para>
-If you have choosen to not keep original menus, it's possible to define some playback options.
+If you have choosen to not keep original menus, it's possible to define some playback options :
 </para>
 <para>
    <inlinemediaobject>
@@ -191,30 +191,140 @@ If you have choosen to not keep original menus, it's possible to define some pla
 <para>
 When a title is selected, it appears in the Selected Titles list. Use buttons on the right of this list to define in which order the titles will be played.
 </para>
+<para>
+You can define the default audio language or the default subtitle for each title. Hilite a title in the title list and the two comboboxes will be filled with the available languages (those which where selected in the treeview).
+</para>
+</sect2>
+<sect2>
+<title>Executing the copy</title>
+<para>
+Once you have selected the titles, you can proceed with copy :
+   <inlinemediaobject>
+     <imageobject>
+     <imagedata fileref="btncopy.png" format="PNG"/>
+     </imageobject>
+    </inlinemediaobject>
+</para>
+
 </sect2>
 </sect1>
-</chapter>
+<sect1 id="dvdbackupsettings">
+<title>DVD backup settings</title>
+    <screenshot>
+	<screeninfo>DVD backup settings</screeninfo>
+	<mediaobject>
+	   <imageobject>
+	     <imagedata fileref="settingsDVD.png" format="PNG"/>
+  	   </imageobject>
+	   <textobject>
+	     <phrase>Screenshot</phrase>
+	   </textobject>
+	</mediaobject>
+    </screenshot>
+<para>
+<itemizedlist>
+    <listitem><para>Temporary files will be placed in the <guilabel>output directory</guilabel> </para></listitem>
+    <listitem><para>Define the max size of the backup</para></listitem>
+    <listitem><para>By default, &k9copy; uses its own burning method. Since the burning options are limited, you can use the a powerfull burning software: k3b.</para></listitem>
+    <listitem><para>AutoBurn allows to run the DVD burning without confirmation.</para></listitem>
+    <listitem><para>When using quickscan, &k9copy; will not analyze the dvd title to estimate the sizes of each stream. The DVD analyze can take a long time if DVD contains many features.</para></listitem>
+</itemizedlist>
+</para>
+</sect1>
 
+<sect1 id="encodemp4">
+<title>Encoding MPEG-4</title>
+<para>&k9copy; offers the possibility to encode DVD titles in MPEG-4 by using MEncoder.
+</para>
+<para>
+Just select an audio stream from a title in the treeview and click on the button    <inlinemediaobject>
+     <imageobject>
+     <imagedata fileref="btnmp4.png" format="PNG"/>
+     </imageobject>
+    </inlinemediaobject>
+</para>
+</sect1>
+
+<sect1 id="mp4backupsettings">
+<title>MPEG-4 settings</title>
+    <screenshot>
+	<screeninfo>MPEG-4 settings</screeninfo>
+	<mediaobject>
+	   <imageobject>
+	     <imagedata fileref="settingsMP4.png" format="PNG"/>
+  	   </imageobject>
+	   <textobject>
+	     <phrase>Screenshot</phrase>
+	   </textobject>
+	</mediaobject>
+    </screenshot>
+<para>
+<itemizedlist>
+    <listitem><para>Select the codec used to encode mp4. Default codecs are XViD and lavc MP4, but you can add other codecs supported by MEncoder.</para></listitem>
+    <listitem><para>Choose the max size of an avi file an the number of files wanted.</para></listitem>
+    <listitem><para>Enter the width of the mpeg4 video.</para></listitem>
+    <listitem><para>Enter the height of the mpeg4 video.</para></listitem>
+    <listitem><para>Audio will be encoded in mp3 using lame. You can choose the bitrate of the mp3 audio stream.</para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+
+<sect1 id="mencodersettings">
+<title>MEncoder settings</title>
+    <screenshot>
+	<screeninfo>MEncoder settings</screeninfo>
+	<mediaobject>
+	   <imageobject>
+	     <imagedata fileref="settingsMencoder.png" format="PNG"/>
+  	   </imageobject>
+	   <textobject>
+	     <phrase>Screenshot</phrase>
+	   </textobject>
+	</mediaobject>
+    </screenshot>
+<para>
+You can add codecs supported by MEncoder:
+</para>
+<para>Video example : xvid -xvidencopts bitrate=$VIDBR
+</para>
+<para>Audio example : mp3lame -lameopts abr:br=$AUDBR</para>
+<para>
+You can use following variables :
+<itemizedlist>
+    <listitem><para>$VIDBR : video bitrate (calculated)</para></listitem>
+    <listitem><para>$AUDBR : audio bitrate (settings)</para></listitem>
+    <listitem><para>$WIDTH : width (settings)</para></listitem>
+    <listitem><para>$HEIGHT : height (settings)</para></listitem>
+</itemizedlist>
+
+</para>
+</sect1>
+
+
+</chapter>
 <chapter id="cmdline-options">
 <title>Command Line Options</title>
 
 <para>Usage:</para>
 <cmdsynopsis>
 <command>k9copy</command>
-<group choice="opt">
-<option>f</option>
-<option>p</option><option>w</option>
-<option>a</option><option>x</option>
-<option>d</option>
-</group>
-<arg>--fullscreen</arg>
+<arg>--input </arg>
+<arg>--output</arg>
 <arg>--play</arg>
-<arg>--audiodriver</arg>
-<arg>--videodriver</arg>
-<arg>--device</arg>
-<arg>--verbose</arg>
-<arg>--wizard</arg>
-<arg rep="repeat"><replaceable>file</replaceable></arg>
+<arg>--dvdtitle</arg>
+<arg>--startsector</arg>
+<arg>--endsector</arg>
+<arg>--audiofilter</arg>
+<arg>--subpicturefilter</arg>
+<arg>--vampsfactor</arg>
+<arg>--inputsize</arg>
+<arg>--totalsize</arg>
+<arg>--dvdsize</arg>
+<arg>--chapter</arg>
+<arg>--cell</arg>
+<arg>--inject</arg>
+<arg>--initstatus</arg>
 </cmdsynopsis>
 
 <para></para>
@@ -223,44 +333,70 @@ When a title is selected, it appears in the Selected Titles list. Use buttons on
 <tgroup cols="2">
 <tbody>
 
-<row><entry><para><option>-f,--fullscreen</option></para></entry>
-<entry><para>Starts &k9copy; in fullscreen mode.
+<row><entry><para><option>--input (argument)</option></para></entry>
+<entry><para>input device</para></entry>
+</row>
+<row>
+<entry><para><option>--output (argument)</option></para></entry>
+<entry><para>output device</para></entry>
+</row>
+<row>
+<entry><para><option>--play</option></para></entry>
+<entry><para>&k9copy; is used to play a title or part of title to stdout 
 </para></entry>
 </row>
 <row>
-<entry><para><option>-p,--play</option></para></entry>
-<entry><para>Starts with last played track.
-</para></entry>
+<entry><para><option>--dvdtitle (argument)</option></para></entry>
+<entry><para>the dvd title to play</para></entry>
 </row>
 <row>
-<entry><para><option>-a,--audiodriver (argument)</option></para></entry>
-<entry><para>Sets the audio driver. Arguments can be: alsa, arts, oss, ...
-</para></entry>
+<entry><para><option>--startsector (argument)</option></para></entry>
+<entry><para>sector to start playing from</para></entry>
 </row>
 <row>
-<entry><para><option>-x,--videodriver (argument)</option></para></entry>
-<entry><para>Sets the video driver. Arguments can be: xv, xshm, dxr3 ,...
-</para></entry>
+<entry><para><option>--endsector (argument)</option></para></entry>
+<entry><para>sector to end playing from</para></entry>
+</row>
+<row><entry><para><option>--audiofilter (argument,argument..)</option></para></entry>
+<entry><para>Selection of audio streams</para></entry>
 </row>
 <row>
-<entry><para><option>-d,--device (argument)</option></para></entry>
-<entry><para>Sets the Audio-CD/VCD/DVD path to (argument).
-</para></entry>
+<entry><para><option>--subpicturefilter (argument,argument,..)</option></para></entry>
+<entry><para>Selection of subtitles</para></entry>
 </row>
 <row>
-<entry><para><option>--verbose</option></para></entry>
-<entry><para>Outputs more debug messages.
-</para></entry>
-</row>
-<row><entry><para><option>-w,--wizard</option></para></entry>
-<entry><para>Runs installation wizard.
-</para></entry>
+<entry><para><option>--vampsfactor (argument)</option></para></entry>
+<entry><para>Shrink factor</para></entry>
 </row>
 <row>
-<entry><para><option>file...</option></para></entry>
-<entry><para>Files to play. Can be local files, a directory, an URL or "AudioCD", "VCD", "DVD".
-</para></entry>
+<entry><para><option>--inputsize (argument)</option></para></entry>
+<entry><para>Size of the cell being copied</para></entry>
 </row>
+<row>
+<entry><para><option>--totalsize (argument)</option></para></entry>
+<entry><para>Total size of titles to play</para></entry>
+</row>
+<row>
+<entry><para><option>--dvdsize (argument)</option></para></entry>
+<entry><para>Final size of the dvd to produce</para></entry>
+</row>
+<row>
+<entry><para><option>--chapter (argument)</option></para></entry>
+<entry><para>Number of the chapter to play</para></entry>
+</row>
+<row>
+<entry><para><option>--cell (argument)</option></para></entry>
+<entry><para>Number of a cell from chapter to play</para></entry>
+</row>
+<row>
+<entry><para><option>--inject (argument)</option></para></entry>
+<entry><para>Name of the file used to save status between 2 calls of k9copy</para></entry>
+</row>
+<row>
+<entry><para><option>--initstatus</option></para></entry>
+<entry><para>Initialize status file</para></entry>
+</row>
+
 </tbody>
 </tgroup>
 </informaltable>
@@ -268,63 +404,11 @@ When a title is selected, it appears in the Selected Titles list. Use buttons on
 </chapter>
 
 
-
-<chapter id="faq">
-<title>Questions and Answers</title>
-
-
-<para>
-<ulink url="http://k9copy.sourceforge.net/index.php?page=faq">Kaffeine-FAQ</ulink>
-</para>
-<para>
-<ulink url="http://xinehq.de/index.php/faq">xine-FAQ</ulink>
-</para>
-
-<para>For Questions use the <ulink url="http://lists.sourceforge.net/lists/listinfo/k9copy-user">k9copy-user mailinglist</ulink>.
-(First check the <ulink url="http://sourceforge.net/mailarchive/forum.php?forum_id=34875">archive</ulink>
- if the question is still answered.)
-</para>
-
-
-</chapter>
-
-<chapter id="bug">
-<title>Reporting BUGS</title>
-
-<para>
-Before you report a bug, please first make sure the bug has not been reported
-yet in the bug tracking system at <ulink url="http://www.sourceforge.net/projects/k9copy">http://www.sourceforge.net/projects/k9copy</ulink>.
-Also have a look into the mailinglist <ulink url="http://sourceforge.net/mailarchive/forum.php?forum_id=34875">archive</ulink>.
-</para>
-
-<para>
-Please use only the tracking system on sourceforge for reporting bugs and log in before
-submitting (if you've a sourceforge account).
-</para>
-
-<para>
-When you submit a bug, please include all of the following information:
-
-<itemizedlist>
-<listitem><para>versions of Kaffeine, xine, KDE, X11</para></listitem>
-<listitem><para>the backtrace from KDE's Crash Manager</para></listitem>
-<listitem><para>console output (you can use --verbose to get more)</para></listitem>
-</itemizedlist>
-
-</para>
-
-</chapter>
-
 <chapter id="credits">
 <title>Copyright and License</title>
 
 <para>
-Program copyright 2003-2005, The Kaffeine Authors
-</para>
-
-
-<para>
-Documentation copyright 2003-2005, Jürgen Kofler <email>k9copy@gmx.net</email>, Christophe Thommeret <email>hftom@free.fr</email>
+Program copyright 2004-2006, Jean-Michel Petit
 </para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
