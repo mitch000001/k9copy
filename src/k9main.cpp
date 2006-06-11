@@ -21,7 +21,7 @@
 #include "k9main.h"
 #include "k9common.h"
 #include "k9dvdauthor.h"
-#include "kburndvd.h"
+#include "k9burndvd.h"
 #include "k9dvd.h"
 #include "k9dvdtitle.h"
 #include "k9dvdbackup.h"
@@ -351,7 +351,7 @@ void k9Main::Copy() {
     }
 
     if (burn) {
-        kBurnDVD b;
+        k9BurnDVD b;
         b.setworkDir(m_prefOutput);
         b.setUseK3b(m_prefK3b);
         b.setAutoBurn(m_prefAutoBurn);

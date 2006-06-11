@@ -29,7 +29,7 @@ void k9play::saveStatus(k9play_st _status) {
    fstatus.open(IO_WriteOnly);
    fstatus.writeBlock((const char*)&_status,sizeof(k9play_st));
    fstatus.close();
-   kdebug (QString("saving status : %1 %2 %3 %4 %5 %6 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesReaden));
+   kdebug (QString("saving status : %1 %2 %3 %4 %5 %6  %7\n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped));
 
 } 
 
@@ -41,7 +41,7 @@ void k9play::readStatus(k9play_st &_status) {
 	fstatus.close();
    } else memset(&_status,0,sizeof(k9play_st));
 
-   kdebug (QString("reading status : %1 %2 %3 %4 %5 %6 \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesReaden));
+   kdebug (QString("reading status : title:%1 chapter:%2 cell:%3 sector:%4 written:%5 readen:%6 skipped:%7 chapters:%8  \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped).arg(_status.bytesChapters));
 
 }
 
@@ -52,6 +52,7 @@ k9play::k9play() {
     m_endSector=0xFFFFFFFF;
     m_vampsFactor=1;
     m_inputSize=1;
+    m_chapterSize=0;
     m_chapter=0;
     m_cell=0;
 }
@@ -110,6 +111,12 @@ void k9play::setdvdSize( QString _value) {
     	m_dvdSize=_value.toULongLong();
 }
 
+void k9play::setchapterSize( QString _value) {
+    if (_value!="")
+    	m_chapterSize=_value.toULongLong();
+}
+
+
 void k9play::setchapter( QString _value) {
    if (_value!="")
 	m_chapter=_value.toUInt();
@@ -118,6 +125,10 @@ void k9play::setchapter( QString _value) {
 void k9play::setcell(QString _value) {
    if (_value !="")
 	m_cell=_value.toUInt();
+}
+
+void k9play::setinitStatus(bool _value) {
+   m_initstatus=_value;
 }
 
 void k9play::execute() {
@@ -196,7 +207,7 @@ void k9play::play() {
 
     k9play_st status;
 
-    if ((m_chapter==1 && m_cell==1))
+    if (m_initstatus)
 	memset(&status,0,sizeof(k9play_st));
     else
 	readStatus( status);
@@ -206,12 +217,28 @@ void k9play::play() {
     vamps.reset();
     vamps.setPreserve( false);
     vamps.setOutput(&m_output);
+
+    // if reading of previous cell reached end of chapter, don't seek for cell
+    if (m_chapter !=0 && m_cell !=0) {
+	if (m_cell==1) {
+	    status.bytesSkipped = status.bytesChapters - status.bytesRead;
+	    kdebug(QString("maj chaptersize : %1").arg(m_chapterSize));
+	    status.bytesChapters += m_chapterSize;
+        }
+	if (status.title == m_title &&
+	    status.chapter > m_chapter) {
+		skipped=true;
+	    }
+    }
+
     //vamps.setVapFactor( m_vampsFactor);
     if (m_totalSize>0) {
 	double factor;
-	factor = (float) (m_totalSize - status.bytesReaden) / (float) (m_dvdSize-status.bytesWritten) ;
+//	factor = (double) (m_totalSize - status.bytesRead) / (double) (m_dvdSize-status.bytesWritten) ;
+
+	factor = (double) (m_totalSize - (status.bytesRead +status.bytesSkipped)) / (double) (m_dvdSize-status.bytesWritten) ;
 	if (factor <1) factor =1;
-	kdebug( QString("computed factor %2 / %3 :%1").arg(factor).arg((float) (m_totalSize - status.bytesReaden),0,'f',0).arg((float) (m_dvdSize-status.bytesWritten),0,'f',0) );
+	kdebug( QString("computed factor %2 / %3 :%1").arg(factor).arg((double) (m_totalSize - (status.bytesRead + status.bytesSkipped)),0,'f',0).arg((double) (m_dvdSize-status.bytesWritten),0,'f',0) );
 	vamps.setVapFactor(factor);
     } else
 	vamps.setVapFactor(m_vampsFactor);
@@ -267,25 +294,6 @@ void k9play::play() {
     bool bcopy=false;
     bool bcell=true;
 
-    /*
-    if (m_chapter !=0 && m_cell !=0 ) {
-	if (status.title == m_title &&
-	    status.chapter == m_chapter &&
-	    status.cell == m_cell) {
-		m_startSector=status.sector;
-		currCell=m_cell-1;
-		kdebug(QString("\nRepositionning on %1\n").arg(m_startSector));
-		bcell=false;
-	}
-    }
-    */
-
-    // if reading of previous cell reached end of chapter, don't seek for cell
-    if (m_chapter !=0 && m_cell !=0) {
-	if (status.title == m_title &&
-	    status.chapter > m_chapter)
-		skipped=true;
-    }
 
     while (!finished && !skipped) {
         int result, event, len;
@@ -338,8 +346,8 @@ void k9play::play() {
 				vamps.start(QThread::NormalPriority);
 			    bcopy=true;
 			    vamps.addData( buf,len);
-			    status.bytesReaden +=len;
-			    kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));
+			    status.bytesRead +=len;
+			    kdebug(QString("\rINFOPOS: %1 %2").arg((status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN).arg(lgr));
 			}
 
 		}
@@ -371,7 +379,7 @@ void k9play::play() {
  	        if (!vamps.running())
 		    vamps.start(QThread::NormalPriority);
 		vamps.addData( buf,len);
-		status.bytesReaden +=len;
+		status.bytesRead +=len;
                 bcopy=true;
    	      //  dvdnav_get_position(dvdnav, &pos, &lgr);
 	       // kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));

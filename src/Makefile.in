@@ -54,21 +54,21 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(applnkMultimediadir)" "$(DESTDIR)$(shellrcdir)"
+am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(applnkMultimediadir)" "$(DESTDIR)$(konquerorServicesMenusdir)" "$(DESTDIR)$(shellrcdir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_k9copy_OBJECTS = kcddrive.$(OBJEXT) kviewmpeg2.$(OBJEXT) \
-	main.$(OBJEXT) kconfigdlg.$(OBJEXT) kburndvd.$(OBJEXT) \
-	k9copy.$(OBJEXT) k9main.$(OBJEXT) k9play.$(OBJEXT) \
-	k9settings.$(OBJEXT) k9prefmpeg4.$(OBJEXT) k9prefdvd.$(OBJEXT) \
+	main.$(OBJEXT) kconfigdlg.$(OBJEXT) k9copy.$(OBJEXT) \
+	k9main.$(OBJEXT) k9play.$(OBJEXT) k9settings.$(OBJEXT) \
+	k9prefmpeg4.$(OBJEXT) k9prefdvd.$(OBJEXT) \
 	k9prefmencoder.$(OBJEXT)
 #>- k9copy_OBJECTS = $(am_k9copy_OBJECTS)
 #>+ 9
 k9copy_final_OBJECTS = k9copy.o k9copy.all_cpp.o 
 k9copy_nofinal_OBJECTS = kcddrive.$(OBJEXT) kviewmpeg2.$(OBJEXT) \
-	main.$(OBJEXT) kconfigdlg.$(OBJEXT) kburndvd.$(OBJEXT) \
-	k9copy.$(OBJEXT) k9main.$(OBJEXT) k9play.$(OBJEXT) \
-	k9settings.$(OBJEXT) k9prefmpeg4.$(OBJEXT) k9prefdvd.$(OBJEXT) \
+	main.$(OBJEXT) kconfigdlg.$(OBJEXT) k9copy.$(OBJEXT) \
+	k9main.$(OBJEXT) k9play.$(OBJEXT) k9settings.$(OBJEXT) \
+	k9prefmpeg4.$(OBJEXT) k9prefdvd.$(OBJEXT) \
 	k9prefmencoder.$(OBJEXT) menupreview.$(OBJEXT) viewmpeg2.$(OBJEXT) configDlg.$(OBJEXT) k9mainw.$(OBJEXT) prefDVD.$(OBJEXT) prefMPEG4.$(OBJEXT) prefMencoder.$(OBJEXT)\
 k9main.moc.o kcddrive.moc.o k9copy.moc.o kviewmpeg2.moc.o 
 @KDE_USE_FINAL_FALSE@k9copy_OBJECTS = $(k9copy_nofinal_OBJECTS)
@@ -87,23 +87,23 @@ am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k9play.Po ./$(DEPDIR)/k9prefdvd.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k9prefmencoder.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k9prefmpeg4.Po \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kburndvd.Po \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/kcddrive.Po ./$(DEPDIR)/kconfigdlg.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kcddrive.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/kconfigdlg.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/kviewmpeg2.Po ./$(DEPDIR)/main.Po
 #>+ 14
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/menupreview.P $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/prefDVD.P $(DEPDIR)/prefMPEG4.P $(DEPDIR)/prefMencoder.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/kviewmpeg2.moc.P  $(DEPDIR)/k9copy.all_cpp.P ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9play.Po ./$(DEPDIR)/k9prefdvd.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefmencoder.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefmpeg4.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kburndvd.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/kcddrive.Po ./$(DEPDIR)/kconfigdlg.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kcddrive.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/kconfigdlg.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/kviewmpeg2.Po ./$(DEPDIR)/main.Po
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/menupreview.P $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/prefDVD.P $(DEPDIR)/prefMPEG4.P $(DEPDIR)/prefMencoder.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/kviewmpeg2.moc.P ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9play.Po ./$(DEPDIR)/k9prefdvd.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefmencoder.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefmpeg4.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kburndvd.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/kcddrive.Po ./$(DEPDIR)/kconfigdlg.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kcddrive.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/kconfigdlg.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/kviewmpeg2.Po ./$(DEPDIR)/main.Po
 #>- CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 #>- 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
@@ -147,8 +147,10 @@ RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	pdf-recursive ps-recursive uninstall-info-recursive \
 	uninstall-recursive nmcheck-recursive bcheck-recursive
 applnkMultimediaDATA_INSTALL = $(INSTALL_DATA)
+konquerorServicesMenusDATA_INSTALL = $(INSTALL_DATA)
 shellrcDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(applnkMultimedia_DATA) $(shellrc_DATA)
+DATA = $(applnkMultimedia_DATA) $(konquerorServicesMenus_DATA) \
+	$(shellrc_DATA)
 HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -392,12 +394,12 @@ xdg_menudir = @xdg_menudir@
 
 # set the include path for X, qt and KDE
 INCLUDES = -I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9vamps \
-	-I$(top_srcdir)/libk3bdevice -I$(top_srcdir)/libk9copy -I$(top_srcdir)/libdvdnav $(all_includes)
+	-I$(top_srcdir)/libdvdnav -I$(top_srcdir)/libk3bdevice -I$(top_srcdir)/libk9copy $(all_includes)
 
 
 # these are the headers for your project
-noinst_HEADERS = kconfigdlg.h kburndvd.h k9copy.h k9main.h k9play.h \
-			k9settings.h k9prefmpeg4.h k9prefdvd.h k9prefmencoder.h
+noinst_HEADERS = kconfigdlg.h k9copy.h k9main.h k9play.h k9settings.h \
+	k9prefmpeg4.h k9prefdvd.h k9prefmencoder.h
 
 
 # let automoc handle all of the meta source files (moc)
@@ -406,14 +408,14 @@ KDE_ICON = k9copy
 
 # the application source, library search path, and link libraries
 #>- k9copy_SOURCES = images.h kcddrive.cpp kcddrive.h kviewmpeg2.cpp kviewmpeg2.h \
-#>- 						menupreview.ui viewmpeg2.ui k9copy.png main.cpp configDlg.ui kconfigdlg.cpp \
-#>- 						kburndvd.cpp k9mainw.ui k9copy.cpp k9main.cpp k9play.cpp k9settings.cpp prefDVD.ui \
-#>- 			prefMPEG4.ui k9prefmpeg4.cpp k9prefdvd.cpp prefMencoder.ui k9prefmencoder.cpp
+#>- 	menupreview.ui viewmpeg2.ui k9copy.png main.cpp configDlg.ui kconfigdlg.cpp k9mainw.ui \
+#>- 	k9copy.cpp k9main.cpp k9play.cpp k9settings.cpp prefDVD.ui prefMPEG4.ui \
+#>- 	k9prefmpeg4.cpp k9prefdvd.cpp prefMencoder.ui k9prefmencoder.cpp
 #>+ 4
 k9copy_SOURCES=images.h kcddrive.cpp kcddrive.h kviewmpeg2.cpp kviewmpeg2.h \
-						  k9copy.png main.cpp  kconfigdlg.cpp \
-						kburndvd.cpp  k9copy.cpp k9main.cpp k9play.cpp k9settings.cpp  \
-			 k9prefmpeg4.cpp k9prefdvd.cpp  k9prefmencoder.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp
+	  k9copy.png main.cpp  kconfigdlg.cpp  \
+	k9copy.cpp k9main.cpp k9play.cpp k9settings.cpp   \
+	k9prefmpeg4.cpp k9prefdvd.cpp  k9prefmencoder.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp
 
 k9copy_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 k9copy_LDADD = $(top_builddir)/libdvdnav/libdvdnav.la \
@@ -432,6 +434,8 @@ AM_CXXFLAGS = -O3 -g3
 applnkMultimedia_DATA = k9copy.desktop
 applnkMultimediadir = $(kde_appsdir)/Multimedia
 SUBDIRS = icons
+konquerorServicesMenusdir = $(kde_datadir)/konqueror/servicemenus
+konquerorServicesMenus_DATA = open_k9copy.desktop
 #>- all: all-recursive
 #>+ 1
 all: docs-am  all-recursive
@@ -525,7 +529,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9prefmencoder.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9prefmpeg4.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9settings.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kburndvd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kcddrive.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kconfigdlg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kviewmpeg2.Po@am__quote@
@@ -580,6 +583,23 @@ uninstall-applnkMultimediaDATA:
 	  f="`echo $$p | sed -e 's|^.*/||'`"; \
 	  echo " rm -f '$(DESTDIR)$(applnkMultimediadir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(applnkMultimediadir)/$$f"; \
+	done
+install-konquerorServicesMenusDATA: $(konquerorServicesMenus_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(konquerorServicesMenusdir)" || $(mkdir_p) "$(DESTDIR)$(konquerorServicesMenusdir)"
+	@list='$(konquerorServicesMenus_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(konquerorServicesMenusDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(konquerorServicesMenusdir)/$$f'"; \
+	  $(konquerorServicesMenusDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(konquerorServicesMenusdir)/$$f"; \
+	done
+
+uninstall-konquerorServicesMenusDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(konquerorServicesMenus_DATA)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f '$(DESTDIR)$(konquerorServicesMenusdir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(konquerorServicesMenusdir)/$$f"; \
 	done
 install-shellrcDATA: $(shellrc_DATA)
 	@$(NORMAL_INSTALL)
@@ -764,7 +784,7 @@ check: check-recursive
 all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(applnkMultimediadir)" "$(DESTDIR)$(shellrcdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(applnkMultimediadir)" "$(DESTDIR)$(konquerorServicesMenusdir)" "$(DESTDIR)$(shellrcdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-recursive
@@ -815,9 +835,11 @@ info: info-recursive
 
 info-am:
 
-#>- install-data-am: install-applnkMultimediaDATA install-shellrcDATA
-#>+ 1
-install-data-am: install-kde-icons  install-applnkMultimediaDATA install-shellrcDATA
+#>- install-data-am: install-applnkMultimediaDATA \
+#>- 	install-konquerorServicesMenusDATA install-shellrcDATA
+#>+ 2
+install-data-am: install-kde-icons  install-applnkMultimediaDATA \
+	install-konquerorServicesMenusDATA install-shellrcDATA
 
 install-exec-am: install-binPROGRAMS
 
@@ -846,10 +868,12 @@ ps: ps-recursive
 ps-am:
 
 #>- uninstall-am: uninstall-applnkMultimediaDATA uninstall-binPROGRAMS \
-#>- 	uninstall-info-am uninstall-shellrcDATA
-#>+ 2
+#>- 	uninstall-info-am uninstall-konquerorServicesMenusDATA \
+#>- 	uninstall-shellrcDATA
+#>+ 3
 uninstall-am: uninstall-kde-icons  uninstall-applnkMultimediaDATA uninstall-binPROGRAMS \
-	uninstall-info-am uninstall-shellrcDATA
+	uninstall-info-am uninstall-konquerorServicesMenusDATA \
+	uninstall-shellrcDATA
 
 uninstall-info: uninstall-info-recursive
 
@@ -861,25 +885,20 @@ uninstall-info: uninstall-info-recursive
 	html-am info info-am install install-am \
 	install-applnkMultimediaDATA install-binPROGRAMS install-data \
 	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-man install-shellrcDATA install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool mostlyclean-recursive \
-	pdf pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	install-info-am install-konquerorServicesMenusDATA install-man \
+	install-shellrcDATA install-strip installcheck installcheck-am \
+	installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
+	tags tags-recursive uninstall uninstall-am \
 	uninstall-applnkMultimediaDATA uninstall-binPROGRAMS \
-	uninstall-info-am uninstall-shellrcDATA
+	uninstall-info-am uninstall-konquerorServicesMenusDATA \
+	uninstall-shellrcDATA
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
-
-#>+ 3
-kburndvd.moc: $(srcdir)/kburndvd.h
-	$(MOC) $(srcdir)/kburndvd.h -o kburndvd.moc
-
-#>+ 2
-mocs: kburndvd.moc
 
 #>+ 3
 k9main.moc.cpp: $(srcdir)/k9main.h
@@ -939,10 +958,10 @@ mocs: k9prefmencoder.moc
 
 #>+ 3
 clean-metasources:
-	-rm -f  kburndvd.moc k9main.moc.cpp kcddrive.moc.cpp k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9prefdvd.moc k9prefmpeg4.moc k9prefmencoder.moc
+	-rm -f  k9main.moc.cpp kcddrive.moc.cpp k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9prefdvd.moc k9prefmpeg4.moc k9prefmencoder.moc
 
 #>+ 2
-KDE_DIST=viewmpeg2.ui configDlg.ui prefMPEG4.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png menupreview.ui prefDVD.ui hi32-app-k9copy.png configDlg.ui.h Makefile.in prefMencoder.ui k9copy.desktop MainDlg.ui.h Makefile.am 
+KDE_DIST=viewmpeg2.ui open_k9copy.desktop configDlg.ui prefMPEG4.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png menupreview.ui prefDVD.ui hi32-app-k9copy.png configDlg.ui.h Makefile.in prefMencoder.ui k9copy.desktop MainDlg.ui.h Makefile.am 
 
 #>+ 10
 clean-ui:
@@ -1011,11 +1030,11 @@ bcheck-am:
 
 
 #>+ 11
-k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/kburndvd.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp $(srcdir)/k9play.cpp $(srcdir)/k9settings.cpp $(srcdir)/k9prefmpeg4.cpp $(srcdir)/k9prefdvd.cpp $(srcdir)/k9prefmencoder.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp  kburndvd.moc menupreview.moc prefMencoder.moc k9settings.moc prefDVD.moc configDlg.moc k9prefdvd.moc viewmpeg2.moc prefMPEG4.moc k9mainw.moc k9prefmpeg4.moc k9prefmencoder.moc
+k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp $(srcdir)/k9play.cpp $(srcdir)/k9settings.cpp $(srcdir)/k9prefmpeg4.cpp $(srcdir)/k9prefdvd.cpp $(srcdir)/k9prefmencoder.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp  menupreview.moc prefMencoder.moc k9settings.moc prefDVD.moc configDlg.moc k9prefdvd.moc viewmpeg2.moc prefMPEG4.moc k9mainw.moc k9prefmpeg4.moc k9prefmencoder.moc
 	@echo 'creating k9copy.all_cpp.cpp ...'; \
 	rm -f k9copy.all_cpp.files k9copy.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> k9copy.all_cpp.final; \
-	for file in kcddrive.cpp kviewmpeg2.cpp main.cpp kconfigdlg.cpp kburndvd.cpp k9copy.cpp k9main.cpp k9play.cpp k9settings.cpp k9prefmpeg4.cpp k9prefdvd.cpp k9prefmencoder.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp ; do \
+	for file in kcddrive.cpp kviewmpeg2.cpp main.cpp kconfigdlg.cpp k9copy.cpp k9main.cpp k9play.cpp k9settings.cpp k9prefmpeg4.cpp k9prefdvd.cpp k9prefmencoder.cpp menupreview.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> k9copy.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> k9copy.all_cpp.final; \
 	done; \
@@ -1050,34 +1069,31 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 29
+#>+ 26
 $(srcdir)/k9prefmpeg4.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 k9prefmpeg4.lo: k9prefmpeg4.moc 
 k9settings.lo: k9settings.moc 
+$(srcdir)/k9prefmencoder.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 $(srcdir)/k9play.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 k9prefdvd.lo: k9prefdvd.moc 
 $(srcdir)/main.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 k9prefdvd.o: k9prefdvd.moc 
+k9prefmencoder.lo: k9prefmencoder.moc 
 $(srcdir)/k9copy.png: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 $(srcdir)/kconfigdlg.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/kburndvd.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/k9prefdvd.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/kcddrive.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/kcddrive.h: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-nmcheck-am: nmcheck
-kburndvd.lo: kburndvd.moc 
-k9settings.o: k9settings.moc 
-$(srcdir)/k9settings.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/k9main.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/k9prefmencoder.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-k9prefmencoder.lo: k9prefmencoder.moc 
-kburndvd.o: kburndvd.moc 
 $(srcdir)/k9copy.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 nmcheck: 
 k9prefmpeg4.o: k9prefmpeg4.moc 
+$(srcdir)/k9prefdvd.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+$(srcdir)/kcddrive.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 $(srcdir)/kviewmpeg2.h: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+$(srcdir)/kcddrive.h: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 $(srcdir)/kviewmpeg2.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+nmcheck-am: nmcheck
 $(srcdir)/images.h: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+k9settings.o: k9settings.moc 
+$(srcdir)/k9settings.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+$(srcdir)/k9main.cpp: menupreview.h viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 k9prefmencoder.o: k9prefmencoder.moc 
 
 #>+ 98
