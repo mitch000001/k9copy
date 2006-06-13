@@ -337,7 +337,7 @@
             </item>
             <item>
                 <property name="text">
-                    <string>lavc MPEG4xxxxxxxxxxxxxxxxxxxxxxxx</string>
+                    <string>lavc MPEG4</string>
                 </property>
             </item>
             <property name="name">

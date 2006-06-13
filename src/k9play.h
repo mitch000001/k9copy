@@ -64,7 +64,6 @@ public:
     ~k9play();
     void execute();
     void play();
-    void playCell();
     void setTitle(int _value) {m_title = _value;};
 
     void setDevice(const QString& _value) {m_device = _value;};

@@ -29,7 +29,7 @@ void k9play::saveStatus(k9play_st _status) {
    fstatus.open(IO_WriteOnly);
    fstatus.writeBlock((const char*)&_status,sizeof(k9play_st));
    fstatus.close();
-   kdebug (QString("saving status : %1 %2 %3 %4 %5 %6  %7\n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped));
+   //kdebug (QString("saving status : %1 %2 %3 %4 %5 %6  %7\n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped));
 
 } 
 
@@ -41,7 +41,7 @@ void k9play::readStatus(k9play_st &_status) {
 	fstatus.close();
    } else memset(&_status,0,sizeof(k9play_st));
 
-   kdebug (QString("reading status : title:%1 chapter:%2 cell:%3 sector:%4 written:%5 readen:%6 skipped:%7 chapters:%8  \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped).arg(_status.bytesChapters));
+   //kdebug (QString("reading status : title:%1 chapter:%2 cell:%3 sector:%4 written:%5 readen:%6 skipped:%7 chapters:%8  \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped).arg(_status.bytesChapters));
 
 }
 
@@ -66,8 +66,6 @@ k9play::~k9play() {
 }
 
 void k9play::setstartSector(QString _value) {
-    QString dbg="start sector :" + _value;
-    kdebug(dbg);
     if (_value !="")
     	m_startSector=_value.toUInt();
 }
@@ -222,7 +220,6 @@ void k9play::play() {
     if (m_chapter !=0 && m_cell !=0) {
 	if (m_cell==1) {
 	    status.bytesSkipped = status.bytesChapters - status.bytesRead;
-	    kdebug(QString("maj chaptersize : %1").arg(m_chapterSize));
 	    status.bytesChapters += m_chapterSize;
         }
 	if (status.title == m_title &&
@@ -238,7 +235,7 @@ void k9play::play() {
 
 	factor = (double) (m_totalSize - (status.bytesRead +status.bytesSkipped)) / (double) (m_dvdSize-status.bytesWritten) ;
 	if (factor <1) factor =1;
-	kdebug( QString("computed factor %2 / %3 :%1").arg(factor).arg((double) (m_totalSize - (status.bytesRead + status.bytesSkipped)),0,'f',0).arg((double) (m_dvdSize-status.bytesWritten),0,'f',0) );
+	//kdebug( QString("computed factor %2 / %3 :%1").arg(factor).arg((double) (m_totalSize - (status.bytesRead + status.bytesSkipped)),0,'f',0).arg((double) (m_dvdSize-status.bytesWritten),0,'f',0) );
 	vamps.setVapFactor(factor);
     } else
 	vamps.setVapFactor(m_vampsFactor);
@@ -281,7 +278,6 @@ void k9play::play() {
 
     int32_t parts;
     dvdnav_get_number_of_parts(dvdnav , m_title, &parts);
-    kdebug(QString("number of parts %1 \n").arg(parts));
 
     if (m_chapter ==0) 
     	dvdnav_title_play(dvdnav , m_title);
@@ -333,7 +329,6 @@ void k9play::play() {
 
 	
 		if (m_startSector!=0xFFFFFFFF) {
-			kdebug("\nRepositionning ....\n");
 			uint32_t lg2;
 			dvdnav_sector_search(dvdnav,m_startSector , SEEK_SET);
 
@@ -441,8 +436,6 @@ void k9play::play() {
 		status.chapter=ptt;
 		status.cell=currCell;
 		status.sector=pos;
-
-		kdebug(QString("\nCell changed: %1  position:%2\n").arg(currCell).arg(pos));
 	    }
             break;
         case DVDNAV_HOP_CHANNEL:
@@ -472,7 +465,6 @@ void k9play::play() {
     dvdnav_close(dvdnav);
 
     if (! bcopy) {
-        kdebug ("\ninsert dummy pack\n");
 	int8_t buf[DVD_VIDEO_LB_LEN];
 	insert_nav_pack(buf);
 	m_output.writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
@@ -506,82 +498,6 @@ bool k9play::readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector,uchar *_buffer)
 }
 
 
-void k9play::playCell() {
-  k9DVDRead dvdreader;
-  k9DVDFile *dvdfile;
-  
-  pgc_t *       pgc;
-  int           sector, first_sector, next_vobu = 0;
-
-  dvdreader.openDevice( m_device); 
-  k9Ifo ifo(&dvdreader);
-  
-  //temporary
-  int vts_num=1;
-  int pgc_num=3;
-  int cell=2;
-
-    m_output.open(IO_WriteOnly,stdout);
-    k9vamps vamps(NULL);
-    vamps.reset();
-    vamps.setOutput(&m_output);
-    vamps.setVapFactor( m_vampsFactor);
-    vamps.setInputSize(m_inputSize);
-    for ( QStringList::Iterator it = m_audioFilter.begin(); it != m_audioFilter.end(); ++it ) {
-        vamps.addAudio((*it).toInt());
-    }
-
-    for ( QStringList::Iterator it = m_subpictureFilter.begin(); it != m_subpictureFilter.end(); ++it ) {
-        vamps.addSubpicture((*it).toInt());
-    }
-
-  ifo.setDevice(m_device);
-  ifo.openIFO( vts_num);
-  dvdfile = dvdreader.openTitle( vts_num);
-   
-
-  pgc = ifo.getIFO()-> vts_pgcit -> pgci_srp [pgc_num - 1].pgc;
-
-  first_sector = pgc -> cell_playback [cell - 1].first_sector;
-
- // vamps.start(QThread::NormalPriority);
-
-  /* loop until out of the cell */
-  for (sector = first_sector;
-       next_vobu != SRI_END_OF_CELL; sector += next_vobu & 0x7fffffff)
-  {
-    dsi_t dsi;
-    int   nsectors, len;
-    uchar *buf1=(uchar*)malloc (DVD_VIDEO_LB_LEN);
-    /* read nav pack */
-    if (! readNavPack( dvdfile, &dsi, sector, buf1) ) {
-      kdebug("failed to read nav pack");
-      free (buf1);
-      //if reading of nav pack failed, whe should look for the next vobu in ifo file
-      return;
-    }
-
-
-    nsectors  = dsi.dsi_gi.vobu_ea;
-    next_vobu = dsi.vobu_sri.next_vobu;
-    uchar *buf=(uchar*) malloc(nsectors*DVD_VIDEO_LB_LEN);
-    len =  dvdfile->readBlocks(sector + 1, nsectors,buf );
-    if (len !=-1) {
-        m_output.writeBlock((const char*)buf1, DVD_VIDEO_LB_LEN);
-        m_output.writeBlock((const char*)buf,DVD_VIDEO_LB_LEN * nsectors);
-    }
-    free (buf1);
-    free (buf);
-  }    
-//  vamps.setNoData();
-//  vamps.wait();
-
-  m_output.close(); 
-  ifo.closeIFO();
-  dvdfile->close();
-  dvdreader.close();
-
-}
 
 
 

@@ -415,10 +415,11 @@ void k9DVDAuthor::DVDAuthorStderr() {
         progress->setElapsed(time2.toString("hh:mm:ss") +" / " +m_remain);
 
     } 
-    else {
-        if (!m_stderr.startsWith("libdvdread") && !m_stderr.startsWith("libdvdnav"))
+/*    else {
+        if (!m_stderr.startsWith("libdvdread") && m_stderr.startsWith("libdvdnav"))
 	   qDebug(m_stderr);
     }
+*/
     int end;
     lastMsg=m_stderr;
     

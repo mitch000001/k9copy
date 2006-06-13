@@ -60,6 +60,7 @@
 #include <qvaluelist.h>
 #include <kdeversion.h>
 #include <qlistbox.h>
+#include <qtoolbox.h>
 
 
 
@@ -904,6 +905,10 @@ void k9Main::PreviewTitle() {
 }
 
 void k9Main::CreateMP4() {
+    if (!dvd->getopened()) {
+        KMessageBox::error( this, i18n("DVD is not opened"), i18n("MPEG-4 Encoding"));
+        return;
+    }
     for (int i=0; i < dvd->gettitleCount();i++) {
 	k9DVDTitle *t=dvd->gettitle(i);
 	if (t->isSelected() && t->getIndexed() ) {
@@ -958,20 +963,45 @@ void k9Main::fillTitleList() {
     QString txt=lbSequence->currentText();
 
     lbSequence->clear();
+    k9DVDTitle *title=dvd->getstart();
+  
+    bool found=title !=NULL;
+    //Reconstitution de l'ordre de lecture à partir des titres du DVD
+    while (found) {
+        if (title->isSelected()) {
+	        lbItem *item=new lbItem(lbSequence,title->getname());
+		item->setTitle(title);
+		if (title->getname()==txt) 
+		lbSequence->setCurrentItem(item);
+	}
+	title=title->getnextTitle();
+	found=title!=NULL;	
+    }
+
+    
     for (int i=0;i<dvd->gettitleCount();i++) {
         k9DVDTitle* l_track=dvd->gettitle(i);
         if (l_track->getIndexed()) {
             QString sTitle=l_track->getname();
             if(l_track->isSelected()) {
-                lbItem *item=new lbItem(lbSequence,sTitle);
-                item->setTitle(l_track);
-		if (sTitle==txt) 
-		   lbSequence->setCurrentItem(item);
+   		bool foundtitle=false;
+		for (int j=0; j<lbSequence->count();j++) {
+		   lbItem *tmp=(lbItem*)lbSequence->item(j);
+		   if (tmp->getTitle() == l_track)
+			foundtitle=true;
+		}	
+		if (!foundtitle) {
+			lbItem *item=new lbItem(lbSequence,sTitle);
+			item->setTitle(l_track);
+			if (sTitle==txt) 
+			lbSequence->setCurrentItem(item);
+		}
             }
         }
     }
     if (lbSequence->currentItem()==-1)
 	lbSequence->setCurrentItem(0);
+    setSequence();
 }
 
 
@@ -1163,6 +1193,7 @@ void k9Main::bSeqUpClick() {
         lbSequence->insertItem(lbi,cur-1);
         lbSequence->setCurrentItem(lbi);
     }
+    setSequence();
 }
 
 void k9Main::bSeqDownClick() {
@@ -1173,16 +1204,22 @@ void k9Main::bSeqDownClick() {
         lbSequence->insertItem(lbi,cur+1);
         lbSequence->setCurrentItem(lbi);
     }
+    setSequence();
 }
 
 void k9Main::setSequence() {
+    for (uint i=0;i <dvd->gettitleCount();i++)
+	dvd->gettitle(i)->setnextTitle( NULL);
+
     lbItem *lbi = (lbItem*)lbSequence->item(lbSequence->topItem());
-    lbItem *lbi2;
-    dvd->setstart(lbi->getTitle());
-    for (uint i=0 ; i < lbSequence->count()-1;i++) {
-        lbi=(lbItem*)lbSequence->item(i);
-        lbi2=(lbItem*)lbSequence->item(i+1);
-        lbi->getTitle()->setnextTitle(lbi2->getTitle());
+    if (lbi !=NULL) {
+	lbItem *lbi2;
+	dvd->setstart(lbi->getTitle());
+	for (uint i=0 ; i < lbSequence->count()-1;i++) {
+		lbi=(lbItem*)lbSequence->item(i);
+		lbi2=(lbItem*)lbSequence->item(i+1);
+		lbi->getTitle()->setnextTitle(lbi2->getTitle());
+	}
     }
 }
 
