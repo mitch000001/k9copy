@@ -15,6 +15,7 @@
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
+
 class k9DVDRead;
 
 class k9DVDFile {
@@ -57,5 +58,6 @@ public:
 	
 
 };
+
 
 #endif

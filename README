@@ -1,2 +1,12 @@
+install from sources:
 
-if problems with ./configure try make -f Makefile.cvs before
+make -f Makefile.cvs
+./configure --prefix=/usr
+make
+make install      (as root)
+
+
+k9copy can now copy dvd with bad sectors.
+for a faster copy from a dvd with bad sectors : reduce the readahead for the drive :
+
+as root: hdparm -a8 /dev/dvd

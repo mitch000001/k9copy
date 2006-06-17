@@ -188,9 +188,7 @@
         <slot>bAddClick()</slot>
     </connection>
 </connections>
-<includes>
-    <include location="local" impldecl="in implementation">configDlg.ui.h</include>
-</includes>
+
 <slots>
     <slot>bRemoveClick()</slot>
     <slot>bAddClick()</slot>

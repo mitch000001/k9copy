@@ -50,6 +50,7 @@ static const KCmdLineOptions options[] = {
 	    { "cell <number>", I18N_NOOP("cell number in selected chapter"),0},
 	    { "inject <filename>", I18N_NOOP("status file name"),0},
 	    { "initstatus" ,I18N_NOOP("initialize status file"),0},
+	    { "continue" ,I18N_NOOP("continue playing from last sector"),0},
 
 
 
@@ -96,20 +97,19 @@ int main(int argc, char **argv) {
 	QString chapterSizeArg(args->getOption("chaptersize"));
 
         bool play= args->isSet("play");
-
-        /*InputOptionArg="/dev/hdb";
+/*
+        InputOptionArg="/dev/hdb";
         play=true;
-	TitleNumber="8";
-	chapterArg="4";
-	cellArg="2";
-	audioFilterArg="1,2,3";
-	subpictureFilterArg="2";
-	vampsFactorArg="1.49";
+	TitleNumber="1";
+	audioFilterArg="2";
+	endSectorArg="3383054";
+	startSectorArg="0";
+        injectArg="/tmp/kde-jmp/inject";
 */
-
         if (play) {
             k9play player;
 	    player.setinitStatus( args->isSet("initstatus"));
+	    player.setcontinue( args->isSet("continue"));
             player.setDevice(InputOptionArg);
             player.setTitle(TitleNumber.toInt());
             player.setstartSector(startSectorArg);

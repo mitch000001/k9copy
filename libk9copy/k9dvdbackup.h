@@ -91,6 +91,7 @@ private:
     long currVTS;
     k9TitleSet *currTS;
     int currVOB;
+    ifo_handle_t *m_ifo;
     k9Cell *currCell,*cellOut;//,*currCopyCell;
     k9CellCopyList *m_cellCopyList;
     uint32_t m_position,m_vmgSize;
@@ -100,6 +101,7 @@ private:
     uint64_t argSize;
     void prepareVTS(int VTS);
     void playCell (int vts_num, k9Cell *_cell);
+    uint32_t findNextVobu(uint32_t _sector);
     uint32_t copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9Vobu *_vobu);
     void copyCell(int VTS, k9Cell *_cell,bool _empty);
 //    void copyAngleBlock(k9CellCopyList *_list,uint _num);
@@ -111,6 +113,7 @@ private:
     void updatePgci_ut(ifo_handle_t *_hifo);
     void update4Menu(ifo_handle_t *_hifo);
     void setDummyPack(uchar *_buffer);
+    void setDummyNavPack(uchar *_buffer,uint32_t _sector);
     uint32_t copyMenu (int _vts);
     uint32_t copyMenu2(int _vts);
     k9CellList vmgCells;

@@ -11,6 +11,7 @@
 //
 #include "k9dvdread.h"
 
+
 k9DVDRead::k9DVDRead(){
 	m_dvd=NULL;
 	files.setAutoDelete(true);
@@ -136,9 +137,13 @@ int k9DVDFile::readBytes(uchar *_buffer,uint32_t _size)
 }
 
 int k9DVDFile::readBlocks(uint32_t _sector,uint32_t _size,uchar*_buffer) {
-	if (m_file !=NULL) 
-	    return DVDReadBlocks(m_file,_sector,_size,_buffer);
+	if (m_file !=NULL)  {
+	   return DVDReadBlocks(m_file,_sector,_size,_buffer);
+	}
 	else 
 		return -1;
 }
+
+
+
 

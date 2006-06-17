@@ -47,6 +47,7 @@ private:
     float m_percent;
     QTimer *timer;
     QString m_remain;
+    uint32_t m_totalSize;
 
     Codec m_codec;
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;

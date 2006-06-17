@@ -41,7 +41,7 @@ void k9play::readStatus(k9play_st &_status) {
 	fstatus.close();
    } else memset(&_status,0,sizeof(k9play_st));
 
-   //kdebug (QString("reading status : title:%1 chapter:%2 cell:%3 sector:%4 written:%5 readen:%6 skipped:%7 chapters:%8  \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped).arg(_status.bytesChapters));
+   kdebug (QString("reading status : title:%1 chapter:%2 cell:%3 sector:%4 written:%5 readen:%6 skipped:%7 chapters:%8  \n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped).arg(_status.bytesChapters));
 
 }
 
@@ -129,6 +129,11 @@ void k9play::setinitStatus(bool _value) {
    m_initstatus=_value;
 }
 
+void k9play::setcontinue(bool _value) {
+   m_continue=_value;
+}
+
+
 void k9play::execute() {
     //playCell();
     play();
@@ -207,9 +212,11 @@ void k9play::play() {
 
     if (m_initstatus)
 	memset(&status,0,sizeof(k9play_st));
-    else
+    else {
 	readStatus( status);
-
+	if (m_continue) 
+	    m_startSector=status.sector;
+    }
     m_output.open(IO_WriteOnly,stdout);
     k9vamps vamps(NULL);
     vamps.reset();
@@ -320,19 +327,21 @@ void k9play::play() {
 		status.cell=currCell;
 		status.sector=pos;
 
-		if ((m_endSector !=0xFFFFFFFF) && (pos >m_endSector))
+		if ((m_endSector !=0xFFFFFFFF) && (((status.bytesRead+status.bytesSkipped)/2048) >m_endSector)) {
 			finished=1;
+			kdebug(QString("pos >m_endSector %1 %2").arg((status.bytesRead+status.bytesSkipped)/2048).arg(m_endSector));
+		}
 		if ((m_chapter !=0 && ptt !=m_chapter) || (tt != m_title))
 			finished=1;
  	    	if (m_cell!=0 && currCell>m_cell)
 			finished=1;
 
 	
-		if (m_startSector!=0xFFFFFFFF) {
+		if (m_continue) {
 			uint32_t lg2;
 			dvdnav_sector_search(dvdnav,m_startSector , SEEK_SET);
-
-			m_startSector=0xFFFFFFFF;
+			kdebug (QString("repositionning on %1").arg(m_startSector));
+			m_continue=false;
 			finished=0;
 			bcell=true;
 		} else {

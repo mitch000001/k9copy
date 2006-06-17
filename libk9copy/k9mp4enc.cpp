@@ -48,12 +48,13 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     bool error=false;
     m_percent=0;
     m_remain="--:--:--";
+    m_totalSize=(_title->getChapter(_title->getchapterCount()-1)->getendSector() - _title->getChapter(0)->getstartSector());
 
     for (uint m_part =1 ; (m_part <=m_parts) && !error ;m_part++) {
         uint32_t sec1=_title->getChapter(0)->getstartSector();
         uint32_t sec2=_title->getChapter(_title->getchapterCount()-1)->getendSector();
 
-        uint32_t nbSectors= (_title->getChapter(_title->getchapterCount()-1)->getendSector() - _title->getChapter(0)->getstartSector()) / m_parts   ;
+        uint32_t nbSectors= m_totalSize / m_parts   ;
 
         uint32_t startSector= nbSectors*(m_part-1);
         uint32_t endSector= startSector+nbSectors;
@@ -84,9 +85,15 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
         m_progress->setsize(m_size +i18n("mb") +" X " +QString::number(m_parts));
         m_process=new KProcess();
         m_process->setUseShell(true);
-        *m_process << "k9copy" << "--play" << "--startsector" << QString::number(startSector) << "--endsector" << QString::number(endSector) ;
+        *m_process << "k9copy" << "--play" << "--endsector" << QString::number(endSector) ;
+	*m_process << "--inject" << "/tmp/kde-jmp/inject";
         *m_process << "--input" << "'"+m_device+"'";
         *m_process << "--dvdtitle" << QString::number(_title->getnumTitle());
+	if (m_part==1)
+	    *m_process << "--initstatus";
+	else
+	    *m_process << "--continue";
+
 
         for (uint i=0;i<_title->getaudioStreamCount();i++) {
             if (_title->getaudioStream(i)->getselected()) {
@@ -259,7 +266,7 @@ void k9MP4Enc::getStderr(KProcess *proc, char *buffer, int buflen) {
         QString tmp=m_stderr.mid(pos);
         uint32_t totalBytes,totalSize;
         sscanf(tmp.latin1(),"INFOPOS: %d %d",&totalBytes,&totalSize);
-        m_percent=(float)totalBytes / (float)totalSize;
+        m_percent=(float)totalBytes / (float)m_totalSize;
 
 
         QTime time2(0,0);
