@@ -46,4 +46,5 @@ applnkMultimediadir = $(kde_appsdir)/Multimedia
 SUBDIRS = icons
 
 konquerorServicesMenusdir = $(kde_datadir)/konqueror/servicemenus
-konquerorServicesMenus_DATA = open_k9copy.desktop
+
+konquerorServicesMenus_DATA = k9copy_open.desktop

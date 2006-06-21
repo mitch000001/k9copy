@@ -21,6 +21,8 @@
 #include <kmessagebox.h>
 #include <qstringlist.h>
 #include <ksimpleconfig.h>
+#include <ktempfile.h>
+#include <kstandarddirs.h>
 
 k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
         : QObject(parent, name) {
@@ -49,6 +51,13 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     m_percent=0;
     m_remain="--:--:--";
     m_totalSize=(_title->getChapter(_title->getchapterCount()-1)->getendSector() - _title->getChapter(0)->getstartSector());
+
+    QString injectName;
+    KTempFile injectFile(locateLocal("tmp", "k9v"), "");
+    injectFile.setAutoDelete(true);
+    injectFile.close();
+    injectName=injectFile.name();
+
 
     for (uint m_part =1 ; (m_part <=m_parts) && !error ;m_part++) {
         uint32_t sec1=_title->getChapter(0)->getstartSector();
@@ -86,7 +95,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
         m_process=new KProcess();
         m_process->setUseShell(true);
         *m_process << "k9copy" << "--play" << "--endsector" << QString::number(endSector) ;
-	*m_process << "--inject" << "/tmp/kde-jmp/inject";
+	*m_process << "--inject" << injectName; //"/tmp/kde-jmp/inject";
         *m_process << "--input" << "'"+m_device+"'";
         *m_process << "--dvdtitle" << QString::number(_title->getnumTitle());
 	if (m_part==1)

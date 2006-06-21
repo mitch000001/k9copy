@@ -302,6 +302,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     tt_srpt_t   *tt_srpt;
     QString txt,c;
 
+    start=NULL;
     int menuSizes[100];
     for ( j=0; j<100;j++)
         menuSizes[j]=0;

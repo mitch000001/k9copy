@@ -19,14 +19,13 @@
 #include <kaction.h>
 #include <kstdaction.h>
 
-
 k9Copy::k9Copy()
     : KMainWindow( 0, "k9Copy" ),
       m_k9Main(new k9Main(this))
 {
     // tell the KMainWindow that this is indeed the main widget
     setCentralWidget(m_k9Main);
-
+  
     // then, setup our actions
     setupActions();
 

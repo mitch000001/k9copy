@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-12 21:30+0200\n"
+"POT-Creation-Date: 2006-06-21 09:09+0200\n"
 "PO-Revision-Date: 2006-01-16 20:25-0300\n"
 "Last-Translator: Fabio S Monteiro <fsmont@gmail.com>\n"
 "Language-Team: Português do Brasil <pt@li.org>\n"
@@ -187,15 +187,15 @@ msgstr ""
 msgid "DVD+R Double Layer"
 msgstr "DVD+R Dupla Camada"
 
-#: src/k9copy.cpp:67
+#: src/k9copy.cpp:66
 msgid "Play title"
 msgstr "Reproduzir"
 
-#: src/k9copy.cpp:81
+#: src/k9copy.cpp:80
 msgid "Create MPEG-4"
 msgstr ""
 
-#: src/k9copy.cpp:95
+#: src/k9copy.cpp:94
 #, fuzzy
 msgid "Settings"
 msgstr "&Configurações"
@@ -204,15 +204,15 @@ msgstr "&Configurações"
 msgid "Can't find device %1\n"
 msgstr "Não foi possível encontrar o dispositivo %1\n"
 
-#: src/kviewmpeg2.cpp:107 libk9copy/k9dvd.cpp:338
+#: src/kviewmpeg2.cpp:107 libk9copy/k9dvd.cpp:339
 msgid "Can't open disc %1!\n"
 msgstr "Não foi possível abrir o disco %1!\n"
 
-#: src/kviewmpeg2.cpp:135 libk9copy/k9dvd.cpp:847
+#: src/kviewmpeg2.cpp:135 libk9copy/k9dvd.cpp:848
 msgid "Error opening vobs for title %1\n"
 msgstr "Erro abrindo arquivos vobs do capítulo %1\n"
 
-#: src/kviewmpeg2.cpp:149 libk9copy/k9dvd.cpp:858
+#: src/kviewmpeg2.cpp:149 libk9copy/k9dvd.cpp:859
 msgid "ERROR reading block %1\n"
 msgstr "ERRO lendo bloco %1\n"
 
@@ -291,94 +291,96 @@ msgstr ""
 msgid "initialize status file"
 msgstr ""
 
-#: src/main.cpp:61
+#: src/main.cpp:53
+msgid "continue playing from last sector"
+msgstr ""
+
+#: src/main.cpp:62
 msgid "k9copy"
 msgstr "k9copy"
 
-#: src/main.cpp:64
+#: src/main.cpp:65
 msgid "_: NAME OF TRANSLATORS\\nYour names"
 msgstr "Fabio S Monteiro"
 
-#: src/main.cpp:65
+#: src/main.cpp:66
 msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
 msgstr "fsmont@gmail.com"
 
-#: src/k9main.cpp:313 src/k9main.cpp:908
+#: src/k9main.cpp:315 src/k9main.cpp:919
 msgid "DVD is not opened"
 msgstr "DVD não está aberto"
 
-#: src/k9main.cpp:313 src/k9main.cpp:326
+#: src/k9main.cpp:315 src/k9main.cpp:328
 msgid "DVD Copy"
 msgstr "Copia DVD"
 
-#: src/k9main.cpp:320 libk9copy/k9burndvd.cpp:173
+#: src/k9main.cpp:322 libk9copy/k9burndvd.cpp:173
 msgid "Save image to disk"
 msgstr "Salvar imagem para o disco"
 
-#: src/k9main.cpp:326
+#: src/k9main.cpp:328
 msgid ""
 "Insuffisant disk space on %1\n"
 "%2 mb expected."
 msgstr ""
 
-#: src/k9main.cpp:383 src/k9main.cpp:940
+#: src/k9main.cpp:385 src/k9main.cpp:951
 msgid "ISO Image"
 msgstr "Imagem ISO"
 
-#: src/k9main.cpp:420
+#: src/k9main.cpp:422
 msgid "Open DVD"
 msgstr "Abrir DVD"
 
-#: src/k9main.cpp:439
+#: src/k9main.cpp:441
 msgid "Titleset %1"
 msgstr "VTS %1"
 
-#: src/k9main.cpp:512
+#: src/k9main.cpp:514
 #, fuzzy
 msgid "video %1 "
 msgstr "audio %1 "
 
-#: src/k9main.cpp:524
+#: src/k9main.cpp:526
 msgid "audio %1 "
 msgstr "audio %1 "
 
-#: src/k9main.cpp:541
+#: src/k9main.cpp:543
 msgid "subpicture %1 "
 msgstr ""
 
-#: src/k9main.cpp:908 src/k9settings.cpp:40 libk9copy/k9mp4enc.cpp:179
+#: src/k9main.cpp:919 src/k9settings.cpp:40 libk9copy/k9mp4enc.cpp:195
 msgid "MPEG-4 Encoding"
 msgstr ""
 
-#: src/k9main.cpp:1080 src/k9mainw.cpp:300 src/prefMencoder.cpp:37
-#: src/prefMencoder.cpp:87 debug/src/k9mainw.cpp:300
-#: debug/src/prefMencoder.cpp:37 debug/src/prefMencoder.cpp:87 rc.cpp:57
-#: rc.cpp:168
+#: src/k9main.cpp:1091 debug/src/k9mainw.cpp:304 debug/src/prefMencoder.cpp:37
+#: debug/src/prefMencoder.cpp:87 rc.cpp:50 rc.cpp:161
 #, no-c-format
 msgid "Audio"
 msgstr "Audio"
 
-#: src/k9main.cpp:1091
+#: src/k9main.cpp:1102
 msgid "Subtitles"
 msgstr "Legendas"
 
-#: src/k9main.cpp:1112 src/k9main.cpp:1232 src/k9mainw.cpp:292
-#: libk9copy/k9burndvd.cpp:167 debug/src/k9mainw.cpp:292 rc.cpp:27
+#: src/k9main.cpp:1123 src/k9main.cpp:1245 libk9copy/k9burndvd.cpp:167
+#: debug/src/k9mainw.cpp:296 rc.cpp:20
 #, no-c-format
 msgid "default"
 msgstr ""
 
-#: src/k9main.cpp:1120
+#: src/k9main.cpp:1131
 #, fuzzy
 msgid "Open ISO Image"
 msgstr "Imagem ISO"
 
-#: src/k9main.cpp:1127
+#: src/k9main.cpp:1138
 #, fuzzy
 msgid "Open DVD folder"
 msgstr "Abrir DVD"
 
-#: src/k9main.cpp:1234
+#: src/k9main.cpp:1247
 #, fuzzy
 msgid "none"
 msgstr "Nenhum"
@@ -415,254 +417,13 @@ msgstr ""
 msgid "MPEG-4 Codecs"
 msgstr ""
 
-#: src/k9prefmpeg4.cpp:33 src/k9prefdvd.cpp:33 libk9copy/k9mp4enc.cpp:84
+#: src/k9prefmpeg4.cpp:33 src/k9prefdvd.cpp:33 libk9copy/k9mp4enc.cpp:94
 msgid "mb"
 msgstr "MB"
 
-#: src/menupreview.cpp:1084 debug/src/menupreview.cpp:1084 rc.cpp:3
-#, no-c-format
+#: src/menupreview.cpp:1084 debug/src/menupreview.cpp:1084
 msgid "k9Copy - Menu Preview"
 msgstr "k9Copy - Visualizar Menu"
-
-#: src/viewmpeg2.cpp:631 debug/src/viewmpeg2.cpp:631 rc.cpp:10
-#, no-c-format
-msgid "k9Copy - Title Preview"
-msgstr "k9Copy - Assistir Capítulo"
-
-#: src/configDlg.cpp:43 src/configDlg.cpp:97 debug/src/configDlg.cpp:43
-#: debug/src/configDlg.cpp:97 rc.cpp:76
-#, no-c-format
-msgid "device"
-msgstr "Dispositivo"
-
-#: src/configDlg.cpp:45 src/configDlg.cpp:98 debug/src/configDlg.cpp:45
-#: debug/src/configDlg.cpp:98 rc.cpp:79
-#, no-c-format
-msgid "label"
-msgstr "Nome"
-
-#: src/configDlg.cpp:47 src/configDlg.cpp:99 debug/src/configDlg.cpp:47
-#: debug/src/configDlg.cpp:99 rc.cpp:82
-#, no-c-format
-msgid "Input"
-msgstr "Leitura"
-
-#: src/configDlg.cpp:49 src/configDlg.cpp:100 debug/src/configDlg.cpp:49
-#: debug/src/configDlg.cpp:100 rc.cpp:85
-#, no-c-format
-msgid "Output"
-msgstr "Gravação"
-
-#: src/configDlg.cpp:96 debug/src/configDlg.cpp:96 rc.cpp:73
-#, no-c-format
-msgid "k9Copy - Devices"
-msgstr "k9Copy - Dispositivos"
-
-#: src/k9mainw.cpp:101 src/k9mainw.cpp:294 debug/src/k9mainw.cpp:101
-#: debug/src/k9mainw.cpp:294 rc.cpp:36
-#, no-c-format
-msgid "Title"
-msgstr "Título"
-
-#: src/k9mainw.cpp:102 src/k9mainw.cpp:295 libk9copy/mp4dlg.cpp:131
-#: debug/libk9copy/mp4dlg.cpp:131 debug/src/k9mainw.cpp:102
-#: debug/src/k9mainw.cpp:295 rc.cpp:39 rc.cpp:247
-#, no-c-format
-msgid "Size"
-msgstr "Tamanho"
-
-#: src/k9mainw.cpp:208 src/k9mainw.cpp:305 debug/src/k9mainw.cpp:208
-#: debug/src/k9mainw.cpp:305 rc.cpp:68
-#, no-c-format
-msgid "Languages"
-msgstr "Idiomas"
-
-#: src/k9mainw.cpp:287 debug/src/k9mainw.cpp:287 rc.cpp:15
-#, no-c-format
-msgid "MainDlg"
-msgstr "MainDlg"
-
-#: src/k9mainw.cpp:288 debug/src/k9mainw.cpp:288 rc.cpp:18
-#, no-c-format
-msgid "Output device "
-msgstr "Dispositivo de gravação: "
-
-#: src/k9mainw.cpp:289 debug/src/k9mainw.cpp:289 rc.cpp:21
-#, no-c-format
-msgid "@"
-msgstr ""
-
-#: src/k9mainw.cpp:290 debug/src/k9mainw.cpp:290 rc.cpp:24
-#, no-c-format
-msgid "Input device "
-msgstr "Dispositivo de leitura: "
-
-#: src/k9mainw.cpp:293 src/prefMPEG4.cpp:158 debug/src/k9mainw.cpp:293
-#: debug/src/prefMPEG4.cpp:158 rc.cpp:30 rc.cpp:150
-#, no-c-format
-msgid "X"
-msgstr ""
-
-#: src/k9mainw.cpp:296 debug/src/k9mainw.cpp:296 rc.cpp:45
-#, no-c-format
-msgid "&Keep original menus"
-msgstr "&Manter os menus originais"
-
-#: src/k9mainw.cpp:297 src/prefMPEG4.cpp:157 debug/src/k9mainw.cpp:297
-#: debug/src/prefMPEG4.cpp:157 rc.cpp:48 rc.cpp:147
-#, no-c-format
-msgid "Alt+K"
-msgstr "Alt+M"
-
-#: src/k9mainw.cpp:298 debug/src/k9mainw.cpp:298 rc.cpp:51
-#, no-c-format
-msgid "Default language"
-msgstr ""
-
-#: src/k9mainw.cpp:299 debug/src/k9mainw.cpp:299 rc.cpp:54
-#, fuzzy, no-c-format
-msgid "Subtitle"
-msgstr "Legendas"
-
-#: src/k9mainw.cpp:303 debug/src/k9mainw.cpp:303 rc.cpp:62
-#, no-c-format
-msgid "Selected Titles"
-msgstr ""
-
-#: src/k9mainw.cpp:304 debug/src/k9mainw.cpp:304 rc.cpp:42
-#, fuzzy, no-c-format
-msgid "DVD playback options"
-msgstr "<b>Opções de reprodução</b>"
-
-#: src/k9mainw.cpp:306 debug/src/k9mainw.cpp:306 rc.cpp:65
-#, no-c-format
-msgid "Selection"
-msgstr ""
-
-#: src/k9mainw.cpp:307 debug/src/k9mainw.cpp:307 rc.cpp:33
-#, no-c-format
-msgid "D&VD"
-msgstr "D&VD"
-
-#: src/prefDVD.cpp:89 debug/src/prefDVD.cpp:89 rc.cpp:96
-#, fuzzy, no-c-format
-msgid "prefDVD"
-msgstr "Abrir DVD"
-
-#: src/prefDVD.cpp:90 debug/src/prefDVD.cpp:90 rc.cpp:99
-#, no-c-format
-msgid "Output directory"
-msgstr "Diretório temporário: "
-
-#: src/prefDVD.cpp:91 debug/src/prefDVD.cpp:91 rc.cpp:102
-#, no-c-format
-msgid "Burn with k3b"
-msgstr "Gravar DVD com k3b"
-
-#: src/prefDVD.cpp:93 debug/src/prefDVD.cpp:93 rc.cpp:106
-#, no-c-format
-msgid "Auto burn"
-msgstr "Gravação automática"
-
-#: src/prefDVD.cpp:95 debug/src/prefDVD.cpp:95 rc.cpp:110
-#, no-c-format
-msgid "Quick scan"
-msgstr ""
-
-#: src/prefDVD.cpp:97 debug/src/prefDVD.cpp:97 rc.cpp:114
-#, no-c-format
-msgid "DVD size"
-msgstr "Tamanho do DVD"
-
-#: src/prefMPEG4.cpp:145 src/prefMencoder.cpp:84 debug/src/prefMPEG4.cpp:145
-#: debug/src/prefMencoder.cpp:84 rc.cpp:117 rc.cpp:159
-#, no-c-format
-msgid "Form1"
-msgstr ""
-
-#: src/prefMPEG4.cpp:146 debug/src/prefMPEG4.cpp:146 rc.cpp:120
-#, no-c-format
-msgid "Video Codec"
-msgstr ""
-
-#: src/prefMPEG4.cpp:147 debug/src/prefMPEG4.cpp:147 rc.cpp:123
-#, no-c-format
-msgid "Audio bitrate"
-msgstr ""
-
-#: src/prefMPEG4.cpp:149 debug/src/prefMPEG4.cpp:149 rc.cpp:129
-#, no-c-format
-msgid "File size"
-msgstr ""
-
-#: src/prefMPEG4.cpp:151 debug/src/prefMPEG4.cpp:151 rc.cpp:135
-#, fuzzy, no-c-format
-msgid " mb"
-msgstr "MB"
-
-#: src/prefMPEG4.cpp:152 debug/src/prefMPEG4.cpp:152 rc.cpp:138
-#, no-c-format
-msgid "640"
-msgstr ""
-
-#: src/prefMPEG4.cpp:156 debug/src/prefMPEG4.cpp:156 rc.cpp:144
-#, no-c-format
-msgid "&keep aspect ratio"
-msgstr ""
-
-#: src/prefMPEG4.cpp:160 debug/src/prefMPEG4.cpp:160 rc.cpp:153
-#, no-c-format
-msgid "XviD"
-msgstr ""
-
-#: src/prefMPEG4.cpp:161 debug/src/prefMPEG4.cpp:161 rc.cpp:156
-#, no-c-format
-msgid "lavc MPEG4"
-msgstr ""
-
-#: src/prefMencoder.cpp:33 src/prefMencoder.cpp:85
-#: debug/src/prefMencoder.cpp:33 debug/src/prefMencoder.cpp:85 rc.cpp:162
-#, fuzzy, no-c-format
-msgid "Label"
-msgstr "Nome"
-
-#: src/prefMencoder.cpp:35 src/prefMencoder.cpp:86
-#: debug/src/prefMencoder.cpp:35 debug/src/prefMencoder.cpp:86 rc.cpp:165
-#, no-c-format
-msgid "Video"
-msgstr ""
-
-#: src/k9main.moc.cpp:34 src/k9main.moc.cpp:42 debug/src/k9main.moc.cpp:34
-#: debug/src/k9main.moc.cpp:42
-msgid "k9DVDListItem"
-msgstr "k9DVDListItem"
-
-#: src/k9main.moc.cpp:107 src/k9main.moc.cpp:115 debug/src/k9main.moc.cpp:107
-#: debug/src/k9main.moc.cpp:115
-msgid "k9Main"
-msgstr "k9Main"
-
-#: src/kcddrive.moc.cpp:34 src/kcddrive.moc.cpp:42
-#: debug/src/kcddrive.moc.cpp:34 debug/src/kcddrive.moc.cpp:42
-msgid "kCDDrive"
-msgstr "kCDDrive"
-
-#: src/kcddrive.moc.cpp:107 src/kcddrive.moc.cpp:115
-#: debug/src/kcddrive.moc.cpp:107 debug/src/kcddrive.moc.cpp:115
-msgid "kCDDrives"
-msgstr "kCDDrives"
-
-#: src/k9copy.moc.cpp:34 src/k9copy.moc.cpp:42 libk9copy/progress.cpp:103
-#: debug/libk9copy/progress.cpp:103 debug/src/progress.cpp:78
-#: debug/src/k9copy.moc.cpp:34 debug/src/k9copy.moc.cpp:42 rc.cpp:207
-#, no-c-format
-msgid "k9Copy"
-msgstr "k9Copy"
-
-#: src/kviewmpeg2.moc.cpp:34 src/kviewmpeg2.moc.cpp:42
-#: debug/src/kviewmpeg2.moc.cpp:34 debug/src/kviewmpeg2.moc.cpp:42
-msgid "kViewMPEG2"
-msgstr "kViewMPEG2"
 
 #: libk9copy/k9dvdauthor.cpp:107 libk9copy/k9dvdauthor.cpp:294
 msgid "'%1' not selected"
@@ -676,12 +437,11 @@ msgid "authoring"
 msgstr "masterização"
 
 #: libk9copy/k9dvdauthor.cpp:325 libk9copy/k9dvdauthor.cpp:391
-#: libk9copy/k9dvdauthor.cpp:428
+#: libk9copy/k9dvdauthor.cpp:429
 msgid "Authoring"
 msgstr "Masterização"
 
-#: libk9copy/k9dvdauthor.cpp:326 libk9copy/backupdlg.cpp:162
-#: debug/libk9copy/backupdlg.cpp:162 rc.cpp:179
+#: libk9copy/k9dvdauthor.cpp:326 debug/libk9copy/backupdlg.cpp:162 rc.cpp:172
 #, no-c-format
 msgid "k9Copy - Backup progression"
 msgstr "k9Copy - Progresso da Cópia "
@@ -698,12 +458,12 @@ msgstr "Masterização cancelada"
 msgid "An error occured while running DVDAuthor:\n"
 msgstr "Ocorreu um erro enquanto executava DVDAuthor:\n"
 
-#: libk9copy/k9dvdauthor.cpp:429
+#: libk9copy/k9dvdauthor.cpp:430
 msgid "Fixing VOBUS"
 msgstr ""
 
 #: libk9copy/k9dvdbackup.cpp:137 libk9copy/k9dvdbackup.cpp:151
-#: libk9copy/k9dvdbackup.cpp:490 libk9copy/k9dvdbackup.cpp:647
+#: libk9copy/k9dvdbackup.cpp:491 libk9copy/k9dvdbackup.cpp:648
 msgid "DVD backup cancelled"
 msgstr "Cópia do DVD cancelada"
 
@@ -712,7 +472,7 @@ msgid "unable to open VIDEO_TS.IFO"
 msgstr "não foi possível abrir VIDEO_TS.IFO"
 
 #: libk9copy/k9dvdbackup.cpp:186 libk9copy/k9dvdbackup.cpp:364
-#: libk9copy/k9dvdbackup.cpp:428
+#: libk9copy/k9dvdbackup.cpp:429
 msgid "Unable to open file "
 msgstr "Não foi possível abrir o arquivo"
 
@@ -720,39 +480,39 @@ msgstr "Não foi possível abrir o arquivo"
 msgid "Unable to open titleset %1"
 msgstr "Não foi possível abrir o VTS %1"
 
-#: libk9copy/k9dvdbackup.cpp:263 libk9copy/k9dvdbackup.cpp:619
+#: libk9copy/k9dvdbackup.cpp:263 libk9copy/k9dvdbackup.cpp:620
 msgid "Extracting titleset %1"
 msgstr "Extraindo VTS %1"
 
-#: libk9copy/k9dvdbackup.cpp:435 libk9copy/k9dvdbackup.cpp:563
+#: libk9copy/k9dvdbackup.cpp:436 libk9copy/k9dvdbackup.cpp:564
 msgid "Unable to open menu for titleset %1"
 msgstr "Não foi possível abrir menu para o VTS %1"
 
-#: libk9copy/k9dvdbackup.cpp:457 libk9copy/k9dvdbackup.cpp:570
+#: libk9copy/k9dvdbackup.cpp:458 libk9copy/k9dvdbackup.cpp:571
 msgid "Extracting menu for titleset %1"
 msgstr "Extraindo menu do VTS %1"
 
-#: libk9copy/k9dvdbackup.cpp:556
+#: libk9copy/k9dvdbackup.cpp:557
 msgid "Unable to open "
 msgstr "Não foi possível abrir"
 
-#: libk9copy/k9dvdbackup.cpp:611
+#: libk9copy/k9dvdbackup.cpp:612
 msgid "Unable to open ifo file for titleset %1"
 msgstr "Não foi possível abrir o arquivo ifo para o VTS %1"
 
-#: libk9copy/k9dvdbackup.cpp:623 libk9copy/k9dvdbackup.cpp:1523
+#: libk9copy/k9dvdbackup.cpp:624 libk9copy/k9dvdbackup.cpp:1595
 msgid "Unable to open DVD"
 msgstr "Não foi possível abrir o DVD"
 
-#: libk9copy/k9dvdbackup.cpp:633
+#: libk9copy/k9dvdbackup.cpp:634
 msgid "Unable to open vobs for titleset %1"
 msgstr "Não foi possível abrir vobs para o VTS %1"
 
-#: libk9copy/k9dvdbackup.cpp:1246
+#: libk9copy/k9dvdbackup.cpp:1318
 msgid "Updating vob %1"
 msgstr "Atualizando vob %1"
 
-#: libk9copy/k9dvdbackup.cpp:1262
+#: libk9copy/k9dvdbackup.cpp:1334
 msgid "DVD backup canceled"
 msgstr "Cópia do DVD cancelada"
 
@@ -1325,43 +1085,43 @@ msgstr ""
 msgid "Zulu"
 msgstr ""
 
-#: libk9copy/k9dvd.cpp:348
+#: libk9copy/k9dvd.cpp:349
 msgid "Can't open main ifo!\n"
 msgstr "Não foi possível abrir o arquivo ifo principal!\n"
 
-#: libk9copy/k9dvd.cpp:363
+#: libk9copy/k9dvd.cpp:364
 msgid "unknown"
 msgstr "desconhecido"
 
-#: libk9copy/k9dvd.cpp:387 libk9copy/k9dvd.cpp:674
+#: libk9copy/k9dvd.cpp:388 libk9copy/k9dvd.cpp:675
 msgid "Title %1"
 msgstr "Capítulo %1"
 
-#: libk9copy/k9dvd.cpp:722
+#: libk9copy/k9dvd.cpp:723
 msgid "reading title"
 msgstr "lendo capítulo"
 
-#: libk9copy/k9mp4enc.cpp:74
+#: libk9copy/k9mp4enc.cpp:84
 #, fuzzy
 msgid "Save file to disk"
 msgstr "Salvar imagem para o disco"
 
-#: libk9copy/k9mp4enc.cpp:108 libk9copy/k9mp4enc.cpp:115
-#: libk9copy/k9mp4enc.cpp:133
+#: libk9copy/k9mp4enc.cpp:124 libk9copy/k9mp4enc.cpp:131
+#: libk9copy/k9mp4enc.cpp:149
 msgid "Encoding %1"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:179
+#: libk9copy/k9mp4enc.cpp:195
 #, fuzzy
 msgid "MPEG-4 Encoding cancelled"
 msgstr "Masterização cancelada"
 
-#: libk9copy/k9mp4enc.cpp:182
+#: libk9copy/k9mp4enc.cpp:198
 #, fuzzy
 msgid "Error while running mencoder :"
 msgstr "Ocorreu um erro enquanto executava DVDAuthor:\n"
 
-#: libk9copy/k9mp4enc.cpp:182
+#: libk9copy/k9mp4enc.cpp:198
 msgid "Encoding error"
 msgstr ""
 
@@ -1402,159 +1162,367 @@ msgstr "Insira outro DVD"
 msgid "Current write speed :%1 x"
 msgstr "Velocidade de gravação atual: %1 x"
 
-#: libk9copy/backupdlg.cpp:163 debug/libk9copy/backupdlg.cpp:163 rc.cpp:182
+#: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
+msgid "kDecMPEG2"
+msgstr "kDecMPEG2"
+
+#: debug/libk9copy/backupdlg.cpp:163 rc.cpp:175
 #, no-c-format
 msgid "A&bort"
 msgstr "Ca&ncelar"
 
-#: libk9copy/backupdlg.cpp:164 debug/libk9copy/backupdlg.cpp:164 rc.cpp:185
+#: debug/libk9copy/backupdlg.cpp:164 rc.cpp:178
 #, no-c-format
 msgid "Alt+B"
 msgstr "Alt+A"
 
-#: libk9copy/backupdlg.cpp:165 debug/libk9copy/backupdlg.cpp:165 rc.cpp:188
+#: debug/libk9copy/backupdlg.cpp:165 rc.cpp:181
 #, no-c-format
 msgid "--:--:--"
 msgstr "--:--:--"
 
-#: libk9copy/backupdlg.cpp:166 debug/libk9copy/backupdlg.cpp:166 rc.cpp:191
+#: debug/libk9copy/backupdlg.cpp:166 rc.cpp:184
 #, no-c-format
 msgid "Current step"
 msgstr "Passo atual"
 
-#: libk9copy/backupdlg.cpp:167 libk9copy/progress.cpp:107
-#: libk9copy/mp4dlg.cpp:129 debug/libk9copy/backupdlg.cpp:167
-#: debug/libk9copy/progress.cpp:107 debug/libk9copy/mp4dlg.cpp:129 rc.cpp:194
-#: rc.cpp:217 rc.cpp:241
+#: debug/libk9copy/backupdlg.cpp:167 debug/libk9copy/progress.cpp:107
+#: debug/libk9copy/mp4dlg.cpp:129 rc.cpp:187 rc.cpp:210 rc.cpp:234
 #, no-c-format
 msgid "Elapsed Time"
 msgstr "Tempo Decorrido"
 
-#: libk9copy/backupdlg.cpp:168 debug/libk9copy/backupdlg.cpp:168 rc.cpp:197
+#: debug/libk9copy/backupdlg.cpp:168 rc.cpp:190
 #, no-c-format
 msgid "<p align=\"left\"><b>DVD Backup</b></p>"
 msgstr "<p align=\"left\"><b>DVD Backup</b></p>"
 
-#: libk9copy/dvdprogress.cpp:92 debug/libk9copy/dvdprogress.cpp:92 rc.cpp:201
+#: debug/libk9copy/dvdprogress.cpp:92 rc.cpp:194
 #, no-c-format
 msgid "k9Copy - DVD Analyze"
 msgstr "k9Copy - Analisando DVD"
 
-#: libk9copy/progress.cpp:106 debug/libk9copy/progress.cpp:106
-#: debug/src/progress.cpp:81 rc.cpp:214
+#: debug/libk9copy/progress.cpp:103 debug/src/progress.cpp:78
+#: debug/src/k9copy.moc.cpp:34 debug/src/k9copy.moc.cpp:42 rc.cpp:200
+#, no-c-format
+msgid "k9Copy"
+msgstr "k9Copy"
+
+#: debug/libk9copy/progress.cpp:106 debug/src/progress.cpp:81 rc.cpp:207
 #, fuzzy, no-c-format
 msgid "Alt+C"
 msgstr "Alt+A"
 
-#: libk9copy/mp4dlg.cpp:120 debug/libk9copy/mp4dlg.cpp:120 rc.cpp:222
+#: debug/libk9copy/mp4dlg.cpp:120 rc.cpp:215
 #, fuzzy, no-c-format
 msgid "k9Copy - transcoding"
 msgstr "k9Copy - Gravando DVD"
 
-#: libk9copy/mp4dlg.cpp:121 debug/libk9copy/mp4dlg.cpp:121 rc.cpp:225
+#: debug/libk9copy/mp4dlg.cpp:121 rc.cpp:218
 #, no-c-format
 msgid "Encoding"
 msgstr ""
 
-#: libk9copy/mp4dlg.cpp:122 debug/libk9copy/mp4dlg.cpp:122 rc.cpp:228
+#: debug/libk9copy/mp4dlg.cpp:122 rc.cpp:221
 #, no-c-format
 msgid "Annu&ler"
 msgstr ""
 
-#: libk9copy/mp4dlg.cpp:123 debug/libk9copy/mp4dlg.cpp:123 rc.cpp:231
+#: debug/libk9copy/mp4dlg.cpp:123 rc.cpp:224
 #, fuzzy, no-c-format
 msgid "Alt+L"
 msgstr "Alt+A"
 
-#: libk9copy/mp4dlg.cpp:128 debug/libk9copy/mp4dlg.cpp:128 rc.cpp:238
+#: debug/libk9copy/mp4dlg.cpp:128 rc.cpp:231
 #, no-c-format
 msgid "fps"
 msgstr ""
 
-#: libk9copy/mp4dlg.cpp:130 debug/libk9copy/mp4dlg.cpp:130 rc.cpp:244
+#: debug/libk9copy/mp4dlg.cpp:130 rc.cpp:237
 #, no-c-format
 msgid "Bitrate"
 msgstr ""
 
-#: libk9copy/k9dvdprogress.moc.cpp:34 libk9copy/k9dvdprogress.moc.cpp:42
+#: debug/libk9copy/mp4dlg.cpp:131 debug/src/k9mainw.cpp:106
+#: debug/src/k9mainw.cpp:299 rc.cpp:32 rc.cpp:240
+#, no-c-format
+msgid "Size"
+msgstr "Tamanho"
+
 #: debug/libk9copy/k9dvdprogress.moc.cpp:34
 #: debug/libk9copy/k9dvdprogress.moc.cpp:42
 msgid "k9DVDProgress"
 msgstr "k9DVDProgress"
 
-#: libk9copy/k9dvdauthor.moc.cpp:34 libk9copy/k9dvdauthor.moc.cpp:42
 #: debug/libk9copy/k9dvdauthor.moc.cpp:34
 #: debug/libk9copy/k9dvdauthor.moc.cpp:42
 msgid "k9DVDAuthor"
 msgstr "k9DVDAuthor"
 
-#: libk9copy/k9dvdsize.moc.cpp:34 libk9copy/k9dvdsize.moc.cpp:42
 #: debug/libk9copy/k9dvdsize.moc.cpp:34 debug/libk9copy/k9dvdsize.moc.cpp:42
 msgid "k9DVDSize"
 msgstr "k9DVDSize"
 
-#: libk9copy/k9dvdtitle.moc.cpp:34 libk9copy/k9dvdtitle.moc.cpp:42
 #: debug/libk9copy/k9dvdtitle.moc.cpp:34 debug/libk9copy/k9dvdtitle.moc.cpp:42
 msgid "k9ChapterCell"
 msgstr "k9ChapterCell"
 
-#: libk9copy/k9dvdtitle.moc.cpp:107 libk9copy/k9dvdtitle.moc.cpp:115
 #: debug/libk9copy/k9dvdtitle.moc.cpp:107
 #: debug/libk9copy/k9dvdtitle.moc.cpp:115
 msgid "k9DVDChapter"
 msgstr "k9DVDChapter"
 
-#: libk9copy/k9dvdtitle.moc.cpp:180 libk9copy/k9dvdtitle.moc.cpp:188
 #: debug/libk9copy/k9dvdtitle.moc.cpp:180
 #: debug/libk9copy/k9dvdtitle.moc.cpp:188
 msgid "k9DVDVideoStream"
 msgstr "k9DVDVideoStream"
 
-#: libk9copy/k9dvdtitle.moc.cpp:253 libk9copy/k9dvdtitle.moc.cpp:261
 #: debug/libk9copy/k9dvdtitle.moc.cpp:253
 #: debug/libk9copy/k9dvdtitle.moc.cpp:261
 msgid "k9DVDAudioStream"
 msgstr "k9DVDAudioStream"
 
-#: libk9copy/k9dvdtitle.moc.cpp:326 libk9copy/k9dvdtitle.moc.cpp:334
 #: debug/libk9copy/k9dvdtitle.moc.cpp:326
 #: debug/libk9copy/k9dvdtitle.moc.cpp:334
 msgid "k9DVDSubtitle"
 msgstr "k9DVDSubtitle"
 
-#: libk9copy/k9dvdtitle.moc.cpp:399 libk9copy/k9dvdtitle.moc.cpp:407
 #: debug/libk9copy/k9dvdtitle.moc.cpp:399
 #: debug/libk9copy/k9dvdtitle.moc.cpp:407
 msgid "k9DVDTitle"
 msgstr "k9DVDTitle"
 
-#: libk9copy/k9dvdtitle.moc.cpp:472 libk9copy/k9dvdtitle.moc.cpp:480
 #: debug/libk9copy/k9dvdtitle.moc.cpp:472
 #: debug/libk9copy/k9dvdtitle.moc.cpp:480
 msgid "k9DVDTitleset"
 msgstr "k9DVDTitleset"
 
-#: libk9copy/k9dvd.moc.cpp:34 libk9copy/k9dvd.moc.cpp:42
 #: debug/libk9copy/k9dvd.moc.cpp:34 debug/libk9copy/k9dvd.moc.cpp:42
 msgid "k9DVD"
 msgstr "k9DVD"
-
-#: k9decmpeg/kdecmpeg2.moc.cpp:34 k9decmpeg/kdecmpeg2.moc.cpp:42
-#: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
-msgid "kDecMPEG2"
-msgstr "kDecMPEG2"
 
 #: debug/libk9copy/k9burndvd.moc.cpp:34 debug/libk9copy/k9burndvd.moc.cpp:42
 #, fuzzy
 msgid "k9BurnDVD"
 msgstr "k9DVD"
 
-#: rc.cpp:250
+#: debug/src/viewmpeg2.cpp:631 rc.cpp:3
+#, no-c-format
+msgid "k9Copy - Title Preview"
+msgstr "k9Copy - Assistir Capítulo"
+
+#: debug/src/configDlg.cpp:42 debug/src/configDlg.cpp:96 rc.cpp:69
+#, no-c-format
+msgid "device"
+msgstr "Dispositivo"
+
+#: debug/src/configDlg.cpp:44 debug/src/configDlg.cpp:97 rc.cpp:72
+#, no-c-format
+msgid "label"
+msgstr "Nome"
+
+#: debug/src/configDlg.cpp:46 debug/src/configDlg.cpp:98 rc.cpp:75
+#, no-c-format
+msgid "Input"
+msgstr "Leitura"
+
+#: debug/src/configDlg.cpp:48 debug/src/configDlg.cpp:99 rc.cpp:78
+#, no-c-format
+msgid "Output"
+msgstr "Gravação"
+
+#: debug/src/configDlg.cpp:95 rc.cpp:66
+#, no-c-format
+msgid "k9Copy - Devices"
+msgstr "k9Copy - Dispositivos"
+
+#: debug/src/k9mainw.cpp:105 debug/src/k9mainw.cpp:298 rc.cpp:29
+#, no-c-format
+msgid "Title"
+msgstr "Título"
+
+#: debug/src/k9mainw.cpp:212 debug/src/k9mainw.cpp:309 rc.cpp:61
+#, no-c-format
+msgid "Languages"
+msgstr "Idiomas"
+
+#: debug/src/k9mainw.cpp:291 rc.cpp:8
+#, no-c-format
+msgid "MainDlg"
+msgstr "MainDlg"
+
+#: debug/src/k9mainw.cpp:292 rc.cpp:11
+#, no-c-format
+msgid "Output device "
+msgstr "Dispositivo de gravação: "
+
+#: debug/src/k9mainw.cpp:293 rc.cpp:14
+#, no-c-format
+msgid "@"
+msgstr ""
+
+#: debug/src/k9mainw.cpp:294 rc.cpp:17
+#, no-c-format
+msgid "Input device "
+msgstr "Dispositivo de leitura: "
+
+#: debug/src/k9mainw.cpp:297 debug/src/prefMPEG4.cpp:158 rc.cpp:23 rc.cpp:143
+#, no-c-format
+msgid "X"
+msgstr ""
+
+#: debug/src/k9mainw.cpp:300 rc.cpp:38
+#, no-c-format
+msgid "&Keep original menus"
+msgstr "&Manter os menus originais"
+
+#: debug/src/k9mainw.cpp:301 debug/src/prefMPEG4.cpp:157 rc.cpp:41 rc.cpp:140
+#, no-c-format
+msgid "Alt+K"
+msgstr "Alt+M"
+
+#: debug/src/k9mainw.cpp:302 rc.cpp:44
+#, no-c-format
+msgid "Default language"
+msgstr ""
+
+#: debug/src/k9mainw.cpp:303 rc.cpp:47
+#, fuzzy, no-c-format
+msgid "Subtitle"
+msgstr "Legendas"
+
+#: debug/src/k9mainw.cpp:307 rc.cpp:55
+#, no-c-format
+msgid "Selected Titles"
+msgstr ""
+
+#: debug/src/k9mainw.cpp:308 rc.cpp:35
+#, fuzzy, no-c-format
+msgid "DVD playback options"
+msgstr "<b>Opções de reprodução</b>"
+
+#: debug/src/k9mainw.cpp:310 rc.cpp:58
+#, no-c-format
+msgid "Selection"
+msgstr ""
+
+#: debug/src/k9mainw.cpp:311 rc.cpp:26
+#, no-c-format
+msgid "D&VD"
+msgstr "D&VD"
+
+#: debug/src/prefDVD.cpp:89 rc.cpp:89
+#, fuzzy, no-c-format
+msgid "prefDVD"
+msgstr "Abrir DVD"
+
+#: debug/src/prefDVD.cpp:90 rc.cpp:92
+#, no-c-format
+msgid "Output directory"
+msgstr "Diretório temporário: "
+
+#: debug/src/prefDVD.cpp:91 rc.cpp:95
+#, no-c-format
+msgid "Burn with k3b"
+msgstr "Gravar DVD com k3b"
+
+#: debug/src/prefDVD.cpp:93 rc.cpp:99
+#, no-c-format
+msgid "Auto burn"
+msgstr "Gravação automática"
+
+#: debug/src/prefDVD.cpp:95 rc.cpp:103
+#, no-c-format
+msgid "Quick scan"
+msgstr ""
+
+#: debug/src/prefDVD.cpp:97 rc.cpp:107
+#, no-c-format
+msgid "DVD size"
+msgstr "Tamanho do DVD"
+
+#: debug/src/prefMPEG4.cpp:145 debug/src/prefMencoder.cpp:84 rc.cpp:110
+#: rc.cpp:152
+#, no-c-format
+msgid "Form1"
+msgstr ""
+
+#: debug/src/prefMPEG4.cpp:146 rc.cpp:113
+#, no-c-format
+msgid "Video Codec"
+msgstr ""
+
+#: debug/src/prefMPEG4.cpp:147 rc.cpp:116
+#, no-c-format
+msgid "Audio bitrate"
+msgstr ""
+
+#: debug/src/prefMPEG4.cpp:149 rc.cpp:122
+#, no-c-format
+msgid "File size"
+msgstr ""
+
+#: debug/src/prefMPEG4.cpp:151 rc.cpp:128
+#, fuzzy, no-c-format
+msgid " mb"
+msgstr "MB"
+
+#: debug/src/prefMPEG4.cpp:152 rc.cpp:131
+#, no-c-format
+msgid "640"
+msgstr ""
+
+#: debug/src/prefMPEG4.cpp:156 rc.cpp:137
+#, no-c-format
+msgid "&keep aspect ratio"
+msgstr ""
+
+#: debug/src/prefMPEG4.cpp:160 rc.cpp:146
+#, no-c-format
+msgid "XviD"
+msgstr ""
+
+#: debug/src/prefMPEG4.cpp:161 rc.cpp:149
+#, no-c-format
+msgid "lavc MPEG4"
+msgstr ""
+
+#: debug/src/prefMencoder.cpp:33 debug/src/prefMencoder.cpp:85 rc.cpp:155
+#, fuzzy, no-c-format
+msgid "Label"
+msgstr "Nome"
+
+#: debug/src/prefMencoder.cpp:35 debug/src/prefMencoder.cpp:86 rc.cpp:158
+#, no-c-format
+msgid "Video"
+msgstr ""
+
+#: debug/src/k9main.moc.cpp:34 debug/src/k9main.moc.cpp:42
+msgid "k9DVDListItem"
+msgstr "k9DVDListItem"
+
+#: debug/src/k9main.moc.cpp:107 debug/src/k9main.moc.cpp:115
+msgid "k9Main"
+msgstr "k9Main"
+
+#: debug/src/kcddrive.moc.cpp:34 debug/src/kcddrive.moc.cpp:42
+msgid "kCDDrive"
+msgstr "kCDDrive"
+
+#: debug/src/kcddrive.moc.cpp:107 debug/src/kcddrive.moc.cpp:115
+msgid "kCDDrives"
+msgstr "kCDDrives"
+
+#: debug/src/kviewmpeg2.moc.cpp:34 debug/src/kviewmpeg2.moc.cpp:42
+msgid "kViewMPEG2"
+msgstr "kViewMPEG2"
+
+#: rc.cpp:243
 #, no-c-format
 msgid "A&ctions"
 msgstr ""
 
-#: rc.cpp:253
+#: rc.cpp:246
 #, no-c-format
 msgid "Actions ToolBar"
 msgstr ""

@@ -435,7 +435,7 @@ applnkMultimedia_DATA = k9copy.desktop
 applnkMultimediadir = $(kde_appsdir)/Multimedia
 SUBDIRS = icons
 konquerorServicesMenusdir = $(kde_datadir)/konqueror/servicemenus
-konquerorServicesMenus_DATA = open_k9copy.desktop
+konquerorServicesMenus_DATA = k9copy_open.desktop
 #>- all: all-recursive
 #>+ 1
 all: docs-am  all-recursive
@@ -968,7 +968,7 @@ clean-metasources:
 	-rm -f  menupreview.moc k9main.moc.cpp kcddrive.moc.cpp k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9prefdvd.moc k9prefmpeg4.moc k9prefmencoder.moc
 
 #>+ 2
-KDE_DIST=viewmpeg2.ui open_k9copy.desktop configDlg.ui prefMPEG4.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png k9mainw.h hi48-app-k9copy.png prefDVD.h prefDVD.ui hi32-app-k9copy.png prefMencoder.h viewmpeg2.h Makefile.in prefMencoder.ui k9copy.desktop configDlg.h k9copy menupreview.cpp Makefile.am prefMPEG4.h menupreview.h 
+KDE_DIST=viewmpeg2.ui configDlg.ui prefMPEG4.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png prefDVD.ui hi32-app-k9copy.png k9copy_open.desktop Makefile.in prefMencoder.ui k9copy.desktop menupreview.cpp Makefile.am menupreview.h 
 
 #>+ 9
 clean-ui:
@@ -1036,7 +1036,7 @@ bcheck-am:
 
 
 #>+ 11
-k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp $(srcdir)/k9play.cpp $(srcdir)/k9settings.cpp $(srcdir)/k9prefmpeg4.cpp $(srcdir)/k9prefdvd.cpp $(srcdir)/k9prefmencoder.cpp $(srcdir)/viewmpeg2.cpp $(srcdir)/configDlg.cpp $(srcdir)/k9mainw.cpp $(srcdir)/prefDVD.cpp $(srcdir)/prefMPEG4.cpp $(srcdir)/prefMencoder.cpp $(srcdir)/kcddrive.moc.cpp $(srcdir)/k9main.moc.cpp $(srcdir)/kviewmpeg2.moc.cpp $(srcdir)/k9copy.moc.cpp  prefMencoder.moc k9settings.moc prefDVD.moc configDlg.moc k9prefdvd.moc viewmpeg2.moc prefMPEG4.moc k9mainw.moc k9prefmpeg4.moc k9prefmencoder.moc
+k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp $(srcdir)/k9play.cpp $(srcdir)/k9settings.cpp $(srcdir)/k9prefmpeg4.cpp $(srcdir)/k9prefdvd.cpp $(srcdir)/k9prefmencoder.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp  prefMencoder.moc k9settings.moc prefDVD.moc configDlg.moc k9prefdvd.moc viewmpeg2.moc prefMPEG4.moc k9mainw.moc k9prefmpeg4.moc k9prefmencoder.moc
 	@echo 'creating k9copy.all_cpp.cpp ...'; \
 	rm -f k9copy.all_cpp.files k9copy.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> k9copy.all_cpp.final; \

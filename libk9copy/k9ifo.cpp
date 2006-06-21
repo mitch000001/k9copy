@@ -138,7 +138,7 @@ void k9Ifo::saveIFO() {
             checkBuffer("updateTT_SRPT",buffer);
             updatePGCI_UT(buffer);
             checkBuffer("updatePGCI_UT",buffer);
-            updatePTL_MAIT(buffer);
+            //JMP: disabled updatePTL_MAIT(buffer);
             checkBuffer("updatePTL_MAIT",buffer);
 
             updateVTS_ATRT(buffer);
@@ -493,7 +493,7 @@ void k9Ifo::updatePGCIT_internal(uchar *_buffer, pgcit_t *_pgcit, int _offset) {
         memcpy(_buffer+offset,pgci_srp,PGCI_SRP_SIZE);
 
         offset+=PGCI_SRP_SIZE;
-// JMP : a vérifier, utilisation de _offset
+// JMP : a vï¿½ifier, utilisation de _offset
         updatePGC(_buffer,_pgcit->pgci_srp[i].pgc,_offset + _pgcit->pgci_srp[i].pgc_start_byte);
     }
     free(pgci_srp);

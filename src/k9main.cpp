@@ -74,6 +74,7 @@ pxText((const char **) img_text) {
         dvd=static_cast<k9DVD  *>(m_factory->create(this,"dvd", "k9DVD"));
     }
 */
+
     dvd=new k9DVD(this);
 
     updating=false;
@@ -820,7 +821,16 @@ void k9Main::itemRenamed(QListViewItem * item,int col) {
     if (t !=NULL) {
         //QMessageBox::critical( this, "test", c.sprintf("%d",it->tag));
         t->setname(newText);
-        lbSequence->changeItem(t->getname(),t->getnumTitle()-1);
+	for (int j=0; j<lbSequence->count();j++) {
+	    lbItem *tmp=(lbItem*)lbSequence->item(j);
+	     if (tmp->getTitle() == t) {
+		lbItem *item=new lbItem(NULL,t->getname());
+		item->setTitle(t);
+		lbSequence->changeItem(item,j);
+		break;
+	     }
+	}	
+
     } else
         dvd->setDVDTitle(item->text(0));
 }
@@ -1224,6 +1234,8 @@ void k9Main::setSequence() {
 }
 
 void k9Main::lbSequenceChanged(QListBoxItem *_item) {
+    if (_item == NULL)
+	return;
     lbItem *lbi=(lbItem*) _item;
     k9DVDTitle *title=lbi->getTitle();
     cbDefAudio->clear();
