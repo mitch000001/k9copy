@@ -36,7 +36,8 @@ void k9prefMPEG4::load() {
     leMp4Width->setText(settings.readEntry("/mp4/width","640"));
     leMp4Height->setText(settings.readEntry("/mp4/height",""));
 
-    ckMp4AspectRatio->setChecked(settings.readEntry("/mp4/aspectratio",0).toInt());
+
+    ckMp4AspectRatio->setChecked(settings.readEntry("/mp4/aspectratio","1").toInt());
     leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
 
 

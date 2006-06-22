@@ -26,11 +26,8 @@
 #include <qapplication.h>
 #include <klocale.h>
 
-#include <string.h>
 #include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+
 
 k9DVDTitle* k9DVD::gettitle(int num) {
     return ((k9DVDTitle*)titles.at(num));
