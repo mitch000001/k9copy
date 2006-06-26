@@ -202,7 +202,7 @@ double ckLvItem::getstreamSize() {
         }
     case VID: {
             title=(k9DVDTitle*)obj;
-            size=title->getvideosize_mb();
+            size=title->gettotalvideosize_mb();
             break;
         }
     default:
@@ -219,7 +219,7 @@ int LvItem::compare ( QListViewItem * i, int col, bool ascending ) const {
     if (col ==1 && depth()==2) {
         title1=(k9DVDTitle*)obj;
         title2=(k9DVDTitle*)litem->obj;
-        return k9Main::compare(title1->getsize_mb(),title2->getsize_mb());
+        return k9Main::compare(title1->gettotalsize_mb(),title2->gettotalsize_mb());
     }
     if (col==0 && depth()==2) {
         title1=(k9DVDTitle*)obj;
@@ -241,15 +241,15 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
                 k9DVDTitleset *titleset=(k9DVDTitleset*)obj;
                 f.setBold(true);
                 p->setFont(f);
-                p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,titleset->getsize_mb()+" mb");
+                p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,titleset->getsize_mb()+" " +i18n("mb"));
                 break;
             }
         case 3: {
                 if ( ! mainDlg->getquickScan()) {
                     double size=getstreamSize();
                     QString c;
-                    c.sprintf("%.2f mb",size);
-                    p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c);
+                    c.sprintf("%.2f ",size);
+                    p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c+i18n("mb"));
                 }
                 break;
             }
@@ -267,8 +267,8 @@ void LvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int w
         p->eraseRect(0,0,width,height());
         k9DVDTitle * title=(k9DVDTitle*)obj;
         QString c;
-        c.sprintf("%.2f mb",title->getsize_mb());
-        p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c);
+        c.sprintf("%.2f ",title->gettotalsize_mb());
+        p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c+i18n("mb"));
     } else
         QListViewItem::paintCell(p,cg,column,width,align);
 }
@@ -440,7 +440,7 @@ void k9Main::Open() {
         QString c;
         c=i18n("Titleset %1").arg(i+1);
         tsItem->setText(0,c);
-        tsItem->setText(1,"   "+dvd->gettitleset(i)->getsize_mb() +" mb");
+        tsItem->setText(1,"   "+dvd->gettitleset(i)->getsize_mb() +" " +i18n("mb"));
         tsItem->obj=dvd->gettitleset(i) ;
         tsItem->streamType=NONE;
         tsItem->setRenameEnabled(0,false);
@@ -452,7 +452,7 @@ void k9Main::Open() {
         if ((l_track->getIndexed()))
             addTitle(l_track);
 
-        h=l_track->getlength();
+        h=l_track->gettotallength();
     }
 
     fillTitleList();
@@ -496,14 +496,19 @@ void k9Main::addTitle(k9DVDTitle *track) {
     k9DVDSubtitle *l_sub;
     int i;
     QString c,ch;
+
+
     listView1->setRootIsDecorated(true);
 
     LvItem * itemTrack = new LvItem( tsItems.at(track->getVTS()-1));
     itemTrack->setOpen( false );
     itemTrack->setText(col1,track->getname());
     itemTrack->setRenameEnabled(0,true);
-    c.sprintf("%.2f mb", track->getsize_mb());
-    itemTrack->setText(col2,c);
+    c.sprintf("%.2f ", track->gettotalsize_mb());
+   
+
+
+    itemTrack->setText(col2,c+i18n("mb"));
     itemTrack->obj=track;
 
     ckLvItem *video;
@@ -512,10 +517,10 @@ void k9Main::addTitle(k9DVDTitle *track) {
     addListItem(track,video,VID);
     video->setOpen( false );
     c=i18n("video %1 ").arg(track->getformat());
-    c.append (" - " + track->getlength().toString("h:mm:ss"));
+    c.append (" - " + track->gettotallength().toString("h:mm:ss"));
     video->setText(col1, c);
-    c.sprintf("%.2f mb",  track->getvideosize_mb());
-    video->setText(col2,c);
+    c.sprintf("%.2f ",  track->gettotalvideosize_mb());
+    video->setText(col2,c +i18n("mb"));
     video->setPixmap(col1,pxVideo);
     video->obj=track;
     lvItems.append(video);
@@ -849,7 +854,7 @@ void k9Main::readSettings() {
     ckMenu->setChecked(settings.readEntry("/options/keepMenus",0).toInt());
 
     m_prefAutoBurn=settings.readEntry("/options/autoburn",0).toInt();
-    m_quickScan=settings.readEntry("/options/quickscan",0).toInt();
+    m_quickScan=settings.readEntry("/options/quickscan","1").toInt();
     m_prefSize=settings.readEntry("/options/dvdsize",QString("4400")).toInt();
 
     //fill the burn speed combo
@@ -923,7 +928,7 @@ void k9Main::CreateMP4() {
 	k9DVDTitle *t=dvd->gettitle(i);
 	if (t->isSelected() && t->getIndexed() ) {
 		k9MP4Enc *mp4=new k9MP4Enc();
-		mp4->setDevice(getDevice(cbInputDev));
+		mp4->setDevice(dvd->getDevice());
 		mp4->setAudioBitrate(m_prefMp4AudioBitrate);
 		mp4->setCodec((k9MP4Enc::Codec) m_prefMp4Codec);
 		mp4->setSize( QString::number(m_prefMp4Size));

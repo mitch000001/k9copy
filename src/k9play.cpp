@@ -55,6 +55,7 @@ k9play::k9play() {
     m_chapterSize=0;
     m_chapter=0;
     m_cell=0;
+    m_totalSize=0;
 }
 
 void k9play::kdebug(QString const & _msg) {
@@ -140,12 +141,6 @@ void k9play::execute() {
     return;
 }
 
-
-void k9play::printPosition() {
-    QString spercent=QString("INFOPOS: %1 %2 \n").arg(m_totalBytes+m_startSector).arg((uint32_t)(m_dvdTitle->getsize_mb()*512));
-    m_stderr.writeBlock(spercent.latin1(),spercent.length());
-
-}
 
 void k9play::insert_nav_pack (int8_t *buf)
 {
@@ -238,11 +233,9 @@ void k9play::play() {
     //vamps.setVapFactor( m_vampsFactor);
     if (m_totalSize>0) {
 	double factor;
-//	factor = (double) (m_totalSize - status.bytesRead) / (double) (m_dvdSize-status.bytesWritten) ;
-
 	factor = (double) (m_totalSize - (status.bytesRead +status.bytesSkipped)) / (double) (m_dvdSize-status.bytesWritten) ;
 	if (factor <1) factor =1;
-	//kdebug( QString("computed factor %2 / %3 :%1").arg(factor).arg((double) (m_totalSize - (status.bytesRead + status.bytesSkipped)),0,'f',0).arg((double) (m_dvdSize-status.bytesWritten),0,'f',0) );
+
 	vamps.setVapFactor(factor);
     } else
 	vamps.setVapFactor(m_vampsFactor);
@@ -356,24 +349,6 @@ void k9play::play() {
 
 		}
 
-
-                pci_t *pci;
-                dsi_t *dsi;
-
-                /* Applications with fifos should not use these functions to retrieve NAV packets,
-                 * they should implement their own NAV handling, because the packet you get from these
-                 * functions will already be ahead in the stream which can cause state inconsistencies.
-                 * Applications with fifos should therefore pass the NAV packet through the fifo
-                 * and decoding pipeline just like any other data. */
-                pci = dvdnav_get_current_nav_pci(dvdnav);
-                dsi = dvdnav_get_current_nav_dsi(dvdnav);
-
-                if(pci->hli.hl_gi.btn_ns > 0) {
-                    int button;
-                    button = 1;
-                    dvdnav_button_select_and_activate(dvdnav, pci, button);
-                }	    
-
             }
 	    break;
 	//removed break --> save
@@ -385,11 +360,7 @@ void k9play::play() {
 		vamps.addData( buf,len);
 		status.bytesRead +=len;
                 bcopy=true;
-   	      //  dvdnav_get_position(dvdnav, &pos, &lgr);
-	       // kdebug(QString("\rINFOPOS: %1 %2").arg(pos).arg(lgr));
 	    }
-//	    if (m_cell!=0 && currCell>m_cell)
-//		finished=1;
             break;
         case DVDNAV_NOP:
             /* Nothing to do here. */
@@ -461,7 +432,6 @@ void k9play::play() {
             finished = 1;
             break;
         }
-//	kdebug(QString(dvdnav_err_to_string(dvdnav)));
 
 #if DVD_READ_CACHE
         dvdnav_free_cache_block(dvdnav, buf);

@@ -901,13 +901,6 @@ uninstall-info: uninstall-info-recursive
 .NOEXPORT:
 
 #>+ 3
-menupreview.moc: $(srcdir)/menupreview.h
-	$(MOC) $(srcdir)/menupreview.h -o menupreview.moc
-
-#>+ 2
-mocs: menupreview.moc
-
-#>+ 3
 k9main.moc.cpp: $(srcdir)/k9main.h
 	$(MOC) $(srcdir)/k9main.h -o k9main.moc.cpp
 
@@ -965,10 +958,10 @@ mocs: k9prefmencoder.moc
 
 #>+ 3
 clean-metasources:
-	-rm -f  menupreview.moc k9main.moc.cpp kcddrive.moc.cpp k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9prefdvd.moc k9prefmpeg4.moc k9prefmencoder.moc
+	-rm -f  k9main.moc.cpp kcddrive.moc.cpp k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9prefdvd.moc k9prefmpeg4.moc k9prefmencoder.moc
 
 #>+ 2
-KDE_DIST=viewmpeg2.ui configDlg.ui prefMPEG4.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png prefDVD.ui hi32-app-k9copy.png k9copy_open.desktop Makefile.in prefMencoder.ui k9copy.desktop menupreview.cpp Makefile.am menupreview.h 
+KDE_DIST=viewmpeg2.ui configDlg.ui prefMPEG4.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png prefDVD.ui hi32-app-k9copy.png k9copy_open.desktop Makefile.in prefMencoder.ui k9copy.desktop Makefile.am 
 
 #>+ 9
 clean-ui:
@@ -1075,17 +1068,15 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 28
+#>+ 26
 $(srcdir)/k9prefmpeg4.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 k9prefmpeg4.lo: k9prefmpeg4.moc 
 k9settings.lo: k9settings.moc 
 $(srcdir)/k9prefmencoder.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 $(srcdir)/k9play.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 k9prefdvd.lo: k9prefdvd.moc 
-menupreview.o: menupreview.moc 
 $(srcdir)/main.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 k9prefdvd.o: k9prefdvd.moc 
-menupreview.lo: menupreview.moc 
 k9prefmencoder.lo: k9prefmencoder.moc 
 $(srcdir)/k9copy.png: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
 $(srcdir)/kconfigdlg.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 

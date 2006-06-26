@@ -796,7 +796,7 @@ dist-hook:
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=stamp-h.in subdirs Makefile.in configure.files config.h.in k9copy.kdevelop.spec configure.in Makefile.cvs aclocal.m4 k9copy.kdevses Doxyfile k9copy-1.0.5.tar.gz k9copy.kdevelop.pcs Makefile.am configure acinclude.m4 k9copy.kdevelop 
+KDE_DIST=stamp-h.in subdirs Makefile.in configure.files config.h.in k9copy.kdevelop.spec configure.in Makefile.cvs aclocal.m4 k9copy.kdevses Doxyfile k9copy-1.0.5.tar.gz k9copy.kdevelop.pcs k9copy-1.1.0.tar.gz Makefile.am configure acinclude.m4 k9copy.kdevelop 
 
 #>+ 2
 docs-am:

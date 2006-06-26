@@ -255,6 +255,41 @@ const float& k9DVDTitle::getsize_mb() {
     return size_mb;
 }
 
+const float k9DVDTitle::gettotalsize_mb() {
+    float size =size_mb;
+    for (int i=0;i<m_titles.count();i++) {
+         k9DVDTitle *tmp=m_titles.at(i);
+   	 size +=tmp->getsize_mb();
+    }
+    return size;
+
+}
+
+const float k9DVDTitle::gettotalvideosize_mb() {
+    float size =videosize_mb;
+    for (int i=0;i<m_titles.count();i++) {
+         k9DVDTitle *tmp=m_titles.at(i);
+ 	 size+=tmp->getvideosize_mb();
+    }
+    return size;
+
+}
+
+
+QTime k9DVDTitle::gettotallength() {
+    QTime totalTime=getlength();
+    for (int i=0;i<m_titles.count();i++) {
+         k9DVDTitle *tmp=m_titles.at(i);
+	 QTime t;
+	 int msecs= t.msecsTo(tmp->getlength());
+	 totalTime=totalTime.addMSecs(msecs);
+    }
+    return totalTime;
+
+}
+
+
+
 /** Read property of float videosize_mb. */
 const float& k9DVDTitle::getvideosize_mb() {
     return videosize_mb;
@@ -306,6 +341,7 @@ const QString& k9DVDTitle::getDF() {
 const int& k9DVDTitle::getangleCount() {
     return angleCount;
 }
+
 
 bool k9DVDTitle::isSelected() {
     k9DVDAudioStream *l_auds;
@@ -428,7 +464,7 @@ bool k9DVDTitleset::getselected() {
 }
 
 void k9DVDTitleset::setselected(bool _state) {
-// selectionner / déselectionner tous les titres
+// selectionner / dï¿½electionner tous les titres
 	for (uint i=0; i<count();i++) {
 		k9DVDTitle *title=titles.at(i);
 		for (uint j=0; j <title->getaudioStreamCount();j++)

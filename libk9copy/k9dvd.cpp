@@ -35,7 +35,7 @@ k9DVDTitle* k9DVD::gettitle(int num) {
 
 k9DVDTitle* k9DVD::gettitleByNum(int num) {
     int j=-1;
-    for (int i=0; i < titles.count();i++) {
+    for (uint i=0; i < titles.count();i++) {
         k9DVDTitle *track=(k9DVDTitle*)titles.at(i);
         if (track->getIndexed()) {
             j++;
@@ -155,13 +155,13 @@ k9DVD::k9DVD(QObject  *parent, const char *name,const QStringList args)  {
     frames_per_s[1]=25.00;
     frames_per_s[2]=-1.0;
     frames_per_s[3]=29.97;
-    connect(this, SIGNAL(sigVobProgress(unsigned int,unsigned int)), this, SLOT(slotVobProgress(unsigned int,unsigned int)));
-    connect(this, SIGNAL(sigTitleProgress(unsigned int,unsigned int)), this, SLOT(slotTitleProgress(unsigned int,unsigned int)));
-    connect(this, SIGNAL(sigTitleText(QString&)), this, SLOT(slotTitleText(QString&)));
-    connect(this, SIGNAL(sigTotalText(QString&)), this, SLOT(slotTotalText(QString&)));
+  
     start=NULL;
 }
-k9DVD::~k9DVD() {}
+k9DVD::~k9DVD() {
+    if (m_dvd.opened())
+	m_dvd.close();
+}
 
 int k9DVD::dvdtime2msec(dvd_time_t *dt) {
     double fps = frames_per_s[(dt->frame_u & 0xc0) >> 6];
@@ -171,7 +171,7 @@ int k9DVD::dvdtime2msec(dvd_time_t *dt) {
     ms += (((dt->second & 0xf0) >> 3) * 5 + (dt->second & 0x0f)) * 1000;
 
     if(fps > 0)
-        ms += ((dt->frame_u & 0x30) >> 3) * 5 + (dt->frame_u & 0x0f) * 1000.0 / fps;
+        ms +=(long)( ((dt->frame_u & 0x30) >> 3) * 5 + (dt->frame_u & 0x0f) * 1000.0 / fps);
 
     return ms;
 }
@@ -248,7 +248,6 @@ QString k9DVD::lang_name(const QString& code) {
                        { "ug", i18n("Uighur") }, { "uk", i18n("Ukrainian") }, { "ur", i18n("Urdu") }, { "uz", i18n("Uzbek") }, { "vi", i18n("Vietnamese") },
                        { "vo", i18n("Volapuk") }, { "wo", i18n("Wolof") }, { "xh", i18n("Xhosa") }, { "yi", i18n("Yiddish") }, { "yo", i18n("Yoruba") }, { "za", i18n("Zhuang") },
                        { "zh", i18n("Chinese") }, { "zu", i18n("Zulu") }, { "xx", i18n("Unknown") }, { "\0", i18n("Unknown") } };
-
     c=i18n("Unknown");
     for (i=0 ; arrLng[i].code[0]!=0;i++) {
         lng l =arrLng[i];
@@ -256,7 +255,6 @@ QString k9DVD::lang_name(const QString& code) {
             c = l.name;
         }
     }
-
     return c;
 }
 
@@ -267,15 +265,6 @@ int k9DVD::calcNumTitle(ifo_handle_t *ifo,int _vts,int _ttn) {
             return (i+1);
     }
    return 0;
-
-}
-
-bool k9DVD::isTitleIndex(ifo_handle_t *ifo,int _vts,int _ttn) {
-    for (int i=0; i< ifo->tt_srpt->nr_of_srpts;i++) {
-        if (ifo->tt_srpt->title[i].title_set_nr==_vts && ifo->tt_srpt->title[i].vts_ttn == _ttn)
-            return true;
-    }
-    return false;
 
 }
 
@@ -292,9 +281,8 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     pgc_t *pgc;
     int i, j,  ltitles, cell, vts_ttn, title_set_nr;
     char lang_code[2];
-    int has_title = 0, ret = 0;
+    int has_title = 0;
     int max_length = 0;
-    struct stat dvd_stat;
     bool ok;
     tt_srpt_t   *tt_srpt;
     QString txt,c;
@@ -310,12 +298,19 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     error=false;
     errMsg="";
 
-    progressDlg= new k9DVDProgress(qApp->mainWidget(),"progress",true);
-    progressDlg->setpbTitleStep(0);
-    progressDlg->setpbTotalStep(0);
-
-    if (!_quickScan)
+    if (!_quickScan) {
+	progressDlg= new k9DVDProgress(qApp->mainWidget(),"progress",true);
+	progressDlg->setpbTitleStep(0);
+	progressDlg->setpbTotalStep(0);
+	
+	connect(this, SIGNAL(sigVobProgress(unsigned int,unsigned int)), this, SLOT(slotVobProgress(unsigned int,unsigned int)));
+	connect(this, SIGNAL(sigTitleProgress(unsigned int,unsigned int)), this, SLOT(slotTitleProgress(unsigned int,unsigned int)));
+        connect(this, SIGNAL(sigTitleText(QString&)), this, SLOT(slotTitleText(QString&)));
+        connect(this, SIGNAL(sigTotalText(QString&)), this, SLOT(slotTotalText(QString&)));
         progressDlg->show();
+    } else
+  	progressDlg=NULL;
+
     qApp->processEvents();
 
     k9DVDTitle *l_track;
@@ -331,6 +326,9 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
             return 1;
         }
     */
+
+    if (m_dvd.opened())
+	m_dvd.close();
     m_dvd.openDevice(device);
     if( !m_dvd.opened() ) {
         c=i18n("Can't open disc %1!\n").arg(device);
@@ -350,7 +348,6 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
     ltitles = ifo_zero->tt_srpt->nr_of_srpts;
     titleCount = 0;
-    int indexedCount=0;
     has_title = get_title_name(device.latin1(), ctitle);
 
     vmgi_mat = ifo_zero->vmgi_mat;
@@ -376,15 +373,19 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
             vtsi_mat   = ifo->vtsi_mat;
             vts_pgcit  = ifo->vts_pgcit;
             pgc = vts_pgcit->pgci_srp[j].pgc;
+	    //retrieve the ttn
+	    int ttn=(vts_pgcit->pgci_srp[j].entry_id) & 0x7F;
+	    bool entryPgc= (vts_pgcit->pgci_srp[j].entry_id & 0x80)==0x80;
+	    int numTitle=calcNumTitle(ifo_zero,ts,ttn);
+	    //JMP : vérifier la numérotation des titres ......
             if (vtsi_mat && (pgc->nr_of_cells >0)) {
                 titleCount++;
-                vts_ttn =  j+1;//ifo->vts_ptt_srpt->title[j].ptt[0].pgcn; //ifo_zero->tt_srpt->title[j].vts_ttn;
-                if (isTitleIndex(ifo_zero,ts,vts_ttn))
-                    indexedCount++;
+                vts_ttn =  ttn;//ifo->vts_ptt_srpt->title[j].ptt[0].pgcn; //ifo_zero->tt_srpt->title[j].vts_ttn;
 		
-                txt=i18n("Title %1").arg(indexedCount);
+                //JMPtxt=i18n("Title %1").arg(indexedCount);
+		txt=i18n("Title %1").arg(numTitle);
                 emit sigTotalText (txt);
-                emit sigTitleProgress(indexedCount,ltitles);
+                emit sigTitleProgress(numTitle,ltitles);
                 video_attr = &vtsi_mat->vts_video_attr;
 
                 vmgi_mat = ifo_zero->vmgi_mat;
@@ -395,8 +396,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
                 int titleStartSector=pgc->cell_playback[0].first_sector;
                 //l_track=addTitle(j+1,title_set_nr,ifo->vts_ptt_srpt->title[vts_ttn - 1].ptt[0].pgcn - 1,titleStartSector,isTitleIndex(ifo_zero,ts,vts_ttn));
-                bool titleIndexed=isTitleIndex(ifo_zero,ts,vts_ttn);
-                l_track=addTitle(titleset,titleCount, calcNumTitle(ifo_zero,ts,vts_ttn),title_set_nr,j,titleStartSector,titleIndexed);
+                l_track=addTitle(titleset,titleCount, numTitle,title_set_nr,j,titleStartSector, entryPgc);
                 titleset->add
                 (l_track);
 
@@ -407,7 +407,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
                 //printf(tr2i18n("Title: %02d, Length: %02x:%02x:%02x "), j+1, pgc->playback_time.hour, pgc->playback_time.minute, pgc->playback_time.second);
 
-                if (dvdtime2msec(&pgc->playback_time) > max_length && isTitleIndex(ifo_zero,ts,vts_ttn)) {
+                if (dvdtime2msec(&pgc->playback_time) > max_length && entryPgc) {
                     max_length = dvdtime2msec(&pgc->playback_time);
                     longestTitle = l_track;
                 }
@@ -416,7 +416,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 l_track->audioStreamCount = vtsi_mat->nr_of_vts_audio_streams;
                 l_track->subPictureCount = vtsi_mat->nr_of_vts_subp_streams;
                 l_track->VTS = ts;//  ifo_zero->tt_srpt->title[j].title_set_nr;
-                l_track->TTN = j+1; // ifo_zero->tt_srpt->title[j].vts_ttn;
+                l_track->TTN = ttn; // ifo_zero->tt_srpt->title[j].vts_ttn;
                 l_track->FPS = frames_per_s[(pgc->playback_time.frame_u & 0xc0) >> 6];
                 l_track->format= (*lvideoFormat.at(video_attr->video_format)).latin1();
                 format = l_track->format;
@@ -455,7 +455,10 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                             lang_code[1] = 'x';
                         }
                         l_auds->langCod=lang_code;
-                        l_auds->language=lang_name(lang_code);
+                        l_auds->language=lang_name(l_auds->langCod);
+			if (l_auds->language==i18n("Unknown"))
+				l_auds->langCod="xx";
+
                         l_auds->format= (*laudioFormat.at(audio_attr->audio_format)).latin1();
                         l_auds->frequency = (*lsampleFreq.at(audio_attr->sample_frequency)).latin1();
                         l_auds->quantization = (*lquantization.at(audio_attr->quantization)).latin1();
@@ -603,7 +606,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         }
                     }
                 }
-                if (isTitleIndex(ifo_zero,ts,vts_ttn) && !_quickScan)
+                if (entryPgc && !_quickScan)
                     calcStreamSize(*l_track);
             }
 
@@ -615,10 +618,12 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
         menuSize+=menuSizes[j];
     kifo_zero.closeIFO();
 
-    delete progressDlg;
+    if (!_quickScan)
+    	delete progressDlg;
+
     progressDlg=0;
     opened=true;
-    m_dvd.close();
+    //m_dvd.close();
     return 0;
 }
 
@@ -639,7 +644,7 @@ float k9DVD::calcVobuSize(ifo_handle_t *_ifo,k9DVDChapter *_chapter) {
 }
 
 /** Adds a new track in the titles list the list is sorted by VTS and pgc*/
-k9DVDTitle* k9DVD::addTitle(k9DVDTitleset *_titleset,int id,int num,int _VTS,int _pgc,int _startSector,bool _indexed) {
+k9DVDTitle* k9DVD::addTitle(k9DVDTitleset *_titleset,int id,int num,int _VTS,int _pgc,uint32_t _startSector,bool _indexed) {
     k9DVDTitle *track,*tmp;
     track = new k9DVDTitle;
     track->numTitle=num;
@@ -652,7 +657,7 @@ k9DVDTitle* k9DVD::addTitle(k9DVDTitleset *_titleset,int id,int num,int _VTS,int
     track->ts_nr=_VTS;
     track->pgc=_pgc;
     bool bappend=true;
-    for (int i=0;i<titles.count();i++) {
+    for (uint i=0;i<titles.count();i++) {
         tmp=(k9DVDTitle*)titles.at(i);
         k9DVDChapter *chap =tmp->getChapter(0);
 
@@ -670,6 +675,15 @@ k9DVDTitle* k9DVD::addTitle(k9DVDTitleset *_titleset,int id,int num,int _VTS,int
     if (bappend)
         titles.append(track);
     track->name=i18n("Title %1").arg(num);
+
+    if (!_indexed) {
+	for (uint i=0;i<titles.count();i++) {
+		tmp=(k9DVDTitle*)titles.at(i);
+	    if (tmp->numTitle==num && tmp->indexed)
+		tmp->m_titles.append(track);
+	}
+    }
+
     return(track);
 
 }
@@ -681,12 +695,8 @@ void k9DVD::calcStreamSize(k9DVDTitle & track) {
     int stop = 0;
     k9DVDChapter *c_start,*c_stop;
     struct streamSize streamList[64];
-    //   unsigned long maxSectors=(track.size_mb*1024*1024)/2048;
     int c, x;
     QString pg;
-    //   int  *b;
-    //   emit sig_progress("start");
-    //   setLog("start");
 
     for( x=0 ; x<64 ; x++ ) {                                                   // init stream usage list
         streams[x].id = 0;
@@ -710,8 +720,6 @@ void k9DVD::calcStreamSize(k9DVDTitle & track) {
         stop=0;
     }
     if (track.chapterCount >2) {
-        //     start=(int)(track.chapterCount/2 - 0.5);
-        //     stop=(int)(track.chapterCount/2 + 0.5);
         start=0;
         stop=(int)(track.chapterCount-1);
     }
@@ -720,16 +728,8 @@ void k9DVD::calcStreamSize(k9DVDTitle & track) {
     pg=tr2i18n("reading title");
     emit sigTitleText(pg);
 
-    //   c = stream_vob(dvd, track.ts_nr,c_start->startSector, c_start->endSector, streams);
     //probe stream usage
     c = stream_vob( track.ts_nr,c_start->startSector, c_stop->endSector, streams);
-    /*  if(start!=stop) {
-    pg.sprintf(tr2i18n("chapter %d"),stop+1);
-    emit sigTitleText(pg);
-    c += stream_vob(dvd, track.ts_nr, c_stop->startSector, c_stop->endSector, streams);
-    }
-
-    */
 
     for( x=0 ; x<64 ; x++ ) {
         if( streams[x].id == 0 )
@@ -886,7 +886,7 @@ long k9DVD::stream_vob( int title, unsigned long startblock, unsigned long lastb
 
 
 
-float k9DVD::getsizeSelected() {
+float k9DVD::getsizeSelected(bool _streams) {
     float selstreams=0,vidstreams=0;
     int i,x;
     k9DVDTitle *l_track;
@@ -901,16 +901,18 @@ float k9DVD::getsizeSelected() {
 
         if ( withvideo) {
             vidstreams +=l_track->getsize_mb();
-            for (x=0;x<l_track->audioStreamCount;x++) {
-                l_auds=l_track->getaudioStream(x);
-                if (!l_auds->selected)
-                    selstreams += l_auds->size_mb;
-            }
-            for (x=0;x<l_track->subPictureCount;x++) {
-                l_sub=l_track->getsubtitle(x);
-                if (!l_sub->selected)
-                    selstreams += l_sub->size_mb;
-            }
+	    if (_streams) {
+		for (x=0;x<l_track->audioStreamCount;x++) {
+			l_auds=l_track->getaudioStream(x);
+			if (!l_auds->selected)
+			selstreams += l_auds->size_mb;
+		}
+		for (x=0;x<l_track->subPictureCount;x++) {
+			l_sub=l_track->getsubtitle(x);
+			if (!l_sub->selected)
+			selstreams += l_sub->size_mb;
+		}
+	    }
         }
     }
     vidstreams -=selstreams;
@@ -921,10 +923,10 @@ float k9DVD::getsizeSelected() {
 
 float k9DVD::getfactor(bool _withMenus,bool _streams) {
     if (_withMenus) {
-        m_dvd.openDevice(Device);
+        //m_dvd.openDevice(Device);
         k9CellCopyList *cellCopyList =new k9CellCopyList(&m_dvd,this);
         double factor=cellCopyList->getfactor(_withMenus,_streams);
-        m_dvd.close();
+        //m_dvd.close();
         return (factor);
     } else {
         float selstreams=0,vidstreams=0,l_factor;
@@ -1003,7 +1005,8 @@ const QString& k9DVD::geterrMsg() {
 void k9DVD::setError(const QString & err) {
     error=true;
     errMsg=err;
-    progressDlg->hide();
+    if (progressDlg !=NULL)
+    	progressDlg->hide();
 }
 
 const bool& k9DVD::getopened() {
@@ -1044,7 +1047,7 @@ void k9DVD::setstart(k9DVDTitle* title) {
     start=title;
 }
 
-
+// returns the title number in the reauthored DVD
 int k9DVD::getnewTitleNum(k9DVDTitle *title) {
     int num=0;
     k9DVDTitle *tr;

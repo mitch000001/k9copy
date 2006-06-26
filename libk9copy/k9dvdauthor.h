@@ -60,9 +60,10 @@ private: // Private attributes
   bool m_firsttitle;
   uint32_t m_totalSize;
   uint32_t m_copied,m_lastPos;
+  uint32_t m_totalPartSize;
   void clearOutput(QString name);
   void createXML();
-  void addTitle(QDomElement &root, int title);
+  void addTitle(QDomElement &root, k9DVDTitle *title);
   void createMenus(bool preview);
   void addMenus(QDomElement &titleSet);
   void processMenu();

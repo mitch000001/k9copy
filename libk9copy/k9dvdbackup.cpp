@@ -680,11 +680,11 @@ void k9DVDBackup::setDummyNavPack(uchar *buf,uint32_t _sector)
     0, 0, 1, 0xbf, 0x03, 0xfa
   };
 
-  memcpy (ptr, nav_pack1, sizeof (nav_pack1));
+  tc_memcpy (ptr, nav_pack1, sizeof (nav_pack1));
   ptr += sizeof (nav_pack1);
   memset (ptr, 0, DVD_VIDEO_LB_LEN/2 - sizeof (nav_pack1));
   ptr = (int8_t*)buf + DVD_VIDEO_LB_LEN/2;
-  memcpy (ptr, nav_pack2, sizeof (nav_pack2));
+  tc_memcpy (ptr, nav_pack2, sizeof (nav_pack2));
   ptr += sizeof (nav_pack2);
   memset (ptr, 0, DVD_VIDEO_LB_LEN/2 - sizeof (nav_pack2));
 

@@ -36,7 +36,6 @@ private:
     k9DVD *m_dvd;
     k9DVDTitle *m_dvdTitle;
     QString m_device;
-    void printPosition();
     QFile m_output;
     QFile m_stderr;
     uint32_t m_totalBytes;

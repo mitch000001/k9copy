@@ -50,7 +50,16 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     bool error=false;
     m_percent=0;
     m_remain="--:--:--";
-    m_totalSize=(_title->getChapter(_title->getchapterCount()-1)->getendSector() - _title->getChapter(0)->getstartSector());
+
+    uint32_t m_endSector;
+    if (_title->getTitles().count() >0) {
+	k9DVDTitle *tmp=_title->getTitles().at(_title->getTitles().count()-1);
+	m_endSector= tmp->getChapter(tmp->getchapterCount()-1)->getendSector();
+    }
+    else
+	m_endSector= _title->getChapter(_title->getchapterCount()-1)->getendSector();
+
+    m_totalSize=(m_endSector - _title->getChapter(0)->getstartSector());
 
     QString injectName;
     KTempFile injectFile(locateLocal("tmp", "k9v"), "");
@@ -60,9 +69,6 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 
 
     for (uint m_part =1 ; (m_part <=m_parts) && !error ;m_part++) {
-        uint32_t sec1=_title->getChapter(0)->getstartSector();
-        uint32_t sec2=_title->getChapter(_title->getchapterCount()-1)->getendSector();
-
         uint32_t nbSectors= m_totalSize / m_parts   ;
 
         uint32_t startSector= nbSectors*(m_part-1);
@@ -220,10 +226,10 @@ void k9MP4Enc::exited(KProcess * process) {
 int k9MP4Enc::getBitRate(k9DVDTitle *_title) {
     // bitrate video = (MB *8388.608) /SEC    - bitrate audio
     int size=m_size.toInt();
-    if (_title->getsize_mb() < size)
-	size=_title->getsize_mb();
+    if (_title->gettotalsize_mb() < size)
+	size=_title->gettotalsize_mb();
     QTime t1(0,0);
-    int sec=t1.secsTo(_title->getlength());
+    int sec=t1.secsTo(_title->gettotallength());
     int bitrate=((size*m_parts) * 8388.608)/sec  - m_audioBitrate.toInt();
     return bitrate;
 

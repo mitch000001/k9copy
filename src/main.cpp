@@ -29,7 +29,7 @@
 static const char description[] =
     I18N_NOOP("A DVD Backup tool for KDE");
 
-static const char version[] = "1.0.5";
+static const char version[] = "1.1.0";
 
 static const KCmdLineOptions options[] = {
             { "input <device>", I18N_NOOP("input device"), 0
@@ -97,18 +97,21 @@ int main(int argc, char **argv) {
 	QString chapterSizeArg(args->getOption("chaptersize"));
 
         bool play= args->isSet("play");
-/*
-        InputOptionArg="/dev/hdb";
+
+/*        InputOptionArg="/dev/hdb";
         play=true;
-	TitleNumber="1";
-	audioFilterArg="2";
-	endSectorArg="3383054";
-	startSectorArg="0";
+	TitleNumber="5";
+	audioFilterArg="1";
+//        chapterArg="1";
+//	cellArg="1";
         injectArg="/tmp/kde-jmp/inject";
 */
         if (play) {
             k9play player;
 	    player.setinitStatus( args->isSet("initstatus"));
+	    //tmp
+//	    player.setinitStatus( true);
+
 	    player.setcontinue( args->isSet("continue"));
             player.setDevice(InputOptionArg);
             player.setTitle(TitleNumber.toInt());

@@ -36,7 +36,7 @@ k9Copy::k9Copy()
 		// automatically save settings if changed: window size, toolbar
     // position, icon size, etc.  Also to add actions for the statusbar
 		// toolbar, and keybindings if necessary.
-    setupGUI();
+    setupGUI(QSize(800,600));
 
     // allow the view to change the statusbar and caption
 

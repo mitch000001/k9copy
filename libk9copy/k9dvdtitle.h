@@ -24,6 +24,7 @@
 #include "k9dvd.h"
 #include <qdatetime.h>
 #include <qstringlist.h>
+#include <qptrlist.h>
 
 static int cptChapter=0;
 enum angleBlock_t {angleNone=0,angleInside=1,angleStart=3,angleEnd=5};
@@ -226,7 +227,7 @@ private: // Public attributes
   k9DVDSubtitle *m_defSubtitle;
   bool m_defAudioSet;
   bool m_defSubtitleSet;
-
+  QPtrList <k9DVDTitle> m_titles;
 public: // Public methods
   k9DVDTitle();
   virtual k9DVDTitleset *gettitleset() {return m_titleset;};
@@ -235,6 +236,8 @@ public: // Public methods
   virtual const int& getaudioStreamCount();
   virtual const int& getsubPictureCount();    
   virtual const QTime& getlength();
+  virtual QTime gettotallength();
+
   virtual const int& getVTS();
   virtual const int& getTTN();
   virtual const float& getFPS();
@@ -249,6 +252,9 @@ public: // Public methods
   virtual k9DVDAudioStream *getaudioStream(int num);
   virtual k9DVDSubtitle *getsubtitle(int num);
   virtual const float& getsize_mb();
+  virtual const float  gettotalsize_mb();
+  virtual const float  gettotalvideosize_mb();
+
   virtual const float& getvideosize_mb();
   virtual const float& getvobusize_mb();
   virtual bool isSelected();
@@ -267,6 +273,8 @@ public: // Public methods
   virtual k9DVDSubtitle* getDefSubtitle() const;
   virtual bool getDefAudioSet() const {return m_defAudioSet;};
   virtual bool getDefSubtitleSet() const {return m_defSubtitleSet;};
+  virtual QPtrList< k9DVDTitle > getTitles() const {return m_titles;}
+	
 	
 private: // Private methods
   k9DVDAudioStream* addAudioStream();

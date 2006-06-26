@@ -28,7 +28,7 @@ k9prefDVD::k9prefDVD(QWidget* parent, const char* name, WFlags fl)
     urOutput->setURL(settings.readEntry("/dir/output",kd.findResource("tmp","")));
     ckK3b->setChecked(settings.readEntry("/options/usek3b",0).toInt());
     ckAutoBurn->setChecked(settings.readEntry("/options/autoburn",0).toInt());
-    ckQuickScan->setChecked(settings.readEntry("/options/quickscan",0).toInt());
+    ckQuickScan->setChecked(settings.readEntry("/options/quickscan","1").toInt());
     sbSize->setValue(settings.readEntry("/options/dvdsize",QString("4400")).toInt());
     sbSize->setSuffix(" "+ i18n("mb"));
 }
