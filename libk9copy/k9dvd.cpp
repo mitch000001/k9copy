@@ -570,7 +570,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                     l_pchap=l_chap;
                 }
                 l_track->size_mb =((float)total_sectors *2048)/(1024*1024);
-
+		l_track->m_sectors= total_sectors;
                 // SUBTITLES
                 l_track->subPictureCount=0;
                 for (i=0; i<vtsi_mat->nr_of_vts_subp_streams; i++) {

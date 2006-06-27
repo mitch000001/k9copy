@@ -228,6 +228,7 @@ private: // Public attributes
   bool m_defAudioSet;
   bool m_defSubtitleSet;
   QPtrList <k9DVDTitle> m_titles;
+  uint32_t m_sectors;
 public: // Public methods
   k9DVDTitle();
   virtual k9DVDTitleset *gettitleset() {return m_titleset;};
@@ -273,8 +274,8 @@ public: // Public methods
   virtual k9DVDSubtitle* getDefSubtitle() const;
   virtual bool getDefAudioSet() const {return m_defAudioSet;};
   virtual bool getDefSubtitleSet() const {return m_defSubtitleSet;};
-  virtual QPtrList< k9DVDTitle > getTitles() const {return m_titles;}
-	
+  virtual QPtrList< k9DVDTitle > getTitles() const {return m_titles;};
+  virtual uint32_t getsectors() { return m_sectors;};	
 	
 private: // Private methods
   k9DVDAudioStream* addAudioStream();

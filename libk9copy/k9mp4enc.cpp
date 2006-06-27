@@ -51,15 +51,11 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     m_percent=0;
     m_remain="--:--:--";
 
-    uint32_t m_endSector;
-    if (_title->getTitles().count() >0) {
-	k9DVDTitle *tmp=_title->getTitles().at(_title->getTitles().count()-1);
-	m_endSector= tmp->getChapter(tmp->getchapterCount()-1)->getendSector();
+    m_totalSize=_title->getsectors();
+    for (int ititle=0 ; ititle < _title->getTitles().count();ititle++) {
+	k9DVDTitle *tmp=_title->getTitles().at(ititle);
+        m_totalSize+= tmp->getsectors();
     }
-    else
-	m_endSector= _title->getChapter(_title->getchapterCount()-1)->getendSector();
-
-    m_totalSize=(m_endSector - _title->getChapter(0)->getstartSector());
 
     QString injectName;
     KTempFile injectFile(locateLocal("tmp", "k9v"), "");
