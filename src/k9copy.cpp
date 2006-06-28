@@ -60,7 +60,7 @@ bool k9Copy::queryClose   (    ) {
 void k9Copy::setupActions()
 {
     KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-    KStdAction::quit(kapp, SLOT(quit()), actionCollection());
+    KStdAction::quit(this, SLOT(close()), actionCollection());
     KStdAction::preferences(this,SLOT(preferences()),actionCollection());
 
     PlayTitleAction = new KAction(i18n("Play title"), 0,
@@ -136,4 +136,9 @@ void k9Copy::setInput(QString _input) {
 void k9Copy::setOutput(QString _output) {
   m_k9Main->setOutput(_output);
 }
+
+void k9Copy::closeEvent( QCloseEvent* ce ) {
+    ce->accept();
+}
+
 

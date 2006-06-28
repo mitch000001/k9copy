@@ -42,6 +42,8 @@ public:
 
 protected:
     bool queryClose( );
+    void closeEvent( QCloseEvent* ce );
+
 private slots:
     void ActionCopy();
     void ActionMP4();

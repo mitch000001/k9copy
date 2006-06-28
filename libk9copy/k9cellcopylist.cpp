@@ -219,6 +219,7 @@ double  k9CellCopyList::gettotalSize() {
                 else if (cell->angleBlock==angleStart) {
                     uint32_t start=0,end=0;
                     start=cell->startSector;
+		    // loop inside the angle block to find the last sector. 
                     while (((k9Cell*)at(iCell))->angleBlock !=angleNone) {
                         end=((k9Cell*)at(iCell))->lastSector;
                         iCell++;

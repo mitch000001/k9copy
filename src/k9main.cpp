@@ -480,7 +480,6 @@ void k9Main::slot_progress(QString str) {
 
 k9Main::~k9Main() {
     delete dvd;
-
 }
 
 void k9Main::closeEvent( QCloseEvent* ce ) {
