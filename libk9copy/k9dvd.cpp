@@ -886,8 +886,8 @@ long k9DVD::stream_vob( int title, unsigned long startblock, unsigned long lastb
 
 
 
-float k9DVD::getsizeSelected(bool _streams) {
-    float selstreams=0,vidstreams=0;
+uint64_t k9DVD::getsizeSelected(bool _streams) {
+    uint64_t selstreams=0,vidstreams=0;
     int i,x;
     k9DVDTitle *l_track;
     k9DVDAudioStream *l_auds;
@@ -900,17 +900,17 @@ float k9DVD::getsizeSelected(bool _streams) {
         withvideo=l_track->isSelected() && l_track->getIndexed();
 
         if ( withvideo) {
-            vidstreams +=l_track->getsize_mb();
+            vidstreams +=l_track->getsectors();
 	    if (_streams) {
 		for (x=0;x<l_track->audioStreamCount;x++) {
 			l_auds=l_track->getaudioStream(x);
 			if (!l_auds->selected)
-			selstreams += l_auds->size_mb;
+			selstreams += l_auds->size_mb*512;
 		}
 		for (x=0;x<l_track->subPictureCount;x++) {
 			l_sub=l_track->getsubtitle(x);
 			if (!l_sub->selected)
-			selstreams += l_sub->size_mb;
+			selstreams += l_sub->size_mb*512;
 		}
 	    }
         }

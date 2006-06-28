@@ -134,7 +134,7 @@ public:
   virtual const bool& geterror();
   virtual const QString& geterrMsg();
   virtual const bool& getopened();
-  virtual float getsizeSelected(bool _streams);
+  virtual uint64_t getsizeSelected(bool _streams);
   virtual QString &getFormat();
   virtual k9DVDTitle* getstart();
   virtual void setstart(k9DVDTitle* title);

@@ -58,9 +58,9 @@ private: // Private attributes
   bool error;
   bool burnDVD;
   bool m_firsttitle;
-  uint32_t m_totalSize;
+  uint64_t m_totalSize;
   uint32_t m_copied,m_lastPos;
-  uint32_t m_totalPartSize;
+  uint64_t m_totalPartSize;
   void clearOutput(QString name);
   void createXML();
   void addTitle(QDomElement &root, k9DVDTitle *title);

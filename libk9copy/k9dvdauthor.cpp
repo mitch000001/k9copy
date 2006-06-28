@@ -72,7 +72,26 @@ void k9DVDAuthor::createXML() {
 
     inject = locateLocal("tmp", "k9v" + (QTime::currentTime()).toString("hhmmss"));
 
+
+    m_totalPartSize=0;
+
+    for (int iTitle=0; iTitle < DVD->gettitleCount();iTitle++) {
+        k9DVDTitle *title=DVD->gettitle(iTitle);
+        if (title->isSelected() && title->getIndexed())
+            for (int iTitle2=0;iTitle2<title->getTitles().count() ;iTitle2++) {
+                k9DVDTitle *title2=title->getTitles().at(iTitle2);
+                m_totalPartSize+= title2->getsize_mb() *1024*1024;
+            }
+
+    }
+    m_totalSize=(int)DVD->getsizeSelected(false) + m_totalPartSize;
+    m_totalSize*=DVD_VIDEO_LB_LEN;
+
+
+
     m_firsttitle=true;
+
+
     for (i=0;i< DVD->gettitleCount();i++) {
         k9DVDTitle *tmp = DVD->gettitle(i);
         addTitle(root,tmp);
@@ -364,21 +383,6 @@ void k9DVDAuthor::author() {
 
         m_copied=0;
         m_lastPos=0;
-
-        m_totalPartSize=0;
-
-        for (int iTitle=0; iTitle < DVD->gettitleCount();iTitle++) {
-            k9DVDTitle *title=DVD->gettitle(iTitle);
-            if (title->isSelected() && title->getIndexed())
-                for (int iTitle2=0;iTitle2<title->getTitles().count() ;iTitle2++) {
-                    k9DVDTitle *title2=title->getTitles().at(iTitle2);
-                    m_totalPartSize+= title2->getsize_mb() *1024*1024;
-                }
-
-        }
-        m_totalSize=(int)DVD->getsizeSelected(false) + m_totalPartSize;
-
-
         //if (m_totalSize >k9DVDSize::getMaxSize())
         //    m_totalSize=k9DVDSize::getMaxSize();
         QDir dir(workDir);
@@ -430,7 +434,7 @@ void k9DVDAuthor::DVDAuthorStderr() {
         m_copied=totalBytes;
         m_lastPos=totalBytes;
         //qDebug(QString("copied : %1   totalSize : %2").arg(m_copied).arg(m_totalSize*512));
-        m_percent=(float)m_copied / (float)(m_totalSize * 512);
+        m_percent=(float)m_copied / (float)(m_totalSize );
 
 
         QTime time2(0,0);

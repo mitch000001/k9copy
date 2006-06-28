@@ -235,7 +235,7 @@ void k9play::play() {
 	double factor;
 	factor = (double) (m_totalSize - (status.bytesRead +status.bytesSkipped)) / (double) (m_dvdSize-status.bytesWritten) ;
 	if (factor <1) factor =1;
-
+	kdebug(QString("shrink factor %1").arg(factor));
 	vamps.setVapFactor(factor);
     } else
 	vamps.setVapFactor(m_vampsFactor);
