@@ -434,7 +434,7 @@ void k9DVDAuthor::DVDAuthorStderr() {
         m_copied=totalBytes;
         m_lastPos=totalBytes;
         //qDebug(QString("copied : %1   totalSize : %2").arg(m_copied).arg(m_totalSize*512));
-        m_percent=(float)m_copied / (float)(m_totalSize );
+        m_percent=(float)m_copied / (float)(m_totalSize/DVD_VIDEO_LB_LEN );
 
 
         QTime time2(0,0);

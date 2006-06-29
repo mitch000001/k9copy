@@ -51,6 +51,7 @@ k9Copy::k9Copy()
 
 k9Copy::~k9Copy()
 {
+kapp->quit();
 }
 bool k9Copy::queryClose   (    ) {
 	m_k9Main->saveSettings();
