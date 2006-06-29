@@ -1,0 +1,9 @@
+[Desktop Action Play]
+Exec=k9copy --input %u
+Icon=k9copy
+Name[fr]=Copier avec k9copy
+
+[Desktop Entry]
+Actions=Play;
+Icon=
+ServiceTypes=media/dvdvideo
