@@ -75,6 +75,7 @@ void k9DVDAuthor::createXML() {
 
     m_totalPartSize=0;
 
+    //computes the size of related titles
     for (int iTitle=0; iTitle < DVD->gettitleCount();iTitle++) {
         k9DVDTitle *title=DVD->gettitle(iTitle);
         if (title->isSelected() && title->getIndexed())
@@ -84,6 +85,8 @@ void k9DVDAuthor::createXML() {
             }
 
     }
+ 
+    //total size of titles to copy
     m_totalSize=(int)DVD->getsizeSelected(false) + m_totalPartSize;
     m_totalSize*=DVD_VIDEO_LB_LEN;
 

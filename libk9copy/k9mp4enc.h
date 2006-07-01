@@ -27,7 +27,8 @@ class k9MP4Enc : public QObject {
 public:
     enum Codec {
 	xvid =0,
-        lavc_mp4=1
+        lavc_mp4=1,
+	x264=2
     };
 private:
     KProcess *m_process;
@@ -54,6 +55,7 @@ private:
     int m_cpt;
     QTime *time;
     QString replaceParams(QString _input);
+    QString round16(QString _wh);
 private slots:
     void getStdout(KProcess *proc, char *buffer, int buflen);
     void getStderr(KProcess *proc, char *buffer, int buflen);

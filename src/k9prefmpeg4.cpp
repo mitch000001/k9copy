@@ -48,6 +48,7 @@ void k9prefMPEG4::load() {
     cbMp4Codec->clear();
     cbMp4Codec->insertItem("Xvid");
     cbMp4Codec->insertItem("lavc MPEG-4");
+    cbMp4Codec->insertItem("x264");
 
     cbMp4Codec->insertStringList(m_codecLabels);
     cbMp4Codec->setCurrentItem(settings.readEntry("/mp4/codec",0).toInt());

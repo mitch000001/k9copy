@@ -44,6 +44,16 @@ k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
 
 }
 
+QString k9MP4Enc::round16(QString _wh) {
+   if (_wh !="") {
+	int value=_wh.toInt()/16;
+	return QString::number(value*16);
+
+   } else return _wh;
+
+
+}
+
 void k9MP4Enc::execute(k9DVDTitle *_title) {
     time = new QTime(0,0);
     time->start();
@@ -133,21 +143,27 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
             m_progress->setTitleLabel(i18n("Encoding %1").arg("lavc MPEG-4"));
 	    m_fourcc="DIVX";  //best compatibility
             break;
+        case x264:
+            *m_process << "x264";
+            *m_process <<"-x264encopts";
+            *m_process <<"bitrate=" + QString::number(getBitRate(_title));
+            m_progress->setTitleLabel(i18n("Encoding %1").arg("x264"));
+	    m_width=round16(m_width);
+	    m_height=round16(m_height);
+            break;
         default:
-            QStringList::Iterator it = m_lstVideo.at((int)m_codec - 2 );
+            QStringList::Iterator it = m_lstVideo.at((int)m_codec - 3 );
             *m_process << replaceParams((*it));
             for (uint i=0;i<_title->getaudioStreamCount();i++) {
                 if (_title->getaudioStream(i)->getselected()) {
                     *m_process << "-oac";
-                    it = m_lstAudio.at((int)m_codec - 2 );
+                    it = m_lstAudio.at((int)m_codec - 3 );
                     *m_process << replaceParams((*it));
-                    //*m_process <<"-aid";
-                    //*m_process << QString::number(_title->getaudioStream(i)->getStreamId());
                     audio=true;
                     break;
                 }
             }
-            it = m_lstCodecs.at((int)m_codec - 2 );
+            it = m_lstCodecs.at((int)m_codec - 3 );
             m_progress->setTitleLabel(i18n("Encoding %1").arg((*it)));
             break;
 
@@ -156,7 +172,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 	if (m_fourcc !="") 
 	    *m_process << "-ffourcc" << m_fourcc;
 
-        if (m_codec == xvid || m_codec == lavc_mp4) {
+        if (m_codec == xvid || m_codec == lavc_mp4 || m_codec== x264) {
             *m_process <<"-vf" << QString("pp=de,crop=0:0:0:0,scale=%1:%2").arg(m_width).arg(m_height);
             //looking for first audio selected
             for (uint i=0;i<_title->getaudioStreamCount();i++) {

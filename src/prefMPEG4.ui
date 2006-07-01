@@ -340,6 +340,11 @@
                     <string>lavc MPEG4</string>
                 </property>
             </item>
+            <item>
+                <property name="text">
+                    <string>x264</string>
+                </property>
+            </item>
             <property name="name">
                 <cstring>cbMp4Codec</cstring>
             </property>
