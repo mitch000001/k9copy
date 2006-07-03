@@ -448,6 +448,10 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
 
 
     c_adt_t *c_adt = hifo->menu_c_adt;
+    // c_adt shouldn't be null. It would say that the menu doesn't contain video !?
+    if (c_adt==NULL)
+	return 0;
+
     uint32_t length = c_adt->last_byte + 1 - C_ADT_SIZE;
     cell_adr_t *ptr;
     ptr= c_adt->cell_adr_table;

@@ -21,10 +21,6 @@
 #include "k3bscsicommand.h"
 #include "k3bmmc.h"
 
-#ifdef HAVE_HAL
-#include "k3bhalconnection.h"
-#endif
-
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qptrlist.h>

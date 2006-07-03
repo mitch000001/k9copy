@@ -13,6 +13,8 @@
  * See the file "COPYING" for the exact licensing terms.
  */
 
+#ifdef Q_OS_FREEBSD
+
 #include "k3bscsicommand.h"
 #include "k3bdevice.h"
 
@@ -23,6 +25,7 @@
 #include <camlib.h>
 #include <cam/scsi/scsi_message.h>
 #include <cam/scsi/scsi_pass.h>
+
 
 #define ERRCODE(s)	((((s)[2]&0x0F)<<16)|((s)[12]<<8)|((s)[13]))
 #define EMEDIUMTYPE	EINVAL
@@ -190,3 +193,6 @@ int K3bDevice::ScsiCommand::transport( TransportDirection dir,
 
   return ret;
 }
+
+#endif
+

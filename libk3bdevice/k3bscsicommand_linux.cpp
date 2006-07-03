@@ -16,6 +16,9 @@
  * See the file "COPYING" for the exact licensing terms.
  */
 
+
+#ifdef Q_OS_LINUX
+
 #include "k3bscsicommand.h"
 #include "k3bdevice.h"
 
@@ -165,3 +168,4 @@ int K3bDevice::ScsiCommand::transport( TransportDirection dir,
   else
     return 0;
 }
+#endif
