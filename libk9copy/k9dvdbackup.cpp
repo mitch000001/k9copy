@@ -749,6 +749,7 @@ uint32_t k9DVDBackup::findNextVobu(uint32_t _sector) {
 uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9Vobu * _vobu) {
     dsi_t	dsi_pack;
     k9Vobu * currVobu;
+    bool badNavPack=false;
 
     uint32_t	nsectors, len,nextVobu=0;
     uchar *buf;
@@ -756,10 +757,21 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     /* read nav pack */
     buf=(uchar*) malloc(DVD_VIDEO_LB_LEN);
     len = _fileHandle->readBlocks ( sector, 1, buf);
+    /* parse contained DSI pack */
+
+    //test if nav pack is ok
+    if (len !=-1) {
+	navRead_DSI (&dsi_pack, buf + DSI_START_BYTE);
+	if (dsi_pack.dsi_gi.nv_pck_lbn != sector) {
+		len=-1;
+	}
+    }
+
     if (len==-1) {
        setDummyNavPack(buf,sector); 
        nextVobu=findNextVobu(sector);
        qDebug (QString("VOBU : %1 Read Error !!!!  ==>  %2").arg(sector).arg(nextVobu));
+       badNavPack=true;
     }
     currVobu=_vobu;
 
@@ -776,27 +788,32 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     wrote=false;
     vamps->addData(buf,DVD_VIDEO_LB_LEN);
     m_inbytes+=DVD_VIDEO_LB_LEN;
+    uint32_t end;
 
-    /* parse contained DSI pack */
-    navRead_DSI (&dsi_pack, buf + DSI_START_BYTE);
+    if (badNavPack) {
+       setDummyPack(buf);
+       nsectors=1;
+       if (nextVobu !=0) end=nextVobu-1;
 
-    nsectors      = dsi_pack.dsi_gi.vobu_ea;
-    uint32_t dsi_next_vobu = dsi_pack.vobu_sri.next_vobu;
-
-    buf=(uchar*) realloc(buf,nsectors*DVD_VIDEO_LB_LEN);
-
-    uint32_t end=nsectors;
-    if (nextVobu !=0) end=nextVobu-1;
-
-    /* read VOBU */
-    for (uint32_t i=0;i< nsectors;i++) {
-        len = _fileHandle->readBlocks ( (sector + 1)+i, 1, buf +(i*DVD_VIDEO_LB_LEN));
-        if (len==-1) {
-            qDebug (QString("VOBU : %1 Read Error !!!!").arg(sector));
-            setDummyPack(buf + (i*DVD_VIDEO_LB_LEN));
-            nsectors=1;
-            break;
-        }
+    } else {
+	nsectors      = dsi_pack.dsi_gi.vobu_ea;
+	uint32_t dsi_next_vobu = dsi_pack.vobu_sri.next_vobu;
+	
+	buf=(uchar*) realloc(buf,nsectors*DVD_VIDEO_LB_LEN);
+	
+	end=nsectors;
+	
+	/* read VOBU */
+	for (uint32_t i=0;i< nsectors;i++) {
+		len = _fileHandle->readBlocks ( (sector + 1)+i, 1, buf +(i*DVD_VIDEO_LB_LEN));
+		if (len==-1) {
+		qDebug (QString("VOBU : %1 Read Error !!!!").arg(sector));
+		//setDummyPack(buf + (i*DVD_VIDEO_LB_LEN));
+		setDummyPack(buf);
+		nsectors=1;
+		break;
+		}
+	}
     }
 
     /* write VOBU */

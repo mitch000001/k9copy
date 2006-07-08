@@ -54,8 +54,7 @@ k9Copy::~k9Copy()
 {
 kapp->quit();
 }
-bool k9Copy::queryClose   (    ) {
-	m_k9Main->saveSettings();
+bool k9Copy::queryClose   (    ) {	
 	return true;
 }
 
@@ -140,6 +139,7 @@ void k9Copy::setOutput(QString _output) {
 }
 
 void k9Copy::closeEvent( QCloseEvent* ce ) {
+    m_k9Main->saveSettings();
     ce->accept();
 }
 
