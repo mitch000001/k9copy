@@ -1,22 +1,20 @@
 # translation of ru.po to Russian
-# translation of k9copy_ru_RU.po to Russian
-# translation of k9copy.po to Russian
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-# Alexander V. Ribchansky <triosoft@triosoft.com.ua>, 2006.
 #
+# Alexander V. Ribchansky <triosoft@triosoft.com.ua>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-21 09:09+0200\n"
-"PO-Revision-Date: 2006-01-17 20:43+0200\n"
+"PO-Revision-Date: 2006-07-12 11:34+0300\n"
 "Last-Translator: Alexander V. Ribchansky <triosoft@triosoft.com.ua>\n"
-"Language-Team: Russian <ru@li.org>\n"
+"Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:30 libk3bdevice/k3bdeviceglobals.cpp:132
 #: libk3bdevice.new/k3bdeviceglobals.cpp:30
@@ -193,10 +191,9 @@ msgstr "Играть ролик"
 
 #: src/k9copy.cpp:80
 msgid "Create MPEG-4"
-msgstr ""
+msgstr "Создать MPEG-4"
 
 #: src/k9copy.cpp:94
-#, fuzzy
 msgid "Settings"
 msgstr "Настройки"
 
@@ -218,82 +215,79 @@ msgstr "Ошибка чтения блока %1\n"
 
 #: src/main.cpp:30
 msgid "A DVD Backup tool for KDE"
-msgstr ""
+msgstr "Утилита резервного копирования DVD для KDE"
 
 #: src/main.cpp:35
-#, fuzzy
 msgid "input device"
 msgstr "Устройство ввода"
 
 #: src/main.cpp:37
-#, fuzzy
 msgid "output device"
 msgstr "Устройство вывода"
 
 #: src/main.cpp:38
 msgid "title to play"
-msgstr ""
+msgstr "играть ролик"
 
 #: src/main.cpp:39
-#, fuzzy
 msgid "play title to stdout"
-msgstr "Играть ролик"
+msgstr "играть ролик на стандартный вывод"
 
 #: src/main.cpp:40
 msgid "start sector"
-msgstr ""
+msgstr "начальный сектор"
 
 #: src/main.cpp:41
 msgid "end sector"
-msgstr ""
+msgstr "конечный сектор"
 
 #: src/main.cpp:42
 msgid "list of audio streams"
-msgstr ""
+msgstr "список аудиопотоков "
 
 #: src/main.cpp:43
 msgid "list of spu streams"
-msgstr ""
+msgstr "список spu-потоков"
 
 #: src/main.cpp:44
 msgid "shrink factor"
-msgstr ""
+msgstr "коэффициент сжатия"
 
 #: src/main.cpp:45
 msgid "size of the cell to be copied"
-msgstr ""
+msgstr "размер копируемой ячейки"
 
 #: src/main.cpp:46
 msgid "total size of selected titles"
-msgstr ""
+msgstr "общий размер выбранных роликов"
 
 #: src/main.cpp:47
 msgid "size of the chapters being copied"
-msgstr ""
+msgstr "размер копируемых глав"
 
 #: src/main.cpp:48
 msgid "new dvd size"
-msgstr ""
+msgstr "новый размер DVD"
 
 #: src/main.cpp:49
 msgid "selected chapter"
-msgstr ""
+msgstr "выбранные главы"
 
 #: src/main.cpp:50
 msgid "cell number in selected chapter"
-msgstr ""
+msgstr "номер ячейки в выбранной главе"
 
 #: src/main.cpp:51
 msgid "status file name"
-msgstr ""
+msgstr "имя файла статуса"
 
 #: src/main.cpp:52
 msgid "initialize status file"
-msgstr ""
+msgstr "инициализировать файл статуса"
 
 #: src/main.cpp:53
 msgid "continue playing from last sector"
-msgstr ""
+msgstr "продолжить воспроизведение с последнего сектора"
 
 #: src/main.cpp:62
 msgid "k9copy"
@@ -324,6 +318,8 @@ msgid ""
 "Insuffisant disk space on %1\n"
 "%2 mb expected."
 msgstr ""
+"Недостаточно места на %1 \n"
+"необходимо %2 Мб "
 
 #: src/k9main.cpp:385 src/k9main.cpp:951
 msgid "ISO Image"
@@ -338,13 +334,12 @@ msgid "Titleset %1"
 msgstr "Группа роликов %1"
 
 #: src/k9main.cpp:514
-#, fuzzy
 msgid "video %1 "
-msgstr "звук %1 "
+msgstr "видео %1 "
 
 #: src/k9main.cpp:526
 msgid "audio %1 "
-msgstr "звук %1 "
+msgstr "аудио %1 "
 
 #: src/k9main.cpp:543
 msgid "subpicture %1 "
@@ -352,13 +347,13 @@ msgstr "субтитры %1 "
 
 #: src/k9main.cpp:919 src/k9settings.cpp:40 libk9copy/k9mp4enc.cpp:195
 msgid "MPEG-4 Encoding"
-msgstr ""
+msgstr "MPEG-4 Кодирование"
 
 #: src/k9main.cpp:1091 debug/src/k9mainw.cpp:304 debug/src/prefMencoder.cpp:37
 #: debug/src/prefMencoder.cpp:87 rc.cpp:50 rc.cpp:161
 #, no-c-format
 msgid "Audio"
-msgstr "Звук"
+msgstr "Аудио"
 
 #: src/k9main.cpp:1102
 msgid "Subtitles"
@@ -368,40 +363,35 @@ msgstr "Субтитры"
 #: debug/src/k9mainw.cpp:296 rc.cpp:20
 #, no-c-format
 msgid "default"
-msgstr ""
+msgstr "по-умолчанию"
 
 #: src/k9main.cpp:1131
-#, fuzzy
 msgid "Open ISO Image"
-msgstr "ISO-образ"
+msgstr "Открыть ISO-образ"
 
 #: src/k9main.cpp:1138
-#, fuzzy
 msgid "Open DVD folder"
-msgstr "Открыть DVD-диск"
+msgstr "Открыть DVD каталог"
 
 #: src/k9main.cpp:1247
 msgid "none"
 msgstr ""
 
 #: src/k9settings.cpp:27
-#, fuzzy
 msgid "Devices"
-msgstr "устройство"
+msgstr "Устройства"
 
 #: src/k9settings.cpp:27
-#, fuzzy
 msgid "Devices not detected by k9copy"
-msgstr "<b><p align=\"center\">Устройства не обнаруженные k9copy</p></b>"
+msgstr "Устройства не обнаруженные k9copy"
 
 #: src/k9settings.cpp:34
 msgid "DVD"
 msgstr ""
 
 #: src/k9settings.cpp:34
-#, fuzzy
 msgid "DVD Backup"
-msgstr "Трек"
+msgstr "Копия DVD"
 
 #: src/k9settings.cpp:40
 msgid "MPEG-4"
@@ -413,7 +403,7 @@ msgstr ""
 
 #: src/k9settings.cpp:46
 msgid "MPEG-4 Codecs"
-msgstr ""
+msgstr "MPEG-4 Кодеки"
 
 #: src/k9prefmpeg4.cpp:33 src/k9prefdvd.cpp:33 libk9copy/k9mp4enc.cpp:94
 msgid "mb"
@@ -458,7 +448,7 @@ msgstr "Ошибка во время работы DVDAuthor:\n"
 
 #: libk9copy/k9dvdauthor.cpp:430
 msgid "Fixing VOBUS"
-msgstr ""
+msgstr "Исправление VOBUS"
 
 #: libk9copy/k9dvdbackup.cpp:137 libk9copy/k9dvdbackup.cpp:151
 #: libk9copy/k9dvdbackup.cpp:491 libk9copy/k9dvdbackup.cpp:648
@@ -524,7 +514,7 @@ msgstr "Невозможно перейти в  %1 для ролика\n"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Not Specified"
-msgstr ""
+msgstr "Не указанно"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Afar"
@@ -983,9 +973,8 @@ msgid "Swahili"
 msgstr ""
 
 #: libk9copy/k9dvd.cpp:248
-#, fuzzy
 msgid "Tamil"
-msgstr "Ролик"
+msgstr ""
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Telugu"
@@ -1100,28 +1089,25 @@ msgid "reading title"
 msgstr "чтение ролика"
 
 #: libk9copy/k9mp4enc.cpp:84
-#, fuzzy
 msgid "Save file to disk"
-msgstr "Сохранить образ на диск"
+msgstr "Сохранить файл на диск"
 
 #: libk9copy/k9mp4enc.cpp:124 libk9copy/k9mp4enc.cpp:131
 #: libk9copy/k9mp4enc.cpp:149
 msgid "Encoding %1"
-msgstr ""
+msgstr "Кодируется %1"
 
 #: libk9copy/k9mp4enc.cpp:195
-#, fuzzy
 msgid "MPEG-4 Encoding cancelled"
-msgstr "Авторинг отменен"
+msgstr "MPEG-4 кодирование отменено"
 
 #: libk9copy/k9mp4enc.cpp:198
-#, fuzzy
 msgid "Error while running mencoder :"
-msgstr "Ошибка во время работы DVDAuthor:\n"
+msgstr "Ошибка во время работы mencoder:"
 
 #: libk9copy/k9mp4enc.cpp:198
 msgid "Encoding error"
-msgstr ""
+msgstr "Ошибка кодирования"
 
 #: libk9copy/k9burndvd.cpp:144
 msgid "k9Copy - Burning DVD"
@@ -1133,7 +1119,7 @@ msgstr "Записать DVD-диск"
 
 #: libk9copy/k9burndvd.cpp:192
 msgid "Insert a recordable DVD"
-msgstr "Вставте записываемый DVD-диск"
+msgstr "Вставьте записываемый DVD-диск"
 
 #: libk9copy/k9burndvd.cpp:199
 msgid "Error burning DVD :\n"
@@ -1153,7 +1139,7 @@ msgstr "Ошибка во время записи DVD-диска: %1"
 
 #: libk9copy/k9burndvd.cpp:209
 msgid "Insert an other DVD"
-msgstr "Вставте другой DVD-диск"
+msgstr "Вставьте другой DVD-диск"
 
 #: libk9copy/k9burndvd.cpp:234
 msgid "Current write speed :%1 x"
@@ -1211,14 +1197,14 @@ msgid "Alt+C"
 msgstr ""
 
 #: debug/libk9copy/mp4dlg.cpp:120 rc.cpp:215
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "k9Copy - transcoding"
-msgstr "k9Copy - Запись DVD-диска"
+msgstr "k9Copy - транскодирование"
 
 #: debug/libk9copy/mp4dlg.cpp:121 rc.cpp:218
 #, no-c-format
 msgid "Encoding"
-msgstr ""
+msgstr "Кодирование"
 
 #: debug/libk9copy/mp4dlg.cpp:122 rc.cpp:221
 #, no-c-format
@@ -1238,7 +1224,7 @@ msgstr ""
 #: debug/libk9copy/mp4dlg.cpp:130 rc.cpp:237
 #, no-c-format
 msgid "Bitrate"
-msgstr ""
+msgstr "Битрейт"
 
 #: debug/libk9copy/mp4dlg.cpp:131 debug/src/k9mainw.cpp:106
 #: debug/src/k9mainw.cpp:299 rc.cpp:32 rc.cpp:240
@@ -1299,9 +1285,8 @@ msgid "k9DVD"
 msgstr ""
 
 #: debug/libk9copy/k9burndvd.moc.cpp:34 debug/libk9copy/k9burndvd.moc.cpp:42
-#, fuzzy
 msgid "k9BurnDVD"
-msgstr "Записать DVD-диск"
+msgstr "k9Записать DVD-диск"
 
 #: debug/src/viewmpeg2.cpp:631 rc.cpp:3
 #, no-c-format
@@ -1381,27 +1366,27 @@ msgstr ""
 #: debug/src/k9mainw.cpp:302 rc.cpp:44
 #, no-c-format
 msgid "Default language"
-msgstr ""
+msgstr "Язык по-умолчанию"
 
 #: debug/src/k9mainw.cpp:303 rc.cpp:47
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Subtitle"
 msgstr "Субтитры"
 
 #: debug/src/k9mainw.cpp:307 rc.cpp:55
 #, no-c-format
 msgid "Selected Titles"
-msgstr ""
+msgstr "Выбранные ролики"
 
 #: debug/src/k9mainw.cpp:308 rc.cpp:35
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "DVD playback options"
-msgstr "<b>настройки DVD-диска</b>"
+msgstr "настройки DVD-диска"
 
 #: debug/src/k9mainw.cpp:310 rc.cpp:58
 #, no-c-format
 msgid "Selection"
-msgstr ""
+msgstr "Избранное"
 
 #: debug/src/k9mainw.cpp:311 rc.cpp:26
 #, no-c-format
@@ -1409,9 +1394,9 @@ msgid "D&VD"
 msgstr ""
 
 #: debug/src/prefDVD.cpp:89 rc.cpp:89
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "prefDVD"
-msgstr "Открыть DVD-диск"
+msgstr ""
 
 #: debug/src/prefDVD.cpp:90 rc.cpp:92
 #, no-c-format
@@ -1431,7 +1416,7 @@ msgstr "Авто запись"
 #: debug/src/prefDVD.cpp:95 rc.cpp:103
 #, no-c-format
 msgid "Quick scan"
-msgstr ""
+msgstr "Быстрое сканирование"
 
 #: debug/src/prefDVD.cpp:97 rc.cpp:107
 #, no-c-format
@@ -1447,20 +1432,20 @@ msgstr ""
 #: debug/src/prefMPEG4.cpp:146 rc.cpp:113
 #, no-c-format
 msgid "Video Codec"
-msgstr ""
+msgstr "Видео кодек"
 
 #: debug/src/prefMPEG4.cpp:147 rc.cpp:116
 #, no-c-format
 msgid "Audio bitrate"
-msgstr ""
+msgstr "Аудио битрейт"
 
 #: debug/src/prefMPEG4.cpp:149 rc.cpp:122
 #, no-c-format
 msgid "File size"
-msgstr ""
+msgstr "Размер файла"
 
 #: debug/src/prefMPEG4.cpp:151 rc.cpp:128
-#, fuzzy, no-c-format
+#, no-c-format
 msgid " mb"
 msgstr "Мб"
 
@@ -1472,7 +1457,7 @@ msgstr ""
 #: debug/src/prefMPEG4.cpp:156 rc.cpp:137
 #, no-c-format
 msgid "&keep aspect ratio"
-msgstr ""
+msgstr "сохранять пропорции"
 
 #: debug/src/prefMPEG4.cpp:160 rc.cpp:146
 #, no-c-format
@@ -1485,14 +1470,14 @@ msgid "lavc MPEG4"
 msgstr ""
 
 #: debug/src/prefMencoder.cpp:33 debug/src/prefMencoder.cpp:85 rc.cpp:155
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Label"
-msgstr "метка"
+msgstr "Метка"
 
 #: debug/src/prefMencoder.cpp:35 debug/src/prefMencoder.cpp:86 rc.cpp:158
 #, no-c-format
 msgid "Video"
-msgstr ""
+msgstr "Видео"
 
 #: debug/src/k9main.moc.cpp:34 debug/src/k9main.moc.cpp:42
 msgid "k9DVDListItem"
@@ -1517,67 +1502,10 @@ msgstr ""
 #: rc.cpp:243
 #, no-c-format
 msgid "A&ctions"
-msgstr ""
+msgstr "Действия"
 
 #: rc.cpp:246
 #, no-c-format
 msgid "Actions ToolBar"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Copy"
-#~ msgstr "Копия DVD"
-
-#~ msgid "Next title"
-#~ msgstr "Следующий ролик"
-
-#~ msgid "&Add"
-#~ msgstr "Добавить"
-
-#~ msgid "At title end"
-#~ msgstr "В конце ролика"
-
-#~ msgid "At start"
-#~ msgstr "В начале"
-
-#~ msgid "kDVDSubtitle"
-#~ msgstr "Субтитры"
-
-#~ msgid "kDVDChapter"
-#~ msgstr "Глава"
-
-#~ msgid "kDVDVideoStream"
-#~ msgstr "ВидеоПоток"
-
-#~ msgid "kDVDAudioStream"
-#~ msgstr "ЗвуковойПоток"
-
-#~ msgid "kDVDProgress"
-#~ msgstr "Прогресс"
-
-#~ msgid "k9Copy - DVD backup"
-#~ msgstr "k9Copy - копирывание DVD-диска"
-
-#~ msgid "Display title preview"
-#~ msgstr "Отобразить предпросмотр ролика"
-
-#~ msgid "Display selected title preview"
-#~ msgstr "Отобразить предпросмотр выбраного ролика"
-
-#~ msgid "&Open"
-#~ msgstr "Открыть"
-
-#~ msgid "Preview &Menu"
-#~ msgstr "Меню Предпросмотра"
-
-#~ msgid "Play &title"
-#~ msgstr "Играть ролик"
-
-#~ msgid "kDVDAuthor"
-#~ msgstr "Автор"
-
-#~ msgid "Unable to start vamps"
-#~ msgstr "Невозможно запустить vamps"
-
-#~ msgid "A KDE KPart Application"
-#~ msgstr "Приложение KDE для сжатия DVD-дисков"
