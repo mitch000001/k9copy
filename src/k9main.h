@@ -18,7 +18,7 @@
 #include "kviewmpeg2.h"
 #include "k9mainw.h"
 #include "kconfigdlg.h"
-
+#include "k9playbackoptions.h"
 #include <qstring.h>
 #include <kmessagebox.h>
 #include <qlistview.h>
@@ -30,7 +30,7 @@
 #include <qlistbox.h>
 
 
-enum eStreamType {SUB,AUD,VID,NONE};
+enum  eStreamType {SUB,AUD,VID,NONE} ;
 
 class LvItem : public QListViewItem {
 public:
@@ -55,22 +55,9 @@ class  k9DVDAudioStream;
 class  k9DVDSubtitle;
 class k9DVDTitle;
 class KLibFactory;
+class k9PlaybackOptions;
+class k9LangSelect;
 
-class lbItem : public QListBoxText {
-protected:
-    k9DVDTitle *m_title;
-public:
-
-    lbItem(QListBox * listbox, const QString & text = QString::null ):
-    QListBoxText(listbox,text) {}
-    ;
-    void setTitle(k9DVDTitle  *_value) {
-        m_title = _value;
-    }
-    k9DVDTitle *getTitle() const {
-        return m_title;
-    }
-};
 
 class ckLvItem : public QCheckListItem {
 public:
@@ -106,21 +93,6 @@ protected:
 
 };
 
-class ckLvLangItem : public QCheckListItem {
-public:
-    ckLvLangItem( QListViewItem *parent,k9Main *dlg)
-            : QCheckListItem( parent,"",QCheckListItem::CheckBox) {
-        mainDlg=dlg;
-        streamType=NONE;
-    }
-    eStreamType streamType;
-    k9Main *mainDlg;
-    QString language;
-protected:
-    void stateChange(bool state);
-};
-
-
 
 class k9DVDListItem : public QObject {
     Q_OBJECT
@@ -139,6 +111,7 @@ class k9Main : public MainDlg {
     Q_OBJECT
 
 public:
+   
     k9Main(QWidget* parent = 0, const char* name = 0,  const QStringList &sl=0 );
     ~k9Main();
     /*$PUBLIC_FUNCTIONS$*/
@@ -154,10 +127,13 @@ public:
     static int compare(double v1,double v2);
     void readSettings();
     bool getquickScan() {return m_quickScan;};
-    //streamanalyze stream;
+    void setPlaybackOptions(k9PlaybackOptions *_value) { m_playbackOptions=_value;};
+    void setLangSelect(k9LangSelect *_value) {m_langSelect=_value;};
+    QObjectList *getItems() {return &items;};
+    void updateFactor();
+    bool withMenus();
     k9DVD *dvd;
 private slots:
-    virtual void          ckMenuClick();
     virtual void          listView1CurrentChanged( QListViewItem * );
     virtual void          bSaveClick();
     virtual void	  cbOutputDevActivated(int);
@@ -165,10 +141,6 @@ private slots:
     virtual void	  bInputOpenDirClick();
     virtual void	  foundMountPoint (const QString &mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail);
     virtual void 	  fspDone();
-    virtual void 		bSeqUpClick();
-    virtual void		bSeqDownClick();
-    virtual void	  cbDefAudioActivated(int _index);
-    virtual void	  cbDefSubActivated(int _index);
 public slots:
     /*$PUBLIC_SLOTS$*/
     virtual void          PreviewTitle();
@@ -186,8 +158,6 @@ protected:
     void readDrives();
     QPtrList<QListViewItem> lvItems;
     QPtrList<ckLvItem> tsItems;
-    QPtrList <ckLvLangItem> langAudItems;
-    QPtrList <ckLvLangItem> langSubItems;
     ckLvItem * root;
     QObjectList driveList;
     QObjectList recorderList;
@@ -199,15 +169,10 @@ protected:
     bool updating;
     bool fspFinish;
     long fspAvail;
-    void fillTitleList();
     void closeEvent( QCloseEvent* ce );
     void closeDVD();
     KLibFactory *m_factory;
-    ;
     QString  getDevice(QComboBox *_combo);
-    void setSequence();
-    QPtrList <k9DVDAudioStream> lstAudioDef;
-    QPtrList <k9DVDSubtitle> lstSubDef;
 
     //PREFERENCES
     QString m_prefOutput;
@@ -226,11 +191,12 @@ protected:
     QStringList m_codecLabels;
     QStringList m_codecVideo;
     QString m_prefCodecAudio,m_prefCodecVideo,m_prefCodecLabel;
+    k9PlaybackOptions *m_playbackOptions;
+    k9LangSelect *m_langSelect;
 protected slots:
     /*$PROTECTED_SLOTS$*/
     void slot_progress(QString str);
     void itemRenamed ( QListViewItem *item, int col );
-    void lbSequenceChanged (QListBoxItem * _item);
 signals: // Signals
     /** No descriptions */
     void sig_progress(QString str);

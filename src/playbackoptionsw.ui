@@ -1,0 +1,385 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>PlaybackOptionsw</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>PlaybackOptionsw</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>327</width>
+            <height>433</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>DVD playback options</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QFrame" row="0" column="0">
+            <property name="name">
+                <cstring>frPlayback</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>0</number>
+                </property>
+                <property name="spacing">
+                    <number>2</number>
+                </property>
+                <widget class="QFrame" row="6" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>frame4</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>211</width>
+                            <height>100</height>
+                        </size>
+                    </property>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Raised</enum>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>0</number>
+                        </property>
+                        <property name="spacing">
+                            <number>0</number>
+                        </property>
+                        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>5</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="font">
+                                <font>
+                                    <bold>1</bold>
+                                </font>
+                            </property>
+                            <property name="text">
+                                <string>Default language</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="2" column="0">
+                            <property name="name">
+                                <cstring>textLabel3</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>5</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>Subtitle</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox" row="1" column="1">
+                            <property name="name">
+                                <cstring>cbDefAudio</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="1" column="0">
+                            <property name="name">
+                                <cstring>textLabel2_3</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>5</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>Audio</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox" row="2" column="1">
+                            <property name="name">
+                                <cstring>cbDefSub</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>5</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+                <widget class="QListBox" row="1" column="0" rowspan="5" colspan="1">
+                    <property name="name">
+                        <cstring>lbSequence</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>7</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                </widget>
+                <spacer row="0" column="1" rowspan="2" colspan="1">
+                    <property name="name">
+                        <cstring>spacer5</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>31</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton" row="2" column="1">
+                    <property name="name">
+                        <cstring>bSeqUp</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>21</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>21</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <spacer row="5" column="1">
+                    <property name="name">
+                        <cstring>spacer6</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>50</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KPushButton" row="4" column="1">
+                    <property name="name">
+                        <cstring>bSeqDown</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>21</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>21</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <spacer row="3" column="1">
+                    <property name="name">
+                        <cstring>spacer7</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>10</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel4</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <bold>1</bold>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Selected Titles</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QCheckBox" row="1" column="0">
+            <property name="name">
+                <cstring>ckMenu</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Keep original menus</string>
+            </property>
+            <property name="accel">
+                <string>Alt+K</string>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="847">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000031649444154388d75934f482b6714c54fbe9938c9c438326ad03e17c1aa0b170a0d0aea0369172d2e5c085d04bad1bda9d04d37853e5c065174d1ba2ab45005a9a00882ae6c036d4d9ac0f3a91b174134915089899d7fdfcc7c73bb288622ed599fdfbd07eeb921bcd0e4e4e447535353e98989898f93c964673c1e47b1587c3a3a3afae9e0e0e07bcbb2debe640000bdbdbd3dcbcbcbdf95cb6541ffa352a9f4d7ececec1b006d2f797d6363e30fd7758988c8755df23c8f38e764db3671cec9f77d2222b22c8b1617177700482d3a9d4e7f53ad56e9e6e6869acd26398ed3820dc3680d11e29f708f8f8f944aa53e070049d3b40fb2d9ecb7b22c33dff7110401dadada20cb32008088100a85100e874144e09c435555747676a6f6f6f67e94a7a7a73fedeaea926ddb462c16831002b66d03003ccf83effbd0340d4404c77160db361a8d0652a954626060e013796c6cec43d77521491242a110244982ebba68369ba8d56a7e2c16639ee7315555c13987699ab02c0b44849191910959d7f55700c0188324490887c3cf5b686e6eeeb3d1d1d1575b5b5b6ba669420881a7a7271886014551a0eb7a9fec799edbd1d101005014058c31c8b28cf6f6f6d0c2c2c2ebbebebede46a381482402ce390cc38010028aa280732ee4ebebeb77d168f47dc618c2e130229108babbbb51abd590c964324110c0344d388e03cbb21004011863088200e572f986e572b943cbb2a0aa2a1445811002b7b7b7701c07aaaa229148405114542a1570ce5b17a956abb8babafa45aad7eb77c964323d3333a331c6b0b2b28242a180a5a52598a6897c3e8fd5d555489284c3c3438c8f8f43d3346c6f6fbf2d140a6f18803fd7d6d6be3c3b3b836559c8e7f3088200f3f3f3383e3e46ad5643341a051161787818894402a7a7a7eececece57009aad360e0e0e7ebdbbbbeb974a25cae572542c16697f7f9f2a950a5d5c5cd0e5e5253d3c3cd0fafaba158fc7bf78e65a7daed7eb3f9f9c9cbcf33c6f50d7f5f78808434343608c81738ef3f3f3209bcdfebeb9b999711ce787672ef41f8fd9ae28caebfefefec99e9e9e7e2104dddfdfdfdeddddfd0ae03700c6bfcd7f030c63c7b7dc5684a70000000049454e44ae426082</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>bSeqDown</sender>
+        <signal>clicked()</signal>
+        <receiver>PlaybackOptionsw</receiver>
+        <slot>bSeqDownClick()</slot>
+    </connection>
+    <connection>
+        <sender>bSeqUp</sender>
+        <signal>clicked()</signal>
+        <receiver>PlaybackOptionsw</receiver>
+        <slot>bSeqUpClick()</slot>
+    </connection>
+    <connection>
+        <sender>ckMenu</sender>
+        <signal>clicked()</signal>
+        <receiver>PlaybackOptionsw</receiver>
+        <slot>ckMenuClick()</slot>
+    </connection>
+    <connection>
+        <sender>cbDefAudio</sender>
+        <signal>activated(int)</signal>
+        <receiver>PlaybackOptionsw</receiver>
+        <slot>cbDefAudioActivated(int)</slot>
+    </connection>
+    <connection>
+        <sender>cbDefSub</sender>
+        <signal>activated(int)</signal>
+        <receiver>PlaybackOptionsw</receiver>
+        <slot>cbDefSubActivated(int)</slot>
+    </connection>
+    <connection>
+        <sender>lbSequence</sender>
+        <signal>currentChanged(QListBoxItem*)</signal>
+        <receiver>PlaybackOptionsw</receiver>
+        <slot>lbSequenceChanged(QListBoxItem*)</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>cbStartActivated( int )</slot>
+    <slot>cbTitleActivated( int )</slot>
+    <slot>ckMenuClick()</slot>
+    <slot>bSeqUpClick()</slot>
+    <slot>bSeqDownClick()</slot>
+    <slot>lbSequenceChanged(QListBoxItem*)</slot>
+    <slot>cbDefAudioActivated(int)</slot>
+    <slot>cbDefSubActivated(int)</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

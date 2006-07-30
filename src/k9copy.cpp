@@ -12,20 +12,40 @@
 #include "k9main.h"
 #include "k9copy.h"
 #include "k9settings.h"
+#include "k9playbackoptions.h"
+#include "k9langselect.h"
 
 #include <kdeversion.h>
 #include <kstatusbar.h>
 #include <kstdaccel.h>
 #include <kaction.h>
 #include <kstdaction.h>
+#include <kdockwidget.h>
+#include <kmdidefines.h>
+#include <kmdichildarea.h>
+#include <qframe.h>
+#include <kkeydialog.h>
+#include <kedittoolbar.h>
 
 k9Copy::k9Copy()
-    : KMainWindow( 0, "k9Copy" ),
-      m_k9Main(new k9Main(this))
+    : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
 {
     // tell the KMainWindow that this is indeed the main widget
-    setCentralWidget(m_k9Main);
-  
+    setToolviewStyle(KMdi::TextAndIcon);
+    m_k9Main=new k9Main(this);
+    m_childView=createWrapper( m_k9Main,"","");
+    addWindow(m_childView, KMdi::StandardAdd ,0);
+    
+    k9PlaybackOptions *opt=new k9PlaybackOptions(m_k9Main,this);
+    addToolWindow(opt, KDockWidget::DockRight, getMainDockWidget(),0,i18n("DVD playback options"),i18n("DVD playback options"))->show();;
+
+    k9LangSelect *lang=new k9LangSelect(m_k9Main,this);
+    addToolWindow(lang, KDockWidget::DockRight, getMainDockWidget(),0,i18n("Selection"),i18n("Selection"));
+
+
+    // accept dnd
+    setAcceptDrops(true);
+
     // then, setup our actions
     setupActions();
 
@@ -37,22 +57,20 @@ k9Copy::k9Copy()
     // position, icon size, etc.  Also to add actions for the statusbar
 		// toolbar, and keybindings if necessary.
     resize(QSize(800,600));
-    setupGUI();
  
     // allow the view to change the statusbar and caption
-
+/*
     connect(m_k9Main, SIGNAL(signalChangeStatusbar(const QString&)),
             this,   SLOT(changeStatusbar(const QString&)));
     connect(m_k9Main, SIGNAL(signalChangeCaption(const QString&)),
             this,   SLOT(changeCaption(const QString&)));
-
-
+*/
+    setAutoSaveSettings();
 
 }
 
 k9Copy::~k9Copy()
 {
-kapp->quit();
 }
 bool k9Copy::queryClose   (    ) {	
 	return true;
@@ -61,8 +79,14 @@ bool k9Copy::queryClose   (    ) {
 void k9Copy::setupActions()
 {
     KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-    KStdAction::quit(this, SLOT(close()), actionCollection());
+    KStdAction::quit(kapp, SLOT(quit()), actionCollection());
     KStdAction::preferences(this,SLOT(preferences()),actionCollection());
+    KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
+    KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
+
+
+    setStandardToolBarMenuEnabled(TRUE);
+    createStandardStatusBarAction();
 
     PlayTitleAction = new KAction(i18n("Play title"), 0,
                                   this, SLOT(ActionPlayTitle()),
@@ -83,6 +107,31 @@ void k9Copy::setupActions()
 				  actionCollection(),"MakeMPEG4");
 
    mkMP4Action->setIcon("mp4");
+
+   createGUI(0);
+}
+
+void k9Copy::optionsConfigureKeys()
+{
+    KKeyDialog::configure(actionCollection());
+}
+
+void k9Copy::optionsConfigureToolbars()
+{
+    // use the standard toolbar editor
+    saveMainWindowSettings(KGlobal::config(), autoSaveGroup());
+    KEditToolbar dlg(factory());
+    connect(&dlg,SIGNAL(newToolbarConfig()),this,SLOT(newToolbarConfig()));
+    dlg.exec();
+}
+
+void k9Copy::newToolbarConfig()
+{
+    // this slot is called when user clicks "Ok" or "Apply" in the toolbar editor.
+    // recreate our GUI, and re-apply the settings (e.g. "text under icons", etc.)
+    createGUI(0);
+
+    applyMainWindowSettings(KGlobal::config(), autoSaveGroup());
 }
 
 void k9Copy::fileOpen()
@@ -113,6 +162,9 @@ void k9Copy::ActionMP4() {
 }
 
 
+
+
+
 void k9Copy::changeStatusbar(const QString& text)
 {
     // display the text on the statusbar
@@ -141,6 +193,7 @@ void k9Copy::setOutput(QString _output) {
 void k9Copy::closeEvent( QCloseEvent* ce ) {
     m_k9Main->saveSettings();
     ce->accept();
+    kapp->quit();
 }
 
 

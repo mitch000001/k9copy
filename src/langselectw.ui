@@ -1,0 +1,72 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>langSelect</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>langSelect</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>600</width>
+            <height>480</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Selection</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <widget class="QListView" row="0" column="0">
+            <column>
+                <property name="text">
+                    <string>Languages</string>
+                </property>
+                <property name="clickable">
+                    <bool>false</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>lvLanguages</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>1</hsizetype>
+                    <vsizetype>7</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>208</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="hScrollBarMode">
+                <enum>AlwaysOff</enum>
+            </property>
+            <property name="resizeMode">
+                <enum>LastColumn</enum>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="608">89504e470d0a1a0a0000000d4948445200000011000000120806000000bdf935540000022749444154388d9dd24f48d36118c0f1efef97ca0affe582220c9a825966ed20251d86512081c1829da2c33a64070fa5d0a50e5b5d0a42727508ba48073b49185114441b24b59ce5241029643041f1b77fbfaded37759b6f87e5dc3f5df4c203efe1793eefc3f33e9210024992283e1e30d7180cb63a93c928d7d7b301f8c6c65ce7c2e1b39b394288a24b21605c309984f07884989ecec5c2d09078093df9881002b94400d260ded7d707a15041b4f4f6a26b6e7e549cbf1de24ab9dd100c96c4718bc5f81cac159114340a4dcb16060205c8218381fdededb6a7d0b8995f05f075fc61a4e6db0b57fcfecc6c0a1aea743a6b536b6bb610a068f09d5d5d877fcdcfdf04ec39e460621cddc50be65d33c25cabd553d5d282944e67bbf80bacb8dd78bd5e35035ea1d723c18d02448b461d0d72d216e839c0dea93d108b6d3d2b4924fd7e3e78bd131a5ced079550088081fc99ac67e411e5c7a4babbfb24d1cc72b683bc58541412e0e807b5dc0c6580cec139351c4a3874f26fc2a7f4254854d3b80eae7240c1ef6c6418599efdacd69e3f4db83aba85280ac9d5d5edea0b91ee3b73aa12581f94630b2c5d3a0191084422c4e271e6d7d62676548ad7fefbf031dfd2a44dbc3136f9de82f3198c0ee7ed4471ad10a214797deba8d5ffeab2703eb6f8767c7d2704e0a3bdc3179e792046afb55bff0529bbf64a3033a8fefc42db1993ad523739addc797fbbcd1998ba279e5c3962ffaf4e001657e4bbee779f08567734546ae40f517b2c24c5d9542e0000000049454e44ae426082</data>
+    </image>
+</images>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

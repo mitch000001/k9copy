@@ -61,15 +61,17 @@ am_k9copy_OBJECTS = kcddrive.$(OBJEXT) kviewmpeg2.$(OBJEXT) \
 	main.$(OBJEXT) kconfigdlg.$(OBJEXT) k9copy.$(OBJEXT) \
 	k9main.$(OBJEXT) k9play.$(OBJEXT) k9settings.$(OBJEXT) \
 	k9prefmpeg4.$(OBJEXT) k9prefdvd.$(OBJEXT) \
-	k9prefmencoder.$(OBJEXT)
+	k9prefmencoder.$(OBJEXT) k9playbackoptions.$(OBJEXT) \
+	k9langselect.$(OBJEXT)
 #>- k9copy_OBJECTS = $(am_k9copy_OBJECTS)
-#>+ 9
+#>+ 10
 k9copy_final_OBJECTS = k9copy.o k9copy.all_cpp.o 
 k9copy_nofinal_OBJECTS = kcddrive.$(OBJEXT) kviewmpeg2.$(OBJEXT) \
 	main.$(OBJEXT) kconfigdlg.$(OBJEXT) k9copy.$(OBJEXT) \
 	k9main.$(OBJEXT) k9play.$(OBJEXT) k9settings.$(OBJEXT) \
 	k9prefmpeg4.$(OBJEXT) k9prefdvd.$(OBJEXT) \
-	k9prefmencoder.$(OBJEXT) viewmpeg2.$(OBJEXT) configDlg.$(OBJEXT) k9mainw.$(OBJEXT) prefDVD.$(OBJEXT) prefMPEG4.$(OBJEXT) prefMencoder.$(OBJEXT)\
+	k9prefmencoder.$(OBJEXT) k9playbackoptions.$(OBJEXT) \
+	k9langselect.$(OBJEXT) viewmpeg2.$(OBJEXT) configDlg.$(OBJEXT) k9mainw.$(OBJEXT) prefDVD.$(OBJEXT) prefMPEG4.$(OBJEXT) prefMencoder.$(OBJEXT) playbackoptionsw.$(OBJEXT) langselectw.$(OBJEXT)\
 k9main.moc.o kcddrive.moc.o k9copy.moc.o kviewmpeg2.moc.o 
 @KDE_USE_FINAL_FALSE@k9copy_OBJECTS = $(k9copy_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@k9copy_OBJECTS = $(k9copy_final_OBJECTS)
@@ -83,23 +85,32 @@ k9copy_DEPENDENCIES = $(top_builddir)/libdvdnav/libdvdnav.la \
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 am__depfiles_maybe = depfiles
-#>- @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/k9play.Po ./$(DEPDIR)/k9prefdvd.Po \
+#>- @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/k9copy.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k9langselect.Po ./$(DEPDIR)/k9main.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k9play.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k9playbackoptions.Po \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k9prefdvd.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k9prefmencoder.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k9prefmpeg4.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kcddrive.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/kconfigdlg.Po \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/kviewmpeg2.Po ./$(DEPDIR)/main.Po
-#>+ 14
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/prefDVD.P $(DEPDIR)/prefMPEG4.P $(DEPDIR)/prefMencoder.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/kviewmpeg2.moc.P  $(DEPDIR)/k9copy.all_cpp.P ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9play.Po ./$(DEPDIR)/k9prefdvd.Po \
+#>+ 20
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/prefDVD.P $(DEPDIR)/prefMPEG4.P $(DEPDIR)/prefMencoder.P $(DEPDIR)/playbackoptionsw.P $(DEPDIR)/langselectw.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/kviewmpeg2.moc.P  $(DEPDIR)/k9copy.all_cpp.P ./$(DEPDIR)/k9copy.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9langselect.Po ./$(DEPDIR)/k9main.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9play.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9playbackoptions.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefdvd.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefmencoder.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefmpeg4.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kcddrive.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/kconfigdlg.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/kviewmpeg2.Po ./$(DEPDIR)/main.Po
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/prefDVD.P $(DEPDIR)/prefMPEG4.P $(DEPDIR)/prefMencoder.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/kviewmpeg2.moc.P ./$(DEPDIR)/k9copy.Po ./$(DEPDIR)/k9main.Po \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9play.Po ./$(DEPDIR)/k9prefdvd.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/viewmpeg2.P $(DEPDIR)/configDlg.P $(DEPDIR)/k9mainw.P $(DEPDIR)/prefDVD.P $(DEPDIR)/prefMPEG4.P $(DEPDIR)/prefMencoder.P $(DEPDIR)/playbackoptionsw.P $(DEPDIR)/langselectw.P $(DEPDIR)/k9main.moc.P $(DEPDIR)/kcddrive.moc.P $(DEPDIR)/k9copy.moc.P $(DEPDIR)/kviewmpeg2.moc.P ./$(DEPDIR)/k9copy.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9langselect.Po ./$(DEPDIR)/k9main.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9play.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9playbackoptions.Po \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefdvd.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefmencoder.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9prefmpeg4.Po \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9settings.Po ./$(DEPDIR)/kcddrive.Po \
@@ -399,7 +410,7 @@ INCLUDES = -I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9vamps \
 
 # these are the headers for your project
 noinst_HEADERS = kconfigdlg.h k9copy.h k9main.h k9play.h k9settings.h \
-	k9prefmpeg4.h k9prefdvd.h k9prefmencoder.h
+		k9prefmpeg4.h k9prefdvd.h k9prefmencoder.h k9playbackoptions.h k9langselect.h
 
 
 # let automoc handle all of the meta source files (moc)
@@ -408,19 +419,21 @@ KDE_ICON = k9copy
 
 # the application source, library search path, and link libraries
 #>- k9copy_SOURCES = images.h kcddrive.cpp kcddrive.h kviewmpeg2.cpp kviewmpeg2.h \
-#>- 	viewmpeg2.ui k9copy.png main.cpp configDlg.ui kconfigdlg.cpp k9mainw.ui k9copy.cpp \
-#>- 	k9main.cpp k9play.cpp k9settings.cpp prefDVD.ui prefMPEG4.ui k9prefmpeg4.cpp \
-#>- 	k9prefdvd.cpp prefMencoder.ui k9prefmencoder.cpp
-#>+ 4
+#>- 		viewmpeg2.ui k9copy.png main.cpp configDlg.ui kconfigdlg.cpp k9mainw.ui k9copy.cpp \
+#>- 		k9main.cpp k9play.cpp k9settings.cpp prefDVD.ui prefMPEG4.ui k9prefmpeg4.cpp \
+#>- 		k9prefdvd.cpp prefMencoder.ui k9prefmencoder.cpp playbackoptionsw.ui \
+#>- 	k9playbackoptions.cpp langselectw.ui k9langselect.cpp
+#>+ 5
 k9copy_SOURCES=images.h kcddrive.cpp kcddrive.h kviewmpeg2.cpp kviewmpeg2.h \
-	 k9copy.png main.cpp  kconfigdlg.cpp  k9copy.cpp \
-	k9main.cpp k9play.cpp k9settings.cpp   k9prefmpeg4.cpp \
-	k9prefdvd.cpp  k9prefmencoder.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp
+		 k9copy.png main.cpp  kconfigdlg.cpp  k9copy.cpp \
+		k9main.cpp k9play.cpp k9settings.cpp   k9prefmpeg4.cpp \
+		k9prefdvd.cpp  k9prefmencoder.cpp  \
+	k9playbackoptions.cpp  k9langselect.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp playbackoptionsw.cpp langselectw.cpp
 
 k9copy_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 k9copy_LDADD = $(top_builddir)/libdvdnav/libdvdnav.la \
 	$(top_builddir)/libk9copy/libk9copy.la $(top_builddir)/k9decmpeg/libk9decmpeg.la \
-	$(top_builddir)/libk3bdevice/libk3bdevice.la $(top_builddir)/k9vamps/libk9vamps.la $(LIB_KPARTS) $(LIB_KDEUI) \
+	$(top_builddir)/libk3bdevice/libk3bdevice.la $(top_builddir)/k9vamps/libk9vamps.la -lkmdi $(LIB_KPARTS) $(LIB_KDEUI) \
 	-ldvdread
 
 
@@ -523,8 +536,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9copy.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9langselect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9play.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9playbackoptions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9prefdvd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9prefmencoder.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9prefmpeg4.Po@am__quote@
@@ -915,6 +930,13 @@ kcddrive.moc.cpp: $(srcdir)/kcddrive.h
 mocs: kcddrive.moc.cpp
 
 #>+ 3
+k9langselect.moc: $(srcdir)/k9langselect.h
+	$(MOC) $(srcdir)/k9langselect.h -o k9langselect.moc
+
+#>+ 2
+mocs: k9langselect.moc
+
+#>+ 3
 k9settings.moc: $(srcdir)/k9settings.h
 	$(MOC) $(srcdir)/k9settings.h -o k9settings.moc
 
@@ -943,6 +965,13 @@ k9prefdvd.moc: $(srcdir)/k9prefdvd.h
 mocs: k9prefdvd.moc
 
 #>+ 3
+k9playbackoptions.moc: $(srcdir)/k9playbackoptions.h
+	$(MOC) $(srcdir)/k9playbackoptions.h -o k9playbackoptions.moc
+
+#>+ 2
+mocs: k9playbackoptions.moc
+
+#>+ 3
 k9prefmpeg4.moc: $(srcdir)/k9prefmpeg4.h
 	$(MOC) $(srcdir)/k9prefmpeg4.h -o k9prefmpeg4.moc
 
@@ -958,12 +987,12 @@ mocs: k9prefmencoder.moc
 
 #>+ 3
 clean-metasources:
-	-rm -f  k9main.moc.cpp kcddrive.moc.cpp k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9prefdvd.moc k9prefmpeg4.moc k9prefmencoder.moc
+	-rm -f  k9main.moc.cpp kcddrive.moc.cpp k9langselect.moc k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9prefdvd.moc k9playbackoptions.moc k9prefmpeg4.moc k9prefmencoder.moc
 
 #>+ 2
-KDE_DIST=viewmpeg2.ui configDlg.ui prefMPEG4.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png prefDVD.ui hi32-app-k9copy.png k9copy_open.desktop Makefile.in prefMencoder.ui k9copy.desktop Makefile.am 
+KDE_DIST=viewmpeg2.ui configDlg.ui prefMPEG4.ui k9mainw.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png prefDVD.ui hi32-app-k9copy.png k9copy_open.desktop Makefile.in prefMencoder.ui langselectw.ui k9copy.desktop Makefile.am playbackoptionsw.ui 
 
-#>+ 9
+#>+ 11
 clean-ui:
 	-rm -f \
 	viewmpeg2.cpp viewmpeg2.h viewmpeg2.moc \
@@ -971,7 +1000,9 @@ clean-ui:
 	k9mainw.cpp k9mainw.h k9mainw.moc \
 	prefDVD.cpp prefDVD.h prefDVD.moc \
 	prefMPEG4.cpp prefMPEG4.h prefMPEG4.moc \
-	prefMencoder.cpp prefMencoder.h prefMencoder.moc 
+	prefMencoder.cpp prefMencoder.h prefMencoder.moc \
+	playbackoptionsw.cpp playbackoptionsw.h playbackoptionsw.moc \
+	langselectw.cpp langselectw.h langselectw.moc 
 
 #>+ 2
 docs-am:
@@ -1029,11 +1060,11 @@ bcheck-am:
 
 
 #>+ 11
-k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp $(srcdir)/k9play.cpp $(srcdir)/k9settings.cpp $(srcdir)/k9prefmpeg4.cpp $(srcdir)/k9prefdvd.cpp $(srcdir)/k9prefmencoder.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp  prefMencoder.moc k9settings.moc prefDVD.moc configDlg.moc k9prefdvd.moc viewmpeg2.moc prefMPEG4.moc k9mainw.moc k9prefmpeg4.moc k9prefmencoder.moc
+k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kcddrive.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/k9copy.cpp $(srcdir)/k9main.cpp $(srcdir)/k9play.cpp $(srcdir)/k9settings.cpp $(srcdir)/k9prefmpeg4.cpp $(srcdir)/k9prefdvd.cpp $(srcdir)/k9prefmencoder.cpp $(srcdir)/k9playbackoptions.cpp $(srcdir)/k9langselect.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp playbackoptionsw.cpp langselectw.cpp k9main.moc.cpp kcddrive.moc.cpp k9copy.moc.cpp kviewmpeg2.moc.cpp  prefMencoder.moc playbackoptionsw.moc configDlg.moc k9prefdvd.moc viewmpeg2.moc langselectw.moc k9playbackoptions.moc k9prefmencoder.moc k9langselect.moc prefDVD.moc k9settings.moc prefMPEG4.moc k9mainw.moc k9prefmpeg4.moc
 	@echo 'creating k9copy.all_cpp.cpp ...'; \
 	rm -f k9copy.all_cpp.files k9copy.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> k9copy.all_cpp.final; \
-	for file in kcddrive.cpp kviewmpeg2.cpp main.cpp kconfigdlg.cpp k9copy.cpp k9main.cpp k9play.cpp k9settings.cpp k9prefmpeg4.cpp k9prefdvd.cpp k9prefmencoder.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp kcddrive.moc.cpp k9main.moc.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp ; do \
+	for file in kcddrive.cpp kviewmpeg2.cpp main.cpp kconfigdlg.cpp k9copy.cpp k9main.cpp k9play.cpp k9settings.cpp k9prefmpeg4.cpp k9prefdvd.cpp k9prefmencoder.cpp k9playbackoptions.cpp k9langselect.cpp viewmpeg2.cpp configDlg.cpp k9mainw.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp playbackoptionsw.cpp langselectw.cpp k9main.moc.cpp kcddrive.moc.cpp k9copy.moc.cpp kviewmpeg2.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> k9copy.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> k9copy.all_cpp.final; \
 	done; \
@@ -1068,34 +1099,40 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 26
-$(srcdir)/k9prefmpeg4.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+#>+ 32
+$(srcdir)/k9prefmpeg4.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+k9langselect.o: k9langselect.moc 
+$(srcdir)/k9langselect.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
 k9prefmpeg4.lo: k9prefmpeg4.moc 
 k9settings.lo: k9settings.moc 
-$(srcdir)/k9prefmencoder.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/k9play.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+$(srcdir)/k9play.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
 k9prefdvd.lo: k9prefdvd.moc 
-$(srcdir)/main.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+$(srcdir)/main.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
 k9prefdvd.o: k9prefdvd.moc 
+k9playbackoptions.lo: k9playbackoptions.moc 
+$(srcdir)/k9copy.png: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/kconfigdlg.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/k9prefdvd.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/kcddrive.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/kcddrive.h: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+nmcheck-am: nmcheck
+k9playbackoptions.o: k9playbackoptions.moc 
+k9langselect.lo: k9langselect.moc 
+k9settings.o: k9settings.moc 
+$(srcdir)/k9settings.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/k9main.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/k9prefmencoder.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
 k9prefmencoder.lo: k9prefmencoder.moc 
-$(srcdir)/k9copy.png: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/kconfigdlg.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/k9copy.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+$(srcdir)/k9playbackoptions.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/k9copy.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
 nmcheck: 
 k9prefmpeg4.o: k9prefmpeg4.moc 
-$(srcdir)/k9prefdvd.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/kcddrive.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/kviewmpeg2.h: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/kcddrive.h: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/kviewmpeg2.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-nmcheck-am: nmcheck
-$(srcdir)/images.h: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-k9settings.o: k9settings.moc 
-$(srcdir)/k9settings.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
-$(srcdir)/k9main.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h 
+$(srcdir)/kviewmpeg2.h: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/kviewmpeg2.cpp: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
+$(srcdir)/images.h: viewmpeg2.h configDlg.h k9mainw.h prefDVD.h prefMPEG4.h prefMencoder.h playbackoptionsw.h langselectw.h 
 k9prefmencoder.o: k9prefmencoder.moc 
 
-#>+ 84
+#>+ 112
 viewmpeg2.cpp: $(srcdir)/viewmpeg2.ui viewmpeg2.h viewmpeg2.moc
 	rm -f viewmpeg2.cpp
 	echo '#include <klocale.h>' > viewmpeg2.cpp
@@ -1109,6 +1146,20 @@ viewmpeg2.h: $(srcdir)/viewmpeg2.ui
 
 viewmpeg2.moc: viewmpeg2.h
 	$(MOC) viewmpeg2.h -o viewmpeg2.moc
+
+playbackoptionsw.cpp: $(srcdir)/playbackoptionsw.ui playbackoptionsw.h playbackoptionsw.moc
+	rm -f playbackoptionsw.cpp
+	echo '#include <klocale.h>' > playbackoptionsw.cpp
+	$(UIC) -tr ${UIC_TR} -i playbackoptionsw.h $(srcdir)/playbackoptionsw.ui > playbackoptionsw.cpp.temp ; ret=$$?; \
+	sed -e "s,${UIC_TR}( \"\" ),QString::null,g" playbackoptionsw.cpp.temp | sed -e "s,${UIC_TR}( \"\"\, \"\" ),QString::null,g" | sed -e "s,image\([0-9][0-9]*\)_data,img\1_playbackoptionsw,g" >> playbackoptionsw.cpp ;\
+	rm -f playbackoptionsw.cpp.temp ;\
+	if test "$$ret" = 0; then echo '#include "playbackoptionsw.moc"' >> playbackoptionsw.cpp; else rm -f playbackoptionsw.cpp ; exit $$ret ; fi
+
+playbackoptionsw.h: $(srcdir)/playbackoptionsw.ui
+	$(UIC) -o playbackoptionsw.h $(srcdir)/playbackoptionsw.ui
+
+playbackoptionsw.moc: playbackoptionsw.h
+	$(MOC) playbackoptionsw.h -o playbackoptionsw.moc
 
 prefDVD.cpp: $(srcdir)/prefDVD.ui prefDVD.h prefDVD.moc
 	rm -f prefDVD.cpp
@@ -1138,20 +1189,6 @@ prefMencoder.h: $(srcdir)/prefMencoder.ui
 prefMencoder.moc: prefMencoder.h
 	$(MOC) prefMencoder.h -o prefMencoder.moc
 
-configDlg.cpp: $(srcdir)/configDlg.ui configDlg.h configDlg.moc
-	rm -f configDlg.cpp
-	echo '#include <klocale.h>' > configDlg.cpp
-	$(UIC) -tr ${UIC_TR} -i configDlg.h $(srcdir)/configDlg.ui > configDlg.cpp.temp ; ret=$$?; \
-	sed -e "s,${UIC_TR}( \"\" ),QString::null,g" configDlg.cpp.temp | sed -e "s,${UIC_TR}( \"\"\, \"\" ),QString::null,g" | sed -e "s,image\([0-9][0-9]*\)_data,img\1_configDlg,g" >> configDlg.cpp ;\
-	rm -f configDlg.cpp.temp ;\
-	if test "$$ret" = 0; then echo '#include "configDlg.moc"' >> configDlg.cpp; else rm -f configDlg.cpp ; exit $$ret ; fi
-
-configDlg.h: $(srcdir)/configDlg.ui
-	$(UIC) -o configDlg.h $(srcdir)/configDlg.ui
-
-configDlg.moc: configDlg.h
-	$(MOC) configDlg.h -o configDlg.moc
-
 k9mainw.cpp: $(srcdir)/k9mainw.ui k9mainw.h k9mainw.moc
 	rm -f k9mainw.cpp
 	echo '#include <klocale.h>' > k9mainw.cpp
@@ -1165,6 +1202,34 @@ k9mainw.h: $(srcdir)/k9mainw.ui
 
 k9mainw.moc: k9mainw.h
 	$(MOC) k9mainw.h -o k9mainw.moc
+
+langselectw.cpp: $(srcdir)/langselectw.ui langselectw.h langselectw.moc
+	rm -f langselectw.cpp
+	echo '#include <klocale.h>' > langselectw.cpp
+	$(UIC) -tr ${UIC_TR} -i langselectw.h $(srcdir)/langselectw.ui > langselectw.cpp.temp ; ret=$$?; \
+	sed -e "s,${UIC_TR}( \"\" ),QString::null,g" langselectw.cpp.temp | sed -e "s,${UIC_TR}( \"\"\, \"\" ),QString::null,g" | sed -e "s,image\([0-9][0-9]*\)_data,img\1_langselectw,g" >> langselectw.cpp ;\
+	rm -f langselectw.cpp.temp ;\
+	if test "$$ret" = 0; then echo '#include "langselectw.moc"' >> langselectw.cpp; else rm -f langselectw.cpp ; exit $$ret ; fi
+
+langselectw.h: $(srcdir)/langselectw.ui
+	$(UIC) -o langselectw.h $(srcdir)/langselectw.ui
+
+langselectw.moc: langselectw.h
+	$(MOC) langselectw.h -o langselectw.moc
+
+configDlg.cpp: $(srcdir)/configDlg.ui configDlg.h configDlg.moc
+	rm -f configDlg.cpp
+	echo '#include <klocale.h>' > configDlg.cpp
+	$(UIC) -tr ${UIC_TR} -i configDlg.h $(srcdir)/configDlg.ui > configDlg.cpp.temp ; ret=$$?; \
+	sed -e "s,${UIC_TR}( \"\" ),QString::null,g" configDlg.cpp.temp | sed -e "s,${UIC_TR}( \"\"\, \"\" ),QString::null,g" | sed -e "s,image\([0-9][0-9]*\)_data,img\1_configDlg,g" >> configDlg.cpp ;\
+	rm -f configDlg.cpp.temp ;\
+	if test "$$ret" = 0; then echo '#include "configDlg.moc"' >> configDlg.cpp; else rm -f configDlg.cpp ; exit $$ret ; fi
+
+configDlg.h: $(srcdir)/configDlg.ui
+	$(UIC) -o configDlg.h $(srcdir)/configDlg.ui
+
+configDlg.moc: configDlg.h
+	$(MOC) configDlg.h -o configDlg.moc
 
 prefMPEG4.cpp: $(srcdir)/prefMPEG4.ui prefMPEG4.h prefMPEG4.moc
 	rm -f prefMPEG4.cpp

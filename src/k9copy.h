@@ -19,10 +19,10 @@
 #endif
 
 #include <kapplication.h>
-#include <kmainwindow.h>
+#include <kmdimainfrm.h>
 class k9Main;
 
-class k9Copy : public KMainWindow
+class k9Copy : public KMdiMainFrm
 {
     Q_OBJECT
 public:
@@ -51,6 +51,9 @@ private slots:
    void ActionPlayTitle();
     void changeStatusbar(const QString& text);
     void changeCaption(const QString& text);
+    void optionsConfigureKeys();
+    void optionsConfigureToolbars();
+    void newToolbarConfig();
 public slots:
     void fileOpen();
     void preferences();
@@ -60,9 +63,10 @@ private:
     KAction *CopyAction;
     KAction *PlayTitleAction;
     KAction *mkMP4Action;
+
 private:
    k9Main  *m_k9Main;
-
+   KMdiChildView *m_childView;
 };
 
 
