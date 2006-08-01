@@ -27,6 +27,7 @@
 #include <kkeydialog.h>
 #include <kedittoolbar.h>
 
+
 k9Copy::k9Copy()
     : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
 {
@@ -51,6 +52,10 @@ k9Copy::k9Copy()
 
     // and a status bar
     statusBar()->show();
+    statusBar()->insertFixedItem("",sbFactor,TRUE);
+    statusBar()->setItemFixed(sbFactor,100);
+    statusBar()->insertItem("",sbMessage,1,FALSE);
+    statusBar()->setItemAlignment(sbMessage,AlignLeft | AlignVCenter);
 
     // Apply the create the main window and ask the mainwindow to
 		// automatically save settings if changed: window size, toolbar
@@ -59,14 +64,13 @@ k9Copy::k9Copy()
     resize(QSize(800,600));
  
     // allow the view to change the statusbar and caption
-/*
-    connect(m_k9Main, SIGNAL(signalChangeStatusbar(const QString&)),
-            this,   SLOT(changeStatusbar(const QString&)));
-    connect(m_k9Main, SIGNAL(signalChangeCaption(const QString&)),
-            this,   SLOT(changeCaption(const QString&)));
-*/
-    setAutoSaveSettings();
 
+    connect(m_k9Main, SIGNAL(changeStatusbar(const QString&,int )),
+            this,   SLOT(changeStatusbar(const QString&,int)));
+    connect(m_k9Main, SIGNAL(changeCaption(const QString&)),
+            this,   SLOT(changeCaption(const QString&)));
+
+    setAutoSaveSettings();
 }
 
 k9Copy::~k9Copy()
@@ -165,10 +169,10 @@ void k9Copy::ActionMP4() {
 
 
 
-void k9Copy::changeStatusbar(const QString& text)
+void k9Copy::changeStatusbar(const QString& text,int id)
 {
     // display the text on the statusbar
-    statusBar()->message(text);
+    statusBar()->changeItem(text,id);
 }
 
 void k9Copy::changeCaption(const QString& text)

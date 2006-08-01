@@ -20,6 +20,10 @@
 
 #include <kapplication.h>
 #include <kmdimainfrm.h>
+
+enum eStatusBarId {sbMessage=0,sbFactor=1};
+
+
 class k9Main;
 
 class k9Copy : public KMdiMainFrm
@@ -49,7 +53,7 @@ private slots:
     void ActionMP4();
 
    void ActionPlayTitle();
-    void changeStatusbar(const QString& text);
+    void changeStatusbar(const QString& text,int id);
     void changeCaption(const QString& text);
     void optionsConfigureKeys();
     void optionsConfigureToolbars();

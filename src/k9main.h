@@ -28,7 +28,7 @@
 #include <qevent.h>
 #include <kfiledialog.h>
 #include <qlistbox.h>
-
+#include "k9copy.h"
 
 enum  eStreamType {SUB,AUD,VID,NONE} ;
 
@@ -200,6 +200,8 @@ protected slots:
 signals: // Signals
     /** No descriptions */
     void sig_progress(QString str);
+    void changeStatusbar(const QString& str,int id);
+    void changeCaption(const QString& str);
 private:
     void fillLvLanguages();
     void updateLvLang(const eStreamType streamType,const QString & lang) ;

@@ -287,7 +287,8 @@ void ckLvItem::stateChange(bool state) {
         }
         k9DVD *d = mainDlg->dvd;
         mainDlg->setDVDSize();
-        (mainDlg->factor)->setValue((int) (d->getfactor(mainDlg->withMenus(),true )*100)-100 );
+	mainDlg->updateFactor();
+        //(mainDlg->factor)->setValue((int) (d->getfactor(mainDlg->withMenus(),true )*100)-100 );
     }
 }
 
@@ -316,7 +317,7 @@ void k9Main::Copy() {
         if (KMessageBox::warningContinueCancel (this, i18n("Insuffisant disk space on %1\n%2 mb expected.").arg(m_prefOutput).arg(m_prefSize),i18n("DVD Copy"))==KMessageBox::Cancel)
             return;
     }
-
+    changeStatusbar( i18n("Backup in progress"),sbMessage);
     bool burn=false;
     if (withMenus()) {
         //copy with k9DVDBackup
@@ -341,6 +342,8 @@ void k9Main::Copy() {
     }
 
     if (burn) {
+        changeStatusbar(i18n("Burning DVD"),sbMessage);
+
         k9BurnDVD b;
         b.setworkDir(m_prefOutput);
         b.setUseK3b(m_prefK3b);
@@ -357,7 +360,8 @@ void k9Main::Copy() {
             b.makeIso(filename);
         b.burn();
     }
-
+    if(dvd->getopened())
+        changeStatusbar(i18n("Ready"),sbMessage);
 
 }
 
@@ -446,6 +450,7 @@ void k9Main::Open() {
     m_playbackOptions->fillTitleList();
     m_langSelect->fillLvLanguages();
     listView1->setSorting(0,true);
+    changeStatusbar( i18n("Ready"),sbMessage);
 }
 
 void k9Main::setDVDSize() {
@@ -842,7 +847,9 @@ void k9Main::CreateMP4() {
         return;
     }
     for (int i=0; i < dvd->gettitleCount();i++) {
-	k9DVDTitle *t=dvd->gettitle(i);
+       k9DVDTitle *t=dvd->gettitle(i);
+       changeStatusbar( i18n("Transcoding title : %1").arg(t->getname()) ,sbMessage);
+
 	if (t->isSelected() && t->getIndexed() ) {
 		k9MP4Enc *mp4=new k9MP4Enc();
 		mp4->setDevice(dvd->getDevice());
@@ -856,6 +863,9 @@ void k9Main::CreateMP4() {
 		delete mp4;
 	}       
     }
+    changeStatusbar( i18n("Ready") ,sbMessage);
+
+
 }
 
 
@@ -904,6 +914,8 @@ void k9Main::listView1CurrentChanged( QListViewItem *newItem ) {
 
 
 void k9Main::closeDVD() {
+    changeStatusbar( "",sbFactor);
+    changeStatusbar( "",sbMessage);
     listView1->clear();
     items.clear();
     m_langSelect->clear();
@@ -1013,7 +1025,15 @@ void k9Main::updateFactor() {
     if (dvd->getopened()) {
         updateSelection();
         setDVDSize();
-        factor->setValue((int) ( dvd->getfactor(withMenus(),true )*100)-100 );
+	double dbfactor=dvd->getfactor(withMenus(),true);
+
+        factor->setValue((int) ( dbfactor*100)-100 );
+
+	if (dvd->getsizeSelected(FALSE)==0) 
+		changeStatusbar("",sbFactor);
+	else
+		changeStatusbar( QString::number(dbfactor,'f',2),sbFactor);
+
     }
 }
 
