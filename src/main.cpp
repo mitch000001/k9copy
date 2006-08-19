@@ -18,13 +18,13 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 #include "k9common.h"
-#include "k9copy.h"
 #include "k9play.h"
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include "ac.h"
+#include "k9copy.h"
 
 static const char description[] =
     I18N_NOOP("A DVD Backup tool for KDE");

@@ -27,6 +27,7 @@
 #include <qapplication.h>
 #include <qcstring.h>
 
+
 kDecMPEG2::kDecMPEG2(){
   demux_pid=0;
   demux_track=0xe0;
@@ -282,6 +283,8 @@ void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
     tc_memcpy(s,c,strlen(c));
     tc_memcpy(s+strlen(c),buf, 3 * width *height);
     pix.loadFromData((uchar*)s,strlen(c)+3*width*height);
+    ppmReady((uchar*)s,(char*)buf,strlen(c)+3*width*height);
+
     free(s);
     pixmapReady(pix);
 //    qApp->processEvents();
@@ -296,19 +299,21 @@ void kDecMPEG2::decode_mpeg2(uint8_t * current, uint8_t * end)
     mpeg2_buffer (decoder, current, end);
 
     info = mpeg2_info (decoder);
+
     while (1) {
 	    state = mpeg2_parse (decoder);
 	    switch (state) {
   	    case STATE_BUFFER:
   	      return;
   	    case STATE_SEQUENCE:
-  	      mpeg2_convert (decoder, mpeg2convert_rgb24, NULL);
+  	      	mpeg2_convert (decoder, mpeg2convert_rgb (MPEG2CONVERT_RGB,QPixmap::defaultDepth()), NULL);
   	      break;
+	    case STATE_PICTURE:
+		break;
   	    case STATE_SLICE:
   	    case STATE_END:
   	    case STATE_INVALID_END:
-  		    if (info->display_fbuf) save_ppm (info->sequence->width, info->sequence->height,
-  			    info->display_fbuf->buf[0], framenum++);
+  		    if (info->display_fbuf  ) save_ppm (info->sequence->width, info->sequence->height,info->display_fbuf->buf[0], framenum++);
   	      break;
   	    default:
   	      break;
@@ -318,7 +323,9 @@ void kDecMPEG2::decode_mpeg2(uint8_t * current, uint8_t * end)
 
 int kDecMPEG2::decode (uint8_t * buf, uint8_t * end, int flags)
 {
+  mutex.lock();
   demux (buf,end,0);
+  mutex.unlock();
   return 0;
 }
 kDecMPEG2::~kDecMPEG2(){
@@ -326,16 +333,18 @@ kDecMPEG2::~kDecMPEG2(){
    	mpeg2_close (decoder);
 }
 
-void kDecMPEG2::restart() {
+void kDecMPEG2::restart() { 
+  mutex.lock();
   if (m_opened)
   	mpeg2_close (decoder);
   decoder = mpeg2_init ();
   m_opened=true;
   if (decoder == NULL) {
 	  fprintf (stderr, "Could not allocate a decoder object.\n");
-	  exit (1);
   }  
+  mutex.unlock();  
 }
+
 
 void kDecMPEG2::start() {
   decoder = mpeg2_init ();
@@ -347,7 +356,8 @@ void kDecMPEG2::start() {
 }
 
 void kDecMPEG2::stop() {
-   mpeg2_close(decoder);
+   if (m_opened)
+	mpeg2_close(decoder);
    m_opened=false;
 }
 

@@ -836,8 +836,8 @@ void k9Main::PreviewTitle() {
     }
     if (obj !=NULL) {
         k9DVDTitle *t=(k9DVDTitle*)obj;
-        viewer.show();
-        viewer.open(getDevice(cbInputDev),t);
+        viewer->show();
+        viewer->open(getDevice(cbInputDev),t);
     }
 }
 
@@ -914,6 +914,7 @@ void k9Main::listView1CurrentChanged( QListViewItem *newItem ) {
 
 
 void k9Main::closeDVD() {
+    viewer->bStopClick();
     changeStatusbar( "",sbFactor);
     changeStatusbar( "",sbMessage);
     listView1->clear();

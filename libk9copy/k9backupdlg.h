@@ -23,8 +23,8 @@
 
 #include "k9common.h"
 #include "backupdlg.h"
-#include "kdecmpeg2.h"
 #include <qmutex.h>
+#include "kdecmpeg2.h"
 
 class k9BackupDlg : public backupDlg
 {

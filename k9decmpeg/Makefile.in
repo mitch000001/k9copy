@@ -15,6 +15,7 @@
 
 @SET_MAKE@
 
+
 SOURCES = $(libk9decmpeg_la_SOURCES)
 
 srcdir = @srcdir@
@@ -41,7 +42,8 @@ build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
 subdir = k9decmpeg
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.in
@@ -57,7 +59,7 @@ am_libk9decmpeg_la_OBJECTS = alloc.lo cpu_accel.lo cpu_state.lo \
 	idct_mmx.lo kdecmpeg2.lo motion_comp_alpha.lo \
 	motion_comp_altivec.lo motion_comp.lo motion_comp_mmx.lo \
 	motion_comp_vis.lo rgb.lo rgb_mmx.lo rgb_vis.lo slice.lo \
-	uyvy.lo
+	uyvy.lo k9decodethread.lo k9plaympeg2.lo
 #>- libk9decmpeg_la_OBJECTS = $(am_libk9decmpeg_la_OBJECTS)
 #>+ 10
 libk9decmpeg_la_final_OBJECTS = libk9decmpeg_la.all_cpp.lo 
@@ -66,7 +68,7 @@ libk9decmpeg_la_nofinal_OBJECTS = alloc.lo cpu_accel.lo cpu_state.lo \
 	idct_mmx.lo kdecmpeg2.lo motion_comp_alpha.lo \
 	motion_comp_altivec.lo motion_comp.lo motion_comp_mmx.lo \
 	motion_comp_vis.lo rgb.lo rgb_mmx.lo rgb_vis.lo slice.lo \
-	uyvy.lo\
+	uyvy.lo k9decodethread.lo k9plaympeg2.lo\
 kdecmpeg2.moc.lo 
 @KDE_USE_FINAL_FALSE@libk9decmpeg_la_OBJECTS = $(libk9decmpeg_la_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@libk9decmpeg_la_OBJECTS = $(libk9decmpeg_la_final_OBJECTS)
@@ -79,7 +81,10 @@ am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@	./$(DEPDIR)/header.Plo ./$(DEPDIR)/idct.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/idct_alpha.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/idct_altivec.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/idct_mmx.Plo ./$(DEPDIR)/kdecmpeg2.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/idct_mmx.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k9decodethread.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/k9plaympeg2.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/kdecmpeg2.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/motion_comp.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/motion_comp_alpha.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/motion_comp_altivec.Plo \
@@ -88,14 +93,17 @@ am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rgb.Plo ./$(DEPDIR)/rgb_mmx.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/rgb_vis.Plo ./$(DEPDIR)/slice.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/uyvy.Plo
-#>+ 30
+#>+ 36
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/kdecmpeg2.moc.P  $(DEPDIR)/libk9decmpeg_la.all_cpp.P ./$(DEPDIR)/alloc.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/cpu_accel.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/cpu_state.Plo ./$(DEPDIR)/decode.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/header.Plo ./$(DEPDIR)/idct.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/idct_alpha.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/idct_altivec.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/idct_mmx.Plo ./$(DEPDIR)/kdecmpeg2.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/idct_mmx.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9decodethread.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/k9plaympeg2.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/kdecmpeg2.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/motion_comp.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/motion_comp_alpha.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/motion_comp_altivec.Plo \
@@ -110,7 +118,10 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/header.Plo ./$(DEPDIR)/idct.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/idct_alpha.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/idct_altivec.Plo \
-@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/idct_mmx.Plo ./$(DEPDIR)/kdecmpeg2.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/idct_mmx.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9decodethread.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/k9plaympeg2.Plo \
+@AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/kdecmpeg2.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/motion_comp.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/motion_comp_alpha.Plo \
 @AMDEP_TRUE@@KDE_USE_FINAL_FALSE@	@AMDEP_TRUE@	./$(DEPDIR)/motion_comp_altivec.Plo \
@@ -147,6 +158,7 @@ LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libk9decmpeg_la_SOURCES)
 DIST_SOURCES = $(libk9decmpeg_la_SOURCES)
+HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 #>- DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -390,15 +402,17 @@ KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 #>- METASOURCES = AUTO
 libk9decmpeg_la_LDFLAGS = $(all_libraries)
 noinst_LTLIBRARIES = libk9decmpeg.la
-libk9decmpeg_la_SOURCES = alloc.cpp attributes.h bswap.h convert_internal.h\
-	cpu_accel.cpp cpu_state.cpp decode.cpp header.cpp idct_alpha.cpp\
-	idct_altivec.cpp idct.cpp idct_mmx.cpp kdecmpeg2.cpp kdecmpeg2.h mmx.h\
-	motion_comp_alpha.cpp motion_comp_altivec.cpp motion_comp.cpp\
-	motion_comp_mmx.cpp motion_comp_vis.cpp mpeg2convert.h mpeg2.h\
-	mpeg2_internal.h rgb.cpp rgb_mmx.cpp rgb_vis.cpp slice.cpp tendra.h\
-	uyvy.cpp video_out.h vis.h vlc.h
+libk9decmpeg_la_SOURCES = alloc.cpp attributes.h bswap.h convert_internal.h \
+	cpu_accel.cpp cpu_state.cpp decode.cpp header.cpp idct_alpha.cpp idct_altivec.cpp \
+	idct.cpp idct_mmx.cpp kdecmpeg2.cpp kdecmpeg2.h mmx.h motion_comp_alpha.cpp \
+	motion_comp_altivec.cpp motion_comp.cpp motion_comp_mmx.cpp motion_comp_vis.cpp mpeg2convert.h \
+	mpeg2.h mpeg2_internal.h rgb.cpp rgb_mmx.cpp rgb_vis.cpp slice.cpp tendra.h \
+	uyvy.cpp video_out.h vis.h vlc.h k9decodethread.cpp k9plaympeg2.cpp
 
-INCLUDES = -I$(top_srcdir)/k9vamps -I$(top_srcdir)/libk9copy
+INCLUDES = -I$(top_srcdir)/k9vamps -I$(top_srcdir)/libdvdnav \
+	-I$(top_srcdir)/libk9copy
+
+noinst_HEADERS = k9decodethread.h k9plaympeg2.h
 #>- all: all-am
 #>+ 1
 all: docs-am  all-am
@@ -474,6 +488,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idct_alpha.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idct_altivec.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/idct_mmx.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9decodethread.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9plaympeg2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kdecmpeg2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/motion_comp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/motion_comp_alpha.Plo@am__quote@
@@ -597,7 +613,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -703,8 +719,15 @@ kdecmpeg2.moc.cpp: $(srcdir)/kdecmpeg2.h
 mocs: kdecmpeg2.moc.cpp
 
 #>+ 3
+k9plaympeg2.moc: $(srcdir)/k9plaympeg2.h
+	$(MOC) $(srcdir)/k9plaympeg2.h -o k9plaympeg2.moc
+
+#>+ 2
+mocs: k9plaympeg2.moc
+
+#>+ 3
 clean-metasources:
-	-rm -f  kdecmpeg2.moc.cpp
+	-rm -f  kdecmpeg2.moc.cpp k9plaympeg2.moc
 
 #>+ 2
 KDE_DIST=Makefile.in Makefile.am 
@@ -751,11 +774,11 @@ bcheck-am:
 
 
 #>+ 11
-libk9decmpeg_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/alloc.cpp $(srcdir)/cpu_accel.cpp $(srcdir)/cpu_state.cpp $(srcdir)/decode.cpp $(srcdir)/header.cpp $(srcdir)/idct_alpha.cpp $(srcdir)/idct_altivec.cpp $(srcdir)/idct.cpp $(srcdir)/idct_mmx.cpp $(srcdir)/kdecmpeg2.cpp $(srcdir)/motion_comp_alpha.cpp $(srcdir)/motion_comp_altivec.cpp $(srcdir)/motion_comp.cpp $(srcdir)/motion_comp_mmx.cpp $(srcdir)/motion_comp_vis.cpp $(srcdir)/rgb.cpp $(srcdir)/rgb_mmx.cpp $(srcdir)/rgb_vis.cpp $(srcdir)/slice.cpp $(srcdir)/uyvy.cpp kdecmpeg2.moc.cpp 
+libk9decmpeg_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/alloc.cpp $(srcdir)/cpu_accel.cpp $(srcdir)/cpu_state.cpp $(srcdir)/decode.cpp $(srcdir)/header.cpp $(srcdir)/idct_alpha.cpp $(srcdir)/idct_altivec.cpp $(srcdir)/idct.cpp $(srcdir)/idct_mmx.cpp $(srcdir)/kdecmpeg2.cpp $(srcdir)/motion_comp_alpha.cpp $(srcdir)/motion_comp_altivec.cpp $(srcdir)/motion_comp.cpp $(srcdir)/motion_comp_mmx.cpp $(srcdir)/motion_comp_vis.cpp $(srcdir)/rgb.cpp $(srcdir)/rgb_mmx.cpp $(srcdir)/rgb_vis.cpp $(srcdir)/slice.cpp $(srcdir)/uyvy.cpp $(srcdir)/k9decodethread.cpp $(srcdir)/k9plaympeg2.cpp kdecmpeg2.moc.cpp  k9plaympeg2.moc
 	@echo 'creating libk9decmpeg_la.all_cpp.cpp ...'; \
 	rm -f libk9decmpeg_la.all_cpp.files libk9decmpeg_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9decmpeg_la.all_cpp.final; \
-	for file in alloc.cpp cpu_accel.cpp cpu_state.cpp decode.cpp header.cpp idct_alpha.cpp idct_altivec.cpp idct.cpp idct_mmx.cpp kdecmpeg2.cpp motion_comp_alpha.cpp motion_comp_altivec.cpp motion_comp.cpp motion_comp_mmx.cpp motion_comp_vis.cpp rgb.cpp rgb_mmx.cpp rgb_vis.cpp slice.cpp uyvy.cpp kdecmpeg2.moc.cpp ; do \
+	for file in alloc.cpp cpu_accel.cpp cpu_state.cpp decode.cpp header.cpp idct_alpha.cpp idct_altivec.cpp idct.cpp idct_mmx.cpp kdecmpeg2.cpp motion_comp_alpha.cpp motion_comp_altivec.cpp motion_comp.cpp motion_comp_mmx.cpp motion_comp_vis.cpp rgb.cpp rgb_mmx.cpp rgb_vis.cpp slice.cpp uyvy.cpp k9decodethread.cpp k9plaympeg2.cpp kdecmpeg2.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> libk9decmpeg_la.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libk9decmpeg_la.all_cpp.final; \
 	done; \
@@ -790,6 +813,8 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 3
+#>+ 5
 nmcheck: 
+k9plaympeg2.lo: k9plaympeg2.moc 
 nmcheck-am: nmcheck
+k9plaympeg2.o: k9plaympeg2.moc 

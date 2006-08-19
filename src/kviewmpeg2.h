@@ -21,14 +21,33 @@
 #ifndef KVIEWMPEG2_H
 #define KVIEWMPEG2_H
 
-#include "kdecmpeg2.h"
+#define USE_GL
+
 #include "k9dvdtitle.h"
 
 #include <viewmpeg2.h>
+#include <qwidget.h>
 #include <qstring.h>
+#include <qevent.h>
+#include <qmutex.h>
+#include <qgl.h>
+#include "k9plaympeg2.h"
+#include "k9glwidget.h"
+
 /**
   *@author 
   */
+
+class k9Widget : public QWidget {
+Q_OBJECT
+protected:
+   QImage m_image;
+   void paintEvent ( QPaintEvent * _event);
+public:
+   k9Widget (QWidget *_parent):QWidget(_parent) {}
+   void setImage(QImage _image);
+};
+
 
 class kViewMPEG2 : public ViewMPEG2  {
 Q_OBJECT
@@ -37,6 +56,7 @@ public:
 	~kViewMPEG2();
   int open (const QString & device,k9DVDTitle * title);
 private:
+  QMutex mutex;
   k9DVDTitle *m_title;
   QString dev;
   int selTitle;
@@ -45,25 +65,37 @@ private:
   bool lockSlider;
   QImage img;
   bool stopped;
-  void setError(const QString & err);
-  void bPlayClick();
-  void bStopClick();
   void sliderReleased();  
   void playDVD(dvd_reader_t *dvd,int titleSetNr);
   /** No descriptions */
   void sliderPressed();
-  kDecMPEG2 *decoder;
+  void lock();
+  void unlock();
   QString file;
   QString errMsg;
   bool error;
   QString length;
   uint startSector;
   uint lastSector;
+  k9PlayMPEG2 m_player;
+#ifdef USE_GL
+  k9GLWidget *m_widget;
+#else
+  k9Widget *m_widget;
+#endif
 protected:
  void closeEvent( QCloseEvent* );
+ void resizeEvent ( QResizeEvent * );
 public slots: // Public slots
   /** No descriptions */
   void drawPixmap(const QImage &image);
+  //void drawppm(uchar *_buf,char *data,int _len);
+  void setError(const QString & err);
+  void setPosition(uint32_t _position);
+  void setMax(uint32_t _position);
+  void setMin(uint32_t _position);
+  void bPlayClick();
+  void bStopClick();
 
 };
 

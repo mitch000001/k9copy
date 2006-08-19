@@ -18,7 +18,6 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 #include "k9dvdbackup.h"
-#include "k9backupdlg.h"
 #include "k9dvd.h"
 #include "bswap.h"
 #include "k9ifo.h"
@@ -37,6 +36,9 @@
 #include <klocale.h>
 #include <qdir.h>
 #include <kstandarddirs.h>
+
+#include "k9backupdlg.h"
+
 
 #define BUF_SECS	1024
 

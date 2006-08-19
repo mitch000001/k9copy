@@ -18,7 +18,6 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 #include "k9common.h"
-#include "kviewmpeg2.h"
 #include <qpixmap.h>
 #include <qpainter.h>
 #include <qlabel.h>
@@ -27,147 +26,122 @@
 #include <qslider.h>
 #include <qapplication.h>
 #include <qtoolbutton.h>
+#include <qlayout.h>
 
 #include <string.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
 #include <klocale.h>
 #include <kiconloader.h>
 
+#include "kviewmpeg2.h"
+
+
+void k9Widget::setImage(QImage _image) {
+   m_image=_image;
+   paintEvent(NULL);
+}
+
+void k9Widget::paintEvent( QPaintEvent *_event) {
+    setPaletteBackgroundColor(Qt::black);
+    int top,left;
+
+	QPainter p(this);
+	double wratio=(double)width()/(double)m_image.width();
+	double hratio=(double)height()/(double)m_image.height();
+	double ratio= wratio < hratio ? wratio:hratio;
+	
+	top =(int) (height() -m_image.height()*ratio)/2+1;
+	left =(int) (width() -m_image.width()*ratio)/2 +1;
+	
+	p.scale(ratio,ratio);
+	
+	p.drawImage(left/ratio,top/ratio,m_image);
+	
+	p.end();
+    
+}
+
 kViewMPEG2::kViewMPEG2() {
-    decoder=new kDecMPEG2;
-    /*  label->setAutoResize(false);
-      label->setScaledContents(false);
-      label->setAlignment(Qt::AlignCenter);
-      */
 
     bPlay->setPixmap(SmallIcon("player_play"));
     bStop->setPixmap(SmallIcon("player_stop"));
-    connect(decoder, SIGNAL(pixmapReady(const QImage &)), this, SLOT(drawPixmap(const QImage &)));
+    connect(m_player.getDecoder()  , SIGNAL(pixmapReady(const QImage &)), this, SLOT(drawPixmap(const QImage&)));
+    //connect(m_player.getDecoder()  , SIGNAL(ppmReady(uchar *,char *,int)), this, SLOT(drawppm(uchar *,char *,int)));
+    connect(&m_player  , SIGNAL(setPosition(uint32_t)), this, SLOT(setPosition(uint32_t)));
+    connect(&m_player  , SIGNAL(setMax(uint32_t)), this, SLOT(setMax(uint32_t)));
+    connect(&m_player  , SIGNAL(setMin(uint32_t)), this, SLOT(setMin(uint32_t)));
     lockSlider=false;
     stopped=true;
+    QGridLayout *layout=new QGridLayout(label,1,1);
+
+#ifdef USE_GL
+    m_widget=new k9GLWidget(label);
+#else
+    m_widget=new k9Widget(label);
+#endif
+
+    layout->addWidget(m_widget,0,0);
 }
 kViewMPEG2::~kViewMPEG2() {
     stopped=true;
-    delete decoder;
+    m_player.stop();
 }
+
+
+void kViewMPEG2::lock() {
+   mutex.lock();
+}
+
+void kViewMPEG2::unlock() {
+   mutex.unlock();
+}
+
+void kViewMPEG2::setPosition( uint32_t _position) {
+    if (!lockSlider)
+        slider->setValue(_position);
+}
+
+void kViewMPEG2::setMax( uint32_t _position) {
+    slider->setMaxValue(_position);
+}
+
+void kViewMPEG2::setMin(uint32_t _position) {
+    slider->setMinValue(_position);
+}
+
+
 /** No descriptions */
 void kViewMPEG2::drawPixmap(const QImage &image) {
-    int top,left;
+    lock();
+    img=image;
+    unlock();
     if (!pause) {
-        /*QPixmap pix(img);
-        label->setPixmap(pix);
-        qApp->processEvents();
-
-        */
-        QPainter p(label);
-        //     img=image.scale(label->contentsRect().width(),label->contentsRect().height(),QImage::ScaleMin);
-        img=image.scale(label->width(),label->height(),QImage::ScaleMin);
-        top =(int) (label->height() -img.height())/2 +1;
-        left =(int) (label->width() -img.width())/2 +1;
-        p.drawImage(left,top,img);
-        p.end();
-
+	if (qApp->tryLock()) {
+		m_widget->setImage( image);
+		//m_widget->update();
+		//m_widget->repaint(FALSE);
+		qApp->unlock();
+	}
     } else
         pause=false;
 }
 
-void kViewMPEG2::bPlayClick() {
 
-    open(dev,m_title);
+void kViewMPEG2::bPlayClick() {
+    m_player.play();
 }
 
 
 int kViewMPEG2::open (const QString & device,k9DVDTitle * title) {
-    dvd_reader_t *dvd;
-    int  ret = 0;
-    struct stat dvd_stat;
-    QString c;
-    m_title=title;
+    m_player.open(device,title);
 
-    error=false;
-    errMsg="";
-    startSector=0;
-    lastSector=0;
-
-    stopped=false;
-
-    dev=device;
-    ret = stat(device.latin1(), &dvd_stat);
-    if ( ret < 0 ) {
-        c=i18n("Can't find device %1\n").arg(device.latin1());
-        setError(c);
-        return 1;
-    }
-
-    dvd = DVDOpen(device.latin1());
-    if( !dvd ) {
-        c=i18n("Can't open disc %1!\n").arg(device.latin1());
-        setError(c);
-        return 2;
-    }
-
-    startSector=title->getChapter(0)->getstartSector();
-    lastSector=title->getChapter(title->getchapterCount()-1)->getendSector();
-    slider->setMinValue(startSector);
-    slider->setMaxValue(lastSector);
-    slider->setValue(startSector);
-
-    playDVD(dvd,title->getVTS());
-
-    DVDClose(dvd);
-    return 0;
 }
 
-void kViewMPEG2::playDVD(dvd_reader_t *dvd,int titleSetNr) {
-    unsigned char buffer[DVD_VIDEO_LB_LEN*2];
-    unsigned char *ptrbuff;
-
-    int blocksize=2;
-    ssize_t size;
-    QString c;
-    dvd_file_t *dvdfile;
-    dvdfile = DVDOpenFile(dvd, titleSetNr, DVD_READ_TITLE_VOBS);
-
-    if( !dvdfile ) {
-        c=i18n("Error opening vobs for title %1\n").arg(titleSetNr);
-        setError(c);
-        return ;
-    }
-
-    idxLect = slider->value();
-    idxLect=startSector;
-    while( (idxLect <= lastSector) && (blocksize>0)) {
-        if (idxLect+blocksize> lastSector)
-            blocksize=lastSector-idxLect;
-        if (blocksize<=0)
-            break;
-        size= DVDReadBlocks(dvdfile, idxLect,blocksize , buffer);
-        if( !size ) {
-            c=i18n("ERROR reading block %1\n").arg(idxLect);
-            setError(c);
-            break;
-        }
-
-        ptrbuff=buffer;
-        decoder->decode(buffer,buffer+DVD_VIDEO_LB_LEN*blocksize,0);
-        qApp->processEvents();
-        idxLect+=blocksize;
-        if (!lockSlider)
-            slider->setValue(idxLect);
-
-        if (stopped)
-            break;
-    }
-
-    slider->setValue(lastSector);
-    DVDCloseFile(dvdfile);
-    /*   QPixmap pix(img);
-       label->setPixmap(pix);*/
-    stopped=true;
-}
+void kViewMPEG2::playDVD(dvd_reader_t *dvd,int titleSetNr) {}
 
 
 /** No descriptions */
@@ -176,21 +150,19 @@ void kViewMPEG2::setError(const QString & err) {
     errMsg=err;
 }
 
-void kViewMPEG2::bStopClick() {
-    stopped=true;
-    close();
-    /*QPixmap pix(img);
-    label->setPixmap(pix);
-    */
 
+void kViewMPEG2::resizeEvent(QResizeEvent *_event) {
+}
+
+void kViewMPEG2::bStopClick() {
+    m_player.stop();
 }
 
 void kViewMPEG2::sliderReleased() {
     pause=true;
     int i;
     i=slider->value();
-    idxLect=i;
-    decoder->restart();
+    m_player.updatePos(i);
     lockSlider=false;
 
 }
@@ -200,24 +172,6 @@ void kViewMPEG2::closeEvent( QCloseEvent* ce ) {
     ce->accept();
     return;
 
-    /*
-        switch( QMessageBox::information( this, "Qt Application Example",
-                                          "The document has been changed since "
-                                          "the last save.",
-                                          "Save Now", "Cancel", "Leave Anyway",
-                                          0, 1 ) ) {
-        case 0:
-            save();
-            ce->accept();
-            break;
-        case 1:
-        default: // just for sanity
-            ce->ignore();
-            break;
-        case 2:
-            ce->accept();
-            break;
-        }     */
 }
 /** No descriptions */
 void kViewMPEG2::sliderPressed() {

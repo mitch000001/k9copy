@@ -26,6 +26,7 @@
 #include <qframe.h>
 #include <kkeydialog.h>
 #include <kedittoolbar.h>
+#include "kviewmpeg2.h"
 
 
 k9Copy::k9Copy()
@@ -43,6 +44,9 @@ k9Copy::k9Copy()
     k9LangSelect *lang=new k9LangSelect(m_k9Main,this);
     addToolWindow(lang, KDockWidget::DockRight, getMainDockWidget(),0,i18n("Selection"),i18n("Selection"));
 
+    m_mp2=new kViewMPEG2();
+    m_previewAcc=addToolWindow(m_mp2,KDockWidget::DockRight,getMainDockWidget(),0,i18n("Preview"),i18n("Preview"));
+    m_k9Main->setViewer( m_mp2);
 
     // accept dnd
     setAcceptDrops(true);
@@ -153,12 +157,15 @@ void k9Copy::preferences() {
 
 void k9Copy::ActionCopy()
 {
+ m_mp2->bStopClick();
  m_k9Main->Copy();
 }
 
 void k9Copy::ActionPlayTitle()
 {
+ m_previewAcc->show();
  m_k9Main->PreviewTitle();
+
 }
 
 void k9Copy::ActionMP4() {

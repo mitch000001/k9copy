@@ -65,6 +65,12 @@ void k9fifo::dequeue(uchar *_buffer,uint32_t _size) {
     mutex.unlock();
 }
 
+void k9fifo::clear() {
+    mutex.lock();
+    head=queue;
+    m_count=0;
+    mutex.unlock();
+}
 
 void k9vamps::addData(uchar *data,uint size) {
     while (1) {
@@ -83,19 +89,29 @@ int k9vamps::readData(uchar * data,uint size) {
     uint32_t readSize=0,s=0;
     
     while (1) {
+	// is there data in the buffer?
 	if (m_fifo.count() >0) {
+		// s= size of data that we will read (maximum = size)
 		s=(m_fifo.count()) <size2 ? (m_fifo.count()) : size2;
+		// increments the number of readen bytes
 		readSize+=s;
+		// decrements the number of max bytes to read 
 		size2-=s;
+		//moves bytes from buffer to output
 		m_fifo.dequeue(data,s);
+		//moves the position of output buffer to receive next bytes
 		data+=s;
+		//there's now free space in input buffer, we can wake the injection thread
 		wDataRead.wakeAll();
 	}
+	// break the loop if injection thread terminated or we got what we want (size bytes)
+	// oterwise, we're waiting for datas
         if(noData || (m_fifo.count() >=size2)) {
             break;
         } else
             wDataReady.wait();
     }
+    // if there's datas in input buffer and we did not get all what we wanted, we take them.
     s= (m_fifo.count()) <size2 ? (m_fifo.count()) : size2;
     readSize+=s;
     if (s>0 ) 
@@ -487,10 +503,17 @@ int k9vamps::requant (uchar *dst, uchar *src, int n, float fact) {
     rv = m_requant->rqt_wcnt;
 
     m_requant->mutw.unlock();
-    if ((m_requant->rbuf-m_requant->cbuf -3) >0 )  {
+/*    if ((m_requant->rbuf-m_requant->cbuf -3) >0 )  {
         tc_memcpy(dst+m_requant->rqt_wcnt,m_requant->cbuf,m_requant->rbuf-m_requant->cbuf -3);
         rv +=m_requant->rbuf-m_requant->cbuf -3;
     }
+/*/
+   if ((m_requant->rbuf-m_requant->cbuf -2) >0 )  {
+        tc_memcpy(dst+m_requant->rqt_wcnt,m_requant->cbuf,m_requant->rbuf-m_requant->cbuf -2);
+        rv +=m_requant->rbuf-m_requant->cbuf -2;
+    }
+
+
 
     if (rv>n)
         qDebug("requant error");

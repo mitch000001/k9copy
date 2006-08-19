@@ -26,17 +26,22 @@
 #include <stdlib.h>
 #include <qimage.h>
 #include "ac.h"
+#include <qmutex.h>
+#include <qwidget.h>
+#include <qobject.h>
 /**
   *@author 
   */
 
+
+
 class kDecMPEG2 : public QObject  {
 Q_OBJECT
 public: 
-	kDecMPEG2();
-	~kDecMPEG2();
-   int decode (uint8_t * buf, uint8_t * end, int flags);
-   void restart();
+  kDecMPEG2();
+  ~kDecMPEG2();
+  int decode (uint8_t * buf, uint8_t * end, int flags);
+  void restart();
   void start();
   void stop();
 private:
@@ -44,6 +49,7 @@ private:
   bool m_opened;
   int demux_pid;
   int demux_track;
+  QMutex mutex;
   mpeg2dec_t * decoder;
   int demux (uint8_t * buf, uint8_t * end, int flags);
   void save_ppm (int width, int height, uint8_t * buf, int num);
@@ -51,6 +57,7 @@ private:
 signals: // Signals
   /** No descriptions */
   void pixmapReady(const QImage &image);
+  void ppmReady(uchar *buffer,char * data,int size);
 };                       
 
 #endif

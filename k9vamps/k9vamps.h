@@ -72,6 +72,7 @@ public:
 	uint32_t freespace() {return INPUT_SIZE-count();};
 	void enqueue (uchar *_buffer, uint32_t _size) ;
 	void dequeue(uchar *_buffer,uint32_t _size) ;
+        void clear();
 	~k9fifo() { free(array);};
 };
 

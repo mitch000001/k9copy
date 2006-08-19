@@ -18,13 +18,17 @@
 #include <config.h>
 #endif
 
+#include "k9common.h"
+
 #include <kapplication.h>
 #include <kmdimainfrm.h>
+
 
 enum eStatusBarId {sbMessage=0,sbFactor=1};
 
 
 class k9Main;
+class kViewMPEG2;
 
 class k9Copy : public KMdiMainFrm
 {
@@ -71,6 +75,8 @@ private:
 private:
    k9Main  *m_k9Main;
    KMdiChildView *m_childView;
+   KMdiToolViewAccessor *m_previewAcc;
+   kViewMPEG2 *m_mp2;
 };
 
 
