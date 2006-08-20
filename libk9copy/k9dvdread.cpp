@@ -20,7 +20,7 @@ k9DVDRead::k9DVDRead(){
 
 k9DVDRead::~k9DVDRead() {
 	if (m_dvd !=NULL)
-		DVDClose(m_dvd);
+		close();
 }
 
 k9DVDFile::k9DVDFile(k9DVDRead *_dvd) {

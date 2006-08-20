@@ -12,7 +12,7 @@
 
 #ifndef K9PLAYBACKOPTIONS_H
 #define K9PLAYBACKOPTIONS_H
-
+#include "k9common.h"
 #include "playbackoptionsw.h"
 #include "k9dvd.h"
 #include "k9main.h"

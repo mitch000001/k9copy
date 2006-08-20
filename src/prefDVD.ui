@@ -53,10 +53,10 @@
                 <cstring>ckK3b</cstring>
             </property>
             <property name="text">
-                <string>Burn with k3b</string>
+                <string>&amp;Burn with k3b</string>
             </property>
             <property name="accel">
-                <string></string>
+                <string>Alt+B</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
@@ -72,40 +72,12 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Auto burn</string>
+                <string>Au&amp;to burn</string>
             </property>
             <property name="accel">
-                <string></string>
+                <string>Alt+T</string>
             </property>
         </widget>
-        <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>ckQuickScan</cstring>
-            </property>
-            <property name="text">
-                <string>Quick scan</string>
-            </property>
-            <property name="accel">
-                <string></string>
-            </property>
-        </widget>
-        <spacer row="5" column="2">
-            <property name="name">
-                <cstring>spacer1</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>21</width>
-                    <height>131</height>
-                </size>
-            </property>
-        </spacer>
         <widget class="QLabel" row="1" column="0">
             <property name="name">
                 <cstring>textLabel1_2</cstring>
@@ -142,6 +114,45 @@
                 <number>4400</number>
             </property>
         </widget>
+        <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>ckQuickScan</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Quick scan</string>
+            </property>
+            <property name="accel">
+                <string>Alt+Q</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>ckUseGL</cstring>
+            </property>
+            <property name="text">
+                <string>us&amp;e OpenGL for preview</string>
+            </property>
+            <property name="accel">
+                <string>Alt+E</string>
+            </property>
+        </widget>
+        <spacer row="6" column="2">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>21</width>
+                    <height>150</height>
+                </size>
+            </property>
+        </spacer>
     </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>

@@ -152,6 +152,13 @@ void k9Copy::preferences() {
   k9settings settings(this,i18n("Settings"));
   settings.exec();
   m_k9Main->readSettings();
+
+  m_mp2->close();
+  deleteToolWindow(m_previewAcc);
+  
+    m_mp2=new kViewMPEG2();
+    m_previewAcc=addToolWindow(m_mp2,KDockWidget::DockRight,getMainDockWidget(),0,i18n("Preview"),i18n("Preview"));
+    m_k9Main->setViewer( m_mp2);
 }
 
 

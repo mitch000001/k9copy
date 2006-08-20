@@ -10,19 +10,19 @@
 //
 //
 #include "k9glwidget.h"
-#include <qpainter.h>
 #include <qsize.h>
+#include <qapplication.h>
 k9GLWidget::k9GLWidget(QWidget *parent, const char *name)
-        : QGLWidget(parent, name) {
+        : QGLWidget(QGLFormat(QGL::DoubleBuffer| QGL::NoOverlay | QGL::DirectRendering | QGL::Rgba),parent, name) {
 }
 
 
 k9GLWidget::~k9GLWidget() {}
 
 void k9GLWidget::setImage(QImage _image) {
-   m_image=_image;
-   glDraw();
-
+   m_image=QGLWidget::convertToGLFormat(_image );
+   update();
+   qApp->wakeUpGuiThread();
 }
 
 void k9GLWidget::paintGL() {
@@ -30,14 +30,13 @@ void k9GLWidget::paintGL() {
     GLfloat wratio=(GLfloat)width()/(GLfloat)m_image.width();
     GLfloat hratio=(GLfloat)height()/(GLfloat)m_image.height();
     GLfloat ratio= wratio < hratio ? wratio:hratio;	
-    QImage icv = QGLWidget::convertToGLFormat(m_image );
 
    glClear(GL_COLOR_BUFFER_BIT);
    int top = (int) (height() -m_image.height()*ratio) /2;
    int left = (int) (width() -m_image.width()*ratio) /2;
    glRasterPos2i (left, top);
    glPixelZoom (ratio, ratio);
-    glDrawPixels( m_image.width(), m_image.height(), GL_RGBA, GL_UNSIGNED_BYTE, icv.bits() );
+    glDrawPixels( m_image.width(), m_image.height(), GL_RGBA, GL_UNSIGNED_BYTE, m_image.bits() );
    glFlush ();
 }
 

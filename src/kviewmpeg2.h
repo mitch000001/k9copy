@@ -66,7 +66,6 @@ private:
   QImage img;
   bool stopped;
   void sliderReleased();  
-  void playDVD(dvd_reader_t *dvd,int titleSetNr);
   /** No descriptions */
   void sliderPressed();
   void lock();
@@ -78,11 +77,10 @@ private:
   uint startSector;
   uint lastSector;
   k9PlayMPEG2 m_player;
-#ifdef USE_GL
-  k9GLWidget *m_widget;
-#else
+  QGridLayout *m_layout;
+  bool m_prefUseGL;
+  k9GLWidget *m_GLwidget;
   k9Widget *m_widget;
-#endif
 protected:
  void closeEvent( QCloseEvent* );
  void resizeEvent ( QResizeEvent * );
@@ -96,7 +94,7 @@ public slots: // Public slots
   void setMin(uint32_t _position);
   void bPlayClick();
   void bStopClick();
-
+  void readSettings();
 };
 
 #endif

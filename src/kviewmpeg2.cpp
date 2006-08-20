@@ -36,13 +36,15 @@
 
 #include <klocale.h>
 #include <kiconloader.h>
+#include <ksimpleconfig.h>
 
 #include "kviewmpeg2.h"
 
 
 void k9Widget::setImage(QImage _image) {
    m_image=_image;
-   paintEvent(NULL);
+   paintEvent( NULL);
+
 }
 
 void k9Widget::paintEvent( QPaintEvent *_event) {
@@ -59,14 +61,16 @@ void k9Widget::paintEvent( QPaintEvent *_event) {
 	
 	p.scale(ratio,ratio);
 	
-	p.drawImage(left/ratio,top/ratio,m_image);
+	p.drawImage((int)(left/ratio),(int)(top/ratio),m_image);
 	
 	p.end();
     
 }
 
 kViewMPEG2::kViewMPEG2() {
-
+    m_widget=NULL;
+    m_GLwidget=NULL;
+    m_layout=NULL;
     bPlay->setPixmap(SmallIcon("player_play"));
     bStop->setPixmap(SmallIcon("player_stop"));
     connect(m_player.getDecoder()  , SIGNAL(pixmapReady(const QImage &)), this, SLOT(drawPixmap(const QImage&)));
@@ -76,16 +80,35 @@ kViewMPEG2::kViewMPEG2() {
     connect(&m_player  , SIGNAL(setMin(uint32_t)), this, SLOT(setMin(uint32_t)));
     lockSlider=false;
     stopped=true;
-    QGridLayout *layout=new QGridLayout(label,1,1);
+    readSettings();
 
-#ifdef USE_GL
-    m_widget=new k9GLWidget(label);
-#else
-    m_widget=new k9Widget(label);
-#endif
+    m_layout=new QGridLayout(label,1,1);
 
-    layout->addWidget(m_widget,0,0);
+    if (m_prefUseGL)  {
+	m_GLwidget=new k9GLWidget(label);
+	m_widget=NULL;
+        m_layout->addWidget(m_GLwidget,0,0);
+    }
+    else {
+    	m_widget=new k9Widget(label);
+        m_layout->addWidget(m_widget,0,0);
+	m_GLwidget=NULL;
+    }
+
 }
+
+
+void kViewMPEG2::readSettings() {
+    m_player.stop();
+
+    KSimpleConfig settings("K9Copy");
+
+
+    m_prefUseGL=settings.readEntry("/options/useGL",0).toInt();
+
+}
+
+
 kViewMPEG2::~kViewMPEG2() {
     stopped=true;
     m_player.stop();
@@ -116,18 +139,13 @@ void kViewMPEG2::setMin(uint32_t _position) {
 
 /** No descriptions */
 void kViewMPEG2::drawPixmap(const QImage &image) {
-    lock();
-    img=image;
-    unlock();
-    if (!pause) {
 	if (qApp->tryLock()) {
-		m_widget->setImage( image);
-		//m_widget->update();
-		//m_widget->repaint(FALSE);
+		if (m_prefUseGL)
+		    m_GLwidget->setImage( image);
+ 		else 
+		    m_widget->setImage( image);
 		qApp->unlock();
 	}
-    } else
-        pause=false;
 }
 
 
@@ -140,8 +158,6 @@ int kViewMPEG2::open (const QString & device,k9DVDTitle * title) {
     m_player.open(device,title);
 
 }
-
-void kViewMPEG2::playDVD(dvd_reader_t *dvd,int titleSetNr) {}
 
 
 /** No descriptions */

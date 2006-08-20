@@ -90,11 +90,14 @@ void k9DecodeThread::run() {
    m_decoder->start();
    bool wait4buffer=TRUE;
    while (1) {
-	if (m_fifo.count() < (5*2048) && wait4buffer && ! noData)
+	if (m_fifo.count() < (20*2048) && wait4buffer && ! noData) {
+	    wait4buffer=FALSE;
 	    wDataReady.wait();
+	}
  	else {
-		uchar buffer[2048];
-		uint32_t size=readData(buffer,2048);
+		int count=2048;
+		uchar buffer[count];
+		uint32_t size=readData(buffer,count);
 		if (size==0)
 		break;
 		m_decoder->decode(buffer ,buffer+size,0);
@@ -103,6 +106,3 @@ void k9DecodeThread::run() {
    m_decoder->stop();
 
 }
-
-
-#include "k9decodethread.moc"

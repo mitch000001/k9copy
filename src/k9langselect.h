@@ -13,9 +13,9 @@
 #ifndef K9LANGSELECT_H
 #define K9LANGSELECT_H
 
-
-#include "langselectw.h"
 #include "k9common.h"
+#include "langselectw.h"
+
 #include "k9main.h"
 #include <qlistview.h>
 
