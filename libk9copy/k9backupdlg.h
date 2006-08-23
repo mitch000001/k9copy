@@ -66,7 +66,7 @@ protected:
 protected slots:
   /*$PROTECTED_SLOTS$*/
   void timerDone();
-  void drawPixmap(const QImage &image);
+  void drawPixmap(QImage *image);
 };
 
 #endif

@@ -28,6 +28,20 @@
 #include <qcstring.h>
 
 
+void k9DisplayThread::setImage( QImage _image) {
+   if (m_mutex.tryLock()) {
+	m_image=_image;
+	start();
+   }
+}
+
+void k9DisplayThread::run() {
+   m_dec->draw( &m_image);  
+   m_mutex.unlock();
+}
+
+
+
 kDecMPEG2::kDecMPEG2(){
   demux_pid=0;
   demux_track=0xe0;
@@ -37,6 +51,7 @@ kDecMPEG2::kDecMPEG2(){
 	  fprintf (stderr, "Could not allocate a decoder object.\n");
 	  exit (1);
   }  
+  m_display=new k9DisplayThread(this);
 }
 
 #define DEMUX_PAYLOAD_START 1
@@ -283,11 +298,12 @@ void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
     tc_memcpy(s,c,strlen(c));
     tc_memcpy(s+strlen(c),buf, 3 * width *height);
     pix.loadFromData((uchar*)s,strlen(c)+3*width*height);
-    ppmReady((uchar*)s,(char*)buf,strlen(c)+3*width*height);
+//    ppmReady((uchar*)s,(char*)buf,strlen(c)+3*width*height);
 
     free(s);
-    pixmapReady(pix);
-//    qApp->processEvents();
+  
+    m_display->setImage( pix);
+    // pixmapReady(pix);
 
 }
 
@@ -329,6 +345,8 @@ int kDecMPEG2::decode (uint8_t * buf, uint8_t * end, int flags)
   return 0;
 }
 kDecMPEG2::~kDecMPEG2(){
+   m_display->wait();
+   delete m_display;
    if (m_opened)
    	mpeg2_close (decoder);
 }

@@ -29,9 +29,25 @@
 #include <qmutex.h>
 #include <qwidget.h>
 #include <qobject.h>
+#include <qthread.h>
 /**
   *@author 
   */
+
+class kDecMPEG2;
+
+class k9DisplayThread:public QThread {
+
+public:
+   k9DisplayThread(kDecMPEG2 *_dec) {m_dec=_dec;}
+   void setImage(QImage _image);
+protected:
+   kDecMPEG2 *m_dec;
+   QImage m_image;
+   QMutex m_mutex;
+   void run();
+
+};
 
 
 
@@ -44,6 +60,7 @@ public:
   void restart();
   void start();
   void stop();
+  void draw(QImage *image) {emit pixmapReady(image);}
 private:
   QImage pix;
   bool m_opened;
@@ -51,12 +68,13 @@ private:
   int demux_track;
   QMutex mutex;
   mpeg2dec_t * decoder;
+  k9DisplayThread *m_display;
   int demux (uint8_t * buf, uint8_t * end, int flags);
   void save_ppm (int width, int height, uint8_t * buf, int num);
   void decode_mpeg2(uint8_t * current, uint8_t * end);
-signals: // Signals
+ signals: // Signals
   /** No descriptions */
-  void pixmapReady(const QImage &image);
+  void pixmapReady(QImage *image);
   void ppmReady(uchar *buffer,char * data,int size);
 };                       
 

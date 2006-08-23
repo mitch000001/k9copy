@@ -23,6 +23,7 @@
 
 #include "k9dvdtitle.h"
 
+#include <qthread.h>
 #include <viewmpeg2.h>
 #include <qwidget.h>
 #include <qstring.h>
@@ -84,7 +85,7 @@ protected:
  void resizeEvent ( QResizeEvent * );
 public slots: // Public slots
   /** No descriptions */
-  void drawPixmap(const QImage &image);
+  void drawPixmap( QImage *image);
   //void drawppm(uchar *_buf,char *data,int _len);
   void setError(const QString & err);
   void setPosition(uint32_t _position);

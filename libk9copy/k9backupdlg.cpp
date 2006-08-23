@@ -48,17 +48,17 @@ k9BackupDlg::k9BackupDlg(QWidget* parent, const char* name, bool modal, WFlags f
     m_totalSteps=0;
     m_factor="";
     m_progress=0;
-    connect(&m_decoder, SIGNAL(pixmapReady(const QImage &)), this, SLOT(drawPixmap(const QImage &)));
+    connect(&m_decoder, SIGNAL(pixmapReady(QImage *)), this, SLOT(drawPixmap(QImage *)));
     m_stop=false;
     m_playmovie=true;
     m_cpt=0;
 }
 
-void k9BackupDlg::drawPixmap(const QImage &_image) {
+void k9BackupDlg::drawPixmap(QImage *_image) {
 	m_count++;
 	if (m_count ==4) {
 
-       QPixmap pix(_image);
+       QPixmap pix(*_image);
         image->setPixmap(pix);
   	int top,left;
 

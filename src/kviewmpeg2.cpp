@@ -73,7 +73,7 @@ kViewMPEG2::kViewMPEG2() {
     m_layout=NULL;
     bPlay->setPixmap(SmallIcon("player_play"));
     bStop->setPixmap(SmallIcon("player_stop"));
-    connect(m_player.getDecoder()  , SIGNAL(pixmapReady(const QImage &)), this, SLOT(drawPixmap(const QImage&)));
+    connect(m_player.getDecoder()  , SIGNAL(pixmapReady(QImage *)), this, SLOT(drawPixmap(QImage *)));
     //connect(m_player.getDecoder()  , SIGNAL(ppmReady(uchar *,char *,int)), this, SLOT(drawppm(uchar *,char *,int)));
     connect(&m_player  , SIGNAL(setPosition(uint32_t)), this, SLOT(setPosition(uint32_t)));
     connect(&m_player  , SIGNAL(setMax(uint32_t)), this, SLOT(setMax(uint32_t)));
@@ -143,12 +143,12 @@ void kViewMPEG2::setMin(uint32_t _position) {
 
 
 /** No descriptions */
-void kViewMPEG2::drawPixmap(const QImage &image) {
+void kViewMPEG2::drawPixmap(QImage *image) {
 	if (qApp->tryLock()) {
 		if (m_prefUseGL)
-		    m_GLwidget->setImage( image);
+		    m_GLwidget->setImage( *image);
  		else 
-		    m_widget->setImage( image);
+		    m_widget->setImage( *image);
 		qApp->unlock();
 	}
 }
