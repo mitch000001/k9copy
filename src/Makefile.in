@@ -200,10 +200,6 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
-DBUSQT_INCS = @DBUSQT_INCS@
-DBUSQT_LIBS = @DBUSQT_LIBS@
-DBUS_INCS = @DBUS_INCS@
-DBUS_LIBS = @DBUS_LIBS@
 DCOPIDL = @DCOPIDL@
 DCOPIDL2CPP = @DCOPIDL2CPP@
 DCOPIDLNG = @DCOPIDLNG@
@@ -220,9 +216,6 @@ F77 = @F77@
 FFLAGS = @FFLAGS@
 FRAMEWORK_COREAUDIO = @FRAMEWORK_COREAUDIO@
 GMSGFMT = @GMSGFMT@
-HAL_DBUS_LIBS = @HAL_DBUS_LIBS@
-HAL_INCS = @HAL_INCS@
-HAL_LIBS = @HAL_LIBS@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -354,8 +347,6 @@ host_os = @host_os@
 host_vendor = @host_vendor@
 include_ARTS_FALSE = @include_ARTS_FALSE@
 include_ARTS_TRUE = @include_ARTS_TRUE@
-include_HAL_FALSE = @include_HAL_FALSE@
-include_HAL_TRUE = @include_HAL_TRUE@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
@@ -437,8 +428,8 @@ k9copy_SOURCES=images.h kcddrive.cpp kcddrive.h kviewmpeg2.cpp kviewmpeg2.h \
 k9copy_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 k9copy_LDADD = $(top_builddir)/libdvdnav/libdvdnav.la \
 	$(top_builddir)/libk9copy/libk9copy.la $(top_builddir)/k9decmpeg/libk9decmpeg.la \
-	$(top_builddir)/libk3bdevice/libk3bdevice.la $(top_builddir)/k9vamps/libk9vamps.la -lGL -lkmdi $(LIB_KPARTS) \
-	$(LIB_KDEUI) -ldvdread
+	$(top_builddir)/libk3bdevice/libk3bdevice.la $(top_builddir)/k9vamps/libk9vamps.la -lkmdi $(LIB_KPARTS) $(LIB_KDEUI) \
+	-ldvdread
 
 
 # this is where the desktop file will go 

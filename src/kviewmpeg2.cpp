@@ -80,9 +80,14 @@ kViewMPEG2::kViewMPEG2() {
     connect(&m_player  , SIGNAL(setMin(uint32_t)), this, SLOT(setMin(uint32_t)));
     lockSlider=false;
     stopped=true;
-    readSettings();
 
     m_layout=new QGridLayout(label,1,1);
+
+#ifdef HAVE_OPENGL
+    readSettings();
+#else
+    m_prefUseGL=FALSE;
+#endif
 
     if (m_prefUseGL)  {
 	m_GLwidget=new k9GLWidget(label);

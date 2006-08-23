@@ -264,9 +264,9 @@ void k9PlayMPEG2::open (const QString & device,k9DVDTitle * title) {
     emit setMax( m_lastSector);
     emit setMin( m_startSector);
 
-    m_decoder.start(QThread::LowestPriority);
+    m_decoder.start(QThread::LowPriority);
     
-    start(QThread::LowestPriority);
+    start();
 }
 
 

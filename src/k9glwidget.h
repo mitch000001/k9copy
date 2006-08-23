@@ -12,9 +12,29 @@
 #ifndef K9GLWIDGET_H
 #define K9GLWIDGET_H
 
-#include <qgl.h>
-#include <qimage.h>
+#include "k9common.h"
 
+#ifdef HAVE_OPENGL
+
+#include <qimage.h>
+#include <qlibrary.h>
+#include <qgl.h>
+
+typedef void (*glClear_t) (GLbitfield);
+typedef void (*glRasterPos2i_t) ( GLint , GLint );
+typedef void (*glPixelZoom_t) ( GLfloat , GLfloat );
+typedef void (*glDrawPixels_t) ( GLsizei , GLsizei, GLenum , GLenum ,const GLvoid * );
+typedef void (* glFlush_t) ( void );
+typedef void (*glClearColor_t)( GLclampf , GLclampf , GLclampf , GLclampf  );
+typedef void (*glShadeModel_t) ( GLenum );
+typedef void (*glPixelStorei_t)( GLenum , GLint  );
+typedef void (*glViewport_t) ( GLint, GLint,GLsizei , GLsizei);
+typedef void (*glMatrixMode_t)( GLenum );
+typedef void (*glLoadIdentity_t) (void);
+typedef void (*glOrtho_t)( GLdouble , GLdouble ,GLdouble , GLdouble, GLdouble , GLdouble);
+typedef void (*glDisable_t) ( GLenum );
+typedef void (*glPixelTransferi_t) ( GLenum , GLint );
+typedef const GLubyte * (*glGetString_t)( GLenum );
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
@@ -32,6 +52,39 @@ protected:
 	void initializeGL();
 private:
 	QImage m_image;
+	QLibrary * library;
+	glClear_t glClear;
+	glRasterPos2i_t glRasterPos2i;
+
+	glPixelZoom_t glPixelZoom;
+	glDrawPixels_t glDrawPixels;
+	glFlush_t glFlush;
+	glClearColor_t glClearColor;
+	glShadeModel_t glShadeModel;
+	glPixelStorei_t glPixelStorei;
+	glViewport_t glViewport;
+	glMatrixMode_t glMatrixMode;
+	glLoadIdentity_t glLoadIdentity;
+	glOrtho_t glOrtho;
+        glDisable_t glDisable;
+	glPixelTransferi_t glPixelTransferi;
+	glGetString_t glGetString;
 };
 
+#else
+
+#include <qwidget.h>
+#include <qimage.h>
+
+class k9GLWidget:public QWidget
+{
+public:
+    k9GLWidget(QWidget *parent = 0, const char *name = 0){};
+    void setImage(QImage _image){};
+
+};
+
+
 #endif
+#endif
+

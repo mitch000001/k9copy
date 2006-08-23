@@ -21,8 +21,6 @@
 #ifndef KVIEWMPEG2_H
 #define KVIEWMPEG2_H
 
-#define USE_GL
-
 #include "k9dvdtitle.h"
 
 #include <viewmpeg2.h>

@@ -1,4 +1,2 @@
 ./admin/configure.in.min
 configure.in.in
-./libk3bdevice/configure.in.in
-./libk3bdevice.new/configure.in.in

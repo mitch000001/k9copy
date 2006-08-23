@@ -36,3 +36,17 @@ AM_CONDITIONAL(ARCH_386, [test "$ARCH_386" = "yes"])
 AC_MSG_CHECKING(for X86_64 architecture)
 AC_MSG_RESULT($ARCH_X86_64)
 AM_CONDITIONAL(ARCH_X86_64, [test "$ARCH_X86_64" = "yes"])
+
+have_gl=no
+AC_CHECK_HEADER([GL/gl.h], \
+[AC_DEFINE(HAVE_OPENGL, 1, [openGL support]) have_gl=yes], \
+[AC_DEFINE(NO_OPENGL, 1, [No openGL support])])
+
+AC_CHECK_HEADERS([dvdread/dvd_reader.h],\
+[], \
+[AC_MSG_ERROR([libdvdread may be missing]) ])
+
+
+
+
+
