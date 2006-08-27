@@ -15,9 +15,15 @@
 #ifdef HAVE_OPENGL
 #include <qsize.h>
 #include <qapplication.h>
+#include <qdatetime.h>
+#include "ac.h"
+
 k9GLWidget::k9GLWidget(QWidget *parent, const char *name)
         : QGLWidget(parent, name) {
 
+    m_buffer=NULL;
+    m_height=0;
+    m_width=0;
     library=new QLibrary("GL");
 
     glClear = (glClear_t) library->resolve( "glClear" );
@@ -39,31 +45,53 @@ k9GLWidget::k9GLWidget(QWidget *parent, const char *name)
 
 
 k9GLWidget::~k9GLWidget() {
-
+    if (m_buffer !=NULL)
+        free(m_buffer);
     delete library;
 }
 
-void k9GLWidget::setImage(QImage _image) {
-    m_image=QGLWidget::convertToGLFormat(_image );
+
+void k9GLWidget::setImage(uchar *_buffer,int _width,int _height,int _len) {
+    uchar *buffer =(uchar*)malloc(_len);
+    tc_memcpy(buffer,_buffer,_len);
+    m_width=_width;
+    m_height=_height;
+    m_mutex.lock();
+    m_queue.enqueue(buffer);
+    m_mutex.unlock();
     update();
-    qApp->wakeUpGuiThread();
+
 }
 
 void k9GLWidget::paintGL() {
+    uchar *buffer=NULL;
+    if (m_mutex.tryLock()) {
+        buffer=m_queue.dequeue();
+        if (buffer !=NULL) {
+            if (m_buffer !=NULL)
+                free(m_buffer);
+            m_buffer=buffer;
+        }
+        if (m_buffer!=NULL) {
+	    int h=height()-2;
+	    int w=width()-2;
+            GLfloat wratio=(GLfloat)w/(GLfloat)m_width;
+            GLfloat hratio=(GLfloat)h/(GLfloat)m_height;
+            GLfloat ratio= wratio < hratio ? wratio:hratio;
 
-    GLfloat wratio=(GLfloat)width()/(GLfloat)m_image.width();
-    GLfloat hratio=(GLfloat)height()/(GLfloat)m_image.height();
-    GLfloat ratio= wratio < hratio ? wratio:hratio;
 
-    //    glClear(GL_COLOR_BUFFER_BIT);
-    int top = (int) (height() -m_image.height()*ratio) /2;
-    int left = (int) (width() -m_image.width()*ratio) /2;
-    glRasterPos2i (left, top);
+            //    glClear(GL_COLOR_BUFFER_BIT);
+            int top = h-(int) (h -m_height*ratio) /2;
+            int left = (int) (w -m_width*ratio) /2;
 
-    glPixelZoom (ratio, ratio);
+            glRasterPos2i (left,top);
+            glPixelZoom (ratio, -ratio);
 
-    glDrawPixels( m_image.width(), m_image.height(), GL_RGBA, GL_UNSIGNED_BYTE, m_image.bits() );
-    glFlush ();
+            glDrawPixels( m_width, m_height, GL_RGBA, GL_UNSIGNED_BYTE, m_buffer );
+            glFlush ();
+        }
+        m_mutex.unlock();
+    }
 }
 
 
@@ -99,18 +127,18 @@ void k9GLWidget::initializeGL() {
     const GLubyte* extString = glGetString(GL_EXTENSIONS);
 
     if (extString != NULL) {
-       if (strstr((char*) extString, "GL_EXT_convolution") != NULL) {
-           glDisable(GL_CONVOLUTION_1D_EXT);
-           glDisable(GL_CONVOLUTION_2D_EXT);
-           glDisable(GL_SEPARABLE_2D_EXT);
-       }
-       if (strstr((char*) extString, "GL_EXT_histogram") != NULL) {
-           glDisable(GL_HISTOGRAM_EXT);
-           glDisable(GL_MINMAX_EXT);
-       }
-       if (strstr((char*) extString, "GL_EXT_texture3D") != NULL) {
-           glDisable(GL_TEXTURE_3D_EXT);
-       }
+        if (strstr((char*) extString, "GL_EXT_convolution") != NULL) {
+            glDisable(GL_CONVOLUTION_1D_EXT);
+            glDisable(GL_CONVOLUTION_2D_EXT);
+            glDisable(GL_SEPARABLE_2D_EXT);
+        }
+        if (strstr((char*) extString, "GL_EXT_histogram") != NULL) {
+            glDisable(GL_HISTOGRAM_EXT);
+            glDisable(GL_MINMAX_EXT);
+        }
+        if (strstr((char*) extString, "GL_EXT_texture3D") != NULL) {
+            glDisable(GL_TEXTURE_3D_EXT);
+        }
     }
 
 

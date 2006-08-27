@@ -19,6 +19,8 @@
 #include <qimage.h>
 #include <qlibrary.h>
 #include <qgl.h>
+#include <qptrqueue.h>
+#include <qmutex.h>
 
 typedef void (*glClear_t) (GLbitfield);
 typedef void (*glRasterPos2i_t) ( GLint , GLint );
@@ -43,7 +45,7 @@ class k9GLWidget : public QGLWidget
 Q_OBJECT
 public:
     k9GLWidget(QWidget *parent = 0, const char *name = 0);
-    void setImage(QImage _image);
+    void setImage(uchar *_buffer,int _width,int _height,int _len);
     ~k9GLWidget();
 protected:
 	void paintGL();
@@ -52,6 +54,10 @@ protected:
 	void initializeGL();
 private:
 	QImage m_image;
+	QMutex m_mutex;
+	QPtrQueue<uchar> m_queue;
+	int m_width,m_height;
+	uchar *m_buffer;
 	QLibrary * library;
 	glClear_t glClear;
 	glRasterPos2i_t glRasterPos2i;
@@ -80,7 +86,7 @@ class k9GLWidget:public QWidget
 {
 public:
     k9GLWidget(QWidget *parent = 0, const char *name = 0){};
-    void setImage(QImage _image){};
+    void setImage(uchar *_buffer,int _width,int _height,int _len){};
 
 };
 

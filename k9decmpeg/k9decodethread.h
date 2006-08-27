@@ -38,6 +38,7 @@ public:
     void addData(uchar *data,uint size);
     void setNoData();
     void clear();
+    void sleepms(int _ms);
     kDecMPEG2 *getDecoder() {return m_decoder;}
 	
 protected:

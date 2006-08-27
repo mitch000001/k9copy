@@ -26,24 +26,42 @@
 #include <qlabel.h>
 #include <qapplication.h>
 #include <qcstring.h>
-
+#include "k9decodethread.h"
 
 void k9DisplayThread::setImage( QImage _image) {
    if (m_mutex.tryLock()) {
 	m_image=_image;
+	m_raw=FALSE;
+	start();
+   }
+}
+
+void k9DisplayThread::setRawImage(uchar *_buffer,int _width,int _height,int size) {
+   if (m_mutex.tryLock()) {
+	m_buffer=(uchar*) malloc(size);
+	tc_memcpy(m_buffer,_buffer,size);
+	//m_buffer=_buffer;
+	m_size=size;
+        m_width=_width;
+	m_height=_height,
+	m_raw=TRUE;
 	start();
    }
 }
 
 void k9DisplayThread::run() {
-   m_dec->draw( &m_image);  
+   if (m_raw) {
+	m_dec->drawRaw( m_buffer,m_width,m_height,m_size);
+	free(m_buffer);
+   }else
+   	m_dec->draw( &m_image);  
    m_mutex.unlock();
 }
 
 
-
-kDecMPEG2::kDecMPEG2(){
+void kDecMPEG2::init() {
   demux_pid=0;
+  m_thread=NULL;
   demux_track=0xe0;
   decoder = mpeg2_init ();
   m_opened=true;
@@ -52,6 +70,18 @@ kDecMPEG2::kDecMPEG2(){
 	  exit (1);
   }  
   m_display=new k9DisplayThread(this);
+  m_useGL=FALSE;
+
+}
+
+kDecMPEG2::kDecMPEG2(k9DecodeThread *_thread) {
+   init();
+   m_thread=_thread;
+}
+
+
+kDecMPEG2::kDecMPEG2(){
+   init();
 }
 
 #define DEMUX_PAYLOAD_START 1
@@ -287,24 +317,45 @@ pes:
     }
 }
 
-
+void kDecMPEG2::sync() {
+   int t=40- m_timer.elapsed();
+   if (t>0 && m_thread!=NULL) {
+	m_thread->sleepms(t);
+	
+    }
+    m_timer.restart();  
+}
 
 void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
 {
+
+   int len=(int) (4*width*height);
+
+   if (!m_useGL) {
     char c[255];
     sprintf(c,"P6\n%d %d\n255\n", width, height);
     char *s;
-    s= (char*) malloc((width*height*3)+strlen(c));
+    s= (char*) malloc(len+strlen(c));
     tc_memcpy(s,c,strlen(c));
-    tc_memcpy(s+strlen(c),buf, 3 * width *height);
-    pix.loadFromData((uchar*)s,strlen(c)+3*width*height);
-//    ppmReady((uchar*)s,(char*)buf,strlen(c)+3*width*height);
-
+    tc_memcpy(s+strlen(c),buf, len);
+    pix.loadFromData((uchar*)s,strlen(c)+len);
     free(s);
-  
+    sync();
     m_display->setImage( pix);
-    // pixmapReady(pix);
 
+    } else  {
+       sync();
+       m_display->setRawImage( (uchar*)buf,width,height,len);
+    }
+/*JMP:temporaire    
+*/
+
+ 
+  //  
+
+
+
+ 
 }
 
 void kDecMPEG2::decode_mpeg2(uint8_t * current, uint8_t * end)
@@ -321,8 +372,11 @@ void kDecMPEG2::decode_mpeg2(uint8_t * current, uint8_t * end)
 	    switch (state) {
   	    case STATE_BUFFER:
   	      return;
-  	    case STATE_SEQUENCE:
-  	      	mpeg2_convert (decoder, mpeg2convert_rgb (MPEG2CONVERT_RGB,QPixmap::defaultDepth()), NULL);
+  	    case STATE_SEQUENCE: 
+		if (! m_useGL)
+  	      		mpeg2_convert (decoder, mpeg2convert_rgb (MPEG2CONVERT_RGB,24), NULL);
+		else
+			mpeg2_convert (decoder, mpeg2convert_rgb (MPEG2CONVERT_BGR,32), NULL);
   	      break;
 	    case STATE_PICTURE:
 		break;
@@ -365,6 +419,7 @@ void kDecMPEG2::restart() {
 
 
 void kDecMPEG2::start() {
+  m_timer.start();
   decoder = mpeg2_init ();
   m_opened=true;
   if (decoder == NULL) {

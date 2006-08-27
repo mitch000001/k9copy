@@ -13,7 +13,7 @@
 
 k9DecodeThread::k9DecodeThread()
 {
-   m_decoder=new kDecMPEG2;
+   m_decoder=new kDecMPEG2(this);
    noData=FALSE;
 }
 
@@ -84,6 +84,10 @@ void k9DecodeThread::setNoData() {
     wDataRead.wakeAll();
     wDataReady.wakeAll();
 }
+
+void k9DecodeThread::sleepms(int _ms) {
+   msleep(_ms);
+} 
 
 void k9DecodeThread::run() {
    noData=FALSE;

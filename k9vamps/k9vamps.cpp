@@ -515,8 +515,8 @@ int k9vamps::requant (uchar *dst, uchar *src, int n, float fact) {
 
 
 
-    if (rv>n)
-        qDebug("requant error");
+//    if (rv>n)
+//        qDebug("requant error");
 
     double realrqtfact=(double)(vin_bytes) / (double)(vout_bytes+rv);
     avgdiff = ((m_avgfact) /realrqtfact);

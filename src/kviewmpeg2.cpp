@@ -37,11 +37,17 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <ksimpleconfig.h>
-
 #include "kviewmpeg2.h"
 
 
-void k9Widget::setImage(QImage _image) {
+
+
+k9Widget::k9Widget(QWidget *parent):QWidget(parent)
+{
+   m_image=NULL;
+}
+
+void k9Widget::setImage(QImage *_image) {
    m_image=_image;
    paintEvent( NULL);
 
@@ -50,21 +56,21 @@ void k9Widget::setImage(QImage _image) {
 void k9Widget::paintEvent( QPaintEvent *_event) {
     setPaletteBackgroundColor(Qt::black);
     int top,left;
-
+    if (m_image !=NULL) {
 	QPainter p(this);
-	double wratio=(double)width()/(double)m_image.width();
-	double hratio=(double)height()/(double)m_image.height();
+	double wratio=(double)width()/(double)m_image->width();
+	double hratio=(double)height()/(double)m_image->height();
 	double ratio= wratio < hratio ? wratio:hratio;
 	
-	top =(int) (height() -m_image.height()*ratio)/2+1;
-	left =(int) (width() -m_image.width()*ratio)/2 +1;
+	top =(int) (height() -m_image->height()*ratio)/2+1;
+	left =(int) (width() -m_image->width()*ratio)/2 +1;
 	
 	p.scale(ratio,ratio);
 	
-	p.drawImage((int)(left/ratio),(int)(top/ratio),m_image);
+	p.drawImage((int)(left/ratio),(int)(top/ratio),*m_image);
 	
 	p.end();
-    
+    }
 }
 
 kViewMPEG2::kViewMPEG2() {
@@ -73,8 +79,6 @@ kViewMPEG2::kViewMPEG2() {
     m_layout=NULL;
     bPlay->setPixmap(SmallIcon("player_play"));
     bStop->setPixmap(SmallIcon("player_stop"));
-    connect(m_player.getDecoder()  , SIGNAL(pixmapReady(QImage *)), this, SLOT(drawPixmap(QImage *)));
-    //connect(m_player.getDecoder()  , SIGNAL(ppmReady(uchar *,char *,int)), this, SLOT(drawppm(uchar *,char *,int)));
     connect(&m_player  , SIGNAL(setPosition(uint32_t)), this, SLOT(setPosition(uint32_t)));
     connect(&m_player  , SIGNAL(setMax(uint32_t)), this, SLOT(setMax(uint32_t)));
     connect(&m_player  , SIGNAL(setMin(uint32_t)), this, SLOT(setMin(uint32_t)));
@@ -89,14 +93,18 @@ kViewMPEG2::kViewMPEG2() {
     m_prefUseGL=FALSE;
 #endif
 
+    m_player.getDecoder()->setUseGL(m_prefUseGL);
     if (m_prefUseGL)  {
+        connect(m_player.getDecoder()  , SIGNAL(ppmReady(uchar *,int,int,int)), this, SLOT(drawppm(uchar *,int,int,int)));
 	m_GLwidget=new k9GLWidget(label);
 	m_widget=NULL;
         m_layout->addWidget(m_GLwidget,0,0);
     }
     else {
+        connect(m_player.getDecoder()  , SIGNAL(pixmapReady(QImage *)), this, SLOT(drawPixmap(QImage *)));
     	m_widget=new k9Widget(label);
         m_layout->addWidget(m_widget,0,0);
+
 	m_GLwidget=NULL;
     }
 
@@ -145,11 +153,16 @@ void kViewMPEG2::setMin(uint32_t _position) {
 /** No descriptions */
 void kViewMPEG2::drawPixmap(QImage *image) {
 	if (qApp->tryLock()) {
-		if (m_prefUseGL)
-		    m_GLwidget->setImage( *image);
- 		else 
-		    m_widget->setImage( *image);
+   		m_widget->setImage( image);
 		qApp->unlock();
+	}
+}
+
+/** No descriptions */
+void kViewMPEG2::drawppm(uchar *_buf,int _width,int _height,int _len) {
+	if (qApp->tryLock()) {
+	    m_GLwidget->setImage(_buf,_width,_height,_len);
+  	    qApp->unlock();
 	}
 }
 

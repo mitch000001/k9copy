@@ -40,11 +40,11 @@
 class k9Widget : public QWidget {
 Q_OBJECT
 protected:
-   QImage m_image;
+   QImage *m_image;
    void paintEvent ( QPaintEvent * _event);
 public:
-   k9Widget (QWidget *_parent):QWidget(_parent) {}
-   void setImage(QImage _image);
+   k9Widget (QWidget *_parent);
+   void setImage(QImage *_image);
 };
 
 
@@ -86,7 +86,7 @@ protected:
 public slots: // Public slots
   /** No descriptions */
   void drawPixmap( QImage *image);
-  //void drawppm(uchar *_buf,char *data,int _len);
+  void drawppm(uchar *_buf,int _width,int _height,int _len);
   void setError(const QString & err);
   void setPosition(uint32_t _position);
   void setMax(uint32_t _position);
