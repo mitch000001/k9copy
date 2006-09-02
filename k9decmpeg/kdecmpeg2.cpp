@@ -343,7 +343,10 @@ void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
     pix.loadFromData((uchar*)s,strlen(c)+len);
     free(s);
     sync();
-    m_display->setImage( pix);
+    if (m_thread !=NULL)
+    	m_display->setImage( pix);
+    else
+	draw( &pix);
 
     } else  {
        sync();

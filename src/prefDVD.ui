@@ -53,10 +53,10 @@
                 <cstring>ckK3b</cstring>
             </property>
             <property name="text">
-                <string>&amp;Burn with k3b</string>
+                <string>Burn with k3b</string>
             </property>
             <property name="accel">
-                <string>Alt+B</string>
+                <string></string>
             </property>
         </widget>
         <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
@@ -72,10 +72,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Au&amp;to burn</string>
+                <string>Auto burn</string>
             </property>
             <property name="accel">
-                <string>Alt+T</string>
+                <string></string>
             </property>
         </widget>
         <widget class="QLabel" row="1" column="0">
@@ -119,10 +119,10 @@
                 <cstring>ckQuickScan</cstring>
             </property>
             <property name="text">
-                <string>&amp;Quick scan</string>
+                <string>Quick scan</string>
             </property>
             <property name="accel">
-                <string>Alt+Q</string>
+                <string></string>
             </property>
         </widget>
         <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
@@ -130,10 +130,10 @@
                 <cstring>ckUseGL</cstring>
             </property>
             <property name="text">
-                <string>us&amp;e OpenGL for preview</string>
+                <string>use OpenGL for preview</string>
             </property>
             <property name="accel">
-                <string>Alt+E</string>
+                <string></string>
             </property>
         </widget>
         <spacer row="6" column="2">
