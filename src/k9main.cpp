@@ -365,6 +365,12 @@ void k9Main::Copy() {
 
 }
 
+void k9Main::eject() {
+   closeDVD();
+   drives.eject( getDevice(cbInputDev));
+}
+
+
 
 QString  k9Main::getDevice(QComboBox *_combo) {
     int index=-1;

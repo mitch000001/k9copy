@@ -116,6 +116,12 @@ void k9Copy::setupActions()
 
    mkMP4Action->setIcon("mp4");
 
+   ejectAction = new KAction(i18n("Eject"),0,
+				  this, SLOT(ActionEject()),
+				  actionCollection() , "Eject");
+   ejectAction->setIcon("player_eject");
+
+
    createGUI(0);
 }
 
@@ -179,6 +185,9 @@ void k9Copy::ActionMP4() {
   m_k9Main->CreateMP4();
 }
 
+void k9Copy::ActionEject() {
+  m_k9Main->eject();
+}
 
 
 

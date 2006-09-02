@@ -17,6 +17,7 @@
 #include <qapplication.h>
 #include <qdatetime.h>
 #include "ac.h"
+#include <X11/Xlib.h>
 
 k9GLWidget::k9GLWidget(QWidget *parent, const char *name)
         : QGLWidget(parent, name) {
@@ -24,6 +25,7 @@ k9GLWidget::k9GLWidget(QWidget *parent, const char *name)
     m_buffer=NULL;
     m_height=0;
     m_width=0;
+    m_stack.setAutoDelete(TRUE);
     library=new QLibrary("GL");
 
     glClear = (glClear_t) library->resolve( "glClear" );
@@ -50,23 +52,27 @@ k9GLWidget::~k9GLWidget() {
     delete library;
 }
 
+void k9GLWidget::paintGL() {
+   draw();
+}
 
 void k9GLWidget::setImage(uchar *_buffer,int _width,int _height,int _len) {
-    uchar *buffer =(uchar*)malloc(_len);
-    tc_memcpy(buffer,_buffer,_len);
+//    uchar *buffer =(uchar*)malloc(_len);
+//    tc_memcpy(buffer,_buffer,_len);
+    uchar *buffer=_buffer;
     m_width=_width;
     m_height=_height;
     m_mutex.lock();
-    m_queue.enqueue(buffer);
+    m_stack.push(buffer);
     m_mutex.unlock();
     update();
-
 }
 
-void k9GLWidget::paintGL() {
+void k9GLWidget::draw() {
     uchar *buffer=NULL;
     if (m_mutex.tryLock()) {
-        buffer=m_queue.dequeue();
+        if (!m_stack.isEmpty())
+            buffer=m_stack.pop();
         if (buffer !=NULL) {
             if (m_buffer !=NULL)
                 free(m_buffer);
@@ -88,14 +94,17 @@ void k9GLWidget::paintGL() {
             glPixelZoom (ratio, -ratio);
 
             glDrawPixels( m_width, m_height, GL_RGBA, GL_UNSIGNED_BYTE, m_buffer );
-            glFlush ();
-        }
+        } else
+	    glClear(GL_COLOR_BUFFER_BIT);
+        swapBuffers();
+	m_stack.clear();
         m_mutex.unlock();
     }
 }
 
 
 void k9GLWidget::initializeGL() {
+    setAutoBufferSwap(FALSE);
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel(GL_FLAT);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -141,7 +150,6 @@ void k9GLWidget::initializeGL() {
         }
     }
 
-
 }
 
 void k9GLWidget::resizeGL(int w, int h) {
@@ -153,10 +161,6 @@ void k9GLWidget::resizeGL(int w, int h) {
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-
-void k9GLWidget::showEvent(QShowEvent *event) {
-    Q_UNUSED(event);
-}
 
 #include "k9glwidget.moc"
 

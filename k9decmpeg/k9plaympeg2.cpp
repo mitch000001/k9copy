@@ -81,7 +81,7 @@ void k9PlayMPEG2::playTitle() {
     /* the read loop which regularly calls dvdnav_get_next_block
      * and handles the returned events */
 
-    while (!finished && !m_stopped) {
+    while (!finished && !m_stopped && qApp!=NULL) {
         int result, event, len;
         uint8_t *buf = mem;
 
@@ -115,7 +115,7 @@ void k9PlayMPEG2::playTitle() {
 		if (tt != title)
 			finished=1;
 	
-		if (finished==0) {
+		if (finished==0 && buf[17]==0xE0) {
 			m_decoder.addData( buf,len);
 		}
 		if (qApp->tryLock()) {

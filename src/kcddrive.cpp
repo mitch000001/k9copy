@@ -41,31 +41,44 @@ kCDDrives::kCDDrives() {
     scanDrives();
 }
 kCDDrives::~kCDDrives() {
-  dm->clear();
-  delete dm;
+    dm->clear();
+    delete dm;
 }
 
 void kCDDrives::eject(const QString & device) {
-   for (uint i=0;i<count();i++) {
-	kCDDrive *drive=getDrive(i);
-	if ((drive->device==device) && ( drive->getk3bDev()!=NULL) ) {
-	K3bDevice::Device *dev=drive->getk3bDev();
-        /*KProcess *process =new KProcess();
-	*process <<"umount" << device;
-	process->start();
-	if (process->isRunning()) process->wait(-1);
-	delete process;
-*/
+    bool ejected=FALSE;
+    for (uint i=0;i<count();i++) {
+        kCDDrive *drive=getDrive(i);
+        if ((drive->device==device) && ( drive->getk3bDev()!=NULL) ) {
+            K3bDevice::Device *dev=drive->getk3bDev();
+            /*KProcess *process =new KProcess();
+            *process <<"umount" << device;
+            process->start();
+            if (process->isRunning()) process->wait(-1);
+            delete process;
+            */
 
 #ifdef Q_OS_LINUX
-	umount(device.latin1());
+
+            umount(device.latin1());
 #endif
 #ifdef Q_OS_FREEBSD
-	unmount(device.latin1(),0);
+
+            unmount(device.latin1(),0);
 #endif
-	dev->eject();
-	}
-   }
+
+            dev->eject();
+	    ejected=TRUE;
+        }
+    }
+
+    if (!ejected) {
+	   KProcess *process =new KProcess();
+           *process <<"eject" << device;
+           process->start();
+	   process->wait();
+	   delete process;
+    }
 }
 
 
@@ -110,23 +123,24 @@ void kCDDrives::scanDrives() {
     dm->scanBus();
     dm->scanFstab();
 
-    
- QPtrListIterator<K3bDevice::Device> it( dm->allDevices());
-  while( it.current() ) {
-	kCDDrive *drive=new kCDDrive;
-	drive->setk3bDev(it.current());
-	drive->canReadDVD=it.current()->readsDvd();
-	drive->canWriteDVD=it.current()->writesDvd();
-	drive->canWriteCDR=it.current()->writesCd();
-	drive->canWriteCDRW=it.current()->writesCdrw();;
-	drive->device=it.current()->devicename();
-	drive->name=it.current()->description();
-	drive->setWriteSpeeds(it.current()->determineSupportedWriteSpeeds());
-	drives.append(drive);
-	//ajouter les vitesses autorisée
-	++it;
 
-  }
+    QPtrListIterator<K3bDevice::Device> it( dm->allDevices());
+    while( it.current() ) {
+        kCDDrive *drive=new kCDDrive;
+        drive->setk3bDev(it.current());
+        drive->canReadDVD=it.current()->readsDvd();
+        drive->canWriteDVD=it.current()->writesDvd();
+        drive->canWriteCDR=it.current()->writesCd();
+        drive->canWriteCDRW=it.current()->writesCdrw();
+        ;
+        drive->device=it.current()->devicename();
+        drive->name=it.current()->description();
+        drive->setWriteSpeeds(it.current()->determineSupportedWriteSpeeds());
+        drives.append(drive);
+        //ajouter les vitesses autorisï¿½
+        ++it;
+
+    }
 
     readConfig();
 }

@@ -42,34 +42,33 @@
 
 
 
-k9Widget::k9Widget(QWidget *parent):QWidget(parent)
-{
-   m_image=NULL;
+k9Widget::k9Widget(QWidget *parent):QWidget(parent) {
+    m_image=NULL;
 }
 
 void k9Widget::setImage(QImage *_image) {
-   m_image=_image;
-   paintEvent( NULL);
-
+    m_image=_image;
+    //paintEvent( NULL);
+    repaint(FALSE);
 }
 
 void k9Widget::paintEvent( QPaintEvent *_event) {
     setPaletteBackgroundColor(Qt::black);
     int top,left;
     if (m_image !=NULL) {
-	QPainter p(this);
-	double wratio=(double)width()/(double)m_image->width();
-	double hratio=(double)height()/(double)m_image->height();
-	double ratio= wratio < hratio ? wratio:hratio;
-	
-	top =(int) (height() -m_image->height()*ratio)/2+1;
-	left =(int) (width() -m_image->width()*ratio)/2 +1;
-	
-	p.scale(ratio,ratio);
-	
-	p.drawImage((int)(left/ratio),(int)(top/ratio),*m_image);
-	
-	p.end();
+        QPainter p(this);
+        double wratio=(double)width()/(double)m_image->width();
+        double hratio=(double)height()/(double)m_image->height();
+        double ratio= wratio < hratio ? wratio:hratio;
+
+        top =(int) (height() -m_image->height()*ratio)/2+1;
+        left =(int) (width() -m_image->width()*ratio)/2 +1;
+
+        p.scale(ratio,ratio);
+
+        p.drawImage((int)(left/ratio),(int)(top/ratio),*m_image);
+
+        p.end();
     }
 }
 
@@ -88,24 +87,25 @@ kViewMPEG2::kViewMPEG2() {
     m_layout=new QGridLayout(label,1,1);
 
 #ifdef HAVE_OPENGL
+
     readSettings();
 #else
+
     m_prefUseGL=FALSE;
 #endif
 
     m_player.getDecoder()->setUseGL(m_prefUseGL);
     if (m_prefUseGL)  {
         connect(m_player.getDecoder()  , SIGNAL(ppmReady(uchar *,int,int,int)), this, SLOT(drawppm(uchar *,int,int,int)));
-	m_GLwidget=new k9GLWidget(label);
-	m_widget=NULL;
+        m_GLwidget=new k9GLWidget(label);
+        m_widget=NULL;
         m_layout->addWidget(m_GLwidget,0,0);
-    }
-    else {
+    } else {
         connect(m_player.getDecoder()  , SIGNAL(pixmapReady(QImage *)), this, SLOT(drawPixmap(QImage *)));
-    	m_widget=new k9Widget(label);
+        m_widget=new k9Widget(label);
         m_layout->addWidget(m_widget,0,0);
 
-	m_GLwidget=NULL;
+        m_GLwidget=NULL;
     }
 
 }
@@ -129,11 +129,11 @@ kViewMPEG2::~kViewMPEG2() {
 
 
 void kViewMPEG2::lock() {
-   mutex.lock();
+    mutex.lock();
 }
 
 void kViewMPEG2::unlock() {
-   mutex.unlock();
+    mutex.unlock();
 }
 
 void kViewMPEG2::setPosition( uint32_t _position) {
@@ -152,18 +152,25 @@ void kViewMPEG2::setMin(uint32_t _position) {
 
 /** No descriptions */
 void kViewMPEG2::drawPixmap(QImage *image) {
-	if (qApp->tryLock()) {
-   		m_widget->setImage( image);
-		qApp->unlock();
-	}
+    if (qApp==NULL)
+        return;
+    if (qApp->tryLock()) {
+        m_widget->setImage( image);
+        if (qApp!=NULL)
+            qApp->unlock();
+        }
 }
 
 /** No descriptions */
 void kViewMPEG2::drawppm(uchar *_buf,int _width,int _height,int _len) {
-	if (qApp->tryLock()) {
-	    m_GLwidget->setImage(_buf,_width,_height,_len);
-  	    qApp->unlock();
-	}
+    if (qApp==NULL)
+        return;
+    if (qApp->tryLock()) {
+        m_GLwidget->setImage(_buf,_width,_height,_len);
+        if (qApp !=NULL)
+            qApp->unlock();
+    } else
+        free(_buf);
 }
 
 
@@ -185,8 +192,7 @@ void kViewMPEG2::setError(const QString & err) {
 }
 
 
-void kViewMPEG2::resizeEvent(QResizeEvent *_event) {
-}
+void kViewMPEG2::resizeEvent(QResizeEvent *_event) {}
 
 void kViewMPEG2::bStopClick() {
     m_player.stop();

@@ -19,7 +19,7 @@
 #include <qimage.h>
 #include <qlibrary.h>
 #include <qgl.h>
-#include <qptrqueue.h>
+#include <qptrstack.h>
 #include <qmutex.h>
 
 typedef void (*glClear_t) (GLbitfield);
@@ -48,14 +48,14 @@ public:
     void setImage(uchar *_buffer,int _width,int _height,int _len);
     ~k9GLWidget();
 protected:
-	void paintGL();
+	void draw();
         void resizeGL(int width, int height);
-        void showEvent(QShowEvent *event);
 	void initializeGL();
+   	void paintGL();
 private:
 	QImage m_image;
 	QMutex m_mutex;
-	QPtrQueue<uchar> m_queue;
+	QPtrStack<uchar> m_stack;
 	int m_width,m_height;
 	uchar *m_buffer;
 	QLibrary * library;

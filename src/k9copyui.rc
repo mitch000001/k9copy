@@ -1,10 +1,12 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="k9copy" version="7.1">
+<kpartgui name="k9copy" version="9">
 <MenuBar>
   <Menu name="Actions"><text>A&amp;ctions</text>
     <Action name="PlayTitle" />
     <Action name="MakeMPEG4"/>	    
     <Action name="Copy" />
+    <Separator/>
+    <Action name="Eject"/>
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar" noMerge="1">
@@ -15,6 +17,7 @@
 	<Action name="Copy"/>
 	<Separator />
 	<Action name="options_configure" />	
+	<Action name="Eject"/>	
 	<Action name="file_quit"/>
 	
 </ToolBar>

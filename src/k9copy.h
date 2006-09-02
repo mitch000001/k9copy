@@ -55,6 +55,7 @@ protected:
 private slots:
     void ActionCopy();
     void ActionMP4();
+    void ActionEject();
 
    void ActionPlayTitle();
     void changeStatusbar(const QString& text,int id);
@@ -71,7 +72,7 @@ private:
     KAction *CopyAction;
     KAction *PlayTitleAction;
     KAction *mkMP4Action;
-
+    KAction *ejectAction;
 private:
    k9Main  *m_k9Main;
    KMdiChildView *m_childView;

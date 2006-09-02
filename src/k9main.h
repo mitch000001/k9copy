@@ -134,6 +134,7 @@ public:
     bool withMenus();
     k9DVD *dvd;
     void setViewer(kViewMPEG2 *_value) {viewer = _value;}
+    void eject();
 private slots:
     virtual void          listView1CurrentChanged( QListViewItem * );
     virtual void          bSaveClick();

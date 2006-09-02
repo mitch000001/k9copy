@@ -40,19 +40,21 @@ void k9DisplayThread::setRawImage(uchar *_buffer,int _width,int _height,int size
    if (m_mutex.tryLock()) {
 	m_buffer=(uchar*) malloc(size);
 	tc_memcpy(m_buffer,_buffer,size);
-	//m_buffer=_buffer;
 	m_size=size;
         m_width=_width;
 	m_height=_height,
 	m_raw=TRUE;
 	start();
+
    }
 }
 
 void k9DisplayThread::run() {
+   if (qApp==NULL)
+	return;
    if (m_raw) {
 	m_dec->drawRaw( m_buffer,m_width,m_height,m_size);
-	free(m_buffer);
+//	free(m_buffer);
    }else
    	m_dec->draw( &m_image);  
    m_mutex.unlock();
@@ -323,7 +325,7 @@ void kDecMPEG2::sync() {
 	m_thread->sleepms(t);
 	
     }
-    m_timer.restart();  
+    m_timer.restart();
 }
 
 void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
@@ -347,14 +349,6 @@ void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
        sync();
        m_display->setRawImage( (uchar*)buf,width,height,len);
     }
-/*JMP:temporaire    
-*/
-
- 
-  //  
-
-
-
  
 }
 
