@@ -70,7 +70,7 @@ void k9DVDAuthor::createXML() {
     root.appendChild(vmgm);
     addMenus(vmgm);
 
-    inject = locateLocal("tmp", "k9v" + (QTime::currentTime()).toString("hhmmss"));
+    inject = locateLocal("tmp", "k9copy/k9v" + (QTime::currentTime()).toString("hhmmss"));
 
 
     m_totalPartSize=0;
@@ -102,7 +102,7 @@ void k9DVDAuthor::createXML() {
 
     QString x = xml->toString();
 
-    QFile file(  locateLocal("tmp", "k9author.xml" ));
+    QFile file(  locateLocal("tmp", "k9copy/k9author.xml" ));
     if ( file.open( IO_WriteOnly ) ) {
         QTextStream stream( &file );
         xml->save(stream,1);
@@ -209,7 +209,7 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
 
         //create palette for subpictures
         palette.sprintf("palette%d.yuv",l_track->getnumTitle());
-        palette= locateLocal("tmp", "k9" +palette);
+        palette= locateLocal("tmp", "k9copy/k9" +palette);
         QFile file(palette);
         if ( file.open( IO_WriteOnly ) ) {
             QTextStream stream( &file );
@@ -377,7 +377,7 @@ void k9DVDAuthor::author() {
         proc=progress->getProcess();//  new QProcess(c,0);
         proc->addArgument(c);
         proc->addArgument("-x");
-        proc->addArgument( locateLocal("tmp", "k9author.xml"));
+        proc->addArgument( locateLocal("tmp", "k9copy/k9author.xml"));
         connect( proc, SIGNAL(readyReadStderr()),
                  this, SLOT(DVDAuthorStderr()) );
         connect( proc, SIGNAL(readyReadStdout()),

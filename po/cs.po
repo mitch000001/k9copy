@@ -2,15 +2,15 @@
 # translation of k9copy.po to czech
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER, 2005.
-# Zdeněk Štěpánek <zdenek@gavanet.org>, 2005
+# Zdeněk Štěpánek <zdenek@gavanet.org>, 2006
 msgid ""
 msgstr ""
 "Project-Id-Version: k9copy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-21 09:09+0200\n"
-"PO-Revision-Date: 2006-01-17 06:03+0100\n"
-"Last-Translator: Zdeněk Štěpúánek <zdenek@gavanet.org>\n"
-"Language-Team:  <cs@li.org>\n"
+"PO-Revision-Date: 2006-08-28 16:15+0100\n"
+"Last-Translator: Zdeněk Štěpánek <zdenek@gavanet.org>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -135,7 +135,7 @@ msgstr "Omezený přepis"
 #: libk3bdevice/k3bdeviceglobals.cpp:83
 #: libk3bdevice.new/k3bdeviceglobals.cpp:83
 msgid "Layer Jump"
-msgstr "Skoková vrstva"
+msgstr "Skok na vrstvu"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:86
 #: libk3bdevice.new/k3bdeviceglobals.cpp:86
@@ -193,10 +193,9 @@ msgstr "Přehrát stopu"
 
 #: src/k9copy.cpp:80
 msgid "Create MPEG-4"
-msgstr ""
+msgstr "Vytvořit MPEG-4"
 
 #: src/k9copy.cpp:94
-#, fuzzy
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -218,86 +217,83 @@ msgstr "Chyba při čtení bloku %1\n"
 
 #: src/main.cpp:30
 msgid "A DVD Backup tool for KDE"
-msgstr ""
+msgstr "Zálohovač DVD pro prostředí KDE"
 
 #: src/main.cpp:35
-#, fuzzy
 msgid "input device"
-msgstr "Vstupní zařízení"
+msgstr "vstupní zařízení"
 
 #: src/main.cpp:37
-#, fuzzy
 msgid "output device"
-msgstr "Výstupní zařízení"
+msgstr "výstupní zařízení"
 
 #: src/main.cpp:38
 msgid "title to play"
-msgstr ""
+msgstr "stopa k přehrání"
 
 #: src/main.cpp:39
-#, fuzzy
 msgid "play title to stdout"
-msgstr "Přehrát stopu"
+msgstr "přehrát stopu na stdout"
 
 #: src/main.cpp:40
 msgid "start sector"
-msgstr ""
+msgstr "start sektor"
 
 #: src/main.cpp:41
 msgid "end sector"
-msgstr ""
+msgstr "stop sektor"
 
 #: src/main.cpp:42
 msgid "list of audio streams"
-msgstr ""
+msgstr "seznam audio proudů"
 
 #: src/main.cpp:43
 msgid "list of spu streams"
-msgstr ""
+msgstr "seznam spu proudů"
 
 #: src/main.cpp:44
 msgid "shrink factor"
-msgstr ""
+msgstr "kompresní faktor"
 
 #: src/main.cpp:45
 msgid "size of the cell to be copied"
-msgstr ""
+msgstr "velikost buňky ke kopírování"
 
 #: src/main.cpp:46
 msgid "total size of selected titles"
-msgstr ""
+msgstr "celková velikost vybraných stop"
 
 #: src/main.cpp:47
 msgid "size of the chapters being copied"
-msgstr ""
+msgstr "velikost kapitol ke kopírování"
 
 #: src/main.cpp:48
 msgid "new dvd size"
-msgstr ""
+msgstr "nová velikost DVD"
 
 #: src/main.cpp:49
 msgid "selected chapter"
-msgstr ""
+msgstr "vybrané kapitoly"
 
 #: src/main.cpp:50
 msgid "cell number in selected chapter"
-msgstr ""
+msgstr "číslo buňky ve vybrané kapitole"
 
 #: src/main.cpp:51
 msgid "status file name"
-msgstr ""
+msgstr "status - jméno souboru"
 
 #: src/main.cpp:52
 msgid "initialize status file"
-msgstr ""
+msgstr "iicializovat status soubor"
 
 #: src/main.cpp:53
 msgid "continue playing from last sector"
-msgstr ""
+msgstr "pokračovat v přehrávání od posledního sektoru"
 
 #: src/main.cpp:62
 msgid "k9copy"
-msgstr "k9Copy"
+msgstr "k9copy"
 
 #: src/main.cpp:65
 msgid "_: NAME OF TRANSLATORS\\nYour names"
@@ -323,7 +319,8 @@ msgstr "Uložit obraz na disk"
 msgid ""
 "Insuffisant disk space on %1\n"
 "%2 mb expected."
-msgstr ""
+msgstr "Nedostatek místa na %1\n."
+"Je potřeba %2 mb."
 
 #: src/k9main.cpp:385 src/k9main.cpp:951
 msgid "ISO Image"
@@ -338,9 +335,8 @@ msgid "Titleset %1"
 msgstr "Seznam stop %1"
 
 #: src/k9main.cpp:514
-#, fuzzy
 msgid "video %1 "
-msgstr "zvuk %1 "
+msgstr "video %1 "
 
 #: src/k9main.cpp:526
 msgid "audio %1 "
@@ -348,11 +344,11 @@ msgstr "zvuk %1 "
 
 #: src/k9main.cpp:543
 msgid "subpicture %1 "
-msgstr "podobraz %1 "
+msgstr "titulky %1 "
 
 #: src/k9main.cpp:919 src/k9settings.cpp:40 libk9copy/k9mp4enc.cpp:195
 msgid "MPEG-4 Encoding"
-msgstr ""
+msgstr "MPEG-4 Kódování"
 
 #: src/k9main.cpp:1091 debug/src/k9mainw.cpp:304 debug/src/prefMencoder.cpp:37
 #: debug/src/prefMencoder.cpp:87 rc.cpp:50 rc.cpp:161
@@ -368,56 +364,47 @@ msgstr "Titulky"
 #: debug/src/k9mainw.cpp:296 rc.cpp:20
 #, no-c-format
 msgid "default"
-msgstr ""
+msgstr "výchozí"
 
 #: src/k9main.cpp:1131
-#, fuzzy
 msgid "Open ISO Image"
-msgstr "ISO obraz"
+msgstr "Otevřít ISO obraz"
 
 #: src/k9main.cpp:1138
-#, fuzzy
 msgid "Open DVD folder"
-msgstr "Otevřít DVD"
+msgstr "Otevřít adresář DVD"
 
 #: src/k9main.cpp:1247
-#, fuzzy
 msgid "none"
-msgstr "Žádný"
+msgstr "žádný"
 
 #: src/k9settings.cpp:27
-#, fuzzy
 msgid "Devices"
-msgstr "zařízení"
+msgstr "Zařízení"
 
 #: src/k9settings.cpp:27
-#, fuzzy
 msgid "Devices not detected by k9copy"
-msgstr ""
-"<b><p align=\"center\">Zařízení nebylo detekováno prostřednictvím k9Copy </"
-"p></b>"
+msgstr "Zařízení nebylo detekováno prostřednictvím k9Copy"
 
 #: src/k9settings.cpp:34
-#, fuzzy
 msgid "DVD"
-msgstr "kDVD"
+msgstr "DVD"
 
 #: src/k9settings.cpp:34
-#, fuzzy
 msgid "DVD Backup"
-msgstr "kDVDTrack"
+msgstr "DVD Záloha"
 
 #: src/k9settings.cpp:40
 msgid "MPEG-4"
-msgstr ""
+msgstr "MPEG-4"
 
 #: src/k9settings.cpp:46
 msgid "MEncoder"
-msgstr ""
+msgstr "MEncoder"
 
 #: src/k9settings.cpp:46
 msgid "MPEG-4 Codecs"
-msgstr ""
+msgstr "MPEG-4 Kodeky"
 
 #: src/k9prefmpeg4.cpp:33 src/k9prefdvd.cpp:33 libk9copy/k9mp4enc.cpp:94
 msgid "mb"
@@ -436,7 +423,7 @@ msgstr "'%1' není vybrán"
 #: libk9copy/k9dvdauthor.cpp:367 libk9copy/k9burndvd.cpp:193
 #: libk9copy/k9burndvd.cpp:210
 msgid "authoring"
-msgstr "Tvorba DVD"
+msgstr "tvorba DVD"
 
 #: libk9copy/k9dvdauthor.cpp:325 libk9copy/k9dvdauthor.cpp:391
 #: libk9copy/k9dvdauthor.cpp:429
@@ -462,7 +449,7 @@ msgstr "Chyba ve spuštěném dvdauthor:\n"
 
 #: libk9copy/k9dvdauthor.cpp:430
 msgid "Fixing VOBUS"
-msgstr ""
+msgstr "Fixuji VOBUS"
 
 #: libk9copy/k9dvdbackup.cpp:137 libk9copy/k9dvdbackup.cpp:151
 #: libk9copy/k9dvdbackup.cpp:491 libk9copy/k9dvdbackup.cpp:648
@@ -471,7 +458,7 @@ msgstr "Zálohování DVD zrušeno"
 
 #: libk9copy/k9dvdbackup.cpp:164
 msgid "unable to open VIDEO_TS.IFO"
-msgstr "Nelze otevřít VIDEO_TS.IFO"
+msgstr "nelze otevřít VIDEO_TS.IFO"
 
 #: libk9copy/k9dvdbackup.cpp:186 libk9copy/k9dvdbackup.cpp:364
 #: libk9copy/k9dvdbackup.cpp:429
@@ -528,7 +515,7 @@ msgstr "Nelze vyhledat stopu v %1\n"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Not Specified"
-msgstr ""
+msgstr "Není specifikováno"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Afar"
@@ -987,9 +974,8 @@ msgid "Swahili"
 msgstr ""
 
 #: libk9copy/k9dvd.cpp:248
-#, fuzzy
 msgid "Tamil"
-msgstr "Stopa"
+msgstr ""
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Telugu"
@@ -1104,28 +1090,25 @@ msgid "reading title"
 msgstr "Čtení stopy"
 
 #: libk9copy/k9mp4enc.cpp:84
-#, fuzzy
 msgid "Save file to disk"
-msgstr "Uložit obraz na disk"
+msgstr "Uložit soubor na disk"
 
 #: libk9copy/k9mp4enc.cpp:124 libk9copy/k9mp4enc.cpp:131
 #: libk9copy/k9mp4enc.cpp:149
 msgid "Encoding %1"
-msgstr ""
+msgstr "Kóduji %1"
 
 #: libk9copy/k9mp4enc.cpp:195
-#, fuzzy
 msgid "MPEG-4 Encoding cancelled"
-msgstr "Tvorba DVD zrušena"
+msgstr "Kódování MPEG-4 zrušeno"
 
 #: libk9copy/k9mp4enc.cpp:198
-#, fuzzy
 msgid "Error while running mencoder :"
-msgstr "Chyba ve spuštěném dvdauthor:\n"
+msgstr "Chyba ve spuštěném mencoderu :"
 
 #: libk9copy/k9mp4enc.cpp:198
 msgid "Encoding error"
-msgstr ""
+msgstr "Chyba při kódování"
 
 #: libk9copy/k9burndvd.cpp:144
 msgid "k9Copy - Burning DVD"
@@ -1141,7 +1124,7 @@ msgstr "Vložte zapisovatelné DVD"
 
 #: libk9copy/k9burndvd.cpp:199
 msgid "Error burning DVD :\n"
-msgstr "Chyba při vypalování DVD:\n"
+msgstr "Chyba při vypalování DVD :\n"
 
 #: libk9copy/k9burndvd.cpp:199 libk9copy/k9burndvd.cpp:203
 msgid "DVD burning"
@@ -1210,39 +1193,39 @@ msgid "k9Copy"
 msgstr "k9Copy"
 
 #: debug/libk9copy/progress.cpp:106 debug/src/progress.cpp:81 rc.cpp:207
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Alt+C"
-msgstr "Alt+B"
+msgstr "Alt+C"
 
 #: debug/libk9copy/mp4dlg.cpp:120 rc.cpp:215
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "k9Copy - transcoding"
-msgstr "k9copy - Vypalování DVD"
+msgstr "k9copy - překódování"
 
 #: debug/libk9copy/mp4dlg.cpp:121 rc.cpp:218
 #, no-c-format
 msgid "Encoding"
-msgstr ""
+msgstr "Kódování"
 
 #: debug/libk9copy/mp4dlg.cpp:122 rc.cpp:221
 #, no-c-format
 msgid "Annu&ler"
-msgstr ""
+msgstr "Zrušit"
 
 #: debug/libk9copy/mp4dlg.cpp:123 rc.cpp:224
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Alt+L"
-msgstr "Alt+A"
+msgstr "Alt+L"
 
 #: debug/libk9copy/mp4dlg.cpp:128 rc.cpp:231
 #, no-c-format
 msgid "fps"
-msgstr ""
+msgstr "fps"
 
 #: debug/libk9copy/mp4dlg.cpp:130 rc.cpp:237
 #, no-c-format
 msgid "Bitrate"
-msgstr ""
+msgstr "Bitrate"
 
 #: debug/libk9copy/mp4dlg.cpp:131 debug/src/k9mainw.cpp:106
 #: debug/src/k9mainw.cpp:299 rc.cpp:32 rc.cpp:240
@@ -1303,9 +1286,8 @@ msgid "k9DVD"
 msgstr "k9DVD"
 
 #: debug/libk9copy/k9burndvd.moc.cpp:34 debug/libk9copy/k9burndvd.moc.cpp:42
-#, fuzzy
 msgid "k9BurnDVD"
-msgstr "k9DVD"
+msgstr "k9BurnDVD"
 
 #: debug/src/viewmpeg2.cpp:631 rc.cpp:3
 #, no-c-format
@@ -1320,7 +1302,7 @@ msgstr "zařízení"
 #: debug/src/configDlg.cpp:44 debug/src/configDlg.cpp:97 rc.cpp:72
 #, no-c-format
 msgid "label"
-msgstr "Popisek"
+msgstr "popisek"
 
 #: debug/src/configDlg.cpp:46 debug/src/configDlg.cpp:98 rc.cpp:75
 #, no-c-format
@@ -1360,7 +1342,7 @@ msgstr "Výstupní zařízení"
 #: debug/src/k9mainw.cpp:293 rc.cpp:14
 #, no-c-format
 msgid "@"
-msgstr ""
+msgstr "@"
 
 #: debug/src/k9mainw.cpp:294 rc.cpp:17
 #, no-c-format
@@ -1370,7 +1352,7 @@ msgstr "Vstupní zařízení"
 #: debug/src/k9mainw.cpp:297 debug/src/prefMPEG4.cpp:158 rc.cpp:23 rc.cpp:143
 #, no-c-format
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: debug/src/k9mainw.cpp:300 rc.cpp:38
 #, no-c-format
@@ -1385,27 +1367,27 @@ msgstr "Alt+K"
 #: debug/src/k9mainw.cpp:302 rc.cpp:44
 #, no-c-format
 msgid "Default language"
-msgstr ""
+msgstr "Výchozí jazyk"
 
 #: debug/src/k9mainw.cpp:303 rc.cpp:47
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Subtitle"
 msgstr "Titulky"
 
 #: debug/src/k9mainw.cpp:307 rc.cpp:55
 #, no-c-format
 msgid "Selected Titles"
-msgstr ""
+msgstr "Vybrané Stopy"
 
 #: debug/src/k9mainw.cpp:308 rc.cpp:35
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "DVD playback options"
-msgstr "<b>Možnosti přehrávání DVD</b>"
+msgstr "Možnosti přehrávání DVD"
 
 #: debug/src/k9mainw.cpp:310 rc.cpp:58
 #, no-c-format
 msgid "Selection"
-msgstr ""
+msgstr "Výběr"
 
 #: debug/src/k9mainw.cpp:311 rc.cpp:26
 #, no-c-format
@@ -1413,9 +1395,9 @@ msgid "D&VD"
 msgstr "DVD"
 
 #: debug/src/prefDVD.cpp:89 rc.cpp:89
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "prefDVD"
-msgstr "Otevřít DVD"
+msgstr "prefDVD"
 
 #: debug/src/prefDVD.cpp:90 rc.cpp:92
 #, no-c-format
@@ -1435,7 +1417,7 @@ msgstr "Automaticky vypálit"
 #: debug/src/prefDVD.cpp:95 rc.cpp:103
 #, no-c-format
 msgid "Quick scan"
-msgstr ""
+msgstr "Jednoduché hledání"
 
 #: debug/src/prefDVD.cpp:97 rc.cpp:107
 #, no-c-format
@@ -1451,52 +1433,52 @@ msgstr ""
 #: debug/src/prefMPEG4.cpp:146 rc.cpp:113
 #, no-c-format
 msgid "Video Codec"
-msgstr ""
+msgstr "Video kodek"
 
 #: debug/src/prefMPEG4.cpp:147 rc.cpp:116
 #, no-c-format
 msgid "Audio bitrate"
-msgstr ""
+msgstr "Bitrate zvuku"
 
 #: debug/src/prefMPEG4.cpp:149 rc.cpp:122
 #, no-c-format
 msgid "File size"
-msgstr ""
+msgstr "Velikost souboru"
 
 #: debug/src/prefMPEG4.cpp:151 rc.cpp:128
-#, fuzzy, no-c-format
+#, no-c-format
 msgid " mb"
-msgstr "mb"
+msgstr " mb"
 
 #: debug/src/prefMPEG4.cpp:152 rc.cpp:131
 #, no-c-format
 msgid "640"
-msgstr ""
+msgstr "640"
 
 #: debug/src/prefMPEG4.cpp:156 rc.cpp:137
 #, no-c-format
 msgid "&keep aspect ratio"
-msgstr ""
+msgstr "Zachovat poměr stran"
 
 #: debug/src/prefMPEG4.cpp:160 rc.cpp:146
 #, no-c-format
 msgid "XviD"
-msgstr ""
+msgstr "XviD"
 
 #: debug/src/prefMPEG4.cpp:161 rc.cpp:149
 #, no-c-format
 msgid "lavc MPEG4"
-msgstr ""
+msgstr "lavc MPEG4"
 
 #: debug/src/prefMencoder.cpp:33 debug/src/prefMencoder.cpp:85 rc.cpp:155
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Label"
 msgstr "Popisek"
 
 #: debug/src/prefMencoder.cpp:35 debug/src/prefMencoder.cpp:86 rc.cpp:158
 #, no-c-format
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: debug/src/k9main.moc.cpp:34 debug/src/k9main.moc.cpp:42
 msgid "k9DVDListItem"
@@ -1521,79 +1503,9 @@ msgstr "kViewMPEG2"
 #: rc.cpp:243
 #, no-c-format
 msgid "A&ctions"
-msgstr ""
+msgstr "Akce"
 
 #: rc.cpp:246
 #, no-c-format
 msgid "Actions ToolBar"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Copy"
-#~ msgstr "k9Copy"
-
-#~ msgid "Next title"
-#~ msgstr "Následující stopa"
-
-#~ msgid "&Add"
-#~ msgstr "Přidat"
-
-#~ msgid "Alt+R"
-#~ msgstr "Alt+R"
-
-#~ msgid "At title end"
-#~ msgstr "Na konci stopy"
-
-#~ msgid "At start"
-#~ msgstr "Začít s:"
-
-#~ msgid "Alt+S"
-#~ msgstr "Alt+S"
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "kDVDSubtitle"
-#~ msgstr "kDVDSubtitle"
-
-#~ msgid "kDVDChapter"
-#~ msgstr "kDVDChapter"
-
-#~ msgid "kDVDVideoStream"
-#~ msgstr "kDVDVideoStream"
-
-#~ msgid "kDVDAudioStream"
-#~ msgstr "kDVDAudioStream"
-
-#~ msgid "kDVDProgress"
-#~ msgstr "kDVDProgress"
-
-#~ msgid "k9Copy - DVD backup"
-#~ msgstr "k9copy - Zálohování DVD"
-
-#~ msgid "Display title preview"
-#~ msgstr "Zobrazit náhled stopy"
-
-#~ msgid "Display selected title preview"
-#~ msgstr "Zobrazit náhled vybraných stop"
-
-#~ msgid "&Open"
-#~ msgstr "Načíst"
-
-#~ msgid "Preview &Menu"
-#~ msgstr "Náhled menu."
-
-#~ msgid "Play &title"
-#~ msgstr "Přehrát stopu"
-
-#~ msgid "kDVDAuthor"
-#~ msgstr "kDVDAuthor"
-
-#~ msgid "k9DVDFactory"
-#~ msgstr "k9DVDFactory"
-
-#~ msgid "Unable to start vamps"
-#~ msgstr "Nelze spustit vamps"
-
-#~ msgid "A KDE KPart Application"
-#~ msgstr "Program KDE KPart"
+msgstr "Nástrojová lišta akcí"

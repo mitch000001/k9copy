@@ -3,18 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER, 2006.
 #
+# FiNeX <finex@finex.org>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-21 09:09+0200\n"
-"PO-Revision-Date: 2006-01-17 20:53+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2006-08-13 23:27+0200\n"
+"Last-Translator: FiNeX <finex@finex.org>\n"
 "Language-Team:  <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:30 libk3bdevice/k3bdeviceglobals.cpp:132
 #: libk3bdevice.new/k3bdeviceglobals.cpp:30
@@ -216,7 +217,7 @@ msgstr "ERRORE nella nettura del blocco %1\n"
 
 #: src/main.cpp:30
 msgid "A DVD Backup tool for KDE"
-msgstr ""
+msgstr "Un programma per il backup dei DVD per KDE"
 
 #: src/main.cpp:35
 #, fuzzy
@@ -230,7 +231,7 @@ msgstr "Registra su"
 
 #: src/main.cpp:38
 msgid "title to play"
-msgstr ""
+msgstr "titolo da riprodurre"
 
 #: src/main.cpp:39
 #, fuzzy
@@ -239,15 +240,15 @@ msgstr "Anteprima Capitolo"
 
 #: src/main.cpp:40
 msgid "start sector"
-msgstr ""
+msgstr "inizio settore"
 
 #: src/main.cpp:41
 msgid "end sector"
-msgstr ""
+msgstr "fine settore"
 
 #: src/main.cpp:42
 msgid "list of audio streams"
-msgstr ""
+msgstr "Lista dei flussi audio"
 
 #: src/main.cpp:43
 msgid "list of spu streams"
@@ -255,7 +256,7 @@ msgstr ""
 
 #: src/main.cpp:44
 msgid "shrink factor"
-msgstr ""
+msgstr "fattore di riduzione"
 
 #: src/main.cpp:45
 msgid "size of the cell to be copied"
@@ -263,19 +264,19 @@ msgstr ""
 
 #: src/main.cpp:46
 msgid "total size of selected titles"
-msgstr ""
+msgstr "dimensione totale dei titoli selezionati"
 
 #: src/main.cpp:47
 msgid "size of the chapters being copied"
-msgstr ""
+msgstr "dimensione dei capitoli in copia"
 
 #: src/main.cpp:48
 msgid "new dvd size"
-msgstr ""
+msgstr "nuova dimensione del dvd"
 
 #: src/main.cpp:49
 msgid "selected chapter"
-msgstr ""
+msgstr "capitolo selezionato"
 
 #: src/main.cpp:50
 msgid "cell number in selected chapter"
@@ -291,7 +292,7 @@ msgstr ""
 
 #: src/main.cpp:53
 msgid "continue playing from last sector"
-msgstr ""
+msgstr "continua la riproduzione dall'ultimo settore"
 
 #: src/main.cpp:62
 msgid "k9copy"
@@ -300,12 +301,15 @@ msgstr "k9copy"
 #: src/main.cpp:65
 msgid "_: NAME OF TRANSLATORS\\nYour names"
 msgstr ""
-"TRANDUTTORE\n"
-"       Paolo Rampino"
+"TRANDUTTORI:\n"
+"       Paolo Rampino\n"
+"       Finetti Leonardo"
 
 #: src/main.cpp:66
 msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
-msgstr "paolo@clickma.it"
+msgstr ""
+"paolo@clickma.it\n"
+"leonardo.finetti@gmail.com"
 
 #: src/k9main.cpp:315 src/k9main.cpp:919
 msgid "DVD is not opened"
@@ -352,7 +356,7 @@ msgstr "Fotogramma %1"
 
 #: src/k9main.cpp:919 src/k9settings.cpp:40 libk9copy/k9mp4enc.cpp:195
 msgid "MPEG-4 Encoding"
-msgstr ""
+msgstr "Codifica MPEG4"
 
 #: src/k9main.cpp:1091 debug/src/k9mainw.cpp:304 debug/src/prefMencoder.cpp:37
 #: debug/src/prefMencoder.cpp:87 rc.cpp:50 rc.cpp:161
@@ -368,7 +372,7 @@ msgstr "Sottotitoli"
 #: debug/src/k9mainw.cpp:296 rc.cpp:20
 #, no-c-format
 msgid "default"
-msgstr ""
+msgstr "predefinito"
 
 #: src/k9main.cpp:1131
 #, fuzzy
@@ -460,7 +464,7 @@ msgstr "C'è stato un errore nella esecuzione di DVDAutor\n"
 
 #: libk9copy/k9dvdauthor.cpp:430
 msgid "Fixing VOBUS"
-msgstr ""
+msgstr "riparazione VOBUS"
 
 #: libk9copy/k9dvdbackup.cpp:137 libk9copy/k9dvdbackup.cpp:151
 #: libk9copy/k9dvdbackup.cpp:491 libk9copy/k9dvdbackup.cpp:648
@@ -526,7 +530,7 @@ msgstr "Non posso cercare nel %1 per il capitolo\n"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Not Specified"
-msgstr ""
+msgstr "Non specificato"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Afar"
@@ -985,9 +989,8 @@ msgid "Swahili"
 msgstr ""
 
 #: libk9copy/k9dvd.cpp:248
-#, fuzzy
 msgid "Tamil"
-msgstr "Titolo"
+msgstr ""
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Telugu"
@@ -1109,7 +1112,7 @@ msgstr "Salva immagine sul disco"
 #: libk9copy/k9mp4enc.cpp:124 libk9copy/k9mp4enc.cpp:131
 #: libk9copy/k9mp4enc.cpp:149
 msgid "Encoding %1"
-msgstr ""
+msgstr "Codifica %1"
 
 #: libk9copy/k9mp4enc.cpp:195
 #, fuzzy
@@ -1123,7 +1126,7 @@ msgstr "C'è stato un errore nella esecuzione di DVDAutor\n"
 
 #: libk9copy/k9mp4enc.cpp:198
 msgid "Encoding error"
-msgstr ""
+msgstr "Errore durante la codifica"
 
 #: libk9copy/k9burndvd.cpp:144
 msgid "k9Copy - Burning DVD"
@@ -1222,7 +1225,7 @@ msgstr "k9Copy - Masterizza DVD"
 #: debug/libk9copy/mp4dlg.cpp:121 rc.cpp:218
 #, no-c-format
 msgid "Encoding"
-msgstr ""
+msgstr "Codifica"
 
 #: debug/libk9copy/mp4dlg.cpp:122 rc.cpp:221
 #, no-c-format
@@ -1385,7 +1388,7 @@ msgstr "Alt+K"
 #: debug/src/k9mainw.cpp:302 rc.cpp:44
 #, no-c-format
 msgid "Default language"
-msgstr ""
+msgstr "Lingua predefinita"
 
 #: debug/src/k9mainw.cpp:303 rc.cpp:47
 #, fuzzy, no-c-format
@@ -1395,7 +1398,7 @@ msgstr "Sottotitoli"
 #: debug/src/k9mainw.cpp:307 rc.cpp:55
 #, no-c-format
 msgid "Selected Titles"
-msgstr ""
+msgstr "Titoli selezionati"
 
 #: debug/src/k9mainw.cpp:308 rc.cpp:35
 #, fuzzy, no-c-format
@@ -1405,7 +1408,7 @@ msgstr "<b>Opzioni del DVD</b>"
 #: debug/src/k9mainw.cpp:310 rc.cpp:58
 #, no-c-format
 msgid "Selection"
-msgstr ""
+msgstr "Selezione"
 
 #: debug/src/k9mainw.cpp:311 rc.cpp:26
 #, no-c-format
@@ -1435,7 +1438,7 @@ msgstr "Masterizza al termine"
 #: debug/src/prefDVD.cpp:95 rc.cpp:103
 #, no-c-format
 msgid "Quick scan"
-msgstr ""
+msgstr "Scansione veloce"
 
 #: debug/src/prefDVD.cpp:97 rc.cpp:107
 #, no-c-format
@@ -1451,7 +1454,7 @@ msgstr ""
 #: debug/src/prefMPEG4.cpp:146 rc.cpp:113
 #, no-c-format
 msgid "Video Codec"
-msgstr ""
+msgstr "Codec video"
 
 #: debug/src/prefMPEG4.cpp:147 rc.cpp:116
 #, no-c-format
@@ -1461,7 +1464,7 @@ msgstr ""
 #: debug/src/prefMPEG4.cpp:149 rc.cpp:122
 #, no-c-format
 msgid "File size"
-msgstr ""
+msgstr "Dimensione file"
 
 #: debug/src/prefMPEG4.cpp:151 rc.cpp:128
 #, fuzzy, no-c-format
@@ -1476,7 +1479,7 @@ msgstr ""
 #: debug/src/prefMPEG4.cpp:156 rc.cpp:137
 #, no-c-format
 msgid "&keep aspect ratio"
-msgstr ""
+msgstr "&mantieni le proporzioni"
 
 #: debug/src/prefMPEG4.cpp:160 rc.cpp:146
 #, no-c-format
@@ -1521,79 +1524,10 @@ msgstr "KViewMPEG2"
 #: rc.cpp:243
 #, no-c-format
 msgid "A&ctions"
-msgstr ""
+msgstr "A&zioni"
 
 #: rc.cpp:246
 #, no-c-format
 msgid "Actions ToolBar"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Copy"
-#~ msgstr "k9copy"
-
-#~ msgid "Next title"
-#~ msgstr "Prossimo Capitolo"
-
-#~ msgid "&Add"
-#~ msgstr "&Aggiungi"
-
-#~ msgid "Alt+R"
-#~ msgstr "Alt+R"
-
-#~ msgid "At title end"
-#~ msgstr "Al termine del Capitolo "
-
-#~ msgid "At start"
-#~ msgstr "All'avvio"
-
-#~ msgid "Alt+S"
-#~ msgstr "Alt+S"
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "kDVDSubtitle"
-#~ msgstr "kDVDSottotitoli"
-
-#~ msgid "kDVDChapter"
-#~ msgstr "kDVDCapitolo"
-
-#~ msgid "kDVDVideoStream"
-#~ msgstr "kDVDVideoStream"
-
-#~ msgid "kDVDAudioStream"
-#~ msgstr "kDVDAudioStream"
-
-#~ msgid "kDVDProgress"
-#~ msgstr "kDVDProgresso"
-
-#~ msgid "k9Copy - DVD backup"
-#~ msgstr "k9Copy - Esamina DVD"
-
-#~ msgid "Display title preview"
-#~ msgstr "Mostra l'anteprima del capitolo"
-
-#~ msgid "Display selected title preview"
-#~ msgstr "Mostra l'anteprima del capitolo selezionato"
-
-#~ msgid "&Open"
-#~ msgstr "&Apri"
-
-#~ msgid "Preview &Menu"
-#~ msgstr "Anteprima &Menù"
-
-#~ msgid "Play &title"
-#~ msgstr "Anteprima del &capitolo"
-
-#~ msgid "kDVDAuthor"
-#~ msgstr "Autoring (Creazione menù)"
-
-#~ msgid "k9DVDFactory"
-#~ msgstr "k9DVDFabbrica"
-
-#~ msgid "Unable to start vamps"
-#~ msgstr "Impossibile avviare vamps"
-
-#~ msgid "A KDE KPart Application"
-#~ msgstr "Applicazione integrata nelle KPart di KDE "

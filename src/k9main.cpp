@@ -82,8 +82,8 @@ pxText((const char **) img_text) {
 
     items.setAutoDelete(true);
     listView1->setDefaultRenameAction(QListView::Accept);
-    KStandardDirs kd;
-    m_prefOutput=kd.findResource("tmp","");
+//    KStandardDirs kd;
+    m_prefOutput=locateLocal("tmp","k9copy/",true); //kd.findResource("tmp","");
     readSettings();
     bInputOpen->setPixmap(SmallIcon("fileopen"));
     bInputOpenDir->setPixmap(SmallIcon("folder_open"));
@@ -774,8 +774,8 @@ void k9Main::readSettings() {
     readDrives();
 
     KSimpleConfig settings("K9Copy");
-    KStandardDirs kd;
-    m_prefOutput=settings.readEntry("/dir/output",kd.findResource("tmp",""));
+//    KStandardDirs kd;
+    m_prefOutput=settings.readEntry("/dir/output",locateLocal("tmp","k9copy/",true));//  kd.findResource("tmp",""));
     cbInputDev->setCurrentItem(settings.readEntry("/dev/input",0).toInt());
     cbOutputDev->setCurrentItem(settings.readEntry("/dev/output",0).toInt());
 

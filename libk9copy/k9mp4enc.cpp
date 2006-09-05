@@ -68,7 +68,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     }
 
     QString injectName;
-    KTempFile injectFile(locateLocal("tmp", "k9v"), "");
+    KTempFile injectFile(locateLocal("tmp", "k9copy/k9v"), "");
     injectFile.setAutoDelete(true);
     injectFile.close();
     injectName=injectFile.name();
