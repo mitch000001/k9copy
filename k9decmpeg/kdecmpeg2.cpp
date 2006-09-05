@@ -331,9 +331,10 @@ void kDecMPEG2::sync() {
 void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
 {
 
-   int len=(int) (4*width*height);
+   int len;
 
    if (!m_useGL) {
+    len =(int) (3*width*height);
     char c[255];
     sprintf(c,"P6\n%d %d\n255\n", width, height);
     char *s;
@@ -349,6 +350,7 @@ void kDecMPEG2::save_ppm (int width, int height, uint8_t * buf, int num)
 	draw( &pix);
 
     } else  {
+       len =(int) (4*width*height);
        sync();
        m_display->setRawImage( (uchar*)buf,width,height,len);
     }
