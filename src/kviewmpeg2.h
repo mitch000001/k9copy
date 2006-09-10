@@ -53,7 +53,7 @@ Q_OBJECT
 public: 
 	kViewMPEG2();
 	~kViewMPEG2();
-  int open (const QString & device,k9DVDTitle * title);
+  int open (k9DVD *_dvd,k9DVDTitle * title);
 private:
   QMutex mutex;
   k9DVDTitle *m_title;

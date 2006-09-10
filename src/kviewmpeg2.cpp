@@ -179,9 +179,8 @@ void kViewMPEG2::bPlayClick() {
 }
 
 
-int kViewMPEG2::open (const QString & device,k9DVDTitle * title) {
-    m_player.open(device,title);
-
+int kViewMPEG2::open (k9DVD *_dvd,k9DVDTitle * title) {
+    m_player.open(_dvd->getdvd()->getDvd(), _dvd->getDevice(),title);
 }
 
 

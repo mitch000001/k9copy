@@ -61,7 +61,7 @@ static dvdnav_status_t dvdnav_clear(dvdnav_t * this) {
   return DVDNAV_STATUS_OK;
 }
 
-dvdnav_status_t dvdnav_open(dvdnav_t** dest, const char *path) {
+dvdnav_status_t dvdnav_open(dvdnav_t** dest, const char *path,dvd_reader_t *dvd) {
   dvdnav_t *this;
   struct timeval time;
   
@@ -86,6 +86,7 @@ dvdnav_status_t dvdnav_open(dvdnav_t** dest, const char *path) {
     free(this);
     return DVDNAV_STATUS_ERR;
   }
+  this->vm->openedDvd=dvd;
   if(!vm_reset(this->vm, path)) {
     printerr("Error starting the VM / opening the DVD device.");
     pthread_mutex_destroy(&this->vm_lock);

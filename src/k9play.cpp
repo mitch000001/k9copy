@@ -250,7 +250,7 @@ void k9play::play() {
     }
 
     /* open dvdnav handle */
-    if (dvdnav_open(&dvdnav, m_device) != DVDNAV_STATUS_OK) {
+    if (dvdnav_open(&dvdnav, m_device,NULL) != DVDNAV_STATUS_OK) {
         kdebug("ERR:Error on dvdnav_open\n");
         return ;
     }

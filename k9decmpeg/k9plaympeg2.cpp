@@ -48,7 +48,7 @@ void k9PlayMPEG2::playTitle() {
 
 
     /* open dvdnav handle */
-    if (dvdnav_open(&dvdnav, m_device) != DVDNAV_STATUS_OK) {
+    if (dvdnav_open(&dvdnav, m_device,m_dvd) != DVDNAV_STATUS_OK) {
         setError("ERR:Error on dvdnav_open\n");
         return ;
     }
@@ -227,15 +227,15 @@ void k9PlayMPEG2::stop() {
 
 void k9PlayMPEG2::play() {
   if (m_stopped && m_title!=NULL) 
-	open(m_device,m_title);
+	open(m_dvd,m_device,m_title);
 }
 
 kDecMPEG2 *k9PlayMPEG2::getDecoder() {
   return m_decoder.getDecoder() ;
 }
 
-void k9PlayMPEG2::open (const QString & device,k9DVDTitle * title) {
-    dvd_reader_t *dvd;
+void k9PlayMPEG2::open (dvd_reader_t *dvd,const QString & device,k9DVDTitle * title) {
+    m_dvd=dvd;
     int  ret = 0;
     struct stat dvd_stat;
     QString c;

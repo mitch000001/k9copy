@@ -82,7 +82,7 @@ typedef int32_t dvdnav_status_t;
  *
  * The resulting dvdnav_t handle will be written to *dest.
  */
-dvdnav_status_t dvdnav_open(dvdnav_t **dest, const char *path);
+dvdnav_status_t dvdnav_open(dvdnav_t **dest, const char *path,dvd_reader_t *dvd);
 
 /*
  * Closes a dvdnav_t previously opened with dvdnav_open(), freeing any 

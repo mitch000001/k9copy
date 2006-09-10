@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2000, 2001 Håkan Hjort
+ * Copyright (C) 2000, 2001 Hï¿½an Hjort
  * Copyright (C) 2001 Rich Wareham <richwareham@users.sourceforge.net>
  * 
  * This file is part of libdvdnav, a DVD navigation library. It is modified
@@ -82,7 +82,7 @@ typedef struct vm_position_s {
 } vm_position_t;
 
 typedef struct {
-  dvd_reader_t *dvd;
+  dvd_reader_t *dvd,*openedDvd;
   ifo_handle_t *vmgi;
   ifo_handle_t *vtsi;
   dvd_state_t   state;

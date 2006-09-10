@@ -37,11 +37,13 @@ private:
    bool m_stopped;
    dvd_file_t *dvdfile;
    QMutex mutex;
+   dvd_reader_t *m_dvd;
 public:
     k9PlayMPEG2();
-    void open (const QString & device,k9DVDTitle * title);
+    void open (dvd_reader_t *dvd,const QString & device,k9DVDTitle * title);
     kDecMPEG2 *getDecoder();
-
+    void setDvd(dvd_reader_t* _value) { m_dvd = _value;}
+    dvd_reader_t* getDvd() const {return m_dvd;}
     ~k9PlayMPEG2();
 protected:
     void run();
@@ -50,6 +52,7 @@ public slots:
   void stop();
   void play();
   void updatePos(uint32_t _position);	
+	
 signals:
   void setPosition(uint32_t _position);
   void setMin(uint32_t _sector);

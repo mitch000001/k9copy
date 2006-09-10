@@ -843,7 +843,7 @@ void k9Main::PreviewTitle() {
     if (obj !=NULL) {
         k9DVDTitle *t=(k9DVDTitle*)obj;
         viewer->show();
-        viewer->open(getDevice(cbInputDev),t);
+        viewer->open(dvd,t);
     }
 }
 

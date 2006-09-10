@@ -270,7 +270,8 @@ void vm_stop(vm_t *vm) {
     vm->vtsi=NULL;
   }
   if(vm->dvd) {
-    DVDClose(vm->dvd);
+    if (!vm->openedDvd)
+    	DVDClose(vm->dvd);
     vm->dvd=NULL;
   }
   vm->stopped = 1;
@@ -314,8 +315,12 @@ int vm_reset(vm_t *vm, const char *dvdroot) {
     /* a new dvd device has been requested */
     vm_stop(vm);
   }
-  if (!vm->dvd) {
-    vm->dvd = DVDOpen(dvdroot);
+
+  if (!vm->dvd) {	
+    if (vm->openedDvd)   /*JMP we use the dvd opened by k9copy*/
+	vm->dvd=vm->openedDvd;
+    else
+        vm->dvd = DVDOpen(dvdroot);
     if(!vm->dvd) {
       fprintf(MSG_OUT, "libdvdnav: vm: faild to open/read the DVD\n");
       return 0;
