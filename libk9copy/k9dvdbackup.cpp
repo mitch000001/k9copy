@@ -85,6 +85,7 @@ uint32_t k9TitleSet::getSize() {
 k9DVDBackup::k9DVDBackup(QObject* _dvd,const char* name,const QStringList& args)
         : QObject(NULL, "") {
     DVD = (k9DVD*)_dvd;
+    m_dvdread=DVD->getdvd();
     currVTS=0;
     outputFile=NULL;
     currTS=NULL;
@@ -159,7 +160,7 @@ void k9DVDBackup::prepareVTS(int _VTS) {
         if (currTS != NULL) {
             startSector = currTS->startSector + currTS->getSize();
         } else {
-            k9Ifo kifo(&m_dvdread);
+            k9Ifo kifo(m_dvdread);
             kifo.openIFO( 0);
             hifo = kifo.getIFO();
             if (!hifo) {
@@ -195,7 +196,7 @@ void k9DVDBackup::prepareVTS(int _VTS) {
         currTS->lastSector += currTS->menuSize ;
         titleSets.append(currTS);
 
-        k9Ifo *kifo =new k9Ifo(&m_dvdread);
+        k9Ifo *kifo =new k9Ifo(m_dvdread);
         kifo->openIFO( _VTS);
         currTS->ifoTitle=kifo;
 
@@ -254,7 +255,7 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     ;
 
     k9DVDFile *dvdfile;
-    if ((dvdfile = m_dvdread.openTitle( _vts))== 0) {
+    if ((dvdfile = m_dvdread->openTitle( _vts))== 0) {
         QString stmp;
         stmp=i18n("Unable to open titleset %1").arg(_vts);
         seterror(stmp);
@@ -400,7 +401,7 @@ void k9DVDBackup::setOutput(QString _output) {
 uint32_t k9DVDBackup::copyMenu2(int _vts) {
     if (error )
         return 0;
-    k9Ifo kifo(&m_dvdread);
+    k9Ifo kifo(m_dvdread);
     kifo.openIFO( _vts);
     ifo_handle_t *hifo =kifo.getIFO();
     m_ifo=hifo;
@@ -433,7 +434,7 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
     }
 
     k9DVDFile *dvdfile;
-    if ((dvdfile = m_dvdread.openMenu( _vts))== 0) {
+    if ((dvdfile = m_dvdread->openMenu( _vts))== 0) {
         QString stmp;
         stmp=i18n("Unable to open menu for titleset %1").arg(_vts);
         seterror (stmp);
@@ -544,7 +545,7 @@ uint32_t k9DVDBackup::copyMenu(int _vts) {
     QString c;
     c="/VIDEO_TS/" + targetName;
     //gets the menu vob size
-    k9Ifo kifo(&m_dvdread);
+    k9Ifo kifo(m_dvdread);
     kifo.openIFO( _vts);
     ifo_handle_t *hifo =kifo.getIFO();
     if (_vts==0)
@@ -565,7 +566,7 @@ uint32_t k9DVDBackup::copyMenu(int _vts) {
     }
 
     k9DVDFile *dvdfile;
-    if ((dvdfile = m_dvdread.openMenu( _vts))== 0) {
+    if ((dvdfile = m_dvdread->openMenu( _vts))== 0) {
         QString stmp;
         stmp=i18n("Unable to open menu for titleset %1").arg(_vts);
         seterror (stmp);
@@ -609,7 +610,7 @@ void k9DVDBackup::playCell (int vts_num, k9Cell *_cell) {
     k9DVDFile *dvdfile;
     uint32_t	sector, dsi_next_vobu = 0;
     /* open disc */
-    if (m_dvdread.opened()) {
+    if (m_dvdread->opened()) {
         /* load information for the given VTS */
         // vts_handle = ifoOpen (dvd_handle, vts_num);
         vts_handle=currTS->ifoTitle->getIFO();
@@ -634,7 +635,7 @@ void k9DVDBackup::playCell (int vts_num, k9Cell *_cell) {
 
 
     /* open VTS data */
-    dvdfile = m_dvdread.openTitle (vts_num);
+    dvdfile = m_dvdread->openTitle (vts_num);
     if (! dvdfile) {
         QString stmp;
         stmp=i18n("Unable to open vobs for titleset %1").arg(vts_num);
@@ -725,7 +726,7 @@ void k9DVDBackup::setDummyPack(uchar *_buffer) {
 
 
 uint32_t k9DVDBackup::findNextVobu(uint32_t _sector) {
-    k9Ifo ifo(&m_dvdread);
+    k9Ifo ifo(m_dvdread);
     ifo.openIFO(currVTS);
     m_ifo=ifo.getIFO();
     vobu_admap_t * vobu_admap;
@@ -920,7 +921,7 @@ void k9DVDBackup::updateMainIfo() {
     if (error)
         return;
 
-    k9Ifo ifo(&m_dvdread);
+    k9Ifo ifo(m_dvdread);
     ifo.setOutput(output);
     ifo.setDevice(device);
 
@@ -1126,7 +1127,7 @@ void k9DVDBackup::updateIfo() {
     if (error)
         return;
 
-    k9Ifo ifo(&m_dvdread);
+    k9Ifo ifo(m_dvdread);
     ifo.setOutput(output);
     ifo.setDevice(device);
 
@@ -1613,13 +1614,13 @@ void k9DVDBackup::execute() {
 
     output=QDir::cleanDirPath(output +"/VIDEO_TS");
 
-    m_dvdread.openDevice(device);
-    if (!m_dvdread.opened()) {
+    m_dvdread->openDevice(device);
+    if (!m_dvdread->opened()) {
         seterror(tr2i18n("Unable to open DVD"));
         return;
     }
 
-    k9CellCopyList *cellCopyList =new k9CellCopyList(&m_dvdread,DVD);
+    k9CellCopyList *cellCopyList =new k9CellCopyList(m_dvdread,DVD);
     m_cellCopyList=cellCopyList;
 
     double totalSize=DVD->getmenuSize() *2048 ;
@@ -1627,7 +1628,7 @@ void k9DVDBackup::execute() {
     totalSize/=(1024*1024);
     totalSize = (totalSize >k9DVDSize::getMaxSize()) ? k9DVDSize::getMaxSize():totalSize;
 
-    backupDlg->setTotalMax(totalSize);
+    backupDlg->setTotalMax((uint32_t)totalSize);
     m_inbytes=m_outbytes=0;
 
     int lastCell;
@@ -1674,5 +1675,5 @@ void k9DVDBackup::execute() {
 
     if (error)
         KMessageBox::error(0,errMsg,"DVD Backup");
-    m_dvdread.close();
+    //m_dvdread->close();
 }

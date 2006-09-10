@@ -142,6 +142,7 @@ public:
   virtual int getmenuSize();
   virtual void close();
   virtual k9DVDTitleset *gettitleset(int num);
+  virtual k9DVDRead * getdvd() {return &m_dvd;}
 private: // Private methods
   k9DVDRead  m_dvd;
   k9DVDTitle* addTitle(k9DVDTitleset *titleset,int id,int num,int _VTS,int _pgc,uint32_t _startSector, bool _indexed);

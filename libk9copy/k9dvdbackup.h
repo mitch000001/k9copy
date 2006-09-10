@@ -81,7 +81,7 @@ protected:
     QString output;
     bool wrote;
 private:
-    k9DVDRead m_dvdread;
+    k9DVDRead *m_dvdread;
     bool m_copyMenu;
     k9DVD *DVD;
     QString errMsg;

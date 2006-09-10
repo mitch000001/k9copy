@@ -249,12 +249,12 @@ void k9PlayMPEG2::open (const QString & device,k9DVDTitle * title) {
     m_startSector=0;
     m_lastSector=0;
     ret = stat(device.latin1(), &dvd_stat);
-    if ( ret < 0 ) {
+  /*  if ( ret < 0 ) {
         c=i18n("Can't find device %1\n").arg(device.latin1());
         setError(c);
         return;
     }
-
+*/
     m_title=title;
 
     m_startSector=m_title->getChapter( 0)->getstartSector();
