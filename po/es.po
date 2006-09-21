@@ -4,16 +4,17 @@
 #: libk3bdevice/k3bdeviceglobals.cpp:30 libk3bdevice/k3bdeviceglobals.cpp:132
 #: libk3bdevice.new/k3bdeviceglobals.cpp:30
 #: libk3bdevice.new/k3bdeviceglobals.cpp:132
+# David Moreno <dmoreno@tuxum.com>, 2006.
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Mime-Version: 1.0\n"
-"Last-Translator: usuario\n"
-"PO-Revision-Date: 2006-07-26 14:38+0200\n"
+"Last-Translator: David Moreno <dmoreno@tuxum.com>\n"
+"PO-Revision-Date: 2006-09-20 16:46+0200\n"
 "Project-Id-Version: es\n"
 "Language-Team:  <es@li.org>\n"
-"X-Generator: KBabel 1.11.2\n"
+"X-Generator: KBabel 1.11.4\n"
 "MIME-Version: 1.0\n"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:30 libk3bdevice/k3bdeviceglobals.cpp:132
@@ -123,7 +124,7 @@ msgstr ""
 #: libk3bdevice/k3bdeviceglobals.cpp:79
 #: libk3bdevice.new/k3bdeviceglobals.cpp:79
 msgid "Incremental Sequential"
-msgstr "Incremental Secuencial"
+msgstr "Secuencial Incremental"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:81
 #: libk3bdevice.new/k3bdeviceglobals.cpp:81
@@ -316,7 +317,7 @@ msgstr "El DVD no está abierto"
 
 #: src/k9main.cpp:315 src/k9main.cpp:328
 msgid "DVD Copy"
-msgstr ""
+msgstr "Copia de DVD"
 
 #: src/k9main.cpp:322 libk9copy/k9burndvd.cpp:173
 msgid "Save image to disk"
@@ -349,7 +350,7 @@ msgstr "vídeo %1 "
 
 #: src/k9main.cpp:526
 msgid "audio %1 "
-msgstr ""
+msgstr "audio %1"
 
 #: src/k9main.cpp:543
 msgid "subpicture %1 "

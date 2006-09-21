@@ -21,6 +21,7 @@
 #include "k9dvdtitle.h"
 #include "k9dvdbackup.h"
 #include "kmessagebox.h"
+#include "k9tools.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -353,6 +354,14 @@ void k9DVDAuthor::setworkDir( const QString& _newVal) {
 }
 
 void k9DVDAuthor::author() {
+
+    if ( ! k9Tools::checkProgram("dvdauthor")) {
+	KMessageBox::error (qApp->mainWidget(),i18n("Unable to run %1").arg("dvdauthor") , i18n("authoring"));	
+	error = TRUE;
+	return;
+    }
+
+
     bool burnOk=false;
     //nettoyage du répertoire de sortie
     clearOutput(workDir+"dvd");

@@ -23,6 +23,8 @@
 #include <ksimpleconfig.h>
 #include <ktempfile.h>
 #include <kstandarddirs.h>
+#include "k9tools.h"
+
 
 k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
         : QObject(parent, name) {
@@ -55,11 +57,19 @@ QString k9MP4Enc::round16(QString _wh) {
 }
 
 void k9MP4Enc::execute(k9DVDTitle *_title) {
+    bool error=false;
+
+    if ( ! k9Tools::checkProgram("mencoder")) {
+	KMessageBox::error (qApp->mainWidget(),i18n("Unable to run %1").arg("mencoder") , i18n("Encoding error"));	
+	error = TRUE;
+	return;
+    }
+	
     time = new QTime(0,0);
     time->start();
-    bool error=false;
     m_percent=0;
     m_remain="--:--:--";
+
 
     m_totalSize=_title->getsectors();
     for (int ititle=0 ; ititle < _title->getTitles().count();ititle++) {
