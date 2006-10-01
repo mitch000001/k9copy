@@ -19,13 +19,12 @@
 #include "ac.h"
 #include <X11/Xlib.h>
 
-k9GLWidget::k9GLWidget(QWidget *parent, const char *name)
-        : QGLWidget(parent, name) {
+k9GLWidget::k9GLWidget(QWidget *parent, const char *name):QGLWidget(parent, name) {
+    XMapRaised(x11Display(),winId());
 
     m_buffer=NULL;
     m_height=0;
     m_width=0;
-    m_stack.setAutoDelete(TRUE);
     library=new QLibrary("GL");
 
     glClear = (glClear_t) library->resolve( "glClear" );
@@ -45,6 +44,10 @@ k9GLWidget::k9GLWidget(QWidget *parent, const char *name)
     glGetString=(glGetString_t)library->resolve("glGetString");
 }
 
+k9GLWidget* k9GLWidget::createWidget(QWidget *parent , const char *name ) {
+    //XInitThreads();
+    return new k9GLWidget(parent,name);
+}
 
 k9GLWidget::~k9GLWidget() {
     if (m_buffer !=NULL)
@@ -57,27 +60,38 @@ void k9GLWidget::paintGL() {
 }
 
 void k9GLWidget::setImage(uchar *_buffer,int _width,int _height,int _len) {
-//    uchar *buffer =(uchar*)malloc(_len);
-//    tc_memcpy(buffer,_buffer,_len);
-    uchar *buffer=_buffer;
-    m_width=_width;
-    m_height=_height;
-    m_mutex.lock();
-    m_stack.push(buffer);
-    m_mutex.unlock();
-    update();
+     if (qApp==NULL)
+	return;
+     if (qApp->tryLock() ) {
+	uchar *buffer=_buffer;
+	m_width=_width;
+	m_height=_height;
+	m_mutex.lock();
+        if (m_buffer !=NULL)
+           free(m_buffer);
+        m_buffer=buffer;		
+	//m_stack.push(buffer);
+	m_mutex.unlock();
+	update();
+	if (qApp !=NULL)
+            qApp->unlock();
+    } else {
+	free(_buffer);
+    }
 }
 
 void k9GLWidget::draw() {
-    uchar *buffer=NULL;
+    XLockDisplay(x11Display());
+  //  uchar *buffer=NULL;
     if (m_mutex.tryLock()) {
-        if (!m_stack.isEmpty())
+     /*   if (!m_stack.isEmpty())
             buffer=m_stack.pop();
         if (buffer !=NULL) {
             if (m_buffer !=NULL)
                 free(m_buffer);
             m_buffer=buffer;
         }
+*/
         if (m_buffer!=NULL) {
 	    int h=height()-2;
 	    int w=width()-2;
@@ -97,9 +111,9 @@ void k9GLWidget::draw() {
         } else
 	    glClear(GL_COLOR_BUFFER_BIT);
         swapBuffers();
-	m_stack.clear();
         m_mutex.unlock();
     }
+    XUnlockDisplay(x11Display());
 }
 
 

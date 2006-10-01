@@ -97,7 +97,8 @@ kViewMPEG2::kViewMPEG2() {
     m_player.getDecoder()->setUseGL(m_prefUseGL);
     if (m_prefUseGL)  {
         connect(m_player.getDecoder()  , SIGNAL(ppmReady(uchar *,int,int,int)), this, SLOT(drawppm(uchar *,int,int,int)));
-        m_GLwidget=new k9GLWidget(label);
+        
+        m_GLwidget= k9GLWidget::createWidget(label);
         m_widget=NULL;
         m_layout->addWidget(m_GLwidget,0,0);
     } else {
@@ -165,12 +166,12 @@ void kViewMPEG2::drawPixmap(QImage *image) {
 void kViewMPEG2::drawppm(uchar *_buf,int _width,int _height,int _len) {
     if (qApp==NULL)
         return;
-    if (qApp->tryLock()) {
+//    if (qApp->tryLock()) {
         m_GLwidget->setImage(_buf,_width,_height,_len);
-        if (qApp !=NULL)
-            qApp->unlock();
-    } else
-        free(_buf);
+ //       if (qApp !=NULL)
+  //          qApp->unlock();
+ //   } else
+ //       free(_buf);
 }
 
 

@@ -104,7 +104,7 @@ k9Cell *k9CellCopyList::addCell(int _VTS,int _pgc,int _id,uint32_t startSector,u
         if (cell->startSector ==startSector && cell->vts==_VTS) {
             bFound=true;
             if (cell->lastSector!=lastSector  )
-                KMessageBox::error(0,"last sector doesn't match","DVD Backup");
+                qDebug("last sector doesn't match","DVD Backup");
 
         }
         if (!bFound && (_VTS <cell->vts  || (startSector<cell->startSector  && cell->vts ==_VTS ) )) {

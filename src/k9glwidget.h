@@ -19,7 +19,6 @@
 #include <qimage.h>
 #include <qlibrary.h>
 #include <qgl.h>
-#include <qptrstack.h>
 #include <qmutex.h>
 
 typedef void (*glClear_t) (GLbitfield);
@@ -44,8 +43,8 @@ class k9GLWidget : public QGLWidget
 {
 Q_OBJECT
 public:
-    k9GLWidget(QWidget *parent = 0, const char *name = 0);
     void setImage(uchar *_buffer,int _width,int _height,int _len);
+    static k9GLWidget * createWidget(QWidget *parent = 0, const char *name = 0);
     ~k9GLWidget();
 protected:
 	void draw();
@@ -53,9 +52,9 @@ protected:
 	void initializeGL();
    	void paintGL();
 private:
+        k9GLWidget(QWidget *parent = 0, const char *name = 0);
 	QImage m_image;
 	QMutex m_mutex;
-	QPtrStack<uchar> m_stack;
 	int m_width,m_height;
 	uchar *m_buffer;
 	QLibrary * library;
@@ -85,8 +84,12 @@ private:
 class k9GLWidget:public QWidget
 {
 public:
-    k9GLWidget(QWidget *parent = 0, const char *name = 0){};
+    static k9GLWidget * createWidget(QWidget *parent = 0, const char *name = 0) {
+	return new k9GLWidget(parent,name);
+    }
     void setImage(uchar *_buffer,int _width,int _height,int _len){};
+private:
+    k9GLWidget(QWidget *parent = 0, const char *name = 0){};
 
 };
 
