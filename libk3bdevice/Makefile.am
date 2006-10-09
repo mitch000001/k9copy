@@ -4,10 +4,10 @@ KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 
 METASOURCES = AUTO
 
-libk3bdevice_la_LIBADD = 
+
 
 # lib version 2 for K3b 0.11.x 
-libk3bdevice_la_LDFLAGS = $(all_libraries) 
+libk3bdevice_la_LDFLAGS = $(all_libraries) $(CAM_LIB)
 
 libk3bdevice_la_SOURCES = k3bdevice.cpp k3bdevice_mmc.cpp k3bscsicommand.cpp \
 	k3btrack.cpp k3btoc.cpp k3bdevicemanager.cpp k3bmsf.cpp k3bdiskinfo.cpp \

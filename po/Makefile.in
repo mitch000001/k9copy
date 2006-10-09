@@ -76,6 +76,7 @@ AUTODIRS = @AUTODIRS@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CAM_LIB = @CAM_LIB@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -285,8 +286,8 @@ xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 #>- POFILES = AUTO
 #>+ 2
-POFILES = pt_BR.po cs.po ru.po es.po fr.po de.po it.po el.po pl.po
-GMOFILES = pt_BR.gmo cs.gmo ru.gmo es.gmo fr.gmo de.gmo it.gmo el.gmo pl.gmo
+POFILES = pt_BR.po cs.po it.po ru.po es.po fr.po de.po el.po pl.po
+GMOFILES = pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo el.gmo pl.gmo
 noinst_HEADERS = fr.po k9copy.pot es.po it.po pt_BR.po cs.po de.po ru.po el.po \
 	pl.po
 
@@ -535,6 +536,9 @@ pt_BR.gmo: pt_BR.po
 cs.gmo: cs.po
 	rm -f cs.gmo; $(GMSGFMT) -o cs.gmo $(srcdir)/cs.po
 	test ! -f cs.gmo || touch cs.gmo
+it.gmo: it.po
+	rm -f it.gmo; $(GMSGFMT) -o it.gmo $(srcdir)/it.po
+	test ! -f it.gmo || touch it.gmo
 ru.gmo: ru.po
 	rm -f ru.gmo; $(GMSGFMT) -o ru.gmo $(srcdir)/ru.po
 	test ! -f ru.gmo || touch ru.gmo
@@ -547,9 +551,6 @@ fr.gmo: fr.po
 de.gmo: de.po
 	rm -f de.gmo; $(GMSGFMT) -o de.gmo $(srcdir)/de.po
 	test ! -f de.gmo || touch de.gmo
-it.gmo: it.po
-	rm -f it.gmo; $(GMSGFMT) -o it.gmo $(srcdir)/it.po
-	test ! -f it.gmo || touch it.gmo
 el.gmo: el.po
 	rm -f el.gmo; $(GMSGFMT) -o el.gmo $(srcdir)/el.po
 	test ! -f el.gmo || touch el.gmo
@@ -559,11 +560,11 @@ pl.gmo: pl.po
 
 #>+ 3
 clean-nls:
-	-rm -f  pt_BR.gmo cs.gmo ru.gmo es.gmo fr.gmo de.gmo it.gmo el.gmo pl.gmo
+	-rm -f  pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo el.gmo pl.gmo
 
 #>+ 10
 install-nls:
-	@for base in pt_BR cs ru es fr de it el pl ; do \
+	@for base in pt_BR cs it ru es fr de el pl ; do \
 	  echo $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
 	  $(mkinstalldirs) $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES ; \
 	  if test -f $$base.gmo; then $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
@@ -576,11 +577,11 @@ install-nls:
 uninstall-nls:
 	rm -f $(DESTDIR)$(kde_locale)/pt_BR/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/cs/LC_MESSAGES/$(PACKAGE).mo
+	rm -f $(DESTDIR)$(kde_locale)/it/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/ru/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/es/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/fr/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/de/LC_MESSAGES/$(PACKAGE).mo
-	rm -f $(DESTDIR)$(kde_locale)/it/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/el/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/pl/LC_MESSAGES/$(PACKAGE).mo
 

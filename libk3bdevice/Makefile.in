@@ -53,7 +53,7 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libk3bdevice_la_DEPENDENCIES =
+libk3bdevice_la_LIBADD =
 am_libk3bdevice_la_OBJECTS = k3bdevice.lo k3bdevice_mmc.lo \
 	k3bscsicommand.lo k3btrack.lo k3btoc.lo k3bdevicemanager.lo \
 	k3bmsf.lo k3bdiskinfo.lo k3bdeviceglobals.lo k3bcrc.lo \
@@ -144,6 +144,7 @@ AUTODIRS = @AUTODIRS@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CAM_LIB = @CAM_LIB@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -354,10 +355,9 @@ xdg_menudir = @xdg_menudir@
 AM_CPPFLAGS = -I$(srcdir) $(all_includes) 
 KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 #>- METASOURCES = AUTO
-libk3bdevice_la_LIBADD = 
 
 # lib version 2 for K3b 0.11.x 
-libk3bdevice_la_LDFLAGS = $(all_libraries) 
+libk3bdevice_la_LDFLAGS = $(all_libraries) $(CAM_LIB)
 libk3bdevice_la_SOURCES = k3bdevice.cpp k3bdevice_mmc.cpp k3bscsicommand.cpp \
 	k3btrack.cpp k3btoc.cpp k3bdevicemanager.cpp k3bmsf.cpp k3bdiskinfo.cpp \
 	k3bdeviceglobals.cpp k3bcrc.cpp k3bcdtext.cpp k3bscsicommand_bsd.cpp \
@@ -668,7 +668,7 @@ clean-metasources:
 	-rm -f  k3bdevicemanager.moc
 
 #>+ 2
-KDE_DIST=k3bcrc.h k3bscsicommand.h k3bhalconnection.cpp k3bmmc.h Makefile.in libk3bdevice.doxy Makefile.am 
+KDE_DIST=k3bcrc.h k3bscsicommand.h k3bhalconnection.cpp k3bmmc.h configure.in.in Makefile.in libk3bdevice.doxy Makefile.am 
 
 #>+ 2
 docs-am:

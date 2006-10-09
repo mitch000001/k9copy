@@ -19,7 +19,6 @@ include_HEADERS = k9backupdlg.h k9cellcopylist.h k9cell.h k9dvdauthor.h \
 noinst_HEADERS = bswap.h k9dvdread.h k9progress.h k9mp4enc.h k9mp4dlg.h \
 		k9burndvd.h k9tools.h
 
-kde includedir = $(kde_includes)
 
 libk9copy_la_LDFLAGS = -module
 INCLUDES = -I$(top_srcdir)/k9vamps -I$(top_srcdir)/k9decmpeg
