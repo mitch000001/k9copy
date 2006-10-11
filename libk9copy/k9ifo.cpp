@@ -426,33 +426,34 @@ void k9Ifo::updatePGCI_UT(uchar *_buffer) {
         return;
     }
     sector2=sector;
-    pgci_ut_t * pgci_ut;
-    pgci_ut = (pgci_ut_t*) malloc( sizeof(pgci_ut_t));
-    memcpy (pgci_ut,_ifo->pgci_ut,sizeof(pgci_ut_t));
-    B2N_16(pgci_ut->nr_of_lus);
-    B2N_32(pgci_ut->last_byte);
-
-    memcpy(_buffer+sector,pgci_ut,PGCI_UT_SIZE);
-
-
-    int info_length = _ifo->pgci_ut->nr_of_lus * PGCI_LU_SIZE;
-    sector += PGCI_UT_SIZE;
-    free(pgci_ut);
-
-    pgci_lu_t *pgci_lu;
-    pgci_lu = (pgci_lu_t*)malloc(sizeof(pgci_lu_t));
-
-    for(int i = 0; i < _ifo->pgci_ut->nr_of_lus; i++) {
-        memcpy(pgci_lu,&(_ifo->pgci_ut->lu[i]), PGCI_LU_SIZE);
-        B2N_16(pgci_lu->lang_code);
-        B2N_32(pgci_lu->lang_start_byte);
-        memcpy(_buffer+sector,pgci_lu,PGCI_LU_SIZE);
-        updatePGCIT_internal(_buffer,_ifo->pgci_ut->lu[i].pgcit,sector2 + _ifo->pgci_ut->lu[i].lang_start_byte);
-        sector += PGCI_LU_SIZE;
-
+    if (_ifo->pgci_ut !=NULL) {
+	pgci_ut_t * pgci_ut;
+	pgci_ut = (pgci_ut_t*) malloc( sizeof(pgci_ut_t));
+	memcpy (pgci_ut,_ifo->pgci_ut,sizeof(pgci_ut_t));
+	B2N_16(pgci_ut->nr_of_lus);
+	B2N_32(pgci_ut->last_byte);
+	
+	memcpy(_buffer+sector,pgci_ut,PGCI_UT_SIZE);
+	
+	
+	int info_length = _ifo->pgci_ut->nr_of_lus * PGCI_LU_SIZE;
+	sector += PGCI_UT_SIZE;
+	free(pgci_ut);
+	
+	pgci_lu_t *pgci_lu;
+	pgci_lu = (pgci_lu_t*)malloc(sizeof(pgci_lu_t));
+	
+	for(int i = 0; i < _ifo->pgci_ut->nr_of_lus; i++) {
+		memcpy(pgci_lu,&(_ifo->pgci_ut->lu[i]), PGCI_LU_SIZE);
+		B2N_16(pgci_lu->lang_code);
+		B2N_32(pgci_lu->lang_start_byte);
+		memcpy(_buffer+sector,pgci_lu,PGCI_LU_SIZE);
+		updatePGCIT_internal(_buffer,_ifo->pgci_ut->lu[i].pgcit,sector2 + _ifo->pgci_ut->lu[i].lang_start_byte);
+		sector += PGCI_LU_SIZE;
+	
+	}
+	free (pgci_lu);
     }
-    free (pgci_lu);
-
     // A FAIRE :
 //    for(int i = 0; i < _ifo->pgci_ut->nr_of_lus; i++) {
 //        updatePGCIT_internal(_buffer,_ifo->pgci_ut->lu[i].pgcit,sector2  + _ifo->pgci_ut->lu[i].lang_start_byte);

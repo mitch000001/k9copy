@@ -286,10 +286,10 @@ xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 #>- POFILES = AUTO
 #>+ 2
-POFILES = pt_BR.po cs.po it.po ru.po es.po fr.po de.po el.po pl.po
-GMOFILES = pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo el.gmo pl.gmo
+POFILES = pt_BR.po cs.po it.po ru.po es.po fr.po de.po ca.po el.po pl.po
+GMOFILES = pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo ca.gmo el.gmo pl.gmo
 noinst_HEADERS = fr.po k9copy.pot es.po it.po pt_BR.po cs.po de.po ru.po el.po \
-	pl.po
+	pl.po ca.po
 
 #>- all: all-am
 #>+ 1
@@ -527,9 +527,9 @@ uninstall-am: uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=pl.gmo ru.gmo en_GB.gmo el.gmo fr.gmo cs.gmo pt_BR.gmo Makefile.in it.gmo de.gmo es.gmo Makefile.am 
+KDE_DIST=cs.gmo pt_BR.gmo pl.gmo Makefile.in ru.gmo en_GB.gmo it.gmo el.gmo de.gmo fr.gmo es.gmo Makefile.am 
 
-#>+ 28
+#>+ 31
 pt_BR.gmo: pt_BR.po
 	rm -f pt_BR.gmo; $(GMSGFMT) -o pt_BR.gmo $(srcdir)/pt_BR.po
 	test ! -f pt_BR.gmo || touch pt_BR.gmo
@@ -551,6 +551,9 @@ fr.gmo: fr.po
 de.gmo: de.po
 	rm -f de.gmo; $(GMSGFMT) -o de.gmo $(srcdir)/de.po
 	test ! -f de.gmo || touch de.gmo
+ca.gmo: ca.po
+	rm -f ca.gmo; $(GMSGFMT) -o ca.gmo $(srcdir)/ca.po
+	test ! -f ca.gmo || touch ca.gmo
 el.gmo: el.po
 	rm -f el.gmo; $(GMSGFMT) -o el.gmo $(srcdir)/el.po
 	test ! -f el.gmo || touch el.gmo
@@ -560,11 +563,11 @@ pl.gmo: pl.po
 
 #>+ 3
 clean-nls:
-	-rm -f  pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo el.gmo pl.gmo
+	-rm -f  pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo ca.gmo el.gmo pl.gmo
 
 #>+ 10
 install-nls:
-	@for base in pt_BR cs it ru es fr de el pl ; do \
+	@for base in pt_BR cs it ru es fr de ca el pl ; do \
 	  echo $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
 	  $(mkinstalldirs) $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES ; \
 	  if test -f $$base.gmo; then $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
@@ -573,7 +576,7 @@ install-nls:
 	done
 
 
-#>+ 11
+#>+ 12
 uninstall-nls:
 	rm -f $(DESTDIR)$(kde_locale)/pt_BR/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/cs/LC_MESSAGES/$(PACKAGE).mo
@@ -582,6 +585,7 @@ uninstall-nls:
 	rm -f $(DESTDIR)$(kde_locale)/es/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/fr/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/de/LC_MESSAGES/$(PACKAGE).mo
+	rm -f $(DESTDIR)$(kde_locale)/ca/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/el/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/pl/LC_MESSAGES/$(PACKAGE).mo
 
