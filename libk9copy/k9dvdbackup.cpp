@@ -38,7 +38,7 @@
 #include <kstandarddirs.h>
 
 #include "k9backupdlg.h"
-
+#include "dvdread.h"
 
 #define BUF_SECS	1024
 
@@ -286,7 +286,7 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     outputFile->writeBlock((char*)buffer,DVD_VIDEO_LB_LEN);
 
     /* parse contained DSI pack */
-    navRead_DSI (&dsi_pack, buffer + DSI_START_BYTE);
+    DvdreadF()->navRead_DSI (&dsi_pack, buffer + DSI_START_BYTE);
     currCell->vob = dsi_pack.dsi_gi.vobu_vob_idn;
     //vobu->size=1;
     /* JMP
@@ -350,7 +350,7 @@ void k9DVDBackup::getOutput(uchar * buffer, uint32_t buflen) {
 
             cellOut=vobu->parent;
             dsi_t dsiPack;
-            navRead_DSI (&dsiPack, (uchar*)(temp+itemp) + DSI_START_BYTE);
+            DvdreadF()->navRead_DSI (&dsiPack, (uchar*)(temp+itemp) + DSI_START_BYTE);
 
             cellOut->vob = dsiPack.dsi_gi.vobu_vob_idn;
             if ((dsiPack.dsi_gi.vobu_ea * DVD_VIDEO_LB_LEN) + fileSize >= (1024*1024*1024)) {
@@ -697,12 +697,12 @@ void k9DVDBackup::setDummyNavPack(uchar *buf,uint32_t _sector)
 
   dsi_t dsiPack;
   pci_t pciPack;
-  navRead_DSI (&dsiPack, buf + DSI_START_BYTE);
+  DvdreadF()->navRead_DSI (&dsiPack, buf + DSI_START_BYTE);
   k9Ifo::navRead_PCI (&pciPack, buf+0x2d);
   dsiPack.dsi_gi.nv_pck_lbn=_sector;
   dsiPack.dsi_gi.vobu_ea = 0;
 
-  navRead_DSI((dsi_t*)(buf + DSI_START_BYTE),(uchar*)&dsiPack);
+  DvdreadF()->navRead_DSI((dsi_t*)(buf + DSI_START_BYTE),(uchar*)&dsiPack);
   pciPack.pci_gi.nv_pck_lbn =dsiPack.dsi_gi.nv_pck_lbn;
   k9Ifo::navRead_PCI((pci_t*)(buf+0x2d),(uchar*)&pciPack);
 }
@@ -764,7 +764,7 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
 
     //test if nav pack is ok
     if (len !=-1) {
-	navRead_DSI (&dsi_pack, buf + DSI_START_BYTE);
+	DvdreadF()->navRead_DSI (&dsi_pack, buf + DSI_START_BYTE);
 	if (dsi_pack.dsi_gi.nv_pck_lbn != sector) {
 		len=-1;
 	}
@@ -1370,7 +1370,7 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                     dsi_t dsiPack;
                     pci_t pciPack;
                     nbVobuUpdated++;
-                    navRead_DSI (&dsiPack, buffer + DSI_START_BYTE);
+                    DvdreadF()->navRead_DSI (&dsiPack, buffer + DSI_START_BYTE);
                     k9Ifo::navRead_PCI (&pciPack, buffer+0x2d);
                     sector=dsiPack.dsi_gi.nv_pck_lbn;  //JMP : pour debug
                     //vobu=remapVobu(&dsiPack.dsi_gi.nv_pck_lbn );
@@ -1458,7 +1458,7 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                                 uchar *tmpbuff=(uchar*)malloc(2048);
                                 fread(tmpbuff,DVD_VIDEO_LB_LEN,1,file2);
                                 dsi_t dsiNext;
-                                navRead_DSI (&dsiNext, tmpbuff + DSI_START_BYTE);
+                                DvdreadF()->navRead_DSI (&dsiNext, tmpbuff + DSI_START_BYTE);
                                 uint32_t sectmp= dsiNext.sml_pbi.ilvu_ea+1;
                                 remapOffset(dsiNext.dsi_gi.nv_pck_lbn,&sectmp,1);
                                 dsiPack.sml_pbi.size=sectmp;
@@ -1504,7 +1504,7 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                         dsiPack.dsi_gi.c_eltm.hour=dsiPack.dsi_gi.c_eltm.minute=dsiPack.dsi_gi.c_eltm.second=0;
                     }
                     // mise en place des donnees modifi�s dans le buffer de sortie
-                    navRead_DSI((dsi_t*)(buffer + DSI_START_BYTE),(uchar*)&dsiPack);
+                    DvdreadF()->navRead_DSI((dsi_t*)(buffer + DSI_START_BYTE),(uchar*)&dsiPack);
                     pciPack.pci_gi.nv_pck_lbn =dsiPack.dsi_gi.nv_pck_lbn;
                     k9Ifo::navRead_PCI((pci_t*)(buffer+0x2d),(uchar*)&pciPack);
                     //mise �jour du fichier

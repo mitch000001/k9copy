@@ -18,3 +18,4 @@ noinst_HEADERS = k3bdevicemanager.h k3bdevice.h k3btoc.h k3btrack.h \
 	k3bdeviceglobals.h k3bdiskinfo.h k3bcdtext.h k3bmsf.h k3bdevicetypes.h
 
 noinst_LTLIBRARIES = libk3bdevice.la
+

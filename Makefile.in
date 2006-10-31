@@ -310,7 +310,9 @@ x_libraries = @x_libraries@
 xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
-SUBDIRS = k9vamps k9decmpeg libk9copy libk3bdevice libdvdnav src po doc
+SUBDIRS = k9vamps libdvdnav k9Mplayer k9decmpeg libk9copy libk3bdevice src po \
+	doc
+
 MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 configure.files 
 EXTRA_DIST = admin COPYING configure.in.in
 AM_CXXFLAGS = -O3 -g3

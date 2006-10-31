@@ -37,7 +37,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
+#include "dvdread.h"
 
 #include "dvdnav_internal.h"
 
@@ -188,30 +188,30 @@ static int ifoOpenNewVTSI(vm_t *vm, dvd_reader_t *dvd, int vtsN) {
   }
   
   if(vm->vtsi != NULL)
-    ifoClose(vm->vtsi);
+    DvdreadF()->ifoClose(vm->vtsi);
   
-  vm->vtsi = ifoOpenVTSI(dvd, vtsN);
+  vm->vtsi = DvdreadF()->ifoOpenVTSI(dvd, vtsN);
   if(vm->vtsi == NULL) {
     fprintf(MSG_OUT, "libdvdnav: ifoOpenVTSI failed\n");
     return 0;
   }
-  if(!ifoRead_VTS_PTT_SRPT(vm->vtsi)) {
+  if(!DvdreadF()->ifoRead_VTS_PTT_SRPT(vm->vtsi)) {
     fprintf(MSG_OUT, "libdvdnav: ifoRead_VTS_PTT_SRPT failed\n");
     return 0;
   }
-  if(!ifoRead_PGCIT(vm->vtsi)) {
+  if(!DvdreadF()->ifoRead_PGCIT(vm->vtsi)) {
     fprintf(MSG_OUT, "libdvdnav: ifoRead_PGCIT failed\n");
     return 0;
   }
-  if(!ifoRead_PGCI_UT(vm->vtsi)) {
+  if(!DvdreadF()->ifoRead_PGCI_UT(vm->vtsi)) {
     fprintf(MSG_OUT, "libdvdnav: ifoRead_PGCI_UT failed\n");
     return 0;
   }
-  if(!ifoRead_VOBU_ADMAP(vm->vtsi)) {
+  if(!DvdreadF()->ifoRead_VOBU_ADMAP(vm->vtsi)) {
     fprintf(MSG_OUT, "libdvdnav: ifoRead_VOBU_ADMAP vtsi failed\n");
     return 0;
   }
-  if(!ifoRead_TITLE_VOBU_ADMAP(vm->vtsi)) {
+  if(!DvdreadF()->ifoRead_TITLE_VOBU_ADMAP(vm->vtsi)) {
     fprintf(MSG_OUT, "libdvdnav: ifoRead_TITLE_VOBU_ADMAP vtsi failed\n");
     return 0;
   }
@@ -262,16 +262,16 @@ int vm_start(vm_t *vm) {
 
 void vm_stop(vm_t *vm) {
   if(vm->vmgi) {
-    ifoClose(vm->vmgi);
+    DvdreadF()->ifoClose(vm->vmgi);
     vm->vmgi=NULL;
   }
   if(vm->vtsi) {
-    ifoClose(vm->vtsi);
+    DvdreadF()->ifoClose(vm->vtsi);
     vm->vtsi=NULL;
   }
   if(vm->dvd) {
-    if (!vm->openedDvd)
-    	DVDClose(vm->dvd);
+     if (!vm->openedDvd)
+    	DvdreadF()->DVDClose(vm->dvd);
     vm->dvd=NULL;
   }
   vm->stopped = 1;
@@ -317,42 +317,42 @@ int vm_reset(vm_t *vm, const char *dvdroot) {
   }
 
   if (!vm->dvd) {	
-    if (vm->openedDvd)   /*JMP we use the dvd opened by k9copy*/
+    if (vm->openedDvd)   /*JMP we use the dvd opened by copy*/
 	vm->dvd=vm->openedDvd;
-    else
-        vm->dvd = DVDOpen(dvdroot);
+    else 
+        vm->dvd = DvdreadF()->DVDOpen(dvdroot);
     if(!vm->dvd) {
       fprintf(MSG_OUT, "libdvdnav: vm: faild to open/read the DVD\n");
       return 0;
     }
     dvd_read_name(vm->dvd_name, dvdroot);
     vm->map  = remap_loadmap(vm->dvd_name);
-    vm->vmgi = ifoOpenVMGI(vm->dvd);
+    vm->vmgi = DvdreadF()->ifoOpenVMGI(vm->dvd);
     if(!vm->vmgi) {
       fprintf(MSG_OUT, "libdvdnav: vm: faild to read VIDEO_TS.IFO\n");
       return 0;
     }
-    if(!ifoRead_FP_PGC(vm->vmgi)) {
+    if(!DvdreadF()->ifoRead_FP_PGC(vm->vmgi)) {
       fprintf(MSG_OUT, "libdvdnav: vm: ifoRead_FP_PGC failed\n");
       return 0;
     }
-    if(!ifoRead_TT_SRPT(vm->vmgi)) {
+    if(!DvdreadF()->ifoRead_TT_SRPT(vm->vmgi)) {
       fprintf(MSG_OUT, "libdvdnav: vm: ifoRead_TT_SRPT failed\n");
       return 0;
     }
-    if(!ifoRead_PGCI_UT(vm->vmgi)) {
+    if(!DvdreadF()->ifoRead_PGCI_UT(vm->vmgi)) {
       fprintf(MSG_OUT, "libdvdnav: vm: ifoRead_PGCI_UT failed\n");
       return 0;
     }
-    if(!ifoRead_PTL_MAIT(vm->vmgi)) {
+    if(!DvdreadF()->ifoRead_PTL_MAIT(vm->vmgi)) {
       fprintf(MSG_OUT, "libdvdnav: vm: ifoRead_PTL_MAIT failed\n");
       /* return 0; Not really used for now.. */
     }
-    if(!ifoRead_VTS_ATRT(vm->vmgi)) {
+    if(!DvdreadF()->ifoRead_VTS_ATRT(vm->vmgi)) {
       fprintf(MSG_OUT, "libdvdnav: vm: ifoRead_VTS_ATRT failed\n");
       /* return 0; Not really used for now.. */
     }
-    if(!ifoRead_VOBU_ADMAP(vm->vmgi)) {
+    if(!DvdreadF()->ifoRead_VOBU_ADMAP(vm->vmgi)) {
       fprintf(MSG_OUT, "libdvdnav: vm: ifoRead_VOBU_ADMAP vgmi failed\n");
       /* return 0; Not really used for now.. */
     }
@@ -402,14 +402,14 @@ vm_t *vm_new_copy(vm_t *source) {
 
 void vm_merge(vm_t *target, vm_t *source) {
   if(target->vtsi)
-    ifoClose(target->vtsi);
+    DvdreadF()->ifoClose(target->vtsi);
   memcpy(target, source, sizeof(vm_t));
   memset(source, 0, sizeof(vm_t));
 }
 
 void vm_free_copy(vm_t *vm) {
   if(vm->vtsi)
-    ifoClose(vm->vtsi);
+    DvdreadF()->ifoClose(vm->vtsi);
   free(vm);
 }
 

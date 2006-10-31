@@ -17,6 +17,7 @@
 #include "k9prefdvd.h"
 #include "k9prefmpeg4.h"
 #include "k9prefmencoder.h"
+#include "k9prefpreview.h"
 #include <kdialogbase.h>
 
 /**
@@ -34,7 +35,7 @@ private:
     k9prefDVD *m_prefDVD;
     k9prefMPEG4 *m_prefMPEG4;
     k9prefMencoder *m_prefMencoder;
-
+    k9prefPreview *m_prefPreview;
 private slots:
     void slotOkClicked();
     void slotApplyClicked();

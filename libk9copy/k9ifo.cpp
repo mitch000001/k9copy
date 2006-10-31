@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "k9ifo.h"
 #include "bswap.h"
+#include "dvdread.h"
 
 
 k9Ifo::k9Ifo(k9DVDRead *_dvdread)
@@ -57,7 +58,7 @@ void k9Ifo::setOutput(QString &_output) {
     \fn k9Ifo::openIFO(int _num)
  */
 ifo_handle_t * k9Ifo::openIFO(int _num) {
-    _ifo = ifoOpen(m_dvd->getDvd(), _num);
+    _ifo = DvdreadF()->ifoOpen(m_dvd->getDvd(), _num);
     numIfo=_num;
     return _ifo;
 
@@ -69,7 +70,7 @@ ifo_handle_t * k9Ifo::openIFO(int _num) {
  */
 void k9Ifo::closeIFO() {
     if(_ifo!=NULL) {
-        ifoClose(_ifo);
+        DvdreadF()->ifoClose(_ifo);
         _ifo=NULL;
     }
 }
@@ -98,7 +99,7 @@ void k9Ifo::saveIFO() {
 	size=_ifo->vtsi_mat->vtsi_last_sector +1;
 
     size*=2048;
- //   if (UDFFindFile(dvd,(char*) filename.latin1(), &size)) {
+ //   if (k9UDFFindFile(dvd,(char*) filename.latin1(), &size)) {
     if (size >0) {
         uchar *buffer ;
         buffer= (uchar *) malloc (size);
@@ -454,10 +455,6 @@ void k9Ifo::updatePGCI_UT(uchar *_buffer) {
 	}
 	free (pgci_lu);
     }
-    // A FAIRE :
-//    for(int i = 0; i < _ifo->pgci_ut->nr_of_lus; i++) {
-//        updatePGCIT_internal(_buffer,_ifo->pgci_ut->lu[i].pgcit,sector2  + _ifo->pgci_ut->lu[i].lang_start_byte);
- //   }
 
 }
 

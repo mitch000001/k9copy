@@ -56,7 +56,8 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libk9copy_la_DEPENDENCIES = $(top_builddir)/k9vamps/libk9vamps.la \
-	$(top_builddir)/k9decmpeg/libk9decmpeg.la
+	$(top_builddir)/k9decmpeg/libk9decmpeg.la \
+	$(top_builddir)/libdvdnav/libk9dvdnav.la
 am_libk9copy_la_OBJECTS = k9backupdlg.lo k9cellcopylist.lo k9cell.lo \
 	k9dvdauthor.lo k9dvdbackup.lo k9dvd.lo k9dvdprogress.lo \
 	k9ifo.lo k9dvdtitle.lo dummy.lo k9dvdsize.lo k9dvdread.lo \
@@ -368,7 +369,7 @@ KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 #>- METASOURCES = AUTO
 lib_LTLIBRARIES = libk9copy.la
 libk9copy_la_LIBADD = $(top_builddir)/k9vamps/libk9vamps.la \
-	$(top_builddir)/k9decmpeg/libk9decmpeg.la -ldvdread
+	$(top_builddir)/k9decmpeg/libk9decmpeg.la $(top_builddir)/libdvdnav/libk9dvdnav.la
 
 #>- libk9copy_la_SOURCES = backupdlg.ui dvdprogress.ui progress.ui mp4dlg.ui \
 #>- 			k9backupdlg.cpp k9cellcopylist.cpp k9cell.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvd.cpp \
@@ -387,7 +388,9 @@ noinst_HEADERS = bswap.h k9dvdread.h k9progress.h k9mp4enc.h k9mp4dlg.h \
 		k9burndvd.h k9tools.h
 
 libk9copy_la_LDFLAGS = -module
-INCLUDES = -I$(top_srcdir)/k9vamps -I$(top_srcdir)/k9decmpeg
+INCLUDES = -I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9vamps \
+	-I$(top_srcdir)/libdvdnav
+
 #>- all: all-am
 #>+ 1
 all: docs-am  all-am

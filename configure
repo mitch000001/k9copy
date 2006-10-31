@@ -31666,6 +31666,8 @@ done
 
           ac_config_files="$ac_config_files k9decmpeg/Makefile"
 
+          ac_config_files="$ac_config_files k9Mplayer/Makefile"
+
           ac_config_files="$ac_config_files k9vamps/Makefile"
 
           ac_config_files="$ac_config_files libdvdnav/Makefile"
@@ -32268,6 +32270,7 @@ do
   "doc/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
   "doc/k9copy/Makefile" ) CONFIG_FILES="$CONFIG_FILES doc/k9copy/Makefile" ;;
   "k9decmpeg/Makefile" ) CONFIG_FILES="$CONFIG_FILES k9decmpeg/Makefile" ;;
+  "k9Mplayer/Makefile" ) CONFIG_FILES="$CONFIG_FILES k9Mplayer/Makefile" ;;
   "k9vamps/Makefile" ) CONFIG_FILES="$CONFIG_FILES k9vamps/Makefile" ;;
   "libdvdnav/Makefile" ) CONFIG_FILES="$CONFIG_FILES libdvdnav/Makefile" ;;
   "libk3bdevice/Makefile" ) CONFIG_FILES="$CONFIG_FILES libk3bdevice/Makefile" ;;

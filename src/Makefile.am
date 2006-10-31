@@ -1,11 +1,12 @@
 # set the include path for X, qt and KDE
 INCLUDES = -I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9vamps \
-	-I$(top_srcdir)/libdvdnav -I$(top_srcdir)/libk3bdevice -I$(top_srcdir)/libk9copy $(all_includes)
+	-I$(top_srcdir)/libdvdnav -I$(top_srcdir)/libk3bdevice -I$(top_srcdir)/libk9copy \
+	-I$(top_srcdir)/k9Mplayer $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS = kconfigdlg.h k9copy.h k9main.h k9play.h k9settings.h \
-			k9prefmpeg4.h k9prefdvd.h k9prefmencoder.h k9playbackoptions.h k9langselect.h \
-	k9glwidget.h
+				k9prefmpeg4.h k9prefdvd.h k9prefmencoder.h k9playbackoptions.h k9langselect.h \
+		k9glwidget.h k9prefpreview.h
 
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
@@ -22,15 +23,16 @@ bin_PROGRAMS = k9copy
 
 # the application source, library search path, and link libraries
 k9copy_SOURCES = images.h kcddrive.cpp kcddrive.h kviewmpeg2.cpp kviewmpeg2.h \
-			viewmpeg2.ui k9copy.png main.cpp configDlg.ui kconfigdlg.cpp k9mainw.ui k9copy.cpp \
-			k9main.cpp k9play.cpp k9settings.cpp prefDVD.ui prefMPEG4.ui k9prefmpeg4.cpp \
-			k9prefdvd.cpp prefMencoder.ui k9prefmencoder.cpp playbackoptionsw.ui \
-		k9playbackoptions.cpp langselectw.ui k9langselect.cpp k9glwidget.cpp
+				viewmpeg2.ui k9copy.png main.cpp configDlg.ui kconfigdlg.cpp k9mainw.ui k9copy.cpp \
+				k9main.cpp k9play.cpp k9settings.cpp prefDVD.ui prefMPEG4.ui k9prefmpeg4.cpp \
+				k9prefdvd.cpp prefMencoder.ui k9prefmencoder.cpp playbackoptionsw.ui \
+			k9playbackoptions.cpp langselectw.ui k9langselect.cpp k9glwidget.cpp prefpreview.ui \
+	k9prefpreview.cpp
 k9copy_LDFLAGS = $(KDE_RPATH) $(all_libraries)
-k9copy_LDADD = $(top_builddir)/libdvdnav/libdvdnav.la \
-	$(top_builddir)/libk9copy/libk9copy.la $(top_builddir)/k9decmpeg/libk9decmpeg.la \
-	$(top_builddir)/libk3bdevice/libk3bdevice.la $(top_builddir)/k9vamps/libk9vamps.la -lkmdi $(LIB_KPARTS) $(LIB_KDEUI) \
-	-ldvdread
+k9copy_LDADD = $(top_builddir)/k9Mplayer/libk9mplayer.la \
+	$(top_builddir)/libdvdnav/libk9dvdnav.la $(top_builddir)/libk9copy/libk9copy.la \
+	$(top_builddir)/k9decmpeg/libk9decmpeg.la $(top_builddir)/libk3bdevice/libk3bdevice.la \
+	$(top_builddir)/k9vamps/libk9vamps.la -lkmdi $(LIB_KPARTS) $(LIB_KDEUI)
 
 # this is where the desktop file will go 
 shelldesktopdir = $(kde_appsdir)/Utilities

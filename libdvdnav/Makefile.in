@@ -16,7 +16,7 @@
 @SET_MAKE@
 
 
-SOURCES = $(libdvdnav_la_SOURCES)
+SOURCES = $(libk9dvdnav_la_SOURCES)
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -53,30 +53,30 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libdvdnav_la_DEPENDENCIES =
-am_libdvdnav_la_OBJECTS = decoder.lo dvdnav.lo highlight.lo md5.lo \
+libk9dvdnav_la_LIBADD =
+am_libk9dvdnav_la_OBJECTS = decoder.lo dvdnav.lo highlight.lo \
 	navigation.lo read_cache.lo remap.lo searching.lo settings.lo \
-	vm.lo vmcmd.lo
-#>- libdvdnav_la_OBJECTS = $(am_libdvdnav_la_OBJECTS)
+	vm.lo vmcmd.lo dvdread.lo
+#>- libk9dvdnav_la_OBJECTS = $(am_libk9dvdnav_la_OBJECTS)
 #>+ 6
-libdvdnav_la_final_OBJECTS = decoder.lo dvdnav.lo highlight.lo md5.lo navigation.lo read_cache.lo remap.lo searching.lo settings.lo vm.lo vmcmd.lo 
-libdvdnav_la_nofinal_OBJECTS = decoder.lo dvdnav.lo highlight.lo md5.lo \
+libk9dvdnav_la_final_OBJECTS = decoder.lo dvdnav.lo highlight.lo navigation.lo read_cache.lo remap.lo searching.lo settings.lo vm.lo vmcmd.lo dvdread.lo 
+libk9dvdnav_la_nofinal_OBJECTS = decoder.lo dvdnav.lo highlight.lo \
 	navigation.lo read_cache.lo remap.lo searching.lo settings.lo \
-	vm.lo vmcmd.lo
-@KDE_USE_FINAL_FALSE@libdvdnav_la_OBJECTS = $(libdvdnav_la_nofinal_OBJECTS)
-@KDE_USE_FINAL_TRUE@libdvdnav_la_OBJECTS = $(libdvdnav_la_final_OBJECTS)
+	vm.lo vmcmd.lo dvdread.lo
+@KDE_USE_FINAL_FALSE@libk9dvdnav_la_OBJECTS = $(libk9dvdnav_la_nofinal_OBJECTS)
+@KDE_USE_FINAL_TRUE@libk9dvdnav_la_OBJECTS = $(libk9dvdnav_la_final_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 am__depfiles_maybe = depfiles
 #>- @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/decoder.Plo ./$(DEPDIR)/dvdnav.Plo \
-#>- @AMDEP_TRUE@	./$(DEPDIR)/highlight.Plo ./$(DEPDIR)/md5.Plo \
+#>- @AMDEP_TRUE@	./$(DEPDIR)/dvdread.Plo ./$(DEPDIR)/highlight.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/navigation.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/read_cache.Plo ./$(DEPDIR)/remap.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/searching.Plo ./$(DEPDIR)/settings.Plo \
 #>- @AMDEP_TRUE@	./$(DEPDIR)/vm.Plo ./$(DEPDIR)/vmcmd.Plo
 #>+ 6
 @AMDEP_TRUE@DEP_FILES =  ./$(DEPDIR)/decoder.Plo ./$(DEPDIR)/dvdnav.Plo \
-@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/highlight.Plo ./$(DEPDIR)/md5.Plo \
+@AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/dvdread.Plo ./$(DEPDIR)/highlight.Plo \
 @AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/navigation.Plo \
 @AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/read_cache.Plo ./$(DEPDIR)/remap.Plo \
 @AMDEP_TRUE@	@AMDEP_TRUE@	./$(DEPDIR)/searching.Plo ./$(DEPDIR)/settings.Plo \
@@ -89,8 +89,8 @@ LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) \
 CCLD = $(CC)
 LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(libdvdnav_la_SOURCES)
-DIST_SOURCES = $(libdvdnav_la_SOURCES)
+SOURCES = $(libk9dvdnav_la_SOURCES)
+DIST_SOURCES = $(libk9dvdnav_la_SOURCES)
 HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -323,13 +323,12 @@ xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 #>- METASOURCES = AUTO
-noinst_LTLIBRARIES = libdvdnav.la
-libdvdnav_la_SOURCES = decoder.c decoder.h dvdnav.c dvdnav_events.h dvdnav.h \
-	dvdnav_internal.h highlight.c md5.c md5.h navigation.c read_cache.c read_cache.h remap.c \
-	remap.h searching.c settings.c vm.c vmcmd.c vmcmd.h vm.h compat.h dvd_types.h
+noinst_LTLIBRARIES = libk9dvdnav.la
+libk9dvdnav_la_SOURCES = decoder.c decoder.h dvdnav.c dvdnav_events.h dvdnav.h \
+		dvdnav_internal.h highlight.c navigation.c read_cache.c read_cache.h remap.c remap.h \
+		searching.c settings.c vm.c vmcmd.c vmcmd.h vm.h compat.h dvd_types.h dvdread.c
 
-libdvdnav_la_LIBADD = -ldvdread
-noinst_HEADERS = common.h
+noinst_HEADERS = common.h dvdread.h
 #>- all: all-am
 #>+ 1
 all: docs-am  all-am
@@ -387,8 +386,8 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libdvdnav.la: $(libdvdnav_la_OBJECTS) $(libdvdnav_la_DEPENDENCIES) 
-	$(LINK)  $(libdvdnav_la_LDFLAGS) $(libdvdnav_la_OBJECTS) $(libdvdnav_la_LIBADD) $(LIBS)
+libk9dvdnav.la: $(libk9dvdnav_la_OBJECTS) $(libk9dvdnav_la_DEPENDENCIES) 
+	$(LINK)  $(libk9dvdnav_la_LDFLAGS) $(libk9dvdnav_la_OBJECTS) $(libk9dvdnav_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -398,8 +397,8 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decoder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dvdnav.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dvdread.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/highlight.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/md5.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/navigation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/read_cache.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/remap.Plo@am__quote@
@@ -663,19 +662,19 @@ bcheck-am:
 
 #>+ 3
 final:
-	$(MAKE) libdvdnav_la_OBJECTS="$(libdvdnav_la_final_OBJECTS)" all-am
+	$(MAKE) libk9dvdnav_la_OBJECTS="$(libk9dvdnav_la_final_OBJECTS)" all-am
 
 #>+ 3
 final-install:
-	$(MAKE) libdvdnav_la_OBJECTS="$(libdvdnav_la_final_OBJECTS)" install-am
+	$(MAKE) libk9dvdnav_la_OBJECTS="$(libk9dvdnav_la_final_OBJECTS)" install-am
 
 #>+ 3
 no-final:
-	$(MAKE) libdvdnav_la_OBJECTS="$(libdvdnav_la_nofinal_OBJECTS)" all-am
+	$(MAKE) libk9dvdnav_la_OBJECTS="$(libk9dvdnav_la_nofinal_OBJECTS)" all-am
 
 #>+ 3
 no-final-install:
-	$(MAKE) libdvdnav_la_OBJECTS="$(libdvdnav_la_nofinal_OBJECTS)" install-am
+	$(MAKE) libk9dvdnav_la_OBJECTS="$(libk9dvdnav_la_nofinal_OBJECTS)" install-am
 
 #>+ 3
 cvs-clean:

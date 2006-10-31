@@ -16,8 +16,8 @@
 #include "k9langselect.h"
 
 #include <kdeversion.h>
-#include <kstatusbar.h>
-#include <kstdaccel.h>
+#include <kstatusbar.h> 
+#include <kstdaccel.h> 
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kdockwidget.h>
@@ -26,12 +26,17 @@
 #include <qframe.h>
 #include <kkeydialog.h>
 #include <kedittoolbar.h>
+#include <klibloader.h>
+#include <ksimpleconfig.h>
 #include "kviewmpeg2.h"
 
 
 k9Copy::k9Copy()
     : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
 {
+    KSimpleConfig settings("K9Copy");
+    m_useXine=settings.readEntry("/options/useMplayer",0).toInt();
+
     // tell the KMainWindow that this is indeed the main widget
     setToolviewStyle(KMdi::TextAndIcon);
     m_k9Main=new k9Main(this);
@@ -43,10 +48,27 @@ k9Copy::k9Copy()
 
     k9LangSelect *lang=new k9LangSelect(m_k9Main,this);
     addToolWindow(lang, KDockWidget::DockRight, getMainDockWidget(),0,i18n("Selection"),i18n("Selection"));
+   
+    if (m_useXine) {
+/*     	KLibFactory *m_factory = KLibLoader::self()->factory("libk9xine");
+   	 if (m_factory)      {
+        	m_mp2=static_cast<K9XinePlayer  *>(m_factory->create(this,"xineplayer", "K9XinePlayer"));
+    	}
+*/
+	m_mp2=new K9Mplayer(this);
 
-    m_mp2=new kViewMPEG2();
+
+    }
+    else
+    	m_mp2=new kViewMPEG2();
+
     m_previewAcc=addToolWindow(m_mp2,KDockWidget::DockRight,getMainDockWidget(),0,i18n("Preview"),i18n("Preview"));
-    m_k9Main->setViewer( m_mp2);
+//    m_k9Main->setViewer( (kViewMPEG2*) m_mp2);
+	
+
+//    kViewMPEG2 * v=(kViewMPEG2*) m_mp2;
+    connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle* )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle* )));
+    connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
 
     // accept dnd
     setAcceptDrops(true);
@@ -162,15 +184,24 @@ void k9Copy::preferences() {
   m_mp2->close();
   deleteToolWindow(m_previewAcc);
   
-    m_mp2=new kViewMPEG2();
+   KSimpleConfig ksettings("K9Copy");
+   m_useXine=ksettings.readEntry("/options/useMplayer",0).toInt();
+
+    if (m_useXine)
+	m_mp2=new K9Mplayer(this);
+    else
+    	m_mp2=new kViewMPEG2();
     m_previewAcc=addToolWindow(m_mp2,KDockWidget::DockRight,getMainDockWidget(),0,i18n("Preview"),i18n("Preview"));
-    m_k9Main->setViewer( m_mp2);
+    //kViewMPEG2 * v=(kViewMPEG2*) m_mp2;
+    connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle* )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle* )));
+    connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
+
 }
 
 
 void k9Copy::ActionCopy()
 {
- m_mp2->bStopClick();
+( (kViewMPEG2*)m_mp2)->bStopClick();
  m_k9Main->Copy();
 }
 

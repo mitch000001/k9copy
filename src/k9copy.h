@@ -77,7 +77,8 @@ private:
    k9Main  *m_k9Main;
    KMdiChildView *m_childView;
    KMdiToolViewAccessor *m_previewAcc;
-   kViewMPEG2 *m_mp2;
+   QWidget *m_mp2;
+   bool m_useXine;
 };
 
 

@@ -11,7 +11,10 @@
 //
 #ifndef K9DVDREAD_H
 #define K9DVDREAD_H
+
 #include "k9common.h"
+#include <qlibrary.h>
+
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
@@ -23,6 +26,7 @@ friend class k9DVDRead;
 private:
     dvd_file_t *m_file;
     k9DVDRead *m_dvd;
+    QLibrary *m_library;
     void openIfo(uint _vts);
     void openMenu(uint _vts);
     void openTitle(uint _vts);

@@ -527,7 +527,7 @@ uninstall-am: uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=cs.gmo pt_BR.gmo pl.gmo Makefile.in ru.gmo en_GB.gmo it.gmo el.gmo de.gmo fr.gmo es.gmo Makefile.am 
+KDE_DIST=pl.gmo ru.gmo en_GB.gmo el.gmo fr.gmo cs.gmo pt_BR.gmo Makefile.in it.gmo de.gmo es.gmo Makefile.am 
 
 #>+ 31
 pt_BR.gmo: pt_BR.po

@@ -19,4 +19,4 @@
 typedef K_TYPELIST_5( k9DVD,k9DVDBackup,k9DVDAuthor,k9DVDSize,k9Progress ) k9;
 K_EXPORT_COMPONENT_FACTORY( libk9copy, KGenericFactory<k9> )
 
-
+ 

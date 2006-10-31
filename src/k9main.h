@@ -28,7 +28,6 @@
 #include <kfiledialog.h>
 #include <qlistbox.h>
 #include "k9copy.h"
-#include "kviewmpeg2.h"
 
 enum  eStreamType {SUB,AUD,VID,NONE} ;
 
@@ -133,7 +132,6 @@ public:
     void updateFactor();
     bool withMenus();
     k9DVD *dvd;
-    void setViewer(kViewMPEG2 *_value) {viewer = _value;}
     void eject();
 private slots:
     virtual void          listView1CurrentChanged( QListViewItem * );
@@ -167,7 +165,6 @@ protected:
     QPixmap pxVideo;
     QPixmap pxSound;
     QPixmap pxText;
-    kViewMPEG2 *viewer;
     bool updating;
     bool fspFinish;
     long fspAvail;
@@ -204,6 +201,8 @@ signals: // Signals
     void sig_progress(QString str);
     void changeStatusbar(const QString& str,int id);
     void changeCaption(const QString& str);
+    void showPreview(k9DVD *_dvd,k9DVDTitle * title);
+    void stopPreview();
 private:
     void fillLvLanguages();
     void updateLvLang(const eStreamType streamType,const QString & lang) ;

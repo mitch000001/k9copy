@@ -36,7 +36,7 @@
 #include "read_cache.h"
 #include <sys/time.h>
 #include <time.h>
-
+#include "dvdread.h"
 #define READ_CACHE_CHUNKS 10
 
 /* all cache chunks must be memory aligned to allow use of raw devices */
@@ -297,9 +297,9 @@ int dvdnav_read_cache_block(read_cache_t *self, int sector, size_t block_count, 
     dprintf("libdvdnav: read_ahead_size=%d, size=%d\n", self->read_ahead_size, size);
 
     if (size)
-      chunk->cache_read_count += DVDReadBlocks(self->dvd_self->file,
+      chunk->cache_read_count += DvdreadF()->DVDReadBlocks(self->dvd_self->file,
                                                start,
-                                               size,
+                                               size, 
                                                read_ahead_buf);
 
     res = DVD_VIDEO_LB_LEN * block_count;
@@ -309,7 +309,7 @@ int dvdnav_read_cache_block(read_cache_t *self, int sector, size_t block_count, 
     if (self->dvd_self->use_read_ahead)
       dprintf("cache miss on sector %d\n", sector);
 
-    res = DVDReadBlocks(self->dvd_self->file,
+    res = DvdreadF()->DVDReadBlocks(self->dvd_self->file,
                         sector,
                         block_count,
                         *buf) * DVD_VIDEO_LB_LEN;

@@ -1,4 +1,5 @@
-SUBDIRS = k9vamps k9decmpeg libk9copy libk3bdevice libdvdnav src po doc
+SUBDIRS = k9vamps libdvdnav k9Mplayer k9decmpeg libk9copy libk3bdevice src po \
+	doc
 
 $(top_srcdir)/configure.in: configure.in.in $(top_srcdir)/subdirs
 	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common configure.in ;
@@ -27,6 +28,7 @@ dist-hook:
 	cd $(top_distdir) && $(MAKE) -f admin/Makefile.common subdirs
 
 AM_CXXFLAGS = -O3 -g3
+
 
 
 

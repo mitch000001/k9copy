@@ -48,6 +48,13 @@ k9settings::k9settings(QWidget *parent,const QString &caption):  KDialogBase (Ic
     m_prefMencoder =new k9prefMencoder(frMencoder);
     grid->addWidget(m_prefMencoder,0,0);
 
+    QFrame *frPreview;
+    frPreview=addPage (i18n("Preview"),i18n("Title preview"),KGlobal::iconLoader()->loadIcon("mplayer", KIcon::Panel, KIcon::SizeMedium));
+    grid = new QGridLayout(frPreview, 0, 0, 10 );
+    m_prefPreview =new k9prefPreview(frPreview);
+    grid->addWidget(m_prefPreview,0,0);
+
+
     connect(this, SIGNAL(okClicked()), SLOT(slotOkClicked()));
     connect(this, SIGNAL(applyClicked()), SLOT(slotApplyClicked()));
 }
@@ -57,6 +64,7 @@ void k9settings::slotOkClicked() {
     m_prefDVD->save();
     m_prefMPEG4->save();
     m_prefMencoder->save();
+    m_prefPreview->save();
 }
 
 void k9settings::slotApplyClicked() {
@@ -70,6 +78,7 @@ k9settings::~k9settings() {
     delete m_prefDVD;
     delete m_prefMPEG4;
     delete m_prefMencoder;
+    delete m_prefPreview;
 }
 
 #include "k9settings.moc"

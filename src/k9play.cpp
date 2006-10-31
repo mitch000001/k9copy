@@ -22,7 +22,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
+#include "dvdread.h"
 
 void k9play::saveStatus(k9play_st _status) {
    QFile fstatus(m_inject);
@@ -468,7 +468,7 @@ bool k9play::readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector,uchar *_buffer)
       /* read Ok */
       if (k9Cell::isNavPack (_buffer))
          /* parse contained DSI pack */
-          navRead_DSI (dsi, _buffer + DSI_START_BYTE);
+          DvdreadF()->navRead_DSI (dsi, _buffer + DSI_START_BYTE);
           if (sector == dsi -> dsi_gi.nv_pck_lbn) {
                return true;
           }

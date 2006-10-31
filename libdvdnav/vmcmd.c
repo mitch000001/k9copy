@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2000, 2001 Martin Norbäck, Håkan Hjort
+ * Copyright (C) 2000, 2001 Martin Norbï¿½k, Hï¿½an Hjort
  *               2002-2004 the dvdnav project
  * 
  * This file is part of libdvdnav, a DVD navigation library. It is modified

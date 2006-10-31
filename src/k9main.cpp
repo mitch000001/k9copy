@@ -74,7 +74,7 @@ pxText((const char **) img_text) {
     if (m_factory)      {
         dvd=static_cast<k9DVD  *>(m_factory->create(this,"dvd", "k9DVD"));
     }
-*/
+*/ 
 
     dvd=new k9DVD(this);
 
@@ -526,7 +526,7 @@ void k9Main::addTitle(k9DVDTitle *track) {
     for (i=0;i< track->getaudioStreamCount();i++) {
         l_auds=track->getaudioStream(i);
         c=i18n("audio %1 ").arg(i+1);
-        c.append( l_auds->getlanguage() + " " +l_auds->getformat()+" ");
+        c.append( l_auds->getlanguage() + " " +l_auds->getformat()+" " +l_auds->getcontent() +" ");
         ch.sprintf("%dch ",l_auds->getchannels());
         c.append(ch+l_auds->getfrequency()+" "+l_auds->getcontent()+" "+l_auds->getquantization());
         ckLvItem * item = new ckLvItem( itemTrack,this);
@@ -543,7 +543,7 @@ void k9Main::addTitle(k9DVDTitle *track) {
     for (i=0;i< track->getsubPictureCount();i++) {
         l_sub=track->getsubtitle(i);
         c=i18n("subpicture %1 ").arg(i+1);
-        c.append( l_sub->getlanguage());
+        c.append( l_sub->getlanguage()+" "+l_sub->getcontent());
         ckLvItem * item = new ckLvItem( itemTrack,this);
         item->streamType=SUB;
         item->language=l_sub->getlanguage();
@@ -842,8 +842,9 @@ void k9Main::PreviewTitle() {
     }
     if (obj !=NULL) {
         k9DVDTitle *t=(k9DVDTitle*)obj;
-        viewer->show();
-        viewer->open(dvd,t);
+        //viewer->show();
+        //viewer->open(dvd,t);
+	emit showPreview( dvd,t);
     }
 }
 
@@ -920,7 +921,8 @@ void k9Main::listView1CurrentChanged( QListViewItem *newItem ) {
 
 
 void k9Main::closeDVD() {
-    viewer->bStopClick();
+    //viewer->bStopClick();
+    emit stopPreview();
     changeStatusbar( "",sbFactor);
     changeStatusbar( "",sbMessage);
     listView1->clear();

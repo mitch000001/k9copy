@@ -418,18 +418,18 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 l_track->VTS = ts;//  ifo_zero->tt_srpt->title[j].title_set_nr;
                 l_track->TTN = ttn; // ifo_zero->tt_srpt->title[j].vts_ttn;
                 l_track->FPS = frames_per_s[(pgc->playback_time.frame_u & 0xc0) >> 6];
-                l_track->format= (*lvideoFormat.at(video_attr->video_format)).latin1();
+                l_track->format= (*lvideoFormat.at(video_attr->video_format));
                 format = l_track->format;
                 /*      QStringList::Iterator it;
                 it= videoFormat.at(video_attr->video_format);
                 c= (*it).latin1();
                 */
 
-                l_track->aspectRatio = (*laspectRatio.at(video_attr->display_aspect_ratio)).latin1();
-                l_track->width = (*lvideoWidth.at(video_attr->picture_size)).latin1();
+                l_track->aspectRatio = (*laspectRatio.at(video_attr->display_aspect_ratio));
+                l_track->width = (*lvideoWidth.at(video_attr->picture_size));
                 ;
-                l_track->height = (*lvideoHeight.at(video_attr->video_format)).latin1();
-                l_track->DF = (*lpermittedDf.at(video_attr->permitted_df)).latin1();
+                l_track->height = (*lvideoHeight.at(video_attr->video_format));
+                l_track->DF = (*lpermittedDf.at(video_attr->permitted_df));
 
                 for (i=0; i<16; i++) {
                     QString pal;
@@ -459,12 +459,12 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 			if (l_auds->language==i18n("Unknown"))
 				l_auds->langCod="xx";
 
-                        l_auds->format= (*laudioFormat.at(audio_attr->audio_format)).latin1();
-                        l_auds->frequency = (*lsampleFreq.at(audio_attr->sample_frequency)).latin1();
-                        l_auds->quantization = (*lquantization.at(audio_attr->quantization)).latin1();
+                        l_auds->format= (*laudioFormat.at(audio_attr->audio_format));
+                        l_auds->frequency = (*lsampleFreq.at(audio_attr->sample_frequency));
+                        l_auds->quantization = (*lquantization.at(audio_attr->quantization));
                         l_auds->channels = audio_attr->channels+1;
                         l_auds->appMode = audio_attr->application_mode;
-                        l_auds->content = (*laudioType.at(audio_attr->lang_extension)).latin1();
+                        l_auds->content = (*laudioType.at(audio_attr->lang_extension));
                         //if (((pgc->audio_control[i]>>8) & 0x80) ==0x80) {
                         l_auds->id = 1+ ((pgc->audio_control[i]>>8) & 0x7) ;
 			l_auds->m_streamId = (pgc->audio_control[i]>>8);
@@ -586,7 +586,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         //JMP : l_sub->setselected(!titleIndexed);
                         l_sub->langCod=lang_code;
                         l_sub->language=lang_name(lang_code);
-                        l_sub->content= (*lsubpType.at(subp_attr->lang_extension)).latin1();
+                        l_sub->content= (*lsubpType.at(subp_attr->lang_extension));
                         unsigned char subpc;
                         subpc=pgc->subp_control[i]>>24;
                         if ((subpc & 0x80)==0x80) {
