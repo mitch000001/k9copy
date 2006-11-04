@@ -125,17 +125,6 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>ckUseGL</cstring>
-            </property>
-            <property name="text">
-                <string>use OpenGL for preview</string>
-            </property>
-            <property name="accel">
-                <string></string>
-            </property>
-        </widget>
         <spacer row="6" column="2">
             <property name="name">
                 <cstring>spacer1</cstring>

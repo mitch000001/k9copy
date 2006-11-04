@@ -40,6 +40,7 @@ void k9prefMPEG4::load() {
     ckMp4AspectRatio->setChecked(settings.readEntry("/mp4/aspectratio","1").toInt());
     leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
 
+    ck2passes->setChecked(settings.readBoolEntry("/mp4/2passes",FALSE));
 
     leMp4AudioBitrate->setText(settings.readEntry("/mp4/audiobitrate","128"));
 
@@ -69,6 +70,7 @@ void k9prefMPEG4::save() {
     settings.writeEntry("/mp4/height",leMp4Height->text());
     settings.writeEntry("/mp4/aspectratio",(int)ckMp4AspectRatio->isChecked());
     settings.writeEntry("/mp4/audiobitrate",leMp4AudioBitrate->text());
+    settings.writeEntry("/mp4/2passes",ck2passes->isChecked());
 
 }
 

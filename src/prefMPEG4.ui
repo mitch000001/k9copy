@@ -59,23 +59,6 @@
                 <string>Width</string>
             </property>
         </widget>
-        <spacer row="5" column="5">
-            <property name="name">
-                <cstring>spacer8</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>21</width>
-                    <height>121</height>
-                </size>
-            </property>
-        </spacer>
         <widget class="QSpinBox" row="1" column="1">
             <property name="name">
                 <cstring>sbMp4Size</cstring>
@@ -238,28 +221,6 @@
                 <set>AlignAuto</set>
             </property>
         </widget>
-        <widget class="QCheckBox" row="2" column="2" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>ckMp4AspectRatio</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>7</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>&amp;keep aspect ratio</string>
-            </property>
-            <property name="accel">
-                <string>Alt+K</string>
-            </property>
-            <property name="checked">
-                <bool>true</bool>
-            </property>
-        </widget>
         <widget class="QLabel" row="1" column="2">
             <property name="name">
                 <cstring>textLabel1</cstring>
@@ -329,7 +290,7 @@
                 </size>
             </property>
         </spacer>
-        <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="4">
+        <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="2">
             <item>
                 <property name="text">
                     <string>XviD</string>
@@ -358,6 +319,53 @@
             </property>
             <property name="currentItem">
                 <number>1</number>
+            </property>
+        </widget>
+        <spacer row="5" column="5">
+            <property name="name">
+                <cstring>spacer8</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>21</width>
+                    <height>280</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QCheckBox" row="0" column="3" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>ck2passes</cstring>
+            </property>
+            <property name="text">
+                <string>2 passes</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="2" column="3" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>ckMp4AspectRatio</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>&amp;keep aspect ratio</string>
+            </property>
+            <property name="accel">
+                <string>Alt+K</string>
+            </property>
+            <property name="checked">
+                <bool>true</bool>
             </property>
         </widget>
     </grid>

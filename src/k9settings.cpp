@@ -36,6 +36,8 @@ k9settings::k9settings(QWidget *parent,const QString &caption):  KDialogBase (Ic
     m_prefDVD =new k9prefDVD(frDVD);
     grid->addWidget(m_prefDVD,0,0);
 
+    //TODO afficher uniquement si mencoder et mplayer installés
+
     QFrame *frMPEG4;
     frMPEG4=addPage (i18n("MPEG-4"),i18n("MPEG-4 Encoding"),KGlobal::iconLoader()->loadIcon("mp4", KIcon::Panel, KIcon::SizeMedium));
     grid = new QGridLayout(frMPEG4, 0, 0, 10 );

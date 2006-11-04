@@ -41,17 +41,19 @@ k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
     m_lstAudio=settings.readListEntry("mencoder/audio");
     m_lstCodecs=settings.readListEntry("mencoder/labels");
     m_lstVideo=settings.readListEntry("mencoder/video");
+    m_2pass=settings.readBoolEntry("/mp4/2passes",FALSE);
     timer = new QTimer( this );
     connect( timer, SIGNAL(timeout()), this, SLOT(timerDone()) );
 
 }
 
 QString k9MP4Enc::round16(QString _wh) {
-   if (_wh !="") {
-	int value=_wh.toInt()/16;
-	return QString::number(value*16);
+    if (_wh !="") {
+        int value=_wh.toInt()/16;
+        return QString::number(value*16);
 
-   } else return _wh;
+    } else
+        return _wh;
 
 
 }
@@ -60,11 +62,11 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     bool error=false;
 
     if ( ! k9Tools::checkProgram("mencoder")) {
-	KMessageBox::error (qApp->mainWidget(),i18n("Unable to run %1").arg("mencoder") , i18n("Encoding error"));	
-	error = TRUE;
-	return;
+        KMessageBox::error (qApp->mainWidget(),i18n("Unable to run %1").arg("mencoder") , i18n("Encoding error"));
+        error = TRUE;
+        return;
     }
-	
+
     time = new QTime(0,0);
     time->start();
     m_percent=0;
@@ -73,7 +75,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 
     m_totalSize=_title->getsectors();
     for (int ititle=0 ; ititle < _title->getTitles().count();ititle++) {
-	k9DVDTitle *tmp=_title->getTitles().at(ititle);
+        k9DVDTitle *tmp=_title->getTitles().at(ititle);
         m_totalSize+= tmp->getsectors();
     }
 
@@ -83,149 +85,183 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     injectFile.close();
     injectName=injectFile.name();
 
+    KTempFile passLogFile(locateLocal("tmp", "k9copy/k9v"), "");
+    passLogFile.setAutoDelete(true);
+    passLogFile.close();
+
+
+    int maxPass=0;
+    int pass=0;
+    if (m_2pass) {
+        maxPass=2;
+        pass=1;
+    }
 
     for (uint m_part =1 ; (m_part <=m_parts) && !error ;m_part++) {
-        uint32_t nbSectors= m_totalSize / m_parts   ;
+        do {
 
-        uint32_t startSector= nbSectors*(m_part-1);
-        uint32_t endSector= startSector+nbSectors;
+            uint32_t nbSectors= m_totalSize / m_parts   ;
 
-        //calculer le bitrate en faisant la somme des cells compris entre startSector et endSector
+            uint32_t startSector= nbSectors*(m_part-1);
+            uint32_t endSector= startSector+nbSectors;
 
-        m_stderr="";
-        m_title=_title;
-        if (m_height=="")
-            m_height="-2";
-        if (m_width=="")
-            m_width="640";
-        if (m_audioBitrate=="")
-            m_audioBitrate="128";
-        if (m_size=="")
-            m_size="700";
-        if (m_filename=="")
-            m_filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.avi", 0,i18n("Save file to disk"));
-        if (m_filename =="")
-            return;
+            //calculer le bitrate en faisant la somme des cells compris entre startSector et endSector
 
-        QDir d=QDir::root();
-        if (d.exists(m_filename))
-            d.remove(m_filename);
+            m_stderr="";
+            m_title=_title;
+            if (m_height=="")
+                m_height="-2";
+            if (m_width=="")
+                m_width="640";
+            if (m_audioBitrate=="")
+                m_audioBitrate="128";
+            if (m_size=="")
+                m_size="700";
+            if (m_filename=="")
+                m_filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.avi", 0,i18n("Save file to disk"));
+            if (m_filename =="")
+                return;
 
-        m_progress=new k9MP4Dlg(qApp->mainWidget(),0);
-        m_progress->setbitrate(QString::number(getBitRate(_title)));
-        m_progress->setsize(m_size +i18n("mb") +" X " +QString::number(m_parts));
-        m_process=new KProcess();
-        m_process->setUseShell(true);
-        *m_process << "k9copy" << "--play" << "--endsector" << QString::number(endSector) ;
-	*m_process << "--inject" << injectName; //"/tmp/kde-jmp/inject";
-        *m_process << "--input" << "'"+m_device+"'";
-        *m_process << "--dvdtitle" << QString::number(_title->getnumTitle());
-	if (m_part==1)
-	    *m_process << "--initstatus";
-	else
-	    *m_process << "--continue";
+            QDir d=QDir::root();
+            if (d.exists(m_filename))
+                d.remove(m_filename);
+
+            m_progress=new k9MP4Dlg(qApp->mainWidget(),0);
+            m_progress->setbitrate(QString::number(getBitRate(_title)));
+            m_progress->setsize(m_size +i18n("mb") +" X " +QString::number(m_parts));
+            m_process=new KProcess();
+            m_process->setUseShell(true);
+            *m_process << "k9copy" << "--play" << "--endsector" << QString::number(endSector) ;
+            *m_process << "--inject" << injectName; //"/tmp/kde-jmp/inject";
+            *m_process << "--input" << "'"+m_device+"'";
+            *m_process << "--dvdtitle" << QString::number(_title->getnumTitle());
+            if (m_part==1)
+                *m_process << "--initstatus";
+            else
+                *m_process << "--continue";
 
 
-        for (uint i=0;i<_title->getaudioStreamCount();i++) {
-            if (_title->getaudioStream(i)->getselected()) {
-                *m_process << "--audiofilter" << QString::number(_title->getaudioStream(i)->getID());
-		break;
-            }
-        }
-
-        *m_process << "| mencoder" << "/dev/stdin";
-        *m_process << "-ovc";
-
-        bool audio=false;
-
-        switch (m_codec) {
-        case xvid:
-            *m_process << "xvid";
-            *m_process <<"-xvidencopts";
-            *m_process <<"bitrate=" + QString::number(getBitRate(_title));
-            m_progress->setTitleLabel(i18n("Encoding %1").arg("XviD"));
-
-            break;
-        case lavc_mp4 :
-            *m_process << "lavc";
-            *m_process << "-lavcopts";
-            *m_process << QString("vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=%1").arg(getBitRate(_title));
-            m_progress->setTitleLabel(i18n("Encoding %1").arg("lavc MPEG-4"));
-	    m_fourcc="DIVX";  //best compatibility
-            break;
-        case x264:
-            *m_process << "x264";
-            *m_process <<"-x264encopts";
-            *m_process <<"bitrate=" + QString::number(getBitRate(_title));
-            m_progress->setTitleLabel(i18n("Encoding %1").arg("x264"));
-	    m_width=round16(m_width);
-	    m_height=round16(m_height);
-            break;
-        default:
-            QStringList::Iterator it = m_lstVideo.at((int)m_codec - 3 );
-            *m_process << replaceParams((*it));
             for (uint i=0;i<_title->getaudioStreamCount();i++) {
                 if (_title->getaudioStream(i)->getselected()) {
-                    *m_process << "-oac";
-                    it = m_lstAudio.at((int)m_codec - 3 );
-                    *m_process << replaceParams((*it));
-                    audio=true;
+                    *m_process << "--audiofilter" << QString::number(_title->getaudioStream(i)->getID());
                     break;
                 }
             }
-            it = m_lstCodecs.at((int)m_codec - 3 );
-            m_progress->setTitleLabel(i18n("Encoding %1").arg((*it)));
-            break;
 
-        }
+            *m_process << "| mencoder" << "/dev/stdin";
+            *m_process << "-passlogfile" << passLogFile.name();
+            *m_process << "-ovc";
 
-	if (m_fourcc !="") 
-	    *m_process << "-ffourcc" << m_fourcc;
+            bool audio=false;
+	    QString sPass="";
+            switch (m_codec) {
+            case xvid:
+                if (pass>0) {
+                    qDebug( QString("encoding pass %1").arg(pass));
+                    sPass=QString(":turbo:pass=%1").arg(pass);
+                }
 
-        if (m_codec == xvid || m_codec == lavc_mp4 || m_codec== x264) {
-            *m_process <<"-vf" << QString("pp=de,crop=0:0:0:0,scale=%1:%2").arg(m_width).arg(m_height);
-            //looking for first audio selected
-            for (uint i=0;i<_title->getaudioStreamCount();i++) {
-                if (_title->getaudioStream(i)->getselected()) {
-                    *m_process << "-oac";
-                    *m_process << "mp3lame";
-                    *m_process <<"-lameopts" << QString("abr:br=%1").arg(m_audioBitrate);
+                *m_process << "xvid";
+                *m_process <<"-xvidencopts";
+                *m_process <<"bitrate=" + QString::number(getBitRate(_title)) +sPass;
+		m_progress->setTitleLabel(i18n("Encoding %1").arg("XviD"));
+                break;
+            case lavc_mp4 :
+                if (pass>0) {
+                    qDebug( QString("encoding pass %1").arg(pass));
+                    sPass=QString(":turbo:vpass=%1").arg(pass);
+                }
 
-                    //*m_process << QString::number(_title->getaudioStream(i)->getStreamId());
-                    audio=true;
-                    break;
+                *m_process << "lavc";
+                *m_process << "-lavcopts";
+                *m_process << QString("vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=%1"+sPass).arg(getBitRate(_title));
+                m_progress->setTitleLabel(i18n("Encoding %1").arg("lavc MPEG-4"));
+                m_fourcc="DIVX";  //best compatibility
+
+                break;
+            case x264:
+                if (pass>0) {
+                    qDebug( QString("encoding pass %1").arg(pass));
+                    sPass=QString(":turbo=1:pass=%1").arg(pass);
+                }
+
+                *m_process << "x264";
+                *m_process <<"-x264encopts";
+                *m_process <<"bitrate=" + QString::number(getBitRate(_title)) +sPass;
+                m_progress->setTitleLabel(i18n("Encoding %1").arg("x264"));
+                m_width=round16(m_width);
+                m_height=round16(m_height);
+
+                break;
+            default:
+                QStringList::Iterator it = m_lstVideo.at((int)m_codec - 3 );
+                *m_process << replaceParams((*it));
+                for (uint i=0;i<_title->getaudioStreamCount();i++) {
+                    if (_title->getaudioStream(i)->getselected()) {
+                        *m_process << "-oac";
+                        it = m_lstAudio.at((int)m_codec - 3 );
+                        *m_process << replaceParams((*it));
+                        audio=true;
+                        break;
+                    }
+                }
+                it = m_lstCodecs.at((int)m_codec - 3 );
+                m_progress->setTitleLabel(i18n("Encoding %1").arg((*it)));
+                break;
+
+            }
+
+            if (m_fourcc !="")
+                *m_process << "-ffourcc" << m_fourcc;
+
+            if (m_codec == xvid || m_codec == lavc_mp4 || m_codec== x264) {
+                *m_process <<"-vf" << QString("pp=de,crop=0:0:0:0,scale=%1:%2").arg(m_width).arg(m_height);
+                //looking for first audio selected
+                for (uint i=0;i<_title->getaudioStreamCount();i++) {
+                    if (_title->getaudioStream(i)->getselected()) {
+                        *m_process << "-oac";
+                        *m_process << "mp3lame";
+                        *m_process <<"-lameopts" << QString("abr:br=%1").arg(m_audioBitrate);
+
+                        //*m_process << QString::number(_title->getaudioStream(i)->getStreamId());
+                        audio=true;
+                        break;
+                    }
                 }
             }
-        }
-        if (!audio)
-            *m_process << "-nosound";
+            if (!audio)
+                *m_process << "-nosound";
 
-        QString path=m_filename;
+            QString path=m_filename;
 
-        if (m_parts>1) {
-            QString ext=m_filename.section(".",-1);
-            if (ext!="")
-                ext="."+ext;
-            path=m_filename.left(m_filename.length()-ext.length());
-            path=path+QString::number(m_part)+ext;
-        }
+            if (m_parts>1) {
+                QString ext=m_filename.section(".",-1);
+                if (ext!="")
+                    ext="."+ext;
+                path=m_filename.left(m_filename.length()-ext.length());
+                path=path+QString::number(m_part)+ext;
+            }
+	    if (pass==1)
+		*m_process << "-o" << "/dev/null";
+	    else
+            	*m_process <<"-o" << "'"+path+"'";
 
-        *m_process <<"-o" << "'"+path+"'";
+            connect(m_process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
+            connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
+            connect(m_process, SIGNAL(processExited(KProcess*)),this,SLOT(exited(KProcess*)));
+            m_process->start(KProcess::OwnGroup, KProcess::All);
+            timer->start(500, 0 );
 
-        connect(m_process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
-        connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
-        connect(m_process, SIGNAL(processExited(KProcess*)),this,SLOT(exited(KProcess*)));
-        m_process->start(KProcess::OwnGroup, KProcess::All);
-        timer->start(500, 0 );
-
-        if(m_progress->exec() == QDialog::Rejected) {
-            m_process->kill();
-            KMessageBox::information (qApp->mainWidget(),i18n("MPEG-4 Encoding cancelled"), i18n("MPEG-4 Encoding"));
-            error=true;
-        } else if (!m_process->normalExit()) {
-            KMessageBox::error (qApp->mainWidget(),"<b>"+i18n("Error while running mencoder :") +"<b><br>"+m_stderr, i18n("Encoding error"));
-            error=true;
-        }
+            if(m_progress->exec() == QDialog::Rejected) {
+                m_process->kill();
+                KMessageBox::information (qApp->mainWidget(),i18n("MPEG-4 Encoding cancelled"), i18n("MPEG-4 Encoding"));
+                error=true;
+            } else if (!m_process->normalExit()) {
+                KMessageBox::error (qApp->mainWidget(),"<b>"+i18n("Error while running mencoder :") +"<b><br>"+m_stderr, i18n("Encoding error"));
+                error=true;
+            }
+            pass++;
+        } while (pass<=maxPass && !error);
 
         delete m_progress;
     }
@@ -233,6 +269,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 
 QString k9MP4Enc::replaceParams(QString _value) {
     QString str=_value;
+    str.replace("$PASS",QString::number(m_pass));
     str.replace("$WIDTH",m_width);
     str.replace("$HEIGHT",m_height);
     str.replace("$VIDBR",QString::number(getBitRate(m_title)));
@@ -249,7 +286,7 @@ int k9MP4Enc::getBitRate(k9DVDTitle *_title) {
     // bitrate video = (MB *8388.608) /SEC    - bitrate audio
     int size=m_size.toInt();
     if (_title->gettotalsize_mb() < size)
-	size=_title->gettotalsize_mb();
+        size=_title->gettotalsize_mb();
     QTime t1(0,0);
     int sec=t1.secsTo(_title->gettotallength());
     int bitrate=((size*m_parts) * 8388.608)/sec  - m_audioBitrate.toInt();
@@ -325,9 +362,9 @@ void k9MP4Enc::getStderr(KProcess *proc, char *buffer, int buflen) {
 }
 
 void k9MP4Enc::timerDone() {
-        QTime time2(0,0);
-        time2=time2.addMSecs(time->elapsed());
-        m_progress->setremain(time2.toString("hh:mm:ss") +" / " +m_remain);
+    QTime time2(0,0);
+    time2=time2.addMSecs(time->elapsed());
+    m_progress->setremain(time2.toString("hh:mm:ss") +" / " +m_remain);
 
 }
 

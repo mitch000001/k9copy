@@ -30,13 +30,13 @@
 
 
 k9DVDTitle* k9DVD::gettitle(int num) {
-    return ((k9DVDTitle*)titles.at(num));
+    return ((k9DVDTitle*)m_titles.at(num));
 }
 
 k9DVDTitle* k9DVD::gettitleByNum(int num) {
     int j=-1;
-    for (uint i=0; i < titles.count();i++) {
-        k9DVDTitle *track=(k9DVDTitle*)titles.at(i);
+    for (uint i=0; i < m_titles.count();i++) {
+        k9DVDTitle *track=(k9DVDTitle*)m_titles.at(i);
         if (track->getIndexed()) {
             j++;
             if (j==num)
@@ -49,114 +49,114 @@ k9DVDTitle* k9DVD::gettitleByNum(int num) {
 
 /** Read property of int longestTitle. */
 k9DVDTitle *k9DVD::getlongestTitle() {
-    return longestTitle;
+    return m_longestTitle;
 }
 
 /** Read property of QString title. */
 const QString& k9DVD::getDVDTitle() {
-    return title;
+    return m_title;
 }
 
 void k9DVD::setDVDTitle(const QString &_newVal) {
-    title=_newVal;
+    m_title=_newVal;
 }
 
 /** Read property of int titleCount. */
 const int& k9DVD::gettitleCount() {
-    return titleCount;
+    return m_titleCount;
 }
 
 /** Read property of int titlesetCount. */
 const int& k9DVD::gettitlesetCount() {
-    return titlesetCount;
+    return m_titlesetCount;
 }
 
 k9DVDTitleset *k9DVD::gettitleset(int num) {
-    return titlesets.at(num);
+    return m_titlesets.at(num);
 }
 
 int k9DVD::getmenuSize() {
-    return menuSize;
+    return m_menuSize;
 }
 
 k9DVD::k9DVD(QObject  *parent, const char *name,const QStringList args)  {
-    error=false;
-    opened=false;
-    titles.setAutoDelete(true);
-    titlesets.setAutoDelete(true);
-    lvideoFormat.append("NTSC");
-    lvideoFormat.append("PAL");
+    m_error=false;
+    m_opened=false;
+    m_titles.setAutoDelete(true);
+    m_titlesets.setAutoDelete(true);
+    m_lvideoFormat.append("NTSC");
+    m_lvideoFormat.append("PAL");
 
-    laspectRatio.append("4:3");
-    laspectRatio.append("16:9");
-    laspectRatio.append("?:?");
-    laspectRatio.append("16:9");
+    m_laspectRatio.append("4:3");
+    m_laspectRatio.append("16:9");
+    m_laspectRatio.append("?:?");
+    m_laspectRatio.append("16:9");
 
-    lquantization.append("16bps");
-    lquantization.append("20bps");
-    lquantization.append("24bps");
-    lquantization.append("drc");
+    m_lquantization.append("16bps");
+    m_lquantization.append("20bps");
+    m_lquantization.append("24bps");
+    m_lquantization.append("drc");
 
-    lmpegVersion.append("mpeg1");
-    lmpegVersion.append("mpeg2");
+    m_lmpegVersion.append("mpeg1");
+    m_lmpegVersion.append("mpeg2");
 
-    lvideoHeight.append("480");
-    lvideoHeight.append("576");
-    lvideoHeight.append("???");
-    lvideoHeight.append("576");
+    m_lvideoHeight.append("480");
+    m_lvideoHeight.append("576");
+    m_lvideoHeight.append("???");
+    m_lvideoHeight.append("576");
 
-    lvideoWidth.append("720");
-    lvideoWidth.append("704");
-    lvideoWidth.append("352");
-    lvideoWidth.append("352");
+    m_lvideoWidth.append("720");
+    m_lvideoWidth.append("704");
+    m_lvideoWidth.append("352");
+    m_lvideoWidth.append("352");
 
-    lpermittedDf.append("Pan&Scan");
-    lpermittedDf.append("Letterbox");
-    lpermittedDf.append("Pan&Scan");
-    lpermittedDf.append("Letterbox");
-    lpermittedDf.append("?");
+    m_lpermittedDf.append("Pan&Scan");
+    m_lpermittedDf.append("Letterbox");
+    m_lpermittedDf.append("Pan&Scan");
+    m_lpermittedDf.append("Letterbox");
+    m_lpermittedDf.append("?");
 
-    laudioFormat.append("ac3");
-    laudioFormat.append("?");
-    laudioFormat.append("mp2");
-    laudioFormat.append("mp2");
-    laudioFormat.append("pcm");
-    laudioFormat.append("sdds");
-    laudioFormat.append("dts");
+    m_laudioFormat.append("ac3");
+    m_laudioFormat.append("?");
+    m_laudioFormat.append("mp2");
+    m_laudioFormat.append("mp2");
+    m_laudioFormat.append("pcm");
+    m_laudioFormat.append("sdds");
+    m_laudioFormat.append("dts");
 
-    lsampleFreq.append("48kHz");
-    lsampleFreq.append("48kHz");
+    m_lsampleFreq.append("48kHz");
+    m_lsampleFreq.append("48kHz");
 
-    laudioType.append("");
-    laudioType.append("Normal");
-    laudioType.append("Impaired");
-    laudioType.append("Comments1");
-    laudioType.append("Comments2");
+    m_laudioType.append("");
+    m_laudioType.append("Normal");
+    m_laudioType.append("Impaired");
+    m_laudioType.append("Comments1");
+    m_laudioType.append("Comments2");
 
-    lsubpType.append("");
-    lsubpType.append("Normal");
-    lsubpType.append("Large");
-    lsubpType.append("Children");
-    lsubpType.append("reserved");
-    lsubpType.append("Normal_CC");
-    lsubpType.append("Large_CC");
-    lsubpType.append("Children_CC");
-    lsubpType.append("reserved");
-    lsubpType.append("Forced");
-    lsubpType.append("reserved");
-    lsubpType.append("reserved");
-    lsubpType.append("reserved");
-    lsubpType.append("Director");
-    lsubpType.append("Large_Director");
-    lsubpType.append("Children_Director");
+    m_lsubpType.append("");
+    m_lsubpType.append("Normal");
+    m_lsubpType.append("Large");
+    m_lsubpType.append("Children");
+    m_lsubpType.append("reserved");
+    m_lsubpType.append("Normal_CC");
+    m_lsubpType.append("Large_CC");
+    m_lsubpType.append("Children_CC");
+    m_lsubpType.append("reserved");
+    m_lsubpType.append("Forced");
+    m_lsubpType.append("reserved");
+    m_lsubpType.append("reserved");
+    m_lsubpType.append("reserved");
+    m_lsubpType.append("Director");
+    m_lsubpType.append("Large_Director");
+    m_lsubpType.append("Children_Director");
 
 
-    frames_per_s[0]=-1.0;
-    frames_per_s[1]=25.00;
-    frames_per_s[2]=-1.0;
-    frames_per_s[3]=29.97;
+    m_frames_per_s[0]=-1.0;
+    m_frames_per_s[1]=25.00;
+    m_frames_per_s[2]=-1.0;
+    m_frames_per_s[3]=29.97;
   
-    start=NULL;
+    m_start=NULL;
 }
 k9DVD::~k9DVD() {
     if (m_dvd.opened())
@@ -164,7 +164,7 @@ k9DVD::~k9DVD() {
 }
 
 int k9DVD::dvdtime2msec(dvd_time_t *dt) {
-    double fps = frames_per_s[(dt->frame_u & 0xc0) >> 6];
+    double fps = m_frames_per_s[(dt->frame_u & 0xc0) >> 6];
     long   ms;
     ms  = (((dt->hour &   0xf0) >> 3) * 5 + (dt->hour   & 0x0f)) * 3600000;
     ms += (((dt->minute & 0xf0) >> 3) * 5 + (dt->minute & 0x0f)) * 60000;
@@ -287,29 +287,29 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     tt_srpt_t   *tt_srpt;
     QString txt,c;
 
-    start=NULL;
+    m_start=NULL;
     int menuSizes[100];
     for ( j=0; j<100;j++)
         menuSizes[j]=0;
 
-    titles.clear();
-    Device=device;
+    m_titles.clear();
+    m_Device=device;
 
-    error=false;
-    errMsg="";
+    m_error=false;
+    m_errMsg="";
 
     if (!_quickScan) {
-	progressDlg= new k9DVDProgress(qApp->mainWidget(),"progress",true);
-	progressDlg->setpbTitleStep(0);
-	progressDlg->setpbTotalStep(0);
+	m_progressDlg= new k9DVDProgress(qApp->mainWidget(),"progress",true);
+	m_progressDlg->setpbTitleStep(0);
+	m_progressDlg->setpbTotalStep(0);
 	
 	connect(this, SIGNAL(sigVobProgress(unsigned int,unsigned int)), this, SLOT(slotVobProgress(unsigned int,unsigned int)));
 	connect(this, SIGNAL(sigTitleProgress(unsigned int,unsigned int)), this, SLOT(slotTitleProgress(unsigned int,unsigned int)));
         connect(this, SIGNAL(sigTitleText(QString&)), this, SLOT(slotTitleText(QString&)));
         connect(this, SIGNAL(sigTotalText(QString&)), this, SLOT(slotTotalText(QString&)));
-        progressDlg->show();
+        m_progressDlg->show();
     } else
-  	progressDlg=NULL;
+  	m_progressDlg=NULL;
 
     qApp->processEvents();
 
@@ -347,17 +347,17 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     }
 
     ltitles = ifo_zero->tt_srpt->nr_of_srpts;
-    titleCount = 0;
+    m_titleCount = 0;
     has_title = get_title_name(device.latin1(), ctitle);
 
     vmgi_mat = ifo_zero->vmgi_mat;
-    titlesetCount = vmgi_mat->vmg_nr_of_title_sets;
+    m_titlesetCount = vmgi_mat->vmg_nr_of_title_sets;
 
     menuSizes[0]=vmgi_mat->vmg_last_sector;
 
-    title=( has_title ? tr2i18n("unknown") : ctitle);
+    m_title=( has_title ? tr2i18n("unknown") : ctitle);
 
-    for (int ts=1;ts <=titlesetCount;ts++) {
+    for (int ts=1;ts <=m_titlesetCount;ts++) {
         tt_srpt = ifo_zero->tt_srpt;
         kifo.openIFO(ts);
         ifo = kifo.getIFO();
@@ -365,7 +365,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
             continue;
         //add the titleset in the titleset list
         k9DVDTitleset *titleset = new k9DVDTitleset(ts,ifo->vtsi_mat->vts_last_sector -ifo->vtsi_mat->vtstt_vobs-1);
-        titlesets.append(titleset);
+        m_titlesets.append(titleset);
 
         for (j=0; j < ifo->vts_pgcit->nr_of_pgci_srp; j++) {
             // tt_srpt->title[j].title_set_nr);
@@ -379,7 +379,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 	    int numTitle=calcNumTitle(ifo_zero,ts,ttn);
 	    //JMP : vérifier la numérotation des titres ......
             if (vtsi_mat && (pgc->nr_of_cells >0)) {
-                titleCount++;
+                m_titleCount++;
                 vts_ttn =  ttn;//ifo->vts_ptt_srpt->title[j].ptt[0].pgcn; //ifo_zero->tt_srpt->title[j].vts_ttn;
 		
                 //JMPtxt=i18n("Title %1").arg(indexedCount);
@@ -396,7 +396,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
                 int titleStartSector=pgc->cell_playback[0].first_sector;
                 //l_track=addTitle(j+1,title_set_nr,ifo->vts_ptt_srpt->title[vts_ttn - 1].ptt[0].pgcn - 1,titleStartSector,isTitleIndex(ifo_zero,ts,vts_ttn));
-                l_track=addTitle(titleset,titleCount, numTitle,title_set_nr,j,titleStartSector, entryPgc);
+                l_track=addTitle(titleset,m_titleCount, numTitle,title_set_nr,j,titleStartSector, entryPgc);
                 titleset->add
                 (l_track);
 
@@ -409,7 +409,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
                 if (dvdtime2msec(&pgc->playback_time) > max_length && entryPgc) {
                     max_length = dvdtime2msec(&pgc->playback_time);
-                    longestTitle = l_track;
+                    m_longestTitle = l_track;
                 }
 
                 l_track->chapterCount =  pgc->nr_of_programs;//  ifo_zero->tt_srpt->title[j].nr_of_ptts;
@@ -417,19 +417,19 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 l_track->subPictureCount = vtsi_mat->nr_of_vts_subp_streams;
                 l_track->VTS = ts;//  ifo_zero->tt_srpt->title[j].title_set_nr;
                 l_track->TTN = ttn; // ifo_zero->tt_srpt->title[j].vts_ttn;
-                l_track->FPS = frames_per_s[(pgc->playback_time.frame_u & 0xc0) >> 6];
-                l_track->format= (*lvideoFormat.at(video_attr->video_format));
-                format = l_track->format;
+                l_track->FPS = m_frames_per_s[(pgc->playback_time.frame_u & 0xc0) >> 6];
+                l_track->format= (*m_lvideoFormat.at(video_attr->video_format));
+                m_format = l_track->format;
                 /*      QStringList::Iterator it;
                 it= videoFormat.at(video_attr->video_format);
                 c= (*it).latin1();
                 */
 
-                l_track->aspectRatio = (*laspectRatio.at(video_attr->display_aspect_ratio));
-                l_track->width = (*lvideoWidth.at(video_attr->picture_size));
+                l_track->aspectRatio = (*m_laspectRatio.at(video_attr->display_aspect_ratio));
+                l_track->width = (*m_lvideoWidth.at(video_attr->picture_size));
                 ;
-                l_track->height = (*lvideoHeight.at(video_attr->video_format));
-                l_track->DF = (*lpermittedDf.at(video_attr->permitted_df));
+                l_track->height = (*m_lvideoHeight.at(video_attr->video_format));
+                l_track->DF = (*m_lpermittedDf.at(video_attr->permitted_df));
 
                 for (i=0; i<16; i++) {
                     QString pal;
@@ -459,12 +459,12 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 			if (l_auds->language==i18n("Unknown"))
 				l_auds->langCod="xx";
 
-                        l_auds->format= (*laudioFormat.at(audio_attr->audio_format));
-                        l_auds->frequency = (*lsampleFreq.at(audio_attr->sample_frequency));
-                        l_auds->quantization = (*lquantization.at(audio_attr->quantization));
+                        l_auds->format= (*m_laudioFormat.at(audio_attr->audio_format));
+                        l_auds->frequency = (*m_lsampleFreq.at(audio_attr->sample_frequency));
+                        l_auds->quantization = (*m_lquantization.at(audio_attr->quantization));
                         l_auds->channels = audio_attr->channels+1;
                         l_auds->appMode = audio_attr->application_mode;
-                        l_auds->content = (*laudioType.at(audio_attr->lang_extension));
+                        l_auds->content = (*m_laudioType.at(audio_attr->lang_extension));
                         //if (((pgc->audio_control[i]>>8) & 0x80) ==0x80) {
                         l_auds->id = 1+ ((pgc->audio_control[i]>>8) & 0x7) ;
 			l_auds->m_streamId = (pgc->audio_control[i]>>8);
@@ -586,7 +586,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         //JMP : l_sub->setselected(!titleIndexed);
                         l_sub->langCod=lang_code;
                         l_sub->language=lang_name(lang_code);
-                        l_sub->content= (*lsubpType.at(subp_attr->lang_extension));
+                        l_sub->content= (*m_lsubpType.at(subp_attr->lang_extension));
                         unsigned char subpc;
                         subpc=pgc->subp_control[i]>>24;
                         if ((subpc & 0x80)==0x80) {
@@ -613,16 +613,16 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
         }
         kifo.closeIFO();
     }
-    menuSize=0;
+    m_menuSize=0;
     for (j=0;j<100;j++)
-        menuSize+=menuSizes[j];
+        m_menuSize+=menuSizes[j];
     kifo_zero.closeIFO();
 
     if (!_quickScan)
-    	delete progressDlg;
+    	delete m_progressDlg;
 
-    progressDlg=0;
-    opened=true;
+    m_progressDlg=0;
+    m_opened=true;
     //m_dvd.close();
     return 0;
 }
@@ -657,8 +657,8 @@ k9DVDTitle* k9DVD::addTitle(k9DVDTitleset *_titleset,int id,int num,int _VTS,int
     track->ts_nr=_VTS;
     track->pgc=_pgc;
     bool bappend=true;
-    for (uint i=0;i<titles.count();i++) {
-        tmp=(k9DVDTitle*)titles.at(i);
+    for (uint i=0;i<m_titles.count();i++) {
+        tmp=(k9DVDTitle*)m_titles.at(i);
         k9DVDChapter *chap =tmp->getChapter(0);
 
         if (tmp->ts_nr >_VTS) {
@@ -667,18 +667,18 @@ k9DVDTitle* k9DVD::addTitle(k9DVDTitleset *_titleset,int id,int num,int _VTS,int
             bappend=false;
         }
         if (!bappend) {
-            titles.insert(i,track);
+            m_titles.insert(i,track);
             break;
         }
 
     }
     if (bappend)
-        titles.append(track);
+        m_titles.append(track);
     track->name=i18n("Title %1").arg(num);
 
     if (!_indexed) {
-	for (uint i=0;i<titles.count();i++) {
-		tmp=(k9DVDTitle*)titles.at(i);
+	for (uint i=0;i<m_titles.count();i++) {
+		tmp=(k9DVDTitle*)m_titles.at(i);
 	    if (tmp->numTitle==num && tmp->indexed)
 		tmp->m_titles.append(track);
 	}
@@ -894,7 +894,7 @@ uint64_t k9DVD::getsizeSelected(bool _streams) {
     k9DVDSubtitle *l_sub;
     bool withvideo;
 
-    for (i=0;i<titleCount;i++) {
+    for (i=0;i<m_titleCount;i++) {
         l_track=gettitle(i);
 
         withvideo=l_track->isSelected() && l_track->getIndexed();
@@ -936,7 +936,7 @@ float k9DVD::getfactor(bool _withMenus,bool _streams) {
         k9DVDSubtitle *l_sub;
         bool withvideo;
 
-        for (i=0;i<titleCount;i++) {
+        for (i=0;i<m_titleCount;i++) {
             l_track=gettitle(i);
 
             withvideo=l_track->isSelected() && l_track->getIndexed();
@@ -969,53 +969,53 @@ float k9DVD::getfactor(bool _withMenus,bool _streams) {
     }
 }
 void k9DVD::slotVobProgress(unsigned int position,unsigned int total) {
-    progressDlg->setpbTitleStep(position);
-    progressDlg->setpbTitleTotalSteps(total);
+    m_progressDlg->setpbTitleStep(position);
+    m_progressDlg->setpbTitleTotalSteps(total);
     qApp->processEvents();
 }
 
 void k9DVD::slotTitleProgress(unsigned int position,unsigned int total) {
-    progressDlg->setpbTotalStep(position);
-    progressDlg->setpbTotalTotalSteps(total);
+    m_progressDlg->setpbTotalStep(position);
+    m_progressDlg->setpbTotalTotalSteps(total);
     qApp->processEvents();
 }
 
 void k9DVD::slotTitleText(QString& text) {
-    progressDlg->setlblTitle(text);
+    m_progressDlg->setlblTitle(text);
     qApp->processEvents();
 }
 
 void k9DVD::slotTotalText(QString& text) {
-    progressDlg->setlblTotal(text);
+    m_progressDlg->setlblTotal(text);
     qApp->processEvents();
 }
 
 const QString& k9DVD::getDevice() {
-    return Device;
+    return m_Device;
 }
 
 const bool& k9DVD::geterror() {
-    return error;
+    return m_error;
 }
 
 const QString& k9DVD::geterrMsg() {
-    return errMsg;
+    return m_errMsg;
 }
 
 void k9DVD::setError(const QString & err) {
-    error=true;
-    errMsg=err;
-    if (progressDlg !=NULL)
-    	progressDlg->hide();
+    m_error=true;
+    m_errMsg=err;
+    if (m_progressDlg !=NULL)
+    	m_progressDlg->hide();
 }
 
 const bool& k9DVD::getopened() {
-    return opened;
+    return m_opened;
 }
 
 
 QString &k9DVD::getFormat() {
-    return (format);
+    return (m_format);
 }
 
 int k9DVD::getVampsID(int type) {
@@ -1040,18 +1040,18 @@ int k9DVD::getVampsID(int type) {
 
 
 k9DVDTitle* k9DVD::getstart() {
-    return start;
+    return m_start;
 }
 
 void k9DVD::setstart(k9DVDTitle* title) {
-    start=title;
+    m_start=title;
 }
 
 // returns the title number in the reauthored DVD
 int k9DVD::getnewTitleNum(k9DVDTitle *title) {
     int num=0;
     k9DVDTitle *tr;
-    for (int i=0 ;i < titleCount;i++) {
+    for (int i=0 ;i < m_titleCount;i++) {
         tr=gettitle(i);
         if (tr->isSelected() && tr->getIndexed()) {
             ++num;
@@ -1065,9 +1065,9 @@ int k9DVD::getnewTitleNum(k9DVDTitle *title) {
 
 
 void k9DVD::close() {
-    opened=false;
+    m_opened=false;
     if (m_dvd.opened())
         m_dvd.close();
-    titles.clear();
-    titlesets.clear();
+    m_titles.clear();
+    m_titlesets.clear();
 }

@@ -183,7 +183,7 @@ void k9BurnDVD::burnWithGrowisofs() {
         proc->addArgument("-udf");
         proc->addArgument("-r");
         proc->addArgument("-V "+volId);
-        c=QDir::cleanDirPath(workDir +"dvd");
+        c=QDir::cleanDirPath(workDir +"/dvd");
         proc->addArgument(c);
 
         connect( proc, SIGNAL(readyReadStderr()),this, SLOT(growisoStderr()) );

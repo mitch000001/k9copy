@@ -49,7 +49,8 @@ private:
     QTimer *timer;
     QString m_remain;
     uint32_t m_totalSize;
-
+    bool m_2pass;
+    int m_pass;
     Codec m_codec;
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
     int m_cpt;

@@ -27,7 +27,6 @@ k9prefDVD::k9prefDVD(QWidget* parent, const char* name, WFlags fl)
     urOutput->setMode(2);
     urOutput->setURL(settings.readEntry("/dir/output",locateLocal("tmp","k9copy/",true)));//kd.findResource("tmp","")));
     ckK3b->setChecked(settings.readEntry("/options/usek3b",0).toInt());
-    ckUseGL->setChecked(settings.readEntry("/options/useGL",0).toInt());
 
     ckAutoBurn->setChecked(settings.readEntry("/options/autoburn",0).toInt());
     ckQuickScan->setChecked(settings.readEntry("/options/quickscan","1").toInt());
@@ -45,7 +44,6 @@ void k9prefDVD::save() {
     KSimpleConfig settings("K9Copy");
     settings.writeEntry("/dir/output",urOutput->url());
     settings.writeEntry("/options/usek3b",(int)ckK3b->isChecked());
-    settings.writeEntry("/options/useGL",(int)ckUseGL->isChecked());
 
     settings.writeEntry("/options/autoburn",(int)ckAutoBurn->isChecked());
     settings.writeEntry("/options/dvdsize",(int)sbSize->value());
