@@ -155,6 +155,7 @@ void k9CellCopyList::sortVTSList() {
     VTSList.sort();
 }
 
+
 void k9CellCopyList::addStreams(k9DVDTitle *_title,k9Cell *_cell) {
     k9DVDSubtitle *l_sub;
     k9DVDAudioStream *l_auds;
@@ -195,12 +196,17 @@ bool k9CellCopyList::checkSelected(k9Cell *_cell) {
     bool selected=false;
     for (int i=0; i< DVD->gettitleCount();i++) {
         k9DVDTitle *title=DVD->gettitle(i);
-        if ( title->getVTS()==_cell->vts  && title ->isSelected()) {
+//FACTOR        if ( title->getVTS()==_cell->vts  && title ->isSelected()) {
+        if ( title->getVTS()==_cell->vts) { // {  && title ->isSelected()) {
             for (int j=0; j <title->getchapterCount();j++) {
                 k9DVDChapter * chapter= title->getChapter(j);
                 if (_cell->startSector >= chapter->getstartSector() && _cell->startSector<=chapter->getendSector()) {
-                    addStreams (title,_cell);
-                    selected=true;
+		     //add a reference to the title in the titles list from the cell
+		    _cell->addTitle( title);	//FACTOR
+		    if (title->isSelected()) {  //FACTOR
+			addStreams (title,_cell);
+			selected=true;
+		    }
                 }
             }
         }
@@ -234,6 +240,56 @@ double  k9CellCopyList::gettotalSize() {
     return  (totalSize*2048);
     ;
 
+}
+
+//gives the final size of cells with a forced shrink factor
+double k9CellCopyList::getforcedSize(bool _withFactor) {
+    double  totalSize=0;
+    for (uint iCell=0;iCell<count();iCell++) {
+        k9Cell *cell=(k9Cell*)at(iCell); 
+	double factor = _withFactor ? cell->getFactor():1;
+	double size=0;
+//        if (!cell->copied) {
+            if (cell->selected && cell->getforceFactor() ) {
+                if (cell->angleBlock==angleNone)
+                    size = cell->lastSector-cell->startSector;
+                else if (cell->angleBlock==angleStart) {
+                    uint32_t start=0,end=0;
+                    start=cell->startSector;
+		    // loop inside the angle block to find the last sector. 
+                    while (((k9Cell*)at(iCell))->angleBlock !=angleNone) {
+                        end=((k9Cell*)at(iCell))->lastSector;
+                        iCell++;
+                    }
+                    iCell--;
+                    size += end-start;
+                }
+	        totalSize += (size/factor);
+            } 
+ //       }
+    }
+    return  (totalSize*2048);
+
+}
+
+double k9CellCopyList::getMinFactor(bool _withMenus) {
+
+   double fforced=getforcedSize( false);
+   double MaxSize=k9DVDSize::getMaxSize();
+   MaxSize*=1024*1024;
+   double menuSize=0;
+
+   if (_withMenus)
+        menuSize=DVD->getmenuSize();
+
+   menuSize= menuSize*2048;
+   double totalSize=gettotalSize()+menuSize - fforced;
+   totalSize/=2.50;
+
+   double minFactor=fforced/(MaxSize - totalSize) ;
+   if (minFactor<1)
+	minFactor=1;
+   return minFactor;
 }
 
 
@@ -271,11 +327,14 @@ double k9CellCopyList::getfactor(bool _withMenus,bool _streams,uint64_t _inbytes
     dvdSize*=1024*1024;
 
     double factor;
-    double dvdSize2=dvdSize-_outbytes;
+
+    double fforced=getforcedSize(false);
+    double fforcedsh=getforcedSize(true);
+    double dvdSize2=dvdSize-_outbytes -fforcedsh;
     //     dvdSize2 -=menuSize;
 
-    factor=(totalSize +menuSize-_inbytes)/ (dvdSize2);
-
+    factor=(totalSize +menuSize -  fforced -_inbytes)/ dvdSize2 ;
+     	
     factor = (int)(factor*100);
     factor /=100;
     factor+=0.01;

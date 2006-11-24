@@ -124,6 +124,7 @@ private:
     void clearOutput(QString name);
     uint  getLastCell(k9CellCopyList *_cellCopyList,uint _index);
     void calcFactor();
+    void forceFactor(double _factor);
     bool error;
     void seterror(const QString &_msg);
     k9vamps *vamps;

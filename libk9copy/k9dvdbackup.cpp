@@ -217,6 +217,11 @@ void k9DVDBackup::copyCell(int _VTS,k9Cell * _cell,bool _empty) {
     prepareVTS(_VTS);
     if (error)
         return;
+
+    if (_cell->getforceFactor())
+	forceFactor( _cell->getFactor());
+
+
     mutex.lock();
     k9Cell *cell= currTS->addCell(_VTS,0,0);
     //JMP cell->startSector=m_position;
@@ -270,7 +275,7 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
 
     uint32_t sector,dsi_next_vobu = 0,len=0;
     uchar buffer[DVD_VIDEO_LB_LEN];
-    currCell->oldStartSector=_cell->startSector;
+//TO REMOVE    currCell->oldStartSector=_cell->startSector;
     sector = _cell->startSector;
     backupDlg->setProgress(sector);
     dsi_t	 dsi_pack;
@@ -279,7 +284,7 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     dvdfile->readBlocks (sector, 1, buffer);
 
 
-    currCell->oldLastSector=_cell->lastSector;
+//TO REMOVE    currCell->oldLastSector=_cell->lastSector;
     k9Vobu * vobu=currCell->addVobu(sector);
     vobu->empty=true;
     currCell->addNewVobus((char*)buffer,DVD_VIDEO_LB_LEN,currCell->cellList->getPosition(),currVOB,outputFile->at());
@@ -646,7 +651,7 @@ void k9DVDBackup::playCell (int vts_num, k9Cell *_cell) {
 
 
     /* loop until out of the cell */
-    currCell->oldStartSector=_cell->startSector;
+//TO REMOVE    currCell->oldStartSector=_cell->startSector;
     for (sector = _cell->startSector;
             sector <= _cell->lastSector; sector += dsi_next_vobu & 0x7fffffff) {
 
@@ -780,7 +785,7 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
 
     mutex.lock();
     if (k9Cell::isNavPack(buf)) {
-        currCell->oldLastSector=sector;
+//TO REMOVE        currCell->oldLastSector=sector;
         if (currVobu==NULL) {
             currVobu =currCell->addVobu(sector);
             vobuQueue.enqueue(currVobu);
@@ -1561,9 +1566,18 @@ uint k9DVDBackup::getLastCell(k9CellCopyList *_cellCopyList, uint _index) {
     for ( it = orig->subpicture.begin(); it != orig->subpicture.end(); ++it )
         subpOrig[*it -1]=1;
 
+   float factor=-1;
+
     for (uint iCell=_index+1;(iCell<_cellCopyList->count()) ;iCell++) {
         k9Cell *cell=(k9Cell*)_cellCopyList->at(iCell);
         if ((cell->vts== orig->vts) && ( cell->selected)) {
+	    //if the cell factor changed, it's a new group of cells
+	    if (factor==-1)
+		factor=cell->getFactor();
+	    else {
+		if (cell->getFactor()!=factor)
+		   break;
+	    }
 
             uchar audio[8];
             uchar subp[32];
@@ -1598,6 +1612,15 @@ void k9DVDBackup::calcFactor() {
     backupDlg->setFactor(sFactor);
     argFactor =  factor;
 }
+
+void k9DVDBackup::forceFactor(double _factor) {
+    double factor=_factor;
+    QString sFactor;
+    sFactor.sprintf("%.2f",factor);
+    backupDlg->setFactor(sFactor);
+    argFactor =  factor;
+}
+
 
 void k9DVDBackup::execute() {
     QString sOutput=output;
@@ -1646,7 +1669,10 @@ void k9DVDBackup::execute() {
                 if (lastCell <iCell) {
                     lastCell=getLastCell( cellCopyList,iCell);
                     //adjusting factor of compression
-                    calcFactor();
+		    if ( cell->getforceFactor())
+			forceFactor( cell->getFactor());
+		    else
+                    	calcFactor();
                 }
 
                 copyCell(cell->vts,cell,! cell->selected);

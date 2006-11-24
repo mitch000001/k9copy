@@ -65,29 +65,6 @@
 
 
 
-k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
-        : MainDlg(parent,name),pxVideo((const char **) img_video ),
-        pxSound((const char **) img_sound),
-pxText((const char **) img_text) {
-
-/*    m_factory = KLibLoader::self()->factory("libk9copy");
-    if (m_factory)      {
-        dvd=static_cast<k9DVD  *>(m_factory->create(this,"dvd", "k9DVD"));
-    }
-*/ 
-
-    dvd=new k9DVD(this);
-
-    updating=false;
-
-    items.setAutoDelete(true);
-    listView1->setDefaultRenameAction(QListView::Accept);
-//    KStandardDirs kd;
-    m_prefOutput=locateLocal("tmp","k9copy/",true); //kd.findResource("tmp","");
-    readSettings();
-    bInputOpen->setPixmap(SmallIcon("fileopen"));
-    bInputOpenDir->setPixmap(SmallIcon("folder_open"));
-}
 
 k9DVDListItem::k9DVDListItem(QObject *DVD,ckLvItem *List,eStreamType type) {
     switch(type) {
@@ -107,12 +84,37 @@ k9DVDListItem::k9DVDListItem(QObject *DVD,ckLvItem *List,eStreamType type) {
         title =(k9DVDTitle*)DVD;
         break;
     default :
-	break;
+        break;
     }
     listItem= List;
     streamType=type;
 }
 
+k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
+	: MainDlg(parent,name),pxVideo((const char **) img_video ),
+        pxSound((const char **) img_sound),
+	pxText((const char **) img_text) {
+
+    /*    m_factory = KLibLoader::self()->factory("libk9copy");
+		if (m_factory)      {
+		dvd=static_cast<k9DVD  *>(m_factory->create(this,"dvd", "k9DVD"));
+	}
+    */
+
+		dvd=new k9DVD(this);
+
+		updating=false;
+
+		items.setAutoDelete(true);
+		listView1->setDefaultRenameAction(QListView::Accept);
+    //    KStandardDirs kd;
+		m_prefOutput=locateLocal("tmp","k9copy/",true); //kd.findResource("tmp","");
+		readSettings();
+		bInputOpen->setPixmap(SmallIcon("fileopen"));
+		bInputOpenDir->setPixmap(SmallIcon("folder_open"));
+	}
+
+	
 k9DVDListItem *k9Main::addListItem(QObject *DVD,ckLvItem *List,eStreamType type) {
     k9DVDListItem *litem;
     litem=new k9DVDListItem(DVD,List,type);
@@ -285,9 +287,9 @@ void ckLvItem::stateChange(bool state) {
             mainDlg->checkTitle(state,this);
             break;
         }
-        k9DVD *d = mainDlg->dvd;
+        //        k9DVD *d = mainDlg->dvd;
         mainDlg->setDVDSize();
-	mainDlg->updateFactor();
+        mainDlg->updateFactor();
         //(mainDlg->factor)->setValue((int) (d->getfactor(mainDlg->withMenus(),true )*100)-100 );
     }
 }
@@ -366,8 +368,8 @@ void k9Main::Copy() {
 }
 
 void k9Main::eject() {
-   closeDVD();
-   drives.eject( getDevice(cbInputDev));
+    closeDVD();
+    drives.eject( getDevice(cbInputDev));
 }
 
 
@@ -502,7 +504,7 @@ void k9Main::addTitle(k9DVDTitle *track) {
     itemTrack->setText(col1,track->getname());
     itemTrack->setRenameEnabled(0,true);
     c.sprintf("%.2f ", track->gettotalsize_mb());
-   
+
 
 
     itemTrack->setText(col2,c+i18n("mb"));
@@ -562,6 +564,7 @@ void k9Main::updateSelection() {
     k9DVDListItem *litem;
     for (i=0;i<items.count();i++) {
         litem=(k9DVDListItem*)items.at(i);
+
         switch (litem->streamType) {
         case SUB:
             k9DVDSubtitle *l_sub;
@@ -576,13 +579,18 @@ void k9Main::updateSelection() {
         case VID :
             k9DVDTitle *l_title;
             l_title=litem->title;
-            l_title->setforceSelection(litem->listItem->isOn());
-            break;
-	default :
-	    break;
-        }
 
+            l_title->setforceSelection(litem->listItem->isOn());
+            //if title is not selected => shrink factor is not forced
+            if (!l_title->isSelected())
+                l_title->setforceFactor( false);
+
+            break;
+        default :
+            break;
+        }
     }
+
 }
 
 void k9Main::checkLang(QString lang,eStreamType streamType,bool state) {
@@ -618,8 +626,8 @@ void k9Main::checkLang(QString lang,eStreamType streamType,bool state) {
                     itemtitleset->setOn(title->gettitleset()->getselected());
                 }
                 break;
-	    default:
-		break;
+            default:
+                break;
             }
             //we must check the video item
             if (checked) {
@@ -635,6 +643,8 @@ void k9Main::checkLang(QString lang,eStreamType streamType,bool state) {
     }
     m_playbackOptions->fillTitleList();
     updating=false;
+    emit SelectionChanged(dvd);
+    
 }
 
 void k9Main::checkTitle(bool state, ckLvItem *_item) {
@@ -659,8 +669,8 @@ void k9Main::checkTitle(bool state, ckLvItem *_item) {
                     l_auds->setselected(state);
                     litem->listItem->setOn(state);
                     break;
-		default:
-		    break;
+                default:
+                    break;
                 }
             } else if ( litem->streamType == VID && state &&  (_item->streamType==SUB || _item->streamType==AUD)) {
                 litem->title->setforceSelection(state);
@@ -683,6 +693,7 @@ void k9Main::checkTitle(bool state, ckLvItem *_item) {
 
     m_playbackOptions->fillTitleList();
     updating=false;
+    emit SelectionChanged(dvd);
 }
 
 
@@ -700,19 +711,19 @@ void k9Main::checkAll(bool state) {
             litem->listItem->setOn(state);
             break;
         case VID: {
-            k9DVDTitle * l_title;
-            l_title=litem->title;
-            //            l_title->setforceSelection(state);
-            litem->listItem->setOn(state);
+                k9DVDTitle * l_title;
+                l_title=litem->title;
+                //            l_title->setforceSelection(state);
+                litem->listItem->setOn(state);
 
-            //            k9DVDTitle *title=(k9DVDTitle*)litem->listItem->obj;
-            ckLvItem * itemtitleset=(ckLvItem*)litem -> listItem->parent()->parent();
-            l_title->gettitleset()->setselected(state);
-            itemtitleset->setOn(l_title->gettitleset()->getselected());
+                //            k9DVDTitle *title=(k9DVDTitle*)litem->listItem->obj;
+                ckLvItem * itemtitleset=(ckLvItem*)litem -> listItem->parent()->parent();
+                l_title->gettitleset()->setselected(state);
+                itemtitleset->setOn(l_title->gettitleset()->getselected());
             }
-	    break;
-	default:
-	    break;
+            break;
+        default:
+            break;
         }
     }
 
@@ -721,6 +732,7 @@ void k9Main::checkAll(bool state) {
     updateSelection();
     m_playbackOptions->fillTitleList();
     updating=false;
+    emit SelectionChanged(dvd);
 
 }
 
@@ -735,14 +747,14 @@ void k9Main::checkTS( bool _state,ckLvItem *_item ) {
             litem->listItem->setOn(_state);
         }
     }
-    
+
     m_langSelect->update();
 
     updateSelection();
 
     m_playbackOptions->fillTitleList();
     updating=false;
-
+    emit SelectionChanged(dvd);
 }
 
 
@@ -764,7 +776,7 @@ void k9Main::itemRenamed(QListViewItem * item,int col) {
     if (t !=NULL) {
         //QMessageBox::critical( this, "test", c.sprintf("%d",it->tag));
         t->setname(newText);
-	m_playbackOptions->titleRenamed( t,newText);
+        m_playbackOptions->titleRenamed( t,newText);
     } else
         dvd->setDVDTitle(item->text(0));
 }
@@ -774,7 +786,7 @@ void k9Main::readSettings() {
     readDrives();
 
     KSimpleConfig settings("K9Copy");
-//    KStandardDirs kd;
+    //    KStandardDirs kd;
     m_prefOutput=settings.readEntry("/dir/output",locateLocal("tmp","k9copy/",true));//  kd.findResource("tmp",""));
     cbInputDev->setCurrentItem(settings.readEntry("/dev/input",0).toInt());
     cbOutputDev->setCurrentItem(settings.readEntry("/dev/output",0).toInt());
@@ -791,7 +803,7 @@ void k9Main::readSettings() {
     m_prefMp4Codec=settings.readEntry("/mp4/codec",0).toInt();
     m_prefMp4Size=settings.readEntry("/mp4/size",QString("700")).toInt();
     m_prefMp4NumberCD=settings.readEntry("/mp4/numberCD",QString("1")).toInt();
-    
+
     m_prefMp4Width=settings.readEntry("/mp4/width","640");
     m_prefMp4Height=settings.readEntry("/mp4/height","");
 
@@ -802,12 +814,12 @@ void k9Main::readSettings() {
     m_codecVideo=settings.readListEntry("mencoder/video");
 
     if (m_prefMp4Codec -2 <=m_codecLabels.count()) {
-       QStringList::Iterator it=m_codecAudio.at(m_prefMp4Codec);
-       m_prefCodecAudio=*it;
-       it=m_codecVideo.at(m_prefMp4Codec);
-       m_prefCodecVideo=*it;
-       it=m_codecLabels.at(m_prefMp4Codec);	
-       m_prefCodecLabel=*it;
+        QStringList::Iterator it=m_codecAudio.at(m_prefMp4Codec);
+        m_prefCodecAudio=*it;
+        it=m_codecVideo.at(m_prefMp4Codec);
+        m_prefCodecVideo=*it;
+        it=m_codecLabels.at(m_prefMp4Codec);
+        m_prefCodecLabel=*it;
     }
 
 }
@@ -844,7 +856,7 @@ void k9Main::PreviewTitle() {
         k9DVDTitle *t=(k9DVDTitle*)obj;
         //viewer->show();
         //viewer->open(dvd,t);
-	emit showPreview( dvd,t);
+        emit showPreview( dvd,t);
     }
 }
 
@@ -854,21 +866,21 @@ void k9Main::CreateMP4() {
         return;
     }
     for (int i=0; i < dvd->gettitleCount();i++) {
-       k9DVDTitle *t=dvd->gettitle(i);
-       changeStatusbar( i18n("Transcoding title : %1").arg(t->getname()) ,sbMessage);
+        k9DVDTitle *t=dvd->gettitle(i);
+        changeStatusbar( i18n("Transcoding title : %1").arg(t->getname()) ,sbMessage);
 
-	if (t->isSelected() && t->getIndexed() ) {
-		k9MP4Enc *mp4=new k9MP4Enc();
-		mp4->setDevice(dvd->getDevice());
-		mp4->setAudioBitrate(m_prefMp4AudioBitrate);
-		mp4->setCodec((k9MP4Enc::Codec) m_prefMp4Codec);
-		mp4->setSize( QString::number(m_prefMp4Size));
-		mp4->setNumberCD(QString::number(m_prefMp4NumberCD));
-		mp4->setWidth( m_prefMp4Width);
-		mp4->setHeight( m_prefMp4Height);
-		mp4->execute(t);
-		delete mp4;
-	}       
+        if (t->isSelected() && t->getIndexed() ) {
+            k9MP4Enc *mp4=new k9MP4Enc();
+            mp4->setDevice(dvd->getDevice());
+            mp4->setAudioBitrate(m_prefMp4AudioBitrate);
+            mp4->setCodec((k9MP4Enc::Codec) m_prefMp4Codec);
+            mp4->setSize( QString::number(m_prefMp4Size));
+            mp4->setNumberCD(QString::number(m_prefMp4NumberCD));
+            mp4->setWidth( m_prefMp4Width);
+            mp4->setHeight( m_prefMp4Height);
+            mp4->execute(t);
+            delete mp4;
+        }
     }
     changeStatusbar( i18n("Ready") ,sbMessage);
 
@@ -915,6 +927,19 @@ void k9Main::listView1CurrentChanged( QListViewItem *newItem ) {
         if (!withMenus()) {
             m_playbackOptions->enable(true);
         }
+    }
+    
+    k9DVDTitle *title=NULL;
+	
+    if (newItem->rtti()==1000) {
+	    LvItem *it = (LvItem*) newItem;
+	    title=(k9DVDTitle*)it->obj;
+    } else if (newItem->rtti()==1001 && newItem->depth()>2) {
+	    ckLvItem *ckit = (ckLvItem*) newItem;
+	    title=(k9DVDTitle*)ckit->obj;
+    }
+    if (title !=NULL) {
+	    emit changedTitle(title);			
     }
 
 }
@@ -963,7 +988,7 @@ void k9Main::bInputOpenClick() {
     QString result=KFileDialog::getOpenFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Open ISO Image"));
     if (result!="") {
         cbInputDev->setCurrentText(result);
-	Open();
+        Open();
     }
 }
 
@@ -972,7 +997,7 @@ void k9Main::bInputOpenDirClick() {
     QString result= KDirSelectDialog::selectDirectory (QDir::homeDirPath(), false, this,i18n("Open DVD folder")).path();
     if (result!="") {
         cbInputDev->setCurrentText(result);
-	Open();
+        Open();
     }
 }
 
@@ -1012,7 +1037,7 @@ void k9Main::setOutput(QString _output) {
     for (uint i=0 ;i <recorderList.count();i++) {
         kCDDrive * drive=(kCDDrive*)recorderList.at(i);
         QString c(drive->device);
-//        qDebug ("output=" +c);
+        //        qDebug ("output=" +c);
         if (c==_output) {
             cbOutputDev->setCurrentItem(i+1);
             break;
@@ -1034,14 +1059,14 @@ void k9Main::updateFactor() {
     if (dvd->getopened()) {
         updateSelection();
         setDVDSize();
-	double dbfactor=dvd->getfactor(withMenus(),true);
+        double dbfactor=dvd->getfactor(withMenus(),true);
 
         factor->setValue((int) ( dbfactor*100)-100 );
 
-	if (dvd->getsizeSelected(FALSE)==0) 
-		changeStatusbar("",sbFactor);
-	else
-		changeStatusbar( QString::number(dbfactor,'f',2),sbFactor);
+        if (dvd->getsizeSelected(FALSE)==0)
+            changeStatusbar("",sbFactor);
+        else
+            changeStatusbar( QString::number(dbfactor,'f',2),sbFactor);
 
     }
 }

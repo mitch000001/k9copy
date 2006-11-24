@@ -47,7 +47,7 @@ public:
     int vobNum;
     uchar frameType;
     uint32_t  firstRef,secondRef,thirdRef;
-	bool firstRefOk,secondRefOk,thirdRefOk;
+    bool firstRefOk,secondRefOk,thirdRefOk;
 };
 
 class k9VobuList : public QPtrList <k9Vobu> {
@@ -71,6 +71,9 @@ public:
     static int getStreamID(int type);
     k9Vobu * findVobu(uint32_t _oldSector);
     uint32_t getnewSize();
+    void addTitle(k9DVDTitle *_title);
+    bool getforceFactor();
+    float getFactor();
 public:
     k9VobuList vobus;
     int vts;
@@ -78,11 +81,11 @@ public:
     int vob;
     uint32_t startSector;
     uint32_t lastSector;
-    uint32_t oldStartSector;
-    uint32_t oldLastSector;
-    uint32_t newSize;
+    //TO REMOVE    uint32_t ;
+    //TO REMOVE    uint32_t ;
+    //TO REMOVE    uint32_t newSize;
     uchar angleBlock;
-    int nbVideoNew,nbVideoOld;
+    //TO REMOVE    int nbVideoNew,nbVideoOld;
     int id;
     bool selected;
     bool copied;
@@ -92,26 +95,29 @@ public:
 private:
     int numVobu;
     void addRefStream(k9Vobu *_vobu,uchar *_buffer,uint32_t _position);
+    QPtrList <k9DVDTitle> m_titles;
 };
 
 
 
 class k9CellList : public QPtrList <k9Cell> {
 private:
-   uint32_t m_position;
+    uint32_t m_position;
 public:
-    k9CellList() {m_position=0;};
+    k9CellList() {
+        m_position=0;
+    };
     k9Cell *addCell(int _vts, int _pgc,int _vob);
     k9Vobu *findVobu(uint32_t sector);
 
-	void setPosition(const uint32_t& _value) {
-	    m_position = _value;
-	}
-	
-	uint32_t getPosition() const {
-	    return m_position;
-	}
-	
+    void setPosition(const uint32_t& _value) {
+        m_position = _value;
+    }
+
+    uint32_t getPosition() const {
+        return m_position;
+    }
+
 };
 
 

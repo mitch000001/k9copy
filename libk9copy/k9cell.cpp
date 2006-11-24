@@ -59,13 +59,13 @@ k9Vobu * k9VobuList::findVobu(uint32_t sector, uint32_t start, uint32_t end) {
 }
 
 uint32_t k9Cell::getnewSize() {
-  uint32_t size=0;
-  //for (k9Vobu * vobu=vobus.first();vobu;vobu=vobus.next())
-  for (uint i=0; i<vobus.count();i++) {
-	k9Vobu *vobu=vobus.at(i);
-	size+=vobu->size;
-  }
-  return size;
+    uint32_t size=0;
+    //for (k9Vobu * vobu=vobus.first();vobu;vobu=vobus.next())
+    for (uint i=0; i<vobus.count();i++) {
+        k9Vobu *vobu=vobus.at(i);
+        size+=vobu->size;
+    }
+    return size;
 }
 
 int k9Cell::getStreamID(int type) {
@@ -172,68 +172,92 @@ k9Cell::k9Cell(QObject *parent, const char *name)
     vob=0;
     startSector=0;
     lastSector=0;
-    oldStartSector=0;
-    oldLastSector=0;
-    newSize=0;
+    //TO REMOVE    oldStartSector=0;
+    //TO REMOVE    oldLastSector=0;
+    //TO REMOVE    newSize=0;
     id=0;
     selected=false;
     copied=false;
-    nbVideoNew=0;
-    nbVideoOld=0;
+    //TO REMOVE    nbVideoNew=0;
+    //TO REMOVE    nbVideoOld=0;
     angleBlock=angleNone;
 }
 
 
 k9Cell::~k9Cell() {}
 
+//add a title in the title list (titles using this cell)
+void k9Cell::addTitle( k9DVDTitle *_title) {
+   m_titles.append( _title);
+}
+
+bool k9Cell::getforceFactor() {
+   bool m_forced=false;
+   for (int i=0; i< m_titles.count() && !m_forced ;i++) {
+	k9DVDTitle *title=m_titles.at(i);
+	if (title->getforceFactor())
+	   m_forced=true;
+   }
+   return m_forced;
+}
+
+// returns the shrink factor. 
+float k9Cell::getFactor() {
+   float factor=0;
+   for (int i=0; i< m_titles.count() ;i++) {
+	k9DVDTitle *title=m_titles.at(i);
+	if ((title->getfactor()< factor || factor==0 )  && title->getforceFactor() )
+	   factor=title->getfactor();
+   }
+   return factor;
+}
+
 
 //looking for the end reference frame adress block
 void k9Cell::addRefStream(k9Vobu *_vobu,uchar *_buffer,uint32_t _position) {
-	if (_vobu->firstRefOk && _vobu->secondRefOk && _vobu->thirdRefOk)
-		return;
-	//offset of frame
-	uint start=0x16+_buffer[0x16]+1;
-	//PES Length
-	uint length=_buffer[0x12];
-	length=(length <<8 ) + _buffer[0x13];
+    if (_vobu->firstRefOk && _vobu->secondRefOk && _vobu->thirdRefOk)
+        return;
+    //offset of frame
+    uint start=0x16+_buffer[0x16]+1;
+    //PES Length
+    uint length=_buffer[0x12];
+    length=(length <<8 ) + _buffer[0x13];
 
-	//end of PES
-	uint end=0x14+length;
+    //end of PES
+    uint end=0x14+length;
 
-	if ( _vobu->frameType!=0x18) {
-		if (!_vobu->firstRefOk)
-			_vobu->firstRef=_position;
-		else if (!_vobu->secondRefOk)
-			_vobu->secondRef=_position;
-		else if (!_vobu->thirdRefOk)
-			_vobu->thirdRef=_position;
-	}
+    if ( _vobu->frameType!=0x18) {
+        if (!_vobu->firstRefOk)
+            _vobu->firstRef=_position;
+        else if (!_vobu->secondRefOk)
+            _vobu->secondRef=_position;
+        else if (!_vobu->thirdRefOk)
+            _vobu->thirdRef=_position;
+    }
 
-	for (uint i=start;i <end-7;i++) {
-		//if last picture is not a B-Frame, keep offset of last video 
+    for (uint i=start;i <end-7;i++) {
+        //if last picture is not a B-Frame, keep offset of last video
 
-		//looking for start code picture
-		if ((_buffer[i-5] ==0) &&( _buffer[i-4] ==0)	&&( _buffer[i-3] ==1)&&( _buffer[i-2] ==0)) {
-			uchar frameType=_buffer[i] &0x38;
-			//  if frameType != B-Frame and a reference picture was found
-			if ((_vobu->frameType!=0x18) && (_vobu->frameType!=0)) {
-				if (!_vobu->firstRefOk)  {
-					_vobu->firstRefOk=true;
-					_vobu->firstRef=_position;
-				}
-				else if (!_vobu->secondRefOk) {
-					_vobu->secondRefOk=true;
-					_vobu->secondRef=_position;
-				}
-				else if (!_vobu->thirdRefOk) {
-					_vobu->thirdRefOk=true;
-					_vobu->thirdRef=_position;
-				}
-			}
-			//keep the current frame type
-			_vobu->frameType=frameType;
-		}
-	}
+        //looking for start code picture
+        if ((_buffer[i-5] ==0) &&( _buffer[i-4] ==0)	&&( _buffer[i-3] ==1)&&( _buffer[i-2] ==0)) {
+            uchar frameType=_buffer[i] &0x38;
+            //  if frameType != B-Frame and a reference picture was found
+            if ((_vobu->frameType!=0x18) && (_vobu->frameType!=0)) {
+                if (!_vobu->firstRefOk)  {
+                    _vobu->firstRefOk=true;
+                    _vobu->firstRef=_position;
+                } else if (!_vobu->secondRefOk) {
+                    _vobu->secondRefOk=true;
+                    _vobu->secondRef=_position;
+                } else if (!_vobu->thirdRefOk) {
+                    _vobu->thirdRefOk=true;
+                    _vobu->thirdRef=_position;
+                }
+            }
+            //keep the current frame type
+            _vobu->frameType=frameType;
+        }
+    }
 
 }
 
@@ -253,8 +277,8 @@ void k9Cell::addNewVobus(char *_buffer,uint32_t _len,uint32_t _position,int _vob
             vobu=(k9Vobu*)vobus.at(numVobu);
             vobu->newSector=i/DVD_BLOCK_LEN  +start;
             numVobu++;
-	    vobu->vobNum=_vobNum;
-	    vobu->vobPos=_vobPos;
+            vobu->vobNum=_vobNum;
+            vobu->vobPos=_vobPos;
             //QString c;
             //c.sprintf("vobu : %d  old: %d  new :%d",numVobu-1,vobu->oldSector,vobu->newSector);
             //qDebug (c.latin1());
@@ -280,17 +304,17 @@ void k9Cell::addNewVobus(char *_buffer,uint32_t _len,uint32_t _position,int _vob
                 }
                 break;
             case stVideo:
-		addRefStream(vobu,(uchar*)_buffer+i,(i/DVD_BLOCK_LEN  +start) - vobu->newSector);
+                addRefStream(vobu,(uchar*)_buffer+i,(i/DVD_BLOCK_LEN  +start) - vobu->newSector);
                 if (vobu->firstVideo==-1) {
                     vobu->firstVideo =  ((i / DVD_BLOCK_LEN)+start) - vobu->newSector;
                 }
-                nbVideoNew++;
+                //TO REMOVE                nbVideoNew++;
                 break;
             }
 
         }
         vobu->size= _position-vobu->newSector;
-        // à vérifier
+        // ï¿½vï¿½ifier
         lastSector=_position;
     }
 
@@ -314,9 +338,9 @@ k9Vobu::k9Vobu(k9Cell *_parent,uint32_t _oldSector)
     firstRef=0;
     secondRef=0;
     thirdRef=0;
-	firstRefOk=false;
-	secondRefOk=false;
-	thirdRefOk=false;
+    firstRefOk=false;
+    secondRefOk=false;
+    thirdRefOk=false;
 }
 
 
@@ -356,16 +380,16 @@ k9Cell* k9CellList::addCell(int _vts,int _pgc, int _vob) {
 
 }
 
- k9Vobu *k9CellList::findVobu(uint32_t sector) {
-       k9Vobu *vobu=NULL;
-	 for (uint i=0;i <count();i++) {
-            k9Cell * cell = (k9Cell*)at(i);
-            vobu = cell->findVobu(sector);
-            if (vobu !=NULL) {
-                return vobu;
-            }
+k9Vobu *k9CellList::findVobu(uint32_t sector) {
+    k9Vobu *vobu=NULL;
+    for (uint i=0;i <count();i++) {
+        k9Cell * cell = (k9Cell*)at(i);
+        vobu = cell->findVobu(sector);
+        if (vobu !=NULL) {
+            return vobu;
         }
-	return vobu;
+    }
+    return vobu;
 }
 
 #include "k9cell.moc"

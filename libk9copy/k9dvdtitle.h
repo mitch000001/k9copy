@@ -229,6 +229,8 @@ private: // Public attributes
   bool m_defSubtitleSet;
   QPtrList <k9DVDTitle> m_titles;
   uint32_t m_sectors;
+  bool m_forceFactor;
+  float m_factor;
 public: // Public methods
   k9DVDTitle();
   virtual k9DVDTitleset *gettitleset() {return m_titleset;};
@@ -276,7 +278,12 @@ public: // Public methods
   virtual bool getDefSubtitleSet() const {return m_defSubtitleSet;};
   virtual QPtrList< k9DVDTitle > getTitles() const {return m_titles;};
   virtual uint32_t getsectors() { return m_sectors;};	
-	
+  virtual float getfactor() { return m_factor;};
+  virtual bool getforceFactor() { return m_forceFactor;};
+public slots:
+  virtual void setfactor(float _value) {m_factor=_value;};
+  virtual void setforceFactor(bool _value) {m_forceFactor=_value;};
+ 
 private: // Private methods
   k9DVDAudioStream* addAudioStream();
   k9DVDChapter* addChapter(int num);

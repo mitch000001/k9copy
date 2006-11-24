@@ -52,6 +52,8 @@ public:
     k9CellCopyList(k9DVDRead  * _dvdHandle,k9DVD *_DVD);
     double getfactor(bool _withMenus,bool _streams,uint64_t _inbytes=0,uint64_t outbytes=0);
     double gettotalSize();
+    double getforcedSize(bool _withFactor);
+    double getMinFactor(bool _withMenus);
     k9CellVTSList VTSList;
     ~k9CellCopyList();
 private:
@@ -62,6 +64,7 @@ private:
     bool checkSelected(k9Cell *_cell);
     void addStreams(k9DVDTitle *_title,k9Cell *_cell);
     void setVTS(uint _numVTS,uint32_t _size);
+
    //QPtrList <k9CellCopyVTS> VTSList;
    void sortVTSList();
     

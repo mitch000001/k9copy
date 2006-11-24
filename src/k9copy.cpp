@@ -29,19 +29,21 @@
 #include <klibloader.h>
 #include <ksimpleconfig.h>
 #include "kviewmpeg2.h"
-
-
+#include "k9titlefactor.h"
+#include <qdom.h>
+		
 k9Copy::k9Copy()
     : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
 {
     KSimpleConfig settings("K9Copy");
     m_useXine=settings.readEntry("/options/useMplayer",0).toInt();
+    
+    m_k9Main=new k9Main(this);
+    m_childView=createWrapper( m_k9Main,"","");
+    addWindow(m_childView, KMdi::StandardAdd);
 
     // tell the KMainWindow that this is indeed the main widget
     setToolviewStyle(KMdi::TextAndIcon);
-    m_k9Main=new k9Main(this);
-    m_childView=createWrapper( m_k9Main,"","");
-    addWindow(m_childView, KMdi::StandardAdd ,0);
     
     k9PlaybackOptions *opt=new k9PlaybackOptions(m_k9Main,this);
     addToolWindow(opt, KDockWidget::DockRight, getMainDockWidget(),0,i18n("DVD playback options"),i18n("DVD playback options"))->show();;
@@ -50,29 +52,31 @@ k9Copy::k9Copy()
     addToolWindow(lang, KDockWidget::DockRight, getMainDockWidget(),0,i18n("Selection"),i18n("Selection"));
    
     if (m_useXine) {
-/*     	KLibFactory *m_factory = KLibLoader::self()->factory("libk9xine");
-   	 if (m_factory)      {
-        	m_mp2=static_cast<K9XinePlayer  *>(m_factory->create(this,"xineplayer", "K9XinePlayer"));
-    	}
-*/
-	m_mp2=new K9Mplayer(this);
-
-
+	    m_mp2=new K9Mplayer(this);
     }
     else
-    	m_mp2=new kViewMPEG2();
+	    m_mp2=new kViewMPEG2();
 
     m_previewAcc=addToolWindow(m_mp2,KDockWidget::DockRight,getMainDockWidget(),0,i18n("Preview"),i18n("Preview"));
 //    m_k9Main->setViewer( (kViewMPEG2*) m_mp2);
-	
 
 //    kViewMPEG2 * v=(kViewMPEG2*) m_mp2;
     connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle* )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle* )));
     connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
-
+       
+    k9TitleFactor *Factors=new k9TitleFactor( this);  
+    
+    addToolWindow(Factors,KDockWidget::DockBottom,getMainDockWidget(),10,i18n("Shrink Factor"),i18n("Shrink Factor"));
+      
+    
+    connect(m_k9Main,SIGNAL(SelectionChanged( k9DVD* )),Factors,SLOT(SelectionChanged( k9DVD* )));
+    connect(m_k9Main,SIGNAL(changedTitle( k9DVDTitle* )),Factors,SLOT(changedTitle( k9DVDTitle* )));    
+                  			    
+    KDockWidget *dw=dockManager->findWidgetParentDock (Factors);
+    dw->setForcedFixedHeight( 100);
     // accept dnd
     setAcceptDrops(true);
-
+   
     // then, setup our actions
     setupActions();
 
@@ -97,6 +101,9 @@ k9Copy::k9Copy()
             this,   SLOT(changeCaption(const QString&)));
 
     setAutoSaveSettings();
+    KConfig config("K9Copy");
+    dockManager->readConfig(&config,"dock");
+
 }
 
 k9Copy::~k9Copy()
@@ -145,6 +152,7 @@ void k9Copy::setupActions()
 
 
    createGUI(0);
+   
 }
 
 void k9Copy::optionsConfigureKeys()
@@ -248,7 +256,9 @@ void k9Copy::setOutput(QString _output) {
   m_k9Main->setOutput(_output);
 }
 
-void k9Copy::closeEvent( QCloseEvent* ce ) {
+void k9Copy::closeEvent( QCloseEvent* ce ) {    
+    KConfig config("K9Copy");
+    dockManager->writeConfig(&config,"dock");
     m_k9Main->saveSettings();
     ce->accept();
     kapp->quit();

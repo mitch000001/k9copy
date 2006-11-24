@@ -441,6 +441,8 @@ k9DVDTitle::k9DVDTitle() {
     m_defAudioSet=false;
     m_defSubtitleSet=false;
     forceSelection=false;
+    m_forceFactor=false;
+    m_factor=0;
 }
 
 void k9DVDTitleset::add(k9DVDTitle * _title) {
