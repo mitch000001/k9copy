@@ -29,7 +29,7 @@ void k9play::saveStatus(k9play_st _status) {
    fstatus.open(IO_WriteOnly);
    fstatus.writeBlock((const char*)&_status,sizeof(k9play_st));
    fstatus.close();
-   //kdebug (QString("saving status : %1 %2 %3 %4 %5 %6  %7\n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped));
+   kdebug (QString("saving status : %1 %2 %3 %4 %5 %6  %7\n").arg(_status.title).arg(_status.chapter).arg(_status.cell).arg(_status.sector).arg(_status.bytesWritten).arg(_status.bytesRead).arg(_status.bytesSkipped));
 
 } 
 
@@ -56,6 +56,7 @@ k9play::k9play() {
     m_chapter=0;
     m_cell=0;
     m_totalSize=0;
+    m_forcedFactor=false;
 }
 
 void k9play::kdebug(QString const & _msg) {
@@ -134,6 +135,9 @@ void k9play::setcontinue(bool _value) {
    m_continue=_value;
 }
 
+void k9play::setforcedFactor( bool _value) {
+   m_forcedFactor=_value;	
+}
 
 void k9play::execute() {
     //playCell();
@@ -221,7 +225,10 @@ void k9play::play() {
     // if reading of previous cell reached end of chapter, don't seek for cell
     if (m_chapter !=0 && m_cell !=0) {
 	if (m_cell==1) {
-	    status.bytesSkipped = status.bytesChapters - status.bytesRead;
+	    if (status.bytesRead <=status.bytesChapters)
+	    	status.bytesSkipped = status.bytesChapters - status.bytesRead;
+	    else
+		status.bytesSkipped=0;
 	    status.bytesChapters += m_chapterSize;
         }
 	if (status.title == m_title &&
@@ -231,7 +238,8 @@ void k9play::play() {
     }
 
     //vamps.setVapFactor( m_vampsFactor);
-    if (m_totalSize>0) {
+    //TODO forced factors !!!
+    if (m_totalSize>0 && !m_forcedFactor) {
 	double factor;
 	factor = (double) (m_totalSize - (status.bytesRead +status.bytesSkipped)) / (double) (m_dvdSize-status.bytesWritten) ;
 	if (factor <1) factor =1;

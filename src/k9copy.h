@@ -66,6 +66,7 @@ private slots:
 public slots:
     void fileOpen();
     void preferences();
+    void quit();
 private:
     void setupAccel();
     void setupActions();

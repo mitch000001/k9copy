@@ -65,15 +65,15 @@ k9Copy::k9Copy()
     connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
        
     k9TitleFactor *Factors=new k9TitleFactor( this);  
-    
+    int h=Factors->height();
     addToolWindow(Factors,KDockWidget::DockBottom,getMainDockWidget(),10,i18n("Shrink Factor"),i18n("Shrink Factor"));
       
     
-    connect(m_k9Main,SIGNAL(SelectionChanged( k9DVD* )),Factors,SLOT(SelectionChanged( k9DVD* )));
+    connect(m_k9Main,SIGNAL(SelectionChanged( k9DVD*,bool )),Factors,SLOT(SelectionChanged( k9DVD*,bool )));
     connect(m_k9Main,SIGNAL(changedTitle( k9DVDTitle* )),Factors,SLOT(changedTitle( k9DVDTitle* )));    
                   			    
     KDockWidget *dw=dockManager->findWidgetParentDock (Factors);
-    dw->setForcedFixedHeight( 100);
+    dw->setForcedFixedHeight(h);
     // accept dnd
     setAcceptDrops(true);
    
@@ -101,9 +101,9 @@ k9Copy::k9Copy()
             this,   SLOT(changeCaption(const QString&)));
 
     setAutoSaveSettings();
-    KConfig config("K9Copy");
-    dockManager->readConfig(&config,"dock");
-
+    if (settings.hasGroup("dock"))
+    	dockManager->readConfig((KConfig*)&settings,"dock");
+    
 }
 
 k9Copy::~k9Copy()
@@ -116,7 +116,7 @@ bool k9Copy::queryClose   (    ) {
 void k9Copy::setupActions()
 {
     KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-    KStdAction::quit(kapp, SLOT(quit()), actionCollection());
+    KStdAction::quit(this, SLOT(quit()), actionCollection());
     KStdAction::preferences(this,SLOT(preferences()),actionCollection());
     KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
     KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
@@ -256,9 +256,15 @@ void k9Copy::setOutput(QString _output) {
   m_k9Main->setOutput(_output);
 }
 
+
+void k9Copy::quit() {
+    close( true);	
+}
+
 void k9Copy::closeEvent( QCloseEvent* ce ) {    
     KConfig config("K9Copy");
     dockManager->writeConfig(&config,"dock");
+
     m_k9Main->saveSettings();
     ce->accept();
     kapp->quit();

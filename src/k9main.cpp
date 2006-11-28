@@ -112,6 +112,8 @@ k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
 		readSettings();
 		bInputOpen->setPixmap(SmallIcon("fileopen"));
 		bInputOpenDir->setPixmap(SmallIcon("folder_open"));
+		emit SelectionChanged(NULL,true);
+
 	}
 
 	
@@ -459,6 +461,7 @@ void k9Main::Open() {
     m_langSelect->fillLvLanguages();
     listView1->setSorting(0,true);
     changeStatusbar( i18n("Ready"),sbMessage);
+    emit SelectionChanged(dvd,withMenus());
 }
 
 void k9Main::setDVDSize() {
@@ -643,7 +646,7 @@ void k9Main::checkLang(QString lang,eStreamType streamType,bool state) {
     }
     m_playbackOptions->fillTitleList();
     updating=false;
-    emit SelectionChanged(dvd);
+    emit SelectionChanged(dvd,withMenus());
     
 }
 
@@ -693,7 +696,7 @@ void k9Main::checkTitle(bool state, ckLvItem *_item) {
 
     m_playbackOptions->fillTitleList();
     updating=false;
-    emit SelectionChanged(dvd);
+    emit SelectionChanged(dvd,withMenus());
 }
 
 
@@ -732,7 +735,7 @@ void k9Main::checkAll(bool state) {
     updateSelection();
     m_playbackOptions->fillTitleList();
     updating=false;
-    emit SelectionChanged(dvd);
+    emit SelectionChanged(dvd,withMenus());
 
 }
 
@@ -754,7 +757,7 @@ void k9Main::checkTS( bool _state,ckLvItem *_item ) {
 
     m_playbackOptions->fillTitleList();
     updating=false;
-    emit SelectionChanged(dvd);
+    emit SelectionChanged(dvd,withMenus());
 }
 
 
@@ -948,6 +951,7 @@ void k9Main::listView1CurrentChanged( QListViewItem *newItem ) {
 void k9Main::closeDVD() {
     //viewer->bStopClick();
     emit stopPreview();
+    emit SelectionChanged(NULL,withMenus());
     changeStatusbar( "",sbFactor);
     changeStatusbar( "",sbMessage);
     listView1->clear();
@@ -1067,7 +1071,7 @@ void k9Main::updateFactor() {
             changeStatusbar("",sbFactor);
         else
             changeStatusbar( QString::number(dbfactor,'f',2),sbFactor);
-
+	SelectionChanged( dvd,withMenus());
     }
 }
 

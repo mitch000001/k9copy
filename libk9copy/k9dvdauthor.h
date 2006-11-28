@@ -59,6 +59,7 @@ private: // Private attributes
   bool burnDVD;
   bool m_firsttitle;
   uint64_t m_totalSize;
+  uint64_t m_forced,m_forcedsh;
   uint32_t m_copied,m_lastPos;
   uint64_t m_totalPartSize;
   void clearOutput(QString name);

@@ -935,14 +935,18 @@ float k9DVD::getfactor(bool _withMenus,bool _streams) {
         k9DVDAudioStream *l_auds;
         k9DVDSubtitle *l_sub;
         bool withvideo;
-
+	double forced=0,forcedsh=0;
         for (i=0;i<m_titleCount;i++) {
             l_track=gettitle(i);
 
             withvideo=l_track->isSelected() && l_track->getIndexed();
 
             if ( withvideo) {
-                vidstreams +=l_track->getsize_mb();
+                vidstreams +=l_track->getsize_mb();  //getsize_mb includes parts of titles
+		if (l_track->getforceFactor()) {
+			forced+=l_track->getsize_mb();
+			forcedsh+=(l_track->getsize_mb()/l_track->getfactor());	 
+		}
                 if (_streams) {
                     for (x=0;x<l_track->audioStreamCount;x++) {
                         l_auds=l_track->getaudioStream(x);
@@ -959,7 +963,7 @@ float k9DVD::getfactor(bool _withMenus,bool _streams) {
         }
         vidstreams -=selstreams;
 
-        l_factor = (float) vidstreams / (k9DVDSize::getMaxSize());
+        l_factor = ((float) vidstreams - forced) / (k9DVDSize::getMaxSize() - forcedsh);
         l_factor = (int)((l_factor+0.01)*100);
         l_factor /=100;
         if (l_factor <1)

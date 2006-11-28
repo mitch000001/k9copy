@@ -1,0 +1,154 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>titleFactor</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>titleFactor</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>551</width>
+            <height>115</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Shrink Factors</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>lbTitle</cstring>
+            </property>
+            <property name="font">
+                <font>
+                    <bold>1</bold>
+                </font>
+            </property>
+            <property name="text">
+                <string>Shrink Factor for Title %1</string>
+            </property>
+        </widget>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>gbTitle</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="title">
+                <string>Change Factor</string>
+            </property>
+            <property name="alignment">
+                <set>AlignVCenter</set>
+            </property>
+            <property name="flat">
+                <bool>false</bool>
+            </property>
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <property name="checked">
+                <bool>false</bool>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>6</number>
+                </property>
+                <property name="spacing">
+                    <number>1</number>
+                </property>
+                <widget class="QLabel" row="1" column="1">
+                    <property name="name">
+                        <cstring>tFactor</cstring>
+                    </property>
+                    <property name="text">
+                        <string>0.00</string>
+                    </property>
+                </widget>
+                <widget class="QSlider" row="1" column="0">
+                    <property name="name">
+                        <cstring>slFactor</cstring>
+                    </property>
+                    <property name="minValue">
+                        <number>100</number>
+                    </property>
+                    <property name="maxValue">
+                        <number>250</number>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="tickmarks">
+                        <enum>Below</enum>
+                    </property>
+                    <property name="tickInterval">
+                        <number>10</number>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <spacer row="2" column="0">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>slFactor</sender>
+        <signal>sliderPressed()</signal>
+        <receiver>titleFactor</receiver>
+        <slot>slFactorPressed()</slot>
+    </connection>
+    <connection>
+        <sender>slFactor</sender>
+        <signal>sliderReleased()</signal>
+        <receiver>titleFactor</receiver>
+        <slot>slFactorReleased()</slot>
+    </connection>
+    <connection>
+        <sender>slFactor</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>titleFactor</receiver>
+        <slot>slFactor_valueChanged(int)</slot>
+    </connection>
+    <connection>
+        <sender>gbTitle</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>titleFactor</receiver>
+        <slot>ckAutoClicked(bool)</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>slFactor_valueChanged( int )</slot>
+    <slot>slFactorPressed()</slot>
+    <slot>slFactorReleased()</slot>
+    <slot>ckAutoClicked(bool)</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

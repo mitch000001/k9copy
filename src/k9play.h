@@ -49,6 +49,7 @@ private:
     uint m_cell;
     bool m_initstatus;
     bool m_continue;
+    bool m_forcedFactor;
     QString m_inject;
     QStringList m_audioFilter;
     QStringList m_subpictureFilter;
@@ -82,6 +83,7 @@ public:
     void setchapterSize(QString _value);
     void setinitStatus(bool _value);
     void setcontinue (bool _value);
+    void setforcedFactor(bool _value);
 };
 
 #endif

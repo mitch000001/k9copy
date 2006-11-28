@@ -492,16 +492,28 @@ void k9DVDTitleset::updateSelection() {
 	}
 
 	//if titleset selected, we select all features. otherwise they are unselected
+	//TODO select parts of titles only
 	if (selected !=m_selected) 
 		for (uint i=0; i<count();i++) {
 			k9DVDTitle *title=titles.at(i);
+			//FIXED : parts of title selection
+			if (title->getIndexed() && title->isSelected()) 
+				for (int iTitle=0;iTitle <title->getTitles().count();iTitle++) {
+				    k9DVDTitle *title2=title->getTitles().at(iTitle);
+				    for (uint j=0; j <title2->getaudioStreamCount();j++)
+					    title2->getaudioStream(j)->setselected(title->getaudioStream(j)->getselected());
+				    for (uint j=0;j<title2->getsubPictureCount();j++)
+					    title2->getsubtitle(j)->setselected(title2->getsubtitle(j)->getselected());
+				    title2->setforceSelection(true);		    
+				}
+			/* 
 			if (!title->getIndexed()) {
 				for (uint j=0; j <title->getaudioStreamCount();j++)
 					title->getaudioStream(j)->setselected(m_selected);
 				for (uint j=0;j<title->getsubPictureCount();j++)
 					title->getsubtitle(j)->setselected(m_selected);
 				title->setforceSelection(m_selected);
-			}
+			}*/
 		}
 	m_updating=false;
 }

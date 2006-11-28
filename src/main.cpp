@@ -43,6 +43,7 @@ static const KCmdLineOptions options[] = {
             { "audiofilter <number,number>", I18N_NOOP("list of audio streams"),0},
             { "subpicturefilter <number,number>", I18N_NOOP("list of spu streams"),0},
             { "vampsfactor <number>", I18N_NOOP("shrink factor"),0},
+	    { "ffactor", I18N_NOOP("shrink factor forced"),0},
             { "inputsize <number>", I18N_NOOP("size of the cell to be copied"),0},
 	    { "totalsize <number>", I18N_NOOP("total size of selected titles"),0},
 	    { "chaptersize <number>", I18N_NOOP("size of the chapters being copied"),0},
@@ -97,17 +98,23 @@ int main(int argc, char **argv) {
 	QString totalSizeArg(args->getOption("totalsize"));
 	QString dvdSizeArg(args->getOption("dvdsize"));
 	QString chapterSizeArg(args->getOption("chaptersize"));
-
+	bool ffactor=args->isSet("ffactor");
         bool play= args->isSet("play");
-
-/*        InputOptionArg="/dev/hdb";
+/*	
+        InputOptionArg="/dev/hdb";
         play=true;
-	TitleNumber="5";
+	TitleNumber="4";
 	audioFilterArg="1";
-//        chapterArg="1";
-//	cellArg="1";
+        chapterArg="2";
+	cellArg="1";
         injectArg="/tmp/kde-jmp/inject";
-*/
+	vampsFactorArg ="1.00";
+	inputSizeArg="8192";
+	chapterSizeArg="8192";
+	injectArg="/tmp/kde-jmp/k9copy/k9v102718";
+	totalSizeArg="300320768";
+	dvdSizeArg="4613734400";
+*/	
         if (play) {
             k9play player;
 	    player.setinitStatus( args->isSet("initstatus"));
@@ -129,6 +136,7 @@ int main(int argc, char **argv) {
 	    player.settotalSize(totalSizeArg);
 	    player.setdvdSize(dvdSizeArg);
             player.setchapterSize( chapterSizeArg);
+	    player.setforcedFactor(ffactor);
             player.execute();
             return 0;
         } else {

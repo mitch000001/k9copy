@@ -76,6 +76,9 @@ void k9DVDAuthor::createXML() {
 
     m_totalPartSize=0;
 
+    m_forced=0;
+    m_forcedsh=0;
+
     //computes the size of related titles
     for (int iTitle=0; iTitle < DVD->gettitleCount();iTitle++) {
         k9DVDTitle *title=DVD->gettitle(iTitle);
@@ -83,18 +86,24 @@ void k9DVDAuthor::createXML() {
             for (int iTitle2=0;iTitle2<title->getTitles().count() ;iTitle2++) {
                 k9DVDTitle *title2=title->getTitles().at(iTitle2);
                 m_totalPartSize+= title2->getsize_mb() *1024*1024;
+		if (title->getforceFactor()) {
+			m_forced+=title2->getsectors()*2048;
+			m_forcedsh+=(title2->getsectors()/title->getfactor())*2048;
+		}		
+		
             }
+        //total size of forced titles    
+	if (title->isSelected() && title->getforceFactor()) {
+	    m_forced+=title->getsectors()*2048;
+	    m_forcedsh+=(title->getsectors()/title->getfactor())*2048;
+	}
 
     }
- 
+     
     //total size of titles to copy
-    m_totalSize=(int)DVD->getsizeSelected(false) + m_totalPartSize;
-    m_totalSize*=DVD_VIDEO_LB_LEN;
-
-
-
+    m_totalSize=((uint64_t)DVD->getsizeSelected(false))*DVD_VIDEO_LB_LEN + m_totalPartSize;
+    
     m_firsttitle=true;
-
 
     for (i=0;i< DVD->gettitleCount();i++) {
         k9DVDTitle *tmp = DVD->gettitle(i);
@@ -102,7 +111,7 @@ void k9DVDAuthor::createXML() {
     }
 
     QString x = xml->toString();
-
+    
     QFile file(  locateLocal("tmp", "k9copy/k9author.xml" ));
     if ( file.open( IO_WriteOnly ) ) {
         QTextStream stream( &file );
@@ -166,6 +175,11 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
     QString caud="",csub="",c,palette;
 
     if (l_track->isSelected() && l_track->getIndexed()) {
+	double titleFactor;
+	if (l_track->getforceFactor())
+		titleFactor=l_track->getfactor();
+	else
+		titleFactor=factor;
         QDomElement titleSet = xml->createElement("titleset");
         root.appendChild(titleSet);
         QDomElement titleMenu = xml->createElement("menus");
@@ -301,17 +315,20 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
                          .arg(sCell)
                          .arg(caud)
                          .arg(csub)
-                         .arg(factor,0,'f',2)
+                         .arg(titleFactor,0,'f',2)
                          .arg(itotSize,0,'f',0)
                          .arg(chapterSize,0,'f',0);
                     if (m_firsttitle) {
                         file +=" --initstatus ";
                         m_firsttitle=false;
                     }
+		    if (l_track->getforceFactor()) {
+			file +=" --ffactor ";    
+		    }
                     file +=QString(" --inject %1 --totalsize %2 --dvdsize %3 |")
                            .arg(inject)
-                           .arg(m_totalSize,0,'f',0)
-                           .arg((uint64_t)k9DVDSize::getMaxSize() *1024 *1024,0,'f',0);
+                           .arg(m_totalSize -m_forced,0,'f',0)
+                           .arg((uint64_t)(k9DVDSize::getMaxSize() *1024 *1024) - m_forcedsh,0,'f',0);
 
                     e.setAttribute("file",file);
                     if (first)

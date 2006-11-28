@@ -203,7 +203,7 @@ signals: // Signals
     void changeCaption(const QString& str);
     void showPreview(k9DVD *_dvd,k9DVDTitle * title);
     void stopPreview();
-    void SelectionChanged(k9DVD *_dvd);
+    void SelectionChanged(k9DVD *_dvd,bool _withMenus);
     void changedTitle(k9DVDTitle *_title);
 private:
     void fillLvLanguages();
