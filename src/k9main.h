@@ -29,19 +29,20 @@
 #include <qlistbox.h>
 #include "k9copy.h"
 
-enum  eStreamType {SUB,AUD,VID,NONE} ;
+enum  eStreamType {SUB,AUD,VID,NONE,CHAP} ;
+enum  eObjectType {TITLES,CHAPTERS};
 
 class LvItem : public QListViewItem {
 public:
-    LvItem( QListViewItem *parent)
+    LvItem( QListViewItem *parent,eObjectType _objectType)
             : QListViewItem( parent), obj( NULL ) {
-        streamType=NONE;
+        objectType=_objectType;
     }
-    LvItem( QListView *parent)
+    LvItem( QListView *parent,eObjectType _objectType)
             : QListViewItem( parent), obj( NULL ) {
-        streamType=NONE;
+	    objectType=_objectType;
     }
-    eStreamType streamType;
+    eObjectType objectType;
     QObject *obj;
     virtual int rtti () const;
     int compare ( QListViewItem * i, int col, bool ascending ) const;
@@ -115,6 +116,7 @@ public:
     ~k9Main();
     /*$PUBLIC_FUNCTIONS$*/
     void addTitle(k9DVDTitle *track);
+    void addChapters(QListViewItem *_parent,k9DVDTitle *_title);
     void updateSelection();
     void checkAll(bool state);
     void checkTS( bool _state,ckLvItem *_item );
@@ -156,8 +158,8 @@ protected:
     k9DVDListItem *addListItem(QObject *DVD,ckLvItem *List,eStreamType type);
 
     void readDrives();
-    QPtrList<QListViewItem> lvItems;
     QPtrList<ckLvItem> tsItems;
+    QPtrList<ckLvItem> chItems;
     ckLvItem * root;
     QObjectList driveList;
     QObjectList recorderList;

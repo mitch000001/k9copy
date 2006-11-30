@@ -22,64 +22,12 @@
 
 #include "k9common.h"
 #include "k9dvd.h"
+#include "k9dvdchapter.h"
 #include <qdatetime.h>
 #include <qstringlist.h>
 #include <qptrlist.h>
 
-static int cptChapter=0;
-enum angleBlock_t {angleNone=0,angleInside=1,angleStart=3,angleEnd=5};
-
-class k9ChapterCell :public QObject{
-Q_OBJECT
-public:
-   k9ChapterCell(uint _id,uint _angle){ m_id=_id;m_angle=_angle;m_angleBlock=angleNone;};
-   virtual uint getid() {return m_id;};
-   virtual uint getangle(){return m_angle;};
-   virtual uchar getangleBlock() {return m_angleBlock;};
-   virtual void setangleBlock(uchar _angleBlock) {m_angleBlock=_angleBlock;};
-   virtual void setstartSector(uint32_t _value) { m_startSector=_value;};
-   virtual uint32_t getstartSector() { return m_startSector;};
-   virtual void setlastSector(uint32_t _value) { m_lastSector=_value;};
-   virtual uint32_t getlastSector() { return m_lastSector;};
-
-private:
-   uint m_id;
-   uint m_angle;
-   uchar m_angleBlock;
-   uint32_t m_startSector,m_lastSector;
-};
-
-class k9DVDChapter : public QObject{
-Q_OBJECT
-friend class k9DVDTitle;
-friend class k9DVD;
-private: // Private attributes
-  /**  */
-  int num;
-  int id;
-  /**  */
-  QTime length;
-  QTime time;
-  /**  */
-  int sectors;
-  unsigned long startSector;
-  unsigned long endSector;
-  static int getcptChapter() { cptChapter ++; return cptChapter;};
-  static void setcptChapter(int _newValue) { cptChapter=_newValue;};
-public: // Public methods
-  k9DVDChapter();
-  /** Read property of int num. */
-  virtual const int& getnum();
-  /** Read property of QTime length. */
-  virtual const QTime& getlength();
-  /** Read property of int sectors. */
-  virtual const int& getsectors();
-  QPtrList<k9ChapterCell> cells;
-  QValueList<uint32_t> startSectors;
-  virtual const QTime & gettime();
-  unsigned long getstartSector() { return startSector;};
-  unsigned long getendSector() {return endSector;};
-};
+class k9DVDTitleSet;
   
 class k9DVDVideoStream : public QObject{
 Q_OBJECT
@@ -280,6 +228,7 @@ public: // Public methods
   virtual uint32_t getsectors() { return m_sectors;};	
   virtual float getfactor() { return m_factor;};
   virtual bool getforceFactor() { return m_forceFactor;};
+  virtual void selectChapters(bool _state);
 public slots:
   virtual void setfactor(float _value) {m_factor=_value;};
   virtual void setforceFactor(bool _value) {m_forceFactor=_value;};
@@ -297,26 +246,7 @@ public: // Public attributes
 };
   
 
-class k9DVDTitleset :public QObject{
-Q_OBJECT
-private:
-  int m_num;
-  uint32_t m_size;
-  QPtrList <k9DVDTitle> titles;
-  bool m_selected;
-  bool m_updating;
-public:
-  k9DVDTitleset( uint _num,uint32_t _size) {m_num=_num;m_size=_size;m_selected=false;m_updating=false;};
-  virtual void add(k9DVDTitle *_title);
-  virtual int count();
-  virtual k9DVDTitle *gettitle(uint _pos);
-  virtual uint32_t getsize();
-  virtual const QString getsize_mb();
-  virtual bool getselected();
-  virtual void setselected(bool state);
-  virtual void updateSelection();
-  virtual int getnum();
-};
+
 
 #endif
 

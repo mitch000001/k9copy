@@ -24,6 +24,7 @@
 #include "k9burndvd.h"
 #include "k9dvd.h"
 #include "k9dvdtitle.h"
+#include "k9dvdtitleset.h"
 #include "k9dvdbackup.h"
 #include "k9mp4enc.h"
 #include "k9settings.h"
@@ -134,6 +135,8 @@ int ckLvItem::rtti() const {
 }
 
 int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const {
+    if (i->rtti() !=1001)
+	return 1;
     ckLvItem *litem = (ckLvItem*)i;
     k9DVDTitleset *titleset1,*titleset2;
     ckLvItem *l;
@@ -144,7 +147,7 @@ int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const {
             titleset1=(k9DVDTitleset*)obj;
             titleset2=(k9DVDTitleset*)litem->obj;
             return titleset1->getnum() -titleset2->getnum();
-        case 3:
+        case 3: 
             l=(ckLvItem*)this;
             id=streamType*100;
             id2=litem->streamType*100;
@@ -215,6 +218,8 @@ double ckLvItem::getstreamSize() {
 
 
 int LvItem::compare ( QListViewItem * i, int col, bool ascending ) const {
+    if(i->rtti()==1001)
+	return -1;
     LvItem *litem = (LvItem*)i;
     k9DVDTitle *title1,*title2;
     if (col ==1 && depth()==2) {
@@ -428,7 +433,8 @@ void k9Main::Open() {
     listView1->clear();
     items.clear();
     tsItems.clear();
-
+    chItems.clear();
+    
     root = new ckLvItem (listView1,this );
     root->setOpen( TRUE );
     root->setText(0, dvd->getDVDTitle());
@@ -490,6 +496,33 @@ void k9Main::closeEvent( QCloseEvent* ce ) {
     ce->accept();
 }
 
+
+void k9Main::addChapters(QListViewItem *_parent,k9DVDTitle *_title) {
+   LvItem *chapter = new LvItem(_parent,CHAPTERS);
+   chapter->setText(0, i18n("chapters"));
+   chapter->setOpen( false);
+	
+   int ch=0;
+   for (int i=0;i< _title->getchapterCount();i++) {
+	ckLvItem *it =new ckLvItem(chapter,this);
+	it->setText(0,i18n("chapter %1").arg(++ch));
+	it->streamType=CHAP;
+	it->obj=_title->getChapter(i);
+	chItems.append( it);
+   }
+   for (int j=0;j <_title->getTitles().count();j++) {
+	k9DVDTitle *title2=_title->getTitles().at(j);
+	for (int i=0;i< title2->getchapterCount();i++) {
+		ckLvItem *it =new ckLvItem(chapter,this);
+		it->setText(0,i18n("chapter %1").arg(++ch));
+		it->streamType=CHAP;
+		it->obj=title2->getChapter(i);
+		chItems.append( it);
+	}
+		   
+   }
+   
+}
 /** No descriptions */
 void k9Main::addTitle(k9DVDTitle *track) {
     const int col1 =0;
@@ -502,17 +535,17 @@ void k9Main::addTitle(k9DVDTitle *track) {
 
     listView1->setRootIsDecorated(true);
 
-    LvItem * itemTrack = new LvItem( tsItems.at(track->getVTS()-1));
+    LvItem * itemTrack = new LvItem( tsItems.at(track->getVTS()-1),TITLES);
     itemTrack->setOpen( false );
     itemTrack->setText(col1,track->getname());
     itemTrack->setRenameEnabled(0,true);
     c.sprintf("%.2f ", track->gettotalsize_mb());
 
-
-
     itemTrack->setText(col2,c+i18n("mb"));
     itemTrack->obj=track;
 
+    addChapters( itemTrack,track);
+    
     ckLvItem *video;
     video=new ckLvItem( itemTrack,this);
     video->streamType=VID;
@@ -525,8 +558,6 @@ void k9Main::addTitle(k9DVDTitle *track) {
     video->setText(col2,c +i18n("mb"));
     video->setPixmap(col1,pxVideo);
     video->obj=track;
-    lvItems.append(video);
-
 
     for (i=0;i< track->getaudioStreamCount();i++) {
         l_auds=track->getaudioStream(i);
@@ -563,9 +594,9 @@ void k9Main::addTitle(k9DVDTitle *track) {
 }
 /** No descriptions */
 void k9Main::updateSelection() {
-    uint i;
+   
     k9DVDListItem *litem;
-    for (i=0;i<items.count();i++) {
+    for (uint i=0;i<items.count();i++) {
         litem=(k9DVDListItem*)items.at(i);
 
         switch (litem->streamType) {
@@ -592,6 +623,11 @@ void k9Main::updateSelection() {
         default :
             break;
         }
+    }
+    for (int i=0;i<chItems.count();i++){
+	    ckLvItem *it=chItems.at(i);
+	    k9DVDChapter *c=(k9DVDChapter*)it->obj;
+	    it->setOn( c->getSelected());
     }
 
 }
@@ -654,6 +690,23 @@ void k9Main::checkTitle(bool state, ckLvItem *_item) {
 
     k9DVDListItem *litem;
     updating=true;
+    
+    k9DVDTitle *title;
+    if (_item->streamType==CHAP){
+	    k9DVDChapter *c=(k9DVDChapter*)_item->obj;
+	    c->setSelected( state);
+	    title=c->getTitle();
+	    
+	    for (uint i=0;i<items.count() && state ;i++) {
+		    litem=(k9DVDListItem*)items.at(i);
+		    if (title==litem->title && litem->streamType==VID)
+			    litem->listItem->setOn(state);
+		    
+	    }
+    } else
+	    title=(k9DVDTitle*) _item->obj;
+    
+	    
     for (uint i=0;i<items.count();i++) {
         litem=(k9DVDListItem*)items.at(i);
         if (litem->listItem->parent() == _item->parent()) {
@@ -681,16 +734,23 @@ void k9Main::checkTitle(bool state, ckLvItem *_item) {
             }
         }
     }
+    
+    
     updateSelection();
-
+	    
+    k9DVDTitleset * titleset=NULL;
+    
+    titleset=title->gettitleset();
+	        
     m_langSelect->update();
 
-    k9DVDTitleset * titleset=NULL;
-    k9DVDTitle *title=(k9DVDTitle*) _item->obj;
-    titleset=title->gettitleset();
-
+    //check the titleset checkbox
     if (titleset!=NULL) {
-        ckLvItem * itemtitleset=(ckLvItem*)_item->parent()->parent();
+        ckLvItem * itemtitleset;
+	if (_item->streamType==CHAP)
+		itemtitleset=(ckLvItem*)_item->parent()->parent()->parent();
+	else
+		itemtitleset=(ckLvItem*)_item->parent()->parent();
         itemtitleset->setOn(titleset->getselected());
     }
 
@@ -939,7 +999,11 @@ void k9Main::listView1CurrentChanged( QListViewItem *newItem ) {
 	    title=(k9DVDTitle*)it->obj;
     } else if (newItem->rtti()==1001 && newItem->depth()>2) {
 	    ckLvItem *ckit = (ckLvItem*) newItem;
-	    title=(k9DVDTitle*)ckit->obj;
+	    if (((ckLvItem*)newItem)->streamType==CHAP) {
+		LvItem *parent=(LvItem*)(ckit->parent()->parent());
+		title=(k9DVDTitle*)parent->obj;
+	    } else 
+		title=(k9DVDTitle*)ckit->obj;
     }
     if (title !=NULL) {
 	    emit changedTitle(title);			

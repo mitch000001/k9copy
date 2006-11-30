@@ -203,8 +203,9 @@ bool k9CellCopyList::checkSelected(k9Cell *_cell) {
                 if (_cell->startSector >= chapter->getstartSector() && _cell->startSector<=chapter->getendSector()) {
 		     //add a reference to the title in the titles list from the cell
 		    _cell->addTitle( title);	//FACTOR
-		    if (title->isSelected()) {  //FACTOR
-			addStreams (title,_cell);
+//		    if (title->isSelected()) {  
+		    if (chapter->getSelected()) {  
+		    addStreams (title,_cell);
 			selected=true;
 		    }
                 }

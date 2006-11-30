@@ -20,6 +20,7 @@
 
 #include "k9dvd.h"
 #include "k9dvdtitle.h"
+#include "k9dvdtitleset.h"
 #include "k9cellcopylist.h"
 #include "k9dvdprogress.h"
 #include "k9ifo.h"

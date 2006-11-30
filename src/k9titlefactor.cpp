@@ -117,7 +117,7 @@ void k9TitleFactor::changedTitle(k9DVDTitle *_title) {
 
 void k9TitleFactor::setMinFactor() {
     k9CellCopyList *lst=new k9CellCopyList(m_dvd->getdvd(),m_dvd);
-    double minFactor=lst->getMinFactor( true);
+    double minFactor=lst->getMinFactor( true); //TODO : corriger pour copie sans menus
     slFactor->setMinValue(minFactor*100);
 
     delete lst;
