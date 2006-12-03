@@ -78,11 +78,12 @@ void k9DVDAuthor::createXML() {
 
     m_forced=0;
     m_forcedsh=0;
-
+    uint64_t chapterssize=0;
     //computes the size of related titles
     for (int iTitle=0; iTitle < DVD->gettitleCount();iTitle++) {
         k9DVDTitle *title=DVD->gettitle(iTitle);
-        if (title->isSelected() && title->getIndexed())
+        if (title->isSelected() && title->getIndexed()) {
+	    chapterssize+= title->getChaptersSize(false);
             for (int iTitle2=0;iTitle2<title->getTitles().count() ;iTitle2++) {
                 k9DVDTitle *title2=title->getTitles().at(iTitle2);
                 m_totalPartSize+= title2->getsize_mb() *1024*1024;
@@ -90,8 +91,9 @@ void k9DVDAuthor::createXML() {
 			m_forced+=title2->getsectors()*2048;
 			m_forcedsh+=(title2->getsectors()/title->getfactor())*2048;
 		}		
-		
+		chapterssize+= title2->getChaptersSize(false);
             }
+	}
         //total size of forced titles    
 	if (title->isSelected() && title->getforceFactor()) {
 	    m_forced+=title->getsectors()*2048;
@@ -101,7 +103,7 @@ void k9DVDAuthor::createXML() {
     }
      
     //total size of titles to copy
-    m_totalSize=((uint64_t)DVD->getsizeSelected(false))*DVD_VIDEO_LB_LEN + m_totalPartSize;
+    m_totalSize=((uint64_t)DVD->getsizeSelected(false))*DVD_VIDEO_LB_LEN + m_totalPartSize -chapterssize*DVD_VIDEO_LB_LEN;
     
     m_firsttitle=true;
 
@@ -294,6 +296,9 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
                 numPart++;
                 uint icell=0;
                 k9DVDChapter *l_chap=title->getChapter(i);
+		if (!l_chap->getSelected())
+		    continue;
+		
                 bool first=true;
                 uint32_t chapterSize= (l_chap->getendSector()-l_chap->getstartSector())*DVD_VIDEO_LB_LEN;
                 QString sChapter,sCell;
@@ -327,7 +332,7 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
 		    }
                     file +=QString(" --inject %1 --totalsize %2 --dvdsize %3 |")
                            .arg(inject)
-                           .arg(m_totalSize -m_forced,0,'f',0)
+                           .arg(m_totalSize -m_forced  ,0,'f',0)
                            .arg((uint64_t)(k9DVDSize::getMaxSize() *1024 *1024) - m_forcedsh,0,'f',0);
 
                     e.setAttribute("file",file);

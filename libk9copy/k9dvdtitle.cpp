@@ -246,6 +246,30 @@ const float k9DVDTitle::gettotalsize_mb() {
 
 }
 
+//If _selected=true, returns the size of selected chapters, otherwise returns size of
+//unselected ones
+const float k9DVDTitle::getChaptersSize_mb(bool _selected){
+   return (getChaptersSize(_selected)/512);
+}
+
+//If _selected=true, returns the size of selected chapters, otherwise returns size of
+//unselected ones
+const uint64_t k9DVDTitle::getChaptersSize(bool _selected){
+	uint64_t total=0;
+	for (int i=0;i<chapterCount ;i++) {
+		k9DVDChapter *chap = getChapter( i);
+		if (chap->getSelected()==_selected) {
+			total+= chap->getsectors();
+		}
+	}
+	for (int i=0;i<m_titles.count();i++) {
+		k9DVDTitle * title=m_titles.at(i);
+		total+=title->getChaptersSize(_selected);
+	}
+	return total;
+
+}
+
 const float k9DVDTitle::gettotalvideosize_mb() {
     float size =videosize_mb;
     for (int i=0;i<m_titles.count();i++) {
@@ -274,11 +298,6 @@ QTime k9DVDTitle::gettotallength() {
 /** Read property of float videosize_mb. */
 const float& k9DVDTitle::getvideosize_mb() {
     return videosize_mb;
-}
-
-/** Read property of float vobusize_mb. */
-const float& k9DVDTitle::getvobusize_mb() {
-    return vobusize_mb;
 }
 
 

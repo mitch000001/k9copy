@@ -205,9 +205,9 @@ public: // Public methods
   virtual const float& getsize_mb();
   virtual const float  gettotalsize_mb();
   virtual const float  gettotalvideosize_mb();
-
+  virtual const float  getChaptersSize_mb(bool _selected);
+  virtual const uint64_t  getChaptersSize(bool _selected);
   virtual const float& getvideosize_mb();
-  virtual const float& getvobusize_mb();
   virtual bool isSelected();
   virtual void setname( const QString& _newVal);
   virtual const QString& getname();

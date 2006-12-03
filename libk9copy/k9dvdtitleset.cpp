@@ -88,8 +88,7 @@ void k9DVDTitleset::updateSelection()
   }
 
   //if titleset selected, we select all features. otherwise they are unselected
-  //TODO select parts of titles only
-  if (selected !=m_selected)
+   if (selected !=m_selected)
     for (uint i=0; i<count();i++)
     {
       k9DVDTitle *title=titles.at(i);

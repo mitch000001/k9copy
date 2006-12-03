@@ -943,10 +943,12 @@ float k9DVD::getfactor(bool _withMenus,bool _streams) {
             withvideo=l_track->isSelected() && l_track->getIndexed();
 
             if ( withvideo) {
-                vidstreams +=l_track->getsize_mb();  //getsize_mb includes parts of titles
+		//size_mb = size of titles - size of unselected chapters
+		float size_mb=l_track->gettotalsize_mb()-l_track->getChaptersSize_mb( false) ; //gettotalsize_mb does include parts of titles
+                vidstreams +=size_mb ;
 		if (l_track->getforceFactor()) {
-			forced+=l_track->getsize_mb();
-			forcedsh+=(l_track->getsize_mb()/l_track->getfactor());	 
+			forced+=size_mb;
+			forcedsh+=(size_mb/l_track->getfactor());	 
 		}
                 if (_streams) {
                     for (x=0;x<l_track->audioStreamCount;x++) {

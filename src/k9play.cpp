@@ -238,7 +238,6 @@ void k9play::play() {
     }
 
     //vamps.setVapFactor( m_vampsFactor);
-    //TODO forced factors !!!
     if (m_totalSize>0 && !m_forcedFactor) {
 	double factor;
 	factor = (double) (m_totalSize - (status.bytesRead +status.bytesSkipped)) / (double) (m_dvdSize-status.bytesWritten) ;

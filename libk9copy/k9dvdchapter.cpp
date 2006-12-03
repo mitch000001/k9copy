@@ -46,6 +46,7 @@ k9DVDChapter::k9DVDChapter()
   sectors=0;
   startSector=0;
   endSector=0;
+  m_selected=false;
   time.setHMS(0,0,0);
   cells.setAutoDelete(true);
 }
