@@ -61,7 +61,7 @@ k9Copy::k9Copy()
 //    m_k9Main->setViewer( (kViewMPEG2*) m_mp2);
 
 //    kViewMPEG2 * v=(kViewMPEG2*) m_mp2;
-    connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle* )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle* )));
+    connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle*,int )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle*,int )));
     connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
        
     k9TitleFactor *Factors=new k9TitleFactor( this);  
@@ -201,7 +201,7 @@ void k9Copy::preferences() {
     	m_mp2=new kViewMPEG2();
     m_previewAcc=addToolWindow(m_mp2,KDockWidget::DockRight,getMainDockWidget(),0,i18n("Preview"),i18n("Preview"));
     //kViewMPEG2 * v=(kViewMPEG2*) m_mp2;
-    connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle* )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle* )));
+    connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle*,int )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle*,int )));
     connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
 
 }

@@ -80,6 +80,7 @@ public:
     eStreamType streamType;
 
     k9Main *mainDlg;
+    k9DVDTitle *mainTitle;
     QObject *obj;
     QObject *stream;
     QString language;
@@ -167,6 +168,7 @@ protected:
     QPixmap pxVideo;
     QPixmap pxSound;
     QPixmap pxText;
+    QPixmap pxChapter;
     bool updating;
     bool fspFinish;
     long fspAvail;
@@ -203,7 +205,7 @@ signals: // Signals
     void sig_progress(QString str);
     void changeStatusbar(const QString& str,int id);
     void changeCaption(const QString& str);
-    void showPreview(k9DVD *_dvd,k9DVDTitle * title);
+    void showPreview(k9DVD *_dvd,k9DVDTitle * title,int chapter);
     void stopPreview();
     void SelectionChanged(k9DVD *_dvd,bool _withMenus);
     void changedTitle(k9DVDTitle *_title);

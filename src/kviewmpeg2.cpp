@@ -180,7 +180,7 @@ void kViewMPEG2::bPlayClick() {
 }
 
 
-int kViewMPEG2::open (k9DVD *_dvd,k9DVDTitle * title) {
+int kViewMPEG2::open (k9DVD *_dvd,k9DVDTitle * title,int chapter) {
     m_player.open(_dvd->getdvd()->getDvd(), _dvd->getDevice(),title);
 }
 

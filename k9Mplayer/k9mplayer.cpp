@@ -69,7 +69,7 @@ void K9Mplayer::setDevice(const QString & _device) {
 }
 
 
-void K9Mplayer::setTitle( const QString & _numTitle) {
+void K9Mplayer::setTitle( const QString & _numTitle,const QString &_numChapter) {
 /*   m_xineWidget->clearQueue();
    m_xineWidget->appendToQueue(QString("dvd:/%1").arg(_numTitle));
    m_xineWidget->slotPlay();
@@ -90,10 +90,14 @@ void K9Mplayer::setTitle( const QString & _numTitle) {
 	*m_process << "-slave" ;
 	*m_process <<  "-idle";
 	*m_process << "-dvd-device" << m_device;
+	
 	m_process->start( KProcess::NotifyOnExit,KProcess::All);
 	m_canwrite=TRUE;
    }
    sendCmd( QString("loadfile dvd://%1").arg(_numTitle));
+   if (_numChapter !="")
+	sendCmd(QString("seek_chapter %1 1").arg(_numChapter));
+  
    m_position=0;
    slider->setValue(m_position);
 }
@@ -150,7 +154,7 @@ void K9Mplayer::sliderPressed() {
 
 void K9Mplayer::bPlayClick()
 {
-   setTitle(QString::number( m_title));
+   setTitle(QString::number( m_title),"");
 }
 
 void K9Mplayer::bStopClick()
@@ -170,8 +174,8 @@ void K9Mplayer::bUpClick() {
 }
 
 
-void K9Mplayer::open( k9DVD *_dvd,k9DVDTitle *_title) {
-    cbSub->clear();
+void K9Mplayer::open( k9DVD *_dvd,k9DVDTitle *_title,int chapter) {
+    cbSub->clear(); 
     cbAudio->clear();
     for (int i=0; i< _title->getaudioStreamCount();i++)
 	cbAudio->insertItem("");
@@ -196,7 +200,7 @@ void K9Mplayer::open( k9DVD *_dvd,k9DVDTitle *_title) {
     setDevice( _dvd->getDevice());
     m_dvdTitle=_title;
     m_title=_title->getnumTitle();
-    setTitle( QString::number(m_title));
+    setTitle( QString::number(m_title),QString::number(chapter));
     if (_title->getaudioStreamCount() >0)
     	cbAudioActivated( 0);
     if (_title->getsubPictureCount() >0)

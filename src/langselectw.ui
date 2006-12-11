@@ -23,7 +23,7 @@
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
-            <number>0</number>
+            <number>2</number>
         </property>
         <widget class="QListView" row="0" column="0">
             <column>

@@ -33,7 +33,7 @@ public:
   ~K9Mplayer();
   /*$PUBLIC_FUNCTIONS$*/
   void setDevice(const QString & _device);
-  void setTitle(const QString & _numTitle);
+  void setTitle(const QString & _numTitle,const QString &_numChapter);
 private slots:
   void slotLengthChanged();
   void slotNewPosition(int _pos,const QTime & _time);
@@ -47,7 +47,7 @@ public slots:
   virtual void          bStopClick();
   virtual void 		sliderPressed();
   virtual void		sliderChanged(int _value);
-  virtual void 		open(k9DVD *_dvd,k9DVDTitle *_title);
+  virtual void 		open(k9DVD *_dvd,k9DVDTitle *_title,int chapter);
   virtual void		titleChanged();
   virtual void		cbAudioActivated (int _value);
   virtual void 		cbSubActivated (int _value);

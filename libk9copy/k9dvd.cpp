@@ -295,7 +295,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
     m_titles.clear();
     m_Device=device;
-
+    
     m_error=false;
     m_errMsg="";
 

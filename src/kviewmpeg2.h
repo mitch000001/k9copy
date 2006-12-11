@@ -85,7 +85,7 @@ protected:
  void resizeEvent ( QResizeEvent * );
 public slots: // Public slots
   /** No descriptions */
-  int open (k9DVD *_dvd,k9DVDTitle * title);
+  int open (k9DVD *_dvd,k9DVDTitle * title,int chapter);
   void drawPixmap( QImage *image);
   void drawppm(uchar *_buf,int _width,int _height,int _len);
   void setError(const QString & err);
