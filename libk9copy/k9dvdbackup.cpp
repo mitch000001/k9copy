@@ -95,7 +95,7 @@ k9DVDBackup::k9DVDBackup(QObject* _dvd,const char* name,const QStringList& args)
     backupDlg = new k9BackupDlg(qApp->mainWidget(),"",true);
     //  cells.setAutoDelete(true);
     vamps=new k9vamps(this);
-    m_withMenu=false;
+    m_withMenu=true;//false;
 }
 
 
