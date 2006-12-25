@@ -17,47 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "k9ifo.h"
+#include "k9ifo2.h"
 #include "bswap.h"
 #include "dvdread.h"
 
 
-k9Ifo::k9Ifo(k9DVDRead *_dvdread)
+k9Ifo2::k9Ifo2(k9DVDRead *_dvdread)
         : QObject(NULL,"") {
     _ifo=NULL;
     m_dvd=_dvdread;
 }
 
 
-k9Ifo::~k9Ifo() {
+k9Ifo2::~k9Ifo2() {
     closeIFO();
 
 
 }
 
-
-#include "k9ifo.moc"
-
 /*!
-    \fn k9Ifo::setDevice(QString &_device)
+    \fn k9Ifo2::setDevice(QString &_device)
  */
-void k9Ifo::setDevice(QString &_device) {
+void k9Ifo2::setDevice(QString &_device) {
     device=_device;
 }
 
 
 /*!
-    \fn k9Ifo::setOutput(QString &_output)
+    \fn k9Ifo2::setOutput(QString &_output)
  */
-void k9Ifo::setOutput(QString &_output) {
+void k9Ifo2::setOutput(QString &_output) {
     output=_output;
 }
 
 
 /*!
-    \fn k9Ifo::openIFO(int _num)
+    \fn k9Ifo2::openIFO(int _num)
  */
-ifo_handle_t * k9Ifo::openIFO(int _num) {
+ifo_handle_t * k9Ifo2::openIFO(int _num) {
     _ifo = DvdreadF()->ifoOpen(m_dvd->getDvd(), _num);
     numIfo=_num;
     return _ifo;
@@ -66,22 +63,22 @@ ifo_handle_t * k9Ifo::openIFO(int _num) {
 
 
 /*!
-    \fn k9Ifo::IFOClose( ifo_handle_t* _ifo)
+    \fn k9Ifo2::IFOClose( ifo_handle_t* _ifo)
  */
-void k9Ifo::closeIFO() {
+void k9Ifo2::closeIFO() {
     if(_ifo!=NULL) {
         DvdreadF()->ifoClose(_ifo);
         _ifo=NULL;
     }
 }
 
-ifo_handle_t * k9Ifo::getIFO() {
+ifo_handle_t * k9Ifo2::getIFO() {
     return _ifo;
 }
 /*!
-    \fn k9Ifo::saveIFO(ifo_handle_t* _ifo)
+    \fn k9Ifo2::saveIFO(ifo_handle_t* _ifo)
  */
-void k9Ifo::saveIFO() {
+void k9Ifo2::saveIFO() {
     uint32_t size;
     /* DVD handler */
     k9DVDFile *dvdfile;
@@ -102,8 +99,9 @@ void k9Ifo::saveIFO() {
  //   if (k9UDFFindFile(dvd,(char*) filename.latin1(), &size)) {
     if (size >0) {
         uchar *buffer ;
-        buffer= (uchar *) malloc (size);
-        bufCopy=(uchar *) malloc (size);
+        buffer= new uchar[size];
+        bufCopy=new uchar[size];
+        m_buffer=new uchar[size*2];
         memset(buffer,0,size);
         //Lecture du fichier IFO original et sauvegarde dans buffer
         if ((dvdfile = m_dvd->openIfo(  numIfo))== 0) {
@@ -128,51 +126,36 @@ void k9Ifo::saveIFO() {
         bufCopySize=size;
         dvdfile->close();
         if (mainIfo) {
-
-            checkBuffer("",buffer);
+            m_position=0;
             updateVMG(buffer);
-            checkBuffer("updateVMG",buffer);
+	    m_position=1024;//sizeof(vmgi_mat_t);    
             updateFP_PGC(buffer);
-            checkBuffer("updateFP_PGC",buffer);
+            _ifo->vmgi_mat->vmgi_last_byte=m_position -1;
 
             updateTT_SRPT(buffer);
-            checkBuffer("updateTT_SRPT",buffer);
             updatePGCI_UT(buffer);
-            checkBuffer("updatePGCI_UT",buffer);
-            //JMP: disabled updatePTL_MAIT(buffer);
-            checkBuffer("updatePTL_MAIT",buffer);
 
             updateVTS_ATRT(buffer);
-            checkBuffer("updateVTS_ATRT",buffer);
             updateTXTDT_MGI(buffer);
-            checkBuffer("updateTXTDT_MGI",buffer);
             updateC_ADT(buffer);
-            checkBuffer("updateC_ADT",buffer);
             updateVOBU_ADMAP(buffer);
-            checkBuffer("updateVOBU_ADMAP",buffer);
+            
+            updateVMG(buffer);
+
         } else {
+            m_position=0;
             updateVTS(buffer);
-            checkBuffer("updateVTS",buffer);
-
+            m_position=sizeof(vtsi_mat_t);
+	    _ifo->vtsi_mat->vtsi_last_byte=m_position -1;
             updateVTS_PTT_SRPT(buffer);
-            checkBuffer("updateVTS_PTT_SRPT",buffer);
-
             updatePGCIT(buffer);
-            checkBuffer("updatePGCIT",buffer);
-
             updatePGCI_UT(buffer);
-            checkBuffer("updatePGCI_UT",buffer);
-
             updateVTS_TMAPT(buffer);
-            checkBuffer("updateVTS_TMAPT",buffer);
-
             updateC_ADT(buffer);
-            checkBuffer("updateC_ADT",buffer);
-
             updateVOBU_ADMAP(buffer);
-            checkBuffer("updateVOBU_ADMAP",buffer);
-
+            updateVTS(buffer);
         }
+	m_position=round(m_position);
 
         //sauvegarder buffer dans fichier
         if (mainIfo) {
@@ -188,32 +171,45 @@ void k9Ifo::saveIFO() {
 
         QFile ifofile (filename);
         ifofile.open(IO_WriteOnly);
-        if (ifofile.writeBlock((char*)buffer,size) ==-1) {
+        if (ifofile.writeBlock((char*)m_buffer,m_position) ==-1) {
             QString sError("erreur");
         }
         ifofile.close();
 
         QFile ifofile2 (filename2);
         ifofile2.open(IO_WriteOnly);
-        if (ifofile2.writeBlock((char*)buffer,size) ==-1) {
+        if (ifofile2.writeBlock((char*)m_buffer,m_position) ==-1) {
             QString sError("erreur");
         }
         ifofile2.close();
 
 
-        free(buffer);
-        free(bufCopy);
+        delete buffer;
+        delete bufCopy;
+        delete m_buffer;
     }
 }
 
 
 /*!
-    \fn k9Ifo::updateVMG(uchar * _buffer)
+    \fn k9Ifo2::updateVMG(uchar * _buffer)
  */
-void k9Ifo::updateVMG(uchar * _buffer) {
+void k9Ifo2::updateVMG(uchar * _buffer) {
     vmgi_mat_t vmgi_mat;
     memcpy(&vmgi_mat,_ifo->vmgi_mat,sizeof(vmgi_mat_t));
-
+    uint32_t lastSector=vmgi_mat.vmgi_last_sector;
+    uint32_t lastByte=vmgi_mat.vmgi_last_byte;
+    //JMP : à vérifier
+    if (m_position !=0) {
+	lastSector=(round( m_position+sizeof(vmgi_mat_t))-DVD_BLOCK_LEN) /DVD_BLOCK_LEN ;
+	//lastByte=vmgi_mat.vmgi_last_sector * DVD_BLOCK_LEN +DVD_BLOCK_LEN -1;
+	vmgi_mat.vmg_last_sector+=2*(lastSector-vmgi_mat.vmgi_last_sector);
+    }
+    
+    vmgi_mat.vmgi_last_sector=lastSector;
+    if (vmgi_mat.vmgm_vobs !=0)
+    	vmgi_mat.vmgm_vobs=vmgi_mat.vmgi_last_sector +1;
+    
     B2N_32(vmgi_mat.vmg_last_sector);
     B2N_32(vmgi_mat.vmgi_last_sector);
     B2N_32(vmgi_mat.vmg_category);
@@ -234,46 +230,52 @@ void k9Ifo::updateVMG(uchar * _buffer) {
     B2N_16(vmgi_mat.vmgm_audio_attr.lang_code);
     B2N_16(vmgi_mat.vmgm_subp_attr.lang_code);
 
-    memcpy(_buffer,&vmgi_mat,sizeof(vmgi_mat_t));
+    memcpy(m_buffer,&vmgi_mat,sizeof(vmgi_mat_t));
 }
 
 
 /*!
-    \fn k9Ifo::updateFP_PGC(uchar * _buffer)
+    \fn k9Ifo2::updateFP_PGC(uchar * _buffer)
  */
-void k9Ifo::updateFP_PGC(uchar * _buffer) {
-    int offset=_ifo->vmgi_mat->first_play_pgc;
-
-    updatePGC(_buffer,_ifo->first_play_pgc,offset);
+void k9Ifo2::updateFP_PGC(uchar * _buffer) {
+    //int offset=_ifo->vmgi_mat->first_play_pgc;
+    _ifo->vmgi_mat->first_play_pgc=m_position;
+    return updatePGC(_buffer,_ifo->first_play_pgc,m_position);
 
 
 }
 
 /*!
-    \fn k9Ifo::updatePGC(uchar *_buffer,pgc_t *_pgc,int _offset)
+    \fn k9Ifo2::updatePGC(uchar *_buffer,pgc_t *_pgc,int _offset)
  */
-void k9Ifo::updatePGC(uchar *_buffer,pgc_t *_pgc,int _offset) {
-    // pgc_t2 pgc;
+void k9Ifo2::updatePGC(uchar *_buffer,pgc_t *_pgc,int _offset) {
     pgc_t pgc;
-    //memcpy(&pgc,_pgc,sizeof(pgc_t2));
     memcpy(&pgc,_pgc,sizeof(pgc_t));
+    uint start=m_position;
+    m_position+=PGC_SIZE;
+    
     if(pgc.command_tbl_offset != 0) {
-        updatePGC_COMMAND_TBL(_buffer ,pgc.command_tbl  ,_offset+pgc.command_tbl_offset);
+        pgc.command_tbl_offset=PGC_SIZE;
+        updatePGC_COMMAND_TBL(_buffer ,pgc.command_tbl  ,m_position);
     }
     if(pgc.program_map_offset != 0) {
-        updatePGC_PROGRAM_MAP(_buffer, pgc.program_map,pgc.nr_of_programs ,_offset + pgc.program_map_offset );
+        pgc.program_map_offset=m_position-start;
+        updatePGC_PROGRAM_MAP(_buffer, pgc.program_map,pgc.nr_of_programs ,m_position);
     }
     if(pgc.cell_playback_offset != 0) {
-        updatePGC_CELL_PLAYBACK_TBL(_buffer ,pgc.cell_playback,pgc.nr_of_cells,_offset + pgc.cell_playback_offset);
+        pgc.cell_playback_offset=m_position-start;
+        updatePGC_CELL_PLAYBACK_TBL(_buffer ,pgc.cell_playback,pgc.nr_of_cells,m_position);
     }
 
     if(pgc.cell_position_offset != 0) {
-        updatePGC_CELL_POSITION_TBL(_buffer,pgc.cell_position,pgc.nr_of_cells,_offset + pgc.cell_position_offset);
+        pgc.cell_position_offset=m_position-start;
+        updatePGC_CELL_POSITION_TBL(_buffer,pgc.cell_position,pgc.nr_of_cells,m_position);
     }
+    
+    B2N_16(pgc.command_tbl_offset);
     B2N_16(pgc.next_pgc_nr);
     B2N_16(pgc.prev_pgc_nr);
     B2N_16(pgc.goup_pgc_nr);
-    B2N_16(pgc.command_tbl_offset);
     B2N_16(pgc.program_map_offset);
     B2N_16(pgc.cell_playback_offset);
     B2N_16(pgc.cell_position_offset);
@@ -287,63 +289,68 @@ void k9Ifo::updatePGC(uchar *_buffer,pgc_t *_pgc,int _offset) {
         B2N_32(pgc.palette[i]);
 
     //memcpy(_buffer+_offset,&(pgc.pgc),sizeof(pgc_t1));
-    memcpy(_buffer+_offset,&pgc,PGC_SIZE);
+    memcpy(m_buffer+_offset,&pgc,PGC_SIZE);
 }
 
 
 
 /*!
-    \fn k9Ifo::updatePGC_COMMAND_TBL(uchar  *_buffer,pgc_command_tbl_t *_cmd_tbl,int offset)
+    \fn k9Ifo2::updatePGC_COMMAND_TBL(uchar  *_buffer,pgc_command_tbl_t *_cmd_tbl,int offset)
  */
-void k9Ifo::updatePGC_COMMAND_TBL(uchar  *_buffer,pgc_command_tbl_t *_cmd_tbl,int _offset) {
+void k9Ifo2::updatePGC_COMMAND_TBL(uchar  *_buffer,pgc_command_tbl_t *_cmd_tbl,int _offset) {
     struct {
         uint16_t nr_of_pre;
         uint16_t nr_of_post;
         uint16_t nr_of_cell;
-        uint16_t zero_1;
+        uint16_t last_byte;
     }
     ATTRIBUTE_PACKED cmd_tbl;
 
     memcpy(&cmd_tbl,_cmd_tbl,sizeof(cmd_tbl));
-    B2N_16(cmd_tbl.nr_of_pre);
-    B2N_16(cmd_tbl.nr_of_post);
-    B2N_16(cmd_tbl.nr_of_cell);
-    memcpy(_buffer+_offset,&cmd_tbl,sizeof(cmd_tbl));
 
     //moves the offset to save vm_cmd
-    _offset +=sizeof(cmd_tbl);
+    m_position+=sizeof(cmd_tbl);
 
     if(_cmd_tbl->nr_of_pre != 0) {
         unsigned int pre_cmds_size  = _cmd_tbl->nr_of_pre * COMMAND_DATA_SIZE;
-        memcpy(_buffer + _offset,_cmd_tbl->pre_cmds,pre_cmds_size);
-        _offset +=pre_cmds_size;
+        memcpy(m_buffer + m_position,_cmd_tbl->pre_cmds,pre_cmds_size);
+        m_position+=pre_cmds_size;
     }
     if(_cmd_tbl->nr_of_post != 0) {
         unsigned int post_cmds_size = _cmd_tbl->nr_of_post * COMMAND_DATA_SIZE;
-        memcpy(_buffer + _offset,_cmd_tbl->post_cmds,post_cmds_size);
-        _offset += post_cmds_size;
+        memcpy(m_buffer + m_position,_cmd_tbl->post_cmds,post_cmds_size);
+        m_position+=post_cmds_size;
     }
     if(_cmd_tbl->nr_of_cell != 0) {
         unsigned int cell_cmds_size = _cmd_tbl->nr_of_cell * COMMAND_DATA_SIZE;
-        memcpy(_buffer +_offset,_cmd_tbl->cell_cmds,cell_cmds_size);
+        memcpy(m_buffer +m_position,_cmd_tbl->cell_cmds,cell_cmds_size);
+        m_position+=cell_cmds_size;
     }
+    B2N_16(cmd_tbl.nr_of_pre);
+    B2N_16(cmd_tbl.nr_of_post);
+    B2N_16(cmd_tbl.nr_of_cell);
+    cmd_tbl.last_byte=m_position-_offset-1;
+    B2N_16(cmd_tbl.last_byte);
+    memcpy(m_buffer+_offset,&cmd_tbl,sizeof(cmd_tbl));
+
+
 }
 
 
 /*!
-    \fn k9Ifo::updatePGC_PROGRAM_MAP(uchar *_buffer,pgc_program_map_t *_program_map, int _nr,int_offset
+    \fn k9Ifo2::updatePGC_PROGRAM_MAP(uchar *_buffer,pgc_program_map_t *_program_map, int _nr,int_offset
  */
-void k9Ifo::updatePGC_PROGRAM_MAP(uchar *_buffer,pgc_program_map_t *_program_map, int _nr,int _offset) {
+void k9Ifo2::updatePGC_PROGRAM_MAP(uchar *_buffer,pgc_program_map_t *_program_map, int _nr,int _offset) {
     int size = _nr * sizeof(pgc_program_map_t);
-    memcpy(_buffer+_offset, _program_map,size);
-
+    memcpy(m_buffer+_offset, _program_map,size);
+    m_position+=size;
 }
 
 
 /*!
-    \fn k9Ifo::updatePGC_CELL_PLAYBACK_TBL(uchar *_buffer, cell_playback_t *_cell_playback,int _nr, int _offset)
+    \fn k9Ifo2::updatePGC_CELL_PLAYBACK_TBL(uchar *_buffer, cell_playback_t *_cell_playback,int _nr, int _offset)
  */
-void k9Ifo::updatePGC_CELL_PLAYBACK_TBL(uchar *_buffer, cell_playback_t *_cell_playback,int _nr, int _offset) {
+void k9Ifo2::updatePGC_CELL_PLAYBACK_TBL(uchar *_buffer, cell_playback_t *_cell_playback,int _nr, int _offset) {
     cell_playback_t *cell_playback;
     int size = _nr * sizeof(cell_playback_t);
     cell_playback=(cell_playback_t*) malloc(size);
@@ -356,16 +363,17 @@ void k9Ifo::updatePGC_CELL_PLAYBACK_TBL(uchar *_buffer, cell_playback_t *_cell_p
         B2N_32(cell_playback[i].last_sector);
     }
 
-    memcpy(_buffer + _offset,cell_playback,size);
+    memcpy(m_buffer + _offset,cell_playback,size);
+    m_position+=size;
 
     free(cell_playback);
 }
 
 
 /*!
-    \fn k9Ifo::updatePGC_CELL_POSITION_TBL(uchar *_buffer,cell_position_t *_cell_position,int _nr, int _offset)
+    \fn k9Ifo2::updatePGC_CELL_POSITION_TBL(uchar *_buffer,cell_position_t *_cell_position,int _nr, int _offset)
  */
-void k9Ifo::updatePGC_CELL_POSITION_TBL(uchar *_buffer,cell_position_t *_cell_position,int _nr, int _offset) {
+void k9Ifo2::updatePGC_CELL_POSITION_TBL(uchar *_buffer,cell_position_t *_cell_position,int _nr, int _offset) {
     cell_position_t * cell_position;
     int size = _nr * sizeof(cell_position_t);
     cell_position=(cell_position_t*)malloc(size);
@@ -373,19 +381,31 @@ void k9Ifo::updatePGC_CELL_POSITION_TBL(uchar *_buffer,cell_position_t *_cell_po
     for( int i = 0; i < _nr; i++) {
         B2N_16(cell_position[i].vob_id_nr);
     }
-    memcpy(_buffer + _offset,cell_position,size);
+    memcpy(m_buffer + _offset,cell_position,size);
+    m_position+=size;
     free(cell_position);
 }
 
-
+int k9Ifo2::round(int _value) {
+   if (_value % DVD_BLOCK_LEN ==0)
+   	return _value;
+   else {
+   	return (((int)(_value/DVD_BLOCK_LEN)) +1)*DVD_BLOCK_LEN;
+   }
+}
 /*!
-    \fn k9Ifo::updateTT_SRPT(uchar *_buffer)
+    \fn k9Ifo2::updateTT_SRPT(uchar *_buffer)
  */
-void k9Ifo::updateTT_SRPT(uchar *_buffer) {
+void k9Ifo2::updateTT_SRPT(uchar *_buffer) {
     if(_ifo->vmgi_mat->tt_srpt != 0) {
         tt_srpt_t * tt_srpt;
         tt_srpt=(tt_srpt_t*) malloc(sizeof(tt_srpt_t));
-        int offset= _ifo->vmgi_mat->tt_srpt * DVD_BLOCK_LEN;
+      //  int offset= _ifo->vmgi_mat->tt_srpt * DVD_BLOCK_LEN;
+         
+         m_position=round(m_position);
+        int offset=m_position;
+        _ifo->vmgi_mat->tt_srpt=m_position/DVD_BLOCK_LEN;
+        
         memcpy (tt_srpt,_ifo->tt_srpt,sizeof(tt_srpt_t));
 
 
@@ -393,229 +413,185 @@ void k9Ifo::updateTT_SRPT(uchar *_buffer) {
         title_info_t * title_info;
         title_info =(title_info_t*) malloc(info_length);
         memcpy(title_info, tt_srpt->title,info_length);
-
+	
         for(int i =  0; i < tt_srpt->nr_of_srpts; i++) {
             B2N_16(title_info[i].nr_of_ptts);
             B2N_16(title_info[i].parental_id);
             B2N_32(title_info[i].title_set_sector);
         }
-        memcpy(_buffer+offset+TT_SRPT_SIZE,title_info,info_length);
+        memcpy(m_buffer+offset+TT_SRPT_SIZE,title_info,info_length);
 
         free(title_info);
+	m_position +=info_length;
 
         B2N_16(tt_srpt->nr_of_srpts);
         B2N_32(tt_srpt->last_byte);
-        memcpy(_buffer+offset,tt_srpt,TT_SRPT_SIZE);
+        memcpy(m_buffer+offset,tt_srpt,TT_SRPT_SIZE);
         free (tt_srpt);
     }
 
 }
 
 
-void k9Ifo::updatePGCI_UT(uchar *_buffer) {
+void k9Ifo2::updatePGCI_UT(uchar *_buffer) {
     int sector,sector2;
     if(_ifo->vmgi_mat) {
         if(_ifo->vmgi_mat->vmgm_pgci_ut == 0)
             return;
-        sector = _ifo->vmgi_mat->vmgm_pgci_ut *DVD_BLOCK_LEN;
+        m_position=round(m_position);
+        _ifo->vmgi_mat->vmgm_pgci_ut=m_position/DVD_BLOCK_LEN;
     } else if(_ifo->vtsi_mat) {
         if(_ifo->vtsi_mat->vtsm_pgci_ut == 0)
             return;
-        // A v�ifier : si sector = secteur physique ou offset
-        sector = _ifo->vtsi_mat->vtsm_pgci_ut * DVD_BLOCK_LEN;
+        m_position=round(m_position);
+        _ifo->vtsi_mat->vtsm_pgci_ut=m_position/DVD_BLOCK_LEN;
     } else {
         return;
     }
-    sector2=sector;
+    
+    
+    sector2=sector=m_position;
     if (_ifo->pgci_ut !=NULL) {
 	pgci_ut_t * pgci_ut;
 	pgci_ut = (pgci_ut_t*) malloc( sizeof(pgci_ut_t));
 	memcpy (pgci_ut,_ifo->pgci_ut,sizeof(pgci_ut_t));
-	B2N_16(pgci_ut->nr_of_lus);
-	B2N_32(pgci_ut->last_byte);
+	m_position+=PGCI_UT_SIZE;
+	sector2=m_position;
 	
-	memcpy(_buffer+sector,pgci_ut,PGCI_UT_SIZE);
-	
-	
-	int info_length = _ifo->pgci_ut->nr_of_lus * PGCI_LU_SIZE;
-	sector += PGCI_UT_SIZE;
-	free(pgci_ut);
-	
-	pgci_lu_t *pgci_lu;
-	pgci_lu = (pgci_lu_t*)malloc(sizeof(pgci_lu_t));
+	pgci_lu_t pgci_lu[_ifo->pgci_ut->nr_of_lus];
+	m_position+=_ifo->pgci_ut->nr_of_lus*PGCI_LU_SIZE;
+	memcpy(pgci_lu,_ifo->pgci_ut->lu,_ifo->pgci_ut->nr_of_lus*sizeof(pgci_lu_t));
 	
 	for(int i = 0; i < _ifo->pgci_ut->nr_of_lus; i++) {
-		memcpy(pgci_lu,&(_ifo->pgci_ut->lu[i]), PGCI_LU_SIZE);
-		B2N_16(pgci_lu->lang_code);
-		B2N_32(pgci_lu->lang_start_byte);
-		memcpy(_buffer+sector,pgci_lu,PGCI_LU_SIZE);
-		updatePGCIT_internal(_buffer,_ifo->pgci_ut->lu[i].pgcit,sector2 + _ifo->pgci_ut->lu[i].lang_start_byte);
-		sector += PGCI_LU_SIZE;
-	
+		B2N_16(pgci_lu[i].lang_code);
+		pgci_lu[i].lang_start_byte=m_position- sector;
+		B2N_32(pgci_lu[i].lang_start_byte);
+		updatePGCIT_internal(_buffer,_ifo->pgci_ut->lu[i].pgcit,m_position);	
 	}
-	free (pgci_lu);
+	for (int i=0;i <_ifo->pgci_ut->nr_of_lus;i++)
+		memcpy(m_buffer+sector2+i*PGCI_LU_SIZE ,&(pgci_lu[i]),PGCI_LU_SIZE);
+		
+    	B2N_16(pgci_ut->nr_of_lus);
+    	pgci_ut->last_byte=m_position-sector;
+	B2N_32(pgci_ut->last_byte);
+	memcpy(m_buffer+sector,pgci_ut,PGCI_UT_SIZE);
+	free(pgci_ut);
+	
+
     }
 
 }
 
-void k9Ifo::updatePGCIT(uchar *_buffer) {
+void k9Ifo2::updatePGCIT(uchar *_buffer) {
     if(!_ifo->vtsi_mat)
         return ;
 
     if(_ifo->vtsi_mat->vts_pgcit == 0) /* mandatory */
         return ;
-
+    m_position=round(m_position);
+    _ifo->vtsi_mat->vts_pgcit=m_position / DVD_BLOCK_LEN;
     updatePGCIT_internal(_buffer,_ifo->vts_pgcit,_ifo->vtsi_mat->vts_pgcit * DVD_BLOCK_LEN);
 }
 
 
-void k9Ifo::updatePGCIT_internal(uchar *_buffer, pgcit_t *_pgcit, int _offset) {
+void k9Ifo2::updatePGCIT_internal(uchar *_buffer, pgcit_t *_pgcit, int _offset) {
     pgcit_t * pgcit;
     pgcit=(pgcit_t*)malloc(sizeof(pgcit_t));
     memcpy(pgcit,_pgcit,sizeof(pgcit_t));
-    B2N_16(pgcit->nr_of_pgci_srp);
-    B2N_32(pgcit->last_byte);
-    memcpy(_buffer+_offset ,pgcit,PGCIT_SIZE);
-    free(pgcit);
 
-    int info_length =_pgcit->nr_of_pgci_srp * PGCI_SRP_SIZE;
-    pgci_srp_t * pgci_srp;;
-    pgci_srp=(pgci_srp_t*)malloc(sizeof(pgci_srp_t));
+    int offset=m_position+PGCIT_SIZE;
+    m_position+=PGCIT_SIZE;
 
-    int offset=_offset+PGCIT_SIZE;
+    pgci_srp_t pgci_srp[_pgcit->nr_of_pgci_srp];
+    memcpy(pgci_srp,_pgcit->pgci_srp,sizeof(pgci_srp_t)*_pgcit->nr_of_pgci_srp);
+    
+    m_position+=_pgcit->nr_of_pgci_srp*PGCI_SRP_SIZE;
 
     for(int i = 0; i < _pgcit->nr_of_pgci_srp; i++) {
-        memcpy(pgci_srp,&(_pgcit->pgci_srp[i]) , PGCI_SRP_SIZE);
-        B2N_16(pgci_srp->ptl_id_mask);
-        B2N_32(pgci_srp->pgc_start_byte);
-        memcpy(_buffer+offset,pgci_srp,PGCI_SRP_SIZE);
-
-        offset+=PGCI_SRP_SIZE;
-// JMP : a v�ifier, utilisation de _offset
-        updatePGC(_buffer,_pgcit->pgci_srp[i].pgc,_offset + _pgcit->pgci_srp[i].pgc_start_byte);
+        B2N_16(pgci_srp[i].ptl_id_mask);
+        pgci_srp[i].pgc_start_byte=m_position-_offset;
+        B2N_32(pgci_srp[i].pgc_start_byte); //JMP:faux
+        updatePGC(_buffer,_pgcit->pgci_srp[i].pgc,m_position);
     }
-    free(pgci_srp);
 
+    for(int i = 0; i < _pgcit->nr_of_pgci_srp; i++) 
+        memcpy(m_buffer+offset+i*PGCI_SRP_SIZE,&(pgci_srp[i]),PGCI_SRP_SIZE);
+    
+    B2N_16(pgcit->nr_of_pgci_srp);
+    pgcit->last_byte=m_position-_offset-1;
+    B2N_32(pgcit->last_byte);
+    memcpy(m_buffer+_offset ,pgcit,PGCIT_SIZE);
+    free(pgcit);
 
 }
 
 
-void k9Ifo::updatePTL_MAIT(uchar *_buffer) {
+void k9Ifo2::updatePTL_MAIT(uchar *_buffer) {
     if(!_ifo->vmgi_mat)
         return;
 
-    if(_ifo->vmgi_mat->ptl_mait == 0)
-        return;
-
-    ptl_mait_t* ptl_mait;
-    ptl_mait=(ptl_mait_t*)malloc(sizeof(ptl_mait_t));
-    memcpy(ptl_mait,_ifo->ptl_mait,sizeof(ptl_mait_t));
-
-    B2N_16(ptl_mait->nr_of_countries);
-    B2N_16(ptl_mait->nr_of_vtss);
-    B2N_32(ptl_mait->last_byte);
-
-    int offset=_ifo->vmgi_mat->ptl_mait * DVD_BLOCK_LEN;
-    memcpy(_buffer+offset,ptl_mait,PTL_MAIT_SIZE);
-    free(ptl_mait);
-
-    offset+=PTL_MAIT_SIZE;
-
-    int info_length = _ifo->ptl_mait->nr_of_countries * sizeof(ptl_mait_country_t);
-    ptl_mait_country_t *ptl_mait_country;;
-    ptl_mait_country = (ptl_mait_country_t*) malloc (sizeof(ptl_mait_country_t));
-
-
-    for(int i = 0; i < ptl_mait->nr_of_countries; i++) {
-        memcpy(ptl_mait_country,&(_ifo->ptl_mait->countries[i]),PTL_MAIT_COUNTRY_SIZE);
-        B2N_16(ptl_mait_country->country_code);
-        B2N_16(ptl_mait_country->pf_ptl_mai_start_byte);
-        memcpy(_buffer +offset,ptl_mait_country,PTL_MAIT_COUNTRY_SIZE);
-        offset+=PTL_MAIT_COUNTRY_SIZE;
-
-    }
-    free(ptl_mait_country);
-    /* A VOIR
-    pf_level_t * pf_level,*ptr2;
-    pf_level =(pf_level_t*)malloc(sizeof(pf_level_t));
-
-    for(int i = 0; i < _ifo->ptl_mait->nr_of_countries; i++) {
-       int offset2=_ifo->vmgi_mat->ptl_mait * DVD_BLOCK_LEN + _ifo->ptl_mait->countries[i].pf_ptl_mai_start_byte;
-    for (int j = 0; j < ((_ifo->ptl_mait->nr_of_vtss + 1) * 8); j++) {
-    	ptr2 =  &(_ifo->ptl_mait->countries[i].pf_ptl_mai[j]);
-    	memcpy(pf_level,ptr2,sizeof(pf_level_t));
-           	B2N_16(pf_level[0]);
-    	memcpy(_buffer+offset2,pf_level,sizeof(pf_level_t));
-    	offset2+=sizeof(pf_level_t);
-       }
-    }
-    free(pf_level);
-    */
+    _ifo->vmgi_mat->ptl_mait = 0;
+     return;
 }
 
-void k9Ifo::updateVTS_ATRT(uchar *_buffer) {
+void k9Ifo2::updateVTS_ATRT(uchar *_buffer) {
     if(_ifo->vmgi_mat->vts_atrt == 0)
         return;
-
+    uint32_t orig=_ifo->vmgi_mat->vts_atrt * DVD_BLOCK_LEN;
+    m_position=round(m_position);
+   _ifo->vmgi_mat->vts_atrt=m_position/DVD_BLOCK_LEN;
+   
+    memcpy(m_buffer+m_position,_buffer+orig,_ifo->vts_atrt->last_byte+1);
+   
+    m_position+=_ifo->vts_atrt->last_byte+1;
+    /*
     int sector = _ifo->vmgi_mat->vts_atrt * DVD_BLOCK_LEN;
     vts_atrt_t *vts_atrt;
     vts_atrt = (vts_atrt_t*)malloc(sizeof(vts_atrt_t));
     memcpy(vts_atrt,_ifo->vts_atrt,VTS_ATRT_SIZE);
     B2N_16(vts_atrt->nr_of_vtss);
     B2N_32(vts_atrt->last_byte);
-    memcpy(_buffer+sector,vts_atrt,VTS_ATRT_SIZE);
+    memcpy(m_buffer+sector,vts_atrt,VTS_ATRT_SIZE);
     free(vts_atrt);
+    m_position+=VTS_ATRT_SIZE;
 
     sector += VTS_ATRT_SIZE;
-    vts_atrt=_ifo->vts_atrt;
-    int info_length;
-    info_length = vts_atrt->nr_of_vtss * sizeof(uint32_t);
-    uint32_t *data;
+        
+    memcpy(m_buffer+sector,_buffer +orig+VTS_ATRT_SIZE ,VTS_ATTRIBUTES_SIZE*_ifo->vts_atrt->nr_of_vtss);
     
-    /* JMP : à vérifier
-    data=(uint32_t*) malloc(info_length);
-    memcpy (data,_ifo->vts_atrt->vts_atrt_offsets,info_length);
-
-    for(int i = 0; i < _ifo->vts_atrt->nr_of_vtss; i++) {
-        B2N_32(data[i]);
-    }
-    memcpy(_buffer+sector,data,info_length);
-    free(data);
+    m_position+=VTS_ATTRIBUTES_SIZE*_ifo->vts_atrt->nr_of_vtss;
     */
-    data = (uint32_t*)_ifo->vts_atrt->vts_atrt_offsets;
-    info_length = vts_atrt->nr_of_vtss * sizeof(vts_attributes_t);
-    for(int i = 0; i < _ifo->vts_atrt->nr_of_vtss; i++) {
-        unsigned int offset = data[i];
-        // A VOIR
-        // updateVTS_ATTRIBUTES(_buffer+sector+offset,&(_ifo->vts_atrt->vts[i]));
-    }
-    
-    
 }
 
-void k9Ifo::updateTXTDT_MGI(uchar * _buffer) {
+void k9Ifo2::updateTXTDT_MGI(uchar * _buffer) {
     if(_ifo->vmgi_mat->txtdt_mgi == 0)
         return;
-    int offset=_ifo->vmgi_mat->txtdt_mgi * DVD_BLOCK_LEN;
-    memcpy(_buffer+offset,_ifo->txtdt_mgi,TXTDT_MGI_SIZE);
+    
+    m_position=round(m_position);
+    int orig=_ifo->vmgi_mat->txtdt_mgi*DVD_BLOCK_LEN;
+    int offset=m_position;
+    _ifo->vmgi_mat->txtdt_mgi =m_position/ DVD_BLOCK_LEN;
+    memcpy(m_buffer+offset,_buffer+orig ,TXTDT_MGI_SIZE);
+    m_position+=TXTDT_MGI_SIZE;
 }
 
-void k9Ifo::updateC_ADT(uchar * _buffer) {
-    int sector;
-
+void k9Ifo2::updateC_ADT(uchar * _buffer) {
     if(_ifo->vmgi_mat) {
         if(_ifo->vmgi_mat->vmgm_c_adt != 0) {
-            sector = _ifo->vmgi_mat->vmgm_c_adt * DVD_BLOCK_LEN;
-            updateC_ADT_Internal(_buffer,_ifo->menu_c_adt,sector);
+            m_position =round(m_position); //
+            _ifo->vmgi_mat->vmgm_c_adt=m_position/ DVD_BLOCK_LEN;
+            updateC_ADT_Internal(_buffer,_ifo->menu_c_adt,m_position);
         }
     } else if(_ifo->vtsi_mat) {
         if(_ifo->vtsi_mat->vtsm_c_adt != 0) {
-            sector = _ifo->vtsi_mat->vtsm_c_adt * DVD_BLOCK_LEN;
-            updateC_ADT_Internal(_buffer,_ifo->menu_c_adt,sector);
+            m_position=round(m_position); //sector =
+            _ifo->vtsi_mat->vtsm_c_adt=m_position / DVD_BLOCK_LEN;
+            updateC_ADT_Internal(_buffer,_ifo->menu_c_adt,m_position);
         }
         if (_ifo->vtsi_mat->vts_c_adt !=0) {
-            sector = _ifo->vtsi_mat->vts_c_adt * DVD_BLOCK_LEN;
-            updateC_ADT_Internal(_buffer,_ifo->vts_c_adt,sector);
+            m_position=round(m_position); //sector = 
+            _ifo->vtsi_mat->vts_c_adt=m_position / DVD_BLOCK_LEN;
+            updateC_ADT_Internal(_buffer,_ifo->vts_c_adt,m_position);
         }
     } else {
         return ;
@@ -623,17 +599,15 @@ void k9Ifo::updateC_ADT(uchar * _buffer) {
 
 }
 
-void k9Ifo::updateC_ADT_Internal(uchar *_buffer,c_adt_t *_c_adt,int _sector) {
+void k9Ifo2::updateC_ADT_Internal(uchar *_buffer,c_adt_t *_c_adt,int _sector) {
     c_adt_t * c_adt;
     c_adt =(c_adt_t*) malloc (sizeof(c_adt_t));
     memcpy(c_adt,_c_adt,sizeof(c_adt_t));
-    B2N_16(c_adt->nr_of_vobs);
-    B2N_32(c_adt->last_byte);
-    memcpy(_buffer+_sector,c_adt,C_ADT_SIZE);
-    free(c_adt);
+
 
     int offset =_sector + C_ADT_SIZE;
-
+    m_position+=C_ADT_SIZE;
+    
     int info_length = _c_adt->last_byte + 1 - C_ADT_SIZE;
 
     cell_adr_t *cell_adr,*ptr;
@@ -645,31 +619,41 @@ void k9Ifo::updateC_ADT_Internal(uchar *_buffer,c_adt_t *_c_adt,int _sector) {
         B2N_16(cell_adr->vob_id);
         B2N_32(cell_adr->start_sector);
         B2N_32(cell_adr->last_sector);
-        memcpy(_buffer+offset,cell_adr,sizeof(cell_adr_t));
+        memcpy(m_buffer+offset,cell_adr,sizeof(cell_adr_t));
         offset+=sizeof(cell_adr_t);
         //ptr+=sizeof(cell_adr_t);
     }
-
+    
+    m_position+=info_length;
     free(cell_adr);
+    
+    B2N_16(c_adt->nr_of_vobs);
+    c_adt->last_byte=m_position-_sector-1;
+    B2N_32(c_adt->last_byte);
+    memcpy(m_buffer+_sector,c_adt,C_ADT_SIZE);
+    free(c_adt);
 }
 
-void k9Ifo::updateVOBU_ADMAP(uchar * _buffer) {
+void k9Ifo2::updateVOBU_ADMAP(uchar * _buffer) {
     int sector;
     if(_ifo->vmgi_mat) {
 
         if(_ifo->vmgi_mat->vmgm_vobu_admap == 0)
             return ;
-        sector = _ifo->vmgi_mat->vmgm_vobu_admap * DVD_BLOCK_LEN;
+        sector = m_position=round(m_position);//_ifo->vmgi_mat->vmgm_vobu_admap * DVD_BLOCK_LEN;
+        _ifo->vmgi_mat->vmgm_vobu_admap=m_position/DVD_BLOCK_LEN;
         updateVOBU_ADMAP_Internal(_buffer,_ifo->menu_vobu_admap,sector);
 
     } else if(_ifo->vtsi_mat) {
 
         if(_ifo->vtsi_mat->vtsm_vobu_admap != 0) {
-            sector = _ifo->vtsi_mat->vtsm_vobu_admap * DVD_BLOCK_LEN;
+            sector = m_position=round(m_position);//sector = _ifo->vtsi_mat->vtsm_vobu_admap * DVD_BLOCK_LEN;
+            _ifo->vtsi_mat->vtsm_vobu_admap=m_position/DVD_BLOCK_LEN;
             updateVOBU_ADMAP_Internal(_buffer,_ifo->menu_vobu_admap,sector);
         }
         if (_ifo->vtsi_mat->vts_vobu_admap !=0) {
-            sector = _ifo->vtsi_mat->vts_vobu_admap * DVD_BLOCK_LEN;
+            sector = m_position=round(m_position);//sector = _ifo->vtsi_mat->vts_vobu_admap * DVD_BLOCK_LEN;
+            _ifo->vtsi_mat->vts_vobu_admap=m_position/DVD_BLOCK_LEN;
             updateVOBU_ADMAP_Internal(_buffer,_ifo->vts_vobu_admap,sector);
         }
     } else {
@@ -677,16 +661,14 @@ void k9Ifo::updateVOBU_ADMAP(uchar * _buffer) {
     }
 }
 
-void k9Ifo::updateVOBU_ADMAP_Internal(uchar *_buffer,vobu_admap_t *_vobu_admap,int _sector) {
+void k9Ifo2::updateVOBU_ADMAP_Internal(uchar *_buffer,vobu_admap_t *_vobu_admap,int _sector) {
     vobu_admap_t *vobu_admap;
     vobu_admap=(vobu_admap_t*)malloc(sizeof(vobu_admap_t));
     memcpy(vobu_admap,_vobu_admap,sizeof(vobu_admap_t));
-    B2N_32(vobu_admap->last_byte);
-    memcpy(_buffer+_sector,vobu_admap,VOBU_ADMAP_SIZE);
-    free(vobu_admap);
 
     int offset = _sector + VOBU_ADMAP_SIZE;
-
+    m_position+=VOBU_ADMAP_SIZE;
+    
     int info_length = _vobu_admap->last_byte + 1 - VOBU_ADMAP_SIZE;
     uint32_t *vobu_start_sectors;
     vobu_start_sectors=(uint32_t*)malloc(info_length);
@@ -695,19 +677,41 @@ void k9Ifo::updateVOBU_ADMAP_Internal(uchar *_buffer,vobu_admap_t *_vobu_admap,i
     for(int i = 0; i < info_length/sizeof(uint32_t); i++)
         B2N_32(vobu_start_sectors[i]);
 
-    memcpy(_buffer+offset,vobu_start_sectors,info_length);
-
+    memcpy(m_buffer+offset,vobu_start_sectors,info_length);
+    
+    m_position+=info_length;
     free(vobu_start_sectors);
+    vobu_admap->last_byte=m_position-_sector-1;
+    B2N_32(vobu_admap->last_byte);
+    memcpy(m_buffer+_sector,vobu_admap,VOBU_ADMAP_SIZE);
+    free(vobu_admap);
+
 }
 
-void k9Ifo::updateVTS(uchar *_buffer) {
+void k9Ifo2::updateVTS(uchar *_buffer) {
     vtsi_mat_t *vtsi_mat;
     vtsi_mat = (vtsi_mat_t *)malloc(sizeof(vtsi_mat_t));
     memcpy(vtsi_mat,_ifo->vtsi_mat,sizeof(vtsi_mat_t));
 
+    uint32_t lastSector=vtsi_mat->vtsi_last_sector;
+    //uint32_t lastByte=vtsi_mat->vtsi_last_byte;
+    //JMP : à vérifier
+    if (m_position >0) {
+	lastSector=(round(m_position+sizeof(vtsi_mat_t))-DVD_BLOCK_LEN) /DVD_BLOCK_LEN;
+	//lastByte=vtsi_mat->vtsi_last_sector*DVD_BLOCK_LEN +DVD_BLOCK_LEN-1;
+	vtsi_mat->vts_last_sector+=2*(lastSector-vtsi_mat->vtsi_last_sector);
+	vtsi_mat->vtstt_vobs+=lastSector-vtsi_mat->vtsi_last_sector;
+    }      
+    
+    vtsi_mat->vtsi_last_sector=lastSector;
+    //vtsi_mat->vtsi_last_byte=lastByte;
+    if (vtsi_mat->vtsm_vobs !=0)
+    	vtsi_mat->vtsm_vobs= vtsi_mat->vtsi_last_sector +1 ;
+      
     B2N_32(vtsi_mat->vts_last_sector);
     B2N_32(vtsi_mat->vtsi_last_sector);
     B2N_32(vtsi_mat->vts_category);
+  
     B2N_32(vtsi_mat->vtsi_last_byte);
     B2N_32(vtsi_mat->vtsm_vobs);
     B2N_32(vtsi_mat->vtstt_vobs);
@@ -726,11 +730,12 @@ void k9Ifo::updateVTS(uchar *_buffer) {
     for(int i = 0; i < 32; i++)
         B2N_16(vtsi_mat->vts_subp_attr[i].lang_code);
 
-    memcpy(_buffer,vtsi_mat,sizeof(vtsi_mat_t));
+    memcpy(m_buffer,vtsi_mat,sizeof(vtsi_mat_t));
+    
     free(vtsi_mat);
 }
 
-void k9Ifo::updateVTS_PTT_SRPT(uchar *_buffer) {
+void k9Ifo2::updateVTS_PTT_SRPT(uchar *_buffer) {
     if(!_ifo->vtsi_mat)
         return ;
 
@@ -740,38 +745,30 @@ void k9Ifo::updateVTS_PTT_SRPT(uchar *_buffer) {
     vts_ptt_srpt_t * vts_ptt_srpt;
     vts_ptt_srpt = (vts_ptt_srpt_t *)malloc(sizeof(vts_ptt_srpt_t));
     memcpy(vts_ptt_srpt,_ifo->vts_ptt_srpt,sizeof(vts_ptt_srpt_t));
-    int offset = _ifo->vtsi_mat->vts_ptt_srpt * DVD_BLOCK_LEN;
+    int orig=_ifo->vtsi_mat->vts_ptt_srpt * DVD_BLOCK_LEN;
+    int offset = m_position=round(m_position);//_ifo->vtsi_mat->vts_ptt_srpt * DVD_BLOCK_LEN;
+    _ifo->vtsi_mat->vts_ptt_srpt=m_position/DVD_BLOCK_LEN;
 
     B2N_16(vts_ptt_srpt->nr_of_srpts);
     B2N_32(vts_ptt_srpt->last_byte);
 
-    memcpy(_buffer+offset,vts_ptt_srpt,VTS_PTT_SRPT_SIZE);
+    memcpy(m_buffer+offset,vts_ptt_srpt,VTS_PTT_SRPT_SIZE);
     free(vts_ptt_srpt);
-
-    /* A VOIR
-    offset += VTS_PTT_SRPT_SIZE;
-
+    m_position+=VTS_PTT_SRPT_SIZE;
+    
     int info_length = _ifo->vts_ptt_srpt->last_byte + 1 - VTS_PTT_SRPT_SIZE;
-    uint32_t * data;
-    data=(uint32_t*) malloc(info_length);
-    memcpy(data,_ifo->vts_ptt_srpt->ttu_offset,info_length);
-    for(int i = 0; i < _ifo->vts_ptt_srpt->nr_of_srpts; i++) {
-      B2N_32(data[i]);
-    }
-    memcpy(_buffer+offset,data,info_length);
-    free(data);
 
-    ...
-    */
+    memcpy(m_buffer+m_position,_buffer+orig+VTS_PTT_SRPT_SIZE, info_length);
+    m_position+=info_length;
 }
 
 
 /*!
-    \fn k9Ifo::checkBuffer()
+    \fn k9Ifo2::checkBuffer()
  */
 
 
-void k9Ifo::updateVTS_TMAPT(uchar *_buffer) {
+void k9Ifo2::updateVTS_TMAPT(uchar *_buffer) {
     if(!_ifo->vtsi_mat)
         return ;
 
@@ -780,63 +777,72 @@ void k9Ifo::updateVTS_TMAPT(uchar *_buffer) {
     }
 
     vts_tmapt_t *vts_tmapt1,*vts_tmapt;
-    vts_tmapt1 = (vts_tmapt_t *)malloc(sizeof(vts_tmapt_t));
-    memcpy(vts_tmapt1,_ifo->vts_tmapt,sizeof(vts_tmapt_t));
-    uint32_t offset = _ifo->vtsi_mat->vts_tmapt * DVD_BLOCK_LEN;
-    B2N_16(vts_tmapt1->nr_of_tmaps);
-    B2N_32(vts_tmapt1->last_byte);
-    int offset0=offset;
-    offset+=VTS_TMAPT_SIZE;
-
     vts_tmapt=_ifo->vts_tmapt;
     int info_length = vts_tmapt->nr_of_tmaps * 4;
-    uint32_t *vts_tmap_srp = (uint32_t *)malloc(info_length);
-    memcpy(vts_tmap_srp,vts_tmapt->tmap_offset,info_length);
-    for (int i = 0; i < vts_tmapt->nr_of_tmaps; i++) {
-        B2N_32(vts_tmap_srp[i]);
-    }
-    int offset1=offset;
-    int info_length1=info_length;
+  
+    uint32_t  offsets[vts_tmapt->nr_of_tmaps];
+    
+    vts_tmapt1 = (vts_tmapt_t *)malloc(VTS_TMAPT_SIZE);
+    memcpy(vts_tmapt1,_ifo->vts_tmapt,VTS_TMAPT_SIZE);
+    uint32_t offset = m_position=round(m_position);
+    
+    _ifo->vtsi_mat->vts_tmapt =m_position / DVD_BLOCK_LEN;
+    
+    int offset0=offset;
+    offset+=VTS_TMAPT_SIZE;
+    m_position +=VTS_TMAPT_SIZE;
+
+    
     offset += info_length;
+    m_position+=info_length;
 
-    info_length = vts_tmapt->nr_of_tmaps * sizeof(vts_tmap_t);
-    vts_tmap_t * tmap = (vts_tmap_t *)malloc(info_length);
-    memcpy(tmap,vts_tmapt->tmap,info_length);
+    info_length=0;
+    vts_tmap_t *tmap=vts_tmapt->tmap;
+    //loop on tmaps to compute total size
+    for (int i=0;i <vts_tmapt->nr_of_tmaps;i++) {
+         int tmapSize=VTS_TMAP_SIZE+tmap[i].nr_of_entries*sizeof(map_ent_t);
+         info_length+=tmapSize+4;
+    }
+
+    tmap = (vts_tmap_t *)malloc(sizeof(vts_tmap_t)* vts_tmapt->nr_of_tmaps);
+    memcpy(tmap,vts_tmapt->tmap,sizeof(vts_tmap_t)* vts_tmapt->nr_of_tmaps);
+    
+    vts_tmapt1->last_byte=VTS_TMAPT_SIZE+info_length-1;
     for(int i = 0; i < vts_tmapt->nr_of_tmaps; i++) {
+        int tmapSize=VTS_TMAP_SIZE+tmap[i].nr_of_entries*sizeof(map_ent_t);
+        int nr_map_ent=tmap[i].nr_of_entries;
         B2N_16(tmap[i].nr_of_entries);
-        memcpy(_buffer+offset,&(tmap[i]),VTS_TMAP_SIZE);
-
-        vts_tmapt1->last_byte=+offset+VTS_TMAP_SIZE-1;
-
+        offsets[i]=m_position-offset0;
+        B2N_32(offsets[i]);
+        memcpy(m_buffer+m_position,&(tmap[i]),VTS_TMAP_SIZE);
+	m_position+=VTS_TMAP_SIZE;
         offset+=VTS_TMAP_SIZE;
-        vts_tmap_srp[i]=offset-offset1+4;
-        B2N_32(vts_tmap_srp[i]);
-        if(vts_tmapt->tmap[i].nr_of_entries == 0) { // Early out if zero entries
+        
+        if(nr_map_ent == 0) { // Early out if zero entries
             continue;
         }
-        int info_length2 = vts_tmapt->tmap[i].nr_of_entries * sizeof(map_ent_t);
+        int info_length2 = tmapSize-VTS_TMAP_SIZE;
         map_ent_t *map_ent = (map_ent_t *)malloc(info_length2);
-        memcpy(map_ent,vts_tmapt->tmap[i].map_ent,info_length2);
-        for(int j = 0; j < vts_tmapt->tmap[i].nr_of_entries; j++) {
+        memcpy(map_ent,tmap[i].map_ent,info_length2);
+        for(int j = 0; j < nr_map_ent; j++) {
             B2N_32(map_ent[j]);
-            memcpy(_buffer+offset,&(map_ent[j]),sizeof(map_ent_t));
-            vts_tmapt1->last_byte=offset+sizeof(map_ent_t)-1;
+            memcpy(m_buffer+m_position,&(map_ent[j]),sizeof(map_ent_t));
             offset+=sizeof(map_ent_t);
+            m_position+=sizeof(map_ent_t);
         }
         free(map_ent);
     }
-    memcpy(_buffer+offset1,vts_tmap_srp,info_length1);
-    free(vts_tmap_srp);
 
     free(tmap);
-    vts_tmapt1->last_byte-=offset0;
+    B2N_16(vts_tmapt1->nr_of_tmaps);
     B2N_32(vts_tmapt1->last_byte);
-    memcpy(_buffer+offset0,vts_tmapt1,VTS_TMAPT_SIZE);
+    memcpy(m_buffer+offset0,vts_tmapt1,VTS_TMAPT_SIZE);
+    memcpy(m_buffer+offset0+VTS_TMAPT_SIZE,offsets,vts_tmapt->nr_of_tmaps*4);
     free(vts_tmapt1);
 
 
 }
-void k9Ifo::checkBuffer(QString lib,uchar* _buffer) {
+void k9Ifo2::checkBuffer(QString lib,uchar* _buffer) {
     /*     for (int j=0;j<bufCopySize;j++) {
            uchar *c,*c2;
     c=(uchar*) (_buffer+j);
@@ -849,12 +855,12 @@ void k9Ifo::checkBuffer(QString lib,uchar* _buffer) {
     return;
     if (memcmp(bufCopy,_buffer,bufCopySize)!=0) {
         QString c;
-        c="Buffer de sortie al��: " +lib;
+        c="Buffer de sortie altéré: " +lib;
         qDebug(c.latin1());
     }
 }
 
-void k9Ifo::navRead_PCI(pci_t *pci, uchar *buffer) {
+void k9Ifo2::navRead_PCI(pci_t *pci, uchar *buffer) {
   int i, j;
 
   memcpy(pci, buffer, sizeof(pci_t));

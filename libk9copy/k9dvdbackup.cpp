@@ -20,7 +20,7 @@
 #include "k9dvdbackup.h"
 #include "k9dvd.h"
 #include "bswap.h"
-#include "k9ifo.h"
+#include "k9ifo2.h"
 #include "k9vamps.h"
 #include "ac.h"
 #include <kmessagebox.h>
@@ -39,6 +39,7 @@
 
 #include "k9backupdlg.h"
 #include "dvdread.h"
+#include "k9script.h"
 
 #define BUF_SECS	1024
 
@@ -94,6 +95,7 @@ k9DVDBackup::k9DVDBackup(QObject* _dvd,const char* name,const QStringList& args)
     backupDlg = new k9BackupDlg(qApp->mainWidget(),"",true);
     //  cells.setAutoDelete(true);
     vamps=new k9vamps(this);
+    m_withMenu=false;
 }
 
 
@@ -160,7 +162,7 @@ void k9DVDBackup::prepareVTS(int _VTS) {
         if (currTS != NULL) {
             startSector = currTS->startSector + currTS->getSize();
         } else {
-            k9Ifo kifo(m_dvdread);
+            k9Ifo2 kifo(m_dvdread);
             kifo.openIFO( 0);
             hifo = kifo.getIFO();
             if (!hifo) {
@@ -196,7 +198,7 @@ void k9DVDBackup::prepareVTS(int _VTS) {
         currTS->lastSector += currTS->menuSize ;
         titleSets.append(currTS);
 
-        k9Ifo *kifo =new k9Ifo(m_dvdread);
+        k9Ifo2 *kifo =new k9Ifo2(m_dvdread);
         kifo->openIFO( _VTS);
         currTS->ifoTitle=kifo;
 
@@ -404,9 +406,9 @@ void k9DVDBackup::setOutput(QString _output) {
 
 
 uint32_t k9DVDBackup::copyMenu2(int _vts) {
-    if (error )
+    if (error || !m_withMenu )
         return 0;
-    k9Ifo kifo(m_dvdread);
+    k9Ifo2 kifo(m_dvdread);
     kifo.openIFO( _vts);
     ifo_handle_t *hifo =kifo.getIFO();
     m_ifo=hifo;
@@ -534,77 +536,6 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
 
 
 
-uint32_t k9DVDBackup::copyMenu(int _vts) {
-    if (error)
-        return 0;
-
-    QFile *menuFile;
-    QString targetName;
-    if (_vts == 0) {
-        targetName="VIDEO_TS.VOB";
-    } else {
-        targetName.sprintf("VTS_%02i_0.VOB",_vts);
-    }
-
-    uint32_t size;
-    QString c;
-    c="/VIDEO_TS/" + targetName;
-    //gets the menu vob size
-    k9Ifo kifo(m_dvdread);
-    kifo.openIFO( _vts);
-    ifo_handle_t *hifo =kifo.getIFO();
-    if (_vts==0)
-        size=hifo->vmgi_mat->vmg_last_sector -1  - 2* hifo->vmgi_mat->vmgi_last_sector;
-    else
-        size=hifo->vtsi_mat->vtstt_vobs - hifo->vtsi_mat->vtsi_last_sector -1;
-    kifo.closeIFO();
-
-    size*=DVD_BLOCK_LEN;
-
-    if (size ==0)
-        return 0;
-
-    menuFile=new QFile( output +"/"+targetName);
-    if( !menuFile->open(IO_WriteOnly)) {
-        seterror(tr2i18n("Unable to open ") +output +"/"+targetName);
-        return 0;
-    }
-
-    k9DVDFile *dvdfile;
-    if ((dvdfile = m_dvdread->openMenu( _vts))== 0) {
-        QString stmp;
-        stmp=i18n("Unable to open menu for titleset %1").arg(_vts);
-        seterror (stmp);
-        return 0;
-    }
-
-
-    size=size/DVD_VIDEO_LB_LEN;
-    c=i18n("Extracting menu for titleset %1").arg(_vts);
-    backupDlg->setProgressLabel(c);
-
-    backupDlg->show();
-    backupDlg->setTotalSteps(size);
-    uchar buffer[DVD_VIDEO_LB_LEN];
-    for (uint32_t sector=0 ;sector < size ;sector++) {
-        backupDlg->setProgress(sector);
-        if (backupDlg->getAbort())
-            break;
-        int len;
-        len = dvdfile->readBlocks (sector, 1, buffer);
-        menuFile->writeBlock((char*)buffer,DVD_VIDEO_LB_LEN);
-        backupDlg->setProgressTotal(1);
-    }
-
-    dvdfile->close();
-    menuFile->close();
-    delete menuFile;
-
-    return size;
-
-}
-
-
 
 void k9DVDBackup::playCell (int vts_num, k9Cell *_cell) {
 
@@ -703,13 +634,13 @@ void k9DVDBackup::setDummyNavPack(uchar *buf,uint32_t _sector)
   dsi_t dsiPack;
   pci_t pciPack;
   DvdreadF()->navRead_DSI (&dsiPack, buf + DSI_START_BYTE);
-  k9Ifo::navRead_PCI (&pciPack, buf+0x2d);
+  k9Ifo2::navRead_PCI (&pciPack, buf+0x2d);
   dsiPack.dsi_gi.nv_pck_lbn=_sector;
   dsiPack.dsi_gi.vobu_ea = 0;
 
   DvdreadF()->navRead_DSI((dsi_t*)(buf + DSI_START_BYTE),(uchar*)&dsiPack);
   pciPack.pci_gi.nv_pck_lbn =dsiPack.dsi_gi.nv_pck_lbn;
-  k9Ifo::navRead_PCI((pci_t*)(buf+0x2d),(uchar*)&pciPack);
+  k9Ifo2::navRead_PCI((pci_t*)(buf+0x2d),(uchar*)&pciPack);
 }
 
 
@@ -731,7 +662,7 @@ void k9DVDBackup::setDummyPack(uchar *_buffer) {
 
 
 uint32_t k9DVDBackup::findNextVobu(uint32_t _sector) {
-    k9Ifo ifo(m_dvdread);
+    k9Ifo2 ifo(m_dvdread);
     ifo.openIFO(currVTS);
     m_ifo=ifo.getIFO();
     vobu_admap_t * vobu_admap;
@@ -926,7 +857,7 @@ void k9DVDBackup::updateMainIfo() {
     if (error)
         return;
 
-    k9Ifo ifo(m_dvdread);
+    k9Ifo2 ifo(m_dvdread);
     ifo.setOutput(output);
     ifo.setDevice(device);
 
@@ -948,6 +879,13 @@ void k9DVDBackup::updateMainIfo() {
     if (hifo->first_play_pgc !=NULL ) {
 	m_copyMenu=true;
         pgc_t *pgc=hifo->first_play_pgc;
+        if (! m_withMenu && pgc->command_tbl!=0 ) {
+        	pgc->command_tbl->nr_of_pre=0;
+        	pgc->command_tbl->nr_of_post=0;
+        	pgc->command_tbl->nr_of_cell=0;
+        }
+        
+        
         cell_playback_t *cell_playback =pgc->cell_playback;
         int nr= pgc->nr_of_cells;
 
@@ -1030,7 +968,7 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
     uint newPos=0;
     //update pgci_ut
 
-    if (pgci_ut !=0) {
+    if (pgci_ut !=0 && m_withMenu) {
         m_copyMenu=true;
         for (uint i=0; i <pgci_ut->nr_of_lus;i++) {
             pgci_lu_t *pgci_lu= &pgci_ut->lu[i];
@@ -1038,6 +976,13 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
             for (uint i2=0 ; i2 <pgcit->nr_of_pgci_srp;i2++) {
                 pgci_srp_t * pgci_srp=&pgcit->pgci_srp[i2];
                 pgc_t *pgc=pgci_srp->pgc;
+                
+                
+                if (! m_withMenu && pgc->command_tbl!=0) {
+        		pgc->command_tbl->nr_of_pre=0;
+        		pgc->command_tbl->nr_of_post=0;
+        		pgc->command_tbl->nr_of_cell=0;
+        	}	
 
                 cell_playback_t *cell_playback =pgc->cell_playback;
                 int nr= pgc->nr_of_cells;
@@ -1072,6 +1017,13 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
             }
         }
         m_copyMenu=false;
+    }
+    
+    if (!m_withMenu   ) {
+	k9Script *script=new k9Script(_hifo,DVD);
+	script->updatePGCIUT();
+	script->updateFPPGC();
+	delete script;
     }
 
 
@@ -1132,7 +1084,7 @@ void k9DVDBackup::updateIfo() {
     if (error)
         return;
 
-    k9Ifo ifo(m_dvdread);
+    k9Ifo2 ifo(m_dvdread);
     ifo.setOutput(output);
     ifo.setDevice(device);
 
@@ -1163,6 +1115,11 @@ void k9DVDBackup::updateIfo() {
     //update first play PGC
     if (hifo->first_play_pgc !=NULL ) {
         pgc_t *pgc=hifo->first_play_pgc;
+        if (! m_withMenu && pgc->command_tbl!=0) {
+        	pgc->command_tbl->nr_of_pre=0;
+        	pgc->command_tbl->nr_of_post=0;
+        	pgc->command_tbl->nr_of_cell=0;
+        }
         cell_playback_t *cell_playback =pgc->cell_playback;
         int nr= pgc->nr_of_cells;
 
@@ -1204,9 +1161,14 @@ void k9DVDBackup::updateIfo() {
     newPos=0;
     //update each PGC
 
-
     for(uint32_t i = 0; i < pgcit->nr_of_pgci_srp; i++) {
         pgc_t *pgc=pgcit->pgci_srp[i].pgc;
+        int numTitle=pgcit->pgci_srp[i].entry_id & 0x7F;
+	
+	k9Script *script=new k9Script(hifo,DVD);        
+	script->updatePGC(pgc->command_tbl,currTS->VTS,numTitle);
+	delete script;
+        
         cell_playback_t *cell_playback =pgc->cell_playback;
         int nr= pgc->nr_of_cells;
 
@@ -1376,7 +1338,7 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                     pci_t pciPack;
                     nbVobuUpdated++;
                     DvdreadF()->navRead_DSI (&dsiPack, buffer + DSI_START_BYTE);
-                    k9Ifo::navRead_PCI (&pciPack, buffer+0x2d);
+                    k9Ifo2::navRead_PCI (&pciPack, buffer+0x2d);
                     sector=dsiPack.dsi_gi.nv_pck_lbn;  //JMP : pour debug
                     //vobu=remapVobu(&dsiPack.dsi_gi.nv_pck_lbn );
                     sector=vobu->oldSector;
@@ -1511,7 +1473,7 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                     // mise en place des donnees modifi�s dans le buffer de sortie
                     DvdreadF()->navRead_DSI((dsi_t*)(buffer + DSI_START_BYTE),(uchar*)&dsiPack);
                     pciPack.pci_gi.nv_pck_lbn =dsiPack.dsi_gi.nv_pck_lbn;
-                    k9Ifo::navRead_PCI((pci_t*)(buffer+0x2d),(uchar*)&pciPack);
+                    k9Ifo2::navRead_PCI((pci_t*)(buffer+0x2d),(uchar*)&pciPack);
                     //mise �jour du fichier
                     fseek(file,pos,SEEK_SET);
                     fwrite(buffer,DVD_VIDEO_LB_LEN,1,file);

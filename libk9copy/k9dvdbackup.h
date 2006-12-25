@@ -24,7 +24,6 @@
 #include "k9cell.h"
 #include "k9cellcopylist.h"
 #include "k9dvdread.h"
-#include "k9ifo.h"
 #include <qptrqueue.h>
 #include <qmutex.h>
 #include <qfile.h>
@@ -33,6 +32,7 @@
 */
 
 class k9BackupDlg;
+class k9Ifo2;
 
 class k9TitleSet : public QObject {
     Q_OBJECT
@@ -46,7 +46,7 @@ public:
     k9CellList cells,menuCells;
     k9Cell*addCell(int _vts,int _pgc, int _vob);
     uint32_t getSize();
-    k9Ifo *ifoTitle;
+    k9Ifo2 *ifoTitle;
 private:
 };
 
@@ -83,6 +83,7 @@ protected:
 private:
     k9DVDRead *m_dvdread;
     bool m_copyMenu;
+    bool m_withMenu;
     k9DVD *DVD;
     QString errMsg;
     QString vampsMsg;
@@ -114,7 +115,6 @@ private:
     void update4Menu(ifo_handle_t *_hifo);
     void setDummyPack(uchar *_buffer);
     void setDummyNavPack(uchar *_buffer,uint32_t _sector);
-    uint32_t copyMenu (int _vts);
     uint32_t copyMenu2(int _vts);
     k9CellList vmgCells;
 
