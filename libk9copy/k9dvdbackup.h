@@ -73,6 +73,7 @@ public:
     virtual QString getErrMsg();
     virtual void execute();
     virtual bool geterror();
+    virtual void setWithMenus(bool _value);
 public  slots:
     void getOutput(uchar *buffer,uint32_t size);
 

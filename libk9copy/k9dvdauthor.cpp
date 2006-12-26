@@ -143,7 +143,7 @@ void k9DVDAuthor::addMenus(QDomElement &titleSet) {
         }
         start.sprintf("jump titleset %d menu;",DVD->getnewTitleNum(l_track));
     }
-    factor=DVD->getfactor(false,false);
+    factor=DVD->getfactor(false,false,true);
     menu=xml->createElement("menus");
     titleSet.appendChild(menu);
     pgc=xml->createElement("pgc");

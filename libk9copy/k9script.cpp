@@ -56,11 +56,11 @@ vm_cmd_t *k9Script::CALLVMGM_MENU()
 }
 
 
-vm_cmd_t *k9Script::EXIT()
+vm_cmd_t *k9Script::EXIT(char register1,char register2)
 {
   uchar* cmd=(uchar*) &m_cmd;
-  cmd[0]=0x30;cmd[1]=0x01;cmd[2]=0;cmd[3]=0;cmd[4]=0;
-  cmd[5]=0;cmd[6]=0;cmd[7]=0;
+  cmd[0]=0x30;cmd[1]=0x21;cmd[2]=0;cmd[3]=0;cmd[4]=0;
+  cmd[5]=0;cmd[6]=register1;cmd[7]=register2;
   return &m_cmd;
 }
 
@@ -161,9 +161,11 @@ void k9Script::updatePGC(pgc_command_tbl_t *command_tbl,int numVTS,int numPGC) {
         	
         if (title->getnextTitle() !=NULL){
         	addPostCmd(command_tbl,setGPRM(1,title->getnextTitle()->getnumTitle()));     
-		addPostCmd(command_tbl,CALLVMGM_MENU());
 	} else
-		addPostCmd(command_tbl,EXIT());
+		addPostCmd(command_tbl,setGPRM(1,0));     
+	
+	addPostCmd(command_tbl,CALLVMGM_MENU());
+
 	break;
      }
   }
@@ -196,6 +198,11 @@ void k9Script::addTitles(pgc_command_tbl_t *command_tbl) {
   		addPreCmd(command_tbl,JUMPTT(title->getnumTitle(),0,1));
   	}
   }
+  //GPRM0 = 0
+  addPreCmd(command_tbl,setGPRM(0,0));
+  //if (GPRM0==GPRM1) then JUMPTT NumTitle
+  addPreCmd(command_tbl,EXIT(0,1));
+  
 }
 
 void k9Script::addPreCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd) {
@@ -217,4 +224,3 @@ void k9Script::addPostCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd) {
    
    memcpy(&(command_tbl->post_cmds[command_tbl->nr_of_post-1]),cmd,sizeof(vm_cmd_t));
 }
-

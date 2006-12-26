@@ -95,7 +95,7 @@ k9DVDBackup::k9DVDBackup(QObject* _dvd,const char* name,const QStringList& args)
     backupDlg = new k9BackupDlg(qApp->mainWidget(),"",true);
     //  cells.setAutoDelete(true);
     vamps=new k9vamps(this);
-    m_withMenu=true;//false;
+    m_withMenu=false;
 }
 
 
@@ -106,6 +106,10 @@ k9DVDBackup::~k9DVDBackup() {
     }
     delete backupDlg;
     delete vamps;
+}
+
+void k9DVDBackup::setWithMenus(bool _value) {
+    m_withMenu=_value;
 }
 
 bool k9DVDBackup::geterror() {
@@ -277,7 +281,6 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
 
     uint32_t sector,dsi_next_vobu = 0,len=0;
     uchar buffer[DVD_VIDEO_LB_LEN];
-//TO REMOVE    currCell->oldStartSector=_cell->startSector;
     sector = _cell->startSector;
     backupDlg->setProgress(sector);
     dsi_t	 dsi_pack;
@@ -286,7 +289,6 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     dvdfile->readBlocks (sector, 1, buffer);
 
 
-//TO REMOVE    currCell->oldLastSector=_cell->lastSector;
     k9Vobu * vobu=currCell->addVobu(sector);
     vobu->empty=true;
     currCell->addNewVobus((char*)buffer,DVD_VIDEO_LB_LEN,currCell->cellList->getPosition(),currVOB,outputFile->at());
@@ -295,29 +297,12 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     /* parse contained DSI pack */
     DvdreadF()->navRead_DSI (&dsi_pack, buffer + DSI_START_BYTE);
     currCell->vob = dsi_pack.dsi_gi.vobu_vob_idn;
-    //vobu->size=1;
-    /* JMP
-        if (dsi_pack.dsi_gi.vobu_ea != 0) {
-            nsectors      = 1; //dsi_pack.dsi_gi.vobu_ea;
-            dsi_next_vobu = dsi_pack.vobu_sri.next_vobu;
-     
-            uchar *buf=(uchar*) malloc(nsectors*DVD_VIDEO_LB_LEN);
-     
-            len = dvdfile->readBlocks ( (uint32_t) (sector + 1), nsectors, buf) +len ;
-            outputFile->writeBlock((char*)buf,nsectors * DVD_VIDEO_LB_LEN);
-            free(buf);
-        } else {
-            nsectors = 0;
-        }
-    */
     nsectors=0;
     len=0;
 
 
     vobu->size +=nsectors;
-    currCell->lastSector=currCell->startSector+ len;  //JMP *DVD_VIDEO_LB_LEN;
-    // position+=DVD_VIDEO_LB_LEN + len*DVD_VIDEO_LB_LEN;
-    //JMP m_position+=1 + len;
+    currCell->lastSector=currCell->startSector+ len;  
     currCell->cellList->setPosition(currCell->cellList->getPosition()+1+len);
     currTS->lastSector+=len+1;
 
@@ -1030,6 +1015,8 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
 }
 
 void k9DVDBackup::update4Menu(ifo_handle_t *_hifo) {
+    if (!m_withMenu)
+    	return;
     // Mise �jour vtsm_c_adt pour le menu
     m_copyMenu=true;   //indispensable pour remapvobu
     c_adt_t *c_adt = _hifo->menu_c_adt;

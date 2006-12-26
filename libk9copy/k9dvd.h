@@ -129,7 +129,7 @@ public:
    */
   virtual k9DVDTitle* gettitleByNum(int num);
   virtual k9DVDTitle *getlongestTitle();
-  virtual float getfactor(bool withMenus,bool _streams);
+  virtual float getfactor(bool withMenus,bool _streams,bool _useDvdAuthor);
   virtual const QString& getDevice();
   virtual const bool& geterror();
   virtual const QString& geterrMsg();

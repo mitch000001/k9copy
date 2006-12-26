@@ -29,7 +29,7 @@ protected:
    vm_cmd_t *setGPRM(char numReg,uint16_t value);
    vm_cmd_t *CALLVMGM_MENU();
    vm_cmd_t *setSTN(char numAudio,char numSubpicture);
-   vm_cmd_t *EXIT();
+   vm_cmd_t *EXIT(char register1,char register2);
    void addPreCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd);
    void addPostCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd);
    void updatePGCIUT_VMG(pgc_command_tbl_t *command_tbl);

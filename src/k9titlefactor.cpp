@@ -30,14 +30,19 @@ k9TitleFactor::k9TitleFactor(QWidget* parent, const char* name, WFlags fl)
     m_dvd=NULL;
     m_updating=false;
     SelectionChanged( NULL,m_withMenus);
+    m_useDvdAuthor=false;
 }
 
 k9TitleFactor::~k9TitleFactor() {}
 
 /*$SPECIALIZATION$*/
+void k9TitleFactor::setUseDvdAuthor( bool _value) {
+   m_useDvdAuthor=_value;
+}
+
 float k9TitleFactor::getFactor() {
     if (m_factor==-1)
-	    m_factor=m_dvd->getfactor( m_withMenus,false);
+	    m_factor=m_dvd->getfactor( m_withMenus,false,m_useDvdAuthor);
     return m_factor;	
 }
 

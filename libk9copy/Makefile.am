@@ -19,7 +19,7 @@ include_HEADERS = k9backupdlg.h k9cellcopylist.h k9cell.h k9dvdauthor.h \
 	k9dvdchapter.h k9dvdtitleset.h
 
 noinst_HEADERS = bswap.h k9dvdread.h k9progress.h k9mp4enc.h k9mp4dlg.h \
-		k9burndvd.h k9tools.h k9ifo2.h k9vmcmd.h k9script.h
+	k9burndvd.h k9tools.h k9ifo2.h k9script.h
 
 
 libk9copy_la_LDFLAGS = -module

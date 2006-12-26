@@ -38,6 +38,8 @@ k9Copy::k9Copy()
     KSimpleConfig settings("K9Copy");
     m_useXine=settings.readEntry("/options/useMplayer",0).toInt();
     
+    m_useDvdAuthor=settings.readBoolEntry("/options/useDvdAuthor",false);
+    
     m_k9Main=new k9Main(this);
     m_childView=createWrapper( m_k9Main,"","");
     addWindow(m_childView, KMdi::StandardAdd);
@@ -65,6 +67,7 @@ k9Copy::k9Copy()
     connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
        
     k9TitleFactor *Factors=new k9TitleFactor( this);  
+    Factors->setUseDvdAuthor(m_useDvdAuthor);
     int h=Factors->height();
     addToolWindow(Factors,KDockWidget::DockBottom,getMainDockWidget(),10,i18n("Shrink Factor"),i18n("Shrink Factor"));
       

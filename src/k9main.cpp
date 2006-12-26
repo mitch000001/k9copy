@@ -391,7 +391,7 @@ void k9Main::Copy()
   }
   changeStatusbar( i18n("Backup in progress"),sbMessage);
   bool burn=false;
-  if (withMenus())
+  if (!m_useDvdAuthor || withMenus())
   {
     //copy with k9DVDBackup
     //k9DVDBackup *backup = static_cast<k9DVDBackup  *>(m_factory->create(dvd,"backup", "k9DVDBackup"));
@@ -400,6 +400,7 @@ void k9Main::Copy()
     k9DVDBackup *backup=new k9DVDBackup(dvd,"backup");
     backup->setOutput(m_prefOutput);
     backup->setDevice(dvd->getDevice());
+    backup->setWithMenus( withMenus());
     backup->execute();
     burn=backup->getErrMsg()=="";
     delete backup;
@@ -1023,6 +1024,7 @@ void k9Main::readSettings()
     m_prefCodecLabel=*it;
   }
 
+  m_useDvdAuthor=settings.readBoolEntry("/options/useDvdAuthor",false);
 }
 /** No descriptions */
 void k9Main::saveSettings()
@@ -1322,7 +1324,7 @@ void k9Main::updateFactor()
   {
     updateSelection();
     setDVDSize();
-    double dbfactor=dvd->getfactor(withMenus(),true);
+    double dbfactor=dvd->getfactor(withMenus(),true,m_useDvdAuthor);
 
     factor->setValue((int) ( dbfactor*100)-100 );
 

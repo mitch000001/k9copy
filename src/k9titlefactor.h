@@ -32,6 +32,7 @@ private :
   k9DVD	     *m_dvd;
   bool	     m_slFactorPressed;
   bool	     m_withMenus;
+  bool       m_useDvdAuthor;
   float	     m_factor;
   bool	     m_updating;
 public slots:  
@@ -42,13 +43,11 @@ public slots:
   virtual void          slFactor_valueChanged( int );
   virtual void 		SelectionChanged( k9DVD *_dvd,bool _withMenus);
   virtual void 		changedTitle(k9DVDTitle *_title);
-
+  virtual void	        setUseDvdAuthor(bool _value);
 protected:
   /*$PROTECTED_FUNCTIONS$*/
   void setMinFactor();
   float getFactor();
-protected slots:
-  /*$PROTECTED_SLOTS$*/
 
 };
 

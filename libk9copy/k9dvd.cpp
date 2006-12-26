@@ -922,8 +922,8 @@ uint64_t k9DVD::getsizeSelected(bool _streams) {
 }
 
 
-float k9DVD::getfactor(bool _withMenus,bool _streams) {
-    if (_withMenus) {
+float k9DVD::getfactor(bool _withMenus,bool _streams,bool _useDvdAuthor) {
+    if (!_useDvdAuthor || _withMenus) {
         //m_dvd.openDevice(Device);
         k9CellCopyList *cellCopyList =new k9CellCopyList(&m_dvd,this);
         double factor=cellCopyList->getfactor(_withMenus,_streams);

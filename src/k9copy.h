@@ -80,6 +80,7 @@ private:
    KMdiToolViewAccessor *m_previewAcc;
    QWidget *m_mp2;
    bool m_useXine;
+   bool m_useDvdAuthor;
 };
 
 

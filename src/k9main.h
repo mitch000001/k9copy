@@ -179,6 +179,7 @@ protected:
 
     //PREFERENCES
     QString m_prefOutput;
+    bool m_useDvdAuthor;
     bool m_quickScan;
     int  m_prefSize;
     bool m_prefK3b;
