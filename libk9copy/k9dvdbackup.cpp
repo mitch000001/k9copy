@@ -1152,10 +1152,12 @@ void k9DVDBackup::updateIfo() {
         pgc_t *pgc=pgcit->pgci_srp[i].pgc;
         int numTitle=pgcit->pgci_srp[i].entry_id & 0x7F;
 	
-	k9Script *script=new k9Script(hifo,DVD);        
-	script->updatePGC(pgc->command_tbl,currTS->VTS,numTitle);
-	delete script;
-        
+	if (! m_withMenu) {
+		k9Script *script=new k9Script(hifo,DVD);        
+		script->updatePGC(pgc->command_tbl,currTS->VTS,numTitle);
+		delete script;
+	}
+	        
         cell_playback_t *cell_playback =pgc->cell_playback;
         int nr= pgc->nr_of_cells;
 
