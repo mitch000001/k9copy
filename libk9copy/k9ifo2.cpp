@@ -201,7 +201,7 @@ void k9Ifo2::updateVMG(uchar * _buffer) {
     uint32_t lastByte=vmgi_mat.vmgi_last_byte;
     //JMP : à vérifier
     if (m_position !=0) {
-	lastSector=(round( m_position+sizeof(vmgi_mat_t))-DVD_BLOCK_LEN) /DVD_BLOCK_LEN ;
+	lastSector=(round( m_position)-DVD_BLOCK_LEN) /DVD_BLOCK_LEN ;
 	//lastByte=vmgi_mat.vmgi_last_sector * DVD_BLOCK_LEN +DVD_BLOCK_LEN -1;
 	vmgi_mat.vmg_last_sector+=2*(lastSector-vmgi_mat.vmgi_last_sector);
     }
@@ -697,7 +697,7 @@ void k9Ifo2::updateVTS(uchar *_buffer) {
     //uint32_t lastByte=vtsi_mat->vtsi_last_byte;
     //JMP : à vérifier
     if (m_position >0) {
-	lastSector=(round(m_position+sizeof(vtsi_mat_t))-DVD_BLOCK_LEN) /DVD_BLOCK_LEN;
+	lastSector=(round(m_position)-DVD_BLOCK_LEN) /DVD_BLOCK_LEN;
 	//lastByte=vtsi_mat->vtsi_last_sector*DVD_BLOCK_LEN +DVD_BLOCK_LEN-1;
 	vtsi_mat->vts_last_sector+=2*(lastSector-vtsi_mat->vtsi_last_sector);
 	vtsi_mat->vtstt_vobs+=lastSector-vtsi_mat->vtsi_last_sector;
