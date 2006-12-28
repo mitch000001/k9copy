@@ -85,6 +85,7 @@ private:
     k9DVDRead *m_dvdread;
     bool m_copyMenu;
     bool m_withMenu;
+    bool m_forcedFactor;
     k9DVD *DVD;
     QString errMsg;
     QString vampsMsg;

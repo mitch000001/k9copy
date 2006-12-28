@@ -96,6 +96,7 @@ k9DVDBackup::k9DVDBackup(QObject* _dvd,const char* name,const QStringList& args)
     //  cells.setAutoDelete(true);
     vamps=new k9vamps(this);
     m_withMenu=false;
+    m_forcedFactor=false;
 }
 
 
@@ -181,6 +182,7 @@ void k9DVDBackup::prepareVTS(int _VTS) {
         currVOB=0;
         currVTS=_VTS;
 
+	calcFactor(); //menus are always shrinked
         currTS->menuSize=copyMenu2(_VTS);
         if (outputFile != NULL) {
             outputFile->close();
@@ -308,8 +310,10 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
 
     dvdfile->close();
     backupDlg->setProgressTotal(len+1);
-    m_outbytes+=DVD_VIDEO_LB_LEN;
-    m_inbytes+=DVD_VIDEO_LB_LEN;
+    if (!m_forcedFactor) {
+	m_outbytes+=DVD_VIDEO_LB_LEN;
+	m_inbytes+=DVD_VIDEO_LB_LEN;
+    }
 }
 
 
@@ -320,7 +324,8 @@ void k9DVDBackup::getOutput(uchar * buffer, uint32_t buflen) {
     backupDlg->playMovie(buffer,buflen);
     mutex.unlock();
 
-    m_outbytes+=buflen;
+    if (!m_forcedFactor)
+        m_outbytes+=buflen;
 
     uchar *temp =buffer;
     QString sName;
@@ -711,7 +716,8 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     /* generate an MPEG2 program stream (including nav packs) */
     wrote=false;
     vamps->addData(buf,DVD_VIDEO_LB_LEN);
-    m_inbytes+=DVD_VIDEO_LB_LEN;
+    if (!m_forcedFactor)
+    	m_inbytes+=DVD_VIDEO_LB_LEN;
     uint32_t end;
 
     if (badNavPack) {
@@ -746,7 +752,8 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     }
     free(buf);
 
-    m_inbytes+=nsectors*DVD_VIDEO_LB_LEN;
+    if (! m_forcedFactor)
+    	m_inbytes+=nsectors*DVD_VIDEO_LB_LEN;
 
     mutex.lock();
     qApp->processEvents();
@@ -1009,6 +1016,13 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
 	script->updatePGCIUT();
 	script->updateFPPGC();
 	delete script;
+	if (_hifo->vmgi_mat) {
+		_hifo->vmgi_mat->vmgm_c_adt=NULL;
+		_hifo->vmgi_mat->vmgm_vobu_admap=NULL;
+	} else {	
+		_hifo->vtsi_mat->vtsm_c_adt=NULL;
+		_hifo->vtsi_mat->vtsm_vobu_admap=NULL;
+	}    
     }
 
 
@@ -1557,11 +1571,12 @@ uint k9DVDBackup::getLastCell(k9CellCopyList *_cellCopyList, uint _index) {
 }
 
 void k9DVDBackup::calcFactor() {
-    double factor=m_cellCopyList->getfactor(true,false,m_inbytes,m_outbytes);
+    double factor=m_cellCopyList->getfactor(m_withMenu,false,m_inbytes,m_outbytes);
     QString sFactor;
     sFactor.sprintf("%.2f",factor);
     backupDlg->setFactor(sFactor);
     argFactor =  factor;
+    m_forcedFactor=false;
 }
 
 void k9DVDBackup::forceFactor(double _factor) {
@@ -1570,6 +1585,7 @@ void k9DVDBackup::forceFactor(double _factor) {
     sFactor.sprintf("%.2f",factor);
     backupDlg->setFactor(sFactor);
     argFactor =  factor;
+    m_forcedFactor=true;
 }
 
 
