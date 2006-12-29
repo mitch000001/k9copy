@@ -567,12 +567,23 @@ void k9Ifo2::updateTXTDT_MGI(uchar * _buffer) {
     if(_ifo->vmgi_mat->txtdt_mgi == 0)
         return;
     
+   struct  {
+     char disc_name[15];
+     char nr_of_language_units; 
+     uint32_t last_byte;
+     txtdt_lu_t *lu;
+  } ATTRIBUTE_PACKED txtdtmgi;    
+    
+    
     m_position=round(m_position);
     int orig=_ifo->vmgi_mat->txtdt_mgi*DVD_BLOCK_LEN;
     int offset=m_position;
     _ifo->vmgi_mat->txtdt_mgi =m_position/ DVD_BLOCK_LEN;
-    memcpy(m_buffer+offset,_buffer+orig ,TXTDT_MGI_SIZE);
-    m_position+=TXTDT_MGI_SIZE;
+    memcpy(&txtdtmgi,_buffer+orig,sizeof(txtdtmgi));
+    
+    B2N_32(txtdtmgi.last_byte);
+    memcpy(m_buffer+offset,_buffer+orig ,txtdtmgi.last_byte+1);
+    m_position+=txtdtmgi.last_byte+1;
 }
 
 void k9Ifo2::updateC_ADT(uchar * _buffer) {
