@@ -1168,7 +1168,7 @@ void k9DVDBackup::updateIfo() {
 	
 	if (! m_withMenu) {
 		k9Script *script=new k9Script(hifo,DVD);        
-		script->updatePGC(pgc->command_tbl,currTS->VTS,numTitle);
+		script->updatePGC(pgc,currTS->VTS,numTitle);
 		delete script;
 	}
 	        

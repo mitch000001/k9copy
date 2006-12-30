@@ -40,7 +40,7 @@ public:
     k9Script(ifo_handle_t *_ifo,k9DVD *_dvd);
     void updatePGCIUT();
     void updateFPPGC();
-    void updatePGC(pgc_command_tbl_t *command_tbl,int numVTS,int numPGC);
+    void updatePGC(pgc_t *_pgc,int numVTS,int numPGC);
     ~k9Script();
 };
 

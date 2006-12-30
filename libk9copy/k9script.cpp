@@ -142,9 +142,21 @@ void k9Script::updateFPPGC() {
   
 }
 
-void k9Script::updatePGC(pgc_command_tbl_t *command_tbl,int numVTS,int numPGC) {
-  if (command_tbl !=NULL)
-  	memset(command_tbl,0,sizeof(pgc_command_tbl_t));
+void k9Script::updatePGC(pgc_t *_pgc ,int numVTS,int numPGC) {
+  pgc_command_tbl_t *command_tbl=_pgc->command_tbl;
+  if (command_tbl !=NULL) {
+  	//memset(command_tbl,0,sizeof(pgc_command_tbl_t));	
+  	command_tbl->nr_of_pre=0;
+  	command_tbl->pre_cmds=NULL;
+  	command_tbl->nr_of_post=0;
+  	command_tbl->post_cmds=NULL;
+  } else {
+	command_tbl=(pgc_command_tbl_t*) malloc(sizeof(pgc_command_tbl_t));
+	_pgc->command_tbl=command_tbl;
+	_pgc->command_tbl_offset=1;
+	memset(command_tbl,0,sizeof(pgc_command_tbl_t));
+  }  
+  
   if (numPGC==0)
   	return;
   	  	
