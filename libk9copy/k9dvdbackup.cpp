@@ -288,8 +288,10 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     dsi_t	 dsi_pack;
     uint32_t	 nsectors;
 
-    dvdfile->readBlocks (sector, 1, buffer);
-
+    len=dvdfile->readBlocks (sector, 1, buffer);
+    //JMP : D V C
+    if (!k9Cell::isNavPack( buffer)  || len==-1)
+    	setDummyNavPack( buffer,sector);
 
     k9Vobu * vobu=currCell->addVobu(sector);
     vobu->empty=true;
@@ -299,21 +301,26 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     /* parse contained DSI pack */
     DvdreadF()->navRead_DSI (&dsi_pack, buffer + DSI_START_BYTE);
     currCell->vob = dsi_pack.dsi_gi.vobu_vob_idn;
-    nsectors=0;
-    len=0;
+    
+    //dummy video pack    
+    setDummyPack( buffer);
+    currCell->addNewVobus((char*)buffer,DVD_VIDEO_LB_LEN,currCell->cellList->getPosition()+1,currVOB,outputFile->at());
+    outputFile->writeBlock((char*)buffer,DVD_VIDEO_LB_LEN);
 
+    nsectors=1;
+    len=1;
 
     vobu->size +=nsectors;
     currCell->lastSector=currCell->startSector+ len;  
     currCell->cellList->setPosition(currCell->cellList->getPosition()+1+len);
     currTS->lastSector+=len+1;
-
     dvdfile->close();
     backupDlg->setProgressTotal(len+1);
     if (!m_forcedFactor) {
-	m_outbytes+=DVD_VIDEO_LB_LEN;
-	m_inbytes+=DVD_VIDEO_LB_LEN;
+	m_outbytes+=DVD_VIDEO_LB_LEN*2;
+	m_inbytes+=DVD_VIDEO_LB_LEN*2;
     }
+
 }
 
 
