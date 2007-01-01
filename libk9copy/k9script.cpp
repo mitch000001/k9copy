@@ -150,6 +150,9 @@ void k9Script::updatePGC(pgc_t *_pgc ,int numVTS,int numPGC) {
   	command_tbl->pre_cmds=NULL;
   	command_tbl->nr_of_post=0;
   	command_tbl->post_cmds=NULL;
+  	//JMP:test without cells cmds
+  	command_tbl->cell_cmds=NULL;
+  	command_tbl->nr_of_cell=0;
   } else {
 	command_tbl=(pgc_command_tbl_t*) malloc(sizeof(pgc_command_tbl_t));
 	_pgc->command_tbl=command_tbl;

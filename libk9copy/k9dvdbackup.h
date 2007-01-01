@@ -103,9 +103,9 @@ private:
     float argFactor;
     uint64_t argSize;
     void prepareVTS(int VTS);
-    void playCell (int vts_num, k9Cell *_cell);
+    void playCell (int vts_num, k9Cell *_cell,bool _empty=false);
     uint32_t findNextVobu(uint32_t _sector);
-    uint32_t copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9Vobu *_vobu);
+    uint32_t copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9Vobu *_vobu,bool _empty=false);
     void copyCell(int VTS, k9Cell *_cell,bool _empty);
 //    void copyAngleBlock(k9CellCopyList *_list,uint _num);
     void copyEmptyPgc(int _vts,k9Cell *_cell);

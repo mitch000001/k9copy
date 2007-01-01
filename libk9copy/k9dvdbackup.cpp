@@ -237,7 +237,7 @@ void k9DVDBackup::copyCell(int _VTS,k9Cell * _cell,bool _empty) {
     currCell=cell;
     //start cell copy
     mutex.unlock();
-    if (!_empty) {
+    //if (!_empty) {
         if (!vamps->running()) {
             vamps->reset();
             vamps->setInputSize(argSize);
@@ -253,10 +253,9 @@ void k9DVDBackup::copyCell(int _VTS,k9Cell * _cell,bool _empty) {
             vamps->setVapFactor(argFactor);
             vamps->start(QThread::NormalPriority);
         }
-        playCell(_VTS,_cell);
-        //JMP	vamps->wait();
-    } else
-        copyEmptyPgc(_VTS,_cell);
+        playCell(_VTS,_cell,_empty);
+    //} else
+    //    copyEmptyPgc(_VTS,_cell);
     qApp->processEvents();
 }
 
@@ -534,7 +533,7 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
 
 
 
-void k9DVDBackup::playCell (int vts_num, k9Cell *_cell) {
+void k9DVDBackup::playCell (int vts_num, k9Cell *_cell,bool _empty) {
 
     if (error)
         return;
@@ -595,7 +594,7 @@ void k9DVDBackup::playCell (int vts_num, k9Cell *_cell) {
             seterror( vamps->geterrMsg());
             break;
         }
-        dsi_next_vobu= copyVobu(dvdfile,sector,NULL);
+        dsi_next_vobu= copyVobu(dvdfile,sector,NULL,_empty);
     }
     dvdfile->close();
 }
@@ -682,7 +681,7 @@ uint32_t k9DVDBackup::findNextVobu(uint32_t _sector) {
 
 
 
-uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9Vobu * _vobu) {
+uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9Vobu * _vobu,bool _empty) {
     dsi_t	dsi_pack;
     k9Vobu * currVobu;
     bool badNavPack=false;
@@ -733,24 +732,31 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
        if (nextVobu !=0) end=nextVobu-1;
 
     } else {
-	nsectors      = dsi_pack.dsi_gi.vobu_ea;
-	uint32_t dsi_next_vobu = dsi_pack.vobu_sri.next_vobu;
+        if (!_empty) 
+		nsectors = dsi_pack.dsi_gi.vobu_ea;
+	else
+		nsectors = 1;
+			
+	//uint32_t dsi_next_vobu = dsi_pack.vobu_sri.next_vobu;
 	
 	buf=(uchar*) realloc(buf,nsectors*DVD_VIDEO_LB_LEN);
 	
-	end=nsectors;
+	end=dsi_pack.dsi_gi.vobu_ea;
 	
+	if (_empty)
+	   setDummyPack(buf);
 	/* read VOBU */
-	for (uint32_t i=0;i< nsectors;i++) {
-		len = _fileHandle->readBlocks ( (sector + 1)+i, 1, buf +(i*DVD_VIDEO_LB_LEN));
-		if (len==-1) {
-		qDebug (QString("VOBU : %1 Read Error !!!!").arg(sector));
-		//setDummyPack(buf + (i*DVD_VIDEO_LB_LEN));
-		setDummyPack(buf);
-		nsectors=1;
-		break;
+	else
+		for (uint32_t i=0;i< nsectors;i++) {
+			len = _fileHandle->readBlocks ( (sector + 1)+i, 1, buf +(i*DVD_VIDEO_LB_LEN));
+			if (len==-1) {
+			qDebug (QString("VOBU : %1 Read Error !!!!").arg(sector));
+			//setDummyPack(buf + (i*DVD_VIDEO_LB_LEN));
+			setDummyPack(buf);
+			nsectors=1;
+			break;
+			}
 		}
-	}
     }
 
     /* write VOBU */

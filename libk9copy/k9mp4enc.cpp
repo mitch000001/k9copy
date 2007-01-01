@@ -222,7 +222,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
                         *m_process << "-oac";
                         *m_process << "mp3lame";
                         *m_process <<"-lameopts" << QString("abr:br=%1").arg(m_audioBitrate);
-
+			*m_process <<"-af volume=10";
                         //*m_process << QString::number(_title->getaudioStream(i)->getStreamId());
                         audio=true;
                         break;
