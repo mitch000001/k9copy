@@ -187,17 +187,15 @@ void k9Script::updateFPPGC() {
 }
 
 void k9Script::updatePGC(pgc_t *_pgc ,int numVTS,int numPGC) {
+   k9DVDTitle *title=NULL;
+   for (int i=0; i <m_dvd->gettitleCount();i++) {
+   	title=m_dvd->gettitle(i);
+	if (title->getVTS()== numVTS && title->getTTN()==numPGC &&  title->getIndexed()) 
+		break;
+     }
+     
   pgc_command_tbl_t *command_tbl=_pgc->command_tbl;
-  if (command_tbl !=NULL) {
-  	//memset(command_tbl,0,sizeof(pgc_command_tbl_t));	
-  	//command_tbl->nr_of_pre=0;
-  	//command_tbl->pre_cmds=NULL;
-  	//command_tbl->nr_of_post=0;
-  	//command_tbl->post_cmds=NULL;
-  	//JMP:test without cells cmds
-  	//command_tbl->cell_cmds=NULL;
-  	//command_tbl->nr_of_cell=0;
-  } else {
+  if (command_tbl ==NULL) {
 	command_tbl=(pgc_command_tbl_t*) malloc(sizeof(pgc_command_tbl_t));
 	_pgc->command_tbl=command_tbl;
 	_pgc->command_tbl_offset=1;
@@ -207,6 +205,25 @@ void k9Script::updatePGC(pgc_t *_pgc ,int numVTS,int numPGC) {
   if (numPGC==0)
   	return;
   	  	
+  for (int i=0; i < command_tbl->nr_of_pre;i++) {
+      //replace all JUMPs by a goto to the last line of cell commands ( link to next title)
+      char *cmd=(char*)&(command_tbl->pre_cmds[i]);
+      if (cmd[0]==0x30) {
+         char NOP[8]={0,0,0,0,0,0,0,0};
+         memcpy(cmd,NOP,8);
+      }
+
+   } 	  	
+   if (title->isSelected()) {
+   	char numSubP=0,numAudio=0;
+   	if (title->getDefSubtitle() !=NULL) 
+           numSubP=title->getDefSubtitle()->getnum();
+        if (title->getDefAudio() !=NULL)   
+           numAudio=title->getDefAudio()->getID();
+        if (numSubP+numAudio >0)
+           insertPreCmd(command_tbl,setSTN( numAudio,numSubP));
+    }
+              	  	
  for (int i=0; i < command_tbl->nr_of_cell;i++) {
       //replace all JUMPs by a goto to the last line of cell commands ( link to next title)
       //char *cmd=(char*)&(command_tbl->cell_cmds[i]);
@@ -305,15 +322,7 @@ void k9Script::addTitles(pgc_command_tbl_t *command_tbl) {
   	    //initialization of register 1
   	    addPreCmd(command_tbl,setGPRM(1,0));
   	    //set default subtitle and audio stream
-            char numSubP=0,numAudio=0;
-            if (title->getDefSubtitle() !=NULL) 
-               numSubP=title->getDefSubtitle()->getnum();
-            if (title->getDefAudio() !=NULL)   
-               numAudio=title->getDefAudio()->getID();
-            if (numSubP+numAudio >0)
-               addPreCmd(command_tbl,setSTN( numAudio,numSubP));
-            else
-  	       addPreCmd(command_tbl,(vm_cmd_t*)&(NOP[0]));
+            addPreCmd(command_tbl,(vm_cmd_t*)NOP);
   	    //jump to title
   	    if (title->getnextTitle()!=NULL)
   	    	addPreCmd(command_tbl,JUMPTT(title->getnextTitle()->getnumTitle(),0,0));
@@ -334,6 +343,26 @@ void k9Script::addPreCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd) {
    
    memcpy(&(command_tbl->pre_cmds[command_tbl->nr_of_pre-1]),cmd,sizeof(vm_cmd_t));
 }
+
+void k9Script::insertPreCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd) {
+   command_tbl->nr_of_pre++;
+   if (command_tbl->pre_cmds == NULL)
+       command_tbl->pre_cmds=(vm_cmd_t*)malloc(sizeof(vm_cmd_t));
+   else 
+       command_tbl->pre_cmds=(vm_cmd_t*) realloc(command_tbl->pre_cmds,sizeof(vm_cmd_t)*command_tbl->nr_of_pre);
+   
+   for (int i=command_tbl->nr_of_pre-2;i>=0;i--) {
+       memcpy(&(command_tbl->pre_cmds[i+1]),&(command_tbl->pre_cmds[i]),sizeof(vm_cmd_t));
+       char *cmd=(char*)&(command_tbl->pre_cmds[i+1]);
+      if (cmd[0]==0 && cmd[1]&0x01==0x01) 
+      	cmd[7]++;
+      
+   }
+   
+   memcpy(&(command_tbl->pre_cmds[0]),cmd,sizeof(vm_cmd_t));
+}
+
+
 
 void k9Script::addPostCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd) {
    command_tbl->nr_of_post++;
