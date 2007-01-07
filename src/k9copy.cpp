@@ -38,7 +38,7 @@ k9Copy::k9Copy()
     KSimpleConfig settings("K9Copy");
     m_useXine=settings.readEntry("/options/useMplayer",0).toInt();
     
-    m_useDvdAuthor=settings.readBoolEntry("/options/useDvdAuthor",false);
+    m_useDvdAuthor=settings.readBoolEntry("/options/useDvdAuthor",true);
     
     m_k9Main=new k9Main(this);
     m_childView=createWrapper( m_k9Main,"","");

@@ -138,10 +138,18 @@
             <property name="sizeHint">
                 <size>
                     <width>21</width>
-                    <height>150</height>
+                    <height>130</height>
                 </size>
             </property>
         </spacer>
+        <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>ckDvdAuthor</cstring>
+            </property>
+            <property name="text">
+                <string>use dvdAuthor for copy without menus</string>
+            </property>
+        </widget>
     </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>

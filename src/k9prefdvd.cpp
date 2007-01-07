@@ -30,6 +30,7 @@ k9prefDVD::k9prefDVD(QWidget* parent, const char* name, WFlags fl)
 
     ckAutoBurn->setChecked(settings.readEntry("/options/autoburn",0).toInt());
     ckQuickScan->setChecked(settings.readEntry("/options/quickscan","1").toInt());
+    ckDvdAuthor->setChecked(settings.readBoolEntry("/options/useDvdAuthor",true));
     sbSize->setValue(settings.readEntry("/options/dvdsize",QString("4400")).toInt());
     sbSize->setSuffix(" "+ i18n("mb"));
 }
@@ -48,6 +49,7 @@ void k9prefDVD::save() {
     settings.writeEntry("/options/autoburn",(int)ckAutoBurn->isChecked());
     settings.writeEntry("/options/dvdsize",(int)sbSize->value());
     settings.writeEntry("/options/quickscan",(int)ckQuickScan->isChecked());
+    settings.writeEntry( "/options/useDvdAuthor",ckDvdAuthor->isChecked());
 }
 
 #include "k9prefdvd.moc"

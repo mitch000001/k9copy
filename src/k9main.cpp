@@ -1024,7 +1024,7 @@ void k9Main::readSettings()
     m_prefCodecLabel=*it;
   }
 
-  m_useDvdAuthor=settings.readBoolEntry("/options/useDvdAuthor",false);
+  m_useDvdAuthor=settings.readBoolEntry("/options/useDvdAuthor",true);
 }
 /** No descriptions */
 void k9Main::saveSettings()

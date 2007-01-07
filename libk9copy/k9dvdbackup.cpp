@@ -229,7 +229,7 @@ void k9DVDBackup::copyCell(int _VTS,k9Cell * _cell,bool _empty) {
     if (_cell->getforceFactor())
 	forceFactor( _cell->getFactor());
 
-
+    
     mutex.lock();
     k9Cell *cell= currTS->addCell(_VTS,0,0);
     //JMP cell->startSector=m_position;
@@ -237,7 +237,7 @@ void k9DVDBackup::copyCell(int _VTS,k9Cell * _cell,bool _empty) {
     currCell=cell;
     //start cell copy
     mutex.unlock();
-    //if (!_empty) {
+    if (!_empty) {
         if (!vamps->running()) {
             vamps->reset();
             vamps->setInputSize(argSize);
@@ -254,8 +254,8 @@ void k9DVDBackup::copyCell(int _VTS,k9Cell * _cell,bool _empty) {
             vamps->start(QThread::NormalPriority);
         }
         playCell(_VTS,_cell,_empty);
-    //} else
-    //    copyEmptyPgc(_VTS,_cell);
+    } else
+        copyEmptyPgc(_VTS,_cell);
     qApp->processEvents();
 }
 
@@ -721,7 +721,11 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     mutex.unlock();
     /* generate an MPEG2 program stream (including nav packs) */
     wrote=false;
+    
     vamps->addData(buf,DVD_VIDEO_LB_LEN);
+    
+    
+    
     if (!m_forcedFactor)
     	m_inbytes+=DVD_VIDEO_LB_LEN;
     uint32_t end;
@@ -761,7 +765,7 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
 
     /* write VOBU */
     for (uint32_t i=0;i<nsectors ;i++) {
-        vamps->addData(buf + (i*DVD_VIDEO_LB_LEN), DVD_VIDEO_LB_LEN);
+       	vamps->addData(buf + (i*DVD_VIDEO_LB_LEN), DVD_VIDEO_LB_LEN);
     }
     free(buf);
 
@@ -1485,6 +1489,19 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                         pciPack.pci_gi.vobu_se_e_ptm=0;
                         pciPack.pci_gi.e_eltm.hour = pciPack.pci_gi.e_eltm.minute =pciPack.pci_gi.e_eltm.second=0;
                         dsiPack.dsi_gi.c_eltm.hour=dsiPack.dsi_gi.c_eltm.minute=dsiPack.dsi_gi.c_eltm.second=0;
+                        
+                        for (int i=0;i<9;i++) {
+                            dsiPack.sml_agli.data[i].address=0x7FFFFFFF;
+                            dsiPack.sml_agli.data[i].size=0;
+                        }
+                        dsiPack.sml_pbi.ilvu_ea=0;
+                        dsiPack.sml_pbi.ilvu_sa=0;
+                        dsiPack.sml_pbi.size=0;
+                        
+                        dsiPack.dsi_gi.vobu_1stref_ea = 0;
+                        dsiPack.dsi_gi.vobu_2ndref_ea=0;
+                        dsiPack.dsi_gi.vobu_3rdref_ea=0;
+
                     }
                     // mise en place des donnees modifi�s dans le buffer de sortie
                     DvdreadF()->navRead_DSI((dsi_t*)(buffer + DSI_START_BYTE),(uchar*)&dsiPack);
@@ -1654,7 +1671,6 @@ void k9DVDBackup::execute() {
 		    else
                     	calcFactor();
                 }
-
                 copyCell(cell->vts,cell,! cell->selected);
                 if (!error) {
                     cell->copied=true;
