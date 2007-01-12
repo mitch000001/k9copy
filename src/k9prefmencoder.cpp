@@ -12,6 +12,7 @@
 
 
 #include "k9prefmencoder.h"
+#include "k9config.h"
 #include <qtable.h>
 
 k9prefMencoder::k9prefMencoder(QWidget* parent, const char* name, WFlags fl)
@@ -21,10 +22,11 @@ k9prefMencoder::k9prefMencoder(QWidget* parent, const char* name, WFlags fl)
   QStringList llabels;
   QStringList lvideo;
 
-  KSimpleConfig settings("K9Copy");
-  laudio=settings.readListEntry("mencoder/audio");
-  llabels=settings.readListEntry("mencoder/labels");
-  lvideo=settings.readListEntry("mencoder/video");
+  k9Config config;
+  laudio=config.getCodecAudio();
+  llabels=config.getCodecLabels();
+  lvideo=config.getCodecVideo();
+  
   int row=0;
   for ( QStringList::Iterator it = llabels.begin(); it != llabels.end(); ++it )
   {
@@ -52,7 +54,8 @@ void k9prefMencoder::save()
   QStringList laudio;
   QStringList llabels;
   QStringList lvideo;
-  KSimpleConfig settings("K9Copy");
+  
+  k9Config config;
   laudio.clear();
   llabels.clear();
   lvideo.clear();
@@ -70,9 +73,11 @@ void k9prefMencoder::save()
         laudio.append(c);
     }
   }
-  settings.writeEntry("mencoder/labels",llabels);
-  settings.writeEntry("mencoder/audio",laudio);
-  settings.writeEntry("mencoder/video",lvideo);
+  
+  config.setCodecAudio( laudio);
+  config.setCodecLabels( llabels);
+  config.setCodecVideo(  lvideo);
+  config.save();
 }
 
 

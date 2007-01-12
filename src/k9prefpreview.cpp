@@ -12,9 +12,9 @@
 
 
 #include "k9prefpreview.h"
+#include "k9config.h"
 #include <qwidgetstack.h>
 #include <qradiobutton.h>
-#include <ksimpleconfig.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
 #include <klocale.h>
@@ -31,13 +31,14 @@ k9prefPreview::~k9prefPreview()
 /*$SPECIALIZATION$*/
 
 void k9prefPreview::load() {
-    KSimpleConfig settings("K9Copy");
+    k9Config config;
 
-    ckUseGL->setChecked(settings.readEntry("/options/useGL",0).toInt());
-    cbVout->setCurrentItem(settings.readEntry("/mplayer/vout",0).toInt());
-    cbAout->setCurrentItem(settings.readEntry("/mplayer/aout",0).toInt());
-    rbMplayer->setChecked(settings.readEntry("/options/useMplayer",0).toInt());
-    rbInternal->setChecked(!settings.readEntry("/options/useMplayer",0).toInt());
+    ckUseGL->setChecked(config.getUseGL());
+    cbVout->setCurrentItem(config.getMplayerVout());
+    cbAout->setCurrentItem(config.getMplayerAout());
+    rbMplayer->setChecked(config.getUseMplayer());
+    rbInternal->setChecked(!config.getUseMplayer());
+    
     if (rbMplayer->isChecked()) 
 	rbMplayerClick();
     else
@@ -48,17 +49,16 @@ void k9prefPreview::load() {
 
 
 void k9prefPreview::save() {
-    KSimpleConfig settings("K9Copy");
+    k9Config config;
 
     if (rbMplayer->isChecked()) {
-	settings.writeEntry("/mplayer/vout",cbVout->currentItem());
-    	settings.writeEntry("/mplayer/aout",cbAout->currentItem());
-	
+        config.setMplayerVout( cbVout->currentItem());
+        config.setMplayerAout( cbAout->currentItem());	
     }else {
-    	settings.writeEntry("/options/useGL",(int)ckUseGL->isChecked());
-
+    	config.setUseGL( ckUseGL->isChecked());
     }
-    settings.writeEntry("/options/useMplayer",(int)rbMplayer->isChecked());
+    config.setUseMplayer( rbMplayer->isChecked());
+    config.save();
 }
 
 

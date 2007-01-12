@@ -11,7 +11,7 @@
 //
 #include "k9mp4enc.h"
 #include "k9mp4dlg.h"
-
+#include "k9config.h"
 #include <qcstring.h>
 #include <qapplication.h>
 #include <klocale.h>
@@ -20,7 +20,6 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <qstringlist.h>
-#include <ksimpleconfig.h>
 #include <ktempfile.h>
 #include <kstandarddirs.h>
 #include "k9tools.h"
@@ -37,11 +36,12 @@ k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
     QStringList llabels;
     QStringList lvideo;
 
-    KSimpleConfig settings("K9Copy");
-    m_lstAudio=settings.readListEntry("mencoder/audio");
-    m_lstCodecs=settings.readListEntry("mencoder/labels");
-    m_lstVideo=settings.readListEntry("mencoder/video");
-    m_2pass=settings.readBoolEntry("/mp4/2passes",FALSE);
+    k9Config config;
+    m_lstAudio=config.getCodecAudio();
+    m_lstCodecs=config.getCodecLabels();
+    m_lstVideo=config.getCodecVideo();
+    
+    m_2pass=config.getPrefMp42Passes();
     timer = new QTimer( this );
     connect( timer, SIGNAL(timeout()), this, SLOT(timerDone()) );
 

@@ -1,5 +1,6 @@
 
 #include "k9common.h"
+#include "k9config.h"
 #include <qlayout.h>
 #include <qslider.h>
 #include <kselect.h>
@@ -14,7 +15,6 @@
 #include <qtimer.h>
 #include <qapplication.h>
 #include <qevent.h>
-#include <ksimpleconfig.h>
 
 K9Mplayer::K9Mplayer(QObject  *parent,const char *name,const QStringList args):MPlayer((QWidget*)parent) {
     m_seeking=FALSE;
@@ -71,11 +71,11 @@ void K9Mplayer::setTitle( const QString & _numTitle,const QString &_numChapter) 
         sendCmd("quit");
         m_process->wait( 1000);
     }
-    KSimpleConfig settings("K9Copy");
+    k9Config config;
     QString vout[]= {"x11","xv","gl2","sdl"};
     QString aout[]= {"alsa","oss","sdl"};
-    QString vo=vout[settings.readEntry("/mplayer/vout",0).toInt()];
-    QString ao=aout[settings.readEntry("/mplayer/aout",0).toInt()];
+    QString vo=vout[config.getMplayerVout()];
+    QString ao=aout[config.getMplayerAout()];
 
 
     m_process->clearArguments();

@@ -15,7 +15,6 @@
 
 #include "k9common.h"
 #include "prefMencoder.h"
-#include <ksimpleconfig.h>
 #include <qstringlist.h>
 #include <qstring.h>
 

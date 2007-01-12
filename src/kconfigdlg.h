@@ -20,9 +20,9 @@
 #ifndef KCONFIGDLG_H
 #define KCONFIGDLG_H
 
+#include "k9common.h"
 #include <configDlg.h>
 #include <qtable.h>
-#include <ksimpleconfig.h>
 #include <qstringlist.h>
 #include <qfile.h>
 

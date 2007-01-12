@@ -19,6 +19,7 @@
 ***************************************************************************/
 
 #include "kcddrive.h"
+#include "k9config.h"
 #include <kprocess.h>
 #ifdef Q_OS_FREEBSD
    #include <sys/param.h>
@@ -87,10 +88,10 @@ void kCDDrives::readConfig() {
     QStringList ldev;
     QStringList llabels;
     QStringList lIO;
-    KSimpleConfig settings("K9Copy");
-    ldev=settings.readListEntry("devices/dev");
-    llabels=settings.readListEntry("devices/labels");
-    lIO=settings.readListEntry("devices/IO");
+    k9Config config;
+    ldev=config.getDevices();
+    llabels=config.getDevicesLabels();
+    lIO=config.getDevicesIO();
     int row=count();
     int i=0;
     for ( QStringList::Iterator it = ldev.begin(); it != ldev.end(); ++it ) {

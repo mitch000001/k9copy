@@ -12,7 +12,7 @@
 
 #ifndef K9PREFDVD_H
 #define K9PREFDVD_H
-
+#include "k9common.h"
 #include "prefDVD.h"
 
 class k9prefDVD : public prefDVD

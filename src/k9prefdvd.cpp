@@ -12,7 +12,7 @@
 
 
 #include "k9prefdvd.h"
-#include <ksimpleconfig.h>
+#include "k9config.h"
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 #include <qcheckbox.h>
@@ -22,16 +22,15 @@
 k9prefDVD::k9prefDVD(QWidget* parent, const char* name, WFlags fl)
 : prefDVD(parent,name,fl)
 {
-    KSimpleConfig settings("K9Copy");
-//    KStandardDirs kd;
+    k9Config config;
     urOutput->setMode(2);
-    urOutput->setURL(settings.readEntry("/dir/output",locateLocal("tmp","k9copy/",true)));//kd.findResource("tmp","")));
-    ckK3b->setChecked(settings.readEntry("/options/usek3b",0).toInt());
+    urOutput->setURL(config.getPrefOutput());
+    ckK3b->setChecked(config.getPrefK3b());
 
-    ckAutoBurn->setChecked(settings.readEntry("/options/autoburn",0).toInt());
-    ckQuickScan->setChecked(settings.readEntry("/options/quickscan","1").toInt());
-    ckDvdAuthor->setChecked(settings.readBoolEntry("/options/useDvdAuthor",true));
-    sbSize->setValue(settings.readEntry("/options/dvdsize",QString("4400")).toInt());
+    ckAutoBurn->setChecked(config.getPrefAutoBurn());
+    ckQuickScan->setChecked(config.getQuickScan());
+    ckDvdAuthor->setChecked(config.getUseDvdAuthor());
+    sbSize->setValue(config.getPrefSize());
     sbSize->setSuffix(" "+ i18n("mb"));
 }
 
@@ -42,14 +41,14 @@ k9prefDVD::~k9prefDVD()
 /*$SPECIALIZATION$*/
 
 void k9prefDVD::save() {
-    KSimpleConfig settings("K9Copy");
-    settings.writeEntry("/dir/output",urOutput->url());
-    settings.writeEntry("/options/usek3b",(int)ckK3b->isChecked());
-
-    settings.writeEntry("/options/autoburn",(int)ckAutoBurn->isChecked());
-    settings.writeEntry("/options/dvdsize",(int)sbSize->value());
-    settings.writeEntry("/options/quickscan",(int)ckQuickScan->isChecked());
-    settings.writeEntry( "/options/useDvdAuthor",ckDvdAuthor->isChecked());
+    k9Config config;
+    config.setPrefOutput( urOutput->url());
+    config.setPrefK3b(ckK3b->isChecked());
+    config.setPrefAutoBurn( ckAutoBurn->isChecked());
+    config.setPrefSize(sbSize->value());
+    config.setQuickScan( ckQuickScan->isChecked());
+    config.setUseDvdAuthor( ckDvdAuthor->isChecked());    
+    config.save();
 }
 
 #include "k9prefdvd.moc"

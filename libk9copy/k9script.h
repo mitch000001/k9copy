@@ -37,6 +37,7 @@ protected:
 
    vm_cmd_t *EXIT(char register1,char register2);
    void addPreCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd);
+   void insertPreCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd);
    void addPostCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd);
    void addCellCmd(pgc_command_tbl_t *command_tbl,vm_cmd_t *cmd);
    void updatePGCIUT_VMG(pgc_command_tbl_t *command_tbl);

@@ -14,7 +14,7 @@
 #define K9PREFMPEG4_H
 
 #include "prefMPEG4.h"
-
+#include "k9common.h"
 class k9prefMPEG4 : public prefMPEG4
 {
   Q_OBJECT

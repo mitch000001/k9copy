@@ -13,6 +13,7 @@
 #ifndef K9PREFPREVIEW_H
 #define K9PREFPREVIEW_H
 
+#include "k9common.h"
 #include "prefpreview.h"
 
 class k9prefPreview : public prefPreview

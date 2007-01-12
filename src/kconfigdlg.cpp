@@ -17,6 +17,7 @@
 *   Free Software Foundation, Inc.,                                       *
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
+
 #include "kconfigdlg.h"
 #include "kmessagebox.h"
 
@@ -25,6 +26,7 @@
 
 #include <kstdguiitem.h>
 #include <kguiitem.h>
+#include "k9config.h"
 
 kConfigDlg::kConfigDlg(QWidget *parent)
     : configDlg(parent)
@@ -36,10 +38,12 @@ kConfigDlg::kConfigDlg(QWidget *parent)
   tblDevices->setColumnWidth(1,210);
   tblDevices->setColumnWidth(2,40);
   tblDevices->setColumnWidth(3,45);
-  KSimpleConfig settings("K9Copy");
-  ldev=settings.readListEntry("devices/dev");
-  llabels=settings.readListEntry("devices/labels");
-  lIO=settings.readListEntry("devices/IO");
+  //KSimpleConfig settings("K9Copy");
+  k9Config config;
+  
+  ldev=config.getDevices();
+  llabels=config.getDevicesLabels();
+  lIO=config.getDevicesIO();
   int row=0;
   for ( QStringList::Iterator it = ldev.begin(); it != ldev.end(); ++it )
   {
@@ -102,7 +106,8 @@ void kConfigDlg::save()
   QStringList ldev;
   QStringList llabels;
   QStringList lIO;
-  KSimpleConfig settings("K9Copy");
+  //KSimpleConfig settings("K9Copy");
+  k9Config config;
   ldev.clear();
   llabels.clear();
   for (int i=0;i<tblDevices->numRows();i++)
@@ -138,7 +143,9 @@ void kConfigDlg::save()
       }
     }
   }
-  settings.writeEntry("devices/labels",llabels);
-  settings.writeEntry("devices/dev",ldev);
-  settings.writeEntry("devices/IO",lIO);
+  
+  config.setDevicesLabels(llabels);
+  config.setDevices(ldev);
+  config.setDevicesIO(lIO);
+  config.save();
 }

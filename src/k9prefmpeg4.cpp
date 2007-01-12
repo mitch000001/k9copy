@@ -10,9 +10,9 @@
 //
 //
 
-
+#include "k9common.h"
 #include "k9prefmpeg4.h"
-#include <ksimpleconfig.h>
+#include "k9config.h"
 #include <qcombobox.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
@@ -27,24 +27,24 @@ k9prefMPEG4::k9prefMPEG4(QWidget* parent, const char* name, WFlags fl)
 }
 
 void k9prefMPEG4::load() {
-    KSimpleConfig settings("K9Copy");
-
-    sbMp4Size->setValue(settings.readEntry("/mp4/size",QString("700")).toInt());
-    sbMp4Size->setSuffix(" "+ i18n("mb"));
-    sbMp4NumberCD->setValue(settings.readEntry("/mp4/numberCD",QString("1")).toInt());
+    //KSimpleConfig settings("K9Copy");
+    k9Config config;
     
-    leMp4Width->setText(settings.readEntry("/mp4/width","640"));
-    leMp4Height->setText(settings.readEntry("/mp4/height",""));
+    sbMp4Size->setValue(config.getPrefMp4Size());
+    sbMp4Size->setSuffix(" "+ i18n("mb"));
+    sbMp4NumberCD->setValue(config.getPrefMp4NumberCD());
+    
+    leMp4Width->setText(config.getPrefMp4Width());
+    leMp4Height->setText(config.getPrefMp4Height());
 
-
-    ckMp4AspectRatio->setChecked(settings.readEntry("/mp4/aspectratio","1").toInt());
+    ckMp4AspectRatio->setChecked(config.getPrefMp4AspectRatio());
     leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
 
-    ck2passes->setChecked(settings.readBoolEntry("/mp4/2passes",FALSE));
+    ck2passes->setChecked(config.getPrefMp42Passes());
 
-    leMp4AudioBitrate->setText(settings.readEntry("/mp4/audiobitrate","128"));
+    leMp4AudioBitrate->setText(config.getPrefMp4AudioBitrate());
 
-    QStringList m_codecLabels=settings.readListEntry("mencoder/labels");
+    QStringList m_codecLabels=config.getCodecLabels();
 
     cbMp4Codec->clear();
     cbMp4Codec->insertItem("Xvid");
@@ -52,7 +52,7 @@ void k9prefMPEG4::load() {
     cbMp4Codec->insertItem("x264");
 
     cbMp4Codec->insertStringList(m_codecLabels);
-    cbMp4Codec->setCurrentItem(settings.readEntry("/mp4/codec",0).toInt());
+    cbMp4Codec->setCurrentItem(config.getPrefMp4Codec());
 
 }
 
@@ -62,16 +62,16 @@ k9prefMPEG4::~k9prefMPEG4()
 }
 
 void k9prefMPEG4::save() {
-    KSimpleConfig settings("K9Copy");
-    settings.writeEntry("/mp4/codec",cbMp4Codec->currentItem());
-    settings.writeEntry("/mp4/size",(int)sbMp4Size->value());
-    settings.writeEntry("/mp4/numberCD",(int)sbMp4NumberCD->value());
-    settings.writeEntry("/mp4/width",leMp4Width->text());
-    settings.writeEntry("/mp4/height",leMp4Height->text());
-    settings.writeEntry("/mp4/aspectratio",(int)ckMp4AspectRatio->isChecked());
-    settings.writeEntry("/mp4/audiobitrate",leMp4AudioBitrate->text());
-    settings.writeEntry("/mp4/2passes",ck2passes->isChecked());
-
+    k9Config config;
+    config.setPrefMp4Codec(cbMp4Codec->currentItem());
+    config.setPrefMp4Size( (int)sbMp4Size->value());
+    config.setPrefMp4NumberCD( (int)sbMp4NumberCD->value());
+    config.setPrefMp4Width( leMp4Width->text());
+    config.setPrefMp4Height(leMp4Height->text());
+    config.setPrefMp4AspectRatio( ckMp4AspectRatio->isChecked());
+    config.setPrefMp4AudioBitrate( leMp4AudioBitrate->text());
+    config.setPrefMp42Passes(ck2passes->isChecked());
+    config.save();
 }
 
 void k9prefMPEG4::ckMp4AspectRatioClick() {

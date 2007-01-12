@@ -14,7 +14,7 @@
 #include "k9settings.h"
 #include "k9playbackoptions.h"
 #include "k9langselect.h"
-
+#include "k9config.h"
 #include <kdeversion.h>
 #include <kstatusbar.h> 
 #include <kstdaccel.h> 
@@ -27,18 +27,18 @@
 #include <kkeydialog.h>
 #include <kedittoolbar.h>
 #include <klibloader.h>
-#include <ksimpleconfig.h>
 #include "kviewmpeg2.h"
 #include "k9titlefactor.h"
 #include <qdom.h>
-		
+#include <ksimpleconfig.h>		
 k9Copy::k9Copy()
     : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
 {
-    KSimpleConfig settings("K9Copy");
-    m_useXine=settings.readEntry("/options/useMplayer",0).toInt();
     
-    m_useDvdAuthor=settings.readBoolEntry("/options/useDvdAuthor",true);
+    k9Config config;
+    m_useXine=config.getUseMplayer();
+    
+    m_useDvdAuthor=config.getUseDvdAuthor();
     
     m_k9Main=new k9Main(this);
     m_childView=createWrapper( m_k9Main,"","");
@@ -104,6 +104,7 @@ k9Copy::k9Copy()
             this,   SLOT(changeCaption(const QString&)));
 
     setAutoSaveSettings();
+    KSimpleConfig settings("K9Copy");
     if (settings.hasGroup("dock"))
     	dockManager->readConfig((KConfig*)&settings,"dock");
     
@@ -195,8 +196,8 @@ void k9Copy::preferences() {
   m_mp2->close();
   deleteToolWindow(m_previewAcc);
   
-   KSimpleConfig ksettings("K9Copy");
-   m_useXine=ksettings.readEntry("/options/useMplayer",0).toInt();
+   k9Config config;
+   m_useXine=config.getUseMplayer();
 
     if (m_useXine)
 	m_mp2=new K9Mplayer(this);

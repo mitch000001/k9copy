@@ -36,9 +36,8 @@
 
 #include <klocale.h>
 #include <kiconloader.h>
-#include <ksimpleconfig.h>
 #include "kviewmpeg2.h"
-
+#include "k9config.h"
 
 
 
@@ -115,10 +114,10 @@ kViewMPEG2::kViewMPEG2() {
 void kViewMPEG2::readSettings() {
     m_player.stop();
 
-    KSimpleConfig settings("K9Copy");
-
-
-    m_prefUseGL=settings.readEntry("/options/useGL",0).toInt();
+    //KSimpleConfig settings("K9Copy");
+    k9Config config;
+    m_prefUseGL=config.getUseGL();
+    //m_prefUseGL=settings.readEntry("/options/useGL",0).toInt();
 
 }
 

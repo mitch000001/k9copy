@@ -220,25 +220,22 @@ void k9Script::updatePGC(pgc_t *_pgc ,int numVTS,int numPGC) {
            numSubP=title->getDefSubtitle()->getnum();
         if (title->getDefAudio() !=NULL)   
            numAudio=title->getDefAudio()->getID();
-        if (numSubP+numAudio >0)
-           insertPreCmd(command_tbl,setSTN( numAudio,numSubP));
+        if (numSubP+numAudio >0) {
+           char *c=(char*)command_tbl->pre_cmds;
+           if (*c==0x51) 
+           	memcpy(command_tbl->pre_cmds,setSTN( numAudio,numSubP),8);
+           else
+                insertPreCmd(command_tbl,setSTN( numAudio,numSubP)); 
+        }
     }
               	  	
  for (int i=0; i < command_tbl->nr_of_cell;i++) {
       //replace all JUMPs by a goto to the last line of cell commands ( link to next title)
-      //char *cmd=(char*)&(command_tbl->cell_cmds[i]);
-      //if (cmd[0]==0x30) {
-      //   memcpy(&(command_tbl->cell_cmds[i]),CALLVMGM_MENU(),8);
-      //}
       JumpVmg(&(command_tbl->cell_cmds[i]));
 
  }
  for (int i=0; i < command_tbl->nr_of_post;i++) {
       //replace all JUMPs by a goto to the last line of cell commands ( link to next title)
-      //char *cmd=(char*)&(command_tbl->post_cmds[i]);
-    //  if (cmd[0]==0x30) {
-     //    memcpy(&(command_tbl->post_cmds[i]),CALLVMGM_MENU(),8);
-     // }
        JumpVmg(&(command_tbl->post_cmds[i]));
  } 
   	  	

@@ -21,7 +21,6 @@
 #include <qstring.h>
 #include <kmessagebox.h>
 #include <qlistview.h>
-#include <ksimpleconfig.h>
 #include <kmainwindow.h>
 #include <kaboutdata.h>
 #include <qevent.h>
