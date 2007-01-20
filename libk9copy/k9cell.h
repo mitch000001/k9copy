@@ -103,6 +103,9 @@ private:
 class k9CellList : public QPtrList <k9Cell> {
 private:
     uint32_t m_position;
+    k9Cell * findCell(uint32_t sector);
+    k9Cell * findCell(uint32_t sector, uint32_t start, uint32_t end);
+
 public:
     k9CellList() {
         m_position=0;

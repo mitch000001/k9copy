@@ -55,7 +55,7 @@ void k9Config::read() {
   m_devicesIO=m_config->readListEntry("IO");
 
   m_config->setGroup("preview");
-  m_useMplayer=m_config->readBoolEntry("userMplayer",false);
+  m_useMplayer=m_config->readBoolEntry("useMplayer",false);
   m_useGL=m_config->readBoolEntry("useGL",false);
   m_MplayerVout=m_config->readNumEntry("MplayerVout",0);
   m_MplayerAout=m_config->readNumEntry("MplayerAout",0);

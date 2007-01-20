@@ -31,6 +31,7 @@ k9TitleFactor::k9TitleFactor(QWidget* parent, const char* name, WFlags fl)
     m_updating=false;
     SelectionChanged( NULL,m_withMenus);
     m_useDvdAuthor=false;
+    slFactor->setPageStep(0);
 }
 
 k9TitleFactor::~k9TitleFactor() {}

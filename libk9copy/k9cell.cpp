@@ -25,16 +25,19 @@ int k9VobuList::compareItems ( QPtrCollection::Item item1, QPtrCollection::Item 
 }
 
 k9Vobu * k9VobuList::findVobu(uint32_t sector) {
-    int c=count();
-    if (c >0) {
+    //int c=count();
+    //if (c >0) {
         k9Vobu *v1,*v2;
-        v1=(k9Vobu*) at(0);
-        v2=(k9Vobu*) at(c-1);
+        v1=first();
+        v2=last();
+        if (v1==NULL)
+            return NULL;
+            
         if (sector >= v1->oldSector && sector <= v2->oldSector)
-            return findVobu(sector,0,c-1);
+            return findVobu(sector,0,count()-1);
         else
             return NULL;
-    }
+    //}
 }
 
 k9Vobu * k9VobuList::findVobu(uint32_t sector, uint32_t start, uint32_t end) {
@@ -382,14 +385,60 @@ k9Cell* k9CellList::addCell(int _vts,int _pgc, int _vob) {
 
 k9Vobu *k9CellList::findVobu(uint32_t sector) {
     k9Vobu *vobu=NULL;
-    for (uint i=0;i <count();i++) {
+    k9Cell *cell=findCell(sector);
+    if (cell==NULL)
+    	return NULL;
+    else
+        return cell->findVobu(sector);
+    
+    int nbCells=count();
+    for (uint i=0;i <nbCells;i++) {
         k9Cell * cell = (k9Cell*)at(i);
         vobu = cell->findVobu(sector);
         if (vobu !=NULL) {
             return vobu;
         }
+        cell = (k9Cell*)at(nbCells-1-i);
+        vobu = cell->findVobu(sector);
+        if (vobu !=NULL) {
+            return vobu;
+        }
+        
+        
     }
     return vobu;
 }
+
+k9Cell * k9CellList::findCell(uint32_t sector) {
+   return findCell(sector,0,count()-1);
+}
+
+k9Cell * k9CellList::findCell(uint32_t sector, uint32_t start, uint32_t end) {
+
+    long lstart=start;
+    long lend=end;
+
+    k9Cell *result = NULL;
+
+    while (lstart <=lend) {
+        long  m =(lstart+lend)/2;
+        k9Cell *cell = (k9Cell *)at(m);
+        k9Vobu *fv=cell->vobus.first();
+        k9Vobu *lv=cell->vobus.last();
+        
+        
+        if ( sector >=fv->oldSector && sector<= lv->oldSector) {
+            return cell;
+        } else if ( fv->oldSector >sector) {
+            lend = m-1;
+        } else {
+            lstart=m+1;
+        }
+    }
+    return NULL;
+}
+
+
+
 
 #include "k9cell.moc"
