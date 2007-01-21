@@ -38,9 +38,10 @@ private:
    dvd_file_t *dvdfile;
    QMutex mutex;
    dvd_reader_t *m_dvd;
+   int m_chapter;
 public:
     k9PlayMPEG2();
-    void open (dvd_reader_t *dvd,const QString & device,k9DVDTitle * title);
+    void open (dvd_reader_t *dvd,const QString & device,k9DVDTitle * title,int chapter);
     kDecMPEG2 *getDecoder();
     void setDvd(dvd_reader_t* _value) { m_dvd = _value;}
     dvd_reader_t* getDvd() const {return m_dvd;}

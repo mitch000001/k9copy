@@ -30,6 +30,7 @@
 #include "k9settings.h"
 #include "k9langselect.h"
 #include "k9config.h"
+#include "k9updatefactor.h"
 
 #include <kselect.h>
 #include <kcombobox.h>
@@ -120,6 +121,8 @@ k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
   bInputOpen->setPixmap(SmallIcon("fileopen"));
   bInputOpenDir->setPixmap(SmallIcon("folder_open"));
   emit SelectionChanged(NULL,true);
+  m_update=new k9UpdateFactor(this,"");
+  connect(m_update,SIGNAL(updateFactor_internal()),this,SLOT(updateFactor_internal()));
 
 }
 
@@ -390,6 +393,7 @@ void k9Main::Copy()
     if (KMessageBox::warningContinueCancel (this, i18n("Insuffisant disk space on %1\n%2 mb expected.").arg(m_prefOutput).arg(m_prefSize),i18n("DVD Copy"))==KMessageBox::Cancel)
       return;
   }
+  stopPreview();
   changeStatusbar( i18n("Backup in progress"),sbMessage);
   bool burn=false;
   if (!m_useDvdAuthor || withMenus())
@@ -574,6 +578,7 @@ void k9Main::slot_progress(QString str)
 
 k9Main::~k9Main()
 {
+  delete m_update;
   delete dvd;
 }
 
@@ -802,6 +807,7 @@ void k9Main::checkLang(QString lang,eStreamType streamType,bool state)
 
 void k9Main::checkTitle(bool state, ckLvItem *_item)
 {
+   m_update->wait();
 
   k9DVDListItem *litem;
   updating=true;
@@ -1340,7 +1346,11 @@ void k9Main::Clone(QString _input,QString _output)
   Copy();
 }
 
-void k9Main::updateFactor()
+void k9Main::updateFactor(){
+  m_update->updateFactor();
+}
+
+void k9Main::updateFactor_internal()
 {
   if (dvd->getopened())
   {

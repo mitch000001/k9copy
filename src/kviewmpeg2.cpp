@@ -92,7 +92,12 @@ kViewMPEG2::kViewMPEG2() {
 
     m_prefUseGL=FALSE;
 #endif
-
+    //disable the option use_gl, so if k9copy crash, we restart without gl
+    if (m_prefUseGL) {
+    	k9Config config;
+    	config.setUseGL( false);
+    	config.save();
+    }
     m_player.getDecoder()->setUseGL(m_prefUseGL);
     if (m_prefUseGL)  {
         connect(m_player.getDecoder()  , SIGNAL(ppmReady(uchar *,int,int,int)), this, SLOT(drawppm(uchar *,int,int,int)));
@@ -100,6 +105,12 @@ kViewMPEG2::kViewMPEG2() {
         m_GLwidget= k9GLWidget::createWidget(label);
         m_widget=NULL;
         m_layout->addWidget(m_GLwidget,0,0);
+        
+        //init ok, we can put the gl flag to true
+    	k9Config config;
+    	config.setUseGL( true);
+    	config.save();
+        
     } else {
         connect(m_player.getDecoder()  , SIGNAL(pixmapReady(QImage *)), this, SLOT(drawPixmap(QImage *)));
         m_widget=new k9Widget(label);
@@ -180,7 +191,7 @@ void kViewMPEG2::bPlayClick() {
 
 
 int kViewMPEG2::open (k9DVD *_dvd,k9DVDTitle * title,int chapter) {
-    m_player.open(_dvd->getdvd()->getDvd(), _dvd->getDevice(),title);
+    m_player.open(_dvd->getdvd()->getDvd(), _dvd->getDevice(),title,chapter);
 }
 
 

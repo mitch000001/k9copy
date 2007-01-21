@@ -56,7 +56,7 @@ class k9DVDTitle;
 class KLibFactory;
 class k9PlaybackOptions;
 class k9LangSelect;
-
+class k9UpdateFactor;
 
 class ckLvItem : public QCheckListItem {
 public:
@@ -143,6 +143,8 @@ private slots:
     virtual void	  bInputOpenDirClick();
     virtual void	  foundMountPoint (const QString &mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail);
     virtual void 	  fspDone();
+    virtual void updateFactor_internal();
+
 public slots:
     /*$PUBLIC_SLOTS$*/
     virtual void          PreviewTitle();
@@ -175,7 +177,7 @@ protected:
     void closeDVD();
     KLibFactory *m_factory;
     QString  getDevice(QComboBox *_combo);
-
+    k9UpdateFactor *m_update;
     //PREFERENCES
     QString m_prefOutput;
     bool m_useDvdAuthor;

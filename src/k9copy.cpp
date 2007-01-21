@@ -34,7 +34,6 @@
 k9Copy::k9Copy()
     : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
 {
-    
     k9Config config;
     m_useXine=config.getUseMplayer();
     
@@ -107,7 +106,6 @@ k9Copy::k9Copy()
     KSimpleConfig settings("K9Copy");
     if (settings.hasGroup("dock"))
     	dockManager->readConfig((KConfig*)&settings,"dock");
-    
 }
 
 k9Copy::~k9Copy()

@@ -76,8 +76,11 @@ void k9PlayMPEG2::playTitle() {
 
     int32_t parts;
     dvdnav_get_number_of_parts(dvdnav , title, &parts);
-
-    dvdnav_title_play(dvdnav , title);
+     
+    if (m_chapter==0)
+    	dvdnav_title_play(dvdnav , title);
+    else
+        dvdnav_part_play(dvdnav , title,m_chapter);
     /* the read loop which regularly calls dvdnav_get_next_block
      * and handles the returned events */
 
@@ -227,15 +230,16 @@ void k9PlayMPEG2::stop() {
 
 void k9PlayMPEG2::play() {
   if (m_stopped && m_title!=NULL) 
-	open(m_dvd,m_device,m_title);
+	open(m_dvd,m_device,m_title,m_chapter);
 }
 
 kDecMPEG2 *k9PlayMPEG2::getDecoder() {
   return m_decoder.getDecoder() ;
 }
 
-void k9PlayMPEG2::open (dvd_reader_t *dvd,const QString & device,k9DVDTitle * title) {
+void k9PlayMPEG2::open (dvd_reader_t *dvd,const QString & device,k9DVDTitle * title,int chapter=0) {
     m_dvd=dvd;
+    m_chapter=chapter;
     int  ret = 0;
     struct stat dvd_stat;
     QString c;
