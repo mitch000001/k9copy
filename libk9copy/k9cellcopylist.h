@@ -27,13 +27,16 @@
 
 class k9CellCopyVTS {
 private:
-	uint num;
-	uint64_t size;
+    uint num;
+    uint64_t size;
 public:
-	k9CellCopyVTS (int _num) {num=_num;size=0;};
-	uint getnum() ;
-	void addsize(uint32_t _size) ;
-	uint64_t getsize() ;
+    k9CellCopyVTS (int _num) {
+        num=_num;
+        size=0;
+    };
+    uint getnum() ;
+    void addsize(uint32_t _size) ;
+    uint64_t getsize() ;
 };
 
 
@@ -43,31 +46,52 @@ public:
 
 class k9CellVTSList : public QPtrList<k9CellCopyVTS> {
 protected:
-	 int compareItems ( QPtrCollection::Item item1, QPtrCollection::Item item2 );
+    int compareItems ( QPtrCollection::Item item1, QPtrCollection::Item item2 );
 };
 
 
 class k9CellCopyList : public QObjectList {
 public:
     k9CellCopyList(k9DVDRead  * _dvdHandle,k9DVD *_DVD);
-    double getfactor(bool _withMenus,bool _streams,uint64_t _inbytes=0,uint64_t outbytes=0);
+    double getfactor(bool _withMenus,bool _streams);
     double gettotalSize();
     double getforcedSize(bool _withFactor);
     double getMinFactor(bool _withMenus);
     k9CellVTSList VTSList;
     ~k9CellCopyList();
+
+    void addInbytes(const uint64_t& _value) {
+        m_inbytes += _value;
+    }
+
+
+    void addOutbytes(const uint64_t& _value) {
+        m_outbytes += _value;
+    }
+
+    void addFrcinbytes(const uint64_t& _value) {
+        m_frcinbytes += _value;
+    }
+
+    void addFrcoutbytes(const uint64_t& _value) {
+        m_frcoutbytes += _value;
+    }
+
 private:
     k9DVD *DVD;
     k9DVDRead *dvdHandle;
+    uint64_t m_inbytes,m_outbytes;
+    uint64_t m_frcinbytes,m_frcoutbytes;
+
     void fill();
     k9Cell *addCell(int _VTS,int _pgc,int _id,uint32_t startSector,uint32_t lastSector,uchar _angleBlock);
     bool checkSelected(k9Cell *_cell);
     void addStreams(k9DVDTitle *_title,k9Cell *_cell);
     void setVTS(uint _numVTS,uint32_t _size);
 
-   //QPtrList <k9CellCopyVTS> VTSList;
-   void sortVTSList();
-    
+    //QPtrList <k9CellCopyVTS> VTSList;
+    void sortVTSList();
+
 };
 
 #endif

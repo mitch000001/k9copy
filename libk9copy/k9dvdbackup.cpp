@@ -316,10 +316,13 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     dvdfile->close();
     backupDlg->setProgressTotal(len+1);
     if (!m_forcedFactor) {
-	m_outbytes+=DVD_VIDEO_LB_LEN*2;
-	m_inbytes+=DVD_VIDEO_LB_LEN*2;
+	m_cellCopyList->addInbytes( DVD_VIDEO_LB_LEN *2);
+    	m_cellCopyList->addOutbytes( DVD_VIDEO_LB_LEN *2);
+    } else {
+	m_cellCopyList->addFrcinbytes(DVD_VIDEO_LB_LEN *2);
+    	m_cellCopyList->addFrcoutbytes( DVD_VIDEO_LB_LEN *2);
+    
     }
-
 }
 
 
@@ -331,7 +334,9 @@ void k9DVDBackup::getOutput(uchar * buffer, uint32_t buflen) {
     mutex.unlock();
 
     if (!m_forcedFactor)
-        m_outbytes+=buflen;
+        m_cellCopyList->addOutbytes( buflen);
+    else
+    	m_cellCopyList->addFrcoutbytes( buflen);
 
     uchar *temp =buffer;
     QString sName;
@@ -727,7 +732,9 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     
     
     if (!m_forcedFactor)
-    	m_inbytes+=DVD_VIDEO_LB_LEN;
+    	m_cellCopyList->addInbytes( DVD_VIDEO_LB_LEN);
+    else
+    	m_cellCopyList->addFrcinbytes(DVD_VIDEO_LB_LEN);
     uint32_t end;
 
     if (badNavPack) {
@@ -770,7 +777,9 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     free(buf);
 
     if (! m_forcedFactor)
-    	m_inbytes+=nsectors*DVD_VIDEO_LB_LEN;
+    	m_cellCopyList->addInbytes( nsectors*DVD_VIDEO_LB_LEN);
+    else
+    	m_cellCopyList->addFrcinbytes( nsectors*DVD_VIDEO_LB_LEN);
 
     mutex.lock();
     qApp->processEvents();
@@ -1618,7 +1627,7 @@ uint k9DVDBackup::getLastCell(k9CellCopyList *_cellCopyList, uint _index) {
 }
 
 void k9DVDBackup::calcFactor() {
-    double factor=m_cellCopyList->getfactor(m_withMenu,false,m_inbytes,m_outbytes);
+    double factor=m_cellCopyList->getfactor(m_withMenu,false);
     QString sFactor;
     sFactor.sprintf("%.2f",factor);
     backupDlg->setFactor(sFactor);
@@ -1628,11 +1637,15 @@ void k9DVDBackup::calcFactor() {
 
 void k9DVDBackup::forceFactor(double _factor) {
     double factor=_factor;
+    double minFactor=m_cellCopyList->getMinFactor( m_withMenu);
+    if (factor<minFactor)
+    	factor=minFactor;
     QString sFactor;
     sFactor.sprintf("%.2f",factor);
     backupDlg->setFactor(sFactor);
     argFactor =  factor;
     m_forcedFactor=true;
+    qDebug(QString("force factor : %1   min:%2").arg(factor).arg(minFactor));
 }
 
 
@@ -1666,7 +1679,6 @@ void k9DVDBackup::execute() {
     totalSize = (totalSize >k9DVDSize::getMaxSize()) ? k9DVDSize::getMaxSize():totalSize;
 
     backupDlg->setTotalMax((uint32_t)totalSize);
-    m_inbytes=m_outbytes=0;
 
     int lastCell;
     calcFactor();

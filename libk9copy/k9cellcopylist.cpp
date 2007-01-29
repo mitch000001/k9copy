@@ -90,6 +90,7 @@ void k9CellCopyList::fill() {
     }
     kifoZero.closeIFO();
     sortVTSList();
+    m_frcinbytes=m_frcoutbytes=m_inbytes=m_outbytes=0;
 }
 
 
@@ -284,17 +285,22 @@ double k9CellCopyList::getMinFactor(bool _withMenus) {
         menuSize=DVD->getmenuSize();
 
    menuSize= menuSize*2048;
-   double totalSize=gettotalSize()+menuSize - fforced;
+   //totalSize=part of dvd with auto shrink factor/2.5
+   double totalSize=gettotalSize()+menuSize - (fforced-m_frcinbytes) -m_inbytes;
    totalSize/=2.50;
 
-   double minFactor=fforced/(MaxSize - totalSize) ;
+//qDebug(QString("totalSize(%1)=gettotalSize()(%2)+menuSize(%3) -(fforced(%4)-m_frcinbytes(%5))-m_inbytes(%6)").arg(totalSize).arg(gettotalSize()).arg(menuSize).arg(fforced).arg(m_frcinbytes).arg(m_inbytes));
+
+   double minFactor=(fforced-m_frcoutbytes) /(MaxSize- totalSize -m_outbytes) ;
+  // qDebug(QString("minfactor(%1)=(fforced(%2) -m_frcoutbytes(%3))/(MacSize(%4)-totalSize(%5)-m_outbytes(%6))").arg(minFactor).arg(fforced).arg(m_frcoutbytes).arg(MaxSize).arg(totalSize).arg(m_outbytes));
+   
    if (minFactor<1)
 	minFactor=1;
    return minFactor;
 }
 
 
-double k9CellCopyList::getfactor(bool _withMenus,bool _streams,uint64_t _inbytes,uint64_t _outbytes) {
+double k9CellCopyList::getfactor(bool _withMenus,bool _streams) {
 
     double totalSize=gettotalSize();
 
@@ -329,19 +335,34 @@ double k9CellCopyList::getfactor(bool _withMenus,bool _streams,uint64_t _inbytes
 
     double factor;
 
-    double fforced=getforcedSize(false);
-    double fforcedsh=getforcedSize(true);
-    double dvdSize2=dvdSize-_outbytes -fforcedsh;
+    double fforced=getforcedSize(false)-m_frcinbytes;
+    double fforcedsh=getforcedSize(true)-m_frcoutbytes;
+    double dvdSize2=dvdSize-m_outbytes -fforcedsh;
     //     dvdSize2 -=menuSize;
-
-    factor=(totalSize +menuSize -  fforced -_inbytes)/ dvdSize2 ;
-     	
-    factor = (int)(factor*100);
-    factor /=100;
-    factor+=0.01;
-    //    }
-    if (factor<=1)
-        factor=1;
-
+ 
+    if (dvdSize2 <0) {
+    	factor=2.5;
+    	//qDebug(QString("dvdSize (%1)- _outbytes(%2) - fforcedsh(%3)=%4").arg(dvdSize).arg(m_outbytes).arg(fforcedsh).arg(dvdSize2));	
+    }
+    else {
+	factor=(totalSize +menuSize -  fforced -m_inbytes)/ dvdSize2 ;
+			
+	factor = (int)(factor*100);
+	factor /=100;
+	factor+=0.01;
+	//    }
+	
+	uint64_t o=m_outbytes;
+	uint64_t i=m_inbytes;
+	//if (o==0)
+	//	o=1;
+	//qDebug(QString("factor : %1   realise : %2").arg(factor).arg((double)i/(double)o));
+	
+	if (factor<=1)
+		factor=1;
+	else if (factor>3)
+		factor=3;
+    }
+    
     return (factor);
 }
