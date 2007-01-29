@@ -31,7 +31,7 @@
 #include "k9langselect.h"
 #include "k9config.h"
 #include "k9updatefactor.h"
-
+#include "k9haldevice.h"
 #include <kselect.h>
 #include <kcombobox.h>
 #include <qtextbrowser.h>
@@ -434,7 +434,7 @@ void k9Main::Copy()
     b.setSpeed( cbBurnSpeed->currentText());
     if (cbOutputDev->currentItem() !=0)
     {
-      kCDDrive * drive=(kCDDrive*)recorderList.at(cbOutputDev->currentItem()-1);
+      k9CdDrive * drive=(k9CdDrive*)recorderList.at(cbOutputDev->currentItem()-1);
       b.setburnDevice(drive->device);
       closeDVD();
       if (dvd->getDevice()== drive->device)
@@ -491,7 +491,7 @@ QString  k9Main::getDevice(QComboBox *_combo)
   }
   else
   {
-    kCDDrive * drive=(kCDDrive*)driveList.at(index);
+    k9CdDrive * drive=(k9CdDrive*)driveList.at(index);
     res=drive->device;
   }
   return res;
@@ -1157,22 +1157,32 @@ void k9Main::readDrives()
 
   for (int i=0; i<drives.count();i++)
   {
-    if (drives.getDrive(i)->canReadDVD)
-    {
-      QString c(drives.getDrive(i)->name + "  ("+drives.getDrive(i)->device+")");
-      cbInputDev->insertItem(c,-1);
-      driveList.append(drives.getDrive(i));
+    k9CdDrive *drive=drives.getDrive(i);
+    if (drive->getDevice()!=NULL) {
+        k9HalDevice *dev=drive->getDevice();
+        connect(dev,SIGNAL(volumeChanged( const QString &)),this,SLOT(volumeChanged(const QString&)));
     }
-    if (drives.getDrive(i)->canWriteDVD)
+    if (drive->canReadDVD)
     {
-      cbOutputDev->insertItem(drives.getDrive(i)->name+ "  ("+drives.getDrive(i)->device+")",-1);
-      recorderList.append(drives.getDrive(i));
+      QString c(drive->name + "  ("+drive->device+")");
+      cbInputDev->insertItem(c,-1);
+      driveList.append(drive);
+    }
+    if (drive->canWriteDVD)
+    {
+      cbOutputDev->insertItem(drive->name+ "  ("+drive->device+")",-1);
+      recorderList.append(drive);
     }
 
   }
 
 }
 
+
+void k9Main::volumeChanged(const QString &device) {
+    if (device==dvd->getDevice())
+    	closeDVD();
+}
 
 /*!
     \fn k9Main::listView1CurrentChanged( QListViewItem *newItem )
@@ -1248,7 +1258,7 @@ void k9Main::cbOutputDevActivated(int _index)
   if (_index==0)
     return;
 
-  kCDDrive * drive=(kCDDrive*)recorderList.at(_index-1);
+  k9CdDrive * drive=(k9CdDrive*)recorderList.at(_index-1);
   QValueList <int>list=drive->getWriteSpeeds();
   QValueList<int>::iterator it=list.begin();
 
@@ -1256,7 +1266,7 @@ void k9Main::cbOutputDevActivated(int _index)
   cbBurnSpeed->insertItem(i18n("default"));
   while( it !=list.end())
   {
-    cbBurnSpeed->insertItem(QString::number((double)(*it) /1385));
+    cbBurnSpeed->insertItem(QString::number((double)(*it)));
     it++;
   }
 }
@@ -1324,7 +1334,7 @@ void k9Main::setOutput(QString _output)
   cbOutputDev->setCurrentItem(0);
   for (uint i=0 ;i <recorderList.count();i++)
   {
-    kCDDrive * drive=(kCDDrive*)recorderList.at(i);
+    k9CdDrive * drive=(k9CdDrive*)recorderList.at(i);
     QString c(drive->device);
     //        qDebug ("output=" +c);
     if (c==_output)
@@ -1372,3 +1382,5 @@ bool k9Main::withMenus()
 {
   return m_playbackOptions->withMenus();
 }
+
+#include "k9main.moc"

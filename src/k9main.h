@@ -12,8 +12,8 @@
 
 #ifndef K9MAIN_H
 #define K9MAIN_H
-
-#include "kcddrive.h"
+#include "k9common.h"
+#include "k9cddrive.h"
 #include "images.h"
 #include "k9mainw.h"
 #include "kconfigdlg.h"
@@ -144,7 +144,6 @@ private slots:
     virtual void	  foundMountPoint (const QString &mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail);
     virtual void 	  fspDone();
     virtual void updateFactor_internal();
-
 public slots:
     /*$PUBLIC_SLOTS$*/
     virtual void          PreviewTitle();
@@ -154,6 +153,7 @@ public slots:
     virtual void	   Clone(QString _input,QString _output);
     virtual void	   setInput(QString _input);
     virtual void 	   setOutput(QString _output);
+    virtual void 	  volumeChanged(const QString &device);
 protected:
     /*$PROTECTED_FUNCTIONS$*/
     QObjectList items;
@@ -165,7 +165,7 @@ protected:
     ckLvItem * root;
     QObjectList driveList;
     QObjectList recorderList;
-    kCDDrives drives;
+    k9CdDrives drives;
     QPixmap pxVideo;
     QPixmap pxSound;
     QPixmap pxText;

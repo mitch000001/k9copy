@@ -12,6 +12,7 @@
 
 
 #include "k9playbackoptions.h"
+#include "k9config.h"
 #include <kpushbutton.h>
 #include <kiconloader.h>
 
@@ -24,8 +25,8 @@ k9PlaybackOptions::k9PlaybackOptions(k9Main *mainWindow, QWidget* parent, const 
     enable(false);
     bSeqUp->setPixmap(SmallIcon("1uparrow"));
     bSeqDown->setPixmap(SmallIcon("1downarrow"));
-    KSimpleConfig settings("K9Copy");
-    ckMenu->setChecked(settings.readEntry("/options/keepMenus",0).toInt());
+    k9Config config;
+    ckMenu->setChecked(config.getKeepMenus());
     ckMenuClick();
 
 }
