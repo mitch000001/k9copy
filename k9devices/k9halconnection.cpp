@@ -18,7 +18,17 @@
 
 k9HalConnection *Hinstance=NULL;
 
- 
+void halDeviceAdded (LibHalContext *ctx, const char *udi) {
+   Hinstance->addDevice(udi);
+   
+}
+
+void halDeviceRemoved (LibHalContext *ctx, const char *udi) {
+  Hinstance->removeDevice( udi);
+}
+
+
+  
 k9HalConnection::k9HalConnection(QObject *parent, const char *name)
  : QObject(parent, name)
 {
@@ -37,10 +47,10 @@ k9HalConnection::k9HalConnection(QObject *parent, const char *name)
   m_dBusQtConnect->dbus_connection_setup_with_qt_main(m_dbusConnect );
 
   libhal_ctx_set_dbus_connection((LibHalContext*) m_context,m_dbusConnect );
-  /*
-  libhal_ctx_set_device_added( m_context, halDeviceAdded );
-  libhal_ctx_set_device_removed( m_context, halDeviceRemoved );
-  */
+  
+  libhal_ctx_set_device_added( (LibHalContext*)m_context, halDeviceAdded );
+  libhal_ctx_set_device_removed( (LibHalContext*)m_context, halDeviceRemoved );
+  
   if( !libhal_ctx_init((LibHalContext*) m_context, 0 ) ) {
     qDebug("HAL init failed");
     return;
@@ -53,6 +63,13 @@ k9HalConnection::k9HalConnection(QObject *parent, const char *name)
     addDevice( halDeviceList[i] );
 }
 
+void k9HalConnection::removeDevice( const char* udi ) {
+   k9HalDevice *device=findDevice( udi);
+   if (device !=NULL) {
+	emit deviceRemoved( device);
+	m_devices.remove(device);
+   }
+}
 
 void k9HalConnection::addDevice( const char* udi )
 {
@@ -69,8 +86,7 @@ void k9HalConnection::addDevice( const char* udi )
       if( !s.isEmpty() ) {
 	k9HalDevice *device=new k9HalDevice(this,udi);
 	m_devices.append( device);
-	qDebug( QString("k9HalDevice %1").arg(s));
-//	emit deviceAdded( s );
+	emit deviceAdded( device);
       }
     }
   }

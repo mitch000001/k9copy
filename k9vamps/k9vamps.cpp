@@ -381,7 +381,7 @@ bool k9vamps::check_pack (uchar *ptr) {
 
     if (pack_stuffing_length) {
         //fatal ("Non-zero pack stuffing length at %llu: %d\n",   rtell (ptr), pack_stuffing_length);
-        return false;
+       return false;
     }
 
     return true;
@@ -410,9 +410,8 @@ int k9vamps::check_video_packet (uchar *ptr) {
         fatal ("Not an MPEG2 video packet at %llu", rtell (ptr));
 
     if (ptr [7]) {
-        if ((ptr [7] & 0xc0) != 0xc0)
-            fatal ("First video packet in sequence starting at %llu "
-                   "misses PTS or DTS, flags=%02x", rtell (ptr), ptr [7]);
+        //if ((ptr [7] & 0xc0) != 0xc0)
+     //       fatal ("First video packet in sequence starting at %llu misses PTS or DTS, flags=%02x", rtell (ptr), ptr [7]);
 
         sequence_header_code  = (uint32_t) (ptr [6 + 3 + ptr [8] + 0]) << 24;
         sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 1]) << 16;
@@ -555,7 +554,7 @@ int k9vamps::new_private_1_type (uchar *ptr) {
         // LPCM audio
         abase = 0xa0;
     } else {
-        fatal ("Unknown private stream 1 type at %llu: %02x", rtell (ptr), type);
+//        fatal ("Unknown private stream 1 type at %llu: %02x", rtell (ptr), type);
         abase = 0;
     }
 

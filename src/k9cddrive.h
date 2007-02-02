@@ -61,10 +61,16 @@ public:
     k9CdDrive * getDrive(int num);
     void eject(const QString & device);
     void scanDrives();
+public slots:
+   void deviceAdded(k9HalDevice *device);
+   void deviceRemoved(k9HalDevice *device);
+signals:
+    void deviceAdded(k9CdDrive *drive);
+    void deviceRemoved(k9CdDrive *drive);
 private: // Private methods
     k9HalConnection *m_connection;
-
+    void addDrive(k9HalDevice *_device);
     void readConfig();
-    QObjectList drives;
+    QPtrList <k9CdDrive> drives;
 };
 #endif

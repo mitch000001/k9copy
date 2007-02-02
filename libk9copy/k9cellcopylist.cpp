@@ -286,13 +286,14 @@ double k9CellCopyList::getMinFactor(bool _withMenus) {
 
    menuSize= menuSize*2048;
    //totalSize=part of dvd with auto shrink factor/2.5
-   double totalSize=gettotalSize()+menuSize - (fforced-m_frcinbytes) -m_inbytes;
+   //double totalSize=gettotalSize()+menuSize - (fforced-m_frcinbytes) -m_inbytes;
+   double totalSize=gettotalSize()+menuSize - (fforced) -m_inbytes;
    totalSize/=2.50;
 
-//qDebug(QString("totalSize(%1)=gettotalSize()(%2)+menuSize(%3) -(fforced(%4)-m_frcinbytes(%5))-m_inbytes(%6)").arg(totalSize).arg(gettotalSize()).arg(menuSize).arg(fforced).arg(m_frcinbytes).arg(m_inbytes));
+qDebug(QString("totalSize(%1)=gettotalSize()(%2)+menuSize(%3) -(fforced(%4))-m_inbytes(%6)").arg(totalSize).arg(gettotalSize()).arg(menuSize).arg(fforced).arg(m_frcinbytes).arg(m_inbytes));
 
-   double minFactor=(fforced-m_frcoutbytes) /(MaxSize- totalSize -m_outbytes) ;
-  // qDebug(QString("minfactor(%1)=(fforced(%2) -m_frcoutbytes(%3))/(MacSize(%4)-totalSize(%5)-m_outbytes(%6))").arg(minFactor).arg(fforced).arg(m_frcoutbytes).arg(MaxSize).arg(totalSize).arg(m_outbytes));
+   double minFactor=(fforced-m_frcinbytes) /(MaxSize- (totalSize +m_outbytes) - m_frcoutbytes) ;
+   qDebug(QString("minfactor(%1)=(fforced(%2) -m_frinbytes(%3))/(MacSize(%4)-totalSize(%5)-m_outbytes(%6) - m_frcoutbytes(%7))").arg(minFactor).arg(fforced).arg(m_frcinbytes).arg(MaxSize).arg(totalSize).arg(m_outbytes).arg(m_frcoutbytes));
    
    if (minFactor<1)
 	minFactor=1;

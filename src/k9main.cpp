@@ -123,7 +123,8 @@ k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
   emit SelectionChanged(NULL,true);
   m_update=new k9UpdateFactor(this,"");
   connect(m_update,SIGNAL(updateFactor_internal()),this,SLOT(updateFactor_internal()));
-
+  connect(&drives,SIGNAL(deviceAdded( k9CdDrive*)),this,SLOT(deviceAdded( k9CdDrive* )));
+  connect(&drives,SIGNAL(deviceRemoved( k9CdDrive*)),this,SLOT(deviceRemoved( k9CdDrive* )));
 }
 
 
@@ -1140,7 +1141,42 @@ void k9Main::CreateMP4()
 
 }
 
+void k9Main::deviceAdded(k9CdDrive *_drive) {
+   addDrive(_drive);
+}
 
+void k9Main::deviceRemoved(k9CdDrive *_drive) {
+   if (_drive->device == dvd->getDevice()) 
+       closeDVD();
+
+  int i=driveList.find(_drive);
+  driveList.remove(i);
+  cbInputDev->removeItem(i);
+  
+  i=recorderList.find(_drive);
+  recorderList.remove( i);
+  cbOutputDev->removeItem(i+1);  
+
+}
+
+void k9Main::addDrive(k9CdDrive *drive) {
+    if (drive->getDevice()!=NULL) {
+        k9HalDevice *dev=drive->getDevice();
+        connect(dev,SIGNAL(volumeChanged( const QString &)),this,SLOT(volumeChanged(const QString&)));
+    }
+    if (drive->canReadDVD)
+    {
+      QString c(drive->name + "  ("+drive->device+")");
+      cbInputDev->insertItem(c,-1);
+      driveList.append(drive);
+    }
+    if (drive->canWriteDVD)
+    {
+      cbOutputDev->insertItem(drive->name+ "  ("+drive->device+")",-1);
+      recorderList.append(drive);
+    }
+
+}
 
 /*!
     \fn k9Main::readDrives()
@@ -1158,22 +1194,7 @@ void k9Main::readDrives()
   for (int i=0; i<drives.count();i++)
   {
     k9CdDrive *drive=drives.getDrive(i);
-    if (drive->getDevice()!=NULL) {
-        k9HalDevice *dev=drive->getDevice();
-        connect(dev,SIGNAL(volumeChanged( const QString &)),this,SLOT(volumeChanged(const QString&)));
-    }
-    if (drive->canReadDVD)
-    {
-      QString c(drive->name + "  ("+drive->device+")");
-      cbInputDev->insertItem(c,-1);
-      driveList.append(drive);
-    }
-    if (drive->canWriteDVD)
-    {
-      cbOutputDev->insertItem(drive->name+ "  ("+drive->device+")",-1);
-      recorderList.append(drive);
-    }
-
+    addDrive(drive);
   }
 
 }

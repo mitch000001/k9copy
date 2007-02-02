@@ -15,10 +15,6 @@
 #include "k9halconnection.h"
 #include "k9haldevice.h"
 #include <kprocess.h>
-#ifdef Q_OS_FREEBSD
-   #include <sys/param.h>
-#endif
-#include <sys/mount.h>
 k9CdDrive::k9CdDrive() { 
     canReadDVD=false;
     canWriteCDR=false;
@@ -29,13 +25,29 @@ k9CdDrive::k9CdDrive() {
 }
 k9CdDrive::~k9CdDrive() {}
 
-k9CdDrives::k9CdDrives() {
+k9CdDrives::k9CdDrives():QObject( 0,0) {
     drives.setAutoDelete(true);
     m_connection=k9HalConnection::getInstance();
+    connect(m_connection,SIGNAL(deviceAdded( k9HalDevice* )),this,SLOT(deviceAdded( k9HalDevice* )));
+    connect(m_connection,SIGNAL(deviceRemoved( k9HalDevice* )),this,SLOT(deviceRemoved( k9HalDevice*)));
     scanDrives();
 }
 k9CdDrives::~k9CdDrives() {
     m_connection->end();
+}
+
+void k9CdDrives::deviceAdded( k9HalDevice *_device) {
+   addDrive( _device);
+}
+
+void k9CdDrives::deviceRemoved(k9HalDevice *_device) {
+   for (k9CdDrive *d=drives.first();d;d=drives.next()) {
+      if (d->getDevice()==_device) {
+      	  emit deviceRemoved( d);
+          drives.remove(d);
+          break;
+      }
+   }
 }
 
 void k9CdDrives::eject(const QString & device) {
@@ -79,6 +91,22 @@ void k9CdDrives::readConfig() {
     }
 }
 
+void k9CdDrives::addDrive(k9HalDevice *_device) {
+       k9CdDrive *drive=new k9CdDrive;
+        drive->setDevice( _device);
+        drive->canReadDVD=_device->getCanReadDvd();
+        drive->canWriteDVD=_device->getCanBurnDvd();
+        drive->canWriteCDR=_device->getCanBurnCd();
+        drive->device=_device->getDeviceName();
+        drive->name=_device->getModel();
+        QValueList <int> writeSpeeds;
+        for (int i=2;i <=_device->getMaxWriteSpeed()/1385;i+=2)
+            writeSpeeds.append( i);
+        drive->setWriteSpeeds(writeSpeeds);
+        drives.append(drive);    
+        emit deviceAdded( drive);
+ 
+}
 /** No descriptions */
 void k9CdDrives::scanDrives() {
     drives.clear();
@@ -86,19 +114,7 @@ void k9CdDrives::scanDrives() {
     QPtrList <k9HalDevice> list=m_connection->getDevices();
 	
     for (k9HalDevice *hdrive=list.first();hdrive;hdrive=list.next()) {
-    
-        k9CdDrive *drive=new k9CdDrive;
-        drive->setDevice( hdrive);
-        drive->canReadDVD=hdrive->getCanReadDvd();
-        drive->canWriteDVD=hdrive->getCanBurnDvd();
-        drive->canWriteCDR=hdrive->getCanBurnCd();
-        drive->device=hdrive->getDeviceName();
-        drive->name=hdrive->getModel();
-        QValueList <int> writeSpeeds;
-        for (int i=2;i <=hdrive->getMaxWriteSpeed()/1385;i+=2)
-            writeSpeeds.append( i);
-        drive->setWriteSpeeds(writeSpeeds);
-        drives.append(drive);    
+        addDrive(hdrive);
     }
 
     readConfig();

@@ -32,7 +32,13 @@ public:
     static k9HalConnection* getInstance();
     static void end();
 
-   QPtrList< k9HalDevice > getDevices() const { return m_devices;}
+    QPtrList< k9HalDevice > getDevices() const { return m_devices;}
+    void addDevice( const char* udi );
+    void removeDevice( const char* udi );
+    k9HalDevice *findDevice (const char* udi);
+signals:
+    void deviceAdded(k9HalDevice *);
+    void deviceRemoved(k9HalDevice*);
 private:
     QPtrList <k9HalDevice> m_devices;
     void *m_context;
@@ -45,8 +51,6 @@ private:
 
     ~k9HalConnection();
 
-    void addDevice( const char* udi );
-    k9HalDevice *findDevice (const char* udi);
     
 };
 

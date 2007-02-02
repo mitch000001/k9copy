@@ -144,6 +144,8 @@ private slots:
     virtual void	  foundMountPoint (const QString &mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail);
     virtual void 	  fspDone();
     virtual void updateFactor_internal();
+    virtual void	   deviceAdded(k9CdDrive *_drive);
+    virtual void	   deviceRemoved(k9CdDrive *_drive);
 public slots:
     /*$PUBLIC_SLOTS$*/
     virtual void          PreviewTitle();
@@ -160,6 +162,7 @@ protected:
     k9DVDListItem *addListItem(QObject *DVD,ckLvItem *List,eStreamType type);
 
     void readDrives();
+    void addDrive (k9CdDrive *_drive);
     QPtrList<ckLvItem> tsItems;
     QPtrList<ckLvItem> chItems;
     ckLvItem * root;
