@@ -41,6 +41,7 @@
   	hal=FOUND
   else
       AC_MSG_RESULT(searched but not found)
+      AC_MSG_ERROR(libhal may be missing) 
   fi
 
   AC_SUBST(HAL_INCS)
@@ -79,6 +80,7 @@
     dbus=FOUND
   else
     AC_MSG_RESULT(searched but not found)
+    AC_MSG_ERROR(dbus may be missing) 
   fi
 
   AC_SUBST(DBUS_INCS)
@@ -118,6 +120,7 @@
     dbusqt=FOUND
   else
     AC_MSG_RESULT(searched but not found)
+    AC_MSG_ERROR(dbusqt may be missing) 
   fi
 
   AC_SUBST(DBUSQT_INCS)

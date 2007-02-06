@@ -105,7 +105,7 @@ int k9vamps::readData(uchar * data,uint size) {
 		wDataRead.wakeAll();
 	}
 	// break the loop if injection thread terminated or we got what we want (size bytes)
-	// oterwise, we're waiting for datas
+	// otherwise, we're waiting for datas
         if(noData || (m_fifo.count() >=size2)) {
             break;
         } else
@@ -410,8 +410,8 @@ int k9vamps::check_video_packet (uchar *ptr) {
         fatal ("Not an MPEG2 video packet at %llu", rtell (ptr));
 
     if (ptr [7]) {
-        //if ((ptr [7] & 0xc0) != 0xc0)
-     //       fatal ("First video packet in sequence starting at %llu misses PTS or DTS, flags=%02x", rtell (ptr), ptr [7]);
+        if ((ptr [7] & 0xc0) != 0xc0)
+           fatal ("First video packet in sequence starting at %llu misses PTS or DTS, flags=%02x", rtell (ptr), ptr [7]);
 
         sequence_header_code  = (uint32_t) (ptr [6 + 3 + ptr [8] + 0]) << 24;
         sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 1]) << 16;

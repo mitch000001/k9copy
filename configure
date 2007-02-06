@@ -34602,6 +34602,9 @@ echo "${ECHO_T}headers $hal_incdir  libraries $hal_libdir" >&6; }
   else
       { echo "$as_me:$LINENO: result: searched but not found" >&5
 echo "${ECHO_T}searched but not found" >&6; }
+      { { echo "$as_me:$LINENO: error: libhal may be missing" >&5
+echo "$as_me: error: libhal may be missing" >&2;}
+   { (exit 1); exit 1; }; }
   fi
 
 
@@ -34624,7 +34627,7 @@ for i in $search_incs;
 do
   for j in dbus/dbus.h;
   do
-    echo "configure: 34627: $i/$j" >&5
+    echo "configure: 34630: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       dbus_incdir=$i
@@ -34641,7 +34644,7 @@ for i in $search_incs_arch_deps;
 do
   for j in dbus/dbus-arch-deps.h;
   do
-    echo "configure: 34644: $i/$j" >&5
+    echo "configure: 34647: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       dbus_incdir_arch_deps=$i
@@ -34663,7 +34666,7 @@ for i in $search_libs;
 do
   for j in libdbus-1.so;
   do
-    echo "configure: 34666: $i/$j" >&5
+    echo "configure: 34669: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       dbus_libdir=$i
@@ -34685,6 +34688,9 @@ echo "${ECHO_T}headers $dbus_incdir $dbus_incdir_arch_deps  libraries $dbus_libd
   else
     { echo "$as_me:$LINENO: result: searched but not found" >&5
 echo "${ECHO_T}searched but not found" >&6; }
+    { { echo "$as_me:$LINENO: error: dbus may be missing" >&5
+echo "$as_me: error: dbus may be missing" >&2;}
+   { (exit 1); exit 1; }; }
   fi
 
 
@@ -34706,7 +34712,7 @@ for i in $search_incs;
 do
   for j in dbus/connection.h;
   do
-    echo "configure: 34709: $i/$j" >&5
+    echo "configure: 34715: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       dbusqt_incdir=$i
@@ -34733,7 +34739,7 @@ for i in $search_libs;
 do
   for j in libdbus-qt-1.so;
   do
-    echo "configure: 34736: $i/$j" >&5
+    echo "configure: 34742: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       dbusqt_libdir=$i
@@ -34755,6 +34761,9 @@ echo "${ECHO_T}headers $dbusqt_incdir libraries $dbusqt_libdir" >&6; }
   else
     { echo "$as_me:$LINENO: result: searched but not found" >&5
 echo "${ECHO_T}searched but not found" >&6; }
+    { { echo "$as_me:$LINENO: error: dbusqt may be missing" >&5
+echo "$as_me: error: dbusqt may be missing" >&2;}
+   { (exit 1); exit 1; }; }
   fi
 
 

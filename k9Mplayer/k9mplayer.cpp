@@ -152,18 +152,14 @@ void K9Mplayer::bUpClick() {
 void K9Mplayer::open( k9DVD *_dvd,k9DVDTitle *_title,int chapter) {
     cbSub->clear();
     cbAudio->clear();
-    for (int i=0; i< _title->getaudioStreamCount();i++)
-        cbAudio->insertItem("");
     for (int i=0; i< _title->getaudioStreamCount();i++) {
         k9DVDAudioStream *aud=_title->getaudioStream(i);
-        cbAudio->changeItem(QString("%1-%2").arg(aud->getID()).arg(aud->getlanguage()),aud->getID()-1);
+        cbAudio->insertItem(NULL,QString("%1-%2").arg(aud->getID()).arg(aud->getlanguage()),-1);
     }
 
-    for (int i=0; i< _title->getsubPictureCount();i++)
-        cbSub->insertItem("");
     for (int i=0; i< _title->getsubPictureCount();i++) {
         k9DVDSubtitle *sub=_title->getsubtitle( i);
-        cbSub->changeItem(QString("%1-%2").arg(sub->getID()).arg(sub->getlanguage()),sub->getID()-1);
+        cbSub->insertItem(NULL,QString("%1-%2").arg(sub->getID()).arg(sub->getlanguage()),-1);
     }
 
     if(_title->getaspectRatio()=="16:9")
