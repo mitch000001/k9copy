@@ -88,6 +88,7 @@ void k9CdDrives::readConfig() {
         drives.append(drive);
         row++;
         i++;
+        emit deviceAdded(drive);
     }
 }
 

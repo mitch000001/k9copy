@@ -117,14 +117,15 @@ k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
   listView1->setDefaultRenameAction(QListView::Accept);
   //    KStandardDirs kd;
   m_prefOutput=locateLocal("tmp","k9copy/",true); //kd.findResource("tmp","");
+  connect(&drives,SIGNAL(deviceAdded( k9CdDrive*)),this,SLOT(deviceAdded( k9CdDrive* )));
+  connect(&drives,SIGNAL(deviceRemoved( k9CdDrive*)),this,SLOT(deviceRemoved( k9CdDrive* )));
+
   readSettings();
   bInputOpen->setPixmap(SmallIcon("fileopen"));
   bInputOpenDir->setPixmap(SmallIcon("folder_open"));
   emit SelectionChanged(NULL,true);
   m_update=new k9UpdateFactor(this,"");
   connect(m_update,SIGNAL(updateFactor_internal()),this,SLOT(updateFactor_internal()));
-  connect(&drives,SIGNAL(deviceAdded( k9CdDrive*)),this,SLOT(deviceAdded( k9CdDrive* )));
-  connect(&drives,SIGNAL(deviceRemoved( k9CdDrive*)),this,SLOT(deviceRemoved( k9CdDrive* )));
 }
 
 
@@ -1187,16 +1188,17 @@ void k9Main::readDrives()
   cbOutputDev->clear();
   driveList.clear();
   recorderList.clear();
-  drives.scanDrives();
-
   cbOutputDev->insertItem(i18n("ISO Image"));
 
+  drives.scanDrives();
+
+/*
   for (int i=0; i<drives.count();i++)
   {
     k9CdDrive *drive=drives.getDrive(i);
     addDrive(drive);
   }
-
+*/
 }
 
 
