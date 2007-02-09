@@ -188,6 +188,7 @@ public: // Public methods
   virtual const int& getsubPictureCount();    
   virtual const QTime& getlength();
   virtual QTime gettotallength();
+  virtual QTime getSelectedLength();
 
   virtual const int& getVTS();
   virtual const int& getTTN();
@@ -229,15 +230,17 @@ public: // Public methods
   virtual float getfactor() { return m_factor;};
   virtual bool getforceFactor() { return m_forceFactor;};
   virtual void selectChapters(bool _state);
+  virtual QPtrList< k9DVDChapter > getChapters() const {return chapters;};
+
 public slots:
   virtual void setfactor(float _value) {m_factor=_value;};
-  virtual void setforceFactor(bool _value) {m_forceFactor=_value;};
+  virtual void setforceFactor(bool _value) {m_forceFactor=_value;};	
  
 private: // Private methods
   k9DVDAudioStream* addAudioStream();
   k9DVDChapter* addChapter(int num);
   k9DVDSubtitle* addSubtitle(int num);
-  QObjectList chapters;
+  QPtrList <k9DVDChapter> chapters;
   bool indexed;
   bool forceSelection;
    int pgc;

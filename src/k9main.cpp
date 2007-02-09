@@ -484,8 +484,9 @@ QString  k9Main::getDevice(QComboBox *_combo)
       KIO::UDSEntry::iterator it;
       for ( it = entry.begin(); it != entry.end(); ++it )
       {
-        if ( (*it).m_uds== KIO::UDS_LOCAL_PATH)
-          res=(*it).m_str;
+        if ( (*it).m_uds== KIO::UDS_LOCAL_PATH) {
+          res=(*it).m_str; 
+        }
       }
     }
 #endif
@@ -510,13 +511,30 @@ void k9Main::Open()
 
 
   closeDVD();
-  dvd->scandvd(getDevice(cbInputDev),m_quickScan);
+  QString sDevice=getDevice(cbInputDev);
+  
+  QString sVolName="";  
+  //if no dvd label, try to get it from hal
+  for (k9CdDrive *drive=driveList.first();drive;drive=driveList.next()) {
+	if (drive->getDevice() != NULL) {
+		if (drive->getDevice()->mountPoint()==sDevice) {
+			sVolName=drive->getDevice()->getVolumeName();
+			sDevice=drive->device;
+			break;
+		}
+	}
+  }     	
+ 
+  dvd->scandvd(sDevice,m_quickScan);
   if (dvd->geterror())
   {
     KMessageBox::error( this, dvd->geterrMsg(), i18n("Open DVD"));
     return;
   }
-
+  if (dvd->getDVDTitle()==i18n("unknown")) {
+     dvd->setDVDTitle( sVolName);
+  }
+ 
   listView1->clear();
   items.clear();
   tsItems.clear();
@@ -524,6 +542,7 @@ void k9Main::Open()
 
   root = new ckLvItem (listView1,this );
   root->setOpen( TRUE );
+  
   root->setText(0, dvd->getDVDTitle());
   root->setRenameEnabled(0,true);
   root->obj=NULL;

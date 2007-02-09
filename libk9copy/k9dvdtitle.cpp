@@ -293,6 +293,31 @@ QTime k9DVDTitle::gettotallength() {
 
 }
 
+QTime k9DVDTitle::getSelectedLength() {
+    QTime totalTime(0,0);
+    for (k9DVDChapter *chapter=chapters.first();chapter;chapter=chapters.next()) {
+    	if (chapter->getSelected()) {
+		QTime t;
+		int msecs= t.msecsTo(chapter->getlength());
+		totalTime=totalTime.addMSecs(msecs);
+    	}
+    }
+    
+    
+    for (int i=0;i<m_titles.count();i++) {
+         k9DVDTitle *tmp=m_titles.at(i);
+         QPtrList <k9DVDChapter> tchapters=tmp->getChapters();
+          for (k9DVDChapter *chapter=tchapters.first();chapter;chapter=tchapters.next()) {
+		if (chapter->getSelected()) {
+			QTime t;
+			int msecs= t.msecsTo(chapter->getlength());
+			totalTime=totalTime.addMSecs(msecs);
+		}
+	}           
+    }
+    return totalTime;
+
+}
 
 
 /** Read property of float videosize_mb. */

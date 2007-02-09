@@ -285,10 +285,11 @@ void k9MP4Enc::exited(KProcess * process) {
 int k9MP4Enc::getBitRate(k9DVDTitle *_title) {
     // bitrate video = (MB *8388.608) /SEC    - bitrate audio
     int size=m_size.toInt();
-    if (_title->gettotalsize_mb() < size)
-        size=_title->gettotalsize_mb();
+    float titleSize=_title->getChaptersSize_mb( true);
+    if ( titleSize< (float)size)
+        size=(int)titleSize;
     QTime t1(0,0);
-    int sec=t1.secsTo(_title->gettotallength());
+    int sec=t1.secsTo(_title->getSelectedLength());
     int bitrate=((size*m_parts) * 8388.608)/sec  - m_audioBitrate.toInt();
     return bitrate;
 

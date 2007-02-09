@@ -166,8 +166,8 @@ protected:
     QPtrList<ckLvItem> tsItems;
     QPtrList<ckLvItem> chItems;
     ckLvItem * root;
-    QObjectList driveList;
-    QObjectList recorderList;
+    QPtrList <k9CdDrive> driveList;
+    QPtrList <k9CdDrive> recorderList;
     k9CdDrives drives;
     QPixmap pxVideo;
     QPixmap pxSound;

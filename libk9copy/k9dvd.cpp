@@ -188,7 +188,7 @@ int k9DVD::get_title_name(const char* dvd_device, char* title) {
     if (! (filehandle = fopen(dvd_device, "r"))) {
         c=i18n("Couldn't open %1 for title\n").arg(dvd_device);
         // setError(c );
-        strcpy(title, "unknown");
+        strcpy(title, i18n("unknown").latin1());
         return -1;
     }
 
@@ -196,7 +196,7 @@ int k9DVD::get_title_name(const char* dvd_device, char* title) {
         fclose(filehandle);
         c=i18n("Couldn't seek in %1 for title\n").arg( dvd_device);
         setError(c);
-        strcpy(title, "unknown");
+        strcpy(title, i18n("unknown").latin1());
         return -1;
     }
 
@@ -204,7 +204,7 @@ int k9DVD::get_title_name(const char* dvd_device, char* title) {
         fclose(filehandle);
         //        c=tr2i18n("Couldn't read enough bytes for title.\n");
         //        setError(c);
-        strcpy(title, "unknown");
+        strcpy(title, i18n("unknown").latin1());
         return 0;
     }
 
