@@ -35,7 +35,9 @@ public:
     QPtrList< k9HalDevice > getDevices() const { return m_devices;}
     void addDevice( const char* udi );
     void removeDevice( const char* udi );
+    void testVolumeChanged( const char * udi);
     k9HalDevice *findDevice (const char* udi);
+    k9HalDevice *findDeviceByVolume (const char* udi);
 signals:
     void deviceAdded(k9HalDevice *);
     void deviceRemoved(k9HalDevice*);

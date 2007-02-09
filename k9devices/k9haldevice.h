@@ -13,7 +13,6 @@
 #define K9HALDEVICE_H
 
 #include <qobject.h>
-#include <qtimer.h>
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
@@ -54,14 +53,23 @@ public:
 	QString getDeviceName() const {
 	    return m_deviceName;
 	}
+	void updateVolumeName();
+
+	QString getVolumeUdi() const {
+	    return m_volumeUdi;
+	}
+
+	QString getVolumeName() const {
+	    return m_volumeName;
+	}
+	
+	QString mountPoint();
 signals:
    void volumeChanged(const QString &device);	
-private slots:
-    void timerDone();
 	
 private:
-    QTimer m_timer;
     QString m_volumeName;
+    QString m_volumeUdi;
     k9HalConnection *m_connection;
     bool m_canReadCd,m_canReadDvd,m_canBurnCd,m_canBurnDvd;
     QString m_model;

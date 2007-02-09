@@ -20,13 +20,14 @@ k9HalConnection *Hinstance=NULL;
 
 void halDeviceAdded (LibHalContext *ctx, const char *udi) {
    Hinstance->addDevice(udi);
+   Hinstance->testVolumeChanged( udi);
    
 }
 
 void halDeviceRemoved (LibHalContext *ctx, const char *udi) {
   Hinstance->removeDevice( udi);
+  Hinstance->testVolumeChanged( udi);
 }
-
 
   
 k9HalConnection::k9HalConnection(QObject *parent, const char *name)
@@ -89,9 +90,27 @@ void k9HalConnection::addDevice( const char* udi )
 	emit deviceAdded( device);
       }
     }
-  }
+  } 
 }
 
+
+void k9HalConnection::testVolumeChanged( const char * udi) {
+  // ignore devices that have no property "info.capabilities" to suppress error messages
+  if( !libhal_device_property_exists( (LibHalContext*) m_context, udi, "info.capabilities", 0 ) ){
+    k9HalDevice *device=findDeviceByVolume( udi);
+    if (device != NULL)
+    	device->updateVolumeName();
+  }  
+  else 
+  if( libhal_device_query_capability( (LibHalContext*) m_context, udi, "volume", 0 ) ) {
+    char* udiParent = libhal_device_get_property_string( (LibHalContext*) m_context, udi, "info.parent", 0 );
+    if( udiParent ) {
+      k9HalDevice *device=findDevice( udiParent);    
+      libhal_free_string( udiParent );
+      device->updateVolumeName();
+    }
+  }
+ }
 
 
 k9HalConnection::~k9HalConnection()
@@ -112,6 +131,14 @@ k9HalConnection * k9HalConnection::getInstance() {
 k9HalDevice *k9HalConnection::findDevice( const char *udi) {
     for (k9HalDevice *dev= m_devices.first();dev;dev=m_devices.next()) {
         if (dev->name()==QString(udi)) 
+            return dev;
+    }
+    return NULL;
+}
+
+k9HalDevice *k9HalConnection::findDeviceByVolume( const char *udi) {
+    for (k9HalDevice *dev= m_devices.first();dev;dev=m_devices.next()) {
+        if (dev->getVolumeUdi()==QString(udi)) 
             return dev;
     }
     return NULL;
