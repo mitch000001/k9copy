@@ -15,6 +15,8 @@
 #include <qtimer.h>
 #include <qapplication.h>
 #include <qevent.h>
+#include <klocale.h>
+#include <kmessagebox.h>
 
 K9Mplayer::K9Mplayer(QObject  *parent,const char *name,const QStringList args):MPlayer((QWidget*)parent) {
     m_seeking=FALSE;
@@ -90,7 +92,9 @@ void K9Mplayer::setTitle( const QString & _numTitle,const QString &_numChapter) 
         *m_process << "-chapter" << _numChapter;
 
     *m_process << QString("dvd://%1").arg(_numTitle);
-    m_process->start( KProcess::NotifyOnExit,KProcess::All);
+    if (!m_process->start( KProcess::NotifyOnExit,KProcess::All)) {
+         KMessageBox::error (qApp->mainWidget(),i18n("Unable to run %1").arg("mplayer") , i18n("Preview"));
+    }
     m_canwrite=TRUE;
 
     m_position=0;
@@ -118,7 +122,7 @@ void K9Mplayer::slotNewPosition(int _pos,const QTime & _time) {
 }
 
 void K9Mplayer::sliderReleased() {
-    sendCmd( QString("seek %1 1").arg(slider->value()));
+    sendCmd( QString("seek %1 1").arg((int)slider->value()));
     m_seeking=FALSE;
 }
 
@@ -177,7 +181,7 @@ void K9Mplayer::open( k9DVD *_dvd,k9DVDTitle *_title,int chapter) {
     if (_title->getsubPictureCount() >0)
         cbSubActivated( 0);
     if (!m_timer->isActive())
-        m_timer->start(1000,FALSE);
+        m_timer->start(200,FALSE);
 
 }
 

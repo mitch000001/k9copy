@@ -35,7 +35,7 @@
 
 <copyright>
 <year>2004</year>
-<year>2006</year>
+<year>2007</year>
 <holder>The k9copy Author</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -50,7 +50,7 @@ Please respect the format of the date (DD/MM/YYYY) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>04/06/2006</date>
+<date>02/11/2007</date>
 <releaseinfo>1.1.0</releaseinfo>
 
 <!-- Abstract about this handbook -->
@@ -110,15 +110,17 @@ Once oppened, the DVD structure is shown in a treeview (the central widget).
 <para>
 The selection is made by checkboxes. You can select the entire DVD, a Titleset or just a specific language or subtitle from a DVD title.
 </para>
-<para>For DVD backup there are two possibilities :</para>
+<para>The backup can be made in three ways :</para>
 <para>- backup with orginal menus. In this case, k9copy reproduces the orginial structure of the DVD without the unselected parts.
 </para>
-<para>- backup without menus. In this case, k9copy makes a reauthoring of the DVD. K9copy uses libdvdnav from xine to ensure that the DVD will be copied as it were played with xine.
+<para>- backup without menus. In this case, k9copy reproduces the orginial structure of the DVD without the unselected parts and without menus.
+</para>
+<para>- backup without menus via dvdauthor . In this case, k9copy makes a reauthoring of the DVD. K9copy uses libdvdnav from xine to ensure that the DVD will be copied as it were played with xine.
 </para>
 </sect1>
 
 <sect1 id="backupdvd">
-<title>Making a dvd backup</title>
+<title>Make a dvd backup</title>
 <sect2>
 <title>Open the dvd</title>
 <para>
@@ -160,7 +162,10 @@ The selection is made by checkboxes. You can select the entire DVD, a Titleset o
 	Use the checkbox at the top of the treeview to make a copy of the entire DVD.
    </para>
    <para>
-        Use the checkbox beside the titleset to make a copy of an entire titleset.
+        Use the checkbox beside the titleset to make a copy of a whole titleset.
+   </para>
+  <para>
+        It's now possible to selecte only the wanted chapters from a title.
    </para>
    <para>
         A title must have a video stream : if you select an audio language or a subtitle language, the video stream will be automatically selected. If you deselect the video stream, the title will not be backuped.
@@ -170,7 +175,7 @@ The selection is made by checkboxes. You can select the entire DVD, a Titleset o
 <sect2>
 <title>Playback options of the new DVD</title>
 <para>
-If the DVD you want to backup has interactive menus, you can keep them on your backup. On some DVDs, menus are very big and keeping them will increase the shrink factor and reduce the quality of the video stream.
+If the DVD you want to backup has interactive menus, you can keep them on your backup. Some DVDs have menus whose size is important. To preserve these menus would increase the shrink factor and would involve a loss of quality.
    <inlinemediaobject>
      <imageobject>
      <imagedata fileref="keepmenus.png" format="PNG"/>
@@ -178,7 +183,7 @@ If the DVD you want to backup has interactive menus, you can keep them on your b
     </inlinemediaobject>
 </para>
 <para>
-If you have chosen to not keep original menus, it's possible to define some playback options :
+If you chose not to preserve the menus, you can then define some playback options :
 </para>
 <para>
    <inlinemediaobject>
@@ -196,7 +201,7 @@ You can define the default audio language or the default subtitle for each title
 </para>
 </sect2>
 <sect2>
-<title>Executing the copy</title>
+<title>Perform the copy</title>
 <para>
 Once you have selected the titles, you can proceed with copy :
    <inlinemediaobject>
@@ -233,8 +238,8 @@ Once you have selected the titles, you can proceed with copy :
 </sect1>
 
 <sect1 id="encodemp4">
-<title>Encoding MPEG-4</title>
-<para>&k9copy; offers the possibility to encode DVD titles in MPEG-4 by using MEncoder.
+<title>MPEG-4 Encoding</title>
+<para>&k9copy; offers the possibility to encode DVD titles in MPEG-4 via MEncoder.
 </para>
 <para>
 Just select an audio stream from a title in the treeview and click on the button    <inlinemediaobject>
@@ -296,6 +301,7 @@ You can use following variables :
     <listitem><para>$AUDBR : audio bitrate (settings)</para></listitem>
     <listitem><para>$WIDTH : width (settings)</para></listitem>
     <listitem><para>$HEIGHT : height (settings)</para></listitem>
+    <listitem><para>$PASS : pass number (runtime)</para></listitem>
 </itemizedlist>
 
 </para>
@@ -408,7 +414,7 @@ You can use following variables :
 <title>Copyright and License</title>
 
 <para>
-Program copyright 2004-2006, Jean-Michel Petit
+Program copyright 2004-2007, Jean-Michel Petit
 </para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->

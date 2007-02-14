@@ -60,8 +60,10 @@ bool k9DVDChapter::getSelected() const
 
 void k9DVDChapter::setSelected(bool _value)
 {
-  m_selected = _value;
-  if (_value &&  !m_title->isSelected() )
+  if (_value &&  !m_title->isSelected() ) {
 	  m_title->setforceSelection( true);
-	
+          m_title->selectChapters( false);
+  }
+  m_selected = _value;
+
 }

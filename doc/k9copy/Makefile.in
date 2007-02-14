@@ -489,7 +489,7 @@ uninstall-am: uninstall-info-am
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=playback.png mainwindow.png settingsMencoder.png Makefile.in keepmenus.png btnmp4.png settingsMP4.png index.xml btncopy.png index.docbook open1.png treeview.png Makefile.am settingsDVD.png open2.png 
+KDE_DIST=playback.png mainwindow.png index.docbook settingsMencoder.png Makefile.in open1.png treeview.png keepmenus.png btnmp4.png settingsMP4.png Makefile.am index.xml btncopy.png settingsDVD.png open2.png 
 
 #>+ 24
 index.cache.bz2: $(srcdir)/index.docbook $(KDE_XSL_STYLESHEET) index.docbook btncopy.png mainwindow.png open1.png open2.png treeview.png keepmenus.png playback.png index.xml settingsDVD.png btnmp4.png settingsMP4.png settingsMencoder.png 

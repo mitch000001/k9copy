@@ -42,10 +42,9 @@ QString k9HalDevice::volumeName() {
 		volume = libhal_volume_from_udi ((LibHalContext *)m_connection->m_context, volume_udi);
 		if (volume != NULL) {
 			sVol=QString(libhal_volume_get_label (volume));            
+			libhal_volume_free (volume);
 		}
-		libhal_volume_free (volume);
-	
-		}
+	}
 	libhal_free_string_array (volumes);
 	libhal_drive_free(drive);
     }
