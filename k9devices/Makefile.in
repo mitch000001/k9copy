@@ -52,12 +52,15 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-libk9devices_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
-am_libk9devices_la_OBJECTS = k9halconnection.lo k9haldevice.lo
+libk9devices_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
+am_libk9devices_la_OBJECTS = k9halconnection.lo k9haldevice.lo \
+	k9cddrive.lo
 #>- libk9devices_la_OBJECTS = $(am_libk9devices_la_OBJECTS)
-#>+ 4
+#>+ 5
 libk9devices_la_final_OBJECTS = libk9devices_la.all_cpp.lo 
-libk9devices_la_nofinal_OBJECTS = k9halconnection.lo k9haldevice.lo
+libk9devices_la_nofinal_OBJECTS = k9halconnection.lo k9haldevice.lo \
+	k9cddrive.lo
 @KDE_USE_FINAL_FALSE@libk9devices_la_OBJECTS = $(libk9devices_la_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@libk9devices_la_OBJECTS = $(libk9devices_la_final_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -145,6 +148,7 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+K3B_LIBS = @K3B_LIBS@
 KCFG_DEPENDENCIES = @KCFG_DEPENDENCIES@
 KCONFIG_COMPILER = @KCONFIG_COMPILER@
 KDECONFIG = @KDECONFIG@
@@ -276,8 +280,6 @@ host_vendor = @host_vendor@
 htmldir = @htmldir@
 include_ARTS_FALSE = @include_ARTS_FALSE@
 include_ARTS_TRUE = @include_ARTS_TRUE@
-include_HAL_FALSE = @include_HAL_FALSE@
-include_HAL_TRUE = @include_HAL_TRUE@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
@@ -330,13 +332,13 @@ x_libraries = @x_libraries@
 xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
-INCLUDES = -I$(top_srcdir)/libk9copy $(all_includes) $(HAL_INCS) $(DBUS_INCS) $(DBUSQT_INCS)
+INCLUDES = -I$(top_srcdir)/libk9copy $(all_includes) $(HAL_INCS) $(DBUS_INCS) $(DBUSQT_INCS) $(K3B_INCS)
 #>- METASOURCES = AUTO
 libk9devices_la_LDFLAGS = $(all_libraries) 
 noinst_LTLIBRARIES = libk9devices.la
-noinst_HEADERS = k9halconnection.h k9haldevice.h
-libk9devices_la_SOURCES = k9halconnection.cpp k9haldevice.cpp
-libk9devices_la_LIBADD = $(HAL_DBUS_LIBS)
+noinst_HEADERS = k9halconnection.h k9haldevice.h k9cddrive.h
+libk9devices_la_SOURCES = k9halconnection.cpp k9haldevice.cpp k9cddrive.cpp
+libk9devices_la_LIBADD = $(K3B_LIBS) $(HAL_DBUS_LIBS)
 #>- all: all-am
 #>+ 1
 all: docs-am  all-am
@@ -403,6 +405,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9cddrive.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9halconnection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9haldevice.Plo@am__quote@
 
@@ -627,8 +630,15 @@ k9haldevice.moc: $(srcdir)/k9haldevice.h
 mocs: k9haldevice.moc
 
 #>+ 3
+k9cddrive.moc: $(srcdir)/k9cddrive.h
+	$(MOC) $(srcdir)/k9cddrive.h -o k9cddrive.moc
+
+#>+ 2
+mocs: k9cddrive.moc
+
+#>+ 3
 clean-metasources:
-	-rm -f  k9halconnection.moc k9haldevice.moc
+	-rm -f  k9halconnection.moc k9haldevice.moc k9cddrive.moc
 
 #>+ 2
 KDE_DIST=configure.in.in Makefile.in Makefile.am 
@@ -675,11 +685,11 @@ bcheck-am:
 
 
 #>+ 11
-libk9devices_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9halconnection.cpp $(srcdir)/k9haldevice.cpp  k9halconnection.moc k9haldevice.moc
+libk9devices_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9halconnection.cpp $(srcdir)/k9haldevice.cpp $(srcdir)/k9cddrive.cpp  k9halconnection.moc k9haldevice.moc k9cddrive.moc
 	@echo 'creating libk9devices_la.all_cpp.cpp ...'; \
 	rm -f libk9devices_la.all_cpp.files libk9devices_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9devices_la.all_cpp.final; \
-	for file in k9halconnection.cpp k9haldevice.cpp ; do \
+	for file in k9halconnection.cpp k9haldevice.cpp k9cddrive.cpp ; do \
 	  echo "#include \"$$file\"" >> libk9devices_la.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libk9devices_la.all_cpp.final; \
 	done; \
@@ -714,10 +724,12 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 7
+#>+ 9
 nmcheck: 
 k9haldevice.lo: k9haldevice.moc 
 k9halconnection.o: k9halconnection.moc 
 k9haldevice.o: k9haldevice.moc 
 k9halconnection.lo: k9halconnection.moc 
 nmcheck-am: nmcheck
+k9cddrive.o: k9cddrive.moc 
+k9cddrive.lo: k9cddrive.moc 

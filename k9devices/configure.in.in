@@ -1,142 +1,213 @@
-########### Check for the HAL
-########### see libk3bdevices
+  have_hal=no
+
   AC_MSG_CHECKING(for the HAL)
 
-  hal_inc=NOTFOUND
-  hal_lib=NOTFOUND
-  hal=NOTFOUND
+  AC_ARG_ENABLE([hal], 
+                AC_HELP_STRING([--disable-hal], 
+                [do not activate hal/dbus support (use k3bdevice instead)]),
+                [enable_hal=no], 
+                [enable_hal=yes])
 
-  search_incs="$kde_includes /usr/include /usr/include/hal /usr/local/include /usr/local/include/hal"
-  AC_FIND_FILE(libhal.h libhal-storage.h, $search_incs, hal_incdir)
-
-  if [test -r $hal_incdir/libhal.h] ; then
-    HAL_INCS="-I$hal_incdir"
-    hal_inc=FOUND
-  fi
-
-  if test -r $hal_incdir/libhal-storage.h ; then
-    hal_storage_version=4
-    grep LibHalVolume $hal_incdir/libhal-storage.h \
-    > /dev/null 2>&1 && hal_storage_version=5
-    if test $hal_storage_version = 4 ; then
-      AC_DEFINE(HAL_0_4, , [HAL API version 0.4])
-    fi
-  fi
-
-  search_libs="$kde_libraries /usr/lib64 /usr/lib /usr/local/lib /lib /lib64"
-  AC_FIND_FILE(libhal.so, $search_libs, hal_libdir)
-
-  if [test -r $hal_libdir/libhal.so] ; then
-    HAL_LIBS="-L$hal_libdir -lhal"
-    hal_lib=FOUND
-  fi
-  
-  if [test -r $hal_libdir/libhal-storage.so] ; then
-    HAL_LIBS_STORAGE="-L$hal_libdir -lhal-storage"
-    hal_lib_storage=FOUND
-  fi
-
-  if [test $hal_inc = FOUND] && [test $hal_lib = FOUND] ; then
-      AC_MSG_RESULT(headers $hal_incdir  libraries $hal_libdir)
-  	hal=FOUND
-  else
-      AC_MSG_RESULT(searched but not found)
-      AC_MSG_ERROR(libhal may be missing) 
-  fi
-
-  AC_SUBST(HAL_INCS)
-  AC_SUBST(HAL_LIBS)
-
-
-########### Check for DBus
-
-  AC_MSG_CHECKING(for DBus)
-
-  dbus_inc=NOTFOUND
-  dbus_lib=NOTFOUND
-  dbus=NOTFOUND
-
-  search_incs="$kde_includes /usr/include /usr/include/dbus-1.0 /usr/local/include /usr/local/include/dbus-1.0"
-  AC_FIND_FILE(dbus/dbus.h, $search_incs, dbus_incdir)
-
-  search_incs_arch_deps="$kde_includes /usr/lib64/dbus-1.0/include /usr/lib/dbus-1.0/include /usr/local/lib/dbus-1.0/include"
-  AC_FIND_FILE(dbus/dbus-arch-deps.h, $search_incs_arch_deps, dbus_incdir_arch_deps)
-
-  if [test -r $dbus_incdir/dbus/dbus.h] && [test -r $dbus_incdir_arch_deps/dbus/dbus-arch-deps.h] ; then
-    DBUS_INCS="-I$dbus_incdir -I$dbus_incdir_arch_deps"
-    dbus_inc=FOUND
-  fi
-
-  search_libs="$kde_libraries /usr/lib64 /usr/lib /usr/local/lib /lib /lib64"
-  AC_FIND_FILE(libdbus-1.so, $search_libs, dbus_libdir)
-
-  if test -r $dbus_libdir/libdbus-1.so ; then
-    DBUS_LIBS="-L$dbus_libdir -ldbus-1"
-    dbus_lib=FOUND
-  fi
-
-  if [test $dbus_inc = FOUND] && [test $dbus_lib = FOUND] ; then
-    AC_MSG_RESULT(headers $dbus_incdir $dbus_incdir_arch_deps  libraries $dbus_libdir)
-    dbus=FOUND
-  else
-    AC_MSG_RESULT(searched but not found)
-    AC_MSG_ERROR(dbus may be missing) 
-  fi
-
-  AC_SUBST(DBUS_INCS)
-  AC_SUBST(DBUS_LIBS)
-
-########### Check for DBus-Qt bindings
-
-  AC_MSG_CHECKING(for DBus-Qt bindings)
-
-  dbusqt_inc=NOTFOUND
-  dbusqt_lib=NOTFOUND
-  dbusqt=NOTFOUND
-
-  search_incs="$kde_includes /usr/include /usr/include/dbus-1.0 /usr/local/include /usr/local/include/dbus-1.0"
-  AC_FIND_FILE(dbus/connection.h, $search_incs, dbusqt_incdir)
-
-  if test -r $dbusqt_incdir/dbus/connection.h ; then
-    have_qt_patch=0
-    grep dbus_connection_setup_with_qt_main $dbusqt_incdir/dbus/connection.h \
-    > /dev/null 2>&1 && have_qt_patch=1
-    if test $have_qt_patch = 1 ; then
-      DBUSQT_INCS="-I$dbusqt_incdir"
-      dbusqt_inc=FOUND
-    fi
-  fi
-
-  search_libs="$kde_libraries /usr/lib /usr/lib64 /usr/local/lib"
-  AC_FIND_FILE(libdbus-qt-1.so, $search_libs, dbusqt_libdir)
-
-  if test -r $dbusqt_libdir/libdbus-qt-1.so ; then
-    DBUSQT_LIBS="-L$dbusqt_libdir -ldbus-qt-1"
-    dbusqt_lib=FOUND
-  fi
-
-  if [test $dbusqt_inc = FOUND] && [test $dbusqt_lib = FOUND] ; then
-    AC_MSG_RESULT(headers $dbusqt_incdir libraries $dbusqt_libdir)
-    dbusqt=FOUND
-  else
-    AC_MSG_RESULT(searched but not found)
-    AC_MSG_ERROR(dbusqt may be missing) 
-  fi
-
-  AC_SUBST(DBUSQT_INCS)
-  AC_SUBST(DBUSQT_LIBS)
-
-
-########### Check if media HAL backend sould be compiled
-
-have_hal=no
-HAL_DBUS_LIBS=""
-if [test "x$hal" = "xFOUND"] && [test "x$dbus" = "xFOUND"] && [test "x$dbusqt" = "xFOUND"] && [ test $hal_storage_version = 5 ] ; then
-  AC_DEFINE(HAVE_HAL, , [compile in HAL support])
-  have_hal=yes
-  HAL_DBUS_LIBS="$HAL_LIBS $HAL_LIBS_STORAGE $DBUS_LIBS $DBUSQT_LIBS"
+  if test x"$enable_hal" = xyes; then
+	hal_inc=NOTFOUND
+	hal_lib=NOTFOUND
+	hal=NOTFOUND
+	
+	search_incs="$kde_includes /usr/include /usr/include/hal /usr/local/include /usr/local/include/hal"
+	AC_FIND_FILE(libhal.h libhal-storage.h, $search_incs, hal_incdir)
+	
+	if [test -r $hal_incdir/libhal.h] ; then
+	HAL_INCS="-I$hal_incdir"
+	hal_inc=FOUND
+	fi
+	
+	if test -r $hal_incdir/libhal-storage.h ; then
+	hal_storage_version=4
+	grep LibHalVolume $hal_incdir/libhal-storage.h \
+	> /dev/null 2>&1 && hal_storage_version=5
+	if test $hal_storage_version = 4 ; then
+	AC_DEFINE(HAL_0_4, , [HAL API version 0.4])
+	fi
+	fi
+	
+	search_libs="$kde_libraries /usr/lib64 /usr/lib /usr/local/lib /lib /lib64"
+	AC_FIND_FILE(libhal.so, $search_libs, hal_libdir)
+	
+	if [test -r $hal_libdir/libhal.so] ; then
+	HAL_LIBS="-L$hal_libdir -lhal"
+	hal_lib=FOUND
+	fi
+	
+	if [test -r $hal_libdir/libhal-storage.so] ; then
+	HAL_LIBS_STORAGE="-L$hal_libdir -lhal-storage"
+	hal_lib_storage=FOUND
+	fi
+	
+	if [test $hal_inc = FOUND] && [test $hal_lib = FOUND] ; then
+	AC_MSG_RESULT(headers $hal_incdir  libraries $hal_libdir)
+		hal=FOUND
+	else
+	AC_MSG_RESULT(searched but not found)
+	AC_MSG_ERROR(libhal may be missing) 
+	fi
+	
+	AC_SUBST(HAL_INCS)
+	AC_SUBST(HAL_LIBS)
+	
+	
+	########### Check for DBus
+	
+	AC_MSG_CHECKING(for DBus)
+	
+	dbus_inc=NOTFOUND
+	dbus_lib=NOTFOUND
+	dbus=NOTFOUND
+	
+	search_incs="$kde_includes /usr/include /usr/include/dbus-1.0 /usr/local/include /usr/local/include/dbus-1.0"
+	AC_FIND_FILE(dbus/dbus.h, $search_incs, dbus_incdir)
+	
+	search_incs_arch_deps="$kde_includes /usr/lib64/dbus-1.0/include /usr/lib/dbus-1.0/include /usr/local/lib/dbus-1.0/include"
+	AC_FIND_FILE(dbus/dbus-arch-deps.h, $search_incs_arch_deps, dbus_incdir_arch_deps)
+	
+	if [test -r $dbus_incdir/dbus/dbus.h] && [test -r $dbus_incdir_arch_deps/dbus/dbus-arch-deps.h] ; then
+	DBUS_INCS="-I$dbus_incdir -I$dbus_incdir_arch_deps"
+	dbus_inc=FOUND
+	fi
+	
+	search_libs="$kde_libraries /usr/lib64 /usr/lib /usr/local/lib /lib /lib64"
+	AC_FIND_FILE(libdbus-1.so, $search_libs, dbus_libdir)
+	
+	if test -r $dbus_libdir/libdbus-1.so ; then
+	DBUS_LIBS="-L$dbus_libdir -ldbus-1"
+	dbus_lib=FOUND
+	fi
+	
+	if [test $dbus_inc = FOUND] && [test $dbus_lib = FOUND] ; then
+	AC_MSG_RESULT(headers $dbus_incdir $dbus_incdir_arch_deps  libraries $dbus_libdir)
+	dbus=FOUND
+	else
+	AC_MSG_RESULT(searched but not found)
+	AC_MSG_ERROR(dbus may be missing) 
+	fi
+	
+	AC_SUBST(DBUS_INCS)
+	AC_SUBST(DBUS_LIBS)
+	
+	########### Check for DBus-Qt bindings
+	
+	AC_MSG_CHECKING(for DBus-Qt bindings)
+	
+	dbusqt_inc=NOTFOUND
+	dbusqt_lib=NOTFOUND
+	dbusqt=NOTFOUND
+	
+	search_incs="$kde_includes /usr/include /usr/include/dbus-1.0 /usr/local/include /usr/local/include/dbus-1.0"
+	AC_FIND_FILE(dbus/connection.h, $search_incs, dbusqt_incdir)
+	
+	if test -r $dbusqt_incdir/dbus/connection.h ; then
+	have_qt_patch=0
+	grep dbus_connection_setup_with_qt_main $dbusqt_incdir/dbus/connection.h \
+	> /dev/null 2>&1 && have_qt_patch=1
+	if test $have_qt_patch = 1 ; then
+	DBUSQT_INCS="-I$dbusqt_incdir"
+	dbusqt_inc=FOUND
+	fi
+	fi
+	
+	
+	search_libs="$kde_libraries /usr/lib /usr/lib64 /usr/local/lib"
+	AC_FIND_FILE(libdbus-qt-1.so, $search_libs, dbusqt_libdir)
+	
+	if test -r $dbusqt_libdir/libdbus-qt-1.so ; then
+	DBUSQT_LIBS="-L$dbusqt_libdir -ldbus-qt-1"
+	dbusqt_lib=FOUND
+	fi
+	
+	if [test $dbusqt_inc = FOUND] && [test $dbusqt_lib = FOUND] ; then
+	AC_MSG_RESULT(headers $dbusqt_incdir libraries $dbusqt_libdir)
+	dbusqt=FOUND
+	else
+	AC_MSG_RESULT(searched but not found)
+	fi
+	
+	
+	
+	########### Check for new DBus-Qt bindings
+	if [test $dbusqt = NOTFOUND]; then
+		search_incs="$kde_includes $kde_extra_includes /usr/include /usr/include/dbus-1.0/qt3 /usr/local/include /usr/local/include/dbus-1.0"
+		AC_FIND_FILE(dbus/qdbusconnection.h, $search_incs, dbusqt_incdir)
+		
+		if test -r $dbusqt_incdir/dbus/qdbusconnection.h ; then
+			have_qt_patch=0
+			grep dbus_connection_setup_with_qt_main $dbusqt_incdir/dbus/qdbusconnection.h \
+			> /dev/null 2>&1 && have_qt_patch=1
+			if test $have_qt_patch = 1 ; then
+			DBUSQT_INCS="-I$dbusqt_incdir"
+			dbusqt_inc=FOUND
+			fi
+		fi
+		
+		
+		search_libs="$kde_libraries /usr/lib /usr/lib64 /usr/local/lib"
+		AC_FIND_FILE(libdbus-1-qt3.so, $search_libs, dbusqt_libdir)
+		
+		if test -r $dbusqt_libdir/libdbus-1-qt3.so ; then
+		    DBUSQT_LIBS="-L$dbusqt_libdir -ldbus-1-qt3"
+		    dbusqt_lib=FOUND
+		fi
+		
+		if [test $dbusqt_inc = FOUND] && [test $dbusqt_lib = FOUND] ; then
+		   AC_MSG_RESULT(headers $dbusqt_incdir libraries $dbusqt_libdir)
+		   dbusqt=FOUND
+		   AC_DEFINE(DBUS_QT3, , [compile with dbus-qt3 bindings])
+		else
+		   AC_MSG_RESULT(searched but not found)
+		   AC_MSG_ERROR(dbusqt may be missing) 
+		fi
+	
+	
+	fi
+		
+	
+	AC_SUBST(DBUSQT_INCS)
+	AC_SUBST(DBUSQT_LIBS)
+	
+	
+	########### Check if media HAL backend should be compiled
+	
+	HAL_DBUS_LIBS=""
+	if [test "x$hal" = "xFOUND"] && [test "x$dbus" = "xFOUND"] && [test "x$dbusqt" = "xFOUND"] && [ test $hal_storage_version = 5 ] ; then
+	AC_DEFINE(HAVE_HAL, , [compile in HAL support])
+	have_hal=yes
+	HAL_DBUS_LIBS="$HAL_LIBS $HAL_LIBS_STORAGE $DBUS_LIBS $DBUSQT_LIBS"
+	fi
+	
+	AC_SUBST(HAL_DBUS_LIBS)
+else
+	search_incs="$kde_includes /usr/include /usr/local/include"
+	AC_FIND_FILE(k3bdevice.h, $search_incs, k3b_incdir)
+	
+	if [test -r $k3b_incdir/k3bdevice.h] ; then
+		k3b_inc=FOUND
+	fi
+		
+	search_libs="$kde_libraries /usr/lib64 /usr/lib /usr/local/lib /lib /lib64"
+	AC_FIND_FILE(libk3bdevice.so, $search_libs, k3b_libdir)
+	
+	if [test -r $k3b_libdir/libk3bdevice.so] ; then
+		K3B_LIBS="-lk3bdevice"
+		k3b_lib=FOUND
+	fi
+		
+	if [test $k3b_inc = FOUND] && [test $k3b_lib = FOUND] ; then
+		AC_MSG_RESULT(headers $k3b_incdir  libraries $k3b_libdir)
+		k3b=FOUND
+	else
+		AC_MSG_RESULT(libk3bdevice searched but not found)
+		AC_MSG_ERROR(libk3bdevice may be missing) 
+	fi
+	
+	AC_SUBST(K3B_LIBS)
+	
 fi
-
-AM_CONDITIONAL(include_HAL, [test x$have_hal = xyes])
-AC_SUBST(HAL_DBUS_LIBS)
 

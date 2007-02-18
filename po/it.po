@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER, 2006.
 #
-# FiNeX <finex@finex.org>, 2006.
+# FiNeX <finex@finex.org>, 2006, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-21 09:09+0200\n"
-"PO-Revision-Date: 2006-08-13 23:27+0200\n"
+"PO-Revision-Date: 2007-02-12 01:05+0100\n"
 "Last-Translator: FiNeX <finex@finex.org>\n"
 "Language-Team:  <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "Anteprima Capitolo"
 
 #: src/k9copy.cpp:80
 msgid "Create MPEG-4"
-msgstr ""
+msgstr "Crea MPEG-4 "
 
 #: src/k9copy.cpp:94
 #, fuzzy
@@ -234,7 +234,6 @@ msgid "title to play"
 msgstr "titolo da riprodurre"
 
 #: src/main.cpp:39
-#, fuzzy
 msgid "play title to stdout"
 msgstr "Anteprima Capitolo"
 
@@ -248,11 +247,11 @@ msgstr "fine settore"
 
 #: src/main.cpp:42
 msgid "list of audio streams"
-msgstr "Lista dei flussi audio"
+msgstr "lista dei flussi audio"
 
 #: src/main.cpp:43
 msgid "list of spu streams"
-msgstr ""
+msgstr "lista dei flussi spu"
 
 #: src/main.cpp:44
 msgid "shrink factor"
@@ -264,7 +263,7 @@ msgstr ""
 
 #: src/main.cpp:46
 msgid "total size of selected titles"
-msgstr "dimensione totale dei titoli selezionati"
+msgstr "dimensione totale dei capitoli selezionati"
 
 #: src/main.cpp:47
 msgid "size of the chapters being copied"
@@ -284,11 +283,11 @@ msgstr ""
 
 #: src/main.cpp:51
 msgid "status file name"
-msgstr ""
+msgstr "nome del file di stato"
 
 #: src/main.cpp:52
 msgid "initialize status file"
-msgstr ""
+msgstr "inizializza il file di stato"
 
 #: src/main.cpp:53
 msgid "continue playing from last sector"
@@ -303,7 +302,7 @@ msgid "_: NAME OF TRANSLATORS\\nYour names"
 msgstr ""
 "TRANDUTTORI:\n"
 "       Paolo Rampino\n"
-"       Finetti Leonardo"
+"       Leonardo Finetti"
 
 #: src/main.cpp:66
 msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
@@ -328,6 +327,8 @@ msgid ""
 "Insuffisant disk space on %1\n"
 "%2 mb expected."
 msgstr ""
+"Spazio su disco insufficiente in %1\n"
+"necessari %2 Mb."
 
 #: src/k9main.cpp:385 src/k9main.cpp:951
 msgid "ISO Image"
@@ -342,9 +343,8 @@ msgid "Titleset %1"
 msgstr "Capitolo %1"
 
 #: src/k9main.cpp:514
-#, fuzzy
 msgid "video %1 "
-msgstr "audio %1"
+msgstr "video %1"
 
 #: src/k9main.cpp:526
 msgid "audio %1 "
@@ -375,9 +375,8 @@ msgid "default"
 msgstr "predefinito"
 
 #: src/k9main.cpp:1131
-#, fuzzy
 msgid "Open ISO Image"
-msgstr "Immagine ISO"
+msgstr "Apri immagine ISO"
 
 #: src/k9main.cpp:1138
 #, fuzzy
@@ -385,41 +384,36 @@ msgid "Open DVD folder"
 msgstr "Esamina DVD"
 
 #: src/k9main.cpp:1247
-#, fuzzy
 msgid "none"
-msgstr "Nessuno"
+msgstr "nessuno"
 
 #: src/k9settings.cpp:27
-#, fuzzy
 msgid "Devices"
-msgstr "periferica"
+msgstr "Periferiche"
 
 #: src/k9settings.cpp:27
-#, fuzzy
 msgid "Devices not detected by k9copy"
-msgstr "<b><p align=\"center\">Periferiche non trovate da k9copy</p></b>"
+msgstr "Periferiche non trovate da k9copy"
 
 #: src/k9settings.cpp:34
-#, fuzzy
 msgid "DVD"
-msgstr "kDVD"
+msgstr "DVD"
 
 #: src/k9settings.cpp:34
-#, fuzzy
 msgid "DVD Backup"
-msgstr "kDVDTraccia"
+msgstr "Backup DVD"
 
 #: src/k9settings.cpp:40
 msgid "MPEG-4"
-msgstr ""
+msgstr "MPEG-4"
 
 #: src/k9settings.cpp:46
 msgid "MEncoder"
-msgstr ""
+msgstr "MEncoder"
 
 #: src/k9settings.cpp:46
 msgid "MPEG-4 Codecs"
-msgstr ""
+msgstr "MPEG-4 Codec"
 
 #: src/k9prefmpeg4.cpp:33 src/k9prefdvd.cpp:33 libk9copy/k9mp4enc.cpp:94
 msgid "mb"
@@ -443,7 +437,7 @@ msgstr "authoring (creazione menù)"
 #: libk9copy/k9dvdauthor.cpp:325 libk9copy/k9dvdauthor.cpp:391
 #: libk9copy/k9dvdauthor.cpp:429
 msgid "Authoring"
-msgstr "Autoring (Creazione menù)"
+msgstr "Authoring (Creazione menù)"
 
 #: libk9copy/k9dvdauthor.cpp:326 debug/libk9copy/backupdlg.cpp:162 rc.cpp:172
 #, no-c-format
@@ -469,7 +463,7 @@ msgstr "riparazione VOBUS"
 #: libk9copy/k9dvdbackup.cpp:137 libk9copy/k9dvdbackup.cpp:151
 #: libk9copy/k9dvdbackup.cpp:491 libk9copy/k9dvdbackup.cpp:648
 msgid "DVD backup cancelled"
-msgstr "la copia del DVD è stata annullata"
+msgstr "Backup del DVD annullato"
 
 #: libk9copy/k9dvdbackup.cpp:164
 msgid "unable to open VIDEO_TS.IFO"
@@ -518,7 +512,7 @@ msgstr "Aggiorno vob %1"
 
 #: libk9copy/k9dvdbackup.cpp:1334
 msgid "DVD backup canceled"
-msgstr "DVD backup annullata"
+msgstr "Backup del DVD annullato"
 
 #: libk9copy/k9dvd.cpp:191
 msgid "Couldn't open %1 for title\n"
@@ -1094,7 +1088,7 @@ msgstr "Non posso aprire l'ifo principale!\n"
 
 #: libk9copy/k9dvd.cpp:364
 msgid "unknown"
-msgstr "Sconosciuto"
+msgstr "sconosciuto"
 
 #: libk9copy/k9dvd.cpp:388 libk9copy/k9dvd.cpp:675
 msgid "Title %1"
@@ -1105,9 +1099,8 @@ msgid "reading title"
 msgstr "lettura del capitolo in corso"
 
 #: libk9copy/k9mp4enc.cpp:84
-#, fuzzy
 msgid "Save file to disk"
-msgstr "Salva immagine sul disco"
+msgstr "Salva file sul disco"
 
 #: libk9copy/k9mp4enc.cpp:124 libk9copy/k9mp4enc.cpp:131
 #: libk9copy/k9mp4enc.cpp:149
@@ -1120,9 +1113,8 @@ msgid "MPEG-4 Encoding cancelled"
 msgstr "Autoring (Creazione dei menù) annullata"
 
 #: libk9copy/k9mp4enc.cpp:198
-#, fuzzy
 msgid "Error while running mencoder :"
-msgstr "C'è stato un errore nella esecuzione di DVDAutor\n"
+msgstr "C'è stato un errore nella esecuzione di mencoder:"
 
 #: libk9copy/k9mp4enc.cpp:198
 msgid "Encoding error"
@@ -1154,7 +1146,7 @@ msgstr "Scrittura del DVD terminata"
 
 #: libk9copy/k9burndvd.cpp:209
 msgid "An error occured while Burning DVD: %1"
-msgstr "C'è stato un errore nella esecuzione di DVDAutor:%1"
+msgstr "C'è stato un errore nella masterizzazione del DVD: %1"
 
 #: libk9copy/k9burndvd.cpp:209
 msgid "Insert an other DVD"
@@ -1164,7 +1156,7 @@ msgstr "Inserisci un'altro DVD"
 msgid "Current write speed :%1 x"
 msgstr ""
 "Scrittura del DVD in corso\n"
-"Velocità  attuale: %2.1fx"
+"Velocità  attuale: %1 x"
 
 #: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
 msgid "kDecMPEG2"
@@ -1218,9 +1210,9 @@ msgid "Alt+C"
 msgstr "Alt+B"
 
 #: debug/libk9copy/mp4dlg.cpp:120 rc.cpp:215
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "k9Copy - transcoding"
-msgstr "k9Copy - Masterizza DVD"
+msgstr ""
 
 #: debug/libk9copy/mp4dlg.cpp:121 rc.cpp:218
 #, no-c-format
@@ -1230,7 +1222,7 @@ msgstr "Codifica"
 #: debug/libk9copy/mp4dlg.cpp:122 rc.cpp:221
 #, no-c-format
 msgid "Annu&ler"
-msgstr ""
+msgstr "Annu&lla"
 
 #: debug/libk9copy/mp4dlg.cpp:123 rc.cpp:224
 #, fuzzy, no-c-format
@@ -1391,9 +1383,9 @@ msgid "Default language"
 msgstr "Lingua predefinita"
 
 #: debug/src/k9mainw.cpp:303 rc.cpp:47
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Subtitle"
-msgstr "Sottotitoli"
+msgstr "Sottotitolo"
 
 #: debug/src/k9mainw.cpp:307 rc.cpp:55
 #, no-c-format
@@ -1416,7 +1408,7 @@ msgid "D&VD"
 msgstr "D&VD"
 
 #: debug/src/prefDVD.cpp:89 rc.cpp:89
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "prefDVD"
 msgstr "Esamina DVD"
 
@@ -1443,7 +1435,7 @@ msgstr "Scansione veloce"
 #: debug/src/prefDVD.cpp:97 rc.cpp:107
 #, no-c-format
 msgid "DVD size"
-msgstr "Capitolo"
+msgstr "Dimensione DVD"
 
 #: debug/src/prefMPEG4.cpp:145 debug/src/prefMencoder.cpp:84 rc.cpp:110
 #: rc.cpp:152
@@ -1492,9 +1484,9 @@ msgid "lavc MPEG4"
 msgstr ""
 
 #: debug/src/prefMencoder.cpp:33 debug/src/prefMencoder.cpp:85 rc.cpp:155
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Label"
-msgstr "etichetta"
+msgstr "Etichetta"
 
 #: debug/src/prefMencoder.cpp:35 debug/src/prefMencoder.cpp:86 rc.cpp:158
 #, no-c-format
@@ -1529,5 +1521,5 @@ msgstr "A&zioni"
 #: rc.cpp:246
 #, no-c-format
 msgid "Actions ToolBar"
-msgstr ""
+msgstr "Barra strumenti Azioni"
 

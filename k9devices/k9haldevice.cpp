@@ -10,12 +10,13 @@
 //
 //
 #include "k9haldevice.h"
+#ifdef HAVE_HAL
 #include "k9halconnection.h"
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include <dbus/connection.h>
 #include <dbus/dbus.h>
 #include <hal/libhal.h>
-#include <hal/libhal-storage.h>
+#include <hal/libhal-storage.h>  
 
 k9HalDevice::k9HalDevice(QObject *parent, const char *udi)
         : QObject(parent, udi) {
@@ -102,6 +103,6 @@ void k9HalDevice::getDriveProperties() {
     libhal_free_string( dev );
 
     m_volumeName=volumeName();
-
 }
 #include "k9haldevice.moc"
+#endif

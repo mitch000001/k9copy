@@ -30,7 +30,8 @@
 #include "kviewmpeg2.h"
 #include "k9titlefactor.h"
 #include <qdom.h>
-#include <ksimpleconfig.h>		
+#include <ksimpleconfig.h>	
+	
 k9Copy::k9Copy()
     : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
 {

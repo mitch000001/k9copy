@@ -50,15 +50,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"
-libLTLIBRARIES_INSTALL = $(INSTALL)
-LTLIBRARIES = $(lib_LTLIBRARIES)
+LTLIBRARIES = $(noinst_LTLIBRARIES)
 libk9copy_la_DEPENDENCIES = $(top_builddir)/k9vamps/libk9vamps.la \
 	$(top_builddir)/k9decmpeg/libk9decmpeg.la \
 	$(top_builddir)/libdvdnav/libk9dvdnav.la
@@ -103,6 +95,13 @@ CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(KDE_CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libk9copy_la_SOURCES)
 DIST_SOURCES = $(libk9copy_la_SOURCES)
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+am__installdirs = "$(DESTDIR)$(includedir)"
 includeHEADERS_INSTALL = $(INSTALL_HEADER)
 HEADERS = $(include_HEADERS) $(noinst_HEADERS)
 ETAGS = etags
@@ -166,6 +165,7 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+K3B_LIBS = @K3B_LIBS@
 KCFG_DEPENDENCIES = @KCFG_DEPENDENCIES@
 KCONFIG_COMPILER = @KCONFIG_COMPILER@
 KDECONFIG = @KDECONFIG@
@@ -297,8 +297,6 @@ host_vendor = @host_vendor@
 htmldir = @htmldir@
 include_ARTS_FALSE = @include_ARTS_FALSE@
 include_ARTS_TRUE = @include_ARTS_TRUE@
-include_HAL_FALSE = @include_HAL_FALSE@
-include_HAL_TRUE = @include_HAL_TRUE@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
@@ -354,7 +352,7 @@ xdg_menudir = @xdg_menudir@
 AM_CPPFLAGS = -I$(srcdir) $(all_includes) 
 KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 #>- METASOURCES = AUTO
-lib_LTLIBRARIES = libk9copy.la
+noinst_LTLIBRARIES = libk9copy.la
 libk9copy_la_LIBADD = $(top_builddir)/k9vamps/libk9vamps.la \
 	$(top_builddir)/k9decmpeg/libk9decmpeg.la $(top_builddir)/libdvdnav/libk9dvdnav.la
 
@@ -370,17 +368,17 @@ libk9copy_la_SOURCES=    \
 	k9progress.cpp k9mp4enc.cpp k9mp4dlg.cpp k9burndvd.cpp k9tools.cpp k9dvdchapter.cpp \
 	k9dvdtitleset.cpp k9ifo2.cpp k9script.cpp k9config.cpp backupdlg.cpp dvdprogress.cpp progress.cpp mp4dlg.cpp
 
-include_HEADERS = k9backupdlg.h k9cellcopylist.h k9cell.h k9dvdauthor.h \
+include_HEADERS = 
+noinst_HEADERS = bswap.h k9dvdread.h k9progress.h k9mp4enc.h k9mp4dlg.h \
+	k9burndvd.h k9tools.h k9ifo2.h k9script.h k9config.h \
+	k9backupdlg.h k9cellcopylist.h k9cell.h k9dvdauthor.h \
 				k9dvdbackup.h k9dvdprogress.h k9ifo.h k9dvd.h k9dvdtitle.h k9dvdsize.h k9common.h \
 	k9dvdchapter.h k9dvdtitleset.h
 
-noinst_HEADERS = bswap.h k9dvdread.h k9progress.h k9mp4enc.h k9mp4dlg.h \
-	k9burndvd.h k9tools.h k9ifo2.h k9script.h k9config.h
-
-libk9copy_la_LDFLAGS = -module
 INCLUDES = -I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9vamps \
 	-I$(top_srcdir)/libdvdnav
 
+libk9copy_la_LDFLAGS = $(all_libraries)
 #>- all: all-am
 #>+ 1
 all: docs-am  all-am
@@ -429,35 +427,17 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-install-libLTLIBRARIES: $(lib_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	test -z "$(libdir)" || $(mkdir_p) "$(DESTDIR)$(libdir)"
-	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
-	  if test -f $$p; then \
-	    f=$(am__strip_dir) \
-	    echo " $(LIBTOOL) --mode=install $(libLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(libdir)/$$f'"; \
-	    $(LIBTOOL) --mode=install $(libLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(libdir)/$$f"; \
-	  else :; fi; \
-	done
 
-uninstall-libLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@set -x; list='$(lib_LTLIBRARIES)'; for p in $$list; do \
-	  p=$(am__strip_dir) \
-	  echo " $(LIBTOOL) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$p'"; \
-	  $(LIBTOOL) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$p"; \
-	done
-
-clean-libLTLIBRARIES:
-	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
-	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
 	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
 	  test "$$dir" != "$$p" || dir=.; \
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
 libk9copy.la: $(libk9copy_la_OBJECTS) $(libk9copy_la_DEPENDENCIES) 
-	$(CXXLINK) -rpath $(libdir) $(libk9copy_la_LDFLAGS) $(libk9copy_la_OBJECTS) $(libk9copy_la_LIBADD) $(LIBS)
+	$(CXXLINK)  $(libk9copy_la_LDFLAGS) $(libk9copy_la_OBJECTS) $(libk9copy_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -615,7 +595,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"; do \
+	for dir in "$(DESTDIR)$(includedir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -646,10 +626,10 @@ maintainer-clean-generic:
 #>+ 1
 clean: kde-rpo-clean  clean-am
 
-#>- clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
+#>- clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 #>- 	mostlyclean-am
 #>+ 2
-clean-am: clean-metasources clean-ui clean-bcheck clean-final  clean-generic clean-libLTLIBRARIES clean-libtool \
+clean-am: clean-metasources clean-ui clean-bcheck clean-final  clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -670,7 +650,7 @@ info-am:
 
 install-data-am: install-includeHEADERS
 
-install-exec-am: install-libLTLIBRARIES
+install-exec-am:
 
 install-info: install-info-am
 
@@ -696,22 +676,20 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-includeHEADERS uninstall-info-am \
-	uninstall-libLTLIBRARIES
+uninstall-am: uninstall-includeHEADERS uninstall-info-am
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libLTLIBRARIES clean-libtool ctags distclean \
+	clean-libtool clean-noinstLTLIBRARIES ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-exec \
 	install-exec-am install-includeHEADERS install-info \
-	install-info-am install-libLTLIBRARIES install-man \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-includeHEADERS uninstall-info-am \
-	uninstall-libLTLIBRARIES
+	install-info-am install-man install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-includeHEADERS \
+	uninstall-info-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

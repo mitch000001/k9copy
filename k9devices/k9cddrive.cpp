@@ -12,8 +12,15 @@
 #include "k9common.h"
 #include "k9cddrive.h"
 #include "k9config.h"
+
+#ifdef HAVE_HAL
 #include "k9halconnection.h"
 #include "k9haldevice.h"
+#else
+#include <k3bdevice.h>
+#include <k3bdevicemanager.h>
+#endif
+
 #include <kprocess.h>
 k9CdDrive::k9CdDrive() { 
     canReadDVD=false;
@@ -21,26 +28,40 @@ k9CdDrive::k9CdDrive() {
     canWriteDVD=false;
     device="";
     name="";
+    #ifdef HAVE_HAL
     m_Device=NULL;
+    #endif
 }
 k9CdDrive::~k9CdDrive() {}
 
 k9CdDrives::k9CdDrives():QObject( 0,0) {
     drives.setAutoDelete(true);
+    #ifdef HAVE_HAL
     m_connection=k9HalConnection::getInstance();
     connect(m_connection,SIGNAL(deviceAdded( k9HalDevice* )),this,SLOT(deviceAdded( k9HalDevice* )));
     connect(m_connection,SIGNAL(deviceRemoved( k9HalDevice* )),this,SLOT(deviceRemoved( k9HalDevice*)));
+    #else
+        m_devMgr=new K3bDevice::DeviceManager(this);
+
+    #endif
     scanDrives();
 }
 k9CdDrives::~k9CdDrives() {
+    #ifdef HAVE_HAL
     m_connection->end();
+    #else
+    delete m_devMgr;
+    #endif
 }
 
 void k9CdDrives::deviceAdded( k9HalDevice *_device) {
+#ifdef HAVE_HAL
    addDrive( _device);
+#endif
 }
 
 void k9CdDrives::deviceRemoved(k9HalDevice *_device) {
+#ifdef HAVE_HAL   
    for (k9CdDrive *d=drives.first();d;d=drives.next()) {
       if (d->getDevice()==_device) {
       	  emit deviceRemoved( d);
@@ -48,6 +69,61 @@ void k9CdDrives::deviceRemoved(k9HalDevice *_device) {
           break;
       }
    }
+#endif
+}
+#ifdef HAVE_HAL
+void k9CdDrives::addDrive(k9HalDevice *_device) {
+       k9CdDrive *drive=new k9CdDrive;
+        drive->setDevice( _device);
+        drive->canReadDVD=_device->getCanReadDvd();
+        drive->canWriteDVD=_device->getCanBurnDvd();
+        drive->canWriteCDR=_device->getCanBurnCd();
+        drive->device=_device->getDeviceName();
+        drive->name=_device->getModel();
+        QValueList <int> writeSpeeds;
+        for (int i=2;i <=_device->getMaxWriteSpeed()/1385;i+=2)
+            writeSpeeds.append( i);
+        drive->setWriteSpeeds(writeSpeeds);
+        drives.append(drive);    
+        emit deviceAdded( drive);
+ 
+}
+#endif
+
+/** No descriptions */
+void k9CdDrives::scanDrives() {
+    drives.clear();
+
+    #ifdef HAVE_HAL
+    QPtrList <k9HalDevice> list=m_connection->getDevices();
+	
+    for (k9HalDevice *hdrive=list.first();hdrive;hdrive=list.next()) {
+        addDrive(hdrive);
+    }
+    #else
+      m_devMgr->scanBus();
+      int row=0;
+      QPtrList <K3bDevice::Device> lDev=m_devMgr->allDevices();
+      for (K3bDevice::Device *dev=lDev.first();dev;dev=lDev.next()) {
+         k9CdDrive *drive=new k9CdDrive;
+         drive->device=dev->blockDeviceName();
+         drive->name=dev->description();
+         drive->canReadDVD=dev->readsDvd();
+         drive->canWriteCDR=dev->writesCd();
+         drive->canWriteDVD=dev->writesDvd();
+         QValueList <int> writeSpeeds;
+         for (int i=2;i <=dev->determineMaximalWriteSpeed()/1385;i+=2)
+            writeSpeeds.append( i);
+         drive->setWriteSpeeds(writeSpeeds);
+         
+        drive->num=row;
+        drives.append(drive);
+        row++;
+        emit deviceAdded(drive);      
+      }
+      
+    #endif
+    readConfig();
 }
 
 void k9CdDrives::eject(const QString & device) {
@@ -92,34 +168,6 @@ void k9CdDrives::readConfig() {
     }
 }
 
-void k9CdDrives::addDrive(k9HalDevice *_device) {
-       k9CdDrive *drive=new k9CdDrive;
-        drive->setDevice( _device);
-        drive->canReadDVD=_device->getCanReadDvd();
-        drive->canWriteDVD=_device->getCanBurnDvd();
-        drive->canWriteCDR=_device->getCanBurnCd();
-        drive->device=_device->getDeviceName();
-        drive->name=_device->getModel();
-        QValueList <int> writeSpeeds;
-        for (int i=2;i <=_device->getMaxWriteSpeed()/1385;i+=2)
-            writeSpeeds.append( i);
-        drive->setWriteSpeeds(writeSpeeds);
-        drives.append(drive);    
-        emit deviceAdded( drive);
- 
-}
-/** No descriptions */
-void k9CdDrives::scanDrives() {
-    drives.clear();
-
-    QPtrList <k9HalDevice> list=m_connection->getDevices();
-	
-    for (k9HalDevice *hdrive=list.first();hdrive;hdrive=list.next()) {
-        addDrive(hdrive);
-    }
-
-    readConfig();
-}
 
 
 /** No descriptions */

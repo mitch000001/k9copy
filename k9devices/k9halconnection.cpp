@@ -9,13 +9,19 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+#include "k9common.h"
+#ifdef HAVE_HAL
+
 #include "k9halconnection.h"
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include "k9haldevice.h"
+#ifdef DBUS_QT3
+#include <dbus/qdbusconnection.h>
+#else
 #include <dbus/connection.h>
+#endif
 #include <dbus/dbus.h>
 #include <hal/libhal.h>
-
 k9HalConnection *Hinstance=NULL;
 
 void halDeviceAdded (LibHalContext *ctx, const char *udi) {
@@ -43,8 +49,11 @@ k9HalConnection::k9HalConnection(QObject *parent, const char *name)
     qDebug(QString("Error connecting to DBUS : %1").arg(error.message));
     return;
   }
-  
+  #ifdef DBUS_QT3
+    m_dBusQtConnect=new QDBusConnection(this);
+  #else
   m_dBusQtConnect = new DBusQt::Connection( this );
+  #endif
   m_dBusQtConnect->dbus_connection_setup_with_qt_main(m_dbusConnect );
 
   libhal_ctx_set_dbus_connection((LibHalContext*) m_context,m_dbusConnect );
@@ -151,3 +160,4 @@ void k9HalConnection::end() {
     Hinstance=NULL;
 }
 #include "k9halconnection.moc"
+#endif

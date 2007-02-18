@@ -1,17 +1,17 @@
+# translation of k9copy-pt_BR.po to Português do Brasil
 # translation of pt_BR.po to
-# translation of pt_BR.po to Português do Brasil
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Fabio S Monteiro <fsmont@gmail.com>, 2005, 2006.
-# Phantom X <mphantomx@yahoo.com.br>, 2006.
+# Phantom X <megaphantomx@bol.com.br>, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: pt_BR\n"
+"Project-Id-Version: k9copy-pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-21 09:09+0200\n"
-"PO-Revision-Date: 2006-11-21 17:54-0200\n"
-"Last-Translator: Phantom X <mphantomx@yahoo.com.br>\n"
+"PO-Revision-Date: 2007-02-14 19:59-0200\n"
+"Last-Translator: Phantom X <megaphantomx@bol.com.br>\n"
 "Language-Team: Português do Brasil <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,105 +23,105 @@ msgstr ""
 #: libk3bdevice.new/k3bdeviceglobals.cpp:30
 #: libk3bdevice.new/k3bdeviceglobals.cpp:132
 msgid "CD-R"
-msgstr "CD-R"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:32 libk3bdevice/k3bdeviceglobals.cpp:134
 #: libk3bdevice.new/k3bdeviceglobals.cpp:32
 #: libk3bdevice.new/k3bdeviceglobals.cpp:134
 msgid "CD-RW"
-msgstr "CD-RW"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:34 libk3bdevice/k3bdeviceglobals.cpp:130
 #: libk3bdevice.new/k3bdeviceglobals.cpp:34
 #: libk3bdevice.new/k3bdeviceglobals.cpp:130
 msgid "CD-ROM"
-msgstr "CD-ROM"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:36 libk3bdevice/k3bdeviceglobals.cpp:101
 #: libk3bdevice.new/k3bdeviceglobals.cpp:36
 #: libk3bdevice.new/k3bdeviceglobals.cpp:101
 msgid "DVD-ROM"
-msgstr "DVD-ROM"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:38 libk3bdevice/k3bdeviceglobals.cpp:115
 #: libk3bdevice.new/k3bdeviceglobals.cpp:38
 #: libk3bdevice.new/k3bdeviceglobals.cpp:115
 msgid "DVD-RAM"
-msgstr "DVD-RAM"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:40 libk3bdevice/k3bdeviceglobals.cpp:104
 #: libk3bdevice.new/k3bdeviceglobals.cpp:40
 #: libk3bdevice.new/k3bdeviceglobals.cpp:104
 msgid "DVD-R"
-msgstr "DVD-R"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:42 libk3bdevice/k3bdeviceglobals.cpp:118
 #: libk3bdevice.new/k3bdeviceglobals.cpp:42
 #: libk3bdevice.new/k3bdeviceglobals.cpp:118
 msgid "DVD-RW"
-msgstr "DVD-RW"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:44
 #: libk3bdevice.new/k3bdeviceglobals.cpp:44
 msgid "DVD-R DL"
-msgstr "DVD-R DL"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:46 libk3bdevice/k3bdeviceglobals.cpp:126
 #: libk3bdevice.new/k3bdeviceglobals.cpp:46
 #: libk3bdevice.new/k3bdeviceglobals.cpp:126
 msgid "DVD+R"
-msgstr "DVD+R"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:48 libk3bdevice/k3bdeviceglobals.cpp:124
 #: libk3bdevice.new/k3bdeviceglobals.cpp:48
 #: libk3bdevice.new/k3bdeviceglobals.cpp:124
 msgid "DVD+RW"
-msgstr "DVD+RW"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:50
 #: libk3bdevice.new/k3bdeviceglobals.cpp:50
 msgid "DVD+R DL"
-msgstr "DVD+R DL"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:63
 #: libk3bdevice.new/k3bdeviceglobals.cpp:63
 msgid "SAO"
-msgstr "SAO"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:65
 #: libk3bdevice.new/k3bdeviceglobals.cpp:65
 msgid "TAO"
-msgstr "TAO"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:67
 #: libk3bdevice.new/k3bdeviceglobals.cpp:67
 msgid "RAW"
-msgstr "RAW"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:69
 #: libk3bdevice.new/k3bdeviceglobals.cpp:69
 msgid "SAO/R96P"
-msgstr "SAO/R96P"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:71
 #: libk3bdevice.new/k3bdeviceglobals.cpp:71
 msgid "SAO/R96R"
-msgstr "SAO/R96R"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:73
 #: libk3bdevice.new/k3bdeviceglobals.cpp:73
 msgid "RAW/R16"
-msgstr "RAW/R16"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:75
 #: libk3bdevice.new/k3bdeviceglobals.cpp:75
 msgid "RAW/R96P"
-msgstr "RAW/R96P"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:77
 #: libk3bdevice.new/k3bdeviceglobals.cpp:77
 msgid "RAW/R96R"
-msgstr "RAW/R96R"
+msgstr ""
 
 #: libk3bdevice/k3bdeviceglobals.cpp:79
 #: libk3bdevice.new/k3bdeviceglobals.cpp:79
@@ -197,9 +197,8 @@ msgid "Create MPEG-4"
 msgstr "Criar MPEG-4"
 
 #: src/k9copy.cpp:94
-#, fuzzy
 msgid "Settings"
-msgstr "&Configurações"
+msgstr "Configurações"
 
 #: src/kviewmpeg2.cpp:100
 msgid "Can't find device %1\n"
@@ -222,14 +221,12 @@ msgid "A DVD Backup tool for KDE"
 msgstr "Uma ferramenta de backup de DVD para o KDE"
 
 #: src/main.cpp:35
-#, fuzzy
 msgid "input device"
-msgstr "Dispositivo de leitura: "
+msgstr "Dispositivo de leitura"
 
 #: src/main.cpp:37
-#, fuzzy
 msgid "output device"
-msgstr "Dispositivo de gravação: "
+msgstr "Dispositivo de gravação"
 
 #: src/main.cpp:38
 msgid "title to play"
@@ -298,7 +295,7 @@ msgstr "continuar reproduzindo do último setor"
 
 #: src/main.cpp:62
 msgid "k9copy"
-msgstr "k9copy"
+msgstr ""
 
 #: src/main.cpp:65
 msgid "_: NAME OF TRANSLATORS\\nYour names"
@@ -399,11 +396,11 @@ msgstr "<b><p align=\"center\">Dispositivos não detectados pelo k9copy</p></b>"
 
 #: src/k9settings.cpp:34
 msgid "DVD"
-msgstr "DVD"
+msgstr ""
 
 #: src/k9settings.cpp:34
 msgid "DVD Backup"
-msgstr "DVD Backup"
+msgstr ""
 
 #: src/k9settings.cpp:40
 msgid "MPEG-4"
@@ -1116,9 +1113,8 @@ msgid "MPEG-4 Encoding cancelled"
 msgstr "Masterização cancelada"
 
 #: libk9copy/k9mp4enc.cpp:198
-#, fuzzy
 msgid "Error while running mencoder :"
-msgstr "Ocorreu um erro enquanto executava DVDAuthor:\n"
+msgstr "Ocorreu um erro enquanto executava DVDAuthor:"
 
 #: libk9copy/k9mp4enc.cpp:198
 msgid "Encoding error"
@@ -1163,7 +1159,7 @@ msgstr "Velocidade de gravação atual: %1 x"
 
 #: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
 msgid "kDecMPEG2"
-msgstr "kDecMPEG2"
+msgstr ""
 
 #: debug/libk9copy/backupdlg.cpp:163 rc.cpp:175
 #, no-c-format
@@ -1178,7 +1174,7 @@ msgstr "Alt+A"
 #: debug/libk9copy/backupdlg.cpp:165 rc.cpp:181
 #, no-c-format
 msgid "--:--:--"
-msgstr "--:--:--"
+msgstr ""
 
 #: debug/libk9copy/backupdlg.cpp:166 rc.cpp:184
 #, no-c-format
@@ -1194,7 +1190,7 @@ msgstr "Tempo Decorrido"
 #: debug/libk9copy/backupdlg.cpp:168 rc.cpp:190
 #, no-c-format
 msgid "<p align=\"left\"><b>DVD Backup</b></p>"
-msgstr "<p align=\"left\"><b>DVD Backup</b></p>"
+msgstr ""
 
 #: debug/libk9copy/dvdprogress.cpp:92 rc.cpp:194
 #, no-c-format
@@ -1205,7 +1201,7 @@ msgstr "k9Copy - Analisando DVD"
 #: debug/src/k9copy.moc.cpp:34 debug/src/k9copy.moc.cpp:42 rc.cpp:200
 #, no-c-format
 msgid "k9Copy"
-msgstr "k9Copy"
+msgstr ""
 
 #: debug/libk9copy/progress.cpp:106 debug/src/progress.cpp:81 rc.cpp:207
 #, fuzzy, no-c-format
@@ -1251,59 +1247,58 @@ msgstr "Tamanho"
 #: debug/libk9copy/k9dvdprogress.moc.cpp:34
 #: debug/libk9copy/k9dvdprogress.moc.cpp:42
 msgid "k9DVDProgress"
-msgstr "k9DVDProgress"
+msgstr ""
 
 #: debug/libk9copy/k9dvdauthor.moc.cpp:34
 #: debug/libk9copy/k9dvdauthor.moc.cpp:42
 msgid "k9DVDAuthor"
-msgstr "k9DVDAuthor"
+msgstr ""
 
 #: debug/libk9copy/k9dvdsize.moc.cpp:34 debug/libk9copy/k9dvdsize.moc.cpp:42
 msgid "k9DVDSize"
-msgstr "k9DVDSize"
+msgstr ""
 
 #: debug/libk9copy/k9dvdtitle.moc.cpp:34 debug/libk9copy/k9dvdtitle.moc.cpp:42
 msgid "k9ChapterCell"
-msgstr "k9ChapterCell"
+msgstr ""
 
 #: debug/libk9copy/k9dvdtitle.moc.cpp:107
 #: debug/libk9copy/k9dvdtitle.moc.cpp:115
 msgid "k9DVDChapter"
-msgstr "k9DVDChapter"
+msgstr ""
 
 #: debug/libk9copy/k9dvdtitle.moc.cpp:180
 #: debug/libk9copy/k9dvdtitle.moc.cpp:188
 msgid "k9DVDVideoStream"
-msgstr "k9DVDVideoStream"
+msgstr ""
 
 #: debug/libk9copy/k9dvdtitle.moc.cpp:253
 #: debug/libk9copy/k9dvdtitle.moc.cpp:261
 msgid "k9DVDAudioStream"
-msgstr "k9DVDAudioStream"
+msgstr ""
 
 #: debug/libk9copy/k9dvdtitle.moc.cpp:326
 #: debug/libk9copy/k9dvdtitle.moc.cpp:334
 msgid "k9DVDSubtitle"
-msgstr "k9DVDSubtitle"
+msgstr ""
 
 #: debug/libk9copy/k9dvdtitle.moc.cpp:399
 #: debug/libk9copy/k9dvdtitle.moc.cpp:407
 msgid "k9DVDTitle"
-msgstr "k9DVDTitle"
+msgstr ""
 
 #: debug/libk9copy/k9dvdtitle.moc.cpp:472
 #: debug/libk9copy/k9dvdtitle.moc.cpp:480
 msgid "k9DVDTitleset"
-msgstr "k9DVDTitleset"
+msgstr ""
 
 #: debug/libk9copy/k9dvd.moc.cpp:34 debug/libk9copy/k9dvd.moc.cpp:42
 msgid "k9DVD"
-msgstr "k9DVD"
+msgstr ""
 
 #: debug/libk9copy/k9burndvd.moc.cpp:34 debug/libk9copy/k9burndvd.moc.cpp:42
-#, fuzzy
 msgid "k9BurnDVD"
-msgstr "k9DVD"
+msgstr ""
 
 #: debug/src/viewmpeg2.cpp:631 rc.cpp:3
 #, no-c-format
@@ -1348,7 +1343,7 @@ msgstr "Idiomas"
 #: debug/src/k9mainw.cpp:291 rc.cpp:8
 #, no-c-format
 msgid "MainDlg"
-msgstr "MainDlg"
+msgstr ""
 
 #: debug/src/k9mainw.cpp:292 rc.cpp:11
 #, no-c-format
@@ -1408,7 +1403,7 @@ msgstr "Seleção"
 #: debug/src/k9mainw.cpp:311 rc.cpp:26
 #, no-c-format
 msgid "D&VD"
-msgstr "D&VD"
+msgstr ""
 
 #: debug/src/prefDVD.cpp:89 rc.cpp:89
 #, fuzzy, no-c-format
@@ -1474,7 +1469,7 @@ msgstr ""
 #: debug/src/prefMPEG4.cpp:156 rc.cpp:137
 #, no-c-format
 msgid "&keep aspect ratio"
-msgstr "manter aspecto"
+msgstr "&manter aspecto"
 
 #: debug/src/prefMPEG4.cpp:160 rc.cpp:146
 #, no-c-format
@@ -1498,23 +1493,23 @@ msgstr ""
 
 #: debug/src/k9main.moc.cpp:34 debug/src/k9main.moc.cpp:42
 msgid "k9DVDListItem"
-msgstr "k9DVDListItem"
+msgstr ""
 
 #: debug/src/k9main.moc.cpp:107 debug/src/k9main.moc.cpp:115
 msgid "k9Main"
-msgstr "k9Main"
+msgstr ""
 
 #: debug/src/kcddrive.moc.cpp:34 debug/src/kcddrive.moc.cpp:42
 msgid "kCDDrive"
-msgstr "kCDDrive"
+msgstr ""
 
 #: debug/src/kcddrive.moc.cpp:107 debug/src/kcddrive.moc.cpp:115
 msgid "kCDDrives"
-msgstr "kCDDrives"
+msgstr ""
 
 #: debug/src/kviewmpeg2.moc.cpp:34 debug/src/kviewmpeg2.moc.cpp:42
 msgid "kViewMPEG2"
-msgstr "kViewMPEG2"
+msgstr ""
 
 #: rc.cpp:243
 #, no-c-format

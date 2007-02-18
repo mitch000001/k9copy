@@ -9,6 +9,9 @@
 /* x86_64 architecture */
 #undef ARCH_X86_64
 
+/* compile with dbus-qt3 bindings */
+#undef DBUS_QT3
+
 /* HAL API version 0.4 */
 #undef HAL_0_4
 

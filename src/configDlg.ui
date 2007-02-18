@@ -23,12 +23,6 @@
     <property name="caption">
         <string>k9Copy - Devices</string>
     </property>
-    <property name="modal" stdset="0">
-        <bool>true</bool>
-    </property>
-    <property name="sizeGripEnabled" stdset="0">
-        <bool>true</bool>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>

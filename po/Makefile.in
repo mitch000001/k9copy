@@ -115,6 +115,7 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+K3B_LIBS = @K3B_LIBS@
 KCFG_DEPENDENCIES = @KCFG_DEPENDENCIES@
 KCONFIG_COMPILER = @KCONFIG_COMPILER@
 KDECONFIG = @KDECONFIG@
@@ -246,8 +247,6 @@ host_vendor = @host_vendor@
 htmldir = @htmldir@
 include_ARTS_FALSE = @include_ARTS_FALSE@
 include_ARTS_TRUE = @include_ARTS_TRUE@
-include_HAL_FALSE = @include_HAL_FALSE@
-include_HAL_TRUE = @include_HAL_TRUE@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
@@ -302,10 +301,10 @@ xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 #>- POFILES = AUTO
 #>+ 2
-POFILES = pt_BR.po cs.po it.po ru.po es.po fr.po de.po ca.po el.po pl.po es_ar.po
-GMOFILES = pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo ca.gmo el.gmo pl.gmo es_ar.gmo
+POFILES = pt_BR.po cs.po it.po ru.po es.po fr.po de.po ca.po el.po pl.po es_AR.po
+GMOFILES = pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo ca.gmo el.gmo pl.gmo es_AR.gmo
 noinst_HEADERS = fr.po k9copy.pot es.po it.po pt_BR.po cs.po de.po ru.po el.po \
-	pl.po ca.po es_ar.po
+	pl.po ca.po es_AR.po
 
 #>- all: all-am
 #>+ 1
@@ -576,17 +575,17 @@ el.gmo: el.po
 pl.gmo: pl.po
 	rm -f pl.gmo; $(GMSGFMT) -o pl.gmo $(srcdir)/pl.po
 	test ! -f pl.gmo || touch pl.gmo
-es_ar.gmo: es_ar.po
-	rm -f es_ar.gmo; $(GMSGFMT) -o es_ar.gmo $(srcdir)/es_ar.po
-	test ! -f es_ar.gmo || touch es_ar.gmo
+es_AR.gmo: es_AR.po
+	rm -f es_AR.gmo; $(GMSGFMT) -o es_AR.gmo $(srcdir)/es_AR.po
+	test ! -f es_AR.gmo || touch es_AR.gmo
 
 #>+ 3
 clean-nls:
-	-rm -f  pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo ca.gmo el.gmo pl.gmo es_ar.gmo
+	-rm -f  pt_BR.gmo cs.gmo it.gmo ru.gmo es.gmo fr.gmo de.gmo ca.gmo el.gmo pl.gmo es_AR.gmo
 
 #>+ 10
 install-nls:
-	@for base in pt_BR cs it ru es fr de ca el pl es_ar ; do \
+	@for base in pt_BR cs it ru es fr de ca el pl es_AR ; do \
 	  echo $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
 	  $(mkinstalldirs) $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES ; \
 	  if test -f $$base.gmo; then $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
@@ -607,7 +606,7 @@ uninstall-nls:
 	rm -f $(DESTDIR)$(kde_locale)/ca/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/el/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/pl/LC_MESSAGES/$(PACKAGE).mo
-	rm -f $(DESTDIR)$(kde_locale)/es_ar/LC_MESSAGES/$(PACKAGE).mo
+	rm -f $(DESTDIR)$(kde_locale)/es_AR/LC_MESSAGES/$(PACKAGE).mo
 
 #>+ 2
 all-nls: $(GMOFILES)

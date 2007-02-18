@@ -5,8 +5,8 @@ INCLUDES = -I$(top_srcdir)/k9Mplayer -I$(top_srcdir)/k9decmpeg \
 
 # these are the headers for your project
 noinst_HEADERS = kconfigdlg.h k9copy.h k9main.h k9play.h k9settings.h \
-			k9prefmpeg4.h k9prefdvd.h k9prefmencoder.h k9playbackoptions.h k9langselect.h \
-			k9glwidget.h k9prefpreview.h k9titlefactor.h k9updatefactor.h k9cddrive.h
+	k9prefmpeg4.h k9prefdvd.h k9prefmencoder.h k9playbackoptions.h k9langselect.h \
+	k9glwidget.h k9prefpreview.h k9titlefactor.h k9updatefactor.h
 
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
@@ -27,12 +27,12 @@ k9copy_SOURCES = images.h kviewmpeg2.cpp kviewmpeg2.h viewmpeg2.ui k9copy.png \
 	k9settings.cpp prefDVD.ui prefMPEG4.ui k9prefmpeg4.cpp k9prefdvd.cpp prefMencoder.ui \
 	k9prefmencoder.cpp playbackoptionsw.ui k9playbackoptions.cpp langselectw.ui \
 	k9langselect.cpp k9glwidget.cpp prefpreview.ui k9prefpreview.cpp titlefactor.ui \
-	k9titlefactor.cpp k9updatefactor.cpp k9cddrive.cpp
+	k9titlefactor.cpp k9updatefactor.cpp
 k9copy_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 k9copy_LDADD = $(top_builddir)/k9Mplayer/libk9mplayer.la \
 	$(top_builddir)/libdvdnav/libk9dvdnav.la $(top_builddir)/libk9copy/libk9copy.la \
 	$(top_builddir)/k9decmpeg/libk9decmpeg.la $(top_builddir)/k9vamps/libk9vamps.la \
-	$(top_builddir)/k9devices/libk9devices.la -lkmdi $(LIB_KPARTS) $(LIB_KDEUI)
+	$(top_builddir)/k9devices/libk9devices.la -lkmdi $(LIB_KDEUI)
 
 # this is where the desktop file will go 
 shelldesktopdir = $(kde_appsdir)/Utilities

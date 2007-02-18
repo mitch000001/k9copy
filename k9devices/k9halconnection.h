@@ -9,6 +9,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+#include "k9common.h"
+#ifdef HAVE_HAL
 #ifndef K9HALCONNECTION_H
 #define K9HALCONNECTION_H
 
@@ -20,9 +22,13 @@
 
 class k9HalDevice;
 class DBusConnection;
+#ifdef DBUS_QT3
+class QDBusConnection;
+#else
 namespace DBusQt {
   class Connection;
 };
+#endif
 
 class k9HalConnection : public QObject
 {
@@ -45,7 +51,11 @@ private:
     QPtrList <k9HalDevice> m_devices;
     void *m_context;
     DBusConnection* m_dbusConnect;
+    #ifdef DBUS_QT3
+    QDBusConnection* m_dbusQtConnect;
+    #else
     DBusQt::Connection* m_dBusQtConnect;
+    #endif
 
 private:
 
@@ -56,4 +66,5 @@ private:
     
 };
 
+#endif
 #endif

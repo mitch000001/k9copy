@@ -516,6 +516,7 @@ void k9Main::Open()
   QString sVolName="";  
   //if no dvd label, try to get it from hal
   for (k9CdDrive *drive=driveList.first();drive;drive=driveList.next()) {
+  #ifdef HAVE_HAL
 	if (drive->getDevice() != NULL) {
 		if (drive->getDevice()->mountPoint()==sDevice) {
 			sVolName=drive->getDevice()->getVolumeName();
@@ -523,6 +524,7 @@ void k9Main::Open()
 			break;
 		}
 	}
+#endif
   }     	
  
   dvd->scandvd(sDevice,m_quickScan);
@@ -1180,10 +1182,12 @@ void k9Main::deviceRemoved(k9CdDrive *_drive) {
 }
 
 void k9Main::addDrive(k9CdDrive *drive) {
+    #ifdef HAVE_HAL
     if (drive->getDevice()!=NULL) {
         k9HalDevice *dev=drive->getDevice();
         connect(dev,SIGNAL(volumeChanged( const QString &)),this,SLOT(volumeChanged(const QString&)));
     }
+    #endif
     if (drive->canReadDVD)
     {
       QString c(drive->name + "  ("+drive->device+")");
@@ -1208,7 +1212,7 @@ void k9Main::readDrives()
   driveList.clear();
   recorderList.clear();
   cbOutputDev->insertItem(i18n("ISO Image"));
-
+  
   drives.scanDrives();
 
 /*
@@ -1301,15 +1305,17 @@ void k9Main::cbOutputDevActivated(int _index)
     return;
 
   k9CdDrive * drive=(k9CdDrive*)recorderList.at(_index-1);
-  QValueList <int>list=drive->getWriteSpeeds();
-  QValueList<int>::iterator it=list.begin();
-
-  cbBurnSpeed->clear();
-  cbBurnSpeed->insertItem(i18n("default"));
-  while( it !=list.end())
-  {
-    cbBurnSpeed->insertItem(QString::number((double)(*it)));
-    it++;
+  if (drive !=NULL) {
+	QValueList <int>list=drive->getWriteSpeeds();
+	QValueList<int>::iterator it=list.begin();
+	
+	cbBurnSpeed->clear();
+	cbBurnSpeed->insertItem(i18n("default"));
+	while( it !=list.end())
+	{
+	cbBurnSpeed->insertItem(QString::number((double)(*it)));
+	it++;
+	}
   }
 }
 

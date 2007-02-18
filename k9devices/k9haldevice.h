@@ -9,8 +9,11 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
+
 #ifndef K9HALDEVICE_H
 #define K9HALDEVICE_H
+#include "k9common.h"
+#ifdef HAVE_HAL
 
 #include <qobject.h>
 /**
@@ -79,4 +82,5 @@ private:
     QString volumeName();
 };
 
+#endif
 #endif
