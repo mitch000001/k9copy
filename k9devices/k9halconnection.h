@@ -50,9 +50,9 @@ signals:
 private:
     QPtrList <k9HalDevice> m_devices;
     void *m_context;
-    DBusConnection* m_dbusConnect;
+    DBusConnection * m_dbusConnect;
     #ifdef DBUS_QT3
-    QDBusConnection* m_dbusQtConnect;
+    QDBusConnection  m_dBusQtConnect;
     #else
     DBusQt::Connection* m_dBusQtConnect;
     #endif

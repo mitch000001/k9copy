@@ -50,11 +50,12 @@ k9HalConnection::k9HalConnection(QObject *parent, const char *name)
     return;
   }
   #ifdef DBUS_QT3
-    m_dBusQtConnect=new QDBusConnection(this);
+//  QDBusConnection connection=QDBusConnection::addConnection(QDBusConnection::SystemBus, "sbus");
   #else
   m_dBusQtConnect = new DBusQt::Connection( this );
-  #endif
   m_dBusQtConnect->dbus_connection_setup_with_qt_main(m_dbusConnect );
+
+  #endif
 
   libhal_ctx_set_dbus_connection((LibHalContext*) m_context,m_dbusConnect );
   
@@ -126,7 +127,11 @@ k9HalConnection::~k9HalConnection()
 {
  libhal_ctx_shutdown((LibHalContext*)m_context, 0 );
   libhal_ctx_free ((LibHalContext*)m_context);
+  #ifdef DBUS_QT3
+  //QDBusConnection::closeConnection("sbus");
+  #else
   delete m_dBusQtConnect;
+  #endif
 
 }
 

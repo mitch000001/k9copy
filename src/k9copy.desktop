@@ -1,4 +1,5 @@
 [Desktop Entry]
+Encoding=UTF-U
 Type=Application
 Name=k9copy
 Exec=k9copy -caption "%c" %i %m  %u
@@ -9,3 +10,6 @@ GenericName[fr]=Backup de DVD Video
 MimeTypes=
 Terminal=false
 Icon=k9copy.png
+DocPath=k9copy/index.html
+Categories=KDE;Application;AudioVideo;DiscBurning;
+X-KDE-StartupNotify=true
