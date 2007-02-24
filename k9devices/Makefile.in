@@ -55,12 +55,12 @@ am__DEPENDENCIES_1 =
 libk9devices_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 am_libk9devices_la_OBJECTS = k9halconnection.lo k9haldevice.lo \
-	k9cddrive.lo
+	k9cddrive.lo k9dbusdispatch.lo
 #>- libk9devices_la_OBJECTS = $(am_libk9devices_la_OBJECTS)
 #>+ 5
 libk9devices_la_final_OBJECTS = libk9devices_la.all_cpp.lo 
 libk9devices_la_nofinal_OBJECTS = k9halconnection.lo k9haldevice.lo \
-	k9cddrive.lo
+	k9cddrive.lo k9dbusdispatch.lo
 @KDE_USE_FINAL_FALSE@libk9devices_la_OBJECTS = $(libk9devices_la_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@libk9devices_la_OBJECTS = $(libk9devices_la_final_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -120,8 +120,6 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
-DBUSQT_INCS = @DBUSQT_INCS@
-DBUSQT_LIBS = @DBUSQT_LIBS@
 DBUS_INCS = @DBUS_INCS@
 DBUS_LIBS = @DBUS_LIBS@
 DCOPIDL = @DCOPIDL@
@@ -333,13 +331,15 @@ xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 INCLUDES = -I$(top_srcdir)/libk9copy $(all_includes) $(HAL_INCS) $(DBUS_INCS) \
-	$(DBUSQT_INCS) $(K3B_INCS)
+	$(K3B_INCS)
 
 #>- METASOURCES = AUTO
 libk9devices_la_LDFLAGS = $(all_libraries) 
 noinst_LTLIBRARIES = libk9devices.la
-noinst_HEADERS = k9halconnection.h k9haldevice.h k9cddrive.h
-libk9devices_la_SOURCES = k9halconnection.cpp k9haldevice.cpp k9cddrive.cpp
+noinst_HEADERS = k9halconnection.h k9haldevice.h k9cddrive.h k9dbusdispatch.h
+libk9devices_la_SOURCES = k9halconnection.cpp k9haldevice.cpp k9cddrive.cpp \
+	k9dbusdispatch.cpp
+
 libk9devices_la_LIBADD = $(K3B_LIBS) $(HAL_DBUS_LIBS)
 #>- all: all-am
 #>+ 1
@@ -408,6 +408,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9cddrive.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9dbusdispatch.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9halconnection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9haldevice.Plo@am__quote@
 
@@ -625,6 +626,13 @@ k9halconnection.moc: $(srcdir)/k9halconnection.h
 mocs: k9halconnection.moc
 
 #>+ 3
+k9dbusdispatch.moc: $(srcdir)/k9dbusdispatch.h
+	$(MOC) $(srcdir)/k9dbusdispatch.h -o k9dbusdispatch.moc
+
+#>+ 2
+mocs: k9dbusdispatch.moc
+
+#>+ 3
 k9haldevice.moc: $(srcdir)/k9haldevice.h
 	$(MOC) $(srcdir)/k9haldevice.h -o k9haldevice.moc
 
@@ -640,7 +648,7 @@ mocs: k9cddrive.moc
 
 #>+ 3
 clean-metasources:
-	-rm -f  k9halconnection.moc k9haldevice.moc k9cddrive.moc
+	-rm -f  k9halconnection.moc k9dbusdispatch.moc k9haldevice.moc k9cddrive.moc
 
 #>+ 2
 KDE_DIST=configure.in.in Makefile.in Makefile.am 
@@ -687,11 +695,11 @@ bcheck-am:
 
 
 #>+ 11
-libk9devices_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9halconnection.cpp $(srcdir)/k9haldevice.cpp $(srcdir)/k9cddrive.cpp  k9halconnection.moc k9haldevice.moc k9cddrive.moc
+libk9devices_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9halconnection.cpp $(srcdir)/k9haldevice.cpp $(srcdir)/k9cddrive.cpp $(srcdir)/k9dbusdispatch.cpp  k9halconnection.moc k9haldevice.moc k9dbusdispatch.moc k9cddrive.moc
 	@echo 'creating libk9devices_la.all_cpp.cpp ...'; \
 	rm -f libk9devices_la.all_cpp.files libk9devices_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9devices_la.all_cpp.final; \
-	for file in k9halconnection.cpp k9haldevice.cpp k9cddrive.cpp ; do \
+	for file in k9halconnection.cpp k9haldevice.cpp k9cddrive.cpp k9dbusdispatch.cpp ; do \
 	  echo "#include \"$$file\"" >> libk9devices_la.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libk9devices_la.all_cpp.final; \
 	done; \
@@ -726,12 +734,14 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 9
+#>+ 11
 nmcheck: 
 k9haldevice.lo: k9haldevice.moc 
 k9halconnection.o: k9halconnection.moc 
+k9dbusdispatch.o: k9dbusdispatch.moc 
 k9haldevice.o: k9haldevice.moc 
 k9halconnection.lo: k9halconnection.moc 
 nmcheck-am: nmcheck
 k9cddrive.o: k9cddrive.moc 
+k9dbusdispatch.lo: k9dbusdispatch.moc 
 k9cddrive.lo: k9cddrive.moc 

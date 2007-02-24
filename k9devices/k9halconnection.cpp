@@ -15,11 +15,6 @@
 #include "k9halconnection.h"
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include "k9haldevice.h"
-#ifdef DBUS_QT3
-#include <dbus/qdbusconnection.h>
-#else
-#include <dbus/connection.h>
-#endif
 #include <dbus/dbus.h>
 #include <hal/libhal.h>
 k9HalConnection *Hinstance=NULL;
@@ -49,13 +44,9 @@ k9HalConnection::k9HalConnection(QObject *parent, const char *name)
     qDebug(QString("Error connecting to DBUS : %1").arg(error.message));
     return;
   }
-  #ifdef DBUS_QT3
-//  QDBusConnection connection=QDBusConnection::addConnection(QDBusConnection::SystemBus, "sbus");
-  #else
-  m_dBusQtConnect = new DBusQt::Connection( this );
-  m_dBusQtConnect->dbus_connection_setup_with_qt_main(m_dbusConnect );
 
-  #endif
+  m_dbusDispatch=new K9DBusDispatch(this,0);
+  m_dbusDispatch->setConnection(m_dbusConnect);
 
   libhal_ctx_set_dbus_connection((LibHalContext*) m_context,m_dbusConnect );
   
@@ -130,9 +121,8 @@ k9HalConnection::~k9HalConnection()
   #ifdef DBUS_QT3
   //QDBusConnection::closeConnection("sbus");
   #else
-  delete m_dBusQtConnect;
+  //delete m_dBusQtConnect;
   #endif
-
 }
 
 

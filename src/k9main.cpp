@@ -55,7 +55,6 @@
 #include <qspinbox.h>
 #include <qpainter.h>
 #include <qfont.h>
-#include <klibloader.h>
 #include <kdirselectdialog.h>
 #include <kio/global.h>
 #include <kio/job.h>
@@ -280,7 +279,6 @@ int LvItem::compare ( QListViewItem * i, int col, bool ascending ) const
 
 void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int width, int align )
 {
-
   if (column==1)
   {
     p->eraseRect(0,0,width,height());
@@ -327,7 +325,6 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
 
 void LvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int width, int align )
 {
-
   if (column==1 && depth()==2)
   {
     p->eraseRect(0,0,width,height());
@@ -652,6 +649,7 @@ void k9Main::addTitle(k9DVDTitle *track)
 {
   const int col1 =0;
   const int col2 =1;
+  const int col3 =2;
   k9DVDAudioStream *l_auds;
   k9DVDSubtitle *l_sub;
   int i;
@@ -688,9 +686,9 @@ void k9Main::addTitle(k9DVDTitle *track)
   {
     l_auds=track->getaudioStream(i);
     c=i18n("audio %1 ").arg(i+1);
-    c.append( l_auds->getlanguage() + " " +l_auds->getformat()+" " +l_auds->getcontent() +" ");
+    c.append( l_auds->getlanguage() + " " +l_auds->getformat()+" " );
     ch.sprintf("%dch ",l_auds->getchannels());
-    c.append(ch+l_auds->getfrequency()+" "+l_auds->getcontent()+" "+l_auds->getquantization());
+    c.append(ch+l_auds->getfrequency()+" "+l_auds->getquantization());
     ckLvItem * item = new ckLvItem( itemTrack,this);
     item->streamType=AUD;
     item->language=l_auds->getlanguage();
@@ -698,6 +696,7 @@ void k9Main::addTitle(k9DVDTitle *track)
     item->setText( col1,  c );
     c.sprintf("%.2f mb",  l_auds->getsize_mb());
     item->setText( col2,c);
+    item->setText( col3,l_auds->getcontent());
     item->setPixmap(col1,pxSound);
     item->obj=track;
     item->stream=l_auds;
@@ -706,7 +705,7 @@ void k9Main::addTitle(k9DVDTitle *track)
   {
     l_sub=track->getsubtitle(i);
     c=i18n("subpicture %1 ").arg(i+1);
-    c.append( l_sub->getlanguage()+" "+l_sub->getcontent());
+    c.append( l_sub->getlanguage());
     ckLvItem * item = new ckLvItem( itemTrack,this);
     item->streamType=SUB;
     item->language=l_sub->getlanguage();
@@ -714,6 +713,7 @@ void k9Main::addTitle(k9DVDTitle *track)
     item->setText( col1,  c );
     c.sprintf("%.2f mb",  l_sub->getsize_mb());
     item->setText( col2,c);
+    item->setText( col3, l_sub->getcontent());
     item->setPixmap(col1,pxText);
     item->obj=track;
     item->stream=l_sub;

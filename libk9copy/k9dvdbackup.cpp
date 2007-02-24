@@ -84,7 +84,7 @@ uint32_t k9TitleSet::getSize() {
 
 
 k9DVDBackup::k9DVDBackup(QObject* _dvd,const char* name,const QStringList& args)
-        : QObject(NULL, "") {
+        : QObject(NULL, name) {
     DVD = (k9DVD*)_dvd;
     m_dvdread=DVD->getdvd();
     currVTS=0;
@@ -280,7 +280,8 @@ void k9DVDBackup::copyEmptyPgc(int _vts,k9Cell *_cell) {
     backupDlg->show();
 
 
-    uint32_t sector,dsi_next_vobu = 0,len=0;
+    uint32_t sector;
+    int32_t len=0;
     uchar buffer[DVD_VIDEO_LB_LEN];
     sector = _cell->startSector;
     backupDlg->setProgress(sector);
@@ -368,7 +369,7 @@ void k9DVDBackup::getOutput(uchar * buffer, uint32_t buflen) {
                 if (currVTS==0)
                     sName = "/VIDEO_TS.VOB";
                 else
-                    sName.sprintf("/VTS_%02d_%d.VOB",currVTS,currVOB);
+                    sName.sprintf("/VTS_%02d_%d.VOB",(int)currVTS,(int)currVOB);
                 sName=output+sName;
                 outputFile=new QFile(sName);
                 if ( !outputFile->open(IO_WriteOnly)) {
@@ -691,7 +692,8 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     k9Vobu * currVobu;
     bool badNavPack=false;
 
-    uint32_t	nsectors, len,nextVobu=0;
+    uint32_t	nsectors, nextVobu=0;
+    int32_t len=0;
     uchar *buf;
     uint32_t sector=_startSector;
     /* read nav pack */
@@ -905,12 +907,12 @@ void k9DVDBackup::updateMainIfo() {
         
         
         cell_playback_t *cell_playback =pgc->cell_playback;
-        int nr= pgc->nr_of_cells;
+        uint32_t nr= pgc->nr_of_cells;
 
         vobu2=NULL;
         cell_playback_t cell;
         newPos=0;
-        for( int j = 0; j < nr; j++) {
+        for( uint32_t j = 0; j < nr; j++) {
             k9Vobu *vobu=remapVobu(&cell_playback[j].first_sector);
             vobu2=vobu;
 
@@ -1003,12 +1005,12 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
         	}	
 
                 cell_playback_t *cell_playback =pgc->cell_playback;
-                int nr= pgc->nr_of_cells;
+                uint32_t nr= pgc->nr_of_cells;
 
                 vobu2=NULL;
                 cell_playback_t cell;
                 newPos=0;
-                for( int j = 0; j < nr; j++) {
+                for( uint32_t j = 0; j < nr; j++) {
                     k9Vobu *vobu=remapVobu(&cell_playback[j].first_sector);
                     vobu2=vobu;
 
@@ -1043,11 +1045,11 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
 	script->updateFPPGC();
 	delete script;
 	if (_hifo->vmgi_mat) {
-		_hifo->vmgi_mat->vmgm_c_adt=NULL;
-		_hifo->vmgi_mat->vmgm_vobu_admap=NULL;
+		_hifo->vmgi_mat->vmgm_c_adt=0;
+		_hifo->vmgi_mat->vmgm_vobu_admap=0;
 	} else {	
-		_hifo->vtsi_mat->vtsm_c_adt=NULL;
-		_hifo->vtsi_mat->vtsm_vobu_admap=NULL;
+		_hifo->vtsi_mat->vtsm_c_adt=0;
+		_hifo->vtsi_mat->vtsm_vobu_admap=0;
 	}    
     }
 
@@ -1102,10 +1104,6 @@ void k9DVDBackup::update4Menu(ifo_handle_t *_hifo) {
 
 }
 
-
-
-
-
 void k9DVDBackup::updateIfo() {
 
     if (error)
@@ -1133,7 +1131,8 @@ void k9DVDBackup::updateIfo() {
             qDebug (QString("error in ifo file %3 : vtsm_vobs %1 -> %2").arg(hifo->vtsi_mat->vtsm_vobs).arg(hifo->vtsi_mat->vtsi_last_sector +1).arg(currTS->VTS));
         hifo->vtsi_mat->vtsm_vobs= hifo->vtsi_mat->vtsi_last_sector +1 ;
 
-    }
+    }else
+       hifo->vtsi_mat->vtsm_vobs=0;
 
     updatePgci_ut(hifo);
 
@@ -1198,13 +1197,14 @@ void k9DVDBackup::updateIfo() {
 		delete script;
 	}
 	        
+	                
         cell_playback_t *cell_playback =pgc->cell_playback;
-        int nr= pgc->nr_of_cells;
+        uint32_t nr= pgc->nr_of_cells;
 
         vobu2=NULL;
         cell_playback_t cell;
         newPos=0;
-        for( int j = 0; j < nr; j++) {
+        for( uint32_t j = 0; j < nr; j++) {
             k9Vobu *vobu=remapVobu(&cell_playback[j].first_sector);
             vobu2=vobu;
 
@@ -1337,7 +1337,7 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                 if (currVTS==0)
                     sName="VIDEO_TS.VOB";
                 else
-                    sName.sprintf("VTS_%02d_%d.VOB",currVTS,VobNum);
+                    sName.sprintf("VTS_%02d_%d.VOB",(int)currVTS,(int)VobNum);
                 dbg=i18n("Updating vob %1").arg(sName);
                 sName=output+"/"+sName;
                 QFileInfo finfo(sName);
@@ -1400,22 +1400,26 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
 
                         //1st audio packet
                         for (int i =0 ;i <8 ;i++) {
-                            if (((dsiPack.synci.a_synca[i] & 0x8000) != 0x8000 ) && (dsiPack.synci.a_synca[i] !=0x3FFF)) {
+                            //if (((dsiPack.synci.a_synca[i] & 0x8000) != 0x8000 ) && (dsiPack.synci.a_synca[i] !=0x3FFF) && (dsiPack.synci.a_synca[i] !=0x0)) {
+                            if ( (dsiPack.synci.a_synca[i] !=0x3FFF) && (dsiPack.synci.a_synca[i] !=0x0)) {
                                 if (vobu->firstAudio[i] !=-1) {
                                     dsiPack.synci.a_synca[i]=vobu->firstAudio [i];
                                 } else {
-                                    dsiPack.synci.a_synca[i] =0;
+                                    //JMP dsiPack.synci.a_synca[i] =0;
+                                    dsiPack.synci.a_synca[i] =0x3FFF;
                                 }
                             }
                         }
                         //1st subpicture packet
                         for (int i =0 ;i <32 ;i++) {
-                            if (((dsiPack.synci.sp_synca[i] & 0x80000000) != 0x80000000) &&
-                                    (dsiPack.synci.sp_synca[i] != 0x3FFFFFFF) && (dsiPack.synci.sp_synca[i] != 0x7FFFFFFF)) {
+                          //  if (((dsiPack.synci.sp_synca[i] & 0x80000000) != 0x80000000) &&
+                           //         (dsiPack.synci.sp_synca[i] != 0x3FFFFFFF) && (dsiPack.synci.sp_synca[i] != 0x7FFFFFFF) && (dsiPack.synci.sp_synca[i] != 0x0)) {
+                              if ((dsiPack.synci.sp_synca[i] != 0x3FFFFFFF) && (dsiPack.synci.sp_synca[i] != 0x0)) {
                                 if (vobu->firstSubp[i] !=-1) {
                                     dsiPack.synci.sp_synca[i]=vobu->firstSubp [i];
                                 } else {
-                                    dsiPack.synci.sp_synca[i] =0;
+                                    //JMP dsiPack.synci.sp_synca[i] =0;
+                                    dsiPack.synci.sp_synca[i] =0x3FFFFFFF;
                                 }
                             }
                         }
@@ -1451,7 +1455,7 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                                 QFile *file2;
                                 if ( vobu2->vobNum != VobNum) {
                                     QString sName;
-                                    sName.sprintf("/VTS_%02d_%d.VOB",currVTS,vobu2->vobNum);
+                                    sName.sprintf("/VTS_%02d_%d.VOB",(int)currVTS,(int)vobu2->vobNum);
                                     sName=output+sName;
                                     file2=new QFile(sName);
                                     file2->open(IO_ReadWrite);
@@ -1498,9 +1502,9 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                             dsiPack.vobu_sri.bwda[i] = 0x3fffffff;
                         dsiPack.vobu_sri.prev_video=0xbfffffff;
                         for (int i =0 ;i <8 ;i++)
-                            dsiPack.synci.a_synca[i]=0;
+                            dsiPack.synci.a_synca[i]=0x3fff;
                         for (int i =0 ;i <32 ;i++)
-                            dsiPack.synci.sp_synca[i] =0;
+                            dsiPack.synci.sp_synca[i] =0x3FFFFFFF;
                         // end block reference frames
                         dsiPack.dsi_gi.vobu_1stref_ea = 0;
                         dsiPack.dsi_gi.vobu_2ndref_ea=0;
@@ -1688,7 +1692,7 @@ void k9DVDBackup::execute() {
         k9CellCopyVTS *VTS=cellCopyList->VTSList.at(iTS);
         //loop on each cell from the titleset
         lastCell=-1;
-        for (int iCell=0;(iCell<cellCopyList->count()) ;iCell++) {
+        for (uint iCell=0;(iCell<cellCopyList->count()) ;iCell++) {
             k9Cell *cell=(k9Cell*)cellCopyList->at(iCell);
             if (cell->vts== VTS->getnum() && (!cell->copied)) {
                 //		currCopyCell=cell;
@@ -1715,7 +1719,8 @@ void k9DVDBackup::execute() {
         }
     }
     delete cellCopyList;
-
+    vamps->setNoData();
+    vamps->wait();
     if (!error) {
         updateIfo();
         updateVob(&currTS->cells);

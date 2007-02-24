@@ -164,10 +164,12 @@ void k9vamps::reset() {
     vap_fact= 1.0f;
 
     //	inbuffw=inbuff;
-    for (uint i=0; i<8;i++)
+    for (uint i=0; i<8;i++) {
         audio_track_map[i]=0;
-    for (uint i=0; i<32;i++)
+    }
+    for (uint i=0; i<32;i++) {
         spu_track_map[i]=0;
+    }
 
     calc_ps_vap = 1;
     vap_fact=1.0;
@@ -539,6 +541,7 @@ int k9vamps::new_private_1_type (uchar *ptr) {
 
     if (type >= 0x20 && type <= 0x3f) {
         // subpicture
+        
         track = spu_track_map [type - 0x20];
 
         return track ? track - 1 + 0x20 : 0;
@@ -557,7 +560,7 @@ int k9vamps::new_private_1_type (uchar *ptr) {
 //        fatal ("Unknown private stream 1 type at %llu: %02x", rtell (ptr), type);
         abase = 0;
     }
-
+	
     track = audio_track_map [type - abase];
 
     return track ? track - 1 + abase : 0;

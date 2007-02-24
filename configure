@@ -987,8 +987,6 @@ HAL_INCS
 HAL_LIBS
 DBUS_INCS
 DBUS_LIBS
-DBUSQT_INCS
-DBUSQT_LIBS
 HAL_DBUS_LIBS
 K3B_LIBS
 TOPSUBDIRS
@@ -8086,7 +8084,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 8089 "configure"' > conftest.$ac_ext
+  echo '#line 8087 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -9935,11 +9933,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9938: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9936: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9942: \$? = $ac_status" >&5
+   echo "$as_me:9940: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -10168,11 +10166,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10171: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10169: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:10175: \$? = $ac_status" >&5
+   echo "$as_me:10173: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -10235,11 +10233,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10238: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10236: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:10242: \$? = $ac_status" >&5
+   echo "$as_me:10240: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12454,7 +12452,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 12457 "configure"
+#line 12455 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12552,7 +12550,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 12555 "configure"
+#line 12553 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14723,11 +14721,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14726: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14724: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:14730: \$? = $ac_status" >&5
+   echo "$as_me:14728: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -14790,11 +14788,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14793: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14791: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14797: \$? = $ac_status" >&5
+   echo "$as_me:14795: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16205,7 +16203,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 16208 "configure"
+#line 16206 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -16303,7 +16301,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 16306 "configure"
+#line 16304 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -17126,11 +17124,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17129: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17127: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17133: \$? = $ac_status" >&5
+   echo "$as_me:17131: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17193,11 +17191,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17196: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17194: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17200: \$? = $ac_status" >&5
+   echo "$as_me:17198: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19182,11 +19180,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19185: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19183: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:19189: \$? = $ac_status" >&5
+   echo "$as_me:19187: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -19415,11 +19413,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19418: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19416: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:19422: \$? = $ac_status" >&5
+   echo "$as_me:19420: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -19482,11 +19480,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19485: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19483: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:19489: \$? = $ac_status" >&5
+   echo "$as_me:19487: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -21701,7 +21699,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 21704 "configure"
+#line 21702 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -21799,7 +21797,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 21802 "configure"
+#line 21800 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -30972,7 +30970,7 @@ for i in $jpeg_incdirs;
 do
   for j in jpeglib.h;
   do
-    echo "configure: 30975: $i/$j" >&5
+    echo "configure: 30973: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       jpeg_incdir=$i
@@ -31277,7 +31275,7 @@ for i in $qt_incdirs;
 do
   for j in $kde_qt_header;
   do
-    echo "configure: 31280: $i/$j" >&5
+    echo "configure: 31278: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       qt_incdir=$i
@@ -32114,7 +32112,7 @@ for i in $kde_incdirs;
 do
   for j in $kde_check_header;
   do
-    echo "configure: 32117: $i/$j" >&5
+    echo "configure: 32115: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_incdir=$i
@@ -32144,7 +32142,7 @@ for i in $kde_libdirs;
 do
   for j in $kde_check_lib;
   do
-    echo "configure: 32147: $i/$j" >&5
+    echo "configure: 32145: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_libdir=$i
@@ -32162,7 +32160,7 @@ for i in $kde_libdirs;
 do
   for j in "kde3/plugins/designer/kdewidgets.la";
   do
-    echo "configure: 32165: $i/$j" >&5
+    echo "configure: 32163: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       kde_widgetdir=$i
@@ -33608,7 +33606,7 @@ for i in $kde_sharedirs;
 do
   for j in apps/ksgmltools2/customization/kde-chunk.xsl;
   do
-    echo "configure: 33611: $i/$j" >&5
+    echo "configure: 33609: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       KDE_XSL_STYLESHEET=$i
@@ -34550,7 +34548,7 @@ for i in $search_incs;
 do
   for j in libhal.h libhal-storage.h;
   do
-    echo "configure: 34553: $i/$j" >&5
+    echo "configure: 34551: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       hal_incdir=$i
@@ -34585,7 +34583,7 @@ for i in $search_libs;
 do
   for j in libhal.so;
   do
-    echo "configure: 34588: $i/$j" >&5
+    echo "configure: 34586: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       hal_libdir=$i
@@ -34637,7 +34635,7 @@ for i in $search_incs;
 do
   for j in dbus/dbus.h;
   do
-    echo "configure: 34640: $i/$j" >&5
+    echo "configure: 34638: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       dbus_incdir=$i
@@ -34654,7 +34652,7 @@ for i in $search_incs_arch_deps;
 do
   for j in dbus/dbus-arch-deps.h;
   do
-    echo "configure: 34657: $i/$j" >&5
+    echo "configure: 34655: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       dbus_incdir_arch_deps=$i
@@ -34676,7 +34674,7 @@ for i in $search_libs;
 do
   for j in libdbus-1.so;
   do
-    echo "configure: 34679: $i/$j" >&5
+    echo "configure: 34677: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       dbus_libdir=$i
@@ -34706,164 +34704,18 @@ echo "$as_me: error: dbus may be missing" >&2;}
 
 
 
-	########### Check for DBus-Qt bindings
-
-	{ echo "$as_me:$LINENO: checking for DBus-Qt bindings" >&5
-echo $ECHO_N "checking for DBus-Qt bindings... $ECHO_C" >&6; }
-
-	dbusqt_inc=NOTFOUND
-	dbusqt_lib=NOTFOUND
-	dbusqt=NOTFOUND
-
-	search_incs="$kde_includes /usr/include /usr/include/dbus-1.0 /usr/local/include /usr/local/include/dbus-1.0"
-
-dbusqt_incdir=NO
-for i in $search_incs;
-do
-  for j in dbus/connection.h;
-  do
-    echo "configure: 34725: $i/$j" >&5
-    if test -r "$i/$j"; then
-      echo "taking that" >&5
-      dbusqt_incdir=$i
-      break 2
-    fi
-  done
-done
-
-
-	if test -r $dbusqt_incdir/dbus/connection.h ; then
-	have_qt_patch=0
-	grep dbus_connection_setup_with_qt_main $dbusqt_incdir/dbus/connection.h \
-	> /dev/null 2>&1 && have_qt_patch=1
-	if test $have_qt_patch = 1 ; then
-	DBUSQT_INCS="-I$dbusqt_incdir"
-	dbusqt_inc=FOUND
-	fi
-	fi
-
-
-	search_libs="$kde_libraries /usr/lib /usr/lib64 /usr/local/lib"
-
-dbusqt_libdir=NO
-for i in $search_libs;
-do
-  for j in libdbus-qt-1.so;
-  do
-    echo "configure: 34753: $i/$j" >&5
-    if test -r "$i/$j"; then
-      echo "taking that" >&5
-      dbusqt_libdir=$i
-      break 2
-    fi
-  done
-done
-
-
-	if test -r $dbusqt_libdir/libdbus-qt-1.so ; then
-	DBUSQT_LIBS="-L$dbusqt_libdir -ldbus-qt-1"
-	dbusqt_lib=FOUND
-	fi
-
-	if test $dbusqt_inc = FOUND && test $dbusqt_lib = FOUND ; then
-	{ echo "$as_me:$LINENO: result: headers $dbusqt_incdir libraries $dbusqt_libdir" >&5
-echo "${ECHO_T}headers $dbusqt_incdir libraries $dbusqt_libdir" >&6; }
-	dbusqt=FOUND
-	else
-	{ echo "$as_me:$LINENO: result: searched but not found" >&5
-echo "${ECHO_T}searched but not found" >&6; }
-	fi
-
-
-
-	########### Check for new DBus-Qt bindings
-	if test $dbusqt = NOTFOUND; then
-		search_incs="$kde_includes $kde_extra_includes /usr/include /usr/include/dbus-1.0/qt3 /usr/local/include /usr/local/include/dbus-1.0"
-
-dbusqt_incdir=NO
-for i in $search_incs;
-do
-  for j in dbus/qdbusconnection.h;
-  do
-    echo "configure: 34788: $i/$j" >&5
-    if test -r "$i/$j"; then
-      echo "taking that" >&5
-      dbusqt_incdir=$i
-      break 2
-    fi
-  done
-done
-
-
-		if test -r $dbusqt_incdir/dbus/qdbusconnection.h ; then
-			have_qt_patch=0
-			grep dbus_connection_setup_with_qt_main $dbusqt_incdir/dbus/qdbusconnection.h \
-			> /dev/null 2>&1 && have_qt_patch=1
-			if test $have_qt_patch = 1 ; then
-			DBUSQT_INCS="-I$dbusqt_incdir"
-			dbusqt_inc=FOUND
-			fi
-		fi
-
-
-		search_libs="$kde_libraries /usr/lib /usr/lib64 /usr/local/lib"
-
-dbusqt_libdir=NO
-for i in $search_libs;
-do
-  for j in libdbus-1-qt3.so;
-  do
-    echo "configure: 34816: $i/$j" >&5
-    if test -r "$i/$j"; then
-      echo "taking that" >&5
-      dbusqt_libdir=$i
-      break 2
-    fi
-  done
-done
-
-
-		if test -r $dbusqt_libdir/libdbus-1-qt3.so ; then
-		    DBUSQT_LIBS="-L$dbusqt_libdir -ldbus-1-qt3"
-		    dbusqt_lib=FOUND
-		fi
-
-		if test $dbusqt_inc = FOUND && test $dbusqt_lib = FOUND ; then
-		   { echo "$as_me:$LINENO: result: headers $dbusqt_incdir libraries $dbusqt_libdir" >&5
-echo "${ECHO_T}headers $dbusqt_incdir libraries $dbusqt_libdir" >&6; }
-		   dbusqt=FOUND
-
-cat >>confdefs.h <<\_ACEOF
-#define DBUS_QT3
-_ACEOF
-
-		else
-		   { echo "$as_me:$LINENO: result: searched but not found" >&5
-echo "${ECHO_T}searched but not found" >&6; }
-		   { { echo "$as_me:$LINENO: error: dbusqt may be missing" >&5
-echo "$as_me: error: dbusqt may be missing" >&2;}
-   { (exit 1); exit 1; }; }
-		fi
-
-
-	fi
-
-
-
-
-
 
 	########### Check if media HAL backend should be compiled
 
 	HAL_DBUS_LIBS=""
-	if test "x$hal" = "xFOUND" && test "x$dbus" = "xFOUND" && test "x$dbusqt" = "xFOUND" &&  test $hal_storage_version = 5  ; then
+	if test "x$hal" = "xFOUND" && test "x$dbus" = "xFOUND" &&   test $hal_storage_version = 5  ; then
 
 cat >>confdefs.h <<\_ACEOF
 #define HAVE_HAL
 _ACEOF
 
 	have_hal=yes
-	HAL_DBUS_LIBS="$HAL_LIBS $HAL_LIBS_STORAGE $DBUS_LIBS $DBUSQT_LIBS"
+	HAL_DBUS_LIBS="$HAL_LIBS $HAL_LIBS_STORAGE $DBUS_LIBS"
 	fi
 
 
@@ -34875,7 +34727,7 @@ for i in $search_incs;
 do
   for j in k3bdevice.h;
   do
-    echo "configure: 34878: $i/$j" >&5
+    echo "configure: 34730: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       k3b_incdir=$i
@@ -34896,7 +34748,7 @@ for i in $search_libs;
 do
   for j in libk3bdevice.so;
   do
-    echo "configure: 34899: $i/$j" >&5
+    echo "configure: 34751: $i/$j" >&5
     if test -r "$i/$j"; then
       echo "taking that" >&5
       k3b_libdir=$i
@@ -35987,8 +35839,6 @@ HAL_INCS!$HAL_INCS$ac_delim
 HAL_LIBS!$HAL_LIBS$ac_delim
 DBUS_INCS!$DBUS_INCS$ac_delim
 DBUS_LIBS!$DBUS_LIBS$ac_delim
-DBUSQT_INCS!$DBUSQT_INCS$ac_delim
-DBUSQT_LIBS!$DBUSQT_LIBS$ac_delim
 HAL_DBUS_LIBS!$HAL_DBUS_LIBS$ac_delim
 K3B_LIBS!$K3B_LIBS$ac_delim
 TOPSUBDIRS!$TOPSUBDIRS$ac_delim
@@ -35996,7 +35846,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 47; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 45; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

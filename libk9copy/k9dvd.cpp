@@ -23,7 +23,7 @@
 #include "k9dvdtitleset.h"
 #include "k9cellcopylist.h"
 #include "k9dvdprogress.h"
-#include "k9ifo.h"
+#include "k9ifo2.h"
 #include <qapplication.h>
 #include <klocale.h>
 
@@ -130,26 +130,26 @@ k9DVD::k9DVD(QObject  *parent, const char *name,const QStringList args)  {
 
     m_laudioType.append("");
     m_laudioType.append("Normal");
-    m_laudioType.append("Impaired");
-    m_laudioType.append("Comments1");
-    m_laudioType.append("Comments2");
+    m_laudioType.append(i18n("for visually impaired"));
+    m_laudioType.append(i18n("director's comments"));
+    m_laudioType.append(i18n("alternate director's comments"));
 
     m_lsubpType.append("");
     m_lsubpType.append("Normal");
-    m_lsubpType.append("Large");
-    m_lsubpType.append("Children");
-    m_lsubpType.append("reserved");
-    m_lsubpType.append("Normal_CC");
-    m_lsubpType.append("Large_CC");
-    m_lsubpType.append("Children_CC");
-    m_lsubpType.append("reserved");
-    m_lsubpType.append("Forced");
-    m_lsubpType.append("reserved");
-    m_lsubpType.append("reserved");
-    m_lsubpType.append("reserved");
-    m_lsubpType.append("Director");
-    m_lsubpType.append("Large_Director");
-    m_lsubpType.append("Children_Director");
+    m_lsubpType.append(i18n("Large"));
+    m_lsubpType.append(i18n("Children"));
+    m_lsubpType.append(i18n("reserved"));
+    m_lsubpType.append(i18n("Normal captions"));
+    m_lsubpType.append(i18n("Large captions"));
+    m_lsubpType.append(i18n("Children captions"));
+    m_lsubpType.append("");
+    m_lsubpType.append(i18n("Forced"));
+    m_lsubpType.append(i18n("reserved"));
+    m_lsubpType.append(i18n("reserved"));
+    m_lsubpType.append(i18n("reserved"));
+    m_lsubpType.append(i18n("Director's comments"));
+    m_lsubpType.append(i18n("Large director's comments"));
+    m_lsubpType.append(i18n("Director's comments for children"));
 
 
     m_frames_per_s[0]=-1.0;
@@ -337,7 +337,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
         return 2;
     }
 
-    k9Ifo kifo_zero(&m_dvd),kifo(&m_dvd);
+    k9Ifo2 kifo_zero(&m_dvd),kifo(&m_dvd);
     kifo_zero.openIFO( 0);
 
     ifo_zero = kifo_zero.getIFO();
@@ -448,8 +448,12 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                     if (pgc->audio_control[i]>>8 !=0) {
                         l_track->audioStreamCount++;
                         l_auds=l_track->addAudioStream();
-                        //JMP l_auds->setselected(!titleIndexed);
-                        audio_attr = &vtsi_mat->vts_audio_attr[i];
+                        l_auds->id = 1+ ((pgc->audio_control[i]>>8) & 0x7) ;
+                        //this only true for AC3 streams
+			l_auds->m_streamId = (pgc->audio_control[i]>>8);
+                        
+                        //JMPaudio_attr = &vtsi_mat->vts_audio_attr[i];
+                        audio_attr = &vtsi_mat->vts_audio_attr[l_auds->id-1];
                         sprintf(lang_code, "%c%c", audio_attr->lang_code>>8, audio_attr->lang_code & 0xff);
                         if (!lang_code[0]) {
                             lang_code[0] = 'x';
@@ -465,10 +469,8 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         l_auds->quantization = (*m_lquantization.at(audio_attr->quantization));
                         l_auds->channels = audio_attr->channels+1;
                         l_auds->appMode = audio_attr->application_mode;
-                        l_auds->content = (*m_laudioType.at(audio_attr->lang_extension));
+                        l_auds->content = (*m_laudioType.at(audio_attr->code_extension));
                         //if (((pgc->audio_control[i]>>8) & 0x80) ==0x80) {
-                        l_auds->id = 1+ ((pgc->audio_control[i]>>8) & 0x7) ;
-			l_auds->m_streamId = (pgc->audio_control[i]>>8);
                         //} else {
                         //    l_auds->id=1;
                         //}
@@ -576,18 +578,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 l_track->subPictureCount=0;
                 for (i=0; i<vtsi_mat->nr_of_vts_subp_streams; i++) {
                     if (pgc->subp_control[i]>>24 !=0) {
-                        l_track->subPictureCount++;
-                        subp_attr = &vtsi_mat->vts_subp_attr[i];
-                        sprintf(lang_code, "%c%c", subp_attr->lang_code>>8, subp_attr->lang_code & 0xff);
-                        if (!lang_code[0]) {
-                            lang_code[0] = 'x';
-                            lang_code[1] = 'x';
-                        }
-                        l_sub=l_track->addSubtitle(i+1);
-                        //JMP : l_sub->setselected(!titleIndexed);
-                        l_sub->langCod=lang_code;
-                        l_sub->language=lang_name(lang_code);
-                        l_sub->content= (*m_lsubpType.at(subp_attr->lang_extension));
+                        l_sub=l_track->addSubtitle(i+1);                        
                         unsigned char subpc;
                         subpc=pgc->subp_control[i]>>24;
                         if ((subpc & 0x80)==0x80) {
@@ -603,8 +594,19 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                             subpc=pgc->subp_control[i];
                             if ((subpc &0x1F) !=0)
                                 l_sub->id = 1+ (subpc & 0x1F);
-
                         }
+                        l_track->subPictureCount++;
+                        //subp_attr = &vtsi_mat->vts_subp_attr[i];
+                        subp_attr = &vtsi_mat->vts_subp_attr[l_sub->id -1];
+                        sprintf(lang_code, "%c%c", subp_attr->lang_code>>8, subp_attr->lang_code & 0xff);
+                        if (!lang_code[0]) {
+                            lang_code[0] = 'x';
+                            lang_code[1] = 'x';
+                        }
+                        //JMP : l_sub->setselected(!titleIndexed);
+                        l_sub->langCod=lang_code;
+                        l_sub->language=lang_name(lang_code);
+                        l_sub->content= (*m_lsubpType.at(subp_attr->code_extension));
                     }
                 }
                 if (entryPgc && !_quickScan)

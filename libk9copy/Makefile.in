@@ -54,8 +54,8 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 libk9copy_la_LIBADD =
 am_libk9copy_la_OBJECTS = k9backupdlg.lo k9cellcopylist.lo k9cell.lo \
 	k9dvdauthor.lo k9dvdbackup.lo k9dvd.lo k9dvdprogress.lo \
-	k9ifo.lo k9dvdtitle.lo dummy.lo k9dvdsize.lo k9dvdread.lo \
-	k9progress.lo k9mp4enc.lo k9mp4dlg.lo k9burndvd.lo k9tools.lo \
+	k9dvdtitle.lo dummy.lo k9dvdsize.lo k9dvdread.lo k9progress.lo \
+	k9mp4enc.lo k9mp4dlg.lo k9burndvd.lo k9tools.lo \
 	k9dvdchapter.lo k9dvdtitleset.lo k9ifo2.lo k9script.lo \
 	k9config.lo
 #>- libk9copy_la_OBJECTS = $(am_libk9copy_la_OBJECTS)
@@ -63,11 +63,11 @@ am_libk9copy_la_OBJECTS = k9backupdlg.lo k9cellcopylist.lo k9cell.lo \
 libk9copy_la_final_OBJECTS = libk9copy_la.all_cpp.lo 
 libk9copy_la_nofinal_OBJECTS = k9backupdlg.lo k9cellcopylist.lo k9cell.lo \
 	k9dvdauthor.lo k9dvdbackup.lo k9dvd.lo k9dvdprogress.lo \
-	k9ifo.lo k9dvdtitle.lo dummy.lo k9dvdsize.lo k9dvdread.lo \
-	k9progress.lo k9mp4enc.lo k9mp4dlg.lo k9burndvd.lo k9tools.lo \
+	k9dvdtitle.lo dummy.lo k9dvdsize.lo k9dvdread.lo k9progress.lo \
+	k9mp4enc.lo k9mp4dlg.lo k9burndvd.lo k9tools.lo \
 	k9dvdchapter.lo k9dvdtitleset.lo k9ifo2.lo k9script.lo \
 	k9config.lo backupdlg.lo dvdprogress.lo progress.lo mp4dlg.lo\
-k9dvdsize.moc.lo k9dvdtitle.moc.lo k9dvd.moc.lo k9dvdtitleset.moc.lo k9dvdprogress.moc.lo k9dvdauthor.moc.lo k9ifo2.moc.lo k9dvdchapter.moc.lo 
+k9dvdprogress.moc.lo k9dvdauthor.moc.lo k9dvdsize.moc.lo k9ifo2.moc.lo k9dvdtitle.moc.lo k9dvd.moc.lo k9dvdtitleset.moc.lo k9dvdchapter.moc.lo 
 @KDE_USE_FINAL_FALSE@libk9copy_la_OBJECTS = $(libk9copy_la_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@libk9copy_la_OBJECTS = $(libk9copy_la_final_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -135,8 +135,6 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
-DBUSQT_INCS = @DBUSQT_INCS@
-DBUSQT_LIBS = @DBUSQT_LIBS@
 DBUS_INCS = @DBUS_INCS@
 DBUS_LIBS = @DBUS_LIBS@
 DCOPIDL = @DCOPIDL@
@@ -353,22 +351,21 @@ KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 noinst_LTLIBRARIES = libk9copy.la
 #>- libk9copy_la_SOURCES = backupdlg.ui dvdprogress.ui progress.ui mp4dlg.ui \
 #>- 	k9backupdlg.cpp k9cellcopylist.cpp k9cell.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvd.cpp \
-#>- 	k9dvdprogress.cpp k9ifo.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp \
-#>- 	k9progress.cpp k9mp4enc.cpp k9mp4dlg.cpp k9burndvd.cpp k9tools.cpp k9dvdchapter.cpp \
+#>- 	k9dvdprogress.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp \
+#>- 	k9mp4enc.cpp k9mp4dlg.cpp k9burndvd.cpp k9tools.cpp k9dvdchapter.cpp \
 #>- 	k9dvdtitleset.cpp k9ifo2.cpp k9script.cpp k9config.cpp
 #>+ 5
 libk9copy_la_SOURCES=    \
 	k9backupdlg.cpp k9cellcopylist.cpp k9cell.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvd.cpp \
-	k9dvdprogress.cpp k9ifo.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp \
-	k9progress.cpp k9mp4enc.cpp k9mp4dlg.cpp k9burndvd.cpp k9tools.cpp k9dvdchapter.cpp \
+	k9dvdprogress.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp \
+	k9mp4enc.cpp k9mp4dlg.cpp k9burndvd.cpp k9tools.cpp k9dvdchapter.cpp \
 	k9dvdtitleset.cpp k9ifo2.cpp k9script.cpp k9config.cpp backupdlg.cpp dvdprogress.cpp progress.cpp mp4dlg.cpp
 
 include_HEADERS = 
 noinst_HEADERS = bswap.h k9dvdread.h k9progress.h k9mp4enc.h k9mp4dlg.h \
-	k9burndvd.h k9tools.h k9ifo2.h k9script.h k9config.h \
-	k9backupdlg.h k9cellcopylist.h k9cell.h k9dvdauthor.h \
-				k9dvdbackup.h k9dvdprogress.h k9ifo.h k9dvd.h k9dvdtitle.h k9dvdsize.h k9common.h \
-	k9dvdchapter.h k9dvdtitleset.h
+	k9burndvd.h k9tools.h k9ifo2.h k9script.h k9config.h k9backupdlg.h k9cellcopylist.h \
+	k9cell.h k9dvdauthor.h k9dvdbackup.h k9dvdprogress.h k9dvd.h k9dvdtitle.h \
+	k9dvdsize.h k9common.h k9dvdchapter.h k9dvdtitleset.h
 
 INCLUDES = -I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9vamps \
 	-I$(top_srcdir)/libdvdnav
@@ -455,7 +452,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9dvdsize.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9dvdtitle.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9dvdtitleset.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9ifo.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9ifo2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9mp4dlg.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k9mp4enc.Plo@am__quote@
@@ -691,6 +687,20 @@ uninstall-am: uninstall-includeHEADERS uninstall-info-am
 .NOEXPORT:
 
 #>+ 3
+k9mp4enc.moc: $(srcdir)/k9mp4enc.h
+	$(MOC) $(srcdir)/k9mp4enc.h -o k9mp4enc.moc
+
+#>+ 2
+mocs: k9mp4enc.moc
+
+#>+ 3
+k9dvdprogress.moc.cpp: $(srcdir)/k9dvdprogress.h
+	$(MOC) $(srcdir)/k9dvdprogress.h -o k9dvdprogress.moc.cpp
+
+#>+ 2
+mocs: k9dvdprogress.moc.cpp
+
+#>+ 3
 k9cell.moc: $(srcdir)/k9cell.h
 	$(MOC) $(srcdir)/k9cell.h -o k9cell.moc
 
@@ -698,11 +708,25 @@ k9cell.moc: $(srcdir)/k9cell.h
 mocs: k9cell.moc
 
 #>+ 3
+k9dvdauthor.moc.cpp: $(srcdir)/k9dvdauthor.h
+	$(MOC) $(srcdir)/k9dvdauthor.h -o k9dvdauthor.moc.cpp
+
+#>+ 2
+mocs: k9dvdauthor.moc.cpp
+
+#>+ 3
 k9dvdsize.moc.cpp: $(srcdir)/k9dvdsize.h
 	$(MOC) $(srcdir)/k9dvdsize.h -o k9dvdsize.moc.cpp
 
 #>+ 2
 mocs: k9dvdsize.moc.cpp
+
+#>+ 3
+k9ifo2.moc.cpp: $(srcdir)/k9ifo2.h
+	$(MOC) $(srcdir)/k9ifo2.h -o k9ifo2.moc.cpp
+
+#>+ 2
+mocs: k9ifo2.moc.cpp
 
 #>+ 3
 k9dvdtitle.moc.cpp: $(srcdir)/k9dvdtitle.h
@@ -726,48 +750,6 @@ k9dvdtitleset.moc.cpp: $(srcdir)/k9dvdtitleset.h
 mocs: k9dvdtitleset.moc.cpp
 
 #>+ 3
-k9burndvd.moc: $(srcdir)/k9burndvd.h
-	$(MOC) $(srcdir)/k9burndvd.h -o k9burndvd.moc
-
-#>+ 2
-mocs: k9burndvd.moc
-
-#>+ 3
-k9mp4enc.moc: $(srcdir)/k9mp4enc.h
-	$(MOC) $(srcdir)/k9mp4enc.h -o k9mp4enc.moc
-
-#>+ 2
-mocs: k9mp4enc.moc
-
-#>+ 3
-k9dvdprogress.moc.cpp: $(srcdir)/k9dvdprogress.h
-	$(MOC) $(srcdir)/k9dvdprogress.h -o k9dvdprogress.moc.cpp
-
-#>+ 2
-mocs: k9dvdprogress.moc.cpp
-
-#>+ 3
-k9dvdauthor.moc.cpp: $(srcdir)/k9dvdauthor.h
-	$(MOC) $(srcdir)/k9dvdauthor.h -o k9dvdauthor.moc.cpp
-
-#>+ 2
-mocs: k9dvdauthor.moc.cpp
-
-#>+ 3
-k9ifo.moc: $(srcdir)/k9ifo.h
-	$(MOC) $(srcdir)/k9ifo.h -o k9ifo.moc
-
-#>+ 2
-mocs: k9ifo.moc
-
-#>+ 3
-k9ifo2.moc.cpp: $(srcdir)/k9ifo2.h
-	$(MOC) $(srcdir)/k9ifo2.h -o k9ifo2.moc.cpp
-
-#>+ 2
-mocs: k9ifo2.moc.cpp
-
-#>+ 3
 k9backupdlg.moc: $(srcdir)/k9backupdlg.h
 	$(MOC) $(srcdir)/k9backupdlg.h -o k9backupdlg.moc
 
@@ -782,11 +764,11 @@ k9progress.moc: $(srcdir)/k9progress.h
 mocs: k9progress.moc
 
 #>+ 3
-k9dvdbackup.moc: $(srcdir)/k9dvdbackup.h
-	$(MOC) $(srcdir)/k9dvdbackup.h -o k9dvdbackup.moc
+k9dvdchapter.moc.cpp: $(srcdir)/k9dvdchapter.h
+	$(MOC) $(srcdir)/k9dvdchapter.h -o k9dvdchapter.moc.cpp
 
 #>+ 2
-mocs: k9dvdbackup.moc
+mocs: k9dvdchapter.moc.cpp
 
 #>+ 3
 k9mp4dlg.moc: $(srcdir)/k9mp4dlg.h
@@ -796,15 +778,22 @@ k9mp4dlg.moc: $(srcdir)/k9mp4dlg.h
 mocs: k9mp4dlg.moc
 
 #>+ 3
-k9dvdchapter.moc.cpp: $(srcdir)/k9dvdchapter.h
-	$(MOC) $(srcdir)/k9dvdchapter.h -o k9dvdchapter.moc.cpp
+k9dvdbackup.moc: $(srcdir)/k9dvdbackup.h
+	$(MOC) $(srcdir)/k9dvdbackup.h -o k9dvdbackup.moc
 
 #>+ 2
-mocs: k9dvdchapter.moc.cpp
+mocs: k9dvdbackup.moc
+
+#>+ 3
+k9burndvd.moc: $(srcdir)/k9burndvd.h
+	$(MOC) $(srcdir)/k9burndvd.h -o k9burndvd.moc
+
+#>+ 2
+mocs: k9burndvd.moc
 
 #>+ 3
 clean-metasources:
-	-rm -f  k9cell.moc k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9burndvd.moc k9mp4enc.moc k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo.moc k9ifo2.moc.cpp k9backupdlg.moc k9progress.moc k9dvdbackup.moc k9mp4dlg.moc k9dvdchapter.moc.cpp
+	-rm -f  k9mp4enc.moc k9dvdprogress.moc.cpp k9cell.moc k9dvdauthor.moc.cpp k9dvdsize.moc.cpp k9ifo2.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9backupdlg.moc k9progress.moc k9dvdchapter.moc.cpp k9mp4dlg.moc k9dvdbackup.moc k9burndvd.moc
 
 #>+ 2
 KDE_DIST=backupdlg.ui progress.ui Makefile.in mp4dlg.ui Makefile.am dvdprogress.ui 
@@ -859,11 +848,11 @@ bcheck-am:
 
 
 #>+ 11
-libk9copy_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9backupdlg.cpp $(srcdir)/k9cellcopylist.cpp $(srcdir)/k9cell.cpp $(srcdir)/k9dvdauthor.cpp $(srcdir)/k9dvdbackup.cpp $(srcdir)/k9dvd.cpp $(srcdir)/k9dvdprogress.cpp $(srcdir)/k9ifo.cpp $(srcdir)/k9dvdtitle.cpp $(srcdir)/dummy.cpp $(srcdir)/k9dvdsize.cpp $(srcdir)/k9dvdread.cpp $(srcdir)/k9progress.cpp $(srcdir)/k9mp4enc.cpp $(srcdir)/k9mp4dlg.cpp $(srcdir)/k9burndvd.cpp $(srcdir)/k9tools.cpp $(srcdir)/k9dvdchapter.cpp $(srcdir)/k9dvdtitleset.cpp $(srcdir)/k9ifo2.cpp $(srcdir)/k9script.cpp $(srcdir)/k9config.cpp backupdlg.cpp dvdprogress.cpp progress.cpp mp4dlg.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9dvdchapter.moc.cpp  k9cell.moc dvdprogress.moc k9burndvd.moc k9mp4enc.moc progress.moc backupdlg.moc mp4dlg.moc k9ifo.moc k9progress.moc k9backupdlg.moc k9mp4dlg.moc k9dvdbackup.moc
+libk9copy_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9backupdlg.cpp $(srcdir)/k9cellcopylist.cpp $(srcdir)/k9cell.cpp $(srcdir)/k9dvdauthor.cpp $(srcdir)/k9dvdbackup.cpp $(srcdir)/k9dvd.cpp $(srcdir)/k9dvdprogress.cpp $(srcdir)/k9dvdtitle.cpp $(srcdir)/dummy.cpp $(srcdir)/k9dvdsize.cpp $(srcdir)/k9dvdread.cpp $(srcdir)/k9progress.cpp $(srcdir)/k9mp4enc.cpp $(srcdir)/k9mp4dlg.cpp $(srcdir)/k9burndvd.cpp $(srcdir)/k9tools.cpp $(srcdir)/k9dvdchapter.cpp $(srcdir)/k9dvdtitleset.cpp $(srcdir)/k9ifo2.cpp $(srcdir)/k9script.cpp $(srcdir)/k9config.cpp backupdlg.cpp dvdprogress.cpp progress.cpp mp4dlg.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9dvdchapter.moc.cpp  k9cell.moc dvdprogress.moc k9burndvd.moc k9mp4enc.moc progress.moc backupdlg.moc mp4dlg.moc k9backupdlg.moc k9progress.moc k9dvdbackup.moc k9mp4dlg.moc
 	@echo 'creating libk9copy_la.all_cpp.cpp ...'; \
 	rm -f libk9copy_la.all_cpp.files libk9copy_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9copy_la.all_cpp.final; \
-	for file in k9backupdlg.cpp k9cellcopylist.cpp k9cell.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvd.cpp k9dvdprogress.cpp k9ifo.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp k9mp4enc.cpp k9mp4dlg.cpp k9burndvd.cpp k9tools.cpp k9dvdchapter.cpp k9dvdtitleset.cpp k9ifo2.cpp k9script.cpp k9config.cpp backupdlg.cpp dvdprogress.cpp progress.cpp mp4dlg.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9dvdchapter.moc.cpp ; do \
+	for file in k9backupdlg.cpp k9cellcopylist.cpp k9cell.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvd.cpp k9dvdprogress.cpp k9dvdtitle.cpp dummy.cpp k9dvdsize.cpp k9dvdread.cpp k9progress.cpp k9mp4enc.cpp k9mp4dlg.cpp k9burndvd.cpp k9tools.cpp k9dvdchapter.cpp k9dvdtitleset.cpp k9ifo2.cpp k9script.cpp k9config.cpp backupdlg.cpp dvdprogress.cpp progress.cpp mp4dlg.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9dvdchapter.moc.cpp ; do \
 	  echo "#include \"$$file\"" >> libk9copy_la.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libk9copy_la.all_cpp.final; \
 	done; \
@@ -898,12 +887,11 @@ cvs-clean:
 kde-rpo-clean:
 	-rm -f *.rpo
 
-#>+ 41
+#>+ 38
 $(srcdir)/k9dvdtitle.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
 $(srcdir)/k9dvdread.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
 $(srcdir)/k9tools.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
 $(srcdir)/k9mp4dlg.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
-k9ifo.o: k9ifo.moc 
 $(srcdir)/k9backupdlg.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
 $(srcdir)/k9dvdprogress.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
 $(srcdir)/k9dvdsize.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
@@ -921,12 +909,10 @@ $(srcdir)/k9dvdauthor.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h
 k9mp4enc.o: k9mp4enc.moc 
 k9progress.o: k9progress.moc 
 $(srcdir)/dummy.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
-k9ifo.lo: k9ifo.moc 
 $(srcdir)/k9dvdchapter.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
 k9burndvd.lo: k9burndvd.moc 
-$(srcdir)/k9ifo.cpp: backupdlg.h dvdprogress.h progress.h mp4dlg.h 
-k9dvdbackup.lo: k9dvdbackup.moc 
 k9mp4dlg.o: k9mp4dlg.moc 
+k9dvdbackup.lo: k9dvdbackup.moc 
 k9dvdbackup.o: k9dvdbackup.moc 
 k9backupdlg.o: k9backupdlg.moc 
 nmcheck: 

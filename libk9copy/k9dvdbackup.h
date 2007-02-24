@@ -110,7 +110,7 @@ private:
 //    void copyAngleBlock(k9CellCopyList *_list,uint _num);
     void copyEmptyPgc(int _vts,k9Cell *_cell);
     void updateVob(k9CellList *_cells);
-
+    
     void updateIfo();
     void updateMainIfo();
     void updatePgci_ut(ifo_handle_t *_hifo);

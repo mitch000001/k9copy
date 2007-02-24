@@ -93,93 +93,14 @@
 	AC_SUBST(DBUS_INCS)
 	AC_SUBST(DBUS_LIBS)
 	
-	########### Check for DBus-Qt bindings
-	
-	AC_MSG_CHECKING(for DBus-Qt bindings)
-	
-	dbusqt_inc=NOTFOUND
-	dbusqt_lib=NOTFOUND
-	dbusqt=NOTFOUND
-	
-	search_incs="$kde_includes /usr/include /usr/include/dbus-1.0 /usr/local/include /usr/local/include/dbus-1.0"
-	AC_FIND_FILE(dbus/connection.h, $search_incs, dbusqt_incdir)
-	
-	if test -r $dbusqt_incdir/dbus/connection.h ; then
-	have_qt_patch=0
-	grep dbus_connection_setup_with_qt_main $dbusqt_incdir/dbus/connection.h \
-	> /dev/null 2>&1 && have_qt_patch=1
-	if test $have_qt_patch = 1 ; then
-	DBUSQT_INCS="-I$dbusqt_incdir"
-	dbusqt_inc=FOUND
-	fi
-	fi
-	
-	
-	search_libs="$kde_libraries /usr/lib /usr/lib64 /usr/local/lib"
-	AC_FIND_FILE(libdbus-qt-1.so, $search_libs, dbusqt_libdir)
-	
-	if test -r $dbusqt_libdir/libdbus-qt-1.so ; then
-	DBUSQT_LIBS="-L$dbusqt_libdir -ldbus-qt-1"
-	dbusqt_lib=FOUND
-	fi
-	
-	if [test $dbusqt_inc = FOUND] && [test $dbusqt_lib = FOUND] ; then
-	AC_MSG_RESULT(headers $dbusqt_incdir libraries $dbusqt_libdir)
-	dbusqt=FOUND
-	else
-	AC_MSG_RESULT(searched but not found)
-	fi
-	
-	
-	
-	########### Check for new DBus-Qt bindings
-	if [test $dbusqt = NOTFOUND]; then
-		search_incs="$kde_includes $kde_extra_includes /usr/include /usr/include/dbus-1.0/qt3 /usr/local/include /usr/local/include/dbus-1.0"
-		AC_FIND_FILE(dbus/qdbusconnection.h, $search_incs, dbusqt_incdir)
-		
-		if test -r $dbusqt_incdir/dbus/qdbusconnection.h ; then
-			have_qt_patch=0
-			grep dbus_connection_setup_with_qt_main $dbusqt_incdir/dbus/qdbusconnection.h \
-			> /dev/null 2>&1 && have_qt_patch=1
-			if test $have_qt_patch = 1 ; then
-			DBUSQT_INCS="-I$dbusqt_incdir"
-			dbusqt_inc=FOUND
-			fi
-		fi
-		
-		
-		search_libs="$kde_libraries /usr/lib /usr/lib64 /usr/local/lib"
-		AC_FIND_FILE(libdbus-1-qt3.so, $search_libs, dbusqt_libdir)
-		
-		if test -r $dbusqt_libdir/libdbus-1-qt3.so ; then
-		    DBUSQT_LIBS="-L$dbusqt_libdir -ldbus-1-qt3"
-		    dbusqt_lib=FOUND
-		fi
-		
-		if [test $dbusqt_inc = FOUND] && [test $dbusqt_lib = FOUND] ; then
-		   AC_MSG_RESULT(headers $dbusqt_incdir libraries $dbusqt_libdir)
-		   dbusqt=FOUND
-		   AC_DEFINE(DBUS_QT3, , [compile with dbus-qt3 bindings])
-		else
-		   AC_MSG_RESULT(searched but not found)
-		   AC_MSG_ERROR(dbusqt may be missing) 
-		fi
-	
-	
-	fi
-		
-	
-	AC_SUBST(DBUSQT_INCS)
-	AC_SUBST(DBUSQT_LIBS)
-	
 	
 	########### Check if media HAL backend should be compiled
 	
 	HAL_DBUS_LIBS=""
-	if [test "x$hal" = "xFOUND"] && [test "x$dbus" = "xFOUND"] && [test "x$dbusqt" = "xFOUND"] && [ test $hal_storage_version = 5 ] ; then
+	if [test "x$hal" = "xFOUND"] && [test "x$dbus" = "xFOUND"] &&  [ test $hal_storage_version = 5 ] ; then
 	AC_DEFINE(HAVE_HAL, , [compile in HAL support])
 	have_hal=yes
-	HAL_DBUS_LIBS="$HAL_LIBS $HAL_LIBS_STORAGE $DBUS_LIBS $DBUSQT_LIBS"
+	HAL_DBUS_LIBS="$HAL_LIBS $HAL_LIBS_STORAGE $DBUS_LIBS"
 	fi
 	
 	AC_SUBST(HAL_DBUS_LIBS)

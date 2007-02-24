@@ -19,7 +19,7 @@
 ***************************************************************************/
 #include "k9cellcopylist.h"
 #include "k9dvdtitle.h"
-#include "k9ifo.h"
+#include "k9ifo2.h"
 
 #include <kmessagebox.h>
 
@@ -65,7 +65,7 @@ k9CellCopyList::~k9CellCopyList() {}
     \fn k9CellCopyList::fill()
  */
 void k9CellCopyList::fill() {
-    k9Ifo kifo(dvdHandle) ,kifoZero(dvdHandle);
+    k9Ifo2 kifo(dvdHandle) ,kifoZero(dvdHandle);
     ifo_handle_t *hifo,*hifoZero;
     kifoZero.openIFO( 0);
     hifoZero=kifoZero.getIFO();

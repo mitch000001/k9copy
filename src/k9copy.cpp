@@ -211,8 +211,11 @@ void k9Copy::preferences() {
 
 
 void k9Copy::ActionCopy()
-{
-( (kViewMPEG2*)m_mp2)->bStopClick();
+{   
+ if (m_useXine) 
+    ((K9Mplayer*)m_mp2)->bStopClick();
+ else
+    ((kViewMPEG2*)m_mp2)->bStopClick();
  m_k9Main->Copy();
 }
 

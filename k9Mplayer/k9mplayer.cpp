@@ -188,8 +188,10 @@ void K9Mplayer::open( k9DVD *_dvd,k9DVDTitle *_title,int chapter) {
 void K9Mplayer::titleChanged() {}
 
 void K9Mplayer::cbAudioActivated( int _value) {
-    int value=m_dvdTitle->getaudioStream( _value)->getStreamId();
-    sendCmd(QString( "switch_audio %1").arg(value));
+    if (m_dvdTitle) {
+       int value=m_dvdTitle->getaudioStream( _value)->getStreamId();
+       sendCmd(QString( "switch_audio %1").arg(value));
+    }
 }
 
 void K9Mplayer::cbSubActivated( int _value) {

@@ -16,6 +16,7 @@
 
 #include <qobject.h>
 #include <qptrlist.h>
+#include "k9dbusdispatch.h"
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
@@ -51,12 +52,7 @@ private:
     QPtrList <k9HalDevice> m_devices;
     void *m_context;
     DBusConnection * m_dbusConnect;
-    #ifdef DBUS_QT3
-    QDBusConnection  m_dBusQtConnect;
-    #else
-    DBusQt::Connection* m_dBusQtConnect;
-    #endif
-
+    K9DBusDispatch *m_dbusDispatch;
 private:
 
     k9HalConnection(QObject *parent = 0, const char *name = 0);
