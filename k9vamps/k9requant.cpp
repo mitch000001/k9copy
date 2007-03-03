@@ -2437,17 +2437,19 @@ bool k9requant::lock( int64 x) {
   { 
     if (likely (wbuf))
     {
-      mutw.lock();
+      QMutexLocker locker( &mutw );
+      //mutw.lock();
       rqt_wcnt = wbuf - owbuf;
       condw.wakeAll();
-      mutw.unlock();
+      //mutw.unlock();
     }
-    mutr.lock();
+    //mutr.lock();
+    QMutexLocker locker( &mutr );
     while (!rqt_rcnt)
     {
       condr.wait( &mutr);
       if (rqt_stop==true) {
-	mutr.unlock();
+	//mutr.unlock();
 	return false;
       }
     }
@@ -2459,7 +2461,7 @@ bool k9requant::lock( int64 x) {
     inbytecnt  = rqt_inbytes;
     outbytecnt = rqt_outbytes;
     orim2vsize = rqt_visize;
-    mutr.unlock();
+    //mutr.unlock();
     wbuf = owbuf;
     if (    fact_x    <  rqt_fact) {
 	fact_x=rqt_fact;

@@ -155,7 +155,7 @@ public slots:
     virtual void	   Clone(QString _input,QString _output);
     virtual void	   setInput(QString _input);
     virtual void 	   setOutput(QString _output);
-    virtual void 	  volumeChanged(const QString &device);
+    virtual void 	  volumeChanged(const QString &device,const QString &volumeName);
 protected:
     /*$PROTECTED_FUNCTIONS$*/
     QObjectList items;

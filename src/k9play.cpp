@@ -11,7 +11,6 @@
 //
 #include "k9play.h"
 #include "k9dvdread.h"
-#include "k9ifo.h"
 #include "k9cell.h"
 #include "k9vamps.h"
 

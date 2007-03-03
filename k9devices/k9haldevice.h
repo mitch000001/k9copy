@@ -68,7 +68,7 @@ public:
 	
 	QString mountPoint();
 signals:
-   void volumeChanged(const QString &device);	
+   void volumeChanged(const QString &device,const QString &volumeName);	
 	
 private:
     QString m_volumeName;

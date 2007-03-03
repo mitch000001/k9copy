@@ -60,6 +60,21 @@ typedef int (*ifoRead_VOBU_ADMAP_t)(ifo_handle_t *);
 typedef int (*ifoRead_TITLE_VOBU_ADMAP_t)(ifo_handle_t *);
 typedef int (*ifoRead_TXTDT_MGI_t)(ifo_handle_t *);
 
+typedef void (*ifoFree_PTL_MAIT_t)(ifo_handle_t *);
+typedef void (*ifoFree_VTS_ATRT_t)(ifo_handle_t *);
+typedef void (*ifoFree_TT_SRPT_t)(ifo_handle_t *);
+typedef void (*ifoFree_VTS_PTT_SRPT_t)(ifo_handle_t *);
+typedef void (*ifoFree_FP_PGC_t)(ifo_handle_t *);
+typedef void (*ifoFree_PGCIT_t)(ifo_handle_t *);
+typedef void (*ifoFree_PGCI_UT_t)(ifo_handle_t *);
+typedef void (*ifoFree_VTS_TMAPT_t)(ifo_handle_t *);
+typedef void (*ifoFree_C_ADT_t)(ifo_handle_t *);
+typedef void (*ifoFree_TITLE_C_ADT_t)(ifo_handle_t *);
+typedef void (*ifoFree_VOBU_ADMAP_t)(ifo_handle_t *);
+typedef void (*ifoFree_TITLE_VOBU_ADMAP_t)(ifo_handle_t *);
+typedef void (*ifoFree_TXTDT_MGI_t)(ifo_handle_t *);
+
+
 typedef struct {
 	DVDOpen_t 	DVDOpen;
 	DVDClose_t 	DVDClose;
@@ -93,6 +108,22 @@ typedef struct {
 	ifoRead_VOBU_ADMAP_t ifoRead_VOBU_ADMAP;
 	ifoRead_TITLE_VOBU_ADMAP_t ifoRead_TITLE_VOBU_ADMAP;
 	ifoRead_TXTDT_MGI_t ifoRead_TXTDT_MGI;
+	
+	ifoFree_PTL_MAIT_t ifoFree_PTL_MAIT;
+	ifoFree_VTS_ATRT_t ifoFree_VTS_ATRT;
+	ifoFree_TT_SRPT_t ifoFree_TT_SRPT;
+	ifoFree_VTS_PTT_SRPT_t ifoFree_VTS_PTT_SRPT;
+	ifoFree_FP_PGC_t ifoFree_FP_PGC;
+	ifoFree_PGCIT_t ifoFree_PGCIT;
+	ifoFree_PGCI_UT_t ifoFree_PGCI_UT;
+ 	ifoFree_VTS_TMAPT_t  ifoFree_VTS_TMAPT;
+	ifoFree_C_ADT_t ifoFree_C_ADT;
+	ifoFree_TITLE_C_ADT_t ifoFree_TITLE_C_ADT;
+	ifoFree_VOBU_ADMAP_t ifoFree_VOBU_ADMAP;
+	ifoFree_TITLE_VOBU_ADMAP_t ifoFree_TITLE_VOBU_ADMAP;
+	ifoFree_TXTDT_MGI_t ifoFree_TXTDT_MGI;
+	
+	
 } DvdreadFunctions_t;
 
 DvdreadFunctions_t *DvdreadF(void);

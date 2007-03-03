@@ -246,8 +246,8 @@ void k9vamps::run () {
 	    m_requant->condw.wakeAll();
 	    m_requant->wait(10);
 	}
-        m_requant->mutr.unlock();
-        m_requant->mutw.unlock();
+//        m_requant->mutr.unlock();
+//        m_requant->mutw.unlock();
     }
     delete m_requant;
     m_requant=NULL;
@@ -255,7 +255,7 @@ void k9vamps::run () {
     free(vobuf);
     if (m_bgUpdate!=NULL)
 	m_bgUpdate->wait();
-    mutex.unlock();
+    //mutex.unlock();
 }
 
 

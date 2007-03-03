@@ -46,6 +46,20 @@ void loadDvdread() {
 	f_dvdread.ifoRead_TITLE_VOBU_ADMAP=dlsym(libHandle,"ifoRead_TITLE_VOBU_ADMAP");
 	f_dvdread.ifoRead_TXTDT_MGI=dlsym(libHandle,"ifoRead_TXTDT_MGI");
 
+	f_dvdread.ifoFree_PTL_MAIT=dlsym(libHandle,"ifoFree_PTL_MAIT");
+	f_dvdread.ifoFree_VTS_ATRT=dlsym(libHandle,"ifoFree_VTS_ATRT");
+	f_dvdread.ifoFree_TT_SRPT=dlsym(libHandle,"ifoFree_TT_SRPT");
+	f_dvdread.ifoFree_VTS_PTT_SRPT=dlsym(libHandle,"ifoFree_VTS_PTT_SRPT");
+	f_dvdread.ifoFree_FP_PGC=dlsym(libHandle,"ifoFree_FP_PGC");
+	f_dvdread.ifoFree_PGCIT=dlsym(libHandle,"ifoFree_PGCIT");
+	f_dvdread.ifoFree_PGCI_UT=dlsym(libHandle,"ifoFree_PGCI_UT");
+	f_dvdread.ifoFree_VTS_TMAPT=dlsym(libHandle,"ifoFree_VTS_TMAPT");
+	f_dvdread.ifoFree_C_ADT=dlsym(libHandle,"ifoFree_C_ADT");
+	f_dvdread.ifoFree_TITLE_C_ADT=dlsym(libHandle,"ifoFree_TITLE_C_ADT");
+	f_dvdread.ifoFree_VOBU_ADMAP=dlsym(libHandle,"ifoFree_VOBU_ADMAP");
+	f_dvdread.ifoFree_TITLE_VOBU_ADMAP=dlsym(libHandle,"ifoFree_TITLE_VOBU_ADMAP");
+	f_dvdread.ifoFree_TXTDT_MGI=dlsym(libHandle,"ifoFree_TXTDT_MGI");
+
 }
 
 DvdreadFunctions_t *DvdreadF(void) {

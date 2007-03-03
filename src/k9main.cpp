@@ -530,7 +530,7 @@ void k9Main::Open()
     KMessageBox::error( this, dvd->geterrMsg(), i18n("Open DVD"));
     return;
   }
-  if (dvd->getDVDTitle()==i18n("unknown")) {
+  if (dvd->getDVDTitle()==i18n("unknown") && sVolName!="") {
      dvd->setDVDTitle( sVolName);
   }
  
@@ -1185,7 +1185,7 @@ void k9Main::addDrive(k9CdDrive *drive) {
     #ifdef HAVE_HAL
     if (drive->getDevice()!=NULL) {
         k9HalDevice *dev=drive->getDevice();
-        connect(dev,SIGNAL(volumeChanged( const QString &)),this,SLOT(volumeChanged(const QString&)));
+        connect(dev,SIGNAL(volumeChanged( const QString &,const QString &)),this,SLOT(volumeChanged(const QString&,const QString&)));
     }
     #endif
     if (drive->canReadDVD)
@@ -1225,9 +1225,12 @@ void k9Main::readDrives()
 }
 
 
-void k9Main::volumeChanged(const QString &device) {
-    if (device==dvd->getDevice())
+void k9Main::volumeChanged(const QString &device,const QString &volumeName) {
+    if (device==dvd->getDevice() && dvd->getopened() && volumeName=="") 
     	closeDVD();
+    else if (!dvd->getopened() && volumeName !="" && getDevice(cbInputDev)==device) {
+  	Open();
+    }
 }
 
 /*!
@@ -1374,7 +1377,16 @@ long k9Main::getFreeSpace(const QString & _path)
 
 void k9Main::setInput(QString _input)
 {
-  cbInputDev->setCurrentText(_input);
+  bool found=false;
+  for (uint i=0;i< driveList.count();i++) {
+     k9CdDrive *drive=(k9CdDrive*)driveList.at(i);
+     if (drive->device == _input) {
+	cbInputDev->setCurrentItem(i);
+ 	found=true;
+     }
+  }
+  if (!found)
+     cbInputDev->setCurrentText(_input);
 }
 
 void k9Main::setOutput(QString _output)

@@ -77,7 +77,7 @@ QString k9HalDevice::mountPoint() {
 
 void k9HalDevice::updateVolumeName() {
    m_volumeName=volumeName();
-   emit volumeChanged(this->getDeviceName());
+   emit volumeChanged(this->getDeviceName(),m_volumeName);
 }
 
 void k9HalDevice::getDriveProperties() {

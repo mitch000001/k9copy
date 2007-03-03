@@ -742,7 +742,7 @@ uint32_t k9DVDBackup::copyVobu(k9DVDFile  *_fileHandle,uint32_t _startSector,k9V
     if (badNavPack) {
        setDummyPack(buf);
        nsectors=1;
-       if (nextVobu !=0) end=nextVobu-1;
+       if (nextVobu !=0) end=nextVobu-_startSector-1;
 
     } else {
         if (!_empty) 
@@ -950,7 +950,7 @@ void k9DVDBackup::updateMainIfo() {
     updatePgci_ut(hifo);
     update4Menu(hifo);
 
-    //mise �jour des startSectors
+    //mise ï¿½jour des startSectors
     k9TitleSet *TSp=NULL;
     titleSets.sort();
     for (uint iTS=0;iTS < titleSets.count();iTS++) {
@@ -1022,10 +1022,11 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
                     }
                     if (vobu !=NULL) {
                         vobu=remapVobu(&cell_playback[j].last_vobu_start_sector);
-                        cell_playback[j].last_sector = vobu->newSector+vobu->size;// -1 ;
-                        cell_playback[newPos]=cell_playback[j];
-                        cell=cell_playback[newPos];
-                        newPos++;
+			if (vobu !=NULL) 
+				cell_playback[j].last_sector = vobu->newSector+vobu->size;// -1 ;
+			cell_playback[newPos]=cell_playback[j];
+			cell=cell_playback[newPos];
+			newPos++;
                     } else {
                         cell_playback[newPos]=cell;
                         newPos++;
@@ -1059,7 +1060,7 @@ void k9DVDBackup::updatePgci_ut(ifo_handle_t *_hifo) {
 void k9DVDBackup::update4Menu(ifo_handle_t *_hifo) {
     if (!m_withMenu)
     	return;
-    // Mise �jour vtsm_c_adt pour le menu
+    // Mise ï¿½jour vtsm_c_adt pour le menu
     m_copyMenu=true;   //indispensable pour remapvobu
     c_adt_t *c_adt = _hifo->menu_c_adt;
     uint32_t length;
@@ -1529,11 +1530,11 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
                         dsiPack.dsi_gi.vobu_3rdref_ea=0;
 
                     }
-                    // mise en place des donnees modifi�s dans le buffer de sortie
+                    // mise en place des donnees modifiï¿½s dans le buffer de sortie
                     DvdreadF()->navRead_DSI((dsi_t*)(buffer + DSI_START_BYTE),(uchar*)&dsiPack);
                     pciPack.pci_gi.nv_pck_lbn =dsiPack.dsi_gi.nv_pck_lbn;
                     k9Ifo2::navRead_PCI((pci_t*)(buffer+0x2d),(uchar*)&pciPack);
-                    //mise �jour du fichier
+                    //mise ï¿½jour du fichier
                     //fseek(file,pos,SEEK_SET);
                     file->at(pos);
                     //fwrite(buffer,DVD_VIDEO_LB_LEN,1,file);
@@ -1717,10 +1718,11 @@ void k9DVDBackup::execute() {
                     break;
             }
         }
+    	vamps->setNoData();
+    	vamps->wait();
     }
     delete cellCopyList;
-    vamps->setNoData();
-    vamps->wait();
+
     if (!error) {
         updateIfo();
         updateVob(&currTS->cells);

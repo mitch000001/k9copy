@@ -13,6 +13,7 @@
 #include "k9dvd.h"
 #include "k9dvdtitle.h"
 #include "bswap.h"
+#include "dvdread.h"
 
 k9Script::k9Script(ifo_handle_t *_ifo, k9DVD *_dvd )
 {
@@ -134,7 +135,10 @@ vm_cmd_t *k9Script::setSTN(char numAngle) {
 }
 
 void k9Script::updatePGCIUT() {
-      m_ifo->pgci_ut = (pgci_ut_t*) malloc(sizeof(pgci_ut_t));
+   //first, free the old PGCIUT
+  DvdreadF()->ifoFree_PGCI_UT(m_ifo);
+  
+  m_ifo->pgci_ut = (pgci_ut_t*) malloc(sizeof(pgci_ut_t));
   pgci_ut_t* pgci_ut = m_ifo->pgci_ut;
   pgci_ut->nr_of_lus=1;
   
@@ -170,7 +174,7 @@ void k9Script::updatePGCIUT() {
 }
 
 void k9Script::updateFPPGC() {
-  //ifoFree_FP_PGC(m_ifo);
+  DvdreadF()->ifoFree_FP_PGC(m_ifo);
   pgc_t*pgc=(pgc_t*)malloc(sizeof(pgc_t));
   m_ifo->first_play_pgc=pgc;
   memset(pgc,0,sizeof(pgc_t));
@@ -277,8 +281,6 @@ void k9Script::updatePGCIUT_VTS(pgc_command_tbl_t *command_tbl) {
 
 void k9Script::updatePGCIUT_VMG(pgc_command_tbl_t *command_tbl)
 {
-  //first, free the old PGCIUT
-  //ifoFree_PGCI_UT(m_ifo);
   command_tbl->nr_of_pre=0;
   command_tbl->pre_cmds=NULL;
   
