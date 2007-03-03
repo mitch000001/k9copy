@@ -36,7 +36,6 @@
 #include <klocale.h>
 #include <qdir.h>
 #include <kstandarddirs.h>
-
 #include "k9backupdlg.h"
 #include "dvdread.h"
 #include "k9script.h"
@@ -1554,6 +1553,7 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
 
 void k9DVDBackup::clearOutput(QString name) {
     QDir dir(name);
+    
     //delete files in directory
     QStringList lst = dir.entryList( "*",QDir::Files |QDir::Hidden );
     for ( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
@@ -1678,8 +1678,10 @@ void k9DVDBackup::execute() {
     k9CellCopyList *cellCopyList =new k9CellCopyList(m_dvdread,DVD);
     m_cellCopyList=cellCopyList;
 
-    double totalSize=DVD->getmenuSize() *2048 ;
-    totalSize+=cellCopyList->gettotalSize();
+    double totalSize=cellCopyList->gettotalSize();
+    if (m_withMenu)
+       totalSize+=DVD->getmenuSize() *2048 ;
+    
     totalSize/=(1024*1024);
     totalSize = (totalSize >k9DVDSize::getMaxSize()) ? k9DVDSize::getMaxSize():totalSize;
 
