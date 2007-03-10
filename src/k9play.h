@@ -49,10 +49,12 @@ private:
     uint m_cell;
     bool m_initstatus;
     bool m_continue;
+    bool m_firstPass;
     bool m_forcedFactor;
     QString m_inject;
     QStringList m_audioFilter;
     QStringList m_subpictureFilter;
+    QStringList m_chapterList;
     void kdebug(QString const & _msg);
     bool readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector, uchar *_buffer);
     void insert_dummy_pack (int8_t *buf);
@@ -73,6 +75,7 @@ public:
     void setendSector(QString _value);
     void setaudioFilter(QString _value);
     void setsubpictureFilter(QString _value);
+    void setchapterList(QString _value);
     void setvampsFactor(QString _value);
     void setinputSize(QString _value);
     void settotalSize(QString _value);
@@ -83,6 +86,7 @@ public:
     void setchapterSize(QString _value);
     void setinitStatus(bool _value);
     void setcontinue (bool _value);
+    void setfirstPass (bool _value);
     void setforcedFactor(bool _value);
 };
 

@@ -57,6 +57,7 @@ private:
     QTime *time;
     QString replaceParams(QString _input);
     QString round16(QString _wh);
+    QString getChapterList(k9DVDTitle *_title);
 private slots:
     void getStdout(KProcess *proc, char *buffer, int buflen);
     void getStderr(KProcess *proc, char *buffer, int buflen);

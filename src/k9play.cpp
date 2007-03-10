@@ -56,6 +56,7 @@ k9play::k9play() {
     m_cell=0;
     m_totalSize=0;
     m_forcedFactor=false;
+    m_firstPass=false;
 }
 
 void k9play::kdebug(QString const & _msg) {
@@ -88,6 +89,11 @@ void k9play::setaudioFilter( QString _value) {
 void k9play::setsubpictureFilter( QString _value) {
     if (_value!="")
         m_subpictureFilter=QStringList::split(",",_value);
+}
+
+void k9play::setchapterList( QString _value) {
+    if (_value!="")
+        m_chapterList=QStringList::split(",",_value);
 }
 
 void k9play::setvampsFactor(QString _value) {
@@ -132,6 +138,10 @@ void k9play::setinitStatus(bool _value) {
 
 void k9play::setcontinue(bool _value) {
    m_continue=_value;
+}
+
+void k9play::setfirstPass(bool _value) {
+   m_firstPass=_value;
 }
 
 void k9play::setforcedFactor( bool _value) {
@@ -315,7 +325,6 @@ void k9play::play() {
             kdebug(QString("ERR:Error getting next block: %1\n").arg(dvdnav_err_to_string(dvdnav)));
             return;
         }
-
         switch (event) {
         case DVDNAV_NAV_PACKET:
             {
@@ -335,6 +344,15 @@ void k9play::play() {
  	    	if (m_cell!=0 && currCell>m_cell)
 			finished=1;
 
+		if (!finished && m_chapterList.count() >0) {
+		    if (m_chapterList.findIndex( QString::number(ptt)) == -1) {
+		        dvdnav_part_play(dvdnav,tt, ptt+1);
+		        kdebug( QString("skipping chapter %1").arg(ptt));
+		        continue;
+		    	//dvdnav_part_play(dvdnav_t *self, int32_t title, int32_t part);
+		    }
+		    
+		}
 	
 		if (m_continue) {
 			uint32_t lg2;
@@ -460,7 +478,8 @@ void k9play::play() {
 
     m_output.close();
     status.bytesWritten +=vamps.getOutputBytes();
-    saveStatus( status);
+    if (!m_firstPass)
+       saveStatus( status);
 }
 
 bool k9play::readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector,uchar *_buffer)

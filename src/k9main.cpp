@@ -1139,6 +1139,8 @@ void k9Main::CreateMP4()
     KMessageBox::error( this, i18n("DVD is not opened"), i18n("MPEG-4 Encoding"));
     return;
   }
+  QString filename="";
+  int cpt=0;
   for (int i=0; i < dvd->gettitleCount();i++)
   {
     k9DVDTitle *t=dvd->gettitle(i);
@@ -1146,7 +1148,24 @@ void k9Main::CreateMP4()
 
     if (t->isSelected() && t->getIndexed() )
     {
+      QString name;
+      if (filename=="")
+         filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.avi", 0,i18n("Save file to disk"));
+
+    
       k9MP4Enc *mp4=new k9MP4Enc();
+      if (cpt >0) {
+	QString ext=filename.section(".",-1);
+        if (ext!="")
+           ext="."+ext;
+        QString path=filename.left(filename.length()-ext.length());
+        path=path+QString::number(cpt)+ext;      
+        mp4->setFilename(path);
+      }  
+      else
+      	mp4->setFilename(filename);
+
+      cpt++;	
       mp4->setDevice(dvd->getDevice());
       mp4->setAudioBitrate(m_prefMp4AudioBitrate);
       mp4->setCodec((k9MP4Enc::Codec) m_prefMp4Codec);

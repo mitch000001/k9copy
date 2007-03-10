@@ -47,12 +47,14 @@ static const KCmdLineOptions options[] = {
             { "inputsize <number>", I18N_NOOP("size of the cell to be copied"),0},
 	    { "totalsize <number>", I18N_NOOP("total size of selected titles"),0},
 	    { "chaptersize <number>", I18N_NOOP("size of the chapters being copied"),0},
+	    { "chapterlist <list>",I18N_NOOP("selected chapters"),0},
 	    { "dvdsize <number>", I18N_NOOP("new dvd size"),0},
             { "chapter <number>", I18N_NOOP("selected chapter"),0},
 	    { "cell <number>", I18N_NOOP("cell number in selected chapter"),0},
 	    { "inject <filename>", I18N_NOOP("status file name"),0},
 	    { "initstatus" ,I18N_NOOP("initialize status file"),0},
 	    { "continue" ,I18N_NOOP("continue playing from last sector"),0},
+	    { "firstpass" ,I18N_NOOP("don't save status at end"),0},
 
 
 
@@ -98,6 +100,7 @@ int main(int argc, char **argv) {
 	QString totalSizeArg(args->getOption("totalsize"));
 	QString dvdSizeArg(args->getOption("dvdsize"));
 	QString chapterSizeArg(args->getOption("chaptersize"));
+	QString chapterListArg(args->getOption("chapterlist"));
 	bool ffactor=args->isSet("ffactor");
         bool play= args->isSet("play");
 /*	
@@ -122,6 +125,7 @@ int main(int argc, char **argv) {
 //	    player.setinitStatus( true);
 
 	    player.setcontinue( args->isSet("continue"));
+	    player.setfirstPass(args->isSet("firstpass"));
             player.setDevice(InputOptionArg);
             player.setTitle(TitleNumber.toInt());
             player.setstartSector(startSectorArg);
@@ -137,6 +141,7 @@ int main(int argc, char **argv) {
 	    player.setdvdSize(dvdSizeArg);
             player.setchapterSize( chapterSizeArg);
 	    player.setforcedFactor(ffactor);
+	    player.setchapterList( chapterListArg);
             player.execute();
             return 0;
         } else {
