@@ -35,7 +35,6 @@ void k9play::saveStatus(k9play_st _status) {
 void k9play::readStatus(k9play_st &_status) {
    QFile fstatus(m_inject);
    if (fstatus.open(IO_ReadOnly)) {
-	k9play_st status;
 	fstatus.readBlock((char*)&_status,sizeof(k9play_st));
 	fstatus.close();
    } else memset(&_status,0,sizeof(k9play_st));
@@ -60,8 +59,15 @@ k9play::k9play() {
 }
 
 void k9play::kdebug(QString const & _msg) {
+    #ifdef debug
+    m_stderr.writeBlock(_msg.latin1(),_msg.length());
+    #endif
+}
+
+void k9play::writeOutput(QString const & _msg) {
     m_stderr.writeBlock(_msg.latin1(),_msg.length());
 }
+
 
 k9play::~k9play() {
     m_stderr.close();
@@ -210,7 +216,6 @@ void k9play::play() {
     dvdnav_t *dvdnav;
     uint8_t mem[DVD_VIDEO_LB_LEN];
     int finished = 0;
-    int dump = 1, tt_dump = 0;
     bool skipped=false;
     int32_t tt = 0,ptt=0;
     uint32_t pos, lgr;
@@ -267,13 +272,13 @@ void k9play::play() {
 
     /* open dvdnav handle */
     if (dvdnav_open(&dvdnav, m_device,NULL) != DVDNAV_STATUS_OK) {
-        kdebug("ERR:Error on dvdnav_open\n");
+        writeOutput("ERR:Error on dvdnav_open\n");
         return ;
     }
 
     /* set read ahead cache usage */
     if (dvdnav_set_readahead_flag(dvdnav, DVD_READ_CACHE) != DVDNAV_STATUS_OK) {
-        kdebug(QString("ERR:Error on dvdnav_set_readahead_flag: %1\n").arg(dvdnav_err_to_string(dvdnav)));
+        writeOutput( QString("ERR:Error on dvdnav_set_readahead_flag: %1\n").arg(dvdnav_err_to_string(dvdnav)));
         return;
     }
 
@@ -281,14 +286,14 @@ void k9play::play() {
     if (dvdnav_menu_language_select(dvdnav, DVD_LANGUAGE) != DVDNAV_STATUS_OK ||
             dvdnav_audio_language_select(dvdnav, DVD_LANGUAGE) != DVDNAV_STATUS_OK ||
             dvdnav_spu_language_select(dvdnav, DVD_LANGUAGE) != DVDNAV_STATUS_OK) {
-        kdebug(QString("ERR:Error on setting languages: %1\n").arg(dvdnav_err_to_string(dvdnav)));
+        writeOutput( QString("ERR:Error on setting languages: %1\n").arg(dvdnav_err_to_string(dvdnav)));
         return ;
     }
 
     /* set the PGC positioning flag to have position information relatively to the
      * whole feature instead of just relatively to the current chapter */
     if (dvdnav_set_PGC_positioning_flag(dvdnav, 1) != DVDNAV_STATUS_OK) {
-        kdebug(QString("ERR:Error on dvdnav_set_PGC_positioning_flag: %1\n").arg(dvdnav_err_to_string(dvdnav)));
+        writeOutput(QString("ERR:Error on dvdnav_set_PGC_positioning_flag: %1\n").arg(dvdnav_err_to_string(dvdnav)));
         return ;
     }
 
@@ -322,7 +327,7 @@ void k9play::play() {
 
 
         if (result == DVDNAV_STATUS_ERR) {
-            kdebug(QString("ERR:Error getting next block: %1\n").arg(dvdnav_err_to_string(dvdnav)));
+            writeOutput(QString("ERR:Error getting next block: %1\n").arg(dvdnav_err_to_string(dvdnav)));
             return;
         }
         switch (event) {
@@ -355,7 +360,6 @@ void k9play::play() {
 		}
 	
 		if (m_continue) {
-			uint32_t lg2;
 			dvdnav_sector_search(dvdnav,m_startSector , SEEK_SET);
 			kdebug (QString("repositionning on %1").arg(m_startSector));
 			m_continue=false;
@@ -368,7 +372,7 @@ void k9play::play() {
 			    bcopy=true;
 			    vamps.addData( buf,len);
 			    status.bytesRead +=len;
-			    kdebug(QString("\rINFOPOS: %1 %2").arg((status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN).arg(lgr));
+			    writeOutput(QString("\rINFOPOS: %1 %2").arg((status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN).arg(lgr));
 			}
 
 		}
@@ -396,7 +400,6 @@ void k9play::play() {
              * A length of 0xff means an indefinite still which has to be skipped
              * indirectly by some user interaction. */
             {
-                dvdnav_still_event_t *still_event = (dvdnav_still_event_t *)buf;
                 dvdnav_still_skip(dvdnav);
             }
             break;
@@ -422,9 +425,6 @@ void k9play::play() {
         case DVDNAV_HIGHLIGHT:
             /* Player applications should inform their overlay engine to highlight the
              * given button */
-            {
-                dvdnav_highlight_event_t *highlight_event = (dvdnav_highlight_event_t *)buf;
-            }
             break;
         case DVDNAV_VTS_CHANGE:
             /* Some status information like video aspect and video scale permissions do
