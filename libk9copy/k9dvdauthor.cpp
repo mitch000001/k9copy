@@ -242,9 +242,9 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
         e=xml->createElement("video");
         e.setAttribute("aspect",l_track->getaspectRatio());
         e.setAttribute("format",l_track->getformat().lower());
-        //if (l_track->getaspectRatio()=="16:9") {
-        e.setAttribute("widescreen","nopanscan");
-        //}
+        if (l_track->getaspectRatio()!="4:3") {
+            e.setAttribute("widescreen","nopanscan");
+        }
         t.appendChild(e);
 
         for (i=0;i<l_track->getaudioStreamCount();i++) {
