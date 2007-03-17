@@ -256,10 +256,13 @@ void k9play::play() {
 	double factor;
 	factor = (double) (m_totalSize - (status.bytesRead +status.bytesSkipped)) / (double) (m_dvdSize-status.bytesWritten) ;
 	if (factor <1) factor =1;
-	kdebug(QString("shrink factor %1").arg(factor));
+	kdebug(QString("shrink factor %1 totalSize:%2 (status.bytesRead +status.bytesSkipped):%3 m_dvdSize:%4 status.bytesWritten:%5").arg(factor).arg(m_totalSize).arg(status.bytesRead +status.bytesSkipped).arg(m_dvdSize).arg(status.bytesWritten) );
 	vamps.setVapFactor(factor);
-    } else
+    } else {
 	vamps.setVapFactor(m_vampsFactor);
+	kdebug(QString("vamps factor %1\n").arg(m_vampsFactor));
+    }
+
 
     vamps.setInputSize(m_inputSize);
     for ( QStringList::Iterator it = m_audioFilter.begin(); it != m_audioFilter.end(); ++it ) {
