@@ -333,7 +333,7 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
                     file +=QString(" --inject %1 --totalsize %2 --dvdsize %3 |")
                            .arg(inject)
                            .arg(m_totalSize -m_forced  ,0,'f',0)
-                           .arg((uint64_t)(k9DVDSize::getMaxSize() *1024 *1024) - m_forcedsh,0,'f',0);
+                           .arg(((uint64_t)k9DVDSize::getMaxSize() *1024 *1024) - m_forcedsh,0,'f',0);
 
                     e.setAttribute("file",file);
                     if (first)
