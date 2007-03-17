@@ -13,6 +13,7 @@
 #include "k9vamps.h"
 #include <qapplication.h>
 #include "ac.h"
+#include "k9requant2.h"
 // stuff for inter-thread com
 /*	pthread_cond_t  condr=PTHREAD_COND_INITIALIZER;
 	pthread_cond_t  condw=PTHREAD_COND_INITIALIZER; 
@@ -31,45 +32,11 @@
 	bool 	rqt_run;
 */
 
-uint32_t k9fifo::count() {
-	return m_count;
-}
 
-void k9fifo::enqueue (uchar *_buffer, uint32_t _size) {
-   mutex.lock();
-    if (_size+queue > INPUT_SIZE) {
-        uint32_t s1,s2;
-        s1=INPUT_SIZE-queue;
-        tc_memcpy(array+queue,_buffer,s1);
-        s2=_size-s1;
-        tc_memcpy(array,_buffer+s1,s2);
-    } else
-        tc_memcpy(array+queue,_buffer,_size);
-    queue=(queue+_size) %INPUT_SIZE;
-    m_count+=_size;
-    mutex.unlock();
-}
-
-void k9fifo::dequeue(uchar *_buffer,uint32_t _size) {
-    mutex.lock();
-    if ( _size+head >INPUT_SIZE) {
-        uint32_t s1,s2;
-        s1=INPUT_SIZE - head;
-        tc_memcpy(_buffer,array+head,s1);
-        s2=_size-s1;
-        tc_memcpy(_buffer+s1,array,s2);
-    } else
-        tc_memcpy(_buffer,array+head,_size);
-    head =(head+_size)%INPUT_SIZE;
-    m_count -=_size;
-    mutex.unlock();
-}
-
-void k9fifo::clear() {
-    mutex.lock();
-    head=queue;
-    m_count=0;
-    mutex.unlock();
+void k9vamps::setNoData() {
+    noData=true;
+    wDataRead.wakeAll();
+    wDataReady.wakeAll();
 }
 
 void k9vamps::addData(uchar *data,uint size) {
@@ -212,12 +179,6 @@ k9vamps::~k9vamps() {
     free (rbuf);
 }
 
-
-void k9vamps::setNoData() {
-    noData=true;
-    wDataRead.wakeAll();
-    wDataReady.wakeAll();
-}
 
 void k9vamps::run () {
     m_error=false;
@@ -1077,7 +1038,12 @@ void k9vamps::vaporize (void) {
 
         if (fact > 1.0f) {
             // do requantization
-            volen = requant (vobuf, vibuf, vilen, fact);
+           // volen = requant (vobuf, vibuf, vilen, fact);
+            m_requant2.setInput((char*) vibuf,vilen);
+            m_requant2.setOutput( (char*)vobuf,vilen);
+            m_requant2.setFactor( fact);
+            m_requant2.run();
+            volen=m_requant2.getOutByteCnt();
         } else {
             // don't do requantization
             tc_memcpy (vobuf, vibuf, vilen);

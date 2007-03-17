@@ -29,6 +29,8 @@
 #include <qwaitcondition.h>
 #include "k9dvdbackup.h"
 #include "k9requant.h"
+#include "k9fifo.h"
+#include "k9requant2.h"
 
 // DVD sector size
 #define SECT_SIZE 2048
@@ -42,7 +44,7 @@
 // initial video buffer size (1MB)
 #define VBUF_SIZE (1024*1024)
 
-#define INPUT_SIZE ( 0x2000*1024)
+
 
 
 class k9bgUpdate : public QThread
@@ -60,21 +62,7 @@ protected:
 
 };
 
-class k9fifo {
-private:
-	uint32_t  head,queue;
-	uchar *array;
-	uint32_t m_count;
-	QMutex mutex;
-public:
-	k9fifo () { head=queue=m_count=0;array=(uchar*)malloc(INPUT_SIZE);};
-	uint32_t count(); // { return  (queue-head)%INPUT_SIZE ;}
-	uint32_t freespace() {return INPUT_SIZE-count();};
-	void enqueue (uchar *_buffer, uint32_t _size) ;
-	void dequeue(uchar *_buffer,uint32_t _size) ;
-        void clear();
-	~k9fifo() { free(array);};
-};
+
 
 
 class k9vamps:public QThread
@@ -153,6 +141,7 @@ private:
 	QWaitCondition wDataReady;
 	k9DVDBackup *m_dvdbackup;
 	k9requant *m_requant;
+	k9Requant2 m_requant2;
 protected:
 	void run();
 public:
