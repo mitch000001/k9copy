@@ -104,7 +104,6 @@ AFAIK 5 0x00 should never happen except for byte stuffing but to be safe look fo
 	if (rbuf== (uint8_t*)(m_dataIn+m_sizeIn))  \
 	   { RETURN } \
 	rbuf=(uint8_t*)m_dataIn+m_sizeIn; \
-	LOGF("rbuf:%d\n",m_sizeIn);\
 	inbytecnt += m_sizeIn; \
 }
 

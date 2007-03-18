@@ -51,10 +51,10 @@ static const int b_factors[3] = { 25, 45, 105 };
 
 //static const double i_min_stresses[3] = { 0.80, 0.50, 0.00 };
 //static const double p_min_stresses[3] = { 0.60, 0.35, 0.00 };
-//static const double b_min_stresses[3] = { 0.00, 0.00, 0.00 };
-static const double i_min_stresses[3] = { 0.65, 0.40, 0.00 };
-static const double p_min_stresses[3] = { 0.45, 0.30, 0.00 };
 static const double b_min_stresses[3] = { 0.00, 0.00, 0.00 };
+
+static const double i_min_stresses[3] = { 0.60, 0.40, 0.00 };
+static const double p_min_stresses[3] = { 0.45, 0.30, 0.00 };
 
 
 // factor up to which alt table will be used
@@ -2013,8 +2013,9 @@ void  k9requant::run ()
       else return 0;
     }
   }
-  else if (fact_x > 900.0) fact_x = 900.0;
+  
 #endif
+   if (fact_x > 10.0) fact_x = 10.0;
 
   // factor and stresses setting
   initRequant();

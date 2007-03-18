@@ -1038,12 +1038,13 @@ void k9vamps::vaporize (void) {
 
         if (fact > 1.0f) {
             // do requantization
-           // volen = requant (vobuf, vibuf, vilen, fact);
-            m_requant2.setInput((char*) vibuf,vilen);
+            volen = requant (vobuf, vibuf, vilen, fact);
+/*            m_requant2.setInput((char*) vibuf,vilen);
             m_requant2.setOutput( (char*)vobuf,vilen);
             m_requant2.setFactor( fact);
             m_requant2.run();
             volen=m_requant2.getOutByteCnt();
+*/
         } else {
             // don't do requantization
             tc_memcpy (vobuf, vibuf, vilen);
