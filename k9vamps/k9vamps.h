@@ -30,7 +30,6 @@
 #include "k9dvdbackup.h"
 #include "k9requant.h"
 #include "k9fifo.h"
-#include "k9requant2.h"
 
 // DVD sector size
 #define SECT_SIZE 2048
@@ -141,7 +140,6 @@ private:
 	QWaitCondition wDataReady;
 	k9DVDBackup *m_dvdbackup;
 	k9requant *m_requant;
-	k9Requant2 m_requant2;
 protected:
 	void run();
 public:

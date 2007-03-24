@@ -108,7 +108,8 @@ void k9HalConnection::testVolumeChanged( const char * udi) {
     if( udiParent ) {
       k9HalDevice *device=findDevice( udiParent);    
       libhal_free_string( udiParent );
-      device->updateVolumeName();
+      if (device)
+      	device->updateVolumeName();
     }
   }
  }

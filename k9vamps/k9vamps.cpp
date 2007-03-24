@@ -13,24 +13,6 @@
 #include "k9vamps.h"
 #include <qapplication.h>
 #include "ac.h"
-#include "k9requant2.h"
-// stuff for inter-thread com
-/*	pthread_cond_t  condr=PTHREAD_COND_INITIALIZER;
-	pthread_cond_t  condw=PTHREAD_COND_INITIALIZER; 
-	pthread_mutex_t mutr=PTHREAD_MUTEX_INITIALIZER ; 
-	pthread_mutex_t mutw=PTHREAD_MUTEX_INITIALIZER ; 
- 
-	uchar      *rqt_rptr;			// ptr to cur char in requant read buf
-	uchar      *rqt_wptr;			// ptr to first unused char in rqt wbuf
-	int         rqt_rcnt;			// no. bytes in requant read buffer
-	int         rqt_wcnt;			// no. bytes in requant write buffer
-	uint64_t      rqt_inbytes;		// total bytes fed into requantization
-	uint64_t      rqt_outbytes;		// total bytes melt from requantization
-	uint64_t      rqt_visize;			// calc. total unshrinked vidES bytes
-	float       rqt_fact;			// video ES vaporization factor (>1)
-	bool 	rqt_stop;		//stop the thread
-	bool 	rqt_run;
-*/
 
 
 void k9vamps::setNoData() {
@@ -1039,12 +1021,6 @@ void k9vamps::vaporize (void) {
         if (fact > 1.0f) {
             // do requantization
             volen = requant (vobuf, vibuf, vilen, fact);
-/*            m_requant2.setInput((char*) vibuf,vilen);
-            m_requant2.setOutput( (char*)vobuf,vilen);
-            m_requant2.setFactor( fact);
-            m_requant2.run();
-            volen=m_requant2.getOutByteCnt();
-*/
         } else {
             // don't do requantization
             tc_memcpy (vobuf, vibuf, vilen);
