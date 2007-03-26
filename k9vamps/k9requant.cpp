@@ -49,16 +49,9 @@ static const int i_factors[3] = {  5, 15,  65 };
 static const int p_factors[3] = {  5, 25,  85 };
 static const int b_factors[3] = { 25, 45, 105 };
 
-#define altstress 1
 
-#ifndef altstress
-static const double i_min_stresses[3] = { 0.80, 0.50, 0.00 };
-static const double p_min_stresses[3] = { 0.60, 0.35, 0.00 };
-#else
 static const double i_min_stresses[3] = { 0.70, 0.40, 0.00 };
 static const double p_min_stresses[3] = { 0.60, 0.35, 0.00 };
-
-#endif
 static const double b_min_stresses[3] = { 0.00, 0.00, 0.00 };
 
 
