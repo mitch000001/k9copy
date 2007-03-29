@@ -45,8 +45,8 @@ QString k9HalDevice::volumeName() {
 			sVol=QString(libhal_volume_get_label (volume));            
 			libhal_volume_free (volume);
 		}
+		libhal_free_string_array (volumes);
 	}
-	libhal_free_string_array (volumes);
 	libhal_drive_free(drive);
     }
     return sVol;
@@ -55,22 +55,24 @@ QString k9HalDevice::volumeName() {
 QString k9HalDevice::mountPoint() {
     QString sMountPoint("");
     LibHalDrive *drive= libhal_drive_from_udi ((LibHalContext *)m_connection->m_context, name());
-    int num_volumes;
-    char** volumes = libhal_drive_find_all_volumes ((LibHalContext *)m_connection->m_context, drive, &num_volumes);
-    if (volumes != NULL)
-        for (int i = 0; i < num_volumes; i++) {
-            char *volume_udi;
-            LibHalVolume *volume;
-            volume_udi = volumes[i];
-            volume = libhal_volume_from_udi ((LibHalContext *)m_connection->m_context, volume_udi);
-            if (volume != NULL) {
-		sMountPoint=QString(libhal_volume_get_mount_point (volume));            
-            }
-            libhal_volume_free (volume);
-
-        }
-    libhal_free_string_array (volumes);
-    libhal_drive_free(drive);
+    if (drive !=NULL) {
+	int num_volumes;
+	char** volumes = libhal_drive_find_all_volumes ((LibHalContext *)m_connection->m_context, drive, &num_volumes);
+	if (volumes != NULL) {
+	    for (int i = 0; i < num_volumes; i++) {
+		char *volume_udi;
+		LibHalVolume *volume;
+		volume_udi = volumes[i];
+		volume = libhal_volume_from_udi ((LibHalContext *)m_connection->m_context, volume_udi);
+		if (volume != NULL) {
+			sMountPoint=QString(libhal_volume_get_mount_point (volume));        
+			libhal_volume_free (volume);
+		}
+	    }
+	    libhal_free_string_array (volumes);
+	}
+	libhal_drive_free(drive);
+    }
     return sMountPoint;
 }
 

@@ -78,10 +78,10 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Annu&amp;ler</string>
+                <string>&amp;Cancel</string>
             </property>
             <property name="accel">
-                <string>Alt+L</string>
+                <string>Alt+C</string>
             </property>
             <property name="stdItem" stdset="0">
                 <number>2</number>
