@@ -13,7 +13,6 @@
 #ifdef HAVE_HAL
 #include "k9halconnection.h"
 #define DBUS_API_SUBJECT_TO_CHANGE
-#include <dbus/connection.h>
 #include <dbus/dbus.h>
 #include <hal/libhal.h>
 #include <hal/libhal-storage.h>  
