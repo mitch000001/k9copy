@@ -1,6 +1,6 @@
 [Desktop Action Play]
 Exec=k9copy --input %u
-Icon=k9copy
+Icon=k9copy.png
 Name=Copy with k9copy
 Name[fr]=Copier avec k9copy
 Name[de]=Kopieren mit k9copy

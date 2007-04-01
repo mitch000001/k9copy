@@ -1,5 +1,5 @@
 [Desktop Entry]
-Encoding=UTF-U
+Encoding=UTF-8
 Type=Application
 Name=k9copy
 Exec=k9copy -caption "%c" %i %m  %u
@@ -11,5 +11,5 @@ MimeTypes=
 Terminal=false
 Icon=k9copy.png
 DocPath=k9copy/index.html
-Categories=KDE;Application;AudioVideo;DiscBurning;
+Categories=Qt;KDE;AudioVideo;DiscBurning;
 X-KDE-StartupNotify=true

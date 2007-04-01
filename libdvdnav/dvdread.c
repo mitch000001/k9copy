@@ -6,49 +6,14 @@
 void *libHandle=0;
 
 DvdreadFunctions_t f_dvdread;
-#define MAX_DIR_PATH 2048	
-
-static int findLib(char * res,char *libname) {
-    int found=0;    
-    char *path[]={"/usr/lib","/usr/lib64","/lib","/usr/local/lib","/lib64",0};
-    int i=0;
-    char *s;
-    while((s=path[i++])) {
-	
-	DIR* dir = opendir(s);
-	if (!dir) {
-		continue;
-	}
-	
-	struct dirent *entry;
-	
-	while ( (entry = readdir(dir)) ) {
-	if (strstr(entry->d_name,libname)) {
-		strcpy(res,entry->d_name);
-		found=1;
-		break;
-	}
-	}    
-	
-	if (closedir(dir) == -1) {
-		return 0;
-	}
-	
-	return found;
-    }
-}
-
-
 
 void loadDvdread() {
-
 	libHandle=dlopen("libdvdread.so",RTLD_LAZY | RTLD_GLOBAL);
-	/*libdvdread.so doesn't exist on some distros. Look for something like libdvdread.so.3"*/
 	if (!libHandle) {
-	    char res[MAX_DIR_PATH];
-	    if (findLib(res,"libdvdread.so")) {
-		libHandle=dlopen(res,RTLD_LAZY | RTLD_GLOBAL);
-	    }
+	    libHandle=dlopen("libdvdread.so.3",RTLD_LAZY | RTLD_GLOBAL);    
+	}	
+	if (!libHandle) {
+	    libHandle=dlopen("libdvdread.so.2",RTLD_LAZY | RTLD_GLOBAL);    
 	}
 	f_dvdread.DVDOpen=dlsym(libHandle,"DVDOpen");
 	f_dvdread.DVDOpenFile=dlsym(libHandle,"DVDOpenFile");
