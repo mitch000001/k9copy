@@ -30,7 +30,7 @@
 static const char description[] =
     I18N_NOOP("A DVD Backup tool for KDE");
 
-static const char version[] = "1.1.1-2";
+static const char version[] = VERSION ;// "1.1.1-2";
 
 static const KCmdLineOptions options[] = {
             { "input <device>", I18N_NOOP("input device"), 0
