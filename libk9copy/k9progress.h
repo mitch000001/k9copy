@@ -15,7 +15,9 @@
 
 #include "k9common.h"
 #include "progress.h"
-#include <qprocess.h>
+#include <k9process.h>
+#include <qimage.h>
+#include <qtimer.h>
 
 class k9Progress : public Progress
 {
@@ -24,7 +26,7 @@ class k9Progress : public Progress
 public:
   k9Progress(QWidget* parent = 0, const char* name = 0, const QStringList &args=0);
   ~k9Progress();
-   virtual QProcess* getProcess() const;
+   virtual k9Process * getProcess() const;
    virtual void setProgress(long _position,long _total);
    virtual void setLabelText(const QString _text);
    virtual void setElapsed(const QString _text);
@@ -37,11 +39,15 @@ public slots:
 
 protected:
   /*$PROTECTED_FUNCTIONS$*/
-  QProcess *m_process;
+  k9Process *m_process;
   void bCancelClick();
-  
+  bool m_canceled;
+  QImage image1,image2;
+  int m_x1,m_x2;  
+  QTimer m_timer;
 protected slots:
   /*$PROTECTED_SLOTS$*/
+  void drawImage();
 };
 
 #endif

@@ -49,11 +49,13 @@ k9DVDAuthor::k9DVDAuthor(QObject *DVDStruct,const char* name,const QStringList& 
     xml=NULL;
     cancelled=false;
     error=false;
+    progress = new k9Progress(qApp->mainWidget(),"progress",NULL);
 
 }
 k9DVDAuthor::~k9DVDAuthor() {
     if (xml!=NULL)
         delete xml;
+
 }
 /** No descriptions */
 void k9DVDAuthor::createXML() {
@@ -391,36 +393,31 @@ void k9DVDAuthor::author() {
     time = new QTime(0,0);
     time->start();
 
-    //progress= new QProgressDialog ("DVDAuthor",i18n("Cancel"),100,qApp->mainWidget(),"progress",true,0);
-    progress = new k9Progress(qApp->mainWidget(),"progress",NULL);
     progress->setTitle(i18n("Authoring"));
     progress->setCaption(i18n("k9Copy - Backup progression"));
     progress->setProgress(0,100);
     //progress->show();
     if (!cancelled && !error)
         createXML();
-    if (error || cancelled)
-        delete progress;
+//    if (error || cancelled)
+//        delete progress;
 
     //run dvdauthor
     if (!cancelled  && !error) {
         QString c("dvdauthor");
         proc=progress->getProcess();//  new QProcess(c,0);
-        proc->addArgument(c);
-        proc->addArgument("-x");
-        proc->addArgument( locateLocal("tmp", "k9copy/k9author.xml"));
-        connect( proc, SIGNAL(readyReadStderr()),
-                 this, SLOT(DVDAuthorStderr()) );
-        connect( proc, SIGNAL(readyReadStdout()),
-                 this, SLOT(DVDAuthorStdout()) );
+        *proc << c << "-x" << locateLocal("tmp", "k9copy/k9author.xml");
+        connect( proc, SIGNAL(receivedStderr(KProcess *, char *, int)),
+                 this, SLOT(DVDAuthorStderr(KProcess *, char *, int )) );
+        connect( proc, SIGNAL(receivedStdout(KProcess *, char *, int )),
+                 this, SLOT(DVDAuthorStdout(KProcess *, char *, int)) );
         //    connect(progress, SIGNAL(cancelled()), this, SLOT(stopProcess()));
 
         m_copied=0;
         m_lastPos=0;
         //if (m_totalSize >k9DVDSize::getMaxSize())
         //    m_totalSize=k9DVDSize::getMaxSize();
-        QDir dir(workDir);
-        proc->setWorkingDirectory(dir);
+        proc-> setWorkingDirectory(workDir);
         int result=progress->execute();
         if ( result==-1 ) {
             KMessageBox::error( 0,  tr2i18n("Dvdauthor error :\n") + lastMsg,tr2i18n("authoring"));
@@ -440,7 +437,7 @@ void k9DVDAuthor::author() {
             }
         }
         //        delete proc;
-        delete progress;
+ //       delete progress;
         if (!burnOk)
             error=true;
     }
@@ -450,10 +447,10 @@ void k9DVDAuthor::author() {
 
 
 /** No descriptions */
-void k9DVDAuthor::DVDAuthorStderr() {
-    //QString c(proc->readStderr());
+void k9DVDAuthor::DVDAuthorStderr(KProcess *proc, char *buffer, int buflen ) {
 
-    QString m_stderr(proc->readStderr());
+    //QString m_stderr(proc->readStderr());
+    QString m_stderr=QString::fromLatin1(buffer, buflen);
     float m_percent;
     QString m_remain;
 
@@ -512,8 +509,9 @@ void k9DVDAuthor::DVDAuthorStderr() {
 
 }
 
-void k9DVDAuthor::DVDAuthorStdout() {
-    QString c(proc->readStdout());
+void k9DVDAuthor::DVDAuthorStdout(KProcess *proc, char *buffer, int buflen) {
+    QString c=QString::fromLatin1( buffer,buflen);
+    //(proc->readStdout());
     int pos;
     pos=c.find("STAT");
     if (pos!=-1) {
@@ -525,7 +523,7 @@ void k9DVDAuthor::DVDAuthorStdout() {
 
 /** No descriptions */
 void k9DVDAuthor::stopProcess() {
-    proc->tryTerminate();
+    proc->kill();
     cancelled=true;
 }
 

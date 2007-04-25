@@ -29,6 +29,10 @@ enum eStatusBarId {sbMessage=0,sbFactor=1};
 
 class k9Main;
 class kViewMPEG2;
+class k9PlaybackOptions;
+class k9LangSelect;
+class k9MP4Title;
+class k9TitleFactor;
 
 class k9Copy : public KMdiMainFrm
 {
@@ -42,7 +46,11 @@ public:
     void clone(QString _input,QString _output);
     void setInput(QString _input);
     void setOutput(QString _output);
-
+    
+    KDockWidget* getVisibleDock();
+    KMdiToolViewAccessor * setToolWindow(QWidget *_widget,KDockWidget::DockPosition _pos,const QString &tabToolTip,const QString &tabCaption) ;
+    void removeToolWindow(KMdiToolViewAccessor *toolWin);
+    
     /**
      * Default Destructor
      */
@@ -67,6 +75,7 @@ public slots:
     void fileOpen();
     void preferences();
     void quit();
+    void setActions(bool enabled);
 private:
     void setupAccel();
     void setupActions();
@@ -78,9 +87,14 @@ private:
    k9Main  *m_k9Main;
    KMdiChildView *m_childView;
    KMdiToolViewAccessor *m_previewAcc;
+   k9PlaybackOptions *m_options;
+   k9TitleFactor *m_factors;
+   k9LangSelect *m_lang;
+   k9MP4Title *m_mp4;
    QWidget *m_mp2;
    bool m_useXine;
    bool m_useDvdAuthor;
+   QMap  <QString,KAction*> m_actions;
 };
 
 

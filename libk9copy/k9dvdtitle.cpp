@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <qvaluelist.h>
 #include "k9dvdtitleset.h"
+#include "k9titleencopt.h"
 
 //*******************k9DVDAudioStream**************
 k9DVDAudioStream::k9DVDAudioStream() {
@@ -397,8 +398,10 @@ bool k9DVDTitle::isSelected() {
 	forceSelection = _state;    
 	gettitleset()->updateSelection();
 	bool after=isSelected();
-	if (after!=before)
+	if (after!=before) {
 	    selectChapters(after);
+	    emit selectionChanged();
+	}
 }
 
 
@@ -472,7 +475,16 @@ k9DVDTitle::k9DVDTitle() {
     forceSelection=false;
     m_forceFactor=false;
     m_factor=0;
+    m_encOpt=NULL;
 }
+
+k9TitleEncOpt* k9DVDTitle::getEncOpt()  { 
+  if (!m_encOpt)
+  	m_encOpt=new k9TitleEncOpt(this);
+  return m_encOpt;
+  
+}
+
 
 void k9DVDTitle::selectChapters(bool _state) {
     for (int i=0;i < chapterCount;i++) {

@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>328</width>
-            <height>461</height>
+            <height>491</height>
         </rect>
     </property>
     <property name="caption">
@@ -21,6 +21,9 @@
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>2</number>
         </property>
         <widget class="QCheckBox" row="1" column="0">
             <property name="name">

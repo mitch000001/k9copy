@@ -23,7 +23,7 @@
 #include "k9common.h"
 #include "k9progress.h"
 
-#include <qprocess.h>
+#include <k9process.h>
 #include <klocale.h>
 
 /**
@@ -38,6 +38,7 @@ public:
   ~k9BurnDVD();
   virtual void setburnDevice( const QString& _newVal);
   virtual const QString& getburnDevice();
+  virtual QWidget* getDialog() {return progress;};
   void setworkDir( const QString& _newVal);
   void setvolId(QString  _newVal);
   void setUseK3b(bool _newVal);
@@ -50,8 +51,8 @@ public:
 private:
     QTime *time;
     k9Progress *progress;
-    QProcess *proc;
-    QProcess *proc2;
+    k9Process *proc;
+    k9Process *proc2;
     QString volId;
     float burnSpeed;
     QString burnDevice;
@@ -68,10 +69,10 @@ private:
     QString imageSize;
     QString m_speed;
 private slots: // Private slots    
-    void growisoStderr();
-    void growisoStdout();  
-    void mkisoSizeStderr();
-    void mkisoSizeStdout();
+    void growisoStderr(KProcess *proc, char *buffer, int buflen);
+    void growisoStdout(KProcess *proc, char *buffer, int buflen);  
+    void mkisoSizeStderr(KProcess *proc, char *buffer, int buflen);
+    void mkisoSizeStdout(KProcess *proc, char *buffer, int buflen);
 };
 
 #endif

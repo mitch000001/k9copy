@@ -10,12 +10,10 @@
 //
 //
 #include "k9tools.h"
-#include <kprocess.h>
+#include <kstandarddirs.h>
 
 
 bool k9Tools::checkProgram(QString _progName) {
-    KProcess proc;
-    proc << _progName;
-    return proc.start();
+   return KStandardDirs::findExe( _progName,NULL,false) !=NULL ;
 }
 

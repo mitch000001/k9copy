@@ -25,7 +25,7 @@
 #include "k9progress.h"
 
 #include <qdom.h>
-#include <qprocess.h>
+#include "k9process.h"
 #include <qdatastream.h>
 #include <qprogressdialog.h>
 #include <klocale.h>
@@ -44,6 +44,7 @@ public:
   virtual void author();
   virtual void setburnDVD( const bool& _newVal);
   virtual const bool& getburnDVD();
+  virtual QWidget *getDialog(){return progress;};
 private: // Private attributes
   /**  */
   QTime *time;
@@ -51,7 +52,7 @@ private: // Private attributes
   double factor;
   QDomDocument *xml;
   QString lastMsg,totSize,inject;
-  QProcess *proc;
+  k9Process *proc;
   QString workDir;
   k9Progress *progress;
   bool cancelled;
@@ -71,8 +72,8 @@ private: // Private attributes
   void spumux();
 private slots: // Private slots
   /** No descriptions */
-  void DVDAuthorStderr();
-  void DVDAuthorStdout();
+  void DVDAuthorStderr(KProcess *proc, char *buffer, int buflen);
+  void DVDAuthorStdout(KProcess *proc, char *buffer, int buflen);
 
   /** No descriptions */
   void stopProcess();

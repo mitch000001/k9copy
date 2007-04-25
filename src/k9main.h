@@ -29,7 +29,7 @@
 #include "k9copy.h"
 
 enum  eStreamType {SUB,AUD,VID,NONE,CHAP} ;
-enum  eObjectType {TITLES,CHAPTERS};
+enum  eObjectType {TITLE,CHAPTER,TITLESET,STREAM,ROOT};
 
 class LvItem : public QListViewItem {
 public:
@@ -60,24 +60,27 @@ class k9UpdateFactor;
 
 class ckLvItem : public QCheckListItem {
 public:
-    ckLvItem( QListViewItem *parent,k9Main *dlg)
+    ckLvItem( QListViewItem *parent,k9Main *dlg,eObjectType _objectType)
             : QCheckListItem( parent,"",QCheckListItem::CheckBox) {
         mainDlg=dlg;
         obj=NULL;
         stream=NULL;
         streamType=NONE;
         language="";
+        objectType=_objectType;
     }
-    ckLvItem( QListView *parent,k9Main *dlg)
+    ckLvItem( QListView *parent,k9Main *dlg,eObjectType _objectType)
             : QCheckListItem( parent,"",QCheckListItem::CheckBox) {
         mainDlg=dlg;
         obj=NULL;
         stream=NULL;
         streamType=NONE;
         language="";
+        objectType=_objectType;
     }
     eStreamType streamType;
-
+    eObjectType objectType;
+    
     k9Main *mainDlg;
     k9DVDTitle *mainTitle;
     QObject *obj;
@@ -146,6 +149,8 @@ private slots:
     virtual void updateFactor_internal();
     virtual void	   deviceAdded(k9CdDrive *_drive);
     virtual void	   deviceRemoved(k9CdDrive *_drive);
+    virtual void	   expanded(QListViewItem*);
+    virtual void	   collapsed (QListViewItem*);
 public slots:
     /*$PUBLIC_SLOTS$*/
     virtual void          PreviewTitle();
@@ -163,6 +168,7 @@ protected:
 
     void readDrives();
     void addDrive (k9CdDrive *_drive);
+    k9Copy *m_parent;
     QPtrList<ckLvItem> tsItems;
     QPtrList<ckLvItem> chItems;
     ckLvItem * root;
@@ -201,6 +207,9 @@ protected:
     QString m_prefCodecAudio,m_prefCodecVideo,m_prefCodecLabel;
     k9PlaybackOptions *m_playbackOptions;
     k9LangSelect *m_langSelect;
+    
+    KMdiToolViewAccessor *m_toolView;
+    KDockWidget *m_dockWidget;
 protected slots:
     /*$PROTECTED_SLOTS$*/
     void slot_progress(QString str);
@@ -218,6 +227,8 @@ private:
     void fillLvLanguages();
     void updateLvLang(const eStreamType streamType,const QString & lang) ;
     long getFreeSpace(const QString & _path);
+    void setProgressWindow(QWidget *_widget);
+    void removeProgressWindow();
 	
 };
 

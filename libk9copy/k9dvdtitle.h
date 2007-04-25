@@ -138,6 +138,7 @@ public: // Public methods
 };
   
 
+class k9TitleEncOpt;
 
 
 class k9DVDTitle : public QObject{
@@ -179,6 +180,7 @@ private: // Public attributes
   uint32_t m_sectors;
   bool m_forceFactor;
   float m_factor;
+  k9TitleEncOpt *m_encOpt;
 public: // Public methods
   k9DVDTitle();
   virtual k9DVDTitleset *gettitleset() {return m_titleset;};
@@ -231,11 +233,14 @@ public: // Public methods
   virtual bool getforceFactor() { return m_forceFactor;};
   virtual void selectChapters(bool _state);
   virtual QPtrList< k9DVDChapter > getChapters() const {return chapters;};
-
+  virtual k9TitleEncOpt* getEncOpt() ;
+  
 public slots:
   virtual void setfactor(float _value) {m_factor=_value;};
   virtual void setforceFactor(bool _value) {m_forceFactor=_value;};	
- 
+	
+signals:
+  void selectionChanged();
 private: // Private methods
   k9DVDAudioStream* addAudioStream();
   k9DVDChapter* addChapter(int num);

@@ -35,10 +35,14 @@ k9BurnDVD::k9BurnDVD()
     volId="K9Copy";
     iso=false;
     m_filename="";
+    progress=new k9Progress(NULL,"progress",NULL);
+
 }
 
 
-k9BurnDVD::~k9BurnDVD() {}
+k9BurnDVD::~k9BurnDVD() {
+   delete progress;
+}
 
 /** Read property of QString burnDevice. */
 const QString& k9BurnDVD::getburnDevice() {
@@ -89,14 +93,14 @@ void k9BurnDVD::burnWithK3b() {
     delete k3b;
 }
 
-void k9BurnDVD::mkisoSizeStderr() {
-    QString c(proc2->readStderr());
+void k9BurnDVD::mkisoSizeStderr(KProcess *proc, char *buffer, int buflen) {
+    QString c=QString::fromLatin1( buffer,buflen);//   (proc2->readStderr());
     imageSize=c.replace("\n","");
     ;
 }
 
-void k9BurnDVD::mkisoSizeStdout() {
-    QString c(proc2->readStdout());
+void k9BurnDVD::mkisoSizeStdout(KProcess *proc, char *buffer, int buflen) {
+    QString c=QString::fromLatin1(buffer,buflen);// (proc2->readStdout());
     imageSize=c.replace("\n","");
     ;
 }
@@ -104,18 +108,18 @@ void k9BurnDVD::mkisoSizeStdout() {
 const QString &k9BurnDVD::getImageSize() {
     QString c;
     c="mkisofs";
-    proc2=new QProcess(c,0);
-    proc2->addArgument("-quiet");
-    proc2->addArgument("-print-size");
-    proc2->addArgument("-dvd-video");
-    proc2->addArgument("-udf");
-    proc2->addArgument("-r");
-    proc2->addArgument("-V "+volId);
-    c=QDir::cleanDirPath(workDir +"/dvd");
-    proc2->addArgument(c);
+    proc2=new k9Process;
+    *proc2 << c;
+    *proc2 <<"-quiet";
+    *proc2 <<"-print-size";
+    *proc2 <<"-dvd-video";
+    *proc2 <<"-udf";
+    *proc2 <<"-r";
+    *proc2 <<"-V "+volId;
+    *proc2 << QDir::cleanDirPath(workDir +"/dvd");
 
-    connect( proc2, SIGNAL(readyReadStderr()),this, SLOT(mkisoSizeStderr()) );
-    connect( proc2, SIGNAL(readyReadStdout()),this, SLOT(mkisoSizeStdout()) );
+    connect( proc2, SIGNAL(receivedStderr(KProcess *, char *, int )),this, SLOT(mkisoSizeStderr(KProcess *, char *, int)) );
+    connect( proc2, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(mkisoSizeStdout(KProcess *, char *, int)) );
     if (proc2->start()) {
         while (proc2->isRunning()) {
             qApp->processEvents();
@@ -138,8 +142,6 @@ void k9BurnDVD::burnWithGrowisofs() {
     //factory = KLibLoader::self()->factory("libk9copy");
 
 //    progress=static_cast<k9Progress  *>(factory->create(qApp->mainWidget(),"progress", "k9Progress"));
-    progress=0;
-    progress=new k9Progress(NULL,"progress",NULL);
 
     progress->setCaption(i18n("k9Copy - Burning DVD"));
     progress->setTitle(i18n("Burning DVD"));
@@ -154,40 +156,39 @@ void k9BurnDVD::burnWithGrowisofs() {
         else
             c="growisofs";
         proc=progress->getProcess();
-        proc->addArgument(c);
+        *proc << c;
 
         if (!iso) {
-            proc->addArgument("-overburn");
-            proc->addArgument("-Z");
-            proc->addArgument(burnDevice  );
-            proc->addArgument("-use-the-force-luke=tty");
-            proc->addArgument("-use-the-force-luke=tracksize:"+getImageSize());
-            proc->addArgument("-use-the-force-luke=dao:" + imageSize);
-            proc->addArgument("-dvd-compat");
+            *proc <<"-overburn";
+            *proc <<"-Z";
+            *proc <<burnDevice;
+            *proc <<"-use-the-force-luke=tty";
+            *proc <<"-use-the-force-luke=tracksize:"+getImageSize();
+            *proc <<"-use-the-force-luke=dao:" + imageSize;
+            *proc <<"-dvd-compat";
             if (m_speed !=i18n("default"))
-                proc->addArgument("-speed=" + m_speed);
+                *proc <<"-speed=" + m_speed;
 
         } else {
             QString fileName=m_filename;
             if (fileName =="")
                 fileName=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Save image to disk"));
             if (fileName !="") {
-                proc->addArgument("-o");
-                proc->addArgument(fileName);
+                *proc <<"-o";
+                *proc <<fileName;
             } else
                 cancelled=true;
 
         }
 
-        proc->addArgument("-dvd-video");
-        proc->addArgument("-udf");
-        proc->addArgument("-r");
-        proc->addArgument("-V "+volId);
-        c=QDir::cleanDirPath(workDir +"/dvd");
-        proc->addArgument(c);
+        *proc <<"-dvd-video";
+        *proc <<"-udf";
+        *proc << "-r";
+        *proc <<"-V "+volId;
+        *proc <<QDir::cleanDirPath(workDir +"/dvd");
 
-        connect( proc, SIGNAL(readyReadStderr()),this, SLOT(growisoStderr()) );
-        connect( proc, SIGNAL(readyReadStdout()),this, SLOT(growisoStdout()) );
+        connect( proc, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(growisoStderr(KProcess *, char *, int)) );
+        connect( proc, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(growisoStdout(KProcess *, char *, int)) );
         if (!autoBurn && !iso) {
             c=i18n("Insert a recordable DVD");
             if ( KMessageBox::warningContinueCancel ( 0,c, i18n("authoring"))!=KMessageBox::Continue)
@@ -215,13 +216,12 @@ void k9BurnDVD::burnWithGrowisofs() {
         }
     }
     delete time;
-    delete progress;
 
 }
 
 /** No descriptions */
-void k9BurnDVD::growisoStderr() {
-    QString c(proc->readStderr());
+void k9BurnDVD::growisoStderr(KProcess *proc, char *buffer, int buflen) {
+    QString c=QString::fromLatin1( buffer,buflen);// (proc->readStderr());
     char s[255];
     int a,b;
     int pos;
@@ -255,8 +255,8 @@ void k9BurnDVD::growisoStderr() {
         }
     }
 }
-void k9BurnDVD::growisoStdout() {
-    QString c(proc->readStdout());
+void k9BurnDVD::growisoStdout(KProcess *proc, char *buffer, int buflen) {
+    QString c=QString::fromLatin1( buffer,buflen);// (proc->readStdout());
     int pos;
     pos=c.find("STAT");
     if (pos!=-1) {

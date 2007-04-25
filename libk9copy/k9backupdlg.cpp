@@ -59,20 +59,33 @@ void k9BackupDlg::drawPixmap(QImage *_image) {
 	if (m_count ==4) {
 
        QPixmap pix(*_image);
-        image->setPixmap(pix);
+        //image->setPixmap(pix);
   	int top,left;
 
-        /*
-	QImage img;
+        
+	//QImage img;
         QPainter p(image);
-        //     img=image.scale(label->contentsRect().width(),label->contentsRect().height(),QImage::ScaleMin);
-        img=_image.scale(image->width(),image->height(),QImage::ScaleMin);
-        top =(int) (image->height() -img.height())/2 +1;
-        left =(int) (image->width() -img.width())/2 +1;
-        p.drawImage(left,top,img);
+        
+        //img=_image->scale(image->width(),image->height(),QImage::ScaleMin);
+        //top =(int) (image->height() -img.height())/2 +1;
+        //left =(int) (image->width() -img.width())/2 +1;
+        
+        double wratio=(double)image->width()/(double)_image->width();
+        double hratio=(double)image->height()/(double)_image->height();
+        double ratio= wratio < hratio ? wratio:hratio;
+
+        top =(int) (image->height() -_image->height()*ratio)/2+1;
+        left =(int) (image->width() -_image->width()*ratio)/2 +1;
+
+        p.scale(ratio,ratio);
+
+        p.drawImage((int)(left/ratio),(int)(top/ratio),*_image);
+
+        
+        //p.drawImage(left,top,img);
         p.end();
-	*/
-		m_stop=true;
+	
+	m_stop=true;
 	}
 }
 

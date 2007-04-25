@@ -32,6 +32,7 @@
 #include "k9config.h"
 #include "k9updatefactor.h"
 #include "k9haldevice.h"
+#include "k9titleencopt.h"
 #include <kselect.h>
 #include <kcombobox.h>
 #include <qtextbrowser.h>
@@ -64,7 +65,7 @@
 #include <kdeversion.h>
 #include <qlistbox.h>
 #include <qtoolbox.h>
-
+#include <qregion.h>
 
 
 
@@ -98,7 +99,7 @@ k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
     : MainDlg(parent,name),pxVideo((const char **) img_video), pxSound((const char **) img_sound),
     pxText((const char **) img_text)
 {
-
+  m_parent=(k9Copy*)parent;
   QImage img;
   img.loadFromData( img_chapter, sizeof( img_chapter ), "PNG" );
   pxChapter.convertFromImage( img);
@@ -124,7 +125,7 @@ k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
   bInputOpenDir->setPixmap(SmallIcon("folder_open"));
   emit SelectionChanged(NULL,true);
   m_update=new k9UpdateFactor(this,"");
-  connect(m_update,SIGNAL(updateFactor_internal()),this,SLOT(updateFactor_internal()));
+  connect(m_update,SIGNAL(updateFactor_internal()),this,SLOT(updateFactor_internal()));  
 }
 
 
@@ -157,13 +158,13 @@ int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const
   uint id,id2;
   if (col==0)
   {
-    switch(depth())
+    switch(this->objectType)
     {
-    case 1:
+    case TITLESET:
       titleset1=(k9DVDTitleset*)obj;
       titleset2=(k9DVDTitleset*)litem->obj;
       return titleset1->getnum() -titleset2->getnum();
-    case 3:
+    case STREAM:
       l=(ckLvItem*)this;
       id=streamType*100;
       id2=litem->streamType*100;
@@ -189,7 +190,7 @@ int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const
 
       return k9Main::compare(id,id2);
       break;
-    case 4:
+    case CHAPTER:
       l=(ckLvItem*)this;
       k9DVDChapter *ch1=(k9DVDChapter*)l->obj;
       k9DVDChapter *ch2=(k9DVDChapter*)litem->obj;
@@ -199,21 +200,21 @@ int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const
 
   if (col ==1)
   {
-    switch (depth())
+    switch (this->objectType)
     {
-    case 1:
+    case TITLESET:
       titleset1=(k9DVDTitleset*)obj;
       titleset2=(k9DVDTitleset*)litem->obj;
       return k9Main::compare(titleset1->getsize(),titleset2->getsize());
       break;
-    case 3:
+    case STREAM:
       double size1,size2;
       l =(ckLvItem*)this;
       size1=l->getstreamSize();
       size2=litem->getstreamSize();
       return k9Main::compare(size1,size2);
       break;
-    case 4:
+    case CHAPTER:
       l=(ckLvItem*)this;
       k9DVDChapter *ch1=(k9DVDChapter*)l->obj;
       k9DVDChapter *ch2=(k9DVDChapter*)litem->obj;
@@ -261,13 +262,13 @@ int LvItem::compare ( QListViewItem * i, int col, bool ascending ) const
     return -1;
   LvItem *litem = (LvItem*)i;
   k9DVDTitle *title1,*title2;
-  if (col ==1 && depth()==2)
+  if (col ==1 && objectType==TITLE)
   {
     title1=(k9DVDTitle*)obj;
     title2=(k9DVDTitle*)litem->obj;
     return k9Main::compare(title1->gettotalsize_mb(),title2->gettotalsize_mb());
   }
-  if (col==0 && depth()==2)
+  if (col==0 && objectType==TITLE)
   {
     title1=(k9DVDTitle*)obj;
     title2=(k9DVDTitle*)litem->obj;
@@ -284,9 +285,9 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
     p->eraseRect(0,0,width,height());
     QFont f(p->font());
 
-    switch (depth())
+    switch (objectType)
     {
-    case 1:
+    case TITLESET:
       {
         k9DVDTitleset *titleset=(k9DVDTitleset*)obj;
         f.setBold(true);
@@ -294,7 +295,7 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
         p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,titleset->getsize_mb()+" " +i18n("mb"));
         break;
       }
-    case 3:
+    case STREAM:
       {
         if ( ! mainDlg->getquickScan())
         {
@@ -305,7 +306,7 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
         }
         break;
       }
-    case 4 :
+    case CHAPTER :
       {
         k9DVDChapter *chapter=(k9DVDChapter*) obj;
         double size=(double)chapter->getsectors()/512;
@@ -325,7 +326,7 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
 
 void LvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int width, int align )
 {
-  if (column==1 && depth()==2)
+  if (column==1 && objectType==TITLE)
   {
     p->eraseRect(0,0,width,height());
     k9DVDTitle * title=(k9DVDTitle*)obj;
@@ -343,12 +344,12 @@ void ckLvItem::stateChange(bool state)
   {
     if (mainDlg->getupdating())
       return;
-    switch (depth())
+    switch (objectType)
     {
-    case 0 :
+    case ROOT :
       mainDlg->checkAll(state);
       break;
-    case 1:
+    case TITLESET:
       mainDlg->checkTS(state,this);
       break;
     default :
@@ -402,22 +403,29 @@ void k9Main::Copy()
     m_playbackOptions->setSequence(); // JMP : temporaire
 
     k9DVDBackup *backup=new k9DVDBackup(dvd,"backup");
+    
+    setProgressWindow(backup->getDialog());
     backup->setOutput(m_prefOutput);
     backup->setDevice(dvd->getDevice());
     backup->setWithMenus( withMenus());
     backup->execute();
     burn=backup->getErrMsg()=="";
     delete backup;
+    removeProgressWindow();  
   }
   else
   {
     //k9DVDAuthor *b=static_cast<k9DVDAuthor  *>(m_factory->create(dvd,"dvdauthor", "k9DVDAuthor"));
+    
     k9DVDAuthor *b=new k9DVDAuthor(dvd,"dvdauthor");
+    setProgressWindow( b->getDialog());
     m_playbackOptions->setSequence();
     b->setworkDir(m_prefOutput);
     b->author();
     if (!b->getError())
       burn=true;
+    removeProgressWindow();
+    
     delete b;
   }
 
@@ -426,6 +434,8 @@ void k9Main::Copy()
     changeStatusbar(i18n("Burning DVD"),sbMessage);
 
     k9BurnDVD b;
+    
+    setProgressWindow( b.getDialog()); 
     b.setworkDir(m_prefOutput);
     b.setUseK3b(m_prefK3b);
     b.setAutoBurn(m_prefAutoBurn);
@@ -442,10 +452,29 @@ void k9Main::Copy()
     else
       b.makeIso(filename);
     b.burn();
+    removeProgressWindow();
   }
   if(dvd->getopened())
     changeStatusbar(i18n("Ready"),sbMessage);
 
+}
+
+void k9Main::setProgressWindow(QWidget *_widget) {
+    m_toolView=m_parent->setToolWindow(_widget,KDockWidget::DockRight,i18n("processing"),i18n("processing"));
+    m_dockWidget = m_parent->getVisibleDock();
+    m_parent->setActions( false);
+    m_toolView->show();
+    this->setEnabled(false);
+ 
+}
+
+void k9Main::removeProgressWindow() {
+    m_parent->setActions(true);
+
+    m_parent->removeToolWindow( m_toolView);
+    this->setEnabled(true);
+    if (m_dockWidget!=NULL)
+    	m_dockWidget->changeHideShowState();
 }
 
 void k9Main::eject()
@@ -505,7 +534,8 @@ void k9Main::Open()
   QTime h;
   connect(this, SIGNAL(sig_progress(QString)), this, SLOT(slot_progress(QString)));
   connect(listView1,SIGNAL(itemRenamed(QListViewItem*,int)),this,SLOT(itemRenamed(QListViewItem *,int)));
-
+  connect(listView1,SIGNAL(expanded( QListViewItem*)),this,SLOT(expanded( QListViewItem* )));
+  connect(listView1,SIGNAL(collapsed( QListViewItem*)),this,SLOT(collapsed( QListViewItem* )));
 
   closeDVD();
   QString sDevice=getDevice(cbInputDev);
@@ -539,17 +569,18 @@ void k9Main::Open()
   tsItems.clear();
   chItems.clear();
 
-  root = new ckLvItem (listView1,this );
+  root = new ckLvItem (listView1,this,ROOT );
   root->setOpen( TRUE );
   
   root->setText(0, dvd->getDVDTitle());
   root->setRenameEnabled(0,true);
   root->obj=NULL;
   root->streamType=NONE;
+  root->setPixmap(0,SmallIcon("dvd_unmount"));
 
   for (i=0;i<dvd->gettitlesetCount();i++)
   {
-    ckLvItem *tsItem = new ckLvItem(root,this);
+    ckLvItem *tsItem = new ckLvItem(root,this,TITLESET);
     tsItem->setOpen(TRUE);
     QString c;
     c=i18n("Titleset %1").arg(i+1);
@@ -559,6 +590,7 @@ void k9Main::Open()
     tsItem->streamType=NONE;
     tsItem->setRenameEnabled(0,false);
     tsItems.append(tsItem);
+    tsItem->setPixmap( 0,SmallIcon("folder"));
   }
 
   for (i=0;i<dvd->gettitleCount();i++)
@@ -611,7 +643,7 @@ void k9Main::closeEvent( QCloseEvent* ce )
 
 void k9Main::addChapters(QListViewItem *_parent,k9DVDTitle *_title)
 {
-  LvItem *chapter = new LvItem(_parent,CHAPTERS);
+  LvItem *chapter = new LvItem(_parent,CHAPTER);
   chapter->setText(0, i18n("chapters"));
   chapter->setOpen( false);
   chapter->setPixmap(0,pxChapter);
@@ -619,7 +651,7 @@ void k9Main::addChapters(QListViewItem *_parent,k9DVDTitle *_title)
   int ch=0;
   for (int i=0;i< _title->getchapterCount();i++)
   {
-    ckLvItem *it =new ckLvItem(chapter,this);
+    ckLvItem *it =new ckLvItem(chapter,this,CHAPTER);
     it->setText(0,i18n("chapter %1").arg(++ch));
     it->setText(1,i18n("%1 mb").arg((double)(_title->getChapter(i)->getsectors()) /512));
     it->streamType=CHAP;
@@ -632,7 +664,7 @@ void k9Main::addChapters(QListViewItem *_parent,k9DVDTitle *_title)
     k9DVDTitle *title2=_title->getTitles().at(j);
     for (int i=0;i< title2->getchapterCount();i++)
     {
-      ckLvItem *it =new ckLvItem(chapter,this);
+      ckLvItem *it =new ckLvItem(chapter,this,CHAPTER);
       it->setText(0,i18n("chapter %1").arg(++ch));
       it->streamType=CHAP;
       it->obj=title2->getChapter(i);
@@ -658,10 +690,11 @@ void k9Main::addTitle(k9DVDTitle *track)
 
   listView1->setRootIsDecorated(true);
 
-  LvItem * itemTrack = new LvItem( tsItems.at(track->getVTS()-1),TITLES);
+  LvItem * itemTrack = new LvItem( tsItems.at(track->getVTS()-1),TITLE);
   itemTrack->setOpen( false );
   itemTrack->setText(col1,track->getname());
   itemTrack->setRenameEnabled(0,true);
+  itemTrack->setPixmap(col1,SmallIcon("title"));
   c.sprintf("%.2f ", track->gettotalsize_mb());
 
   itemTrack->setText(col2,c+i18n("mb"));
@@ -670,7 +703,7 @@ void k9Main::addTitle(k9DVDTitle *track)
   addChapters( itemTrack,track);
 
   ckLvItem *video;
-  video=new ckLvItem( itemTrack,this);
+  video=new ckLvItem( itemTrack,this,STREAM);
   video->streamType=VID;
   addListItem(track,video,VID);
   video->setOpen( false );
@@ -689,7 +722,7 @@ void k9Main::addTitle(k9DVDTitle *track)
     c.append( l_auds->getlanguage() + " " +l_auds->getformat()+" " );
     ch.sprintf("%dch ",l_auds->getchannels());
     c.append(ch+l_auds->getfrequency()+" "+l_auds->getquantization());
-    ckLvItem * item = new ckLvItem( itemTrack,this);
+    ckLvItem * item = new ckLvItem( itemTrack,this,STREAM);
     item->streamType=AUD;
     item->language=l_auds->getlanguage();
     addListItem(l_auds,item,AUD);
@@ -706,7 +739,7 @@ void k9Main::addTitle(k9DVDTitle *track)
     l_sub=track->getsubtitle(i);
     c=i18n("subpicture %1 ").arg(i+1);
     c.append( l_sub->getlanguage());
-    ckLvItem * item = new ckLvItem( itemTrack,this);
+    ckLvItem * item = new ckLvItem( itemTrack,this,STREAM);
     item->streamType=SUB;
     item->language=l_sub->getlanguage();
     addListItem(l_sub,item,SUB);
@@ -981,6 +1014,24 @@ void k9Main::checkTS( bool _state,ckLvItem *_item )
   emit SelectionChanged(dvd,withMenus());
 }
 
+void k9Main::expanded( QListViewItem *item) {
+if (item->rtti()==1001)
+  {
+    ckLvItem *ckit = (ckLvItem*) item;
+    if (ckit->objectType==TITLESET)
+    	ckit->setPixmap( 0,SmallIcon("folder_open"));
+  }
+}
+
+void k9Main::collapsed( QListViewItem *item) {
+if (item->rtti()==1001)
+  {
+    ckLvItem *ckit = (ckLvItem*) item;
+    if (ckit->objectType==TITLESET)    
+       ckit->setPixmap( 0,SmallIcon("folder"));
+  }
+}
+
 
 /** No descriptions */
 void k9Main::itemRenamed(QListViewItem * item,int col)
@@ -1154,6 +1205,7 @@ void k9Main::CreateMP4()
 
     
       k9MP4Enc *mp4=new k9MP4Enc();
+      setProgressWindow( mp4->getDialog());
       if (cpt >0) {
 	QString ext=filename.section(".",-1);
         if (ext!="")
@@ -1166,15 +1218,18 @@ void k9Main::CreateMP4()
       	mp4->setFilename(filename);
 
       cpt++;	
+      k9TitleEncOpt * opt=t->getEncOpt();
       mp4->setDevice(dvd->getDevice());
-      mp4->setAudioBitrate(m_prefMp4AudioBitrate);
-      mp4->setCodec((k9MP4Enc::Codec) m_prefMp4Codec);
-      mp4->setSize( QString::number(m_prefMp4Size));
-      mp4->setNumberCD(QString::number(m_prefMp4NumberCD));
-      mp4->setWidth( m_prefMp4Width);
-      mp4->setHeight( m_prefMp4Height);
+      mp4->setAudioBitrate(opt->getAudioBr());
+      mp4->setCodec((k9MP4Enc::Codec) opt->getCodec());
+      mp4->setSize(QString::number(opt->getMaxSize()));
+      mp4->setNumberCD(QString::number(opt->getNumParts()));
+      mp4->setWidth(opt->getWidth() );
+      mp4->setHeight(opt->getHeight());
+      mp4->set2Passes( opt->get2Passes());
       mp4->execute(t);
       delete mp4;
+      removeProgressWindow();
     }
   }
   changeStatusbar( i18n("Ready") ,sbMessage);

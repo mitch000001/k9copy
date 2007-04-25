@@ -74,6 +74,7 @@ public:
     virtual void execute();
     virtual bool geterror();
     virtual void setWithMenus(bool _value);
+    virtual QWidget *getDialog() {return (QWidget*)backupDlg;};
 public  slots:
     void getOutput(uchar *buffer,uint32_t size);
 

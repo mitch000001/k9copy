@@ -15,7 +15,7 @@
 #include "k9dvdtitle.h"
 
 #include <qobject.h>
-#include <kprocess.h>
+#include <k9process.h>
 #include <qtimer.h>
 #include <qstringlist.h>
 class k9MP4Dlg;
@@ -31,7 +31,7 @@ public:
 	x264=2
     };
 private:
-    KProcess *m_process;
+    k9Process *m_process;
     k9MP4Dlg  *m_progress;
     k9DVDTitle *m_title;
     int getBitRate(k9DVDTitle *_title);
@@ -51,6 +51,7 @@ private:
     uint32_t m_totalSize;
     bool m_2pass;
     int m_pass;
+    bool m_canceled;
     Codec m_codec;
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
     int m_cpt;
@@ -58,11 +59,12 @@ private:
     QString replaceParams(QString _input);
     QString round16(QString _wh);
     QString getChapterList(k9DVDTitle *_title);
+    int getselectedSubp(k9DVDTitle *_title);
 private slots:
     void getStdout(KProcess *proc, char *buffer, int buflen);
     void getStderr(KProcess *proc, char *buffer, int buflen);
-    void exited(KProcess *proc);
     void timerDone();
+    void slotCancel();
 
 public:
     k9MP4Enc(QObject *parent = 0, const char *name = 0,const QStringList& args=0);
@@ -97,9 +99,13 @@ public:
         m_fourcc = _value.stripWhiteSpace();
     };
 
+    virtual void set2Passes(bool _value) {
+    	m_2pass=_value;
+    }
 
     virtual void setCodec(const Codec& _value) {m_codec = _value;};
 	
+    virtual QWidget *getDialog() {return (QWidget*)m_progress;};
 };
 
 #endif

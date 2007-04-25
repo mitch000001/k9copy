@@ -31,6 +31,7 @@
 #include "k9titlefactor.h"
 #include <qdom.h>
 #include <ksimpleconfig.h>	
+#include "k9mp4title.h"
 	
 k9Copy::k9Copy()
     : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
@@ -47,11 +48,11 @@ k9Copy::k9Copy()
     // tell the KMainWindow that this is indeed the main widget
     setToolviewStyle(KMdi::TextAndIcon);
     
-    k9PlaybackOptions *opt=new k9PlaybackOptions(m_k9Main,this);
-    addToolWindow(opt, KDockWidget::DockRight, getMainDockWidget(),0,i18n("DVD playback options"),i18n("DVD playback options"))->show();;
+    m_options=new k9PlaybackOptions(m_k9Main,this);
+    addToolWindow(m_options, KDockWidget::DockRight, getMainDockWidget(),0,i18n("DVD playback options"),i18n("DVD playback options"))->show();;
 
-    k9LangSelect *lang=new k9LangSelect(m_k9Main,this);
-    addToolWindow(lang, KDockWidget::DockRight, getMainDockWidget(),0,i18n("Selection"),i18n("Selection"));
+    m_lang=new k9LangSelect(m_k9Main,this);
+    addToolWindow(m_lang, KDockWidget::DockRight, getMainDockWidget(),0,i18n("Selection"),i18n("Selection"));
    
     if (m_useXine) {
 	    m_mp2=new K9Mplayer(this);
@@ -66,17 +67,24 @@ k9Copy::k9Copy()
     connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle*,int )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle*,int )));
     connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
        
-    k9TitleFactor *Factors=new k9TitleFactor( this);  
-    Factors->setUseDvdAuthor(m_useDvdAuthor);
-    int h=Factors->height();
-    addToolWindow(Factors,KDockWidget::DockBottom,getMainDockWidget(),10,i18n("Shrink Factor"),i18n("Shrink Factor"));
+    m_factors =new k9TitleFactor( this);  
+    m_factors->setUseDvdAuthor(m_useDvdAuthor);
+    int h=m_factors->height();
+    addToolWindow(m_factors,KDockWidget::DockBottom,getMainDockWidget(),10,i18n("Shrink Factor"),i18n("Shrink Factor"));
       
     
-    connect(m_k9Main,SIGNAL(SelectionChanged( k9DVD*,bool )),Factors,SLOT(SelectionChanged( k9DVD*,bool )));
-    connect(m_k9Main,SIGNAL(changedTitle( k9DVDTitle* )),Factors,SLOT(changedTitle( k9DVDTitle* )));    
+    connect(m_k9Main,SIGNAL(SelectionChanged( k9DVD*,bool )),m_factors,SLOT(SelectionChanged( k9DVD*,bool )));
+    connect(m_k9Main,SIGNAL(changedTitle( k9DVDTitle* )),m_factors,SLOT(changedTitle( k9DVDTitle* )));    
                   			    
-    KDockWidget *dw=dockManager->findWidgetParentDock (Factors);
+    KDockWidget *dw=dockManager->findWidgetParentDock (m_factors);
     dw->setForcedFixedHeight(h);
+    
+    m_mp4=new k9MP4Title(this);
+    addToolWindow(m_mp4,KDockWidget::DockBottom,getMainDockWidget(),10,i18n("MPEG4 Encoding options"),i18n("MPEG4 Encoding Options"));
+    
+    connect(m_k9Main,SIGNAL(changedTitle( k9DVDTitle* )),m_mp4,SLOT(titleChanged( k9DVDTitle* )));
+    connect(m_k9Main,SIGNAL(SelectionChanged( k9DVD*,bool )),m_mp4,SLOT(selectionChanged( k9DVD*,bool )));
+    
     // accept dnd
     setAcceptDrops(true);
    
@@ -118,9 +126,10 @@ bool k9Copy::queryClose   (    ) {
 
 void k9Copy::setupActions()
 {
-    KStdAction::open(this, SLOT(fileOpen()), actionCollection());
-    KStdAction::quit(this, SLOT(quit()), actionCollection());
-    KStdAction::preferences(this,SLOT(preferences()),actionCollection());
+    
+    m_actions["open"]=KStdAction::open(this, SLOT(fileOpen()), actionCollection());
+    m_actions["quit"]=KStdAction::quit(this, SLOT(quit()), actionCollection());
+    m_actions["preferences"]=KStdAction::preferences(this,SLOT(preferences()),actionCollection());
     KStdAction::keyBindings(this, SLOT(optionsConfigureKeys()), actionCollection());
     KStdAction::configureToolbars(this, SLOT(optionsConfigureToolbars()), actionCollection());
 
@@ -131,6 +140,8 @@ void k9Copy::setupActions()
     PlayTitleAction = new KAction(i18n("Play title"), 0,
                                   this, SLOT(ActionPlayTitle()),
                                   actionCollection(), "PlayTitle");
+    m_actions["playtitle"]=PlayTitleAction;
+    
     QImage img;
     img.loadFromData( img_preview, sizeof( img_preview ), "PNG" );	
     PlayTitleAction->setIconSet(QIconSet(img));   
@@ -138,13 +149,14 @@ void k9Copy::setupActions()
     CopyAction = new KAction(i18n("Copy"), 0,
                                   this, SLOT(ActionCopy()),
                                   actionCollection(), "Copy");
-    
+    m_actions["copy"]=CopyAction;
    CopyAction->setIcon("dvdcopy");
 
 
    mkMP4Action = new KAction(i18n("Create MPEG-4"),0,
 				  this, SLOT(ActionMP4()),
 				  actionCollection(),"MakeMPEG4");
+   m_actions["mp4"]=mkMP4Action;
 
    mkMP4Action->setIcon("mp4");
 
@@ -153,9 +165,28 @@ void k9Copy::setupActions()
 				  actionCollection() , "Eject");
    ejectAction->setIcon("player_eject");
 
+   m_actions["eject"]=ejectAction;
 
    createGUI(0);
    
+}
+
+void k9Copy::setActions( bool enabled) {
+   m_actions["open"]->setEnabled(enabled);
+   m_actions["quit"]->setEnabled(enabled);
+   m_actions["preferences"]->setEnabled(enabled);
+   m_actions["playtitle"]->setEnabled(enabled);
+   m_actions["copy"]->setEnabled(enabled);
+   m_actions["mp4"]->setEnabled(enabled);
+   m_actions["eject"]->setEnabled(enabled);
+   m_mp2->setEnabled(enabled);
+   m_mp4->setEnabled(enabled);
+   m_factors->setEnabled(enabled);
+   m_lang->setEnabled(enabled);
+   m_options->setEnabled(enabled);
+   
+
+
 }
 
 void k9Copy::optionsConfigureKeys()
@@ -235,7 +266,14 @@ void k9Copy::ActionEject() {
 }
 
 
+KMdiToolViewAccessor * k9Copy::setToolWindow(QWidget *_widget,KDockWidget::DockPosition _pos,const QString &tabToolTip,const QString &tabCaption) {
+   return addToolWindow(_widget, _pos, getMainDockWidget(),0,tabToolTip,tabCaption);
+}
 
+void k9Copy::removeToolWindow(KMdiToolViewAccessor *toolWin) {
+   deleteToolWindow(toolWin);
+}
+ 
 
 void k9Copy::changeStatusbar(const QString& text,int id)
 {
@@ -275,5 +313,22 @@ void k9Copy::closeEvent( QCloseEvent* ce ) {
     ce->accept();
     kapp->quit();
 }
+
+KDockWidget* k9Copy::getVisibleDock() {
+    KDockWidget *w= manager()->findWidgetParentDock(m_options);
+    if (w->isVisible())
+    	return w;
+    
+    w= manager()->findWidgetParentDock(m_lang);
+    if (w->isVisible())
+    	return w;
+
+    w= manager()->findWidgetParentDock(m_mp2);
+    if (w->isVisible())
+    	return w;
+
+    return NULL;
+}
+
 
 

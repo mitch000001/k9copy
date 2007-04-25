@@ -12,9 +12,9 @@
 
 #ifndef K9MP4DLG_H
 #define K9MP4DLG_H
-
+#include <qtimer.h>
 #include "mp4dlg.h"
-
+#include <qimage.h>
 class k9MP4Dlg : public MP4Dlg
 {
   Q_OBJECT
@@ -29,16 +29,19 @@ public:
   void setremain(QString _remain);
   void setProgress(int _progress);
   void setTitleLabel(QString _titleLabel);
-  void accept();
-public slots:
+  void Cancel();
+signals:
   /*$PUBLIC_SLOTS$*/
-
+  void sigCancel();
 protected:
   /*$PROTECTED_FUNCTIONS$*/
+  QTimer m_timer;
+  QImage image1,image2;
+  int m_x1,m_x2;
 
 protected slots:
   /*$PROTECTED_SLOTS$*/
-
+  void drawImage();
 };
 
 #endif

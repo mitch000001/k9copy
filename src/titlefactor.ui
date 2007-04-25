@@ -22,6 +22,9 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
+        <property name="margin">
+            <number>5</number>
+        </property>
         <widget class="QLabel" row="0" column="0">
             <property name="name">
                 <cstring>lbTitle</cstring>

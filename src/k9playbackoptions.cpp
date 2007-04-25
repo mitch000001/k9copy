@@ -28,7 +28,7 @@ k9PlaybackOptions::k9PlaybackOptions(k9Main *mainWindow, QWidget* parent, const 
     k9Config config;
     ckMenu->setChecked(config.getKeepMenus());
     ckMenuClick();
-
+  
 }
 
 k9PlaybackOptions::~k9PlaybackOptions()
