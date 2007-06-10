@@ -38,13 +38,19 @@ public slots:
 protected slots:
   /*$PROTECTED_SLOTS$*/
   virtual void cbMp4CodecActivated( int );
+  virtual void cbMp4AudioCodecActivated( int );
+
   virtual void ck2passesClicked();
   virtual void sbMp4SizeValueChanged( int );
+  virtual void sbAudioGainValueChanged( int );
+
   virtual void sbMp4NumberCDValueChanged( int );
   virtual void leMp4WidthTextChanged( const QString & );
   virtual void leMp4HeightTextChanged( const QString & );
   virtual void leMp4AudioBitrateTextChanged( const QString & );
+  virtual void leMp4VideoBitrateTextChanged( const QString & );
 
+  virtual void rgVideoSizeChanged();
 };
 
 #endif

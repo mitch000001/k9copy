@@ -19,6 +19,7 @@ k9Config::k9Config() {
 void k9Config::read() {
   // if (! m_config->hasGroup( "options"))
   // 	readOldConfig();
+
   m_config->setGroup( "dir");
   m_prefOutput=m_config->readEntry("output",locateLocal("tmp","k9copy/",true));
   
@@ -43,10 +44,16 @@ void k9Config::read() {
   m_prefMp4AspectRatio=m_config->readBoolEntry("aspectRatio",true);
   m_prefMp42Passes=m_config->readBoolEntry("2passes",false);
   m_prefMp4AudioBitrate=m_config->readEntry("audiobitrate","128");
+  m_prefMp4VideoBitrate=m_config->readEntry("videobitrate" "");
+  m_prefMp4AudioCodec=m_config->readNumEntry("audiocodec",0);
+  m_prefMp4AudioGain=m_config->readNumEntry("audiogain",7);
 
   m_config->setGroup("mencoder");
   m_codecAudio=m_config->readListEntry("audio");
   m_codecLabels=m_config->readListEntry("labels");
+  m_codecLabelsAudio=m_config->readListEntry("audiolabels");
+  
+
   m_codecVideo=m_config->readListEntry("video");
   
   m_config->setGroup("devices");
@@ -84,12 +91,17 @@ void k9Config::save() {
   m_config->writeEntry("width",m_prefMp4Width);
   m_config->writeEntry("height",m_prefMp4Height);
   m_config->writeEntry("audiobitrate",m_prefMp4AudioBitrate);
+  m_config->writeEntry("videobitrate",m_prefMp4VideoBitrate);
   m_config->writeEntry("aspectRatio",m_prefMp4AspectRatio);
   m_config->writeEntry("2passes",m_prefMp42Passes);
+  m_config->writeEntry("audiogain",m_prefMp4AudioGain);
+  m_config->writeEntry("audiocodec", m_prefMp4AudioCodec);
+
 
   m_config->setGroup("mencoder");
   m_config->writeEntry("audio",m_codecAudio);
   m_config->writeEntry("labels",m_codecLabels);
+  m_config->writeEntry("audiolabels",m_codecLabelsAudio);
   m_config->writeEntry("video",m_codecVideo);
 
   m_config->setGroup("devices");

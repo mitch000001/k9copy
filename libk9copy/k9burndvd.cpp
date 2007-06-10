@@ -41,7 +41,6 @@ k9BurnDVD::k9BurnDVD()
 
 
 k9BurnDVD::~k9BurnDVD() {
-   delete progress;
 }
 
 /** Read property of QString burnDevice. */
@@ -150,13 +149,13 @@ void k9BurnDVD::burnWithGrowisofs() {
 
     while (!cancelled && !bok) {
         burnSpeed=0;
-        QString c;
+        QString c,progname;
         if (iso)
-            c="mkisofs";
+            progname="mkisofs";
         else
-            c="growisofs";
+            progname="growisofs";
         proc=progress->getProcess();
-        *proc << c;
+        *proc << progname;
 
         if (!iso) {
             *proc <<"-overburn";
@@ -197,7 +196,8 @@ void k9BurnDVD::burnWithGrowisofs() {
         if (!cancelled) {
             int res=progress->execute();
             if ( res==-1 ) {
-                KMessageBox::error( 0, i18n("Error burning DVD :\n", i18n("DVD burning")) +lastMsg);
+                KMessageBox::error( 0, i18n("Error burning DVD :\n")+i18n("Unable to run %1").arg(progname), i18n("DVD burning") );
+                cancelled=true;
             } else {
                 if (proc->exitStatus()==0) {
                     bok=true;

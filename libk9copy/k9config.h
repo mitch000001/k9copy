@@ -33,6 +33,8 @@ private:
     bool m_prefMenu;
     bool m_prefAutoBurn;
     int  m_prefMp4Codec;
+    int  m_prefMp4AudioCodec;
+    int  m_prefMp4AudioGain;
     int  m_prefMp4Size;
     int  m_prefMp4NumberCD;
     bool m_prefMp4AspectRatio;
@@ -40,7 +42,9 @@ private:
     QString  m_prefMp4Width;
     QString  m_prefMp4Height;
     QString  m_prefMp4AudioBitrate;
+    QString  m_prefMp4VideoBitrate;
     QStringList m_codecAudio;
+    QStringList m_codecLabelsAudio;
     QStringList m_codecLabels;
     QStringList m_codecVideo;
     QString m_prefCodecAudio,m_prefCodecVideo,m_prefCodecLabel;
@@ -152,11 +156,19 @@ public:
 	void setPrefMp4Codec(const int& _value) {
 	    m_prefMp4Codec = _value;
 	}
-	
 
 	int getPrefMp4Codec() const {
 	    return m_prefMp4Codec;
 	}
+
+	void setPrefMp4AudioCodec(const int& _value) {
+	    m_prefMp4AudioCodec = _value;
+	}
+
+	int getPrefMp4AudioCodec() const {
+	    return m_prefMp4AudioCodec;
+	}
+
 
 	void setPrefMp4Size(const int& _value) {
 	    m_prefMp4Size = _value;
@@ -165,6 +177,15 @@ public:
 
 	int getPrefMp4Size() const {
 	    return m_prefMp4Size;
+	}
+
+	void setPrefMp4AudioGain(const int& _value) {
+	    m_prefMp4AudioGain = _value;
+	}
+	
+
+	int getPrefMp4AudioGain() const {
+	    return m_prefMp4AudioGain;
 	}
 
 	void setPrefMp4NumberCD(const int& _value) {
@@ -203,6 +224,15 @@ public:
 	    return m_prefMp4AudioBitrate;
 	}
 
+	void setPrefMp4VideoBitrate(const QString& _value) {
+	    m_prefMp4VideoBitrate = _value;
+	}
+	
+
+	QString getPrefMp4VideoBitrate() const {
+	    return m_prefMp4VideoBitrate;
+	}
+
 	void setCodecAudio(const QStringList& _value) {
 	    m_codecAudio = _value;
 	}
@@ -230,32 +260,16 @@ public:
 	    return m_codecVideo;
 	}
 
-	void setPrefCodecAudio(const QString& _value) {
-	    m_prefCodecAudio = _value;
+
+	void setCodecLabelsAudio(const QStringList& _value) {
+	    m_codecLabelsAudio = _value;
 	}
 	
 
-	QString getPrefCodecAudio() const {
-	    return m_prefCodecAudio;
+	QStringList getCodecLabelsAudio() const {
+	    return m_codecLabelsAudio;
 	}
 
-	void setPrefCodecVideo(const QString& _value) {
-	    m_prefCodecVideo = _value;
-	}
-	
-
-	QString getPrefCodecVideo() const {
-	    return m_prefCodecVideo;
-	}
-
-	void setPrefCodecLabel(const QString& _value) {
-	    m_prefCodecLabel = _value;
-	}
-	
-
-	QString getPrefCodecLabel() const {
-	    return m_prefCodecLabel;
-	}
 
 	void setDevices(const QStringList& _value) {
 	    m_devices = _value;
@@ -337,14 +351,6 @@ public:
 	int getMplayerAout() const {
 	    return m_MplayerAout;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 };
 

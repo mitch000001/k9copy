@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>600</width>
+            <width>582</width>
             <height>441</height>
         </rect>
     </property>
@@ -38,382 +38,542 @@
                 <string></string>
             </property>
         </widget>
-        <widget class="QFrame" row="1" column="0">
+        <widget class="QTabWidget" row="1" column="0">
             <property name="name">
-                <cstring>frOptions</cstring>
+                <cstring>tabWidget</cstring>
             </property>
-            <property name="frameShape">
-                <enum>NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-                <enum>Plain</enum>
-            </property>
-            <grid>
+            <widget class="QWidget">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>tabVideo</cstring>
                 </property>
-                <property name="margin">
-                    <number>4</number>
+                <attribute name="title">
+                    <string>&amp;Video</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QCheckBox" row="0" column="3" rowspan="1" colspan="4">
+                        <property name="name">
+                            <cstring>ck2passes</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&amp;2 passes</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+2</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="0">
+                        <property name="name">
+                            <cstring>textLabel1_4</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Codec</string>
+                        </property>
+                    </widget>
+                    <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="2">
+                        <item>
+                            <property name="text">
+                                <string>XviD</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>lavc MPEG4</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>x264</string>
+                            </property>
+                        </item>
+                        <property name="name">
+                            <cstring>cbMp4Codec</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="currentItem">
+                            <number>1</number>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>textLabel3_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Width</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="2" column="0">
+                        <property name="name">
+                            <cstring>textLabel3_2_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Height</string>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="1" column="1">
+                        <property name="name">
+                            <cstring>leMp4Width</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                            <size>
+                                <width>0</width>
+                                <height>0</height>
+                            </size>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>70</width>
+                                <height>32767</height>
+                            </size>
+                        </property>
+                        <property name="text">
+                            <string>640</string>
+                        </property>
+                        <property name="maxLength">
+                            <number>4</number>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignAuto</set>
+                        </property>
+                        <property name="inputMask">
+                            <string></string>
+                        </property>
+                    </widget>
+                    <widget class="QCheckBox" row="1" column="3" rowspan="1" colspan="4">
+                        <property name="name">
+                            <cstring>ckMp4AspectRatio</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>7</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>&amp;keep aspect ratio</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+K</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                    <spacer row="2" column="2" rowspan="1" colspan="5">
+                        <property name="name">
+                            <cstring>spacer9</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>380</width>
+                                <height>21</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QLineEdit" row="2" column="1">
+                        <property name="name">
+                            <cstring>leMp4Height</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>false</bool>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>1</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                            <size>
+                                <width>0</width>
+                                <height>0</height>
+                            </size>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>70</width>
+                                <height>32767</height>
+                            </size>
+                        </property>
+                        <property name="maxLength">
+                            <number>4</number>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignAuto</set>
+                        </property>
+                        <property name="inputMask">
+                            <string></string>
+                        </property>
+                    </widget>
+                    <spacer row="4" column="5">
+                        <property name="name">
+                            <cstring>spacer8</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>21</width>
+                                <height>110</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QSpinBox" row="3" column="5">
+                        <property name="name">
+                            <cstring>sbMp4NumberCD</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="maxValue">
+                            <number>9</number>
+                        </property>
+                        <property name="minValue">
+                            <number>1</number>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="3" column="4">
+                        <property name="name">
+                            <cstring>textLabel1</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>X</string>
+                        </property>
+                    </widget>
+                    <widget class="QButtonGroup" row="3" column="0" rowspan="1" colspan="4">
+                        <property name="name">
+                            <cstring>buttonGroup1</cstring>
+                        </property>
+                        <property name="frameShape">
+                            <enum>NoFrame</enum>
+                        </property>
+                        <property name="title">
+                            <string></string>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <property name="margin">
+                                <number>2</number>
+                            </property>
+                            <widget class="QRadioButton" row="0" column="0">
+                                <property name="name">
+                                    <cstring>rbSize</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>File &amp;size</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+S</string>
+                                </property>
+                            </widget>
+                            <widget class="QSpinBox" row="0" column="1">
+                                <property name="name">
+                                    <cstring>sbMp4Size</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>0</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>80</width>
+                                        <height>0</height>
+                                    </size>
+                                </property>
+                                <property name="suffix">
+                                    <string> mb</string>
+                                </property>
+                                <property name="buttonSymbols">
+                                    <enum>UpDownArrows</enum>
+                                </property>
+                                <property name="maxValue">
+                                    <number>9999</number>
+                                </property>
+                                <property name="minValue">
+                                    <number>1</number>
+                                </property>
+                                <property name="lineStep">
+                                    <number>10</number>
+                                </property>
+                                <property name="value">
+                                    <number>700</number>
+                                </property>
+                            </widget>
+                            <widget class="QRadioButton" row="1" column="0">
+                                <property name="name">
+                                    <cstring>rbBitrate</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Bitrate</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+B</string>
+                                </property>
+                            </widget>
+                            <spacer row="0" column="2" rowspan="2" colspan="1">
+                                <property name="name">
+                                    <cstring>spacer6</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>51</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="QLineEdit" row="1" column="1">
+                                <property name="name">
+                                    <cstring>leMp4VideoBitrate</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>5</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <spacer row="3" column="6">
+                        <property name="name">
+                            <cstring>spacer3</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>130</width>
+                                <height>21</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tabAudio</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="0">
+                <attribute name="title">
+                    <string>Au&amp;dio</string>
+                </attribute>
+                <grid>
                     <property name="name">
-                        <cstring>textLabel1_4</cstring>
+                        <cstring>unnamed</cstring>
                     </property>
-                    <property name="text">
-                        <string>Video Codec</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="4" column="0">
-                    <property name="name">
-                        <cstring>textLabel1_5</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Audio bitrate</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="0">
-                    <property name="name">
-                        <cstring>textLabel3_2_2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Height</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>textLabel2_4</cstring>
-                    </property>
-                    <property name="text">
-                        <string>File size</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="2" column="0">
-                    <property name="name">
-                        <cstring>textLabel3_2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Width</string>
-                    </property>
-                </widget>
-                <widget class="QSpinBox" row="1" column="1">
-                    <property name="name">
-                        <cstring>sbMp4Size</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                        <size>
-                            <width>80</width>
-                            <height>0</height>
-                        </size>
-                    </property>
-                    <property name="suffix">
-                        <string> mb</string>
-                    </property>
-                    <property name="buttonSymbols">
-                        <enum>UpDownArrows</enum>
-                    </property>
-                    <property name="maxValue">
-                        <number>9999</number>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                    <property name="lineStep">
-                        <number>10</number>
-                    </property>
-                    <property name="value">
-                        <number>700</number>
-                    </property>
-                </widget>
-                <spacer row="1" column="4">
-                    <property name="name">
-                        <cstring>spacer3</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>191</width>
-                            <height>21</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QLineEdit" row="2" column="1">
-                    <property name="name">
-                        <cstring>leMp4Width</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                        <size>
-                            <width>0</width>
-                            <height>0</height>
-                        </size>
-                    </property>
-                    <property name="maximumSize">
-                        <size>
-                            <width>70</width>
-                            <height>32767</height>
-                        </size>
-                    </property>
-                    <property name="text">
-                        <string>640</string>
-                    </property>
-                    <property name="maxLength">
-                        <number>4</number>
-                    </property>
-                    <property name="alignment">
-                        <set>AlignAuto</set>
-                    </property>
-                    <property name="inputMask">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLineEdit" row="3" column="1">
-                    <property name="name">
-                        <cstring>leMp4Height</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>1</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                        <size>
-                            <width>0</width>
-                            <height>0</height>
-                        </size>
-                    </property>
-                    <property name="maximumSize">
-                        <size>
-                            <width>70</width>
-                            <height>32767</height>
-                        </size>
-                    </property>
-                    <property name="maxLength">
-                        <number>4</number>
-                    </property>
-                    <property name="alignment">
-                        <set>AlignAuto</set>
-                    </property>
-                    <property name="inputMask">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QLineEdit" row="4" column="1">
-                    <property name="name">
-                        <cstring>leMp4AudioBitrate</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>1</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                        <size>
-                            <width>0</width>
-                            <height>0</height>
-                        </size>
-                    </property>
-                    <property name="maximumSize">
-                        <size>
-                            <width>70</width>
-                            <height>32767</height>
-                        </size>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="maxLength">
-                        <number>3</number>
-                    </property>
-                    <property name="alignment">
-                        <set>AlignAuto</set>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="2">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>X</string>
-                    </property>
-                </widget>
-                <widget class="QSpinBox" row="1" column="3">
-                    <property name="name">
-                        <cstring>sbMp4NumberCD</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="maxValue">
-                        <number>9</number>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                </widget>
-                <spacer row="3" column="2" rowspan="1" colspan="4">
-                    <property name="name">
-                        <cstring>spacer9</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>410</width>
-                            <height>21</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="4" column="2" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>spacer4</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>380</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="2">
-                    <item>
-                        <property name="text">
-                            <string>XviD</string>
+                    <widget class="QLabel" row="0" column="0">
+                        <property name="name">
+                            <cstring>textLabel1_4_2</cstring>
                         </property>
-                    </item>
-                    <item>
                         <property name="text">
-                            <string>lavc MPEG4</string>
+                            <string>Codec</string>
                         </property>
-                    </item>
-                    <item>
+                    </widget>
+                    <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="2">
+                        <item>
+                            <property name="text">
+                                <string>mp3</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>faac</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>mp2</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>ac3</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>adpcm ima</string>
+                            </property>
+                        </item>
+                        <property name="name">
+                            <cstring>cbMp4AudioCodec</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>0</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>textLabel1_5</cstring>
+                        </property>
                         <property name="text">
-                            <string>x264</string>
+                            <string>Bitrate</string>
                         </property>
-                    </item>
-                    <property name="name">
-                        <cstring>cbMp4Codec</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="currentItem">
-                        <number>1</number>
-                    </property>
-                </widget>
-                <spacer row="5" column="5">
-                    <property name="name">
-                        <cstring>spacer8</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>21</width>
-                            <height>280</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QCheckBox" row="0" column="3" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>ck2passes</cstring>
-                    </property>
-                    <property name="text">
-                        <string>2 passes</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="2" column="3" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>ckMp4AspectRatio</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>7</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>&amp;keep aspect ratio</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-            </grid>
+                    </widget>
+                    <widget class="QLineEdit" row="1" column="1">
+                        <property name="name">
+                            <cstring>leMp4AudioBitrate</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>1</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                            <size>
+                                <width>0</width>
+                                <height>0</height>
+                            </size>
+                        </property>
+                        <property name="maximumSize">
+                            <size>
+                                <width>70</width>
+                                <height>32767</height>
+                            </size>
+                        </property>
+                        <property name="text">
+                            <string></string>
+                        </property>
+                        <property name="maxLength">
+                            <number>3</number>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignAuto</set>
+                        </property>
+                    </widget>
+                    <spacer row="1" column="2" rowspan="1" colspan="2">
+                        <property name="name">
+                            <cstring>spacer4</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>376</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QSpinBox" row="2" column="1">
+                        <property name="name">
+                            <cstring>sbAudioGain</cstring>
+                        </property>
+                        <property name="maxValue">
+                            <number>10</number>
+                        </property>
+                        <property name="minValue">
+                            <number>1</number>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="2" column="0">
+                        <property name="name">
+                            <cstring>textLabel1_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Gain</string>
+                        </property>
+                    </widget>
+                    <spacer row="3" column="3">
+                        <property name="name">
+                            <cstring>spacer14</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>61</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </grid>
+            </widget>
         </widget>
     </grid>
 </widget>
 <connections>
     <connection>
-        <sender>ckMp4AspectRatio</sender>
-        <signal>clicked()</signal>
+        <sender>cbMp4AudioCodec</sender>
+        <signal>activated(int)</signal>
         <receiver>prefMPEG4</receiver>
-        <slot>ckMp4AspectRatioClick()</slot>
+        <slot>cbMp4AudioCodecActivated(int)</slot>
     </connection>
     <connection>
         <sender>cbMp4Codec</sender>
@@ -428,16 +588,22 @@
         <slot>ck2passesClicked()</slot>
     </connection>
     <connection>
-        <sender>sbMp4Size</sender>
-        <signal>valueChanged(int)</signal>
+        <sender>ckMp4AspectRatio</sender>
+        <signal>clicked()</signal>
         <receiver>prefMPEG4</receiver>
-        <slot>sbMp4SizeValueChanged(int)</slot>
+        <slot>ckMp4AspectRatioClick()</slot>
     </connection>
     <connection>
-        <sender>sbMp4NumberCD</sender>
-        <signal>valueChanged(int)</signal>
+        <sender>rbBitrate</sender>
+        <signal>clicked()</signal>
         <receiver>prefMPEG4</receiver>
-        <slot>sbMp4NumberCDValueChanged(int)</slot>
+        <slot>rgVideoSizeChanged()</slot>
+    </connection>
+    <connection>
+        <sender>rbSize</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMPEG4</receiver>
+        <slot>rgVideoSizeChanged()</slot>
     </connection>
     <connection>
         <sender>leMp4Width</sender>
@@ -452,24 +618,65 @@
         <slot>leMp4HeightTextChanged(const QString&amp;)</slot>
     </connection>
     <connection>
+        <sender>sbMp4Size</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>prefMPEG4</receiver>
+        <slot>sbMp4SizeValueChanged(int)</slot>
+    </connection>
+    <connection>
+        <sender>sbMp4NumberCD</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>prefMPEG4</receiver>
+        <slot>sbMp4NumberCDValueChanged(int)</slot>
+    </connection>
+    <connection>
+        <sender>leMp4VideoBitrate</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>prefMPEG4</receiver>
+        <slot>leMp4VideoBitrateTextChanged(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>sbAudioGain</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>prefMPEG4</receiver>
+        <slot>sbAudioGainValueChanged(int)</slot>
+    </connection>
+    <connection>
         <sender>leMp4AudioBitrate</sender>
         <signal>textChanged(const QString&amp;)</signal>
         <receiver>prefMPEG4</receiver>
         <slot>leMp4AudioBitrateTextChanged(const QString&amp;)</slot>
     </connection>
 </connections>
-<includes>
-    <include location="local" impldecl="in implementation">prefMPEG4.ui.h</include>
-</includes>
+<tabstops>
+    <tabstop>tabWidget</tabstop>
+    <tabstop>cbMp4Codec</tabstop>
+    <tabstop>ck2passes</tabstop>
+    <tabstop>leMp4Width</tabstop>
+    <tabstop>ckMp4AspectRatio</tabstop>
+    <tabstop>leMp4Height</tabstop>
+    <tabstop>rbSize</tabstop>
+    <tabstop>rbBitrate</tabstop>
+    <tabstop>sbMp4Size</tabstop>
+    <tabstop>leMp4VideoBitrate</tabstop>
+    <tabstop>sbMp4NumberCD</tabstop>
+    <tabstop>cbMp4AudioCodec</tabstop>
+    <tabstop>leMp4AudioBitrate</tabstop>
+    <tabstop>sbAudioGain</tabstop>
+</tabstops>
 <slots>
     <slot>ckMp4AspectRatioClick()</slot>
     <slot>cbMp4CodecActivated( int )</slot>
+    <slot>cbMp4AudioCodecActivated( int )</slot>
     <slot>ck2passesClicked()</slot>
     <slot>sbMp4SizeValueChanged( int )</slot>
     <slot>sbMp4NumberCDValueChanged( int )</slot>
     <slot>leMp4WidthTextChanged( const QString &amp; )</slot>
     <slot>leMp4HeightTextChanged( const QString &amp; )</slot>
     <slot>leMp4AudioBitrateTextChanged( const QString &amp; )</slot>
+    <slot>rgVideoSizeChanged()</slot>
+    <slot>leMp4VideoBitrateTextChanged(const QString &amp;)</slot>
+    <slot>sbAudioGainValueChanged(int)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

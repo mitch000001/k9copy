@@ -24,12 +24,6 @@ class k9MP4Dlg;
 */
 class k9MP4Enc : public QObject {
     Q_OBJECT
-public:
-    enum Codec {
-	xvid =0,
-        lavc_mp4=1,
-	x264=2
-    };
 private:
     k9Process *m_process;
     k9MP4Dlg  *m_progress;
@@ -42,6 +36,8 @@ private:
     QString m_width;
     QString m_size;
     QString m_audioBitrate;
+    QString m_videoBitrate;
+    QString m_audioGain;
     QString m_fourcc;
     QString m_stderr;
     int m_parts;
@@ -52,7 +48,8 @@ private:
     bool m_2pass;
     int m_pass;
     bool m_canceled;
-    Codec m_codec;
+    int m_codec;
+    int m_audioCodec;
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
     int m_cpt;
     QTime *time;
@@ -60,6 +57,8 @@ private:
     QString round16(QString _wh);
     QString getChapterList(k9DVDTitle *_title);
     int getselectedSubp(k9DVDTitle *_title);
+    QString getAudioBrName(int _value);
+
 private slots:
     void getStdout(KProcess *proc, char *buffer, int buflen);
     void getStderr(KProcess *proc, char *buffer, int buflen);
@@ -95,6 +94,12 @@ public:
     virtual void setAudioBitrate(const QString& _value) {
         m_audioBitrate = _value.stripWhiteSpace();
     };
+    virtual void setVideoBitrate(const QString& _value) {
+        m_videoBitrate = _value.stripWhiteSpace();
+    };
+    virtual void setAudioGain(const QString& _value) {
+	m_audioGain = _value.stripWhiteSpace();
+    };
     virtual void setfourcc(const QString& _value) {
         m_fourcc = _value.stripWhiteSpace();
     };
@@ -103,7 +108,9 @@ public:
     	m_2pass=_value;
     }
 
-    virtual void setCodec(const Codec& _value) {m_codec = _value;};
+    virtual void setCodec(const int& _value) {m_codec = _value;};
+
+    virtual void setAudioCodec(const int& _value) {m_audioCodec = _value;};
 	
     virtual QWidget *getDialog() {return (QWidget*)m_progress;};
 };

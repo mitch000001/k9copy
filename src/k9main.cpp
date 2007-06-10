@@ -630,7 +630,6 @@ void k9Main::slot_progress(QString str)
 
 k9Main::~k9Main()
 {
-  delete m_update;
   delete dvd;
 }
 
@@ -1221,8 +1220,11 @@ void k9Main::CreateMP4()
       k9TitleEncOpt * opt=t->getEncOpt();
       mp4->setDevice(dvd->getDevice());
       mp4->setAudioBitrate(opt->getAudioBr());
-      mp4->setCodec((k9MP4Enc::Codec) opt->getCodec());
+      mp4->setVideoBitrate(opt->getVideoBr());
+      mp4->setCodec( opt->getCodec());
+      mp4->setAudioCodec(opt->getAudioCodec());
       mp4->setSize(QString::number(opt->getMaxSize()));
+      mp4->setAudioGain(QString::number(opt->getAudioGain()));
       mp4->setNumberCD(QString::number(opt->getNumParts()));
       mp4->setWidth(opt->getWidth() );
       mp4->setHeight(opt->getHeight());
@@ -1354,6 +1356,7 @@ void k9Main::closeDVD()
 {
   //viewer->bStopClick();
   emit stopPreview();
+  emit changedTitle(NULL);
   emit SelectionChanged(NULL,withMenus());
   changeStatusbar( "",sbFactor);
   changeStatusbar( "",sbMessage);

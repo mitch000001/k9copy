@@ -31,7 +31,7 @@ void k9TitleEncOpt::load() {
     //KSimpleConfig settings("K9Copy");
     k9Config config;
     
-    int size_mb=getTitle()->gettotalsize_mb();
+    int size_mb=(int)getTitle()->gettotalsize_mb();
     
     m_maxSize=config.getPrefMp4Size();
     if(m_maxSize  > size_mb)
@@ -50,6 +50,12 @@ void k9TitleEncOpt::load() {
 
     m_codec=config.getPrefMp4Codec();
 
+    m_audioCodec=config.getPrefMp4AudioCodec ();
+
+    m_audioGain=config.getPrefMp4AudioGain();
+
+    m_videoBr=config.getPrefMp4VideoBitrate();
+
 }
 
 int k9TitleEncOpt::getMaxSize() {
@@ -67,6 +73,14 @@ int k9TitleEncOpt::getNumParts() {
 
 void k9TitleEncOpt::setNumParts(int _value) {
    m_numParts=_value;
+}
+
+int k9TitleEncOpt::getAudioGain() {
+   return m_audioGain;
+}
+
+void k9TitleEncOpt::setAudioGain(int _value) {
+   m_audioGain=_value;
 }
 
 const QString & k9TitleEncOpt::getWidth() {
@@ -93,6 +107,13 @@ void k9TitleEncOpt::setAudioBr(QString _value) {
     m_audioBr=_value;
 }
 
+const QString & k9TitleEncOpt::getVideoBr() {
+   return m_videoBr;
+}
+void k9TitleEncOpt::setVideoBr(QString _value) {
+    m_videoBr=_value;
+}
+
 bool k9TitleEncOpt::getKeepAspectRatio() {
    return m_keepAspectRatio;
 }
@@ -113,6 +134,14 @@ int k9TitleEncOpt::getCodec() {
 void k9TitleEncOpt::setCodec(int _value) {
    m_codec=_value;
 }
+
+int k9TitleEncOpt::getAudioCodec() {
+   return m_audioCodec;
+}
+void k9TitleEncOpt::setAudioCodec(int _value) {
+   m_audioCodec=_value;
+}
+
 
 
 #include "k9titleencopt.moc"

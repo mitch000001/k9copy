@@ -38,16 +38,19 @@ k9settings::k9settings(QWidget *parent,const QString &caption):  KDialogBase (Ic
 
     //TODO afficher uniquement si mencoder et mplayer installés
 
+    QFrame *frMencoder;
+    frMencoder=addPage (i18n("MEncoder"),i18n("MPEG-4 Codecs"),KGlobal::iconLoader()->loadIcon("mencoder", KIcon::Panel, KIcon::SizeMedium));
+    m_prefMencoder =new k9prefMencoder(frMencoder);
+
+
+
     QFrame *frMPEG4;
     frMPEG4=addPage (i18n("MPEG-4"),i18n("MPEG-4 Encoding"),KGlobal::iconLoader()->loadIcon("mp4", KIcon::Panel, KIcon::SizeMedium));
     grid = new QGridLayout(frMPEG4, 0, 0, 10 );
     m_prefMPEG4 =new k9prefMPEG4(frMPEG4);
     grid->addWidget(m_prefMPEG4,0,0);
 
-    QFrame *frMencoder;
-    frMencoder=addPage (i18n("MEncoder"),i18n("MPEG-4 Codecs"),KGlobal::iconLoader()->loadIcon("mencoder", KIcon::Panel, KIcon::SizeMedium));
     grid = new QGridLayout(frMencoder, 0, 0, 10 );
-    m_prefMencoder =new k9prefMencoder(frMencoder);
     grid->addWidget(m_prefMencoder,0,0);
 
     QFrame *frPreview;

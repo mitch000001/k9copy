@@ -15,8 +15,11 @@
 
 #include "k9common.h"
 #include "prefMencoder.h"
+#include "k9videocodecs.h"
+#include "k9audiocodecs.h"
 #include <qstringlist.h>
 #include <qstring.h>
+#include <qlineedit.h>
 
 class k9prefMencoder : public prefMencoder
 {
@@ -29,16 +32,33 @@ public:
   void save(void);
 public slots:
   /*$PUBLIC_SLOTS$*/
+   void teOptATextChanged();
 
-protected:
-  /*$PROTECTED_FUNCTIONS$*/
+   void teOpt1TextChanged();
+   void teOpt3TextChanged();
+   void teOpt2TextChanged();
+   void leVLabelTextChanged(const QString &);
+   void leALabelTextChanged(const QString &);
 
+private:
+    k9VideoCodecs m_codecs;
+    k9AudioCodecs m_audioCodecs;
+    bool m_update;
 protected slots:
   /*$PROTECTED_SLOTS$*/
-  void bAddClick();
-  void bRemoveClick();
-  QString optValue(QString _value);
+  void lbvCodecsCurrentChanged(QListBoxItem *_item);
+  void lbaCodecsCurrentChanged(QListBoxItem *_item);
+  void btnOpt1Clicked();
+  void btnOpt2Clicked();
+  void btnOpt3Clicked();
+  void btnOptAClicked();
+  void btnAddVClicked();
+  void btnDeleteVClicked();
+  void btnAddAClicked();
+  void btnDeleteAClicked();
+
 };
+
 
 #endif
 

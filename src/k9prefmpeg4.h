@@ -34,7 +34,7 @@ protected:
 protected slots:
   /*$PROTECTED_SLOTS$*/
     virtual void          ckMp4AspectRatioClick();
-
+    virtual void	 rgVideoSizeChanged();
 };
 
 #endif

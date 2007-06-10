@@ -35,6 +35,9 @@ public:
    
    int getNumParts();
    void setNumParts(int);
+
+   int getAudioGain();
+   void setAudioGain(int);
    
    const QString & getWidth();
    void setWidth(QString);
@@ -44,6 +47,9 @@ public:
    
    const QString & getAudioBr();
    void setAudioBr(QString);
+
+   const QString & getVideoBr();
+   void setVideoBr(QString);
    
    bool getKeepAspectRatio();
    void setKeepAspectRatio(bool);
@@ -54,6 +60,9 @@ public:
    int getCodec();
    void setCodec(int);
 
+   int getAudioCodec();
+   void setAudioCodec(int);
+
 
 private:
    int m_maxSize;
@@ -62,8 +71,9 @@ private:
    QString m_height;
    bool m_keepAspectRatio;
    bool m_2Passes;
-   QString m_audioBr;
-   int m_codec;
+   QString m_audioBr,m_videoBr;
+   int m_codec,m_audioCodec;
+   int m_audioGain;
    
 public slots:
    void load();

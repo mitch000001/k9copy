@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>600</width>
-            <height>470</height>
+            <width>595</width>
+            <height>587</height>
         </rect>
     </property>
     <property name="caption">
@@ -19,134 +19,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLayoutWidget" row="0" column="1">
-            <property name="name">
-                <cstring>layout1</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="KPushButton">
-                    <property name="name">
-                        <cstring>bAdd</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>1</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Add</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                    <property name="stdItem" stdset="0">
-                        <number>27</number>
-                    </property>
-                </widget>
-                <widget class="KPushButton">
-                    <property name="name">
-                        <cstring>bRemove</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>1</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Remove</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                    <property name="stdItem" stdset="0">
-                        <number>28</number>
-                    </property>
-                </widget>
-            </vbox>
-        </widget>
-        <spacer row="1" column="1" rowspan="3" colspan="1">
-            <property name="name">
-                <cstring>spacer1</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>380</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QTable" row="0" column="0" rowspan="2" colspan="1">
-            <column>
-                <property name="text">
-                    <string>Label</string>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Video</string>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Audio</string>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>tblOptions</cstring>
-            </property>
-            <property name="resizePolicy">
-                <enum>Default</enum>
-            </property>
-            <property name="numRows">
-                <number>1</number>
-            </property>
-            <property name="numCols">
-                <number>3</number>
-            </property>
-            <property name="readOnly">
-                <bool>false</bool>
-            </property>
-            <property name="selectionMode">
-                <enum>Single</enum>
-            </property>
-        </widget>
-        <widget class="QLabel" row="2" column="0">
-            <property name="name">
-                <cstring>textLabel1</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="font">
-                <font>
-                    <bold>1</bold>
-                </font>
-            </property>
-            <property name="text">
-                <string>Available variables</string>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget" row="3" column="0">
+        <widget class="QLayoutWidget" row="2" column="0">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -201,28 +74,680 @@ audio bitrate</string>
                 </widget>
             </grid>
         </widget>
+        <widget class="QLabel" row="1" column="0">
+            <property name="name">
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="font">
+                <font>
+                    <bold>1</bold>
+                </font>
+            </property>
+            <property name="text">
+                <string>Available variables</string>
+            </property>
+        </widget>
+        <widget class="QTabWidget" row="0" column="0">
+            <property name="name">
+                <cstring>tabWidget2</cstring>
+            </property>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>&amp;Video codecs</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QListBox" row="0" column="0" rowspan="7" colspan="2">
+                        <item>
+                            <property name="text">
+                                <string>XviD</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>x264</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>MJPEG</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>LJPEG</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>H.261</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>H.263</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>MPEG-4 (DivX 4/5)</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>DivX 3</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>MS MPEG-4 v2</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>WMV7</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>WMV8</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>RealVideo</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>MPEG-1</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>MPEG-2</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>HuffYUV</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>ffvHuff</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>ASUS v1</string>
+                            </property>
+                        </item>
+                        <item>
+                            <property name="text">
+                                <string>ASUS v2</string>
+                            </property>
+                        </item>
+                        <property name="name">
+                            <cstring>lbvCodecs</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="0" column="2">
+                        <property name="name">
+                            <cstring>leVLabel</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="2">
+                        <property name="name">
+                            <cstring>textLabel1_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>one pass</string>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget" row="2" column="2">
+                        <property name="name">
+                            <cstring>layout8</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <spacer row="1" column="1">
+                                <property name="name">
+                                    <cstring>spacer4</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>90</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="QTextEdit" row="0" column="0" rowspan="2" colspan="1">
+                                <property name="name">
+                                    <cstring>teOpt1</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                                <property name="wordWrap">
+                                    <enum>WidgetWidth</enum>
+                                </property>
+                            </widget>
+                            <widget class="KPushButton" row="0" column="1">
+                                <property name="name">
+                                    <cstring>btnOpt1</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="QLabel" row="3" column="2">
+                        <property name="name">
+                            <cstring>textLabel1_2_3</cstring>
+                        </property>
+                        <property name="text">
+                            <string>first pass</string>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget" row="4" column="2">
+                        <property name="name">
+                            <cstring>layout9</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QTextEdit" row="0" column="0" rowspan="2" colspan="1">
+                                <property name="name">
+                                    <cstring>teOpt2</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <spacer row="1" column="1">
+                                <property name="name">
+                                    <cstring>spacer5</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>81</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="KPushButton" row="0" column="1">
+                                <property name="name">
+                                    <cstring>btnOpt2</cstring>
+                                </property>
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="QLabel" row="5" column="2">
+                        <property name="name">
+                            <cstring>textLabel1_2_3_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>second pass</string>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget" row="6" column="2" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>layout10</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QTextEdit" row="0" column="0" rowspan="2" colspan="1">
+                                <property name="name">
+                                    <cstring>teOpt3</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <widget class="KPushButton" row="0" column="1">
+                                <property name="name">
+                                    <cstring>btnOpt3</cstring>
+                                </property>
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <spacer row="1" column="1">
+                                <property name="name">
+                                    <cstring>spacer6</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>60</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </grid>
+                    </widget>
+                    <widget class="KPushButton" row="7" column="1">
+                        <property name="name">
+                            <cstring>btnDeleteV</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>1</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>&amp;Supprimer</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+S</string>
+                        </property>
+                        <property name="stdItem" stdset="0">
+                            <number>28</number>
+                        </property>
+                    </widget>
+                    <widget class="KPushButton" row="7" column="0">
+                        <property name="name">
+                            <cstring>btnAddV</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>1</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>A&amp;jouter</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+J</string>
+                        </property>
+                        <property name="stdItem" stdset="0">
+                            <number>27</number>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Au&amp;dio codecs</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QListBox" row="0" column="0" rowspan="3" colspan="2">
+                        <item>
+                            <property name="text">
+                                <string>New Item</string>
+                            </property>
+                        </item>
+                        <property name="name">
+                            <cstring>lbaCodecs</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLineEdit" row="0" column="2">
+                        <property name="name">
+                            <cstring>leALabel</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="2">
+                        <property name="name">
+                            <cstring>textLabel1_2_2_2</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>5</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>options</string>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget" row="2" column="2" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>layout11</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QTextEdit" row="0" column="0" rowspan="2" colspan="1">
+                                <property name="name">
+                                    <cstring>teOptA</cstring>
+                                </property>
+                            </widget>
+                            <spacer row="1" column="1">
+                                <property name="name">
+                                    <cstring>spacer4_2</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>78</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="KPushButton" row="0" column="1">
+                                <property name="name">
+                                    <cstring>btnOptA</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>1</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
+                                </property>
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="KPushButton" row="3" column="1">
+                        <property name="name">
+                            <cstring>btnDeleteA</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>1</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>&amp;Supprimer</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+S</string>
+                        </property>
+                        <property name="stdItem" stdset="0">
+                            <number>28</number>
+                        </property>
+                    </widget>
+                    <widget class="KPushButton" row="3" column="0">
+                        <property name="name">
+                            <cstring>btnAddA</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>1</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>A&amp;jouter</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+J</string>
+                        </property>
+                        <property name="stdItem" stdset="0">
+                            <number>27</number>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+        </widget>
     </grid>
 </widget>
 <connections>
     <connection>
-        <sender>bAdd</sender>
-        <signal>clicked()</signal>
+        <sender>lbvCodecs</sender>
+        <signal>currentChanged(QListBoxItem*)</signal>
         <receiver>prefMencoder</receiver>
-        <slot>bAddClick()</slot>
+        <slot>lbvCodecsCurrentChanged(QListBoxItem*)</slot>
     </connection>
     <connection>
-        <sender>bRemove</sender>
+        <sender>teOpt1</sender>
+        <signal>textChanged()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>teOpt1TextChanged()</slot>
+    </connection>
+    <connection>
+        <sender>teOpt2</sender>
+        <signal>textChanged()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>teOpt2TextChanged()</slot>
+    </connection>
+    <connection>
+        <sender>leVLabel</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>leVLabelTextChanged(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>teOpt3</sender>
+        <signal>textChanged()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>teOpt3TextChanged()</slot>
+    </connection>
+    <connection>
+        <sender>lbaCodecs</sender>
+        <signal>currentChanged(QListBoxItem*)</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>lbaCodecsCurrentChanged(QListBoxItem*)</slot>
+    </connection>
+    <connection>
+        <sender>teOptA</sender>
+        <signal>textChanged()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>teOptATextChanged()</slot>
+    </connection>
+    <connection>
+        <sender>leALabel</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>leALabelTextChanged(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>btnOpt1</sender>
         <signal>clicked()</signal>
         <receiver>prefMencoder</receiver>
-        <slot>bRemoveClick()</slot>
+        <slot>btnOpt1Clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnOpt2</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>btnOpt2Clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnOpt3</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>btnOpt3Clicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnOptA</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>btnOptAClicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnAddA</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>btnAddAClicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnAddV</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>btnAddVClicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnDeleteA</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>btnDeleteAClicked()</slot>
+    </connection>
+    <connection>
+        <sender>btnDeleteV</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>btnDeleteVClicked()</slot>
     </connection>
 </connections>
+<tabstops>
+    <tabstop>tabWidget2</tabstop>
+    <tabstop>lbvCodecs</tabstop>
+    <tabstop>leVLabel</tabstop>
+    <tabstop>teOpt1</tabstop>
+    <tabstop>teOpt2</tabstop>
+    <tabstop>teOpt3</tabstop>
+    <tabstop>lbaCodecs</tabstop>
+    <tabstop>teOptA</tabstop>
+    <tabstop>leALabel</tabstop>
+</tabstops>
 <slots>
-    <slot>bAddClick()</slot>
-    <slot>bRemoveClick()</slot>
+    <slot>lbvCodecsCurrentChanged(QListBoxItem*)</slot>
+    <slot>teOpt1TextChanged()</slot>
+    <slot>teOpt2TextChanged()</slot>
+    <slot>leVLabelTextChanged(const QString &amp;)</slot>
+    <slot>teOpt3TextChanged()</slot>
+    <slot>lbaCodecsCurrentChanged(QListBoxItem*)</slot>
+    <slot>teOptATextChanged()</slot>
+    <slot>leALabelTextChanged(const QString&amp;)</slot>
+    <slot>btnOpt1Clicked()</slot>
+    <slot>btnOpt2Clicked()</slot>
+    <slot>btnOpt3Clicked()</slot>
+    <slot>btnOptAClicked()</slot>
+    <slot>btnAddVClicked()</slot>
+    <slot>btnDeleteVClicked()</slot>
+    <slot>btnAddAClicked()</slot>
+    <slot>btnDeleteAClicked()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
 </includehints>

@@ -1,7 +1,6 @@
 #include "dvdread.h"
 
 #include <dlfcn.h>
-#include <dirent.h>
 
 void *libHandle=0;
 

@@ -100,7 +100,7 @@ void k9GLWidget::draw() {
             GLfloat ratio= wratio < hratio ? wratio:hratio;
 
 
-            //    glClear(GL_COLOR_BUFFER_BIT);
+            glClear(GL_COLOR_BUFFER_BIT);
             int top = h-(int) (h -m_height*ratio) /2;
             int left = (int) (w -m_width*ratio) /2;
 
@@ -108,8 +108,11 @@ void k9GLWidget::draw() {
             glPixelZoom (ratio, -ratio);
 
             glDrawPixels( m_width, m_height, GL_RGBA, GL_UNSIGNED_BYTE, m_buffer );
-        } else
-	    glClear(GL_COLOR_BUFFER_BIT);
+            swapBuffers();
+        } else {
+	    makeCurrent();
+	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
         swapBuffers();
         m_mutex.unlock();
     }
@@ -171,8 +174,8 @@ void k9GLWidget::resizeGL(int w, int h) {
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, w,0,h,-1,1);
-    glMatrixMode (GL_MODELVIEW);
-    glClear(GL_COLOR_BUFFER_BIT);
+   // glMatrixMode (GL_MODELVIEW);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 
