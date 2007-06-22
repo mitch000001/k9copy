@@ -119,10 +119,11 @@ const QString &k9BurnDVD::getImageSize() {
 
     connect( proc2, SIGNAL(receivedStderr(KProcess *, char *, int )),this, SLOT(mkisoSizeStderr(KProcess *, char *, int)) );
     connect( proc2, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(mkisoSizeStdout(KProcess *, char *, int)) );
-    if (proc2->start()) {
-        while (proc2->isRunning()) {
-            qApp->processEvents();
-        }
+    if (proc2->start(KProcess::NotifyOnExit,KProcess::All)) {
+//        while (proc2->isRunning()) {
+//            qApp->processEvents();
+//        }
+        proc2->sync();
         if (proc2->exitStatus()==0) {
             delete proc2;
             return imageSize;
