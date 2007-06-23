@@ -14,6 +14,7 @@
 #include "k9dvdtitle.h"
 #include "bswap.h"
 #include "dvdread.h"
+#include <stdlib.h>
 
 k9Script::k9Script(ifo_handle_t *_ifo, k9DVD *_dvd )
 {
