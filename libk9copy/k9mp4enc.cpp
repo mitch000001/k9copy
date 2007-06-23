@@ -212,11 +212,16 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
                     break;
             }             
             sCodec=videoCodecs->getCodecName(m_codec);
-
+            sVOption=sVOption.simplifyWhiteSpace();
             //*m_process << "-ovc" << sVOption;
+            int pos=sVOption.find("-vf");
+            if (pos==-1)
+                *m_process <<"-vf" << QString("scale=%1:%2").arg(m_width).arg(m_height);
+            else 
+                sVOption=sVOption.insert(pos+4,QString("scale=%1:%2,").arg(m_width).arg(m_height));
             *m_process  << sVOption;
 
-            QString sAOption=replaceParams(audioCodecs->getOptions(m_audioCodec));
+            QString sAOption=replaceParams(audioCodecs->getOptions(m_audioCodec)).simplifyWhiteSpace();
 
             delete audioCodecs;
             delete videoCodecs;
@@ -230,13 +235,17 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
             if (m_fourcc !="")
                 *m_process << "-ffourcc" << m_fourcc;
 
-            *m_process <<"-vf" << QString("pp=de,crop=0:0:0:0,scale=%1:%2").arg(m_width).arg(m_height);
             //looking for first audio selected
             for (int i=0;i<_title->getaudioStreamCount();i++) {
                 if (_title->getaudioStream(i)->getselected()) {
                     //*m_process << "-oac" << sAOption;
+                    pos=sAOption.find("-af");
+                    if (pos==-1)
+                        *m_process << QString("-af volume=%1").arg(m_audioGain);
+                    else 
+                        sAOption=sAOption.insert(pos+4,QString("volume=%1,").arg(m_audioGain));
                     *m_process << sAOption;
-                    *m_process << QString("-af volume=%1").arg(m_audioGain);
+                        
                     audio=true;
                     break;
                 }
