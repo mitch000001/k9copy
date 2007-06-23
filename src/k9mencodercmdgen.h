@@ -36,7 +36,7 @@ public slots:
 private:
    QScrollView *m_scrollView;
    QGrid *m_grid;
-   QHBox *m_hbox;
+   QGrid *m_hbox;
    int m_row,m_page;
    QDomDocument m_doc;
    QString m_cmd;
