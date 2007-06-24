@@ -39,7 +39,7 @@ public slots:
    void teOpt2TextChanged();
    void leVLabelTextChanged(const QString &);
    void leALabelTextChanged(const QString &);
-
+   void leFourccTextChanged(const QString &);
 private:
     k9VideoCodecs m_codecs;
     k9AudioCodecs m_audioCodecs;

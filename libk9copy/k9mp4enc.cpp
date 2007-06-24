@@ -223,8 +223,6 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 
             QString sAOption=replaceParams(audioCodecs->getOptions(m_audioCodec)).simplifyWhiteSpace();
 
-            delete audioCodecs;
-            delete videoCodecs;
 
 
 	    if (pass >0)
@@ -234,6 +232,11 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 
             if (m_fourcc !="")
                 *m_process << "-ffourcc" << m_fourcc;
+            else if (videoCodecs->getFourcc(m_codec)!="")
+                *m_process << "-ffourcc" << videoCodecs->getFourcc(m_codec);
+
+            delete audioCodecs;
+            delete videoCodecs;
 
             //looking for first audio selected
             for (int i=0;i<_title->getaudioStreamCount();i++) {

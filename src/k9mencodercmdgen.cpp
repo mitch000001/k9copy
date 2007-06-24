@@ -115,22 +115,6 @@ void k9MencoderCmdGen::fillListView() {
 
         addWidgets(child, "FILTERS",eChild.nodeName());
     }
-    item=new QListViewItem(listView);
-    item->setText(0,i18n("General"));
-    item->setOpen(true);
-    root=m_doc.documentElement().elementsByTagName("GENERAL").item(0).toElement();
-    for (int i=0; i< root.childNodes().count();i++) {
-        QDomElement eChild=root.childNodes().item(i).toElement();
-        _k9CheckListItem *child=new _k9CheckListItem(item);
-        child->setText(0,eChild.nodeName());
-        child->root="GENERAL";
-        child->doc=m_doc;
-        QDomAttr attr=eChild.attributeNode("selected");
-        if (!attr.isNull())
-            child->setOn(attr.value()=="true");
-        addWidgets(child, "GENERAL",eChild.nodeName());
-    }
-
 
 }
 
@@ -457,7 +441,6 @@ const QString & k9MencoderCmdGen::getCmd(const QString &_root) {
             QDomAttr aCheckBox=eOpt.attributeNode("checkbox");
             QDomAttr aWidget=eOpt.attributeNode("widget");
             QCheckBox *ck=(QCheckBox*)this->child(aCheckBox.value().latin1());
-            qDebug(eOpt.attributeNode("name").value()+" : "+ck->name());
             if (ck->isChecked()) {
                 if (sCmd1.isEmpty()){
                     if (eCodec.attributeNode("options").isNull())
@@ -550,13 +533,11 @@ bool k9MencoderCmdGen::getMencoderOptions(QString &_cmd) {
         QString m_video=m_cmdGen->getCmd("VIDEO").stripWhiteSpace();
         QString m_audio=m_cmdGen->getCmd("AUDIO").stripWhiteSpace();
         QString m_filters=m_cmdGen->getCmd("FILTERS").stripWhiteSpace();
-        QString m_general=m_cmdGen->getCmd("GENERAL").stripWhiteSpace();
         if (!m_video.isEmpty())
             m_video="-ovc "+m_video;
         if (!m_audio.isEmpty())
             m_audio="-oac " +m_audio;
-        _cmd=m_general+" "+m_video+" "+m_audio+" "+m_filters;
-        qDebug(_cmd);
+        _cmd=" "+m_video+" "+m_audio+" "+m_filters;
     }
     delete m_cmdGen;
     return res;

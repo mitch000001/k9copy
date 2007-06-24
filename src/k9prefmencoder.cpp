@@ -45,6 +45,7 @@ void k9prefMencoder::lbvCodecsCurrentChanged(QListBoxItem *_item) {
    if (_item) {
         int i=lbvCodecs->currentItem();            
         m_update=true;
+        leFourcc->setText(m_codecs.getFourcc(i));
         teOpt1->setText(m_codecs.getOptions0(i));
         teOpt2->setText(m_codecs.getOptions1(i));
         teOpt3->setText(m_codecs.getOptions2(i));
@@ -157,6 +158,12 @@ void k9prefMencoder::leALabelTextChanged(const QString &_value) {
    if (!m_update) {
        lbaCodecs->changeItem(_value,lbaCodecs->currentItem());
        m_audioCodecs.setCodecName(lbaCodecs->currentItem(),_value);
+    }
+}
+
+void k9prefMencoder::leFourccTextChanged(const QString &_value) {
+    if (!m_update) {
+        m_codecs.setFourcc(lbvCodecs->currentItem(),_value);
     }
 }
 

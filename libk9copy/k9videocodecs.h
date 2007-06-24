@@ -30,11 +30,13 @@ public:
 
     ~k9VideoCodecs();
     void save();
-   void setOptions0(int _num,QString _value);
+    void setFourcc(int _num,QString _value);
+    void setOptions0(int _num,QString _value);
     void setOptions1(int _num,QString _value);
     void setOptions2(int _num,QString _value);
     void setCodecName(int _num,QString _value);
     void remove(int _num);
+    QString getFourcc(int _num);
     QString getOptions0(int _num);
     QString getOptions1(int _num);
     QString getOptions2(int _num);

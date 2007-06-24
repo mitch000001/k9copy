@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>595</width>
+            <width>672</width>
             <height>587</height>
         </rect>
     </property>
@@ -110,7 +110,7 @@ audio bitrate</string>
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QListBox" row="0" column="0" rowspan="7" colspan="2">
+                    <widget class="QListBox" row="0" column="0" rowspan="5" colspan="2">
                         <item>
                             <property name="text">
                                 <string>XviD</string>
@@ -205,15 +205,188 @@ audio bitrate</string>
                             <cstring>lbvCodecs</cstring>
                         </property>
                     </widget>
-                    <widget class="QLineEdit" row="0" column="2">
+                    <widget class="KPushButton" row="5" column="1">
                         <property name="name">
-                            <cstring>leVLabel</cstring>
+                            <cstring>btnDeleteV</cstring>
                         </property>
-                        <property name="enabled">
-                            <bool>true</bool>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>1</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>&amp;Supprimer</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+S</string>
+                        </property>
+                        <property name="stdItem" stdset="0">
+                            <number>28</number>
+                        </property>
+                    </widget>
+                    <widget class="KPushButton" row="5" column="0">
+                        <property name="name">
+                            <cstring>btnAddV</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>1</hsizetype>
+                                <vsizetype>0</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="text">
+                            <string>A&amp;jouter</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+J</string>
+                        </property>
+                        <property name="stdItem" stdset="0">
+                            <number>27</number>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="2">
+                        <property name="name">
+                            <cstring>textLabel1_3</cstring>
+                        </property>
+                        <property name="text">
+                            <string>la&amp;bel</string>
+                        </property>
+                        <property name="buddy" stdset="0">
+                            <cstring>leVLabel</cstring>
                         </property>
                     </widget>
                     <widget class="QLabel" row="1" column="2">
+                        <property name="name">
+                            <cstring>textLabel2_3</cstring>
+                        </property>
+                        <property name="text">
+                            <string>fourcc</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="3" column="2">
+                        <property name="name">
+                            <cstring>textLabel1_2_3</cstring>
+                        </property>
+                        <property name="text">
+                            <string>first pass</string>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget" row="3" column="3">
+                        <property name="name">
+                            <cstring>layout9</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QTextEdit" row="0" column="0" rowspan="2" colspan="1">
+                                <property name="name">
+                                    <cstring>teOpt2</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <spacer row="1" column="1">
+                                <property name="name">
+                                    <cstring>spacer5</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>81</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                            <widget class="KPushButton" row="0" column="1">
+                                <property name="name">
+                                    <cstring>btnOpt2</cstring>
+                                </property>
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="QLayoutWidget" row="4" column="3" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>layout10</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QTextEdit" row="0" column="0" rowspan="2" colspan="1">
+                                <property name="name">
+                                    <cstring>teOpt3</cstring>
+                                </property>
+                                <property name="enabled">
+                                    <bool>true</bool>
+                                </property>
+                            </widget>
+                            <widget class="KPushButton" row="0" column="1">
+                                <property name="name">
+                                    <cstring>btnOpt3</cstring>
+                                </property>
+                                <property name="minimumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="maximumSize">
+                                    <size>
+                                        <width>22</width>
+                                        <height>22</height>
+                                    </size>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <spacer row="1" column="1">
+                                <property name="name">
+                                    <cstring>spacer6</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>60</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </grid>
+                    </widget>
+                    <widget class="QLabel" row="2" column="2">
                         <property name="name">
                             <cstring>textLabel1_2</cstring>
                         </property>
@@ -221,7 +394,7 @@ audio bitrate</string>
                             <string>one pass</string>
                         </property>
                     </widget>
-                    <widget class="QLayoutWidget" row="2" column="2">
+                    <widget class="QLayoutWidget" row="2" column="3">
                         <property name="name">
                             <cstring>layout8</cstring>
                         </property>
@@ -290,70 +463,7 @@ audio bitrate</string>
                             </widget>
                         </grid>
                     </widget>
-                    <widget class="QLabel" row="3" column="2">
-                        <property name="name">
-                            <cstring>textLabel1_2_3</cstring>
-                        </property>
-                        <property name="text">
-                            <string>first pass</string>
-                        </property>
-                    </widget>
-                    <widget class="QLayoutWidget" row="4" column="2">
-                        <property name="name">
-                            <cstring>layout9</cstring>
-                        </property>
-                        <grid>
-                            <property name="name">
-                                <cstring>unnamed</cstring>
-                            </property>
-                            <widget class="QTextEdit" row="0" column="0" rowspan="2" colspan="1">
-                                <property name="name">
-                                    <cstring>teOpt2</cstring>
-                                </property>
-                                <property name="enabled">
-                                    <bool>true</bool>
-                                </property>
-                            </widget>
-                            <spacer row="1" column="1">
-                                <property name="name">
-                                    <cstring>spacer5</cstring>
-                                </property>
-                                <property name="orientation">
-                                    <enum>Vertical</enum>
-                                </property>
-                                <property name="sizeType">
-                                    <enum>Expanding</enum>
-                                </property>
-                                <property name="sizeHint">
-                                    <size>
-                                        <width>20</width>
-                                        <height>81</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                            <widget class="KPushButton" row="0" column="1">
-                                <property name="name">
-                                    <cstring>btnOpt2</cstring>
-                                </property>
-                                <property name="minimumSize">
-                                    <size>
-                                        <width>22</width>
-                                        <height>22</height>
-                                    </size>
-                                </property>
-                                <property name="maximumSize">
-                                    <size>
-                                        <width>22</width>
-                                        <height>22</height>
-                                    </size>
-                                </property>
-                                <property name="text">
-                                    <string></string>
-                                </property>
-                            </widget>
-                        </grid>
-                    </widget>
-                    <widget class="QLabel" row="5" column="2">
+                    <widget class="QLabel" row="4" column="2" rowspan="2" colspan="1">
                         <property name="name">
                             <cstring>textLabel1_2_3_2</cstring>
                         </property>
@@ -361,64 +471,35 @@ audio bitrate</string>
                             <string>second pass</string>
                         </property>
                     </widget>
-                    <widget class="QLayoutWidget" row="6" column="2" rowspan="2" colspan="1">
+                    <widget class="QLineEdit" row="1" column="3">
                         <property name="name">
-                            <cstring>layout10</cstring>
+                            <cstring>leFourcc</cstring>
                         </property>
-                        <grid>
-                            <property name="name">
-                                <cstring>unnamed</cstring>
-                            </property>
-                            <widget class="QTextEdit" row="0" column="0" rowspan="2" colspan="1">
-                                <property name="name">
-                                    <cstring>teOpt3</cstring>
-                                </property>
-                                <property name="enabled">
-                                    <bool>true</bool>
-                                </property>
-                            </widget>
-                            <widget class="KPushButton" row="0" column="1">
-                                <property name="name">
-                                    <cstring>btnOpt3</cstring>
-                                </property>
-                                <property name="minimumSize">
-                                    <size>
-                                        <width>22</width>
-                                        <height>22</height>
-                                    </size>
-                                </property>
-                                <property name="maximumSize">
-                                    <size>
-                                        <width>22</width>
-                                        <height>22</height>
-                                    </size>
-                                </property>
-                                <property name="text">
-                                    <string></string>
-                                </property>
-                            </widget>
-                            <spacer row="1" column="1">
-                                <property name="name">
-                                    <cstring>spacer6</cstring>
-                                </property>
-                                <property name="orientation">
-                                    <enum>Vertical</enum>
-                                </property>
-                                <property name="sizeType">
-                                    <enum>Expanding</enum>
-                                </property>
-                                <property name="sizeHint">
-                                    <size>
-                                        <width>20</width>
-                                        <height>60</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </grid>
                     </widget>
-                    <widget class="KPushButton" row="7" column="1">
+                    <widget class="QLineEdit" row="0" column="3">
                         <property name="name">
-                            <cstring>btnDeleteV</cstring>
+                            <cstring>leVLabel</cstring>
+                        </property>
+                        <property name="enabled">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Au&amp;dio codecs</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="KPushButton" row="2" column="1">
+                        <property name="name">
+                            <cstring>btnDeleteA</cstring>
                         </property>
                         <property name="sizePolicy">
                             <sizepolicy>
@@ -438,9 +519,9 @@ audio bitrate</string>
                             <number>28</number>
                         </property>
                     </widget>
-                    <widget class="KPushButton" row="7" column="0">
+                    <widget class="KPushButton" row="2" column="0">
                         <property name="name">
-                            <cstring>btnAddV</cstring>
+                            <cstring>btnAddA</cstring>
                         </property>
                         <property name="sizePolicy">
                             <sizepolicy>
@@ -460,20 +541,7 @@ audio bitrate</string>
                             <number>27</number>
                         </property>
                     </widget>
-                </grid>
-            </widget>
-            <widget class="QWidget">
-                <property name="name">
-                    <cstring>tab</cstring>
-                </property>
-                <attribute name="title">
-                    <string>Au&amp;dio codecs</string>
-                </attribute>
-                <grid>
-                    <property name="name">
-                        <cstring>unnamed</cstring>
-                    </property>
-                    <widget class="QListBox" row="0" column="0" rowspan="3" colspan="2">
+                    <widget class="QListBox" row="0" column="0" rowspan="2" colspan="2">
                         <item>
                             <property name="text">
                                 <string>New Item</string>
@@ -483,28 +551,23 @@ audio bitrate</string>
                             <cstring>lbaCodecs</cstring>
                         </property>
                     </widget>
-                    <widget class="QLineEdit" row="0" column="2">
+                    <widget class="QLineEdit" row="0" column="3">
                         <property name="name">
                             <cstring>leALabel</cstring>
                         </property>
                     </widget>
-                    <widget class="QLabel" row="1" column="2">
+                    <widget class="QLabel" row="0" column="2">
                         <property name="name">
-                            <cstring>textLabel1_2_2_2</cstring>
-                        </property>
-                        <property name="sizePolicy">
-                            <sizepolicy>
-                                <hsizetype>5</hsizetype>
-                                <vsizetype>0</vsizetype>
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
+                            <cstring>textLabel3</cstring>
                         </property>
                         <property name="text">
-                            <string>options</string>
+                            <string>label</string>
+                        </property>
+                        <property name="buddy" stdset="0">
+                            <cstring>leALabel</cstring>
                         </property>
                     </widget>
-                    <widget class="QLayoutWidget" row="2" column="2" rowspan="2" colspan="1">
+                    <widget class="QLayoutWidget" row="1" column="3" rowspan="2" colspan="1">
                         <property name="name">
                             <cstring>layout11</cstring>
                         </property>
@@ -564,48 +627,20 @@ audio bitrate</string>
                             </widget>
                         </grid>
                     </widget>
-                    <widget class="KPushButton" row="3" column="1">
+                    <widget class="QLabel" row="1" column="2" rowspan="2" colspan="1">
                         <property name="name">
-                            <cstring>btnDeleteA</cstring>
+                            <cstring>textLabel1_2_2_2</cstring>
                         </property>
                         <property name="sizePolicy">
                             <sizepolicy>
-                                <hsizetype>1</hsizetype>
+                                <hsizetype>5</hsizetype>
                                 <vsizetype>0</vsizetype>
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                             </sizepolicy>
                         </property>
                         <property name="text">
-                            <string>&amp;Supprimer</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+S</string>
-                        </property>
-                        <property name="stdItem" stdset="0">
-                            <number>28</number>
-                        </property>
-                    </widget>
-                    <widget class="KPushButton" row="3" column="0">
-                        <property name="name">
-                            <cstring>btnAddA</cstring>
-                        </property>
-                        <property name="sizePolicy">
-                            <sizepolicy>
-                                <hsizetype>1</hsizetype>
-                                <vsizetype>0</vsizetype>
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                        <property name="text">
-                            <string>A&amp;jouter</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+J</string>
-                        </property>
-                        <property name="stdItem" stdset="0">
-                            <number>27</number>
+                            <string>options</string>
                         </property>
                     </widget>
                 </grid>
@@ -710,17 +745,32 @@ audio bitrate</string>
         <receiver>prefMencoder</receiver>
         <slot>btnDeleteVClicked()</slot>
     </connection>
+    <connection>
+        <sender>leFourcc</sender>
+        <signal>textChanged(const QString&amp;)</signal>
+        <receiver>prefMencoder</receiver>
+        <slot>leFourccTextChanged(const QString&amp;)</slot>
+    </connection>
 </connections>
 <tabstops>
-    <tabstop>tabWidget2</tabstop>
     <tabstop>lbvCodecs</tabstop>
     <tabstop>leVLabel</tabstop>
+    <tabstop>leFourcc</tabstop>
     <tabstop>teOpt1</tabstop>
+    <tabstop>btnOpt1</tabstop>
     <tabstop>teOpt2</tabstop>
+    <tabstop>btnOpt2</tabstop>
     <tabstop>teOpt3</tabstop>
+    <tabstop>btnOpt3</tabstop>
+    <tabstop>btnAddV</tabstop>
+    <tabstop>btnDeleteV</tabstop>
     <tabstop>lbaCodecs</tabstop>
-    <tabstop>teOptA</tabstop>
     <tabstop>leALabel</tabstop>
+    <tabstop>teOptA</tabstop>
+    <tabstop>btnOptA</tabstop>
+    <tabstop>btnAddA</tabstop>
+    <tabstop>btnDeleteA</tabstop>
+    <tabstop>tabWidget2</tabstop>
 </tabstops>
 <slots>
     <slot>lbvCodecsCurrentChanged(QListBoxItem*)</slot>
@@ -739,6 +789,7 @@ audio bitrate</string>
     <slot>btnDeleteVClicked()</slot>
     <slot>btnAddAClicked()</slot>
     <slot>btnDeleteAClicked()</slot>
+    <slot>leFourccTextChanged(const QString&amp;)</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>

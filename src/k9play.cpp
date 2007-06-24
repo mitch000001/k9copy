@@ -22,6 +22,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "dvdread.h"
+#include <ktempfile.h>
+#include <kstandarddirs.h>
 
 void k9play::saveStatus(k9play_st _status) {
    QFile fstatus(m_inject);
@@ -220,7 +222,7 @@ void k9play::play() {
     int32_t tt = 0,ptt=0;
     uint32_t pos, lgr;
     uint currCell=0;
-
+    m_pos=0xFFFFFFFF;
     k9play_st status;
 
     if (m_initstatus)
@@ -230,11 +232,15 @@ void k9play::play() {
 	if (m_continue) 
 	    m_startSector=status.sector;
     }
-    m_output.open(IO_WriteOnly,stdout);
+
+    KTempFile *bufferFile=new KTempFile(locateLocal("tmp", "k9copy/k9p"), "");
+    m_output=bufferFile->file();
+
+   // m_output.open(IO_WriteOnly,stdout);
     k9vamps vamps(NULL);
     vamps.reset();
     vamps.setPreserve( false);
-    vamps.setOutput(&m_output);
+    vamps.setOutput(m_output);
 
     // if reading of previous cell reached end of chapter, don't seek for cell
     if (m_chapter !=0 && m_cell !=0) {
@@ -338,6 +344,7 @@ void k9play::play() {
             {
 		dvdnav_current_title_info(dvdnav, &tt, &ptt);
 		dvdnav_get_position(dvdnav, &pos, &lgr);
+                m_length=lgr;
 		status.title=tt;
 		status.chapter=ptt;
 		status.cell=currCell;
@@ -375,7 +382,9 @@ void k9play::play() {
 			    bcopy=true;
 			    vamps.addData( buf,len);
 			    status.bytesRead +=len;
-			    writeOutput(QString("\rINFOPOS: %1 %2").arg((status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN).arg(lgr));
+			    //writeOutput(QString("\rINFOPOS: %1 %2").arg((status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN).arg(lgr));
+                            if (m_pos==0xFFFFFFFF)
+                                m_pos=(status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN;
 			}
 
 		}
@@ -443,6 +452,12 @@ void k9play::play() {
 		status.chapter=ptt;
 		status.cell=currCell;
 		status.sector=pos;
+
+                flush();
+                delete bufferFile;
+                bufferFile=new KTempFile(locateLocal("tmp", "k9copy/k9p"), "");
+                m_output=bufferFile->file();
+                vamps.setOutput(m_output);
 	    }
             break;
         case DVDNAV_HOP_CHANNEL:
@@ -473,16 +488,33 @@ void k9play::play() {
     if (! bcopy) {
 	int8_t buf[DVD_VIDEO_LB_LEN];
 	insert_nav_pack(buf);
-	m_output.writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
+	m_output->writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
 	insert_dummy_pack(buf);
-	m_output.writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
+	m_output->writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
 
     }
-
-    m_output.close();
+    flush();    
     status.bytesWritten +=vamps.getOutputBytes();
     if (!m_firstPass)
        saveStatus( status);
+    delete bufferFile;
+}
+
+void k9play::flush() {
+    char buffer[DVD_VIDEO_LB_LEN];
+    m_output->reset();
+    QFile out;
+    out.open(IO_WriteOnly,stdout);
+    while(!m_output->atEnd()) {
+        writeOutput(QString("\rINFOPOS: %1 %2").arg(m_pos).arg(m_length));
+        m_pos++;
+        int l=m_output->readBlock(buffer,DVD_VIDEO_LB_LEN);
+        if (l>0)
+            out.writeBlock(buffer,DVD_VIDEO_LB_LEN);
+    }
+    m_output->close();
+    m_output->remove();
+    m_pos=0xFFFFFFFF;
 }
 
 bool k9play::readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector,uchar *_buffer)

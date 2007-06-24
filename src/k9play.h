@@ -36,10 +36,11 @@ private:
     k9DVD *m_dvd;
     k9DVDTitle *m_dvdTitle;
     QString m_device;
-    QFile m_output;
+    QFile *m_output;
     QFile m_stderr;
     uint32_t m_totalBytes;
     uint32_t m_startSector,m_endSector;
+    uint32_t m_pos,m_length;
     double m_vampsFactor;
     uint64_t m_inputSize;
     uint64_t m_totalSize;
@@ -62,6 +63,7 @@ private:
     void insert_nav_pack (int8_t *buf);
     void saveStatus(k9play_st _status);
     void readStatus(k9play_st &_status);
+    void flush();
 public:
     k9play();
 
