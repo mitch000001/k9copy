@@ -23,7 +23,16 @@ k9prefMencoder::k9prefMencoder(QWidget* parent, const char* name, WFlags fl)
 : prefMencoder(parent,name,fl)
 {
    m_update=false;
-   lbvCodecs->clear();
+   load();
+    btnOpt1->setPixmap(SmallIcon("configure"));
+   btnOpt2->setPixmap(SmallIcon("configure"));
+   btnOpt3->setPixmap(SmallIcon("configure"));
+   btnOptA->setPixmap(SmallIcon("configure"));
+
+}
+
+void k9prefMencoder::load() {
+  lbvCodecs->clear();
    for (int i=0;i < m_codecs.count();i++) {
        lbvCodecs->insertItem(m_codecs.getCodecName(i));              
    }
@@ -34,10 +43,6 @@ k9prefMencoder::k9prefMencoder(QWidget* parent, const char* name, WFlags fl)
        lbaCodecs->insertItem(m_audioCodecs.getCodecName(i));              
    }
    lbaCodecs->setCurrentItem(0);
-   btnOpt1->setPixmap(SmallIcon("configure"));
-   btnOpt2->setPixmap(SmallIcon("configure"));
-   btnOpt3->setPixmap(SmallIcon("configure"));
-   btnOptA->setPixmap(SmallIcon("configure"));
 
 }
 
@@ -116,6 +121,17 @@ void k9prefMencoder::btnAddAClicked() {
    m_audioCodecs.setOptions (lbaCodecs->count()-1,"-oac copy");
    m_audioCodecs.setCodecName(lbaCodecs->count()-1,i18n("new profile"));
    lbaCodecs->setCurrentItem(lbaCodecs->count()-1);
+
+}
+
+void k9prefMencoder::bResetClicked() {
+   m_codecs.reset();
+   m_audioCodecs.reset();
+   if (lbvCodecs->selectedItem())
+        lbvCodecsCurrentChanged (lbvCodecs->selectedItem());
+   if (lbaCodecs->selectedItem())
+        lbaCodecsCurrentChanged (lbaCodecs->selectedItem());
+
 
 }
 

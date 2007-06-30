@@ -55,9 +55,7 @@ static const KCmdLineOptions options[] = {
 	    { "initstatus" ,I18N_NOOP("initialize status file"),0},
 	    { "continue" ,I18N_NOOP("continue playing from last sector"),0},
 	    { "firstpass" ,I18N_NOOP("don't save status at end"),0},
-
-
-
+	    { "usecache" ,I18N_NOOP("save cell in a temporary file before encoding"),0},
             KCmdLineLastOption // End of options.
         };
 
@@ -126,6 +124,7 @@ int main(int argc, char **argv) {
 
 	    player.setcontinue( args->isSet("continue"));
 	    player.setfirstPass(args->isSet("firstpass"));
+            player.setuseCache(args->isSet("usecache"));
             player.setDevice(InputOptionArg);
             player.setTitle(TitleNumber.toInt());
             player.setstartSector(startSectorArg);

@@ -1068,23 +1068,14 @@ void k9Main::readSettings()
   k9Config config;
   config.read();
 
-//  KSimpleConfig settings("K9Copy");
-//  m_prefOutput=settings.readEntry("/dir/output",locateLocal("tmp","k9copy/",true));
-//  cbInputDev->setCurrentItem(settings.readEntry("/dev/input",0).toInt());
-//  cbOutputDev->setCurrentItem(settings.readEntry("/dev/output",0).toInt());
   m_prefOutput=config.getPrefOutput();
   cbInputDev->setCurrentItem(config.getInputDev());
   cbOutputDev->setCurrentItem(config.getOutputDev());
   m_prefK3b=config.getPrefK3b();
 
-  //m_prefK3b=settings.readEntry("/options/usek3b",0).toInt();
   m_prefAutoBurn=config.getPrefAutoBurn();
   m_quickScan=config.getQuickScan();
   m_prefSize=config.getPrefSize();
-  //m_prefAutoBurn=settings.readEntry("/options/autoburn",0).toInt();
-  //m_quickScan=settings.readEntry("/options/quickscan","1").toInt();
-  //m_prefSize=settings.readEntry("/options/dvdsize",QString("4400")).toInt();
-
   //fill the burn speed combo
   //cbOutputDevActivated( cbOutputDev->currentItem());
   cbOutputDevActivated( config.getOutputDev());
@@ -1095,20 +1086,10 @@ void k9Main::readSettings()
   m_prefMp4AudioBitrate=config.getPrefMp4AudioBitrate();
   m_prefMp4Height=config.getPrefMp4Height();
   m_prefMp4Width=config.getPrefMp4Width();
-  //m_prefMp4Codec=settings.readEntry("/mp4/codec",0).toInt();
-  //m_prefMp4Size=settings.readEntry("/mp4/size",QString("700")).toInt();
-  //m_prefMp4NumberCD=settings.readEntry("/mp4/numberCD",QString("1")).toInt();
-  //m_prefMp4Width=settings.readEntry("/mp4/width","640");
-  //m_prefMp4Height=settings.readEntry("/mp4/height","");
-  //m_prefMp4AudioBitrate=settings.readEntry("/mp4/audiobitrate","128");
   m_codecAudio=config.getCodecAudio();
   m_codecLabels=config.getCodecLabels();
   m_codecVideo=config.getCodecVideo();
   
-  //m_codecAudio=settings.readListEntry("mencoder/audio");
-  //m_codecLabels=settings.readListEntry("mencoder/labels");
-  //m_codecVideo=settings.readListEntry("mencoder/video");
-
   if (m_prefMp4Codec -2 <=m_codecLabels.count())
   {
     QStringList::Iterator it=m_codecAudio.at(m_prefMp4Codec);
@@ -1128,10 +1109,6 @@ void k9Main::saveSettings()
   k9Config config;
   config.read();
 
-//  KSimpleConfig settings("K9Copy");
-//  settings.writeEntry("/dev/input",cbInputDev->currentItem());
-//  settings.writeEntry("/dev/output",cbOutputDev->currentItem());
-//  settings.writeEntry("/options/keepMenus",(int)withMenus());
   config.setInputDev(cbInputDev->currentItem());
   config.setOutputDev(cbOutputDev->currentItem());
   config.setKeepMenus(withMenus());
@@ -1291,13 +1268,6 @@ void k9Main::readDrives()
   
   drives.scanDrives();
 
-/*
-  for (int i=0; i<drives.count();i++)
-  {
-    k9CdDrive *drive=drives.getDrive(i);
-    addDrive(drive);
-  }
-*/
 }
 
 
@@ -1494,7 +1464,13 @@ void k9Main::Clone(QString _input,QString _output)
 }
 
 void k9Main::updateFactor(){
+
   m_update->updateFactor();
+ // updateFactor_internal();
+  if (dvd->getopened()) {
+    SelectionChanged( dvd,withMenus());
+
+  }
 }
 
 void k9Main::updateFactor_internal()
@@ -1511,7 +1487,6 @@ void k9Main::updateFactor_internal()
       changeStatusbar("",sbFactor);
     else
       changeStatusbar( QString::number(dbfactor,'f',2),sbFactor);
-    SelectionChanged( dvd,withMenus());
   }
 }
 

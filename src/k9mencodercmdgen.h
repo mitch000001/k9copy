@@ -37,7 +37,7 @@ private:
    QScrollView *m_scrollView;
    QGrid *m_grid;
    QGrid *m_hbox;
-   int m_row,m_page;
+   int m_row,m_page,m_cpt;
    QDomDocument m_doc;
    QString m_cmd;
 

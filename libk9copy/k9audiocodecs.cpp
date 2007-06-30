@@ -35,15 +35,7 @@ k9AudioCodecs::k9AudioCodecs(QObject *parent, const char *name)
 
    //adds default codecs
    if (slLabels.count()==0) {
-      m_codecs[0]=_k9AudioCodec("copy","-oac copy");
-      m_codecs[1]=_k9AudioCodec("mp3","-oac lavc -lavcopts acodec=mp3:abitrate=$AUDBR");
-      m_codecs[2]=_k9AudioCodec("mp2","-oac lavc -lavcopts acodec=mp2:abitrate=$AUDBR");
-      m_codecs[3]=_k9AudioCodec("ac3","-oac lavc -lavcopts acodec=ac3:abitrate=$AUDBR");
-      m_codecs[4]=_k9AudioCodec("IMA Adaptive PCM","-oac lavc -lavcopts acodec=adpcm_ima_wav:abitrate=$AUDBR");
-      m_codecs[5]=_k9AudioCodec("sonic","-oac lavc -lavcopts acodec=sonic:abitrate=$AUDBR");
-      m_codecs[6]=_k9AudioCodec("aac","-oac faac -faacopts br=$AUDBR");
-
-      save();
+      reset();
       m_config=new k9Config();
       slLabels=m_config->getCodecLabelsAudio();
       slCodecs=m_config->getCodecAudio();
@@ -57,6 +49,18 @@ k9AudioCodecs::k9AudioCodecs(QObject *parent, const char *name)
    }
    delete m_config;
 
+}
+
+void k9AudioCodecs::reset() {
+      m_codecs[0]=_k9AudioCodec("copy","-oac copy");
+      m_codecs[1]=_k9AudioCodec("mp3","-oac lavc -lavcopts acodec=mp3:abitrate=$AUDBR");
+      m_codecs[2]=_k9AudioCodec("mp2","-oac lavc -lavcopts acodec=mp2:abitrate=$AUDBR");
+      m_codecs[3]=_k9AudioCodec("ac3","-oac lavc -lavcopts acodec=ac3:abitrate=$AUDBR");
+      m_codecs[4]=_k9AudioCodec("IMA Adaptive PCM","-oac lavc -lavcopts acodec=adpcm_ima_wav:abitrate=$AUDBR");
+      m_codecs[5]=_k9AudioCodec("sonic","-oac lavc -lavcopts acodec=sonic:abitrate=$AUDBR");
+      m_codecs[6]=_k9AudioCodec("aac","-oac faac -faacopts br=$AUDBR");
+
+      save();
 }
 
 void k9AudioCodecs::save() {

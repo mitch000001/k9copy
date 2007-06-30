@@ -35,6 +35,7 @@ public:
     QString getOptions(int _num);
     QString getCodecName(int _num);
     void remove(int _num);
+    void reset();
 private:
     QMap <int,_k9AudioCodec> m_codecs;
     k9Config *m_config;

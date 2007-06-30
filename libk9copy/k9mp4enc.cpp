@@ -188,6 +188,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 	     	*m_process << s;
             }	
 
+            *m_process << "--usecache";
             *m_process << "| mencoder" << "/dev/stdin";
             *m_process << "-passlogfile" << passLogFile.name();
 
@@ -213,12 +214,14 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
             }             
             sCodec=videoCodecs->getCodecName(m_codec);
             sVOption=sVOption.simplifyWhiteSpace();
+            int pos;
             //*m_process << "-ovc" << sVOption;
-            int pos=sVOption.find("-vf");
+           /* int pos=sVOption.find("-vf");
             if (pos==-1)
                 *m_process <<"-vf" << QString("scale=%1:%2").arg(m_width).arg(m_height);
             else 
                 sVOption=sVOption.insert(pos+4,QString("scale=%1:%2,").arg(m_width).arg(m_height));
+            */
             *m_process  << sVOption;
 
             QString sAOption=replaceParams(audioCodecs->getOptions(m_audioCodec)).simplifyWhiteSpace();

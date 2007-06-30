@@ -52,6 +52,7 @@ private:
     bool m_continue;
     bool m_firstPass;
     bool m_forcedFactor;
+    bool m_useCache;
     QString m_inject;
     QStringList m_audioFilter;
     QStringList m_subpictureFilter;
@@ -91,6 +92,7 @@ public:
     void setcontinue (bool _value);
     void setfirstPass (bool _value);
     void setforcedFactor(bool _value);
+    void setuseCache(bool _value);
 };
 
 #endif

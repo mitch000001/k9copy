@@ -43,6 +43,7 @@ public:
     QString getCodecName(int _num);
 
     int count();
+    void reset();
 private:
     QMap <int,_k9VideoCodec> m_codecs;
     k9Config *m_config;

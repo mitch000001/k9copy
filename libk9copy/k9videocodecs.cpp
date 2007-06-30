@@ -43,30 +43,7 @@ k9VideoCodecs::k9VideoCodecs(QObject *parent, const char *name)
         bReset=slCodecs.count() !=  slLabels.count()*4; 
    //adds default codecs
    if (bReset) {
-      m_codecs[0]=_k9VideoCodec("copy","","-ovc copy","-ovc copy","-ovc copy");
-      m_codecs[1]=_k9VideoCodec("XviD","","-ovc xvid -xvidencopts bitrate=$VIDBR","-ovc xvid -xvidencopts bitrate=$VIDBR:turbo:pass=%1","-ovc xvid -xvidencopts bitrate=$VIDBR");
-      m_codecs[2]=_k9VideoCodec("x264","","-ovc x264 -x264encopts bitrate=$VIDBR:threads=0","-ovc x264 -x264encopts bitrate=$VIDBR:turbo=1:pass=$PASS:threads=0","-ovc x264 -x264encopts bitrate=$VIDBR:turbo=1:pass=$PASS:threads=0");     
-      m_codecs[3]=_k9VideoCodec("MJPEG","","-ovc lavc -lavcopts vcodec=mjpeg:vhq:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=mjpeg:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=mjpeg:vhq:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[4]=_k9VideoCodec("LJPEG","","-ovc lavc -lavcopts vcodec=ljpeg:vhq:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=ljpeg:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=ljpeg:vhq:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[5]=_k9VideoCodec("H261","","-ovc lavc -lavcopts vcodec=h261:vhq:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=h261:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=h261:vhq:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[6]=_k9VideoCodec("H263","","-ovc lavc -lavcopts vcodec=h263:vhq:v4mv:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=h263:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=h263:vhq:v4mv:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[7]=_k9VideoCodec("H263+","","-ovc lavc -lavcopts vcodec=h263p:vhq:v4mv:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=h263p:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=h263p:vhq:v4mv:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[8]=_k9VideoCodec("MPEG-4 (DivX 4/5)","DIVX","-ovc lavc -lavcopts vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -ffourcc=DIVX","-ovc lavc -lavcopts vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -ffourcc=DIVX","-ovc lavc -lavcopts vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -ffourcc=DIVX");
-      m_codecs[9]=_k9VideoCodec("MS MPEG-4 (DivX 3)","DIVX","-ovc lavc -lavcopts vcodec=msmpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=msmpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=msmpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[10]=_k9VideoCodec("MS MPEG-4 v2","","-ovc lavc -lavcopts vcodec=msmpeg4v2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=msmpeg4v2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=msmpeg4v2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[11]=_k9VideoCodec("WMV7","","-ovc lavc -lavcopts vcodec=wmv1:vhq:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=wmv1:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=wmv1:vhq:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[12]=_k9VideoCodec("WMV8","","-ovc lavc -lavcopts vcodec=wmv2:vhq:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=wmv2:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=wmv2:vhq:vqmin=2:vbitrate=$VIDBR");
-
-      m_codecs[13]=_k9VideoCodec("RealVideo","","-ovc lavc -lavcopts vcodec=rv10:vhq:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=rv10:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=rv10:vhq:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[14]=_k9VideoCodec("MPEG-1 Video","","-ovc lavc -lavcopts vcodec=mpeg1video:vhq:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=mpeg1video:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=mpeg1video:vhq:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[15]=_k9VideoCodec("MPEG-2 Video","","-ovc lavc -lavcopts vcodec=mpeg2video:vhq:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=mpeg2video:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=mpeg2video:vhq:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[16]=_k9VideoCodec("Huffmann yuv","","-ovc lavc -lavcopts vcodec=huffyuv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:format=422p","-ovc lavc -lavcopts vcodec=huffyuv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR::format=422p:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=huffyuv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:format=422p");
-      m_codecs[17]=_k9VideoCodec("ffv Huffmann","","-ovc lavc -lavcopts vcodec=ffvhuff:vhq:v4mv:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=ffvhuff:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=ffvhuff:vhq:v4mv:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[18]=_k9VideoCodec("ASUS v1","","-ovc lavc -lavcopts vcodec=asv1:vhq:v4mv:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=asv1:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=asv1:vhq:v4mv:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[19]=_k9VideoCodec("ASUS v2","","-ovc lavc -lavcopts vcodec=asv2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=asv2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=asv2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR");
-      m_codecs[20]=_k9VideoCodec("flv","","-ovc lavc -lavcopts vcodec=flv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR","-ovc lavc -lavcopts vcodec=flv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS","-ovc lavc -lavcopts vcodec=flv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR");
-
-      save();
+      reset();
       m_config=new k9Config();
       slLabels=m_config->getCodecLabels();
       slCodecs=m_config->getCodecVideo();
@@ -87,6 +64,33 @@ k9VideoCodecs::k9VideoCodecs(QObject *parent, const char *name)
         m_codecs[cpt++]=_k9VideoCodec((*i),fourcc,o1,o2,o3);
    }
    delete m_config;
+
+}
+
+void k9VideoCodecs::reset() {
+      m_codecs[0]=_k9VideoCodec("copy","","-ovc copy","-ovc copy","-ovc copy");
+      m_codecs[1]=_k9VideoCodec("XviD","","-ovc xvid -xvidencopts bitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc xvid -xvidencopts bitrate=$VIDBR:turbo:pass=$WIDTH -vf scale=$WIDTH:$HEIGHT","-ovc xvid -xvidencopts bitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[2]=_k9VideoCodec("x264","","-ovc x264 -x264encopts bitrate=$VIDBR:threads=0 -vf scale=$WIDTH:$HEIGHT","-ovc x264 -x264encopts bitrate=$VIDBR:turbo=1:pass=$PASS:threads=0 -vf scale=$WIDTH:$HEIGHT","-ovc x264 -x264encopts bitrate=$VIDBR:turbo=1:pass=$PASS:threads=0 -vf scale=$WIDTH:$HEIGHT");     
+      m_codecs[3]=_k9VideoCodec("MJPEG","","-ovc lavc -lavcopts vcodec=mjpeg:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=mjpeg:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=mjpeg:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[4]=_k9VideoCodec("LJPEG","","-ovc lavc -lavcopts vcodec=ljpeg:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=ljpeg:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=ljpeg:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[5]=_k9VideoCodec("H261","","-ovc lavc -lavcopts vcodec=h261:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=h261:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=h261:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[6]=_k9VideoCodec("H263","","-ovc lavc -lavcopts vcodec=h263:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=h263:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=h263:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[7]=_k9VideoCodec("H263+","","-ovc lavc -lavcopts vcodec=h263p:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=h263p:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=h263p:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[8]=_k9VideoCodec("MPEG-4 (DivX 4/5)","DIVX","-ovc lavc -lavcopts vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR  -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=mpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR  -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[9]=_k9VideoCodec("MS MPEG-4 (DivX 3)","DIVX","-ovc lavc -lavcopts vcodec=msmpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=msmpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=msmpeg4:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[10]=_k9VideoCodec("MS MPEG-4 v2","","-ovc lavc -lavcopts vcodec=msmpeg4v2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=msmpeg4v2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=msmpeg4v2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[11]=_k9VideoCodec("WMV7","","-ovc lavc -lavcopts vcodec=wmv1:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=wmv1:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=wmv1:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[12]=_k9VideoCodec("WMV8","","-ovc lavc -lavcopts vcodec=wmv2:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=wmv2:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=wmv2:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+
+      m_codecs[13]=_k9VideoCodec("RealVideo","","-ovc lavc -lavcopts vcodec=rv10:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=rv10:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=rv10:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[14]=_k9VideoCodec("MPEG-1 Video","","-ovc lavc -lavcopts vcodec=mpeg1video:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=mpeg1video:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=mpeg1video:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[15]=_k9VideoCodec("MPEG-2 Video","","-ovc lavc -lavcopts vcodec=mpeg2video:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=mpeg2video:vhq:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=mpeg2video:vhq:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[16]=_k9VideoCodec("Huffmann yuv","","-ovc lavc -lavcopts vcodec=huffyuv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:format=422p -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=huffyuv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR::format=422p:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=huffyuv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:format=422p -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[17]=_k9VideoCodec("ffv Huffmann","","-ovc lavc -lavcopts vcodec=ffvhuff:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=ffvhuff:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=ffvhuff:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[18]=_k9VideoCodec("ASUS v1","","-ovc lavc -lavcopts vcodec=asv1:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=asv1:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=asv1:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[19]=_k9VideoCodec("ASUS v2","","-ovc lavc -lavcopts vcodec=asv2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=asv2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=asv2:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      m_codecs[20]=_k9VideoCodec("flv","","-ovc lavc -lavcopts vcodec=flv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=flv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR:turbo:vpass=$PASS -vf scale=$WIDTH:$HEIGHT","-ovc lavc -lavcopts vcodec=flv:vhq:v4mv:vqmin=2:vbitrate=$VIDBR -vf scale=$WIDTH:$HEIGHT");
+      save();
 
 }
 

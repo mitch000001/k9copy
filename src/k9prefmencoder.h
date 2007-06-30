@@ -30,6 +30,7 @@ public:
   ~k9prefMencoder();
   /*$PUBLIC_FUNCTIONS$*/
   void save(void);
+  void load();
 public slots:
   /*$PUBLIC_SLOTS$*/
    void teOptATextChanged();
@@ -56,7 +57,7 @@ protected slots:
   void btnDeleteVClicked();
   void btnAddAClicked();
   void btnDeleteAClicked();
-
+  void bResetClicked();
 };
 
 

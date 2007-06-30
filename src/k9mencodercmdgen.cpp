@@ -149,6 +149,7 @@ void k9MencoderCmdGen::loadXml() {
  }
 
 void k9MencoderCmdGen::addWidgets(_k9CheckListItem *_listItem,QString _root,QString _cat) {
+    m_cpt=0;
     QVBox *vbox=new QVBox(wsOptions);
     wsOptions->addWidget(vbox,m_page);
     _listItem->page=m_page;
@@ -272,6 +273,9 @@ void k9MencoderCmdGen::addInt(QDomElement _eOpt) {
         sb->setFixedWidth(100);
     if( !_eOpt.attributeNode("special").isNull()){
         sb->setSpecialValueText(_eOpt.attributeNode("special").value());
+        if (_eOpt.attributeNode("special").value()== _eOpt.attributeNode("default").value())
+            sb->setValue(iMin-1);
+
     }
 
    _eOpt.setAttribute("widget",sb->name());
@@ -544,7 +548,9 @@ bool k9MencoderCmdGen::getMencoderOptions(QString &_cmd) {
 }
 
 void k9MencoderCmdGen::parseCmd(const QString &_cmd){
-    QStringList cmdList=QStringList::split(" ",_cmd);
+    QString cmd(_cmd);
+    cmd=cmd.replace("\n"," ").simplifyWhiteSpace();
+    QStringList cmdList=QStringList::split(" ",cmd);
     for (QStringList::iterator it=cmdList.begin();it!=cmdList.end();++it) {
         if (*it=="-ovc") {
             ++it;
@@ -626,8 +632,6 @@ void k9MencoderCmdGen::parseCodecOptions(const QString &_root,const QString &_co
                     if (eSOpt.attributeNode("prefix").isNull()) {
                         if (j< slValues.count() && *(slValues.at(j)) !=" " ) {
                             QString sVal=*(slValues.at(j));
-                            if (! eSOpt.attributeNode("prefix").isNull())
-                                sVal=sVal.replace(eSOpt.attributeNode("prefix").value(),"");
                             if (eSOpt.attributeNode("type").value()=="bool")
                                 sVal="true";
                             eSOpt.setAttribute("default",sVal);

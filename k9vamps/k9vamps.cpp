@@ -385,8 +385,7 @@ int k9vamps::check_video_packet (uchar *ptr) {
         pad_packet_start_code |= (uint32_t) (ptr [3]);
 
         if (pad_packet_start_code != 0x000001be)
-            fatal ("Bad padding packet start code at %llu: %08lx",
-                   rtell (ptr + vid_packet_length), pad_packet_start_code);
+            qDebug (QString("Bad padding packet start code at %1: %2").arg(rtell (ptr + vid_packet_length)).arg(pad_packet_start_code));
 
         pad_packet_length  = ptr [4] << 8;
         pad_packet_length |= ptr [5];
@@ -395,8 +394,7 @@ int k9vamps::check_video_packet (uchar *ptr) {
 
     // length of video packet plus padding packet must always match sector size
     if (14 + vid_packet_length + pad_packet_length != SECT_SIZE)
-        fatal ("Bad video packet length at %llu: %d",
-               rtell (ptr), vid_packet_length);
+        qDebug (QString("Bad video packet length at %1: %1").arg(rtell (ptr)).arg(vid_packet_length));
 
     return rc;
 }

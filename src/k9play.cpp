@@ -58,6 +58,7 @@ k9play::k9play() {
     m_totalSize=0;
     m_forcedFactor=false;
     m_firstPass=false;
+    m_useCache=false;
 }
 
 void k9play::kdebug(QString const & _msg) {
@@ -156,6 +157,9 @@ void k9play::setforcedFactor( bool _value) {
    m_forcedFactor=_value;	
 }
 
+void k9play::setuseCache(bool _value) {
+    m_useCache=_value;
+}
 void k9play::execute() {
     //playCell();
     play();
@@ -233,10 +237,16 @@ void k9play::play() {
 	    m_startSector=status.sector;
     }
 
-    KTempFile *bufferFile=new KTempFile(locateLocal("tmp", "k9copy/k9p"), "");
-    m_output=bufferFile->file();
-
-   // m_output.open(IO_WriteOnly,stdout);
+   
+    
+    KTempFile *bufferFile;
+    if (m_useCache) {
+        bufferFile=new KTempFile(locateLocal("tmp", "k9copy/k9p"), "");
+        m_output=bufferFile->file();
+    } else  {
+        m_output=new QFile();
+        m_output->open(IO_WriteOnly,stdout);
+    }
     k9vamps vamps(NULL);
     vamps.reset();
     vamps.setPreserve( false);
@@ -453,11 +463,13 @@ void k9play::play() {
 		status.cell=currCell;
 		status.sector=pos;
 
-                flush();
-                delete bufferFile;
-                bufferFile=new KTempFile(locateLocal("tmp", "k9copy/k9p"), "");
-                m_output=bufferFile->file();
-                vamps.setOutput(m_output);
+                if (m_useCache) {
+                    flush();
+                    delete bufferFile;
+                    bufferFile=new KTempFile(locateLocal("tmp", "k9copy/k9p"), "");
+                    m_output=bufferFile->file();
+                    vamps.setOutput(m_output);
+                }
 	    }
             break;
         case DVDNAV_HOP_CHANNEL:
@@ -493,7 +505,12 @@ void k9play::play() {
 	m_output->writeBlock((const char*)buf,DVD_VIDEO_LB_LEN);
 
     }
-    flush();    
+    if (m_useCache)
+        flush();    
+    else {
+        m_output->close();
+        delete m_output;
+    }
     status.bytesWritten +=vamps.getOutputBytes();
     if (!m_firstPass)
        saveStatus( status);
