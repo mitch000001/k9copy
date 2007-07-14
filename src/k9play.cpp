@@ -15,6 +15,7 @@
 #include "k9vamps.h"
 
 #include "dvdnav.h"
+#include "k9saveimage.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <inttypes.h>
@@ -251,6 +252,9 @@ void k9play::play() {
     vamps.reset();
     vamps.setPreserve( false);
     vamps.setOutput(m_output);
+    k9SaveImage saveImage;
+    saveImage.play();
+    vamps.setSaveImage(&saveImage);
 
     // if reading of previous cell reached end of chapter, don't seek for cell
     if (m_chapter !=0 && m_cell !=0) {
@@ -392,7 +396,8 @@ void k9play::play() {
 			    bcopy=true;
 			    vamps.addData( buf,len);
 			    status.bytesRead +=len;
-			    //writeOutput(QString("\rINFOPOS: %1 %2").arg((status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN).arg(lgr));
+                            if (!m_useCache)
+			         writeOutput(QString("\rINFOPOS: %1 %2").arg((status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN).arg(lgr));
                             if (m_pos==0xFFFFFFFF)
                                 m_pos=(status.bytesRead+status.bytesSkipped) / DVD_VIDEO_LB_LEN;
 			}
@@ -494,6 +499,7 @@ void k9play::play() {
     }
     vamps.setNoData();
     vamps.wait();
+    saveImage.stop();
     /* destroy dvdnav handle */
     dvdnav_close(dvdnav);
 

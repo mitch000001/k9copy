@@ -30,11 +30,13 @@ void k9UpdateFactor::run(){
 }
 
 void k9UpdateFactor::updateFactor() {
+   m_mutex.lock();
    if (running()) {
    	m_restart=true;
    }
    else
    	start();
+   m_mutex.unlock();
 }
 
 

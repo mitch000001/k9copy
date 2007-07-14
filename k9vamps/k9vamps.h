@@ -30,6 +30,7 @@
 #include "k9dvdbackup.h"
 #include "k9requant.h"
 #include "k9fifo.h"
+#include "k9saveimage.h"
 
 // DVD sector size
 #define SECT_SIZE 2048
@@ -140,6 +141,7 @@ private:
 	QWaitCondition wDataReady;
 	k9DVDBackup *m_dvdbackup;
 	k9requant *m_requant;
+        k9SaveImage *m_saveImage;
 protected:
 	void run();
 public:
@@ -151,6 +153,7 @@ public:
 	void reset();
 	void setInputSize(uint64_t size);
 	void setVapFactor(float factor);
+        void setSaveImage(k9SaveImage*);
 	void setOutput(QFile *_output);
 	uint64_t getOutputBytes();
 	QString & geterrMsg();

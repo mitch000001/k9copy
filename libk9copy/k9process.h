@@ -23,9 +23,11 @@ Q_OBJECT
 public:
     k9Process(QObject *parent = 0, const char *name = 0);
     void sync();
+    const QString & debug();
     ~k9Process();
 private:
     bool m_waitSync;
+    QString m_debug;
 private slots:
    void slotProcessExited(KProcess *proc);
 };

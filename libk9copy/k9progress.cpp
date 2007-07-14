@@ -19,18 +19,13 @@
 #include <qimage.h>
 #include <qpainter.h>
 #include <kstandarddirs.h>
+#include <qmovie.h>
 
 k9Progress::k9Progress(QWidget* parent, const char* name,const QStringList &args)
 : Progress(parent,name,true,0)
 {
   m_process=new k9Process(this,0);
-  m_x1=0;m_x2=0;
-
-  connect(&m_timer,SIGNAL(timeout()),this,SLOT(drawImage()));
   
-  QString s= KGlobal::dirs()->findResource( "data", "k9copy/pellicule.png");
-  image1.load(s);
-  image2=image1;
 }
 
 
@@ -64,13 +59,13 @@ int k9Progress::execute() {
 		return -1;
 	}
 	
-   m_timer.start(200,FALSE);
+//   m_timer.start(200,FALSE);
    show();
    m_canceled=false;	
    //the sync method allows to wait for the process end while receiving stdout.
    m_process->sync();
   		
-   m_timer.stop();
+//   m_timer.stop();
    if (!m_canceled && m_process->normalExit())
    	return 1;
    else
@@ -89,21 +84,31 @@ k9Process* k9Progress::getProcess() const {
 
 /*$SPECIALIZATION$*/
 
-void k9Progress::drawImage() {
-   QPainter p(image);
-   if (m_x2==m_x1)
-   	m_x2=m_x1+image1.width();
-   p.scale((double)image->width()/(double)image1.width(),(double)image->height()/(double)image1.height());
-   
-   p.drawImage(m_x1--,0,image1);
-   p.drawImage(m_x2--,0,image2);
-   
-   
-   if (m_x1<(-1 * image1.width()))
-   	m_x1=m_x2+image2.width();
-   if (m_x2<(-1 * image2.width()))
-   	m_x2=m_x1+image1.width();
- //  image->setPixmap(pix);
+
+void k9Progress::setImage(QString _fileName) {
+    QPixmap pixmap;
+    pixmap.load(_fileName);
+
+    
+    int top,left;
+    QPainter p(image);
+        
+   double wratio=(double)image->width()/(double)pixmap.width();
+   double hratio=(double)image->height()/(double)pixmap.height();
+   double ratio= wratio < hratio ? wratio:hratio;
+
+   top =(int) (image->height() -pixmap.height()*ratio)/2+1;
+   left =(int) (image->width() -pixmap.width()*ratio)/2 +1;
+
+   p.scale(ratio,ratio);
+   p.drawPixmap((int)(left/ratio),(int)(top/ratio),pixmap);
 }
+
+void k9Progress::setMovie(QString _fileName) {
+    QMovie mv(_fileName);
+    image->setPaletteBackgroundColor(this->paletteBackgroundColor());
+    image->setMovie(mv);
+}
+
 
 #include "k9progress.moc"

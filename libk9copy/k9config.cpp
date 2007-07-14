@@ -34,6 +34,7 @@ void k9Config::read() {
   m_prefSize=m_config->readNumEntry("dvdsize",4400);
   m_useDvdAuthor=m_config->readBoolEntry("useDvdAuthor",true);
   m_keepMenus=m_config->readBoolEntry("keepMenus",true);
+  m_prefDelTmpFiles=m_config->readBoolEntry("deltmpfiles",false);
 
   m_config->setGroup("mp4");
   m_prefMp4Codec=m_config->readNumEntry("codec",0);
@@ -83,6 +84,7 @@ void k9Config::save() {
   m_config->writeEntry("dvdsize",m_prefSize);
   m_config->writeEntry("useDvdAuthor",m_useDvdAuthor);
   m_config->writeEntry("keepMenus",m_keepMenus);
+  m_config->writeEntry("deltmpfiles",m_prefDelTmpFiles);
   
   m_config->setGroup("mp4");
   m_config->writeEntry("codec",m_prefMp4Codec);

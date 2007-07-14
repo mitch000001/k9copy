@@ -30,18 +30,13 @@ public:
   void setProgress(int _progress);
   void setTitleLabel(QString _titleLabel);
   void Cancel();
+  void setImage(QString _fileName) ;
+
 signals:
   /*$PUBLIC_SLOTS$*/
   void sigCancel();
 protected:
   /*$PROTECTED_FUNCTIONS$*/
-  QTimer m_timer;
-  QImage image1,image2;
-  int m_x1,m_x2;
-
-protected slots:
-  /*$PROTECTED_SLOTS$*/
-  void drawImage();
 };
 
 #endif

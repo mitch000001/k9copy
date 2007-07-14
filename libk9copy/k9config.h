@@ -39,6 +39,7 @@ private:
     int  m_prefMp4NumberCD;
     bool m_prefMp4AspectRatio;
     bool m_prefMp42Passes;
+    bool m_prefDelTmpFiles;
     QString  m_prefMp4Width;
     QString  m_prefMp4Height;
     QString  m_prefMp4AudioBitrate;
@@ -107,6 +108,14 @@ public:
 	bool getUseDvdAuthor() const {
 	    return m_useDvdAuthor;
 	}
+
+        void setPrefDelTmpFiles( bool _value) {
+            m_prefDelTmpFiles=_value;
+        }
+        
+        bool getPrefDelTmpFiles() const {
+            return m_prefDelTmpFiles;
+        }
 
 	void setQuickScan(bool _value) {
 	    m_quickScan = _value;

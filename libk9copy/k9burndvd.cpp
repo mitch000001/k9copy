@@ -20,13 +20,15 @@
 
 #include "k9burndvd.h"
 #include "k9burndvd.moc"
-
+#include "k9tools.h"
 #include <qdir.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <klibloader.h>
 #include <kprocess.h>
 #include <qapplication.h>
+#include <kstandarddirs.h>
+
 k9BurnDVD::k9BurnDVD()
         : QObject(NULL,"") {
     cancelled=false;
@@ -36,8 +38,11 @@ k9BurnDVD::k9BurnDVD()
     iso=false;
     m_filename="";
     progress=new k9Progress(NULL,"progress",NULL);
-
+    QString s= KGlobal::dirs()->findResource( "data", "k9copy/anim.gif");
+    progress->setMovie(s);
+    m_cdrkit=k9Tools::checkProgram("genisoimage") && k9Tools::checkProgram("wodim");
 }
+
 
 
 k9BurnDVD::~k9BurnDVD() {
@@ -75,9 +80,12 @@ void k9BurnDVD::setAutoBurn(bool _newVal) {
     autoBurn=_newVal;
 }
 void k9BurnDVD::burn() {
-    if (!useK3b)
-        burnWithGrowisofs();
-    else
+    if (!useK3b) {
+        if (! m_cdrkit)
+            burnWithGrowisofs();
+        else
+            burnWithGenisoimage();
+    } else
         burnWithK3b();
 }
 
@@ -133,6 +141,103 @@ const QString &k9BurnDVD::getImageSize() {
     return "";
 }
 
+void k9BurnDVD::getGenisoimageCmd(k9Process *proc,QString _fileName,bool _printSize) {
+    QString progname="genisoimage";
+    *proc << progname;
+    *proc << "-gui";
+    *proc << "-graft-points";
+    *proc << "-volid" << volId;
+    *proc  <<"-appid" << "k9copy";
+    *proc << "-volset-size" << "1";
+    *proc << "-volset-seqno" << "1";
+    *proc << "-no-cache-inodes" << "-udf";
+    *proc << "-iso-level" << "1";
+    *proc << "-dvd-video";
+    if (!_printSize) {
+        if (_fileName !="") {
+            *proc <<"-o";
+            *proc <<_fileName;
+        }
+        connect( proc, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(growisoStderr(KProcess *, char *, int)) );
+        connect( proc, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(growisoStdout(KProcess *, char *, int)) );
+    } else {
+        *proc << "-print-size" << "-quiet";
+        connect( proc, SIGNAL(receivedStderr(KProcess *, char *, int )),this, SLOT(mkisoSizeStderr(KProcess *, char *, int)) );
+        connect( proc, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(mkisoSizeStdout(KProcess *, char *, int)) );
+    }
+    *proc <<QDir::cleanDirPath(workDir +"/dvd");
+
+}
+
+void k9BurnDVD::getWodimCmd(k9Process *proc) {
+    *proc <<"|wodim";
+    *proc <<"-dao";
+    *proc <<"-overburn";
+    *proc <<"-data";
+
+    if (m_speed !=i18n("default"))
+        *proc << QString("speed=%1").arg(m_speed);
+    *proc <<QString("dev=%1").arg(burnDevice);
+    *proc <<QString("tsize=%1s").arg(imageSize);
+    *proc << "-";
+}
+
+void k9BurnDVD::burnWithGenisoimage() {
+    time = new QTime(0,0);
+    time->start();
+    progress->setCaption(i18n("k9Copy - Burning DVD"));
+    progress->setTitle(i18n("Burning DVD"));
+    proc=progress->getProcess();
+
+    bool bok=false;
+
+    while (!cancelled && !bok) {
+        burnSpeed=0;
+        QString fileName="";
+        if (iso) {
+            fileName=m_filename;
+            if (fileName =="")
+                fileName=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Save image to disk"));
+            if (fileName =="") {
+                cancelled=true;
+            } 
+        }
+        proc->clearArguments();
+        getGenisoimageCmd(proc,fileName,false);
+        if (!iso) {
+            k9Process *proc2=new k9Process(NULL,NULL);
+            getGenisoimageCmd(proc2,"",true);
+            proc2->start(KProcess::NotifyOnExit,KProcess::All);
+            proc2->sync();
+            getWodimCmd(proc);
+            proc->setUseShell(true);
+            qDebug(proc->debug());
+        }        
+
+
+        if (!cancelled) {
+            int res=progress->execute();
+            if ( res==-1 ) {
+                KMessageBox::error( 0, i18n("Error burning DVD :\n")+i18n("Unable to run %1").arg("genisoimage"), i18n("DVD burning") );
+                cancelled=true;
+            } else {
+                if (proc->exitStatus()==0) {
+                    bok=true;
+                    KMessageBox::information( 0, i18n("DVD Burning finished"), i18n("DVD burning") );
+                    //delete temporary files
+                    //        clearOutput(workDir+"dvd");
+                } else {
+                    QString c;
+
+                    c=i18n("An error occured while Burning DVD: %1").arg(lastMsg) +"\n" +i18n("Insert an other DVD");
+                    if ( KMessageBox::warningContinueCancel ( 0,c, i18n("authoring"))!=KMessageBox::Continue) {
+                        cancelled=true;
+                    }
+                }
+            }
+        }      
+    }
+}
 
 void k9BurnDVD::burnWithGrowisofs() {
     time = new QTime(0,0);
@@ -231,6 +336,11 @@ void k9BurnDVD::growisoStderr(KProcess *proc, char *buffer, int buflen) {
         sscanf(c.latin1(),"%s \"Current Write Speed\" is %d.%d",s,&a,&b);
         burnSpeed=a+b/10;
     }
+    if (c.contains("Speed set to")) {
+        sscanf(c.latin1(),"Speed set to %d",&a);
+        burnSpeed=a/1385;
+    }
+
     progress->setTitle(i18n("Burning DVD"));
     progress->setLabelText(i18n("Current write speed :%1 x").arg(burnSpeed));
     if (c.contains("% done")) {

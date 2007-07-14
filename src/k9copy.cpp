@@ -32,6 +32,7 @@
 #include <qdom.h>
 #include <ksimpleconfig.h>	
 #include "k9mp4title.h"
+#include "k9tools.h"
 	
 k9Copy::k9Copy()
     : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode )
@@ -79,11 +80,8 @@ k9Copy::k9Copy()
     KDockWidget *dw=dockManager->findWidgetParentDock (m_factors);
     dw->setForcedFixedHeight(h);
     
-    m_mp4=new k9MP4Title(this);
-    addToolWindow(m_mp4,KDockWidget::DockBottom,getMainDockWidget(),10,i18n("MPEG4 Encoding options"),i18n("MPEG4 Encoding Options"));
+    addMp4TitleOptions();
     
-    connect(m_k9Main,SIGNAL(changedTitle( k9DVDTitle* )),m_mp4,SLOT(titleChanged( k9DVDTitle* )));
-    connect(m_k9Main,SIGNAL(SelectionChanged( k9DVD*,bool )),m_mp4,SLOT(selectionChanged( k9DVD*,bool )));
     
     // accept dnd
     setAcceptDrops(true);
@@ -119,7 +117,12 @@ k9Copy::k9Copy()
 
 k9Copy::~k9Copy()
 {
+    k9Config config;
+    if (config.getPrefDelTmpFiles())
+        k9Tools::clearOutput(config.getPrefOutput());
 }
+
+
 bool k9Copy::queryClose   (    ) {	
 	return true;
 }
@@ -218,6 +221,15 @@ void k9Copy::fileOpen()
 
 }
 
+
+void k9Copy::addMp4TitleOptions() {
+    m_mp4=new k9MP4Title(this);
+    addToolWindow(m_mp4,KDockWidget::DockBottom,getMainDockWidget(),10,i18n("MPEG4 Encoding options"),i18n("MPEG4 Encoding Options"));
+    connect(m_k9Main,SIGNAL(changedTitle( k9DVDTitle* )),m_mp4,SLOT(titleChanged( k9DVDTitle* )));
+    connect(m_k9Main,SIGNAL(SelectionChanged( k9DVD*,bool )),m_mp4,SLOT(selectionChanged( k9DVD*,bool )));
+
+}
+
 void k9Copy::preferences() {
   k9settings settings(this,i18n("Settings"));
   settings.exec();
@@ -238,6 +250,7 @@ void k9Copy::preferences() {
     connect(m_k9Main,SIGNAL(showPreview( k9DVD*, k9DVDTitle*,int )),m_mp2,SLOT(open( k9DVD*, k9DVDTitle*,int )));
     connect(m_k9Main,SIGNAL(stopPreview()),m_mp2,SLOT(bStopClick()));
 
+    m_mp4->load();
 }
 
 

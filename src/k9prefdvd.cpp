@@ -30,6 +30,7 @@ k9prefDVD::k9prefDVD(QWidget* parent, const char* name, WFlags fl)
     ckAutoBurn->setChecked(config.getPrefAutoBurn());
     ckQuickScan->setChecked(config.getQuickScan());
     ckDvdAuthor->setChecked(config.getUseDvdAuthor());
+    ckDelTmpFiles->setChecked(config.getPrefDelTmpFiles());
     sbSize->setValue(config.getPrefSize());
     sbSize->setSuffix(" "+ i18n("mb"));
 }
@@ -48,6 +49,7 @@ void k9prefDVD::save() {
     config.setPrefSize(sbSize->value());
     config.setQuickScan( ckQuickScan->isChecked());
     config.setUseDvdAuthor( ckDvdAuthor->isChecked());    
+    config.setPrefDelTmpFiles(ckDelTmpFiles->isChecked());
     config.save();
 }
 

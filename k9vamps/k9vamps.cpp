@@ -93,6 +93,10 @@ void k9vamps::setVapFactor(float factor) {
     vap_fact=factor;
 }
 
+void k9vamps::setSaveImage(k9SaveImage *m_save) {
+    m_saveImage=m_save;
+}
+
 void k9vamps::reset() {
     m_preserve=true;
     bytes_read =0;
@@ -134,7 +138,7 @@ void k9vamps::reset() {
 }
 
 k9vamps::k9vamps(k9DVDBackup *dvdbackup) {
-
+    m_saveImage=NULL;
     m_dvdbackup=dvdbackup;
     reset();
     m_requant=NULL;
@@ -280,7 +284,8 @@ void k9vamps::flush (void) {
     } 
     if (m_output != NULL)
 	m_output->writeBlock((const char*) wbuf,size);
-
+    if (m_saveImage !=NULL) 
+        m_saveImage->addData(wbuf,size);
     wptr           = wbuf;
     bytes_written += size;
     mutex.unlock();

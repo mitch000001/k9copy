@@ -29,6 +29,7 @@
 #include <qdatastream.h>
 #include <qprogressdialog.h>
 #include <klocale.h>
+#include <ktempfile.h>
 /**
   *@author
   */
@@ -63,7 +64,8 @@ private: // Private attributes
   uint64_t m_forced,m_forcedsh;
   uint32_t m_copied,m_lastPos;
   uint64_t m_totalPartSize;
-  void clearOutput(QString name);
+  KTempFile *m_xml,*m_inject;
+  QPtrList <KTempFile> files;
   void createXML();
   void addTitle(QDomElement &root, k9DVDTitle *title);
   void createMenus(bool preview);

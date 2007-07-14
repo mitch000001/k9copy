@@ -20,15 +20,6 @@
 k9MP4Dlg::k9MP4Dlg(QWidget* parent, const char* name)
 : MP4Dlg(parent,name, true)
 {
-  m_x1=0;m_x2=0;
-
-  connect(&m_timer,SIGNAL(timeout()),this,SLOT(drawImage()));
-  
-  QString s= KGlobal::dirs()->findResource( "data", "k9copy/pellicule.png");
-  image1.load(s);
-  image2=image1;
-   m_timer.start(200,FALSE);
-
 
 }
 
@@ -69,22 +60,26 @@ void k9MP4Dlg::setsize( QString _size) {
     lblsize->setText(_size);
 }
 
-void k9MP4Dlg::drawImage() {
-   QPainter p(image);
-   if (m_x2==m_x1)
-   	m_x2=m_x1+image1.width();
-   p.scale((double)image->width()/(double)image1.width(),(double)image->height()/(double)image1.height());
-   
-   p.drawImage(m_x1--,0,image1);
-   p.drawImage(m_x2--,0,image2);
-   
-   
-   if (m_x1<(-1 * image1.width()))
-   	m_x1=m_x2+image2.width();
-   if (m_x2<(-1 * image2.width()))
-   	m_x2=m_x1+image1.width();
- //  image->setPixmap(pix);
+
+void k9MP4Dlg::setImage(QString _fileName) {
+    QPixmap pixmap;
+    pixmap.load(_fileName);
+
+    
+    int top,left;
+    QPainter p(image);
+        
+   double wratio=(double)image->width()/(double)pixmap.width();
+   double hratio=(double)image->height()/(double)pixmap.height();
+   double ratio= wratio < hratio ? wratio:hratio;
+
+   top =(int) (image->height() -pixmap.height()*ratio)/2+1;
+   left =(int) (image->width() -pixmap.width()*ratio)/2 +1;
+
+   p.scale(ratio,ratio);
+   p.drawPixmap((int)(left/ratio),(int)(top/ratio),pixmap);
 }
+
 
 
 #include "k9mp4dlg.moc"

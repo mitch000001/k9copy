@@ -31,6 +31,9 @@ public:
    virtual void setLabelText(const QString _text);
    virtual void setElapsed(const QString _text);
    virtual void setTitle(const QString _text);
+   virtual void setImage(QString _fileName) ;
+   virtual void setMovie(QString _fileName);
+
    virtual int execute();
   /*$PUBLIC_FUNCTIONS$*/
    
@@ -42,12 +45,8 @@ protected:
   k9Process *m_process;
   void bCancelClick();
   bool m_canceled;
-  QImage image1,image2;
-  int m_x1,m_x2;  
-  QTimer m_timer;
 protected slots:
   /*$PROTECTED_SLOTS$*/
-  void drawImage();
 };
 
 #endif

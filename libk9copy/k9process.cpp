@@ -39,4 +39,12 @@ void k9Process::slotProcessExited( KProcess * proc) {
    }
 }
 
+const QString & k9Process::debug() {
+    m_debug="";
+    for (int i=0;i<arguments.count();i++ ){
+        m_debug +=" "+ *(arguments.at(i));
+    }
+    return m_debug;
+}
+
 #include "k9process.moc"

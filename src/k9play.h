@@ -58,7 +58,6 @@ private:
     QStringList m_subpictureFilter;
     QStringList m_chapterList;
     void kdebug(QString const & _msg);
-    void writeOutput(QString const & _msg);
     bool readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector, uchar *_buffer);
     void insert_dummy_pack (int8_t *buf);
     void insert_nav_pack (int8_t *buf);
@@ -71,6 +70,8 @@ public:
     ~k9play();
     void execute();
     void play();
+    void writeOutput(QString const & _msg);
+
     void setTitle(int _value) {m_title = _value;};
 
     void setDevice(const QString& _value) {m_device = _value;};

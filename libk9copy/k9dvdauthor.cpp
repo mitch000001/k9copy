@@ -50,9 +50,16 @@ k9DVDAuthor::k9DVDAuthor(QObject *DVDStruct,const char* name,const QStringList& 
     cancelled=false;
     error=false;
     progress = new k9Progress(qApp->mainWidget(),"progress",NULL);
+    files.setAutoDelete(true);
 
 }
 k9DVDAuthor::~k9DVDAuthor() {
+    QPtrListIterator <KTempFile> it (files);
+    KTempFile *file;
+    while ( (file = it.current()) != 0 ) {
+        ++it;
+        file->file()->remove();
+    }
     if (xml!=NULL)
         delete xml;
 
@@ -72,9 +79,6 @@ void k9DVDAuthor::createXML() {
     QDomElement vmgm = xml->createElement("vmgm");
     root.appendChild(vmgm);
     addMenus(vmgm);
-
-    inject = locateLocal("tmp", "k9copy/k9v" + (QTime::currentTime()).toString("hhmmss"));
-
 
     m_totalPartSize=0;
 
@@ -116,12 +120,13 @@ void k9DVDAuthor::createXML() {
 
     QString x = xml->toString();
     
-    QFile file(  locateLocal("tmp", "k9copy/k9author.xml" ));
-    if ( file.open( IO_WriteOnly ) ) {
-        QTextStream stream( &file );
+    //QFile file(  locateLocal("tmp", "k9copy/k9author.xml" ));
+    
+   // if ( file.open( IO_WriteOnly ) ) {
+        QTextStream stream( m_xml->file() );
         xml->save(stream,1);
-        file.close();
-    }
+        m_xml->file()->close();
+   // }
 }
 
 void k9DVDAuthor::addMenus(QDomElement &titleSet) {
@@ -227,17 +232,19 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
         pre.appendChild(precmd);
 
         //create palette for subpictures
-        palette.sprintf("palette%d.yuv",l_track->getnumTitle());
-        palette= locateLocal("tmp", "k9copy/k9" +palette);
-        QFile file(palette);
-        if ( file.open( IO_WriteOnly ) ) {
-            QTextStream stream( &file );
-            for (j=0;j<16;j++) {
-                l_track->getpalette(j,c);
-                stream << c+"\n";
-            }
-            file.close();
+        KTempFile *paletteFile=new KTempFile(locateLocal("tmp", "k9copy/k9p"), ".yuv");
+        files.append(paletteFile);
+        paletteFile->setAutoDelete(false);
+        palette=paletteFile->name();
+
+        //palette.sprintf("palette%d.yuv",l_track->getnumTitle());
+        //palette= locateLocal("tmp", "k9copy/k9" +palette);
+        QTextStream stream( paletteFile->file() );
+        for (j=0;j<16;j++) {
+            l_track->getpalette(j,c);
+            stream << c+"\n";
         }
+        paletteFile->file()->close();
 
         t=xml->createElement("titles");
         titleSet.appendChild(t);
@@ -388,7 +395,7 @@ void k9DVDAuthor::author() {
 
     bool burnOk=false;
     //nettoyage du répertoire de sortie
-    clearOutput(workDir+"dvd");
+    k9Tools::clearOutput(workDir+"dvd");
 
     time = new QTime(0,0);
     time->start();
@@ -397,6 +404,12 @@ void k9DVDAuthor::author() {
     progress->setCaption(i18n("k9Copy - Backup progression"));
     progress->setProgress(0,100);
     //progress->show();
+
+    m_xml=new KTempFile(locateLocal("tmp", "k9copy/k9a"),".xml");
+
+    m_inject=new KTempFile(locateLocal("tmp", "k9copy/k9v"),".inj");
+    inject=m_inject->name();
+
     if (!cancelled && !error)
         createXML();
 //    if (error || cancelled)
@@ -406,7 +419,7 @@ void k9DVDAuthor::author() {
     if (!cancelled  && !error) {
         QString c("dvdauthor");
         proc=progress->getProcess();//  new QProcess(c,0);
-        *proc << c << "-x" << locateLocal("tmp", "k9copy/k9author.xml");
+        *proc << c << "-x" <<  m_xml->name();  //locateLocal("tmp", "k9copy/k9author.xml");
         connect( proc, SIGNAL(receivedStderr(KProcess *, char *, int)),
                  this, SLOT(DVDAuthorStderr(KProcess *, char *, int )) );
         connect( proc, SIGNAL(receivedStdout(KProcess *, char *, int )),
@@ -443,6 +456,10 @@ void k9DVDAuthor::author() {
     }
 
     delete time;
+    m_xml->file()->remove();
+    m_inject->file()->remove();
+    delete m_inject;
+    delete m_xml;
 }
 
 
@@ -507,6 +524,13 @@ void k9DVDAuthor::DVDAuthorStderr(KProcess *proc, char *buffer, int buflen ) {
         }
     }
 
+    pos=m_stderr.find("INFOIMAGE:");
+    if (pos!=-1) {
+       progress->setImage(m_stderr.mid(pos+10));
+    } 
+
+
+
 }
 
 void k9DVDAuthor::DVDAuthorStdout(KProcess *proc, char *buffer, int buflen) {
@@ -527,25 +551,6 @@ void k9DVDAuthor::stopProcess() {
     cancelled=true;
 }
 
-void k9DVDAuthor::clearOutput(QString name) {
-    QDir dir(name);
-    //delete files in directory
-    QStringList lst = dir.entryList( "*",QDir::Files |QDir::Hidden );
-    for ( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
-        QString c(( *it ).latin1() );
-        dir.remove (c);
-    }
-    //scanning subdir
-    QStringList lstdir = dir.entryList( "*",QDir::Dirs );
-    for ( QStringList::Iterator it = lstdir.begin(); it != lstdir.end(); ++it ) {
-        QString c(( *it ).latin1() );
-        if ((c!=".") && c!="..") {
-            clearOutput(dir.absFilePath(c));
-            dir.rmdir(c);
-        }
-    }
-
-}
 /** Read property of bool burnDVD. */
 const bool& k9DVDAuthor::getburnDVD() {
     return burnDVD;

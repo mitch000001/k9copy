@@ -412,8 +412,13 @@ void k9MP4Enc::getStderr(KProcess *proc, char *buffer, int buflen) {
         m_progress->setremain(time2.toString("hh:mm:ss") +" / " +m_remain);
 
         m_progress->setProgress((int)m_percent);
-    } else
-        qDebug(m_stderr);
+    } else {
+        pos=m_stderr.find("INFOIMAGE:");
+        if (pos!=-1) {
+            m_progress->setImage(m_stderr.mid(pos+10));
+        } else
+            qDebug(m_stderr);
+    }
 
 }
 

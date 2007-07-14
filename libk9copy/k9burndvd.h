@@ -63,7 +63,12 @@ private:
     bool useK3b;
     bool autoBurn;
     bool iso;
+    bool m_cdrkit;
     void burnWithGrowisofs();
+    void burnWithGenisoimage();
+    void getGenisoimageCmd(k9Process *proc,QString _fileName,bool _printSize);
+    void getWodimCmd(k9Process *proc);
+
     void burnWithK3b();
     const QString &getImageSize();
     QString imageSize;

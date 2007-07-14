@@ -71,6 +71,7 @@ private slots:
     void optionsConfigureKeys();
     void optionsConfigureToolbars();
     void newToolbarConfig();
+    void addMp4TitleOptions();
 public slots:
     void fileOpen();
     void preferences();

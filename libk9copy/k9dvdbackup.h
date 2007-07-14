@@ -124,7 +124,6 @@ private:
     k9Vobu * remapVobu(uint32_t *value);
     k9Vobu * remapOffset(uint32_t _sector,uint32_t *offset,int dir);
     k9BackupDlg *backupDlg;
-    void clearOutput(QString name);
     uint  getLastCell(k9CellCopyList *_cellCopyList,uint _index);
     void calcFactor();
     void forceFactor(double _factor);

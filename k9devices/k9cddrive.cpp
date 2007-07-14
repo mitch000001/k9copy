@@ -12,6 +12,7 @@
 #include "k9common.h"
 #include "k9cddrive.h"
 #include "k9config.h"
+#include "k9tools.h"
 
 #ifdef HAVE_HAL
 #include "k9halconnection.h"
@@ -128,7 +129,10 @@ void k9CdDrives::scanDrives() {
 
 void k9CdDrives::eject(const QString & device) {
     KProcess *process =new KProcess();
-    *process <<"eject" << device;
+    if (k9Tools::checkProgram("kdeeject"))
+        *process <<"kdeeject" << device;
+    else    
+        *process <<"eject" << device;
     process->start();
     process->wait();
     delete process;

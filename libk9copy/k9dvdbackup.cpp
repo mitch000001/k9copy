@@ -39,6 +39,7 @@
 #include "k9backupdlg.h"
 #include "dvdread.h"
 #include "k9script.h"
+#include "k9tools.h"
 
 #define BUF_SECS	1024
 
@@ -1551,26 +1552,6 @@ void k9DVDBackup::updateVob(k9CellList *cellLst) {
     }
 }
 
-void k9DVDBackup::clearOutput(QString name) {
-    QDir dir(name);
-    
-    //delete files in directory
-    QStringList lst = dir.entryList( "*",QDir::Files |QDir::Hidden );
-    for ( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
-        QString c(( *it ).latin1() );
-        dir.remove (c);
-    }
-    //scanning subdir
-    QStringList lstdir = dir.entryList( "*",QDir::Dirs );
-    for ( QStringList::Iterator it = lstdir.begin(); it != lstdir.end(); ++it ) {
-        QString c(( *it ).latin1() );
-        if ((c!=".") && c!="..") {
-            clearOutput(dir.absFilePath(c));
-            dir.rmdir(c);
-        }
-    }
-
-}
 
 uint k9DVDBackup::getLastCell(k9CellCopyList *_cellCopyList, uint _index) {
 
@@ -1661,7 +1642,7 @@ void k9DVDBackup::execute() {
 
     QDir root("/");
     root.mkdir(output);
-    clearOutput(output);
+    k9Tools::clearOutput(output);
 
     QDir dir(output);
     dir.mkdir("VIDEO_TS");

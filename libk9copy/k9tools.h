@@ -23,7 +23,7 @@ private:
     ~k9Tools(){};
 public: 
    static bool checkProgram(QString _progName);
-
+   static void clearOutput(QString name);
 };
 
 #endif
