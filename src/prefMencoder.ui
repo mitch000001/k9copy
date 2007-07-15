@@ -196,9 +196,6 @@ audio bitrate</string>
                                 <verstretch>0</verstretch>
                             </sizepolicy>
                         </property>
-                        <property name="text">
-                            <string>Supprimer</string>
-                        </property>
                         <property name="accel">
                             <string></string>
                         </property>
@@ -217,12 +214,6 @@ audio bitrate</string>
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                             </sizepolicy>
-                        </property>
-                        <property name="text">
-                            <string>A&amp;jouter</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+J</string>
                         </property>
                         <property name="stdItem" stdset="0">
                             <number>27</number>
@@ -488,12 +479,6 @@ audio bitrate</string>
                                 <verstretch>0</verstretch>
                             </sizepolicy>
                         </property>
-                        <property name="text">
-                            <string>Supprimer</string>
-                        </property>
-                        <property name="accel">
-                            <string></string>
-                        </property>
                         <property name="stdItem" stdset="0">
                             <number>28</number>
                         </property>
@@ -509,12 +494,6 @@ audio bitrate</string>
                                 <horstretch>0</horstretch>
                                 <verstretch>0</verstretch>
                             </sizepolicy>
-                        </property>
-                        <property name="text">
-                            <string>Ajouter</string>
-                        </property>
-                        <property name="accel">
-                            <string></string>
                         </property>
                         <property name="stdItem" stdset="0">
                             <number>27</number>
@@ -657,12 +636,6 @@ audio bitrate</string>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                 </sizepolicy>
-            </property>
-            <property name="text">
-                <string>&amp;Réinitialiser</string>
-            </property>
-            <property name="accel">
-                <string>Alt+R</string>
             </property>
             <property name="stdItem" stdset="0">
                 <number>21</number>

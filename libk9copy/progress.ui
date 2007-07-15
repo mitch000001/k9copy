@@ -106,9 +106,6 @@
             <property name="cursor">
                 <cursor>0</cursor>
             </property>
-            <property name="text">
-                <string>Annu&amp;ler</string>
-            </property>
             <property name="accel">
                 <string>Alt+L</string>
             </property>

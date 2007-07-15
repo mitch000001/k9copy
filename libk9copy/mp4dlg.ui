@@ -181,9 +181,6 @@
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="text">
-                <string>Annu&amp;ler</string>
-            </property>
             <property name="accel">
                 <string>Alt+L</string>
             </property>

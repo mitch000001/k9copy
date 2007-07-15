@@ -1066,7 +1066,7 @@ clean-metasources:
 	-rm -f  k9mencodercmdgen.moc k9main.moc k9glwidget.moc k9langselect.moc k9titlefactor.moc k9settings.moc kviewmpeg2.moc.cpp k9copy.moc.cpp k9prefdvd.moc k9playbackoptions.moc k9updatefactor.moc k9prefpreview.moc k9prefmpeg4.moc k9mp4title.moc k9prefmencoder.moc
 
 #>+ 2
-KDE_DIST=viewmpeg2.ui configDlg.ui prefMPEG4.ui mencoderCmdGen.ui k9mainw.ui k9savepic.cpp titlefactor.ui k9copyui.rc hi16-app-k9copy.png hi48-app-k9copy.png prefDVD.ui hi32-app-k9copy.png k9copy_open.desktop Makefile.in prefpreview.ui k9mainwsov.ui prefMencoder.ui langselectw.ui mencoder.xml k9savepic.h k9copy.desktop anim.gif Makefile.am playbackoptionsw.ui 
+KDE_DIST=viewmpeg2.ui configDlg.ui prefMPEG4.ui mencoderCmdGen.ui k9mainw.ui titlefactor.ui k9copyui.rc hi16-app-k9copy.png pellicule.png hi48-app-k9copy.png prefDVD.ui hi32-app-k9copy.png k9copy_open.desktop Makefile.in prefpreview.ui k9mainwsov.ui prefMencoder.ui langselectw.ui mencoder.xml k9copy.desktop anim.gif Makefile.am playbackoptionsw.ui 
 
 #>+ 14
 clean-ui:

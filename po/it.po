@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-21 09:09+0200\n"
-"PO-Revision-Date: 2007-02-12 01:05+0100\n"
+"PO-Revision-Date: 2007-06-14 11:20+0200\n"
 "Last-Translator: FiNeX <finex@finex.org>\n"
 "Language-Team:  <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -195,7 +195,6 @@ msgid "Create MPEG-4"
 msgstr "Crea MPEG-4 "
 
 #: src/k9copy.cpp:94
-#, fuzzy
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -220,12 +219,10 @@ msgid "A DVD Backup tool for KDE"
 msgstr "Un programma per il backup dei DVD per KDE"
 
 #: src/main.cpp:35
-#, fuzzy
 msgid "input device"
 msgstr "Leggi da"
 
 #: src/main.cpp:37
-#, fuzzy
 msgid "output device"
 msgstr "Registra su"
 
@@ -259,7 +256,7 @@ msgstr "fattore di riduzione"
 
 #: src/main.cpp:45
 msgid "size of the cell to be copied"
-msgstr ""
+msgstr "dimensione della cella da copiare"
 
 #: src/main.cpp:46
 msgid "total size of selected titles"
@@ -279,7 +276,7 @@ msgstr "capitolo selezionato"
 
 #: src/main.cpp:50
 msgid "cell number in selected chapter"
-msgstr ""
+msgstr "numero cella nel capitolo selezionato"
 
 #: src/main.cpp:51
 msgid "status file name"
@@ -379,9 +376,8 @@ msgid "Open ISO Image"
 msgstr "Apri immagine ISO"
 
 #: src/k9main.cpp:1138
-#, fuzzy
 msgid "Open DVD folder"
-msgstr "Esamina DVD"
+msgstr "Apri cartella DVD"
 
 #: src/k9main.cpp:1247
 msgid "none"
@@ -528,559 +524,559 @@ msgstr "Non specificato"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Afar"
-msgstr ""
+msgstr "Afar"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Abkhazian"
-msgstr ""
+msgstr "Abkhazian"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Afrikaans"
-msgstr ""
+msgstr "Afrikaans"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Amharic"
-msgstr ""
+msgstr "Amharic"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Arabic"
-msgstr ""
+msgstr "Arabic"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Assamese"
-msgstr ""
+msgstr "Assamese"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Aymara"
-msgstr ""
+msgstr "Aymara"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Azerbaijani"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Bashkir"
-msgstr ""
+msgstr "Bashkir"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Byelorussian"
-msgstr ""
+msgstr "Byelorussian"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgarian"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Bihari"
-msgstr ""
+msgstr "Bihari"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Bislama"
-msgstr ""
+msgstr "Bislama"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Bengali; Bangla"
-msgstr ""
+msgstr "Bengali; Bangla"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Tibetan"
-msgstr ""
+msgstr "Tibetan"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Breton"
-msgstr ""
+msgstr "Breton"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Catalan"
-msgstr ""
+msgstr "Catalan"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Corsican"
-msgstr ""
+msgstr "Corsican"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Czech"
-msgstr ""
+msgstr "Czech"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Welsh"
-msgstr ""
+msgstr "Welsh"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Dansk"
-msgstr ""
+msgstr "Dansk"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Deutsch"
-msgstr ""
+msgstr "Deutsch"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Bhutani"
-msgstr ""
+msgstr "Bhutani"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Greek"
-msgstr ""
+msgstr "Greek"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "English"
-msgstr ""
+msgstr "English"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Espanol"
-msgstr ""
+msgstr "Espanol"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Estonian"
-msgstr ""
+msgstr "Estonian"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Basque"
-msgstr ""
+msgstr "Basque"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Persian"
-msgstr ""
+msgstr "Persian"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Suomi"
-msgstr ""
+msgstr "Suomi"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Fiji"
-msgstr ""
+msgstr "Fiji"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Faroese"
-msgstr ""
+msgstr "Faroese"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Francais"
-msgstr ""
+msgstr "Francais"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Frisian"
-msgstr ""
+msgstr "Frisian"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Gaelic"
-msgstr ""
+msgstr "Gaelic"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Scots Gaelic"
-msgstr ""
+msgstr "Scots Gaelic"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Galician"
-msgstr ""
+msgstr "Galician"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Guarani"
-msgstr ""
+msgstr "Guarani"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Hausa"
-msgstr ""
+msgstr "Hausa"
 
 #: libk9copy/k9dvd.cpp:234 libk9copy/k9dvd.cpp:236
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebrew"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Hrvatski"
-msgstr ""
+msgstr "Hrvatski"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Magyar"
-msgstr ""
+msgstr "Magyar"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Armenian"
-msgstr ""
+msgstr "Armenian"
 
 #: libk9copy/k9dvd.cpp:235
 msgid "Interlingua"
-msgstr ""
+msgstr "Interlingua"
 
 #: libk9copy/k9dvd.cpp:235
 msgid "Indonesian"
-msgstr ""
+msgstr "Indonesian"
 
 #: libk9copy/k9dvd.cpp:235
 msgid "Interlingue"
-msgstr ""
+msgstr "Interlingue"
 
 #: libk9copy/k9dvd.cpp:235
 msgid "Inupiak"
-msgstr ""
+msgstr "Inupiak"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Islenska"
-msgstr ""
+msgstr "Islenska"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Italiano"
-msgstr ""
+msgstr "Italiano"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Inuktitut"
-msgstr ""
+msgstr "Inuktitut"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Japanese"
-msgstr ""
+msgstr "Japanese"
 
 #: libk9copy/k9dvd.cpp:237 libk9copy/k9dvd.cpp:252
 msgid "Yiddish"
-msgstr ""
+msgstr "Yiddish"
 
 #: libk9copy/k9dvd.cpp:237
 msgid "Javanese"
-msgstr ""
+msgstr "Javanese"
 
 #: libk9copy/k9dvd.cpp:237
 msgid "Georgian"
-msgstr ""
+msgstr "Georgian"
 
 #: libk9copy/k9dvd.cpp:237
 msgid "Kazakh"
-msgstr ""
+msgstr "Kazakh"
 
 #: libk9copy/k9dvd.cpp:237
 msgid "Greenlandic"
-msgstr ""
+msgstr "Greenlandic"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Cambodian"
-msgstr ""
+msgstr "Cambodian"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Kannada"
-msgstr ""
+msgstr "Kannada"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Korean"
-msgstr ""
+msgstr "Korean"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Kashmiri"
-msgstr ""
+msgstr "Kashmiri"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Kurdish"
-msgstr ""
+msgstr "Kurdish"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Kirghiz"
-msgstr ""
+msgstr "Kirghiz"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Latin"
-msgstr ""
+msgstr "Latin"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Lingala"
-msgstr ""
+msgstr "Lingala"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Laothian"
-msgstr ""
+msgstr "Laothian"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Lithuanian"
-msgstr ""
+msgstr "Lithuanian"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Latvian, Lettish"
-msgstr ""
+msgstr "Latvian, Lettish"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Malagasy"
-msgstr ""
+msgstr "Malagasy"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Maori"
-msgstr ""
+msgstr "Maori"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Macedonian"
-msgstr ""
+msgstr "Macedonian"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Malayalam"
-msgstr ""
+msgstr "Malayalam"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Mongolian"
-msgstr ""
+msgstr "Mongolian"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Moldavian"
-msgstr ""
+msgstr "Moldavian"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Marathi"
-msgstr ""
+msgstr "Marathi"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Malay"
-msgstr ""
+msgstr "Malay"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Maltese"
-msgstr ""
+msgstr "Maltese"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Burmese"
-msgstr ""
+msgstr "Burmese"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Nauru"
-msgstr ""
+msgstr "Nauru"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Nepali"
-msgstr ""
+msgstr "Nepali"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Nederlands"
-msgstr ""
+msgstr "Nederlands"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Norsk"
-msgstr ""
+msgstr "Norsk"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Occitan"
-msgstr ""
+msgstr "Occitan"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Oromo"
-msgstr ""
+msgstr "Oromo"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Oriya"
-msgstr ""
+msgstr "Oriya"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Punjabi"
-msgstr ""
+msgstr "Punjabi"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Polish"
-msgstr ""
+msgstr "Polish"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Pashto, Pushto"
-msgstr ""
+msgstr "Pashto, Pushto"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Portugues"
-msgstr ""
+msgstr "Portugues"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Quechua"
-msgstr ""
+msgstr "Quechua"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Rhaeto-Romance"
-msgstr ""
+msgstr "Rhaeto-Romance"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Kirundi"
-msgstr ""
+msgstr "Kirundi"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Romanian"
-msgstr ""
+msgstr "Romanian"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Russian"
-msgstr ""
+msgstr "Russian"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Kinyarwanda"
-msgstr ""
+msgstr "Kinyarwanda"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Sanskrit"
-msgstr ""
+msgstr "Sanskrit"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Sindhi"
-msgstr ""
+msgstr "Sindhi"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Sangho"
-msgstr ""
+msgstr "Sangho"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Serbo-Croatian"
-msgstr ""
+msgstr "Serbo-Croatian"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Sinhalese"
-msgstr ""
+msgstr "Sinhalese"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Slovak"
-msgstr ""
+msgstr "Slovak"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Slovenian"
-msgstr ""
+msgstr "Slovenian"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Samoan"
-msgstr ""
+msgstr "Samoan"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Shona"
-msgstr ""
+msgstr "Shona"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Somali"
-msgstr ""
+msgstr "Somali"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Albanian"
-msgstr ""
+msgstr "Albanian"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Serbian"
-msgstr ""
+msgstr "Serbian"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Siswati"
-msgstr ""
+msgstr "Siswati"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Sesotho"
-msgstr ""
+msgstr "Sesotho"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Sundanese"
-msgstr ""
+msgstr "Sundanese"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Svenska"
-msgstr ""
+msgstr "Svenska"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Swahili"
-msgstr ""
+msgstr "Swahili"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Tamil"
-msgstr ""
+msgstr "Tamil"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Telugu"
-msgstr ""
+msgstr "Telugu"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Tajik"
-msgstr ""
+msgstr "Tajik"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Thai"
-msgstr ""
+msgstr "Thai"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Tigrinya"
-msgstr ""
+msgstr "Tigrinya"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Turkmen"
-msgstr ""
+msgstr "Turkmen"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagalog"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Setswana"
-msgstr ""
+msgstr "Setswana"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Tonga"
-msgstr ""
+msgstr "Tonga"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Turkish"
-msgstr ""
+msgstr "Turkish"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Tsonga"
-msgstr ""
+msgstr "Tsonga"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Tatar"
-msgstr ""
+msgstr "Tatar"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Twi"
-msgstr ""
+msgstr "Twi"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Uighur"
-msgstr ""
+msgstr "Uighur"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainian"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Urdu"
-msgstr ""
+msgstr "Urdu"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Uzbek"
-msgstr ""
+msgstr "Uzbek"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamese"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Volapuk"
-msgstr ""
+msgstr "Volapuk"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Wolof"
-msgstr ""
+msgstr "Wolof"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Xhosa"
-msgstr ""
+msgstr "Xhosa"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Yoruba"
-msgstr ""
+msgstr "Yoruba"
 
 #: libk9copy/k9dvd.cpp:252
 msgid "Zhuang"
-msgstr ""
+msgstr "Zhuang"
 
 #: libk9copy/k9dvd.cpp:253
 msgid "Chinese"
-msgstr ""
+msgstr "Chinese"
 
 #: libk9copy/k9dvd.cpp:253
 msgid "Zulu"
-msgstr ""
+msgstr "Zulu"
 
 #: libk9copy/k9dvd.cpp:349
 msgid "Can't open main ifo!\n"
@@ -1108,9 +1104,8 @@ msgid "Encoding %1"
 msgstr "Codifica %1"
 
 #: libk9copy/k9mp4enc.cpp:195
-#, fuzzy
 msgid "MPEG-4 Encoding cancelled"
-msgstr "Autoring (Creazione dei menù) annullata"
+msgstr "Codifica MPEG-4 annullata"
 
 #: libk9copy/k9mp4enc.cpp:198
 msgid "Error while running mencoder :"
@@ -1205,14 +1200,14 @@ msgid "k9Copy"
 msgstr "k9copy"
 
 #: debug/libk9copy/progress.cpp:106 debug/src/progress.cpp:81 rc.cpp:207
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Alt+C"
-msgstr "Alt+B"
+msgstr "Alt+C"
 
 #: debug/libk9copy/mp4dlg.cpp:120 rc.cpp:215
 #, no-c-format
 msgid "k9Copy - transcoding"
-msgstr ""
+msgstr "k9Copy - transcodifica"
 
 #: debug/libk9copy/mp4dlg.cpp:121 rc.cpp:218
 #, no-c-format
@@ -1225,19 +1220,19 @@ msgid "Annu&ler"
 msgstr "Annu&lla"
 
 #: debug/libk9copy/mp4dlg.cpp:123 rc.cpp:224
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Alt+L"
-msgstr "Alt+A"
+msgstr "Alt+L"
 
 #: debug/libk9copy/mp4dlg.cpp:128 rc.cpp:231
 #, no-c-format
 msgid "fps"
-msgstr ""
+msgstr "fps"
 
 #: debug/libk9copy/mp4dlg.cpp:130 rc.cpp:237
 #, no-c-format
 msgid "Bitrate"
-msgstr ""
+msgstr "Bitrate"
 
 #: debug/libk9copy/mp4dlg.cpp:131 debug/src/k9mainw.cpp:106
 #: debug/src/k9mainw.cpp:299 rc.cpp:32 rc.cpp:240
@@ -1298,9 +1293,8 @@ msgid "k9DVD"
 msgstr "k9DVD"
 
 #: debug/libk9copy/k9burndvd.moc.cpp:34 debug/libk9copy/k9burndvd.moc.cpp:42
-#, fuzzy
 msgid "k9BurnDVD"
-msgstr "k9DVD"
+msgstr "k9BurnDVD"
 
 #: debug/src/viewmpeg2.cpp:631 rc.cpp:3
 #, no-c-format
@@ -1355,7 +1349,7 @@ msgstr "Registra su"
 #: debug/src/k9mainw.cpp:293 rc.cpp:14
 #, no-c-format
 msgid "@"
-msgstr ""
+msgstr "@"
 
 #: debug/src/k9mainw.cpp:294 rc.cpp:17
 #, no-c-format
@@ -1365,7 +1359,7 @@ msgstr "Leggi da"
 #: debug/src/k9mainw.cpp:297 debug/src/prefMPEG4.cpp:158 rc.cpp:23 rc.cpp:143
 #, no-c-format
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: debug/src/k9mainw.cpp:300 rc.cpp:38
 #, no-c-format
@@ -1375,12 +1369,12 @@ msgstr "&Mantieni i menù originali"
 #: debug/src/k9mainw.cpp:301 debug/src/prefMPEG4.cpp:157 rc.cpp:41 rc.cpp:140
 #, no-c-format
 msgid "Alt+K"
-msgstr "Alt+K"
+msgstr "Alt+M"
 
 #: debug/src/k9mainw.cpp:302 rc.cpp:44
 #, no-c-format
 msgid "Default language"
-msgstr "Lingua predefinita"
+msgstr "XLingua predefinita"
 
 #: debug/src/k9mainw.cpp:303 rc.cpp:47
 #, no-c-format
@@ -1393,9 +1387,9 @@ msgid "Selected Titles"
 msgstr "Titoli selezionati"
 
 #: debug/src/k9mainw.cpp:308 rc.cpp:35
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "DVD playback options"
-msgstr "<b>Opzioni del DVD</b>"
+msgstr "Opzioni del DVD"
 
 #: debug/src/k9mainw.cpp:310 rc.cpp:58
 #, no-c-format
@@ -1410,7 +1404,7 @@ msgstr "D&VD"
 #: debug/src/prefDVD.cpp:89 rc.cpp:89
 #, no-c-format
 msgid "prefDVD"
-msgstr "Esamina DVD"
+msgstr "prefDVD"
 
 #: debug/src/prefDVD.cpp:90 rc.cpp:92
 #, no-c-format
@@ -1441,7 +1435,7 @@ msgstr "Dimensione DVD"
 #: rc.cpp:152
 #, no-c-format
 msgid "Form1"
-msgstr ""
+msgstr "Form1"
 
 #: debug/src/prefMPEG4.cpp:146 rc.cpp:113
 #, no-c-format
@@ -1451,7 +1445,7 @@ msgstr "Codec video"
 #: debug/src/prefMPEG4.cpp:147 rc.cpp:116
 #, no-c-format
 msgid "Audio bitrate"
-msgstr ""
+msgstr "Bitrate audio"
 
 #: debug/src/prefMPEG4.cpp:149 rc.cpp:122
 #, no-c-format
@@ -1459,14 +1453,14 @@ msgid "File size"
 msgstr "Dimensione file"
 
 #: debug/src/prefMPEG4.cpp:151 rc.cpp:128
-#, fuzzy, no-c-format
+#, no-c-format
 msgid " mb"
-msgstr "mb"
+msgstr " mb"
 
 #: debug/src/prefMPEG4.cpp:152 rc.cpp:131
 #, no-c-format
 msgid "640"
-msgstr ""
+msgstr "640"
 
 #: debug/src/prefMPEG4.cpp:156 rc.cpp:137
 #, no-c-format
@@ -1476,12 +1470,12 @@ msgstr "&mantieni le proporzioni"
 #: debug/src/prefMPEG4.cpp:160 rc.cpp:146
 #, no-c-format
 msgid "XviD"
-msgstr ""
+msgstr "XviD"
 
 #: debug/src/prefMPEG4.cpp:161 rc.cpp:149
 #, no-c-format
 msgid "lavc MPEG4"
-msgstr ""
+msgstr "lavc MPEG4"
 
 #: debug/src/prefMencoder.cpp:33 debug/src/prefMencoder.cpp:85 rc.cpp:155
 #, no-c-format
@@ -1491,7 +1485,7 @@ msgstr "Etichetta"
 #: debug/src/prefMencoder.cpp:35 debug/src/prefMencoder.cpp:86 rc.cpp:158
 #, no-c-format
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: debug/src/k9main.moc.cpp:34 debug/src/k9main.moc.cpp:42
 msgid "k9DVDListItem"
@@ -1521,5 +1515,5 @@ msgstr "A&zioni"
 #: rc.cpp:246
 #, no-c-format
 msgid "Actions ToolBar"
-msgstr "Barra strumenti Azioni"
+msgstr "Actions ToolBar"
 

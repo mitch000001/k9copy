@@ -58,7 +58,7 @@
                             <cstring>ck2passes</cstring>
                         </property>
                         <property name="text">
-                            <string>&amp;2 passes</string>
+                            <string>&amp;2 pass</string>
                         </property>
                         <property name="accel">
                             <string>Alt+2</string>

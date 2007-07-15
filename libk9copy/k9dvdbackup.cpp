@@ -1671,7 +1671,7 @@ void k9DVDBackup::execute() {
     int lastCell;
     calcFactor();
 
-    //VTSList is sorted by size, so it is easyer to ajust the compression factor
+    //VTSList is sorted by size, so it is easier to ajust the compression factor
     for(uint iTS=0;iTS<cellCopyList->VTSList.count() &&(!error);iTS++) {
         k9CellCopyVTS *VTS=cellCopyList->VTSList.at(iTS);
         //loop on each cell from the titleset

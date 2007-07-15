@@ -361,20 +361,22 @@ int k9vamps::check_video_packet (uchar *ptr) {
 
     if (ptr [7]) {
         if ((ptr [7] & 0xc0) != 0xc0)
-           fatal ("First video packet in sequence starting at %llu misses PTS or DTS, flags=%02x", rtell (ptr), ptr [7]);
-
-        sequence_header_code  = (uint32_t) (ptr [6 + 3 + ptr [8] + 0]) << 24;
-        sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 1]) << 16;
-        sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 2]) <<  8;
-        sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 3]);
-
-        if (sequence_header_code == 0x000001b3) {
-            rc = 1;
-        } else {
-            //fprintf (stderr, "Start of GOP at %llu not on sector boundary\n",
-            //         rtell (ptr + 6 + 3 + ptr [8]));
-            sequence_headers++;
+           qDebug (QString("First video packet in sequence starting at %1 misses PTS or DTS, flags=%2").arg(rtell (ptr)).arg(ptr [7]));
+        else {
+            sequence_header_code  = (uint32_t) (ptr [6 + 3 + ptr [8] + 0]) << 24;
+            sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 1]) << 16;
+            sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 2]) <<  8;
+            sequence_header_code |= (uint32_t) (ptr [6 + 3 + ptr [8] + 3]);
+    
+            if (sequence_header_code == 0x000001b3) {
+                rc = 1;
+            } else {
+                //fprintf (stderr, "Start of GOP at %llu not on sector boundary\n",
+                //         rtell (ptr + 6 + 3 + ptr [8]));
+                sequence_headers++;
+            }
         }
+        
     }
 
     pad_packet_length = 0;
@@ -391,10 +393,11 @@ int k9vamps::check_video_packet (uchar *ptr) {
 
         if (pad_packet_start_code != 0x000001be)
             qDebug (QString("Bad padding packet start code at %1: %2").arg(rtell (ptr + vid_packet_length)).arg(pad_packet_start_code));
-
-        pad_packet_length  = ptr [4] << 8;
-        pad_packet_length |= ptr [5];
-        pad_packet_length += 6;
+        else {
+            pad_packet_length  = ptr [4] << 8;
+            pad_packet_length |= ptr [5];
+            pad_packet_length += 6;
+        }
     }
 
     // length of video packet plus padding packet must always match sector size

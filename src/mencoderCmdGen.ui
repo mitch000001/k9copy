@@ -57,12 +57,6 @@
                     <property name="name">
                         <cstring>buttonOk</cstring>
                     </property>
-                    <property name="text">
-                        <string>&amp;OK</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
                     <property name="autoDefault">
                         <bool>true</bool>
                     </property>
@@ -76,12 +70,6 @@
                 <widget class="KPushButton">
                     <property name="name">
                         <cstring>buttonCancel</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Annu&amp;ler</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+L</string>
                     </property>
                     <property name="autoDefault">
                         <bool>true</bool>
