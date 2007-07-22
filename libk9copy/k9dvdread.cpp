@@ -11,9 +11,11 @@
 //
 #include "k9dvdread.h"
 #include "dvdread.h"
+#include "k9ifo2.h"
 
 k9DVDRead::k9DVDRead(){
 	m_dvd=NULL;
+        ifos.setAutoDelete(true);
 	files.setAutoDelete(true);
 }
 
@@ -40,6 +42,25 @@ void k9DVDRead::openDevice(const QString & _device) {
 	m_dvd=DvdreadF()->DVDOpen(_device.latin1());
 	//turn UDF cache off
 	//DVDUDFCacheLevel(m_dvd, 0 );
+        if (m_dvd) {
+            k9Ifo2 *ifoz=new k9Ifo2(this);
+            ifoz->openIFO(0);
+            ifos.append(ifoz);
+            ifo_handle_t *hifoz=ifoz->getIFO();
+            int nrTS= hifoz->vmgi_mat->vmg_nr_of_title_sets;
+    
+            for (int iTS=1 ; iTS<=nrTS;iTS++) {
+                k9Ifo2 *ifo=new k9Ifo2(this);
+                ifo->openIFO(iTS);
+                ifos.append(ifo);
+            }
+        }
+}
+
+k9Ifo2 *k9DVDRead::getIfo(int _num) {
+   k9Ifo2 *ifo=ifos.at(_num);
+
+    return ifo;
 }
 
 QString k9DVDRead::getDiscId() {
@@ -57,6 +78,7 @@ return id;
 void k9DVDRead::close()
 {
 	DvdreadF()->DVDClose(m_dvd);
+        ifos.clear();
 	files.clear();
 	m_dvd=NULL;
 }

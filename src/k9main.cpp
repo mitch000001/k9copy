@@ -1465,13 +1465,13 @@ void k9Main::Clone(QString _input,QString _output)
 
 void k9Main::updateFactor(){
 
-  m_update->updateFactor();
-
+ // m_update->updateFactor();
+  updateFactor_internal();
 }
 
 void k9Main::updateFactor_internal()
 {
-  if (dvd->getopened())
+  if (dvd->getopened() && m_mutex.tryLock())
   {
     updateSelection();
     setDVDSize();
@@ -1483,7 +1483,8 @@ void k9Main::updateFactor_internal()
       changeStatusbar("",sbFactor);
     else
       changeStatusbar( QString::number(dbfactor,'f',2),sbFactor);
-    SelectionChanged( dvd,withMenus());
+    emit SelectionChanged( dvd,withMenus());
+    m_mutex.unlock();
   }
 }
 

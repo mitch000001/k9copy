@@ -30,6 +30,8 @@ typedef struct {
  uint64_t bytesChapters;
 } k9play_st;
 
+
+class k9SaveImage;
 class k9play{
 private:
     int m_title;
@@ -63,7 +65,7 @@ private:
     void insert_nav_pack (int8_t *buf);
     void saveStatus(k9play_st _status);
     void readStatus(k9play_st &_status);
-    void flush();
+    void flush(k9SaveImage &_saveImage);
 public:
     k9play();
 

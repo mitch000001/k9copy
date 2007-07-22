@@ -469,7 +469,7 @@ void k9play::play() {
 		status.sector=pos;
 
                 if (m_useCache) {
-                    flush();
+                    flush(saveImage);
                     delete bufferFile;
                     bufferFile=new KTempFile(locateLocal("tmp", "k9copy/k9p"), "");
                     m_output=bufferFile->file();
@@ -499,7 +499,6 @@ void k9play::play() {
     }
     vamps.setNoData();
     vamps.wait();
-    saveImage.stop();
     /* destroy dvdnav handle */
     dvdnav_close(dvdnav);
 
@@ -512,18 +511,20 @@ void k9play::play() {
 
     }
     if (m_useCache)
-        flush();    
+        flush(saveImage);    
     else {
         m_output->close();
         delete m_output;
     }
+    saveImage.stop();
+
     status.bytesWritten +=vamps.getOutputBytes();
     if (!m_firstPass)
        saveStatus( status);
     delete bufferFile;
 }
 
-void k9play::flush() {
+void k9play::flush(k9SaveImage &_saveImage ) {
     char buffer[DVD_VIDEO_LB_LEN];
     m_output->reset();
     QFile out;
@@ -532,8 +533,10 @@ void k9play::flush() {
         writeOutput(QString("\rINFOPOS: %1 %2").arg(m_pos).arg(m_length));
         m_pos++;
         int l=m_output->readBlock(buffer,DVD_VIDEO_LB_LEN);
-        if (l>0)
+        if (l>0) {
             out.writeBlock(buffer,DVD_VIDEO_LB_LEN);
+            _saveImage.addData((uchar*)buffer,DVD_VIDEO_LB_LEN);
+        }
     }
     m_output->close();
     m_output->remove();

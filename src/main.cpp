@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
         RESTORE(k9Copy);
     } else {
         ac_mmtest();
-        tc_memcpy_init( 0, ac_mmflag());
+        tc_memcpy_init( 1, ac_mmflag());
 
         // no session.. just start up normally
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();

@@ -31,6 +31,8 @@
 #include <kguiitem.h>
 #include <qlabel.h>
 #include <qpainter.h>
+#include <qlayout.h>
+#include "k9drawimage.h"
 
 k9BackupDlg::k9BackupDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
         : backupDlg(parent,name, modal,fl) {
@@ -52,12 +54,18 @@ k9BackupDlg::k9BackupDlg(QWidget* parent, const char* name, bool modal, WFlags f
     m_stop=false;
     m_playmovie=true;
     m_cpt=0;
+    m_wimage=new k9DrawImage(image,0);
+    QGridLayout *l=new QGridLayout(image,1,1);
+    l->addWidget(m_wimage,0,0);
+
 }
 
 void k9BackupDlg::drawPixmap(QImage *_image) {
 	m_count++;
 	if (m_count ==4) {
-
+  
+        m_wimage->setImage(*_image);
+/*
        QPixmap pix(*_image);
         //image->setPixmap(pix);
   	int top,left;
@@ -84,7 +92,7 @@ void k9BackupDlg::drawPixmap(QImage *_image) {
         
         //p.drawImage(left,top,img);
         p.end();
-	
+*/	
 	m_stop=true;
 	}
 }

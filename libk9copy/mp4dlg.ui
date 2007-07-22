@@ -8,9 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>407</width>
-            <height>474</height>
+            <width>416</width>
+            <height>475</height>
         </rect>
+    </property>
+    <property name="cursor">
+        <cursor>3</cursor>
     </property>
     <property name="caption">
         <string>k9Copy - transcoding</string>
@@ -39,6 +42,9 @@
                     <bold>1</bold>
                 </font>
             </property>
+            <property name="cursor">
+                <cursor>3</cursor>
+            </property>
             <property name="text">
                 <string>Encoding</string>
             </property>
@@ -46,6 +52,9 @@
         <widget class="KProgress" row="3" column="0" rowspan="1" colspan="3">
             <property name="name">
                 <cstring>pbProgress</cstring>
+            </property>
+            <property name="cursor">
+                <cursor>3</cursor>
             </property>
         </widget>
         <widget class="QFrame" row="2" column="0" rowspan="1" colspan="3">
@@ -59,6 +68,9 @@
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                 </sizepolicy>
+            </property>
+            <property name="cursor">
+                <cursor>3</cursor>
             </property>
             <property name="frameShape">
                 <enum>NoFrame</enum>
@@ -74,6 +86,9 @@
                     <property name="name">
                         <cstring>lblfps</cstring>
                     </property>
+                    <property name="cursor">
+                        <cursor>3</cursor>
+                    </property>
                     <property name="text">
                         <string></string>
                     </property>
@@ -84,6 +99,9 @@
                 <widget class="QLabel" row="3" column="1">
                     <property name="name">
                         <cstring>lblRemain</cstring>
+                    </property>
+                    <property name="cursor">
+                        <cursor>3</cursor>
                     </property>
                     <property name="text">
                         <string></string>
@@ -96,6 +114,9 @@
                     <property name="name">
                         <cstring>lblsize</cstring>
                     </property>
+                    <property name="cursor">
+                        <cursor>3</cursor>
+                    </property>
                     <property name="text">
                         <string></string>
                     </property>
@@ -103,6 +124,9 @@
                 <widget class="QLabel" row="1" column="1">
                     <property name="name">
                         <cstring>lblbitrate</cstring>
+                    </property>
+                    <property name="cursor">
+                        <cursor>3</cursor>
                     </property>
                     <property name="text">
                         <string></string>
@@ -112,6 +136,9 @@
                     <property name="name">
                         <cstring>textLabel2</cstring>
                     </property>
+                    <property name="cursor">
+                        <cursor>3</cursor>
+                    </property>
                     <property name="text">
                         <string>fps</string>
                     </property>
@@ -119,6 +146,9 @@
                 <widget class="QLabel" row="3" column="0">
                     <property name="name">
                         <cstring>textLabel2_2</cstring>
+                    </property>
+                    <property name="cursor">
+                        <cursor>3</cursor>
                     </property>
                     <property name="text">
                         <string>Elapsed Time</string>
@@ -128,6 +158,9 @@
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
+                    <property name="cursor">
+                        <cursor>3</cursor>
+                    </property>
                     <property name="text">
                         <string>Bitrate</string>
                     </property>
@@ -136,38 +169,14 @@
                     <property name="name">
                         <cstring>textLabel3</cstring>
                     </property>
+                    <property name="cursor">
+                        <cursor>3</cursor>
+                    </property>
                     <property name="text">
                         <string>Size</string>
                     </property>
                 </widget>
             </grid>
-        </widget>
-        <widget class="QLabel" row="1" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>image</cstring>
-            </property>
-            <property name="minimumSize">
-                <size>
-                    <width>0</width>
-                    <height>250</height>
-                </size>
-            </property>
-            <property name="maximumSize">
-                <size>
-                    <width>32767</width>
-                    <height>200</height>
-                </size>
-            </property>
-            <property name="paletteBackgroundColor">
-                <color>
-                    <red>0</red>
-                    <green>0</green>
-                    <blue>0</blue>
-                </color>
-            </property>
-            <property name="scaledContents">
-                <bool>true</bool>
-            </property>
         </widget>
         <widget class="KPushButton" row="5" column="2">
             <property name="name">
@@ -175,17 +184,17 @@
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
-                    <hsizetype>1</hsizetype>
+                    <hsizetype>0</hsizetype>
                     <vsizetype>0</vsizetype>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="accel">
-                <string>Alt+L</string>
+            <property name="cursor">
+                <cursor>0</cursor>
             </property>
             <property name="stdItem" stdset="0">
-                <number>2</number>
+                <number>26</number>
             </property>
         </widget>
         <spacer row="5" column="0" rowspan="1" colspan="2">
@@ -213,15 +222,47 @@
                 <enum>Vertical</enum>
             </property>
             <property name="sizeType">
-                <enum>Expanding</enum>
+                <enum>Fixed</enum>
             </property>
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>55</height>
+                    <height>16</height>
                 </size>
             </property>
         </spacer>
+        <widget class="QLabel" row="1" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>image</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>7</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>0</width>
+                    <height>250</height>
+                </size>
+            </property>
+            <property name="paletteBackgroundColor">
+                <color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+                </color>
+            </property>
+            <property name="cursor">
+                <cursor>3</cursor>
+            </property>
+            <property name="scaledContents">
+                <bool>true</bool>
+            </property>
+        </widget>
     </grid>
 </widget>
 <connections>

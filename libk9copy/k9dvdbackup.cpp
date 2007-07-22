@@ -69,8 +69,8 @@ k9TitleSet::k9TitleSet(int _VTS):QObject(NULL,"") {
 }
 
 k9TitleSet::~k9TitleSet() {
-    ifoTitle->closeIFO();
-    delete ifoTitle;
+    //ifoTitle->closeIFO();
+    //delete ifoTitle;
 }
 
 k9Cell* k9TitleSet::addCell(int _vts,int _pgc, int _vob) {
@@ -167,15 +167,14 @@ void k9DVDBackup::prepareVTS(int _VTS) {
         if (currTS != NULL) {
             startSector = currTS->startSector + currTS->getSize();
         } else {
-            k9Ifo2 kifo(m_dvdread);
-            kifo.openIFO( 0);
-            hifo = kifo.getIFO();
+            k9Ifo2 *kifo;
+            kifo=m_dvdread->getIfo(0);
+            hifo = kifo->getIFO();
             if (!hifo) {
                 seterror( tr2i18n("unable to open VIDEO_TS.IFO"));
                 return;
             }
             startSector= hifo->vmgi_mat->vmg_last_sector+1  ;
-            kifo.closeIFO();
         }
 
         currTS = new k9TitleSet(_VTS);
@@ -204,8 +203,8 @@ void k9DVDBackup::prepareVTS(int _VTS) {
         currTS->lastSector += currTS->menuSize ;
         titleSets.append(currTS);
 
-        k9Ifo2 *kifo =new k9Ifo2(m_dvdread);
-        kifo->openIFO( _VTS);
+        k9Ifo2 *kifo;
+        kifo=m_dvdread->getIfo(_VTS);
         currTS->ifoTitle=kifo;
 
         m_position=0;
@@ -410,9 +409,9 @@ void k9DVDBackup::setOutput(QString _output) {
 uint32_t k9DVDBackup::copyMenu2(int _vts) {
     if (error || !m_withMenu )
         return 0;
-    k9Ifo2 kifo(m_dvdread);
-    kifo.openIFO( _vts);
-    ifo_handle_t *hifo =kifo.getIFO();
+    k9Ifo2 *kifo;
+    kifo=m_dvdread->getIfo( _vts);
+    ifo_handle_t *hifo =kifo->getIFO();
     m_ifo=hifo;
     uint32_t msize=0;
     if (_vts==0)
@@ -421,7 +420,7 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
         msize=hifo->vtsi_mat->vtstt_vobs - hifo->vtsi_mat->vtsi_last_sector -1;
 
     if (msize==0) {
-        kifo.closeIFO();
+        //kifo.closeIFO();
         return 0;
     }
 
@@ -528,7 +527,7 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
     outputFile->close();
     delete outputFile;
     outputFile=NULL;
-    kifo.closeIFO();
+    //kifo.closeIFO();
 
     updateVob(lstCell);
 
@@ -664,9 +663,9 @@ void k9DVDBackup::setDummyPack(uchar *_buffer) {
 
 
 uint32_t k9DVDBackup::findNextVobu(uint32_t _sector) {
-    k9Ifo2 ifo(m_dvdread);
-    ifo.openIFO(currVTS);
-    m_ifo=ifo.getIFO();
+    k9Ifo2 *ifo;
+    ifo = m_dvdread->getIfo(currVTS);
+    m_ifo=ifo->getIFO();
     vobu_admap_t * vobu_admap;
     if (m_copyMenu)
 	vobu_admap = m_ifo->menu_vobu_admap;
@@ -676,11 +675,11 @@ uint32_t k9DVDBackup::findNextVobu(uint32_t _sector) {
     for(uint32_t i = 0; i < length/sizeof(uint32_t); i++) {
         if (vobu_admap->vobu_start_sectors[i]== _sector) {
 	    uint32_t nextVobu=vobu_admap->vobu_start_sectors[i+1];
-	    ifo.closeIFO();
+	    //ifo.closeIFO();
             return nextVobu;
         }
     }
-    ifo.closeIFO();
+    //ifo.closeIFO();
     return 0;
 
 }

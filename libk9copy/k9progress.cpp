@@ -20,11 +20,18 @@
 #include <qpainter.h>
 #include <kstandarddirs.h>
 #include <qmovie.h>
+#include <qlayout.h>
+
+
 
 k9Progress::k9Progress(QWidget* parent, const char* name,const QStringList &args)
 : Progress(parent,name,true,0)
 {
   m_process=new k9Process(this,0);
+  m_wimage=new k9DrawImage(image,0);
+  QGridLayout *l=new QGridLayout(image,1,1);
+  l->addWidget(m_wimage,0,0);
+
   
 }
 
@@ -86,6 +93,10 @@ k9Process* k9Progress::getProcess() const {
 
 
 void k9Progress::setImage(QString _fileName) {
+    m_wimage->setImage(_fileName);
+   
+
+/*
     QPixmap pixmap;
     pixmap.load(_fileName);
 
@@ -102,12 +113,14 @@ void k9Progress::setImage(QString _fileName) {
 
    p.scale(ratio,ratio);
    p.drawPixmap((int)(left/ratio),(int)(top/ratio),pixmap);
+*/
 }
 
 void k9Progress::setMovie(QString _fileName) {
     QMovie mv(_fileName);
     image->setPaletteBackgroundColor(this->paletteBackgroundColor());
     image->setMovie(mv);
+    m_wimage->hide();
 }
 
 

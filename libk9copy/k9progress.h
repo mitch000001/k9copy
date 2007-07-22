@@ -18,6 +18,7 @@
 #include <k9process.h>
 #include <qimage.h>
 #include <qtimer.h>
+#include "k9drawimage.h"
 
 class k9Progress : public Progress
 {
@@ -43,6 +44,7 @@ public slots:
 protected:
   /*$PROTECTED_FUNCTIONS$*/
   k9Process *m_process;
+  k9DrawImage *m_wimage;
   void bCancelClick();
   bool m_canceled;
 protected slots:

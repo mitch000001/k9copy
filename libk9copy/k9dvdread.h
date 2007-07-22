@@ -20,6 +20,7 @@
 */
 
 class k9DVDRead;
+class k9Ifo2;
 
 class k9DVDFile {
 friend class k9DVDRead;
@@ -45,6 +46,7 @@ friend class k9DVDTitle;
 private:
   dvd_reader_t *m_dvd;
   QPtrList <k9DVDFile> files;
+  QPtrList <k9Ifo2> ifos;
 public:
     k9DVDRead();
     ~k9DVDRead();
@@ -52,6 +54,7 @@ public:
     k9DVDFile *openIfo(uint _vts);
     k9DVDFile *openMenu(uint _vts);
     k9DVDFile *openTitle(uint _vts);
+    k9Ifo2 *getIfo(int _num);
     QString getDiscId();
     void close();
     bool opened();

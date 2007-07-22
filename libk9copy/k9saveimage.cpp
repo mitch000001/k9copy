@@ -11,23 +11,18 @@
 //
 #include "k9saveimage.h"
 #include "kdecmpeg2.h"
+#include <stdio.h>
 
 #include <qimage.h>
-#include <qfile.h>
 #include <kstandarddirs.h>
 
 void k9SaveImage::drawImage(QImage *_image) {
     m_cpt++;
-    if (m_cpt >=20) {
-     m_timer.restart();
-     QFile m_stderr;   
-     m_stderr.open(IO_WriteOnly,stderr);
+    if (m_cpt ==3) {
      QString sFileName=m_tempFile->name();
     _image->save(sFileName,"PNG");
      sFileName="\rINFOIMAGE:"+sFileName;
-     m_stderr.writeBlock(sFileName.latin1(),sFileName.length());
-     m_stderr.close();
-     m_cpt=0;
+     fprintf(stderr,sFileName.latin1());
     }
 }
 
@@ -63,10 +58,25 @@ void k9SaveImage::stop() {
 }
 
 void k9SaveImage::addData(uchar *_buffer, uint32_t _size) {
-    m_fifo.enqueue(_buffer,_size);
+    uchar *buffer=_buffer;
+    bool found=false;
+    if (m_timer.elapsed() >4000 ) {
+        for (uint32_t i=0;i<_size ;i+=2048) {
+            if (testFrameType(FrameType_I,buffer)) {
+                found=!found;
+                if (!found)
+                    break;
+            }
+            if (found)
+                m_fifo.enqueue(buffer,2048);
+            buffer+=2048;
+        }
+        m_timer.restart();
+        m_cpt=0;
+    }
 }
 
-bool k9SaveImage::testFrameType(FrameType _type,uchar *_buffer) {
+bool k9SaveImage::testFrameType(eFrameType _type,uchar *_buffer) {
     //offset of frame
     uint start=0x16+_buffer[0x16]+1;
     //PES Length
@@ -92,10 +102,8 @@ void k9SaveImage::run() {
     do {   
         uchar buffer[2048];
         m_fifo.dequeue(buffer,2048);
-        if (m_timer.elapsed() >4000 ) {
-            m_decoder->decode(buffer ,buffer+2048,0);
+        m_decoder->decode(buffer ,buffer+2048,0);
  
-       } 
     } while (!m_stop);
 }
 

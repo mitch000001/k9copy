@@ -24,7 +24,7 @@
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
-typedef enum  { FrameType_B=0x18,FrameType_I=0x08,FrameType_P=0x10,FrameType_D=0x20} FrameType;
+typedef enum  { FrameType_B=0x18,FrameType_I=0x08,FrameType_P=0x10,FrameType_D=0x20} eFrameType;
 
 class kDecMPEG2;
 
@@ -40,7 +40,7 @@ public:
     void addData(uchar *_buffer, uint32_t _size);
 protected:
     void run();
-    bool testFrameType(FrameType _type,uchar *_buffer);
+    bool testFrameType(eFrameType _type,uchar *_buffer);
 public slots:
    void drawImage(QImage*);
 

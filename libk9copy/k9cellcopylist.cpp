@@ -65,16 +65,20 @@ k9CellCopyList::~k9CellCopyList() {}
     \fn k9CellCopyList::fill()
  */
 void k9CellCopyList::fill() {
-    k9Ifo2 kifo(dvdHandle) ,kifoZero(dvdHandle);
+//    k9Ifo2 kifo(dvdHandle) ,kifoZero(dvdHandle);
     ifo_handle_t *hifo,*hifoZero;
-    kifoZero.openIFO( 0);
-    hifoZero=kifoZero.getIFO();
+    k9Ifo2 *kifo,*kifoZero;
+    kifoZero=dvdHandle->getIfo(0);
+    hifoZero=kifoZero->getIFO();
+
+//    kifoZero.openIFO( 0);
 
     int nrTS= hifoZero->vmgi_mat->vmg_nr_of_title_sets;
 
     for (int iTS=1 ; iTS<=nrTS;iTS++) {
-        kifo.openIFO( iTS);
-	hifo=kifo.getIFO();
+        //kifo.openIFO( iTS);
+        kifo=dvdHandle->getIfo(iTS);
+	hifo=kifo->getIFO();
         c_adt_t *c_adt = hifo->vts_c_adt;
         uint32_t length = c_adt->last_byte + 1 - C_ADT_SIZE;
         cell_adr_t *ptr;
@@ -86,9 +90,9 @@ void k9CellCopyList::fill() {
             k9Cell *cell=NULL;
             cell=addCell(iTS,0,i+1,ptr[i].start_sector,ptr[i].last_sector,angleBlock);
         }
-        kifo.closeIFO();
+        //kifo.closeIFO();
     }
-    kifoZero.closeIFO();
+    //kifoZero.closeIFO();
     sortVTSList();
     m_frcinbytes=m_frcoutbytes=m_inbytes=m_outbytes=0;
 }

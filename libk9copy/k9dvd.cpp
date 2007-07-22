@@ -337,10 +337,12 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
         return 2;
     }
 
-    k9Ifo2 kifo_zero(&m_dvd),kifo(&m_dvd);
-    kifo_zero.openIFO( 0);
+//    k9Ifo2 kifo_zero(&m_dvd),kifo(&m_dvd);
+//    kifo_zero.openIFO( 0);
+    k9Ifo2 *kifo_zero= m_dvd.getIfo(0);
+    k9Ifo2 *kifo;
 
-    ifo_zero = kifo_zero.getIFO();
+    ifo_zero = kifo_zero->getIFO();
     if ( !ifo_zero ) {
         c=tr2i18n("Can't open main ifo!\n");
         setError(c);
@@ -360,8 +362,8 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
     for (int ts=1;ts <=m_titlesetCount;ts++) {
         tt_srpt = ifo_zero->tt_srpt;
-        kifo.openIFO(ts);
-        ifo = kifo.getIFO();
+        kifo=m_dvd.getIfo(ts);
+        ifo = kifo->getIFO();
         if (ifo==NULL)
             continue;
         //add the titleset in the titleset list
@@ -614,12 +616,12 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
             }
 
         }
-        kifo.closeIFO();
+        //kifo.closeIFO();
     }
     m_menuSize=0;
     for (j=0;j<100;j++)
         m_menuSize+=menuSizes[j];
-    kifo_zero.closeIFO();
+    //kifo_zero.closeIFO();
 
     if (!_quickScan)
     	delete m_progressDlg;

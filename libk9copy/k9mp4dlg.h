@@ -15,6 +15,9 @@
 #include <qtimer.h>
 #include "mp4dlg.h"
 #include <qimage.h>
+
+class k9DrawImage;
+
 class k9MP4Dlg : public MP4Dlg
 {
   Q_OBJECT
@@ -35,6 +38,8 @@ public:
 signals:
   /*$PUBLIC_SLOTS$*/
   void sigCancel();
+private:
+    k9DrawImage *m_wimage;
 protected:
   /*$PROTECTED_FUNCTIONS$*/
 };

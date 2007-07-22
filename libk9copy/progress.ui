@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>473</width>
-            <height>461</height>
+            <height>467</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -97,7 +97,7 @@
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
-                    <hsizetype>1</hsizetype>
+                    <hsizetype>0</hsizetype>
                     <vsizetype>0</vsizetype>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
@@ -106,11 +106,8 @@
             <property name="cursor">
                 <cursor>0</cursor>
             </property>
-            <property name="accel">
-                <string>Alt+L</string>
-            </property>
             <property name="stdItem" stdset="0">
-                <number>2</number>
+                <number>26</number>
             </property>
         </widget>
         <spacer row="6" column="0" rowspan="1" colspan="2">
@@ -219,12 +216,12 @@
                 <enum>Vertical</enum>
             </property>
             <property name="sizeType">
-                <enum>Expanding</enum>
+                <enum>Fixed</enum>
             </property>
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>90</height>
+                    <height>20</height>
                 </size>
             </property>
         </spacer>

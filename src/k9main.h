@@ -27,6 +27,7 @@
 #include <kfiledialog.h>
 #include <qlistbox.h>
 #include "k9copy.h"
+#include <qmutex.h>
 
 enum  eStreamType {SUB,AUD,VID,NONE,CHAP} ;
 enum  eObjectType {TITLE,CHAPTER,TITLESET,STREAM,ROOT};
@@ -179,6 +180,7 @@ protected:
     QPixmap pxSound;
     QPixmap pxText;
     QPixmap pxChapter;
+    QMutex m_mutex;
     bool updating;
     bool fspFinish;
     long fspAvail;

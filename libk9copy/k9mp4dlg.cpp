@@ -16,10 +16,15 @@
 #include <kprogress.h>
 #include <qpainter.h>
 #include <kstandarddirs.h>
+#include <qlayout.h>
+#include "k9drawimage.h"
 
 k9MP4Dlg::k9MP4Dlg(QWidget* parent, const char* name)
 : MP4Dlg(parent,name, true)
 {
+  m_wimage=new k9DrawImage(image,0);
+  QGridLayout *l=new QGridLayout(image,1,1);
+  l->addWidget(m_wimage,0,0);
 
 }
 
@@ -62,22 +67,7 @@ void k9MP4Dlg::setsize( QString _size) {
 
 
 void k9MP4Dlg::setImage(QString _fileName) {
-    QPixmap pixmap;
-    pixmap.load(_fileName);
-
-    
-    int top,left;
-    QPainter p(image);
-        
-   double wratio=(double)image->width()/(double)pixmap.width();
-   double hratio=(double)image->height()/(double)pixmap.height();
-   double ratio= wratio < hratio ? wratio:hratio;
-
-   top =(int) (image->height() -pixmap.height()*ratio)/2+1;
-   left =(int) (image->width() -pixmap.width()*ratio)/2 +1;
-
-   p.scale(ratio,ratio);
-   p.drawPixmap((int)(left/ratio),(int)(top/ratio),pixmap);
+    m_wimage->setImage(_fileName);
 }
 
 

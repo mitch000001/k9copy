@@ -40,6 +40,9 @@ public:
     void saveIFO();
     ifo_handle_t * getIFO();
     static  void navRead_PCI(pci_t *pci, uchar *buffer);
+    int test;
+
+
 protected:
     QString device;
     QString output;
