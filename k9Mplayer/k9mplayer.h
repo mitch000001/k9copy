@@ -53,6 +53,7 @@ public slots:
   virtual void 		cbSubActivated (int _value);
   virtual void		bUpClick();
   virtual void 		bDownClick();
+  virtual void          bSwitchAudioClick();
 protected:
   /*$PROTECTED_FUNCTIONS$*/
   void resizeEvent ( QResizeEvent * _resiseEvent);

@@ -447,7 +447,7 @@ void k9Main::Copy()
       b.setburnDevice(drive->device);
       closeDVD();
       if (dvd->getDevice()== drive->device)
-        drives.eject(dvd->getDevice());
+        b.setAutoBurn(false);
     }
     else
       b.makeIso(filename);
@@ -652,7 +652,7 @@ void k9Main::addChapters(QListViewItem *_parent,k9DVDTitle *_title)
   {
     ckLvItem *it =new ckLvItem(chapter,this,CHAPTER);
     it->setText(0,i18n("chapter %1").arg(++ch));
-    it->setText(1,i18n("%1 mb").arg((double)(_title->getChapter(i)->getsectors()) /512));
+    it->setText(1,i18n("%1 MB").arg((double)(_title->getChapter(i)->getsectors()) /512));
     it->streamType=CHAP;
     it->obj=_title->getChapter(i);
     chItems.append( it);
@@ -667,7 +667,7 @@ void k9Main::addChapters(QListViewItem *_parent,k9DVDTitle *_title)
       it->setText(0,i18n("chapter %1").arg(++ch));
       it->streamType=CHAP;
       it->obj=title2->getChapter(i);
-      it->setText(1,i18n("%1 mb").arg((double)(title2->getChapter(i)->getsectors()) /512));
+      it->setText(1,i18n("%1 MB").arg((double)(title2->getChapter(i)->getsectors()) /512));
       chItems.append( it);
       it->mainTitle=_title;
     }

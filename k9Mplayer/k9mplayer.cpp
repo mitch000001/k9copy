@@ -30,6 +30,7 @@ K9Mplayer::K9Mplayer(QObject  *parent,const char *name,const QStringList args):M
     slider->setSteps(1, 1);
     bPlay->setPixmap(SmallIcon("player_play"));
     bStop->setPixmap(SmallIcon("player_stop"));
+    bSwitchAudio->setPixmap(SmallIcon("cycle"));
     connect(m_process,SIGNAL(receivedStdout( KProcess*, char*, int )),this,SLOT(receivedStdout( KProcess*, char*, int )));
     m_timer=new QTimer(this);
     connect(m_process,SIGNAL(wroteStdin( KProcess* )),this,SLOT(wroteStdin( KProcess* )));
@@ -112,6 +113,17 @@ void  K9Mplayer::receivedStdout (KProcess *proc, char *buffer, int buflen) {
     if (!m_seeking && m_position>0) {
         slider->setValue(m_position);
     }
+    int audio=0;
+    if (buf.contains("ANS_switch_audio"))
+        sscanf(buf.latin1(),"ANS_switch_audio=%d",&audio);
+    if (audio >0) {
+        for (int i=0;i < m_dvdTitle->getaudioStreamCount();i++) {
+            k9DVDAudioStream * str=m_dvdTitle->getaudioStream(i);
+            if (str->getStreamId() == audio) {
+                cbAudio->setCurrentItem(i);
+            }
+        }
+    }
 }
 
 void K9Mplayer::slotLengthChanged() {}
@@ -145,6 +157,11 @@ void K9Mplayer::bStopClick() {
 void K9Mplayer::bDownClick() {
     sendCmd( QString("volume -1"));
 
+}
+
+void K9Mplayer::bSwitchAudioClick() {
+    sendCmd( QString("switch_audio"));
+    sendCmd( QString("get_property switch_audio"));
 }
 
 void K9Mplayer::bUpClick() {

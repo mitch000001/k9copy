@@ -12,7 +12,7 @@
             <x>0</x>
             <y>0</y>
             <width>559</width>
-            <height>329</height>
+            <height>458</height>
         </rect>
     </property>
     <property name="caption">
@@ -31,65 +31,67 @@
         <property name="spacing">
             <number>3</number>
         </property>
-        <widget class="KSeparator" row="1" column="0">
+        <widget class="QLabel" row="0" column="0">
             <property name="name">
-                <cstring>kSeparator2_2</cstring>
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="text">
+                <string>Audio</string>
             </property>
         </widget>
-        <widget class="QLayoutWidget" row="0" column="0">
+        <widget class="QComboBox" row="0" column="1">
             <property name="name">
-                <cstring>layout2</cstring>
+                <cstring>cbAudio</cstring>
             </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel" row="0" column="2">
-                    <property name="name">
-                        <cstring>textLabel1_2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Subpicture</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Audio</string>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="0" column="1">
-                    <property name="name">
-                        <cstring>cbAudio</cstring>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="0" column="3">
-                    <property name="name">
-                        <cstring>cbSub</cstring>
-                    </property>
-                </widget>
-                <spacer row="0" column="4">
-                    <property name="name">
-                        <cstring>spacer1</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>160</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-            </grid>
         </widget>
-        <widget class="QLayoutWidget" row="4" column="0">
+        <spacer row="0" column="5">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>190</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QComboBox" row="0" column="4">
+            <property name="name">
+                <cstring>cbSub</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="3">
+            <property name="name">
+                <cstring>textLabel1_2</cstring>
+            </property>
+            <property name="text">
+                <string>Subpicture</string>
+            </property>
+        </widget>
+        <widget class="KPushButton" row="0" column="2">
+            <property name="name">
+                <cstring>bSwitchAudio</cstring>
+            </property>
+            <property name="maximumSize">
+                <size>
+                    <width>22</width>
+                    <height>22</height>
+                </size>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
+            <property name="flat">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget" row="4" column="0" rowspan="1" colspan="6">
             <property name="name">
                 <cstring>layout6</cstring>
             </property>
@@ -271,7 +273,26 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="QFrame" row="1" column="0" rowspan="1" colspan="6">
+            <property name="name">
+                <cstring>frame4</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>HLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+        </widget>
+        <widget class="QLabel" row="2" column="0" rowspan="1" colspan="6">
             <property name="name">
                 <cstring>Label</cstring>
             </property>
@@ -297,9 +318,23 @@
                 <set>AlignCenter</set>
             </property>
         </widget>
-        <widget class="KSeparator" row="3" column="0">
+        <widget class="QFrame" row="3" column="0" rowspan="1" colspan="6">
             <property name="name">
-                <cstring>kSeparator2</cstring>
+                <cstring>frame3</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>HLine</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
             </property>
         </widget>
     </grid>
@@ -373,6 +408,12 @@
         <receiver>MPlayer</receiver>
         <slot>bUpClick()</slot>
     </connection>
+    <connection>
+        <sender>bSwitchAudio</sender>
+        <signal>clicked()</signal>
+        <receiver>MPlayer</receiver>
+        <slot>bSwitchAudioClick()</slot>
+    </connection>
 </connections>
 <slots>
     <slot>bStopClick()</slot>
@@ -385,14 +426,14 @@
     <slot>cbSubActivated(int)</slot>
     <slot>bUpClick()</slot>
     <slot>bDownClick()</slot>
+    <slot>bSwitchAudioClick()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kseparator.h</includehint>
+    <includehint>kicondialog.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
-    <includehint>kseparator.h</includehint>
 </includehints>
 </UI>

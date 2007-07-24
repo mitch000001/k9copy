@@ -101,7 +101,7 @@ void k9MP4Title::ckMp4AspectRatioClick()
 
 }
 
-void k9MP4Title::selectionChanged(k9DVD *_dvd,bool _value) {
+void k9MP4Title::selectionChanged(k9DVD *_dvd,bool) {
    if (_dvd==NULL)
 	m_titleEncOpt=NULL;
    if (m_titleEncOpt)

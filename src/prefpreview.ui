@@ -57,7 +57,7 @@
                         <cstring>rbMplayer</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;MPlayer</string>
+                        <string>MPlayer</string>
                     </property>
                     <property name="accel">
                         <string>Alt+M</string>

@@ -402,7 +402,7 @@ int k9vamps::check_video_packet (uchar *ptr) {
 
     // length of video packet plus padding packet must always match sector size
     if (14 + vid_packet_length + pad_packet_length != SECT_SIZE)
-        qDebug (QString("Bad video packet length at %1: %1").arg(rtell (ptr)).arg(vid_packet_length));
+        qDebug (QString("Bad video packet length at %1: %2").arg(rtell (ptr)).arg(vid_packet_length));
 
     return rc;
 }

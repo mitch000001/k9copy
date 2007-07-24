@@ -47,7 +47,7 @@
                     <cstring>tabVideo</cstring>
                 </property>
                 <attribute name="title">
-                    <string>&amp;Video</string>
+                    <string>Video</string>
                 </attribute>
                 <grid>
                     <property name="name">
@@ -58,7 +58,7 @@
                             <cstring>ck2passes</cstring>
                         </property>
                         <property name="text">
-                            <string>&amp;2 pass</string>
+                            <string>2 pass</string>
                         </property>
                         <property name="accel">
                             <string>Alt+2</string>
@@ -306,7 +306,7 @@
                                     <cstring>rbSize</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>File &amp;size</string>
+                                    <string>File size</string>
                                 </property>
                                 <property name="accel">
                                     <string>Alt+S</string>
@@ -331,7 +331,7 @@
                                     </size>
                                 </property>
                                 <property name="suffix">
-                                    <string> mb</string>
+                                    <string> MB</string>
                                 </property>
                                 <property name="buttonSymbols">
                                     <enum>UpDownArrows</enum>
@@ -354,7 +354,7 @@
                                     <cstring>rbBitrate</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>&amp;Bitrate</string>
+                                    <string>Bitrate</string>
                                 </property>
                                 <property name="accel">
                                     <string>Alt+B</string>
@@ -416,7 +416,7 @@
                     <cstring>tabAudio</cstring>
                 </property>
                 <attribute name="title">
-                    <string>Au&amp;dio</string>
+                    <string>Audio</string>
                 </attribute>
                 <grid>
                     <property name="name">

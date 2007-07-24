@@ -102,6 +102,11 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
+                    <property name="font">
+                        <font>
+                            <italic>1</italic>
+                        </font>
+                    </property>
                     <property name="cursor">
                         <cursor>3</cursor>
                     </property>

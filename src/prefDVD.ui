@@ -53,7 +53,7 @@
                 <cstring>ckK3b</cstring>
             </property>
             <property name="text">
-                <string>&amp;Burn with k3b</string>
+                <string>Burn with k3b</string>
             </property>
             <property name="accel">
                 <string>Alt+B</string>
@@ -72,7 +72,7 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Au&amp;to burn</string>
+                <string>Auto burn</string>
             </property>
             <property name="accel">
                 <string>Alt+T</string>
@@ -119,7 +119,7 @@
                 <cstring>ckQuickScan</cstring>
             </property>
             <property name="text">
-                <string>&amp;Quick scan</string>
+                <string>Quick scan</string>
             </property>
             <property name="accel">
                 <string>Alt+Q</string>
@@ -147,7 +147,7 @@
                 <cstring>ckDvdAuthor</cstring>
             </property>
             <property name="text">
-                <string>use &amp;dvdAuthor for copy without menus</string>
+                <string>use dvdAuthor for copy without menus</string>
             </property>
             <property name="accel">
                 <string>Alt+D</string>
@@ -158,7 +158,7 @@
                 <cstring>ckDelTmpFiles</cstring>
             </property>
             <property name="text">
-                <string>Clear output director&amp;y on exit</string>
+                <string>Clear output directory on exit</string>
             </property>
             <property name="accel">
                 <string>Alt+Y</string>

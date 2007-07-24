@@ -211,6 +211,10 @@ void k9BurnDVD::burnWithGenisoimage() {
             proc2->sync();
             getWodimCmd(proc);
             proc->setUseShell(true);
+            if (!autoBurn) {
+                if ( KMessageBox::warningContinueCancel ( 0,i18n("Insert a recordable DVD"), i18n("DVD burning"))!=KMessageBox::Continue)
+                    cancelled=true;
+            }
             qDebug(proc->debug());
         }        
 
@@ -296,7 +300,7 @@ void k9BurnDVD::burnWithGrowisofs() {
         connect( proc, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(growisoStdout(KProcess *, char *, int)) );
         if (!autoBurn && !iso) {
             c=i18n("Insert a recordable DVD");
-            if ( KMessageBox::warningContinueCancel ( 0,c, i18n("authoring"))!=KMessageBox::Continue)
+            if ( KMessageBox::warningContinueCancel ( 0,c, i18n("DVD burning"))!=KMessageBox::Continue)
                 cancelled=true;
         }
         if (!cancelled) {
