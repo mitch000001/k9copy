@@ -292,7 +292,7 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
         k9DVDTitleset *titleset=(k9DVDTitleset*)obj;
         f.setBold(true);
         p->setFont(f);
-        p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,titleset->getsize_mb()+" " +i18n("mb"));
+        p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,titleset->getsize_mb()+" " +i18n("MB"));
         break;
       }
     case STREAM:
@@ -302,7 +302,7 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
           double size=getstreamSize();
           QString c;
           c.sprintf("%.2f ",size);
-          p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c+i18n("mb"));
+          p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c+i18n("MB"));
         }
         break;
       }
@@ -312,7 +312,7 @@ void ckLvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int
         double size=(double)chapter->getsectors()/512;
         QString c;
         c.sprintf("%.2f ",size);
-        p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c+i18n("mb"));
+        p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c+i18n("MB"));
       }
       break;
     default:
@@ -332,7 +332,7 @@ void LvItem::paintCell ( QPainter * p, const QColorGroup & cg, int column, int w
     k9DVDTitle * title=(k9DVDTitle*)obj;
     QString c;
     c.sprintf("%.2f ",title->gettotalsize_mb());
-    p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c+i18n("mb"));
+    p->drawText(0,0,width,height(),Qt::AlignRight | Qt::AlignVCenter ,c+i18n("MB"));
   }
   else
     QListViewItem::paintCell(p,cg,column,width,align);
@@ -585,7 +585,7 @@ void k9Main::Open()
     QString c;
     c=i18n("Titleset %1").arg(i+1);
     tsItem->setText(0,c);
-    tsItem->setText(1,"   "+dvd->gettitleset(i)->getsize_mb() +" " +i18n("mb"));
+    tsItem->setText(1,"   "+dvd->gettitleset(i)->getsize_mb() +" " +i18n("MB"));
     tsItem->obj=dvd->gettitleset(i) ;
     tsItem->streamType=NONE;
     tsItem->setRenameEnabled(0,false);
@@ -696,7 +696,7 @@ void k9Main::addTitle(k9DVDTitle *track)
   itemTrack->setPixmap(col1,SmallIcon("title"));
   c.sprintf("%.2f ", track->gettotalsize_mb());
 
-  itemTrack->setText(col2,c+i18n("mb"));
+  itemTrack->setText(col2,c+i18n("MB"));
   itemTrack->obj=track;
 
   addChapters( itemTrack,track);
@@ -710,7 +710,7 @@ void k9Main::addTitle(k9DVDTitle *track)
   c.append (" - " + track->gettotallength().toString("h:mm:ss"));
   video->setText(col1, c);
   c.sprintf("%.2f ",  track->gettotalvideosize_mb());
-  video->setText(col2,c +i18n("mb"));
+  video->setText(col2,c +i18n("MB"));
   video->setPixmap(col1,pxVideo);
   video->obj=track;
 
@@ -726,7 +726,7 @@ void k9Main::addTitle(k9DVDTitle *track)
     item->language=l_auds->getlanguage();
     addListItem(l_auds,item,AUD);
     item->setText( col1,  c );
-    c.sprintf("%.2f mb",  l_auds->getsize_mb());
+    c=i18n("%1 MB").arg(l_auds->getsize_mb());
     item->setText( col2,c);
     item->setText( col3,l_auds->getcontent());
     item->setPixmap(col1,pxSound);
@@ -743,7 +743,7 @@ void k9Main::addTitle(k9DVDTitle *track)
     item->language=l_sub->getlanguage();
     addListItem(l_sub,item,SUB);
     item->setText( col1,  c );
-    c.sprintf("%.2f mb",  l_sub->getsize_mb());
+    c=i18n("%1 MB").arg(l_sub->getsize_mb());
     item->setText( col2,c);
     item->setText( col3, l_sub->getcontent());
     item->setPixmap(col1,pxText);

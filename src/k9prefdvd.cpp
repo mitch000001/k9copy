@@ -32,7 +32,7 @@ k9prefDVD::k9prefDVD(QWidget* parent, const char* name, WFlags fl)
     ckDvdAuthor->setChecked(config.getUseDvdAuthor());
     ckDelTmpFiles->setChecked(config.getPrefDelTmpFiles());
     sbSize->setValue(config.getPrefSize());
-    sbSize->setSuffix(" "+ i18n("mb"));
+    sbSize->setSuffix(" "+ i18n("MB"));
 }
 
 k9prefDVD::~k9prefDVD()

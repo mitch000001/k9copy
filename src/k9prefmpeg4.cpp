@@ -31,7 +31,7 @@ void k9prefMPEG4::load() {
     //KSimpleConfig settings("K9Copy");
     k9Config config;
     sbMp4Size->setValue(config.getPrefMp4Size());
-    sbMp4Size->setSuffix(" "+ i18n("mb"));
+    sbMp4Size->setSuffix(" "+ i18n("MB"));
     sbMp4NumberCD->setValue(config.getPrefMp4NumberCD());
     sbAudioGain->setValue(config.getPrefMp4AudioGain());
     

@@ -185,7 +185,11 @@ msgstr ""
 #: rc.cpp:133 debug/src/prefMPEG4.cpp:262
 #, no-c-format
 msgid " MB"
+msgstr " Mo"
+
+msgid "MB"
 msgstr "Mo"
+
 
 #: rc.cpp:139 rc.cpp:451 debug/src/prefMPEG4.cpp:264 debug/src/prefDVD.cpp:100
 #, no-c-format

@@ -158,7 +158,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
                 d.remove(m_filename);
 
             m_progress->setbitrate(QString::number(getBitRate(_title)));
-            m_progress->setsize(m_size +i18n("mb") +" X " +QString::number(m_parts));
+            m_progress->setsize(m_size +i18n("MB") +" X " +QString::number(m_parts));
             m_process=new k9Process(this,0 );
             m_process->setUseShell(true);
             *m_process << "k9copy" << "--play" << "--endsector" << QString::number(endSector) ;
@@ -341,7 +341,7 @@ int k9MP4Enc::getBitRate(k9DVDTitle *_title) {
 	float titleSize=_title->getChaptersSize_mb( true);
 	if ( titleSize< (float)size)
 		size=(int)(titleSize/m_parts) ;
-	m_progress->setsize(QString::number(size) +i18n("mb") +" X " +QString::number(m_parts));
+	m_progress->setsize(QString::number(size) +i18n("MB") +" X " +QString::number(m_parts));
 	QTime t1(0,0);
 	int sec=t1.secsTo(_title->getSelectedLength());
 	int bitrate=(int)( ((size*m_parts) * 8388.608)/sec  - m_audioBitrate.toInt());
