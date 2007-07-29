@@ -18,7 +18,7 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 #include "k9cell.h"
-
+#include "k9dvdtitleset.h"
 
 int k9VobuList::compareItems ( QPtrCollection::Item item1, QPtrCollection::Item item2 ) {
     return(((k9Vobu*)item1)->oldSector- ((k9Vobu*)item2)->oldSector);
@@ -45,7 +45,6 @@ k9Vobu * k9VobuList::findVobu(uint32_t sector, uint32_t start, uint32_t end) {
     long lstart=start;
     long lend=end;
 
-    k9Vobu *result = NULL;
 
     while (lstart <=lend) {
         long  m =(lstart+lend)/2;
@@ -114,8 +113,8 @@ streamType_t k9Cell::identifyStream( uchar *buffer,int *packetType ) {
         if ( (*packetType >=0x20) && (*packetType <=0x3f))
             return stSubpicture;
         return stOther;
-    }
-
+    } else
+        return stOther;
 
 }
 
@@ -196,7 +195,7 @@ void k9Cell::addTitle( k9DVDTitle *_title) {
 
 bool k9Cell::getforceFactor() {
    bool m_forced=false;
-   for (int i=0; i< m_titles.count() && !m_forced ;i++) {
+   for (uint i=0; i< m_titles.count() && !m_forced ;i++) {
 	k9DVDTitle *title=m_titles.at(i);
 	if (title->getforceFactor())
 	   m_forced=true;
@@ -207,7 +206,7 @@ bool k9Cell::getforceFactor() {
 // returns the shrink factor. 
 float k9Cell::getFactor() {
    float factor=0;
-   for (int i=0; i< m_titles.count() ;i++) {
+   for (uint i=0; i< m_titles.count() ;i++) {
 	k9DVDTitle *title=m_titles.at(i);
 	if ((title->getfactor()< factor || factor==0 )  && title->getforceFactor() )
 	   factor=title->getfactor();
@@ -274,8 +273,7 @@ k9Vobu * k9Cell::addVobu(uint32_t _sector) {
 void k9Cell::addNewVobus(char *_buffer,uint32_t _len,uint32_t _position,int _vobNum,long _vobPos) {
     uint32_t start= _position ;//lastSector - _len ;
     k9Vobu *vobu;
-    uchar *tmp;
-    for (int i= 0 ; i<_len ;i+=DVD_BLOCK_LEN) {
+    for (uint32_t i= 0 ; i<_len ;i+=DVD_BLOCK_LEN) {
         if (isNavPack((uchar*)_buffer+i)) {
             vobu=(k9Vobu*)vobus.at(numVobu);
             vobu->newSector=i/DVD_BLOCK_LEN  +start;
@@ -392,7 +390,7 @@ k9Vobu *k9CellList::findVobu(uint32_t sector) {
         return cell->findVobu(sector);
     
     int nbCells=count();
-    for (uint i=0;i <nbCells;i++) {
+    for (int i=0;i <nbCells;i++) {
         k9Cell * cell = (k9Cell*)at(i);
         vobu = cell->findVobu(sector);
         if (vobu !=NULL) {
@@ -418,8 +416,6 @@ k9Cell * k9CellList::findCell(uint32_t sector, uint32_t start, uint32_t end) {
     long lstart=start;
     long lend=end;
 
-    k9Cell *result = NULL;
-
     while (lstart <=lend) {
         long  m =(lstart+lend)/2;
         k9Cell *cell = (k9Cell *)at(m);
@@ -438,7 +434,10 @@ k9Cell * k9CellList::findCell(uint32_t sector, uint32_t start, uint32_t end) {
     return NULL;
 }
 
-
+k9DVDTitleset * k9Cell::getTitleset() {
+    k9DVDTitle *title=m_titles.at(0);
+    return title->gettitleset();
+}
 
 
 #include "k9cell.moc"

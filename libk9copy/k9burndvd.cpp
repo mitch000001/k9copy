@@ -38,7 +38,7 @@ k9BurnDVD::k9BurnDVD()
     iso=false;
     m_filename="";
     progress=new k9Progress(NULL,"progress",NULL);
-    QString s= KGlobal::dirs()->findResource( "data", "k9copy/anim.gif");
+    QString s= KGlobal::dirs()->findResource( "data", "k9copy/anim.mng");
     progress->setMovie(s);
     m_cdrkit=k9Tools::checkProgram("genisoimage") && k9Tools::checkProgram("wodim");
 }

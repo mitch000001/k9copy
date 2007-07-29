@@ -80,10 +80,18 @@ void k9vamps::addSubpicture(uint id) {
 void k9vamps::addAudio(uint id) {
     int cpt=1;
     for (uint i=0;i <8;i++)
-	if (audio_track_map[i] !=0) cpt++;
+        if (audio_track_map[i] !=0) cpt++;
 
     audio_track_map[id-1]=cpt;
 }
+
+void k9vamps::addAudio(uint id,uint newId) {
+    if (newId==0) 
+        addAudio(id);
+    else 
+        audio_track_map[id-1]=newId;
+}
+
 
 void k9vamps::setInputSize(uint64_t size) {
     ps_size=size;
@@ -177,7 +185,7 @@ void k9vamps::run () {
     vobuf = (uchar*) malloc (vbuf_size);
 
     if (vibuf == NULL || vobuf == NULL)
-        fatal ("Allocation of video buffers failed: %s", strerror (errno));
+        fatal (QString("Allocation of video buffers failed: %1").arg(strerror (errno)));
 
 
     // actually do vaporization
@@ -349,15 +357,14 @@ int k9vamps::check_video_packet (uchar *ptr) {
     vid_packet_start_code |= (uint32_t) (ptr [3]);
 
     if (vid_packet_start_code != 0x000001e0)
-        fatal ("Bad video packet start code at %llu: %08lx",
-               rtell (ptr), vid_packet_start_code);
+        fatal(QString ("Bad video packet start code at %1: %2").arg(rtell(ptr)).arg(vid_packet_start_code,0,16));
 
     vid_packet_length  = ptr [4] << 8;
     vid_packet_length |= ptr [5];
     vid_packet_length += 6;
 
     if ((ptr [6] & 0xc0) != 0x80)
-        fatal ("Not an MPEG2 video packet at %llu", rtell (ptr));
+        fatal (QString("Not an MPEG2 video packet at %1").arg(rtell (ptr)));
 
     if (ptr [7]) {
         if ((ptr [7] & 0xc0) != 0xc0)
@@ -628,8 +635,7 @@ void k9vamps::vap_leader () {
             data_length |= ptr [5];
 
             if (14 + data_length != SECT_SIZE - 6)
-                fatal ("Bad padding packet length at %llu: %d",
-                       rtell (ptr), data_length);
+                fatal (QString("Bad padding packet length at %1: %2").arg(rtell (ptr)).arg(data_length));
 
             break;
 
@@ -672,8 +678,7 @@ void k9vamps::vap_trailer (int length) {
             data_length |= ptr [5];
 
             if (14 + data_length != SECT_SIZE - 6)
-                fatal ("Bad padding packet length at %llu: %d",
-                       rtell (ptr), data_length);
+                fatal (QString("Bad padding packet length at %1: %2").arg(rtell (ptr)).arg(data_length));
         } else {
             copy (SECT_SIZE);
         }
@@ -793,8 +798,7 @@ int k9vamps::vap_phase1 (void) {
             data_length |= ptr [5];
 
             if (14 + data_length != SECT_SIZE - 6)
-                fatal ("Bad padding packet length at %llu: %d",
-                       rtell (ptr), data_length);
+                fatal (QString("Bad padding packet length at %1: %2").arg(rtell (ptr)).arg(data_length));
 
             break;
 
@@ -930,8 +934,7 @@ void k9vamps::vap_phase2 (int seq_length) {
             data_length |= ptr [5];
 
             if (14 + data_length != SECT_SIZE - 6)
-                fatal ("Bad padding packet length at %llu: %d",
-                       rtell (ptr), data_length);
+                fatal (QString("Bad padding packet length at %1: %2").arg(rtell (ptr)).arg(data_length));
 
             break;
 
@@ -1060,13 +1063,8 @@ void k9vamps::abort() {
 
 // this is a *very* sophisticated kind of error handling :-)
 void
-k9vamps::fatal (char *fmt, ...) {
-    char tmp[255];
-    va_list ap;
-    va_start (ap, fmt);
-    vsprintf (tmp,fmt, ap);
-    va_end (ap);
-    m_errMsg.setLatin1(tmp);
+k9vamps::fatal (QString msg) {
+    m_errMsg=msg;
     m_error=true;
     if (m_requant !=NULL)
         m_requant->terminate();

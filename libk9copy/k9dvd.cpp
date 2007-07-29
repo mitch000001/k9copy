@@ -454,8 +454,8 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         //this only true for AC3 streams
 			l_auds->m_streamId = (pgc->audio_control[i]>>8);
                         
-                        //JMPaudio_attr = &vtsi_mat->vts_audio_attr[i];
-                        audio_attr = &vtsi_mat->vts_audio_attr[l_auds->id-1];
+                        audio_attr = &vtsi_mat->vts_audio_attr[i];
+                        //JMPaudio_attr = &vtsi_mat->vts_audio_attr[l_auds->id-1];
                         sprintf(lang_code, "%c%c", audio_attr->lang_code>>8, audio_attr->lang_code & 0xff);
                         if (!lang_code[0]) {
                             lang_code[0] = 'x';

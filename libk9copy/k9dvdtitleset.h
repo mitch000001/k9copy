@@ -28,8 +28,9 @@ private:
   QPtrList <k9DVDTitle> titles;
   bool m_selected;
   bool m_updating;
+  bool m_audioStreams[8];
 public:
-  k9DVDTitleset( uint _num,uint32_t _size) {m_num=_num;m_size=_size;m_selected=false;m_updating=false;};
+  k9DVDTitleset( uint _num,uint32_t _size); 
   virtual void add(k9DVDTitle *_title);
   virtual int count();
   virtual k9DVDTitle *gettitle(uint _pos);
@@ -39,6 +40,8 @@ public:
   virtual void setselected(bool state);
   virtual void updateSelection();
   virtual int getnum();
+  virtual void setAudio(int _id,bool _selected);
+  virtual int getNewAudioStreamId(int _oldId);
 }
 ;
 

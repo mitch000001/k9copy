@@ -991,7 +991,7 @@ void k9Main::checkAll(bool state)
 
 void k9Main::checkTS( bool _state,ckLvItem *_item )
 {
-  k9DVDTitleset *titleset = (k9DVDTitleset*)_item;
+  k9DVDTitleset *titleset = (k9DVDTitleset*)_item->obj;
   titleset->setselected(_state);
   k9DVDListItem *litem;
   updating=true;

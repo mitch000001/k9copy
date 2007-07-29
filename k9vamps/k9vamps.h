@@ -113,7 +113,7 @@ private:
 private:
 	// prototypes
 	void vaporize (void);
-	void fatal (char *, ...);
+	void fatal (QString _msg);
 	int lock(int size);
 	void copy(int size);
 	void skip (int size);
@@ -150,6 +150,7 @@ public:
 	void setNoData();
 	void addSubpicture(uint id);
 	void addAudio(uint id);
+        void addAudio(uint id,uint newId);
 	void reset();
 	void setInputSize(uint64_t size);
 	void setVapFactor(float factor);

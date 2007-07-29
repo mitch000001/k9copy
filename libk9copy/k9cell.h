@@ -30,6 +30,7 @@ enum streamType_t {stAudio,stVideo,stSubpicture,stOther};
 */
 class k9CellList;
 class k9Cell;
+class k9DVDTitleset;
 class k9Vobu : public QObject {
     Q_OBJECT
 public:
@@ -72,6 +73,7 @@ public:
     k9Vobu * findVobu(uint32_t _oldSector);
     uint32_t getnewSize();
     void addTitle(k9DVDTitle *_title);
+    k9DVDTitleset * getTitleset();
     bool getforceFactor();
     float getFactor();
 public:

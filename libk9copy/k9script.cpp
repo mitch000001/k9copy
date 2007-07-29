@@ -141,6 +141,7 @@ void k9Script::updatePGCIUT() {
   
   m_ifo->pgci_ut = (pgci_ut_t*) malloc(sizeof(pgci_ut_t));
   pgci_ut_t* pgci_ut = m_ifo->pgci_ut;
+  pgci_ut->zero_1=0;
   pgci_ut->nr_of_lus=1;
   
   pgci_ut->lu = (pgci_lu_t*) malloc(sizeof(pgci_lu_t));

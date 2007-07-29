@@ -117,8 +117,9 @@ void k9Progress::setImage(QString _fileName) {
 }
 
 void k9Progress::setMovie(QString _fileName) {
-    QMovie mv(_fileName);
     image->setPaletteBackgroundColor(this->paletteBackgroundColor());
+    QMovie mv(_fileName,2048);
+    mv.setBackgroundColor(this->paletteBackgroundColor());
     image->setMovie(mv);
     m_wimage->hide();
 }

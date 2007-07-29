@@ -99,6 +99,7 @@ private:
     k9Cell *currCell,*cellOut;//,*currCopyCell;
     k9CellCopyList *m_cellCopyList;
     uint32_t m_position,m_vmgSize;
+    bool m_preserve;
     //uint64_t m_inbytes,m_outbytes;
     k9TitleSetList titleSets;
     float argFactor;

@@ -44,7 +44,7 @@ shellrcdir = $(kde_datadir)/k9copy
 shellrc_DATA = k9copyui.rc
 
 appsdatadir =$(kde_datadir)/k9copy
-appsdata_DATA = anim.gif mencoder.xml
+appsdata_DATA = anim.mng mencoder.xml
 
 AM_CXXFLAGS = -O3 -g3
 

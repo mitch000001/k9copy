@@ -77,6 +77,7 @@ const bool& k9DVDAudioStream::getselected() {
 void k9DVDAudioStream::setselected( const bool& _newVal) {
     bool before=title->isSelected();
     selected = _newVal;
+    title->gettitleset()->setAudio(getID(),_newVal);
     title->gettitleset()->updateSelection();
     bool after=title->isSelected();
     if (after!=before)
@@ -239,7 +240,7 @@ const float& k9DVDTitle::getsize_mb() {
 
 const float k9DVDTitle::gettotalsize_mb() {
     float size =size_mb;
-    for (int i=0;i<m_titles.count();i++) {
+    for (uint i=0;i<m_titles.count();i++) {
          k9DVDTitle *tmp=m_titles.at(i);
    	 size +=tmp->getsize_mb();
     }
@@ -263,7 +264,7 @@ const uint64_t k9DVDTitle::getChaptersSize(bool _selected){
 			total+= chap->getsectors();
 		}
 	}
-	for (int i=0;i<m_titles.count();i++) {
+	for (uint i=0;i<m_titles.count();i++) {
 		k9DVDTitle * title=m_titles.at(i);
 		total+=title->getChaptersSize(_selected);
 	}
@@ -273,7 +274,7 @@ const uint64_t k9DVDTitle::getChaptersSize(bool _selected){
 
 const float k9DVDTitle::gettotalvideosize_mb() {
     float size =videosize_mb;
-    for (int i=0;i<m_titles.count();i++) {
+    for (uint i=0;i<m_titles.count();i++) {
          k9DVDTitle *tmp=m_titles.at(i);
  	 size+=tmp->getvideosize_mb();
     }
@@ -284,7 +285,7 @@ const float k9DVDTitle::gettotalvideosize_mb() {
 
 QTime k9DVDTitle::gettotallength() {
     QTime totalTime=getlength();
-    for (int i=0;i<m_titles.count();i++) {
+    for (uint i=0;i<m_titles.count();i++) {
          k9DVDTitle *tmp=m_titles.at(i);
 	 QTime t;
 	 int msecs= t.msecsTo(tmp->getlength());
@@ -305,7 +306,7 @@ QTime k9DVDTitle::getSelectedLength() {
     }
     
     
-    for (int i=0;i<m_titles.count();i++) {
+    for (uint i=0;i<m_titles.count();i++) {
          k9DVDTitle *tmp=m_titles.at(i);
          QPtrList <k9DVDChapter> tchapters=tmp->getChapters();
           for (k9DVDChapter *chapter=tchapters.first();chapter;chapter=tchapters.next()) {
@@ -372,7 +373,7 @@ const int& k9DVDTitle::getangleCount() {
 bool k9DVDTitle::isSelected() {
     k9DVDAudioStream *l_auds;
     k9DVDSubtitle *l_sub;
-    int i;
+    uint i;
 
     if (forceSelection)
         return true;
@@ -491,7 +492,7 @@ void k9DVDTitle::selectChapters(bool _state) {
 	getChapter(i)->setSelected( _state);    
     }
     
-    for (int iTitle=0;iTitle<m_titles.count();iTitle++) {
+    for (uint iTitle=0;iTitle<m_titles.count();iTitle++) {
 	k9DVDTitle * title=m_titles.at(iTitle);
 	title->selectChapters(_state);     
     }
