@@ -153,7 +153,7 @@ void k9PlaybackOptions::lbSequenceChanged(QListBoxItem *_item) {
 	if (title->getaudioStream(i)->getselected()) {
 //		if ( !title->getDefAudioSet())
 //		   title->setDefAudio(title->getaudioStream(i));
-		cbDefAudio->insertItem(QString("%1 - %2").arg(title->getaudioStream(i)->getID()).arg(title->getaudioStream(i)->getlanguage()));
+		cbDefAudio->insertItem( QString("%1 - %2").arg(title->getaudioStream(i)->getID()).arg(title->getaudioStream(i)->getlanguage()));
 		if (title->getaudioStream(i)==title->getDefAudio()) {
 		   cbDefAudio->setCurrentItem(cbDefAudio->count()-1);
 		}
@@ -163,6 +163,7 @@ void k9PlaybackOptions::lbSequenceChanged(QListBoxItem *_item) {
 
     for (int i=0;i < title->getsubPictureCount();i++) {
 	if (title->getsubtitle(i)->getselected()) {
+                QPixmap icon;
 		cbDefSub->insertItem(QString("%1 - %2").arg(title->getsubtitle(i)->getID()).arg(title->getsubtitle(i)->getlanguage()));
 		if (title->getsubtitle(i)==title->getDefSubtitle()) {
 		   cbDefSub->setCurrentItem(cbDefSub->count()-1);
@@ -216,6 +217,7 @@ void k9PlaybackOptions::clear() {
     lbSequence->clear();
     enable(false);
 }
+
 
 #include "k9playbackoptions.moc"
 

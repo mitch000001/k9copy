@@ -217,7 +217,7 @@ int k9DVD::get_title_name(const char* dvd_device, char* title) {
     return 0;
 }
 
-QString k9DVD::lang_name(const QString& code) {
+QString k9DVD::lang_name(const QString& code,const QString & name) {
     QString c;
     int i=0;
     lng arrLng[] = {
@@ -252,8 +252,15 @@ QString k9DVD::lang_name(const QString& code) {
     c=i18n("Unknown");
     for (i=0 ; arrLng[i].code[0]!=0;i++) {
         lng l =arrLng[i];
-        if (strcmp(code.latin1(),l.code)==0) {
-            c = l.name;
+        if (name=="") {
+            if (strcmp(code.latin1(),l.code)==0) {
+                c = l.name;
+            }
+        } else {
+            if (strcmp(name.latin1(),l.name)==0) {
+                c = l.code;
+            }
+
         }
     }
     return c;
@@ -462,7 +469,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                             lang_code[1] = 'x';
                         }
                         l_auds->langCod=lang_code;
-                        l_auds->language=lang_name(l_auds->langCod);
+                        l_auds->language=lang_name(l_auds->langCod,"");
 			if (l_auds->language==i18n("Unknown"))
 				l_auds->langCod="xx";
 
@@ -607,7 +614,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         }
                         //JMP : l_sub->setselected(!titleIndexed);
                         l_sub->langCod=lang_code;
-                        l_sub->language=lang_name(lang_code);
+                        l_sub->language=lang_name(lang_code,"");
                         l_sub->content= (*m_lsubpType.at(subp_attr->code_extension));
                     }
                 }

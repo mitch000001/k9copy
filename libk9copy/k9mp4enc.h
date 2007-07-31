@@ -50,6 +50,7 @@ private:
     bool m_canceled;
     int m_codec;
     int m_audioCodec;
+    bool m_usecache;
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
     int m_cpt;
     QTime *time;
@@ -106,6 +107,10 @@ public:
 
     virtual void set2Passes(bool _value) {
     	m_2pass=_value;
+    }
+
+    virtual void setUseCache(bool _value) {
+    	m_usecache=_value;
     }
 
     virtual void setCodec(const int& _value) {m_codec = _value;};

@@ -51,6 +51,8 @@ protected slots:
   virtual void leMp4VideoBitrateTextChanged( const QString & );
 
   virtual void rgVideoSizeChanged();
+
+  virtual void ckUseCacheClick();
 };
 
 #endif

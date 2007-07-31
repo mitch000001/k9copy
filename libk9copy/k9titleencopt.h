@@ -56,6 +56,9 @@ public:
    
    bool get2Passes();
    void set2Passes(bool);
+
+   bool getUseCache();
+   void setUseCache(bool);
    
    int getCodec();
    void setCodec(int);
@@ -74,6 +77,7 @@ private:
    QString m_audioBr,m_videoBr;
    int m_codec,m_audioCodec;
    int m_audioGain;
+   bool m_useCache;
    
 public slots:
    void load();

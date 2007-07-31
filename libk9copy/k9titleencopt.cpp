@@ -56,6 +56,8 @@ void k9TitleEncOpt::load() {
 
     m_videoBr=config.getPrefMp4VideoBitrate();
 
+    m_useCache=config.getPrefUseCellCache();
+
 }
 
 int k9TitleEncOpt::getMaxSize() {
@@ -140,6 +142,14 @@ int k9TitleEncOpt::getAudioCodec() {
 }
 void k9TitleEncOpt::setAudioCodec(int _value) {
    m_audioCodec=_value;
+}
+
+bool k9TitleEncOpt::getUseCache()  {
+    return m_useCache;
+}
+
+void k9TitleEncOpt::setUseCache(bool _value) {
+    m_useCache=_value;
 }
 
 

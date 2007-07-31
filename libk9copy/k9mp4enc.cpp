@@ -188,7 +188,8 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 	     	*m_process << s;
             }	
 
-            *m_process << "--usecache";
+            if (m_usecache)
+                *m_process << "--usecache";
             *m_process << "| mencoder" << "/dev/stdin";
             *m_process << "-passlogfile" << passLogFile.name();
 
@@ -200,7 +201,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
             k9VideoCodecs *videoCodecs=new k9VideoCodecs(0,0);
 
             QString sVOption;
-
+            m_pass=pass;
             switch (pass) {
                 case 1:
                     sVOption=replaceParams(videoCodecs->getOptions1(m_codec));

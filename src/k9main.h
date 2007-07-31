@@ -231,6 +231,7 @@ private:
     long getFreeSpace(const QString & _path);
     void setProgressWindow(QWidget *_widget);
     void removeProgressWindow();
+
 	
 };
 

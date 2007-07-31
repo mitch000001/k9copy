@@ -48,6 +48,7 @@ void k9Config::read() {
   m_prefMp4VideoBitrate=m_config->readEntry("videobitrate" "");
   m_prefMp4AudioCodec=m_config->readNumEntry("audiocodec",0);
   m_prefMp4AudioGain=m_config->readNumEntry("audiogain",7);
+  m_prefUseCellCache=m_config->readBoolEntry("usecellcache",true);
 
   m_config->setGroup("mencoder");
   m_codecAudio=m_config->readListEntry("audio");
@@ -98,6 +99,7 @@ void k9Config::save() {
   m_config->writeEntry("2passes",m_prefMp42Passes);
   m_config->writeEntry("audiogain",m_prefMp4AudioGain);
   m_config->writeEntry("audiocodec", m_prefMp4AudioCodec);
+  m_config->writeEntry("usecellcache",m_prefUseCellCache);
 
 
   m_config->setGroup("mencoder");

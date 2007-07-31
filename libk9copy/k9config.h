@@ -40,6 +40,7 @@ private:
     bool m_prefMp4AspectRatio;
     bool m_prefMp42Passes;
     bool m_prefDelTmpFiles;
+    bool m_prefUseCellCache;
     QString  m_prefMp4Width;
     QString  m_prefMp4Height;
     QString  m_prefMp4AudioBitrate;
@@ -117,6 +118,13 @@ public:
             return m_prefDelTmpFiles;
         }
 
+        void setPrefUseCellCache( bool _value) {
+            m_prefUseCellCache=_value;
+        }
+        
+        bool getPrefUseCellCache() const {
+            return m_prefUseCellCache;
+        }
 	void setQuickScan(bool _value) {
 	    m_quickScan = _value;
 	}

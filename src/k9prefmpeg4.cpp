@@ -57,6 +57,8 @@ void k9prefMPEG4::load() {
     cbMp4AudioCodec->insertStringList(m_codecLabelsAudio);
     cbMp4AudioCodec->setCurrentItem(config.getPrefMp4AudioCodec());
 
+    ckUseCache->setChecked(config.getPrefUseCellCache());
+
     if(config.getPrefMp4VideoBitrate() =="") 
 	rbSize->setChecked(true);
     else
@@ -84,6 +86,7 @@ void k9prefMPEG4::save() {
     config.setPrefMp4AudioBitrate( leMp4AudioBitrate->text());
     config.setPrefMp4VideoBitrate( leMp4VideoBitrate->text());
     config.setPrefMp42Passes(ck2passes->isChecked());
+    config.setPrefUseCellCache(ckUseCache->isChecked());
     config.save();
 }
 

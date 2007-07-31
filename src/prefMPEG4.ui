@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>582</width>
-            <height>441</height>
+            <height>460</height>
         </rect>
     </property>
     <property name="caption">
@@ -569,6 +569,14 @@
                 </grid>
             </widget>
         </widget>
+        <widget class="QCheckBox" row="2" column="0">
+            <property name="name">
+                <cstring>ckUseCache</cstring>
+            </property>
+            <property name="text">
+                <string>use cell cache</string>
+            </property>
+        </widget>
     </grid>
 </widget>
 <images>
@@ -655,6 +663,12 @@
         <receiver>prefMPEG4</receiver>
         <slot>leMp4AudioBitrateTextChanged(const QString&amp;)</slot>
     </connection>
+    <connection>
+        <sender>ckUseCache</sender>
+        <signal>clicked()</signal>
+        <receiver>prefMPEG4</receiver>
+        <slot>ckUseCacheClick()</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>tabWidget</tabstop>
@@ -685,6 +699,7 @@
     <slot>rgVideoSizeChanged()</slot>
     <slot>leMp4VideoBitrateTextChanged(const QString &amp;)</slot>
     <slot>sbAudioGainValueChanged(int)</slot>
+    <slot>ckUseCacheClick()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

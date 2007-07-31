@@ -33,9 +33,10 @@ k9MP4Title::k9MP4Title(QWidget* parent, const char* name, WFlags fl)
 {
     m_titleEncOpt=NULL;
     load();
+    ckUseCache->hide();
     tabWidget->setEnabled(false);
     lTitle->setText(i18n("Select a Title in the treeview..."));
-
+ 
 }
 
 k9MP4Title::~k9MP4Title()
@@ -68,6 +69,7 @@ void k9MP4Title::load() {
     leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
 
     ck2passes->setChecked(config.getPrefMp42Passes());
+    ckUseCache->setChecked(config.getPrefUseCellCache());
 
     leMp4AudioBitrate->setText(config.getPrefMp4AudioBitrate());
     leMp4VideoBitrate->setText(config.getPrefMp4VideoBitrate());
@@ -133,7 +135,8 @@ void k9MP4Title::titleChanged( k9DVDTitle *_title) {
 	leMp4Height->setEnabled(!ckMp4AspectRatio->isChecked());
 	
 	ck2passes->setChecked(opt->get2Passes());
-	
+        ckUseCache->setChecked(opt->getUseCache());	
+
 	leMp4AudioBitrate->setText(opt->getAudioBr());
 	leMp4VideoBitrate->setText(opt->getVideoBr());
 	cbMp4Codec->setCurrentItem(opt->getCodec() );   
@@ -163,6 +166,11 @@ void k9MP4Title::cbMp4AudioCodecActivated( int _value) {
 void k9MP4Title::ck2passesClicked() {
    if (m_titleEncOpt)
    	m_titleEncOpt->set2Passes(ck2passes->isChecked());
+}
+
+void k9MP4Title::ckUseCacheClick() {
+   if (m_titleEncOpt)
+   	m_titleEncOpt->setUseCache(ckUseCache->isChecked());
 }
 
 void k9MP4Title::sbMp4SizeValueChanged( int _value) {

@@ -66,7 +66,7 @@
 #include <qlistbox.h>
 #include <qtoolbox.h>
 #include <qregion.h>
-
+#include <qbitmap.h>
 
 
 k9DVDListItem::k9DVDListItem(QObject *DVD,ckLvItem *List,eStreamType type)
@@ -730,6 +730,7 @@ void k9Main::addTitle(k9DVDTitle *track)
     item->setText( col2,c);
     item->setText( col3,l_auds->getcontent());
     item->setPixmap(col1,pxSound);
+    
     item->obj=track;
     item->stream=l_auds;
   }
@@ -747,10 +748,13 @@ void k9Main::addTitle(k9DVDTitle *track)
     item->setText( col2,c);
     item->setText( col3, l_sub->getcontent());
     item->setPixmap(col1,pxText);
+
     item->obj=track;
     item->stream=l_sub;
   }
 }
+
+
 /** No descriptions */
 void k9Main::updateSelection()
 {
@@ -788,7 +792,7 @@ void k9Main::updateSelection()
   }
   bool supdating=updating;
   updating=true;
-  for (int i=0;i<chItems.count();i++)
+  for (uint i=0;i<chItems.count();i++)
   {
     ckLvItem *it=chItems.at(i);
     k9DVDChapter *c=(k9DVDChapter*)it->obj;
@@ -1033,7 +1037,7 @@ if (item->rtti()==1001)
 
 
 /** No descriptions */
-void k9Main::itemRenamed(QListViewItem * item,int col)
+void k9Main::itemRenamed(QListViewItem * item,int )
 {
   k9DVDTitle *t=NULL;
   QString newText;
@@ -1178,7 +1182,8 @@ void k9Main::CreateMP4()
       QString name;
       if (filename=="")
          filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.avi", 0,i18n("Save file to disk"));
-
+      if (filename=="")
+         break;
     
       k9MP4Enc *mp4=new k9MP4Enc();
       setProgressWindow( mp4->getDialog());
@@ -1206,6 +1211,7 @@ void k9Main::CreateMP4()
       mp4->setWidth(opt->getWidth() );
       mp4->setHeight(opt->getHeight());
       mp4->set2Passes( opt->get2Passes());
+      mp4->setUseCache(opt->getUseCache());
       mp4->execute(t);
       delete mp4;
       removeProgressWindow();
@@ -1395,7 +1401,7 @@ void k9Main::fspDone()
   fspFinish=true;
 }
 
-void k9Main::foundMountPoint( const QString &mountPoint, unsigned long kBSize, unsigned long kBUsed, unsigned long kBAvail)
+void k9Main::foundMountPoint( const QString &, unsigned long , unsigned long , unsigned long kBAvail)
 {
   fspAvail=kBAvail;
 }

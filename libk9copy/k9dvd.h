@@ -143,6 +143,7 @@ public:
   virtual void close();
   virtual k9DVDTitleset *gettitleset(int num);
   virtual k9DVDRead * getdvd() {return &m_dvd;}
+  static QString lang_name(const QString & code,const QString & name);
 private: // Private methods
   k9DVDRead  m_dvd;
   k9DVDTitle* addTitle(k9DVDTitleset *titleset,int id,int num,int _VTS,int _pgc,uint32_t _startSector, bool _indexed);
@@ -151,7 +152,6 @@ private: // Private methods
   int identify_stream( unsigned char *buffer ) ;
   int dvdtime2msec(dvd_time_t *dt);
   int get_title_name(const char* dvd_device, char* title);
-  QString lang_name(const QString & code);
   void calcStreamSize(k9DVDTitle & title);
   void setError(const QString &err);
   int getVampsID(int type);

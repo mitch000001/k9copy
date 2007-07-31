@@ -15,7 +15,7 @@
 #include "k9dvd.h"
 #include "k9dvdtitle.h"
 #include "k9main.h"
-
+#include <kstandarddirs.h>
 k9LangSelect::k9LangSelect(k9Main *mainWindow,QWidget* parent, const char* name, WFlags fl)
 : langSelect(parent,name,fl)
 {
@@ -97,6 +97,8 @@ void k9LangSelect::fillLvLanguages() {
     }
 
 }
+
+
 
 void k9LangSelect::update() {
     for (uint i=0;i<langAudItems.count();i++)

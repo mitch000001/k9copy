@@ -62,7 +62,7 @@ protected:
   k9DVD *m_dvd;
   QPtrList <ckLvLangItem> langAudItems;
   QPtrList <ckLvLangItem> langSubItems;
-  void updateLvLang(const eStreamType streamType,const QString & lang )	;
+  void updateLvLang(const eStreamType streamType,const QString & lang );
 
 protected slots:
   /*$PROTECTED_SLOTS$*/
