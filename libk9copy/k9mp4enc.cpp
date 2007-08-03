@@ -380,15 +380,15 @@ void k9MP4Enc::getStdout(KProcess *proc, char *buffer, int buflen) {
 
 void k9MP4Enc::getStderr(KProcess *proc, char *buffer, int buflen) {
     //m_stderr=QString::fromLatin1(buffer,buflen);
-    QCString stderr(buffer,buflen);
+    QCString cstderr(buffer,buflen+1);
 
-    if (stderr.find("FATAL:")!=-1) {
+    if (cstderr.find("FATAL:")!=-1) {
         proc->kill();
     }
 
-    int pos=stderr.find("INFOPOS:");
+    int pos=cstderr.find("INFOPOS:");
     if (pos!=-1) {
-        QString tmp=stderr.mid(pos);
+        QString tmp=cstderr.mid(pos);
         uint32_t totalBytes,totalSize;
         sscanf(tmp.latin1(),"INFOPOS: %d %d",&totalBytes,&totalSize);
         if (totalSize !=0)
@@ -407,13 +407,13 @@ void k9MP4Enc::getStderr(KProcess *proc, char *buffer, int buflen) {
         m_progress->setProgress((int)m_percent);
         m_progress->setremain(time2.toString("hh:mm:ss") +" / " +m_remain);
     } else {
-        pos=stderr.find("INFOIMAGE:");
+        pos=cstderr.find("INFOIMAGE:");
         if (pos!=-1) {
-            m_progress->setImage(stderr.mid(pos+10));
+            m_progress->setImage(cstderr.mid(pos+10));
         } else
             qDebug("[%s]",buffer);
     }
-    m_stderr=stderr;
+    m_stderr=cstderr;
 }
 
 void k9MP4Enc::timerDone() {

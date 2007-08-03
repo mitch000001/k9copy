@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
         RESTORE(k9Copy);
     } else {
         ac_mmtest();
-        tc_memcpy_init( 1, ac_mmflag());
+        tc_memcpy_init( 0, ac_mmflag());
 
         // no session.. just start up normally
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -101,27 +101,9 @@ int main(int argc, char **argv) {
 	QString chapterListArg(args->getOption("chapterlist"));
 	bool ffactor=args->isSet("ffactor");
         bool play= args->isSet("play");
-/*	
-        InputOptionArg="/dev/hdb";
-        play=true;
-	TitleNumber="4";
-	audioFilterArg="1";
-        chapterArg="2";
-	cellArg="1";
-        injectArg="/tmp/kde-jmp/inject";
-	vampsFactorArg ="1.00";
-	inputSizeArg="8192";
-	chapterSizeArg="8192";
-	injectArg="/tmp/kde-jmp/k9copy/k9v102718";
-	totalSizeArg="300320768";
-	dvdSizeArg="4613734400";
-*/	
         if (play) {
             k9play player;
 	    player.setinitStatus( args->isSet("initstatus"));
-	    //tmp
-//	    player.setinitStatus( true);
-
 	    player.setcontinue( args->isSet("continue"));
 	    player.setfirstPass(args->isSet("firstpass"));
             player.setuseCache(args->isSet("usecache"));
