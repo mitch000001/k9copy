@@ -51,6 +51,7 @@ private:
      QTime m_timer;
      uint m_cpt;
      KTempFile *m_tempFile;
+     bool m_found;
 };
 
 #endif

@@ -25,6 +25,7 @@
 #include "k9tools.h"
 #include "k9audiocodecs.h"
 #include "k9videocodecs.h"
+#include <qcstring.h>
 
 k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
         : QObject(parent, name) {
@@ -352,7 +353,7 @@ int k9MP4Enc::getBitRate(k9DVDTitle *_title) {
 
 
 void k9MP4Enc::getStdout(KProcess *proc, char *buffer, int buflen) {
-    QString tmp(buffer);
+    QCString tmp(buffer,buflen);
     m_cpt++;
     if (m_cpt==100)
         m_cpt=0;
@@ -368,36 +369,30 @@ void k9MP4Enc::getStdout(KProcess *proc, char *buffer, int buflen) {
         int fps;
         sscanf(tmp2.latin1(),"Pos: %f%*s%d",&t,&frame);
         tmp2=tmp2.mid(tmp2.find("(")+1);
-        //sscanf(tmp2.latin1(),"%d",&percent);
         tmp2=tmp2.mid(tmp2.find(")")+1);
         sscanf(tmp2.latin1(),"%d",&fps);
-        tmp2=tmp2.mid(tmp2.find("Trem:")+5);
-        //sscanf(tmp2.latin1(),"%d",&trem);
-        tmp2=tmp2.mid(tmp2.find("min")+3);
-        //sscanf(tmp2.latin1(),"%d",&fsize);
 
         m_progress->setfps(QString::number(fps));
-        //m_progress->setremain(QString::number(trem) + " "+i18n("min"));
-        //m_progress->setsize(QString::number(fsize) + " "+i18n("mb"));
     }
     
 
 }
 
 void k9MP4Enc::getStderr(KProcess *proc, char *buffer, int buflen) {
-    m_stderr=QString(buffer);
+    //m_stderr=QString::fromLatin1(buffer,buflen);
+    QCString stderr(buffer,buflen);
 
-    if (m_stderr.find("FATAL:")!=-1) {
+    if (stderr.find("FATAL:")!=-1) {
         proc->kill();
-        
     }
 
-    int pos=m_stderr.find("INFOPOS:");
+    int pos=stderr.find("INFOPOS:");
     if (pos!=-1) {
-        QString tmp=m_stderr.mid(pos);
+        QString tmp=stderr.mid(pos);
         uint32_t totalBytes,totalSize;
         sscanf(tmp.latin1(),"INFOPOS: %d %d",&totalBytes,&totalSize);
-        m_percent=(float)totalBytes / (float)m_totalSize;
+        if (totalSize !=0)
+            m_percent=(float)totalBytes / (float)m_totalSize;
 
 
         QTime time2(0,0);
@@ -411,16 +406,14 @@ void k9MP4Enc::getStderr(KProcess *proc, char *buffer, int buflen) {
         m_percent*=100;
         m_progress->setProgress((int)m_percent);
         m_progress->setremain(time2.toString("hh:mm:ss") +" / " +m_remain);
-
-        m_progress->setProgress((int)m_percent);
     } else {
-        pos=m_stderr.find("INFOIMAGE:");
+        pos=stderr.find("INFOIMAGE:");
         if (pos!=-1) {
-            m_progress->setImage(m_stderr.mid(pos+10));
+            m_progress->setImage(stderr.mid(pos+10));
         } else
-            qDebug(m_stderr);
+            qDebug("[%s]",buffer);
     }
-
+    m_stderr=stderr;
 }
 
 void k9MP4Enc::timerDone() {
