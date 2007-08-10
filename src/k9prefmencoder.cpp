@@ -127,10 +127,11 @@ void k9prefMencoder::btnAddAClicked() {
 void k9prefMencoder::bResetClicked() {
    m_codecs.reset();
    m_audioCodecs.reset();
-   if (lbvCodecs->selectedItem())
-        lbvCodecsCurrentChanged (lbvCodecs->selectedItem());
-   if (lbaCodecs->selectedItem())
-        lbaCodecsCurrentChanged (lbaCodecs->selectedItem());
+   load();
+   lbvCodecs->setCurrentItem(0);
+   lbaCodecs->setCurrentItem(0);
+   lbvCodecsCurrentChanged (lbvCodecs->item(0));
+   lbaCodecsCurrentChanged (lbaCodecs->item(0));
 
 
 }

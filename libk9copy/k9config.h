@@ -26,6 +26,7 @@ private:
     int  m_OutputDev;
     bool m_keepMenus;
     QString m_prefOutput;
+    QString m_prefVersion;
     bool m_useDvdAuthor;
     bool m_quickScan;
     int  m_prefSize;
@@ -95,10 +96,17 @@ public:
 	void setPrefOutput(const QString& _value) {
 	    m_prefOutput = _value;
 	}
-	
 
 	QString getPrefOutput() const {
 	    return m_prefOutput;
+	}
+	
+	void setPrefVersion(const QString& _value) {
+	    m_prefVersion = _value;
+	}
+
+	QString getPrefVersion() const {
+	    return m_prefVersion;
 	}
 
 	void setUseDvdAuthor(bool _value) {

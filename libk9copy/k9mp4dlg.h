@@ -12,9 +12,9 @@
 
 #ifndef K9MP4DLG_H
 #define K9MP4DLG_H
-#include <qtimer.h>
 #include "mp4dlg.h"
 #include <qimage.h>
+#include <qdatetime.h>
 
 class k9DrawImage;
 
@@ -40,6 +40,7 @@ signals:
   void sigCancel();
 private:
     k9DrawImage *m_wimage;
+    QTime m_timer;
 protected:
   /*$PROTECTED_FUNCTIONS$*/
 };

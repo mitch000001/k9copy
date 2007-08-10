@@ -19,13 +19,14 @@
 #include <qlayout.h>
 #include "k9drawimage.h"
 
+
 k9MP4Dlg::k9MP4Dlg(QWidget* parent, const char* name)
 : MP4Dlg(parent,name, true)
 {
   m_wimage=new k9DrawImage(image,0);
   QGridLayout *l=new QGridLayout(image,1,1);
   l->addWidget(m_wimage,0,0);
-
+  m_timer.start();
 }
 
 k9MP4Dlg::~k9MP4Dlg()
@@ -49,7 +50,10 @@ void k9MP4Dlg::setfps(QString _fps) {
 }
 
 void k9MP4Dlg::setremain(QString _remain) {
-    lblRemain->setText(_remain);
+    if (m_timer.elapsed() >=1000) {
+        lblRemain->setText(_remain);
+        m_timer.restart();
+    }
 }
 
 void k9MP4Dlg::setProgress(int _progress) {

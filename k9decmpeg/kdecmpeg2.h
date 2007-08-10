@@ -67,6 +67,7 @@ public:
   void restart();
   void start();
   void stop();
+  void pause();
   void draw(QImage *image) {emit pixmapReady(image);}
   void drawRaw(uchar *_buffer,int width,int height,int size) {emit ppmReady (_buffer,width,height,size);}
 
@@ -74,6 +75,7 @@ public:
 	
 private:
   bool m_useGL;
+  bool m_pause;
   k9DecodeThread *m_thread;
   QImage pix;
   QTime m_timer;

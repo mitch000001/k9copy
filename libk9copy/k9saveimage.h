@@ -19,6 +19,7 @@
 
 #include "k9fifo.h"
 #include <ktempfile.h>
+#include <qimage.h>
 
 
 /**
@@ -40,7 +41,6 @@ public:
     void addData(uchar *_buffer, uint32_t _size);
 protected:
     void run();
-    bool testFrameType(eFrameType _type,uchar *_buffer);
 public slots:
    void drawImage(QImage*);
 
@@ -51,7 +51,10 @@ private:
      QTime m_timer;
      uint m_cpt;
      KTempFile *m_tempFile;
-     bool m_found;
+     uchar *m_buffer;
+     uint32_t m_size;
+     QMutex m_mutex;
+     QImage m_image;
 };
 
 #endif

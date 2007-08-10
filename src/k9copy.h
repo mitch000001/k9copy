@@ -80,6 +80,7 @@ public slots:
 private:
     void setupAccel();
     void setupActions();
+    void initCodecs();
     KAction *CopyAction;
     KAction *PlayTitleAction;
     KAction *mkMP4Action;

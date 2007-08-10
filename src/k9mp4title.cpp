@@ -25,8 +25,6 @@
 #include <qframe.h>
 #include <qtabwidget.h>
 #include <qradiobutton.h>
-#include "k9videocodecs.h"
-#include "k9audiocodecs.h"
 
 k9MP4Title::k9MP4Title(QWidget* parent, const char* name, WFlags fl)
 : prefMPEG4(parent,name,fl)
@@ -45,15 +43,6 @@ k9MP4Title::~k9MP4Title()
 
 
 void k9MP4Title::load() {
-    //KSimpleConfig settings("K9Copy");
-    k9VideoCodecs *v=new k9VideoCodecs(0,0);
-    v->save();
-    delete v;
-    k9AudioCodecs *a=new k9AudioCodecs(0,0);
-    a->save();
-    delete a;
-
-
     k9Config config;
     
     sbMp4Size->setValue(config.getPrefMp4Size());

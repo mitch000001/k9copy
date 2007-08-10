@@ -41,7 +41,14 @@ k9Copy::k9Copy()
     m_useXine=config.getUseMplayer();
     
     m_useDvdAuthor=config.getUseDvdAuthor();
-    
+
+    if (config.getPrefVersion() != VERSION) {
+        initCodecs();
+        config.read();
+        config.setPrefVersion(VERSION);
+        config.save();
+    }
+        
     m_k9Main=new k9Main(this);
     m_childView=createWrapper( m_k9Main,"","");
     addWindow(m_childView, KMdi::StandardAdd);
@@ -122,6 +129,12 @@ k9Copy::~k9Copy()
         k9Tools::clearOutput(config.getPrefOutput());
 }
 
+void k9Copy::initCodecs() {
+    k9VideoCodecs v(0,0);
+    v.reset();
+    k9AudioCodecs a(0,0);
+    v.reset();
+}
 
 bool k9Copy::queryClose   (    ) {	
 	return true;

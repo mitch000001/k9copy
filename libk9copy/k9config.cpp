@@ -51,6 +51,7 @@ void k9Config::read() {
   m_prefUseCellCache=m_config->readBoolEntry("usecellcache",true);
 
   m_config->setGroup("mencoder");
+  m_prefVersion=m_config->readEntry("version","");
   m_codecAudio=m_config->readListEntry("audio");
   m_codecLabels=m_config->readListEntry("labels");
   m_codecLabelsAudio=m_config->readListEntry("audiolabels");
@@ -103,6 +104,7 @@ void k9Config::save() {
 
 
   m_config->setGroup("mencoder");
+  m_config->writeEntry("version",m_prefVersion);
   m_config->writeEntry("audio",m_codecAudio);
   m_config->writeEntry("labels",m_codecLabels);
   m_config->writeEntry("audiolabels",m_codecLabelsAudio);

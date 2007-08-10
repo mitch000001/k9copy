@@ -32,7 +32,6 @@ k9AudioCodecs::k9AudioCodecs(QObject *parent, const char *name)
    m_config=new k9Config();
    QStringList slLabels=m_config->getCodecLabelsAudio();
    QStringList slCodecs=m_config->getCodecAudio();
-
    //adds default codecs
    if (slLabels.count()==0) {
       reset();
@@ -59,7 +58,7 @@ void k9AudioCodecs::reset() {
       m_codecs[4]=_k9AudioCodec("IMA Adaptive PCM","-oac lavc -lavcopts acodec=adpcm_ima_wav:abitrate=$AUDBR");
       m_codecs[5]=_k9AudioCodec("sonic","-oac lavc -lavcopts acodec=sonic:abitrate=$AUDBR");
       m_codecs[6]=_k9AudioCodec("aac","-oac faac -faacopts br=$AUDBR");
-
+      m_codecs[7]=_k9AudioCodec("mp3 (lame)","-oac mp3lame -lameopts abr:br=$AUDBR");
       save();
 }
 
@@ -103,9 +102,11 @@ QString k9AudioCodecs::getCodecName(int _num) {
 
 void k9AudioCodecs::remove(int _num) {
     int nb=count();
-    for(int i=_num;i<nb;i++) {
-        m_codecs[i]=m_codecs[i+1];
-        m_codecs.remove(i+1);
+    if (nb>0) {
+        for(int i=_num;i<nb-1;i++) {
+            m_codecs[i]=m_codecs[i+1];
+        }
+        m_codecs.remove(nb-1);
     }
 }
 

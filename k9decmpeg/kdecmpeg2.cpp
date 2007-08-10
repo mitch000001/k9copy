@@ -178,8 +178,8 @@ int kDecMPEG2::demux (uint8_t * buf, uint8_t * end, int flags)
           	buf += state_bytes;
           	break;
     }
-
-    while (1) {
+    m_pause=false;
+    while (!m_pause) {
       	if (demux_pid) {
       	    state = DEMUX_SKIP;
       	    return 0;
@@ -433,4 +433,7 @@ void kDecMPEG2::stop() {
    m_opened=false;
 }
 
+void kDecMPEG2::pause() {
+    m_pause=true;
+}
 
