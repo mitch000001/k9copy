@@ -145,6 +145,8 @@ void k9TitleEncOpt::setAudioCodec(int _value) {
 }
 
 bool k9TitleEncOpt::getUseCache()  {
+    k9Config config;
+    m_useCache=config.getPrefUseCellCache();
     return m_useCache;
 }
 

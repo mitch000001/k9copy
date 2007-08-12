@@ -13,6 +13,7 @@
 #include "k9dvdread.h"
 #include "k9cell.h"
 #include "k9vamps.h"
+#include "ac.h"
 
 #include "dvdnav.h"
 #include "k9saveimage.h"
@@ -525,17 +526,16 @@ void k9play::play() {
 }
 
 void k9play::flush(k9SaveImage &_saveImage ) {
-    char buffer[DVD_VIDEO_LB_LEN];
+    char buffer[20*DVD_VIDEO_LB_LEN];
     m_output->reset();
     QFile out;
     out.open(IO_WriteOnly,stdout);
     while(!m_output->atEnd()) {
         writeOutput(QString("\rINFOPOS: %1 %2").arg(m_pos).arg(m_length));
         m_pos++;
-        int l=m_output->readBlock(buffer,DVD_VIDEO_LB_LEN);
+        int l=m_output->readBlock(buffer,20*DVD_VIDEO_LB_LEN);
         if (l>0) {
-            out.writeBlock(buffer,DVD_VIDEO_LB_LEN);
-            _saveImage.addData((uchar*)buffer,DVD_VIDEO_LB_LEN);
+            out.writeBlock(buffer,l);
         }
     }
     m_output->close();
