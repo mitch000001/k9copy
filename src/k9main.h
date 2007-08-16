@@ -197,16 +197,6 @@ protected:
     bool m_prefK3b;
     bool m_prefMenu;
     bool m_prefAutoBurn;
-    int  m_prefMp4Codec;
-    int  m_prefMp4Size;
-    int  m_prefMp4NumberCD;
-    QString  m_prefMp4Width;
-    QString  m_prefMp4Height;
-    QString  m_prefMp4AudioBitrate;
-    QStringList m_codecAudio;
-    QStringList m_codecLabels;
-    QStringList m_codecVideo;
-    QString m_prefCodecAudio,m_prefCodecVideo,m_prefCodecLabel;
     k9PlaybackOptions *m_playbackOptions;
     k9LangSelect *m_langSelect;
     
@@ -214,7 +204,6 @@ protected:
     KDockWidget *m_dockWidget;
 protected slots:
     /*$PROTECTED_SLOTS$*/
-    void slot_progress(QString str);
     void itemRenamed ( QListViewItem *item, int col );
 signals: // Signals
     /** No descriptions */

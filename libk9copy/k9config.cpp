@@ -12,13 +12,17 @@
 #include "k9config.h"
 
 k9Config::k9Config() {
-    m_config=new KSimpleConfig("K9Copy");
+    m_config=NULL;
     read();
 }
 
 void k9Config::read() {
   // if (! m_config->hasGroup( "options"))
   // 	readOldConfig();
+  if (m_config!=NULL)
+    delete m_config;
+  m_config=new KSimpleConfig("K9Copy");
+
 
   m_config->setGroup( "dir");
   m_prefOutput=m_config->readEntry("output",locateLocal("tmp","k9copy/",true));

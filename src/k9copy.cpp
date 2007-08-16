@@ -133,7 +133,7 @@ void k9Copy::initCodecs() {
     k9VideoCodecs v(0,0);
     v.reset();
     k9AudioCodecs a(0,0);
-    v.reset();
+    a.reset();
 }
 
 bool k9Copy::queryClose   (    ) {	

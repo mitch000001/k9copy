@@ -195,6 +195,7 @@ int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const
       k9DVDChapter *ch1=(k9DVDChapter*)l->obj;
       k9DVDChapter *ch2=(k9DVDChapter*)litem->obj;
       return k9Main::compare(ch1->getnum()+ch1->getTitle()->getId()*1000 ,ch2->getnum()+ch2->getTitle()->getId()*1000);
+      break;
     }
   }
 
@@ -532,7 +533,6 @@ void k9Main::Open()
   k9DVDTitle * l_track;
   QString t;
   QTime h;
-  connect(this, SIGNAL(sig_progress(QString)), this, SLOT(slot_progress(QString)));
   connect(listView1,SIGNAL(itemRenamed(QListViewItem*,int)),this,SLOT(itemRenamed(QListViewItem *,int)));
   connect(listView1,SIGNAL(expanded( QListViewItem*)),this,SLOT(expanded( QListViewItem* )));
   connect(listView1,SIGNAL(collapsed( QListViewItem*)),this,SLOT(collapsed( QListViewItem* )));
@@ -616,16 +616,6 @@ void k9Main::setDVDSize()
   dvdsize->setMaxSizeDyn(m_prefSize);
   delete dvdsize;
 }
-
-
-/** No descriptions */
-void k9Main::slot_progress(QString str)
-{
-  //  log->setText(log->text() + "\n" +str);
-  //  qApp->processEvents();
-
-}
-
 
 
 k9Main::~k9Main()
@@ -1084,25 +1074,6 @@ void k9Main::readSettings()
   //cbOutputDevActivated( cbOutputDev->currentItem());
   cbOutputDevActivated( config.getOutputDev());
  
-  m_prefMp4Codec=config.getPrefMp4Codec();
-  m_prefMp4Size=config.getPrefMp4Size();
-  m_prefMp4NumberCD=config.getPrefMp4NumberCD();
-  m_prefMp4AudioBitrate=config.getPrefMp4AudioBitrate();
-  m_prefMp4Height=config.getPrefMp4Height();
-  m_prefMp4Width=config.getPrefMp4Width();
-  m_codecAudio=config.getCodecAudio();
-  m_codecLabels=config.getCodecLabels();
-  m_codecVideo=config.getCodecVideo();
-  
-  if (m_prefMp4Codec -2 <=m_codecLabels.count())
-  {
-    QStringList::Iterator it=m_codecAudio.at(m_prefMp4Codec);
-    m_prefCodecAudio=*it;
-    it=m_codecVideo.at(m_prefMp4Codec);
-    m_prefCodecVideo=*it;
-    it=m_codecLabels.at(m_prefMp4Codec);
-    m_prefCodecLabel=*it;
-  }
 
   //m_useDvdAuthor=settings.readBoolEntry("/options/useDvdAuthor",true);
    m_useDvdAuthor=config.getUseDvdAuthor();
@@ -1213,8 +1184,11 @@ void k9Main::CreateMP4()
       mp4->set2Passes( opt->get2Passes());
       mp4->setUseCache(opt->getUseCache());
       mp4->execute(t);
+      bool bStop=mp4->isCanceled();
       delete mp4;
       removeProgressWindow();
+      if (bStop)
+        break;
     }
   }
   changeStatusbar( i18n("Ready") ,sbMessage);

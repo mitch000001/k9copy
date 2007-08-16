@@ -27,7 +27,7 @@
 #include "k9videocodecs.h"
 #include <qcstring.h>
 
-k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& args)
+k9MP4Enc::k9MP4Enc(QObject *parent, const char *name,const QStringList& )
         : QObject(parent, name) {
     m_fourcc=m_height=m_width=m_audioBitrate=m_videoBitrate=m_filename="";
     m_codec=0; //lavc_mp4;
@@ -106,7 +106,6 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     }
 
     time = new QTime(0,0);
-    time->start();
     m_percent=0;
     m_remain="--:--:--";
 
@@ -287,7 +286,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
 	    }
 //	    qDebug (s);
 	   
-	   
+            time->start();   
             connect(m_process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
             connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
             //connect(m_process, SIGNAL(processExited(KProcess*)),this,SLOT(exited(KProcess*)));
@@ -297,6 +296,11 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
             m_process->start(KProcess::OwnGroup, KProcess::All);
             timer->start(500, 0 );
 	    m_process->sync();
+            //if application is exiting, kill the encoding process
+            if (m_process->isRunning()) {
+                m_process->kill();
+                return;
+            }
             if(m_canceled) {
                 KMessageBox::information (qApp->mainWidget(),i18n("MPEG-4 Encoding cancelled"), i18n("MPEG-4 Encoding"));
                 error=true;
@@ -311,16 +315,12 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
     }
 }
 
-QString k9MP4Enc::getAudioBrName(int _value) {
-char *tab[]={"mp3","faac","mp2","ac3","adpcm_ima_wav"};
-return QString(tab[_value]);
-
-}
 
 void k9MP4Enc::slotCancel() {
-    m_process->kill();
     m_canceled=true;
+    m_process->kill();
 }
+
 
 QString k9MP4Enc::replaceParams(QString _value) {
     QString str=_value;
@@ -352,7 +352,7 @@ int k9MP4Enc::getBitRate(k9DVDTitle *_title) {
 }
 
 
-void k9MP4Enc::getStdout(KProcess *proc, char *buffer, int buflen) {
+void k9MP4Enc::getStdout(KProcess *, char *buffer, int buflen) {
     QCString tmp(buffer,buflen);
     m_cpt++;
     if (m_cpt==100)
@@ -423,8 +423,13 @@ void k9MP4Enc::timerDone() {
 
 }
 
+bool k9MP4Enc::isCanceled() {
+   return m_canceled;
+}
 
-k9MP4Enc::~k9MP4Enc() {}
+
+k9MP4Enc::~k9MP4Enc() {
+}
 
 
 #include "k9mp4enc.moc"

@@ -58,7 +58,6 @@ private:
     QString round16(QString _wh);
     QString getChapterList(k9DVDTitle *_title);
     int getselectedSubp(k9DVDTitle *_title);
-    QString getAudioBrName(int _value);
 
 private slots:
     void getStdout(KProcess *proc, char *buffer, int buflen);
@@ -118,6 +117,8 @@ public:
     virtual void setAudioCodec(const int& _value) {m_audioCodec = _value;};
 	
     virtual QWidget *getDialog() {return (QWidget*)m_progress;};
+
+    virtual bool isCanceled();
 };
 
 #endif

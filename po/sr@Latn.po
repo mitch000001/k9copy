@@ -1,0 +1,1768 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: k9copy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-02-07 21:26+0100\n"
+"PO-Revision-Date: 2007-08-15 11:15+0100\n"
+"Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: src/k9copy.cpp:50
+#: debug/src/playbackoptionsw.cpp:228
+#: rc.cpp:172
+#, no-c-format
+msgid "DVD playback options"
+msgstr "Postavke DVD reprodukcije"
+
+#: src/k9copy.cpp:53
+#: debug/src/langselectw.cpp:120
+#: rc.cpp:195
+#, no-c-format
+msgid "Selection"
+msgstr "Obeleženo"
+
+#: src/k9copy.cpp:61
+#: src/k9copy.cpp:204
+#: src/k9settings.cpp:54
+#: debug/k9xine/xineplayer.cpp:584
+#: debug/k9Mplayer/mplayer.cpp:584
+#: rc.cpp:365
+#, no-c-format
+msgid "Preview"
+msgstr "Pregled"
+
+#: src/k9copy.cpp:71
+msgid "Shrink Factor"
+msgstr "Faktor kompresije"
+
+#: src/k9copy.cpp:130
+msgid "Play title"
+msgstr "Pusti naslov"
+
+#: src/k9copy.cpp:144
+msgid "Create MPEG-4"
+msgstr "Napravi MPEG-4"
+
+#: src/k9copy.cpp:150
+msgid "Eject"
+msgstr "Izbaci"
+
+#: src/k9copy.cpp:190
+msgid "Settings"
+msgstr "Postavke"
+
+#: src/main.cpp:31
+msgid "A DVD Backup tool for KDE"
+msgstr "Alat za pravljenje DVD rezervnih kopija u KDE okruženju"
+
+#: src/main.cpp:36
+msgid "input device"
+msgstr "ulazni uređaj"
+
+#: src/main.cpp:38
+msgid "output device"
+msgstr "izlazni uređaj"
+
+#: src/main.cpp:39
+msgid "title to play"
+msgstr "naslov koji da pustim"
+
+#: src/main.cpp:40
+msgid "play title to stdout"
+msgstr "pusti naslov na standardni izlaz"
+
+#: src/main.cpp:41
+msgid "start sector"
+msgstr "obeleživač početka"
+
+#: src/main.cpp:42
+msgid "end sector"
+msgstr "obeleživač kraja"
+
+#: src/main.cpp:43
+msgid "list of audio streams"
+msgstr "lista audio tokova"
+
+#: src/main.cpp:44
+msgid "list of spu streams"
+msgstr "lusta spu tokova"
+
+#: src/main.cpp:45
+msgid "shrink factor"
+msgstr "faktor kompresije"
+
+#: src/main.cpp:46
+msgid "shrink factor forced"
+msgstr "primorani faktor kompresije"
+
+#: src/main.cpp:47
+msgid "size of the cell to be copied"
+msgstr "veličina ćelije za umnožavanje"
+
+#: src/main.cpp:48
+msgid "total size of selected titles"
+msgstr "ukupna veličina obeleženih naslova"
+
+#: src/main.cpp:49
+msgid "size of the chapters being copied"
+msgstr "veličina poglavlja za umnožavanje"
+
+#: src/main.cpp:50
+msgid "new dvd size"
+msgstr "veličina novog DVD-a"
+
+#: src/main.cpp:51
+msgid "selected chapter"
+msgstr "obeleženo poglavnje"
+
+#: src/main.cpp:52
+msgid "cell number in selected chapter"
+msgstr "broj ćelije u obeleženom poglavlju"
+
+#: src/main.cpp:53
+msgid "status file name"
+msgstr "ime datoteke za stanje"
+
+#: src/main.cpp:54
+msgid "initialize status file"
+msgstr "pokreni datoteku za stanjem"
+
+#: src/main.cpp:55
+msgid "continue playing from last sector"
+msgstr "nastavi reprodukciju od zadnjeg sektora"
+
+#: src/main.cpp:64
+msgid "k9copy"
+msgstr "k9Copy"
+
+#: src/main.cpp:67
+msgid ""
+"_: NAME OF TRANSLATORS\\n"
+"Your names"
+msgstr ""
+"_: IME PREVODILACA\\n"
+"Miloš Popović"
+
+#: src/main.cpp:68
+msgid ""
+"_: EMAIL OF TRANSLATORS\\n"
+"Your emails"
+msgstr ""
+"_: MEJL ADRESA PREVODILACA\\n"
+"gpopac@gmail.com"
+
+#: src/k9main.cpp:296
+#: src/k9main.cpp:306
+#: src/k9main.cpp:316
+#: src/k9main.cpp:337
+#: src/k9main.cpp:539
+#: src/k9main.cpp:648
+#: src/k9main.cpp:662
+#: src/k9prefmpeg4.cpp:34
+#: src/k9prefdvd.cpp:34
+#: libk9copy/k9mp4enc.cpp:131
+msgid "mb"
+msgstr "MB"
+
+#: src/k9main.cpp:380
+#: src/k9main.cpp:1118
+msgid "DVD is not opened"
+msgstr "DVD nije otvoren"
+
+#: src/k9main.cpp:380
+#: src/k9main.cpp:395
+msgid "DVD Copy"
+msgstr "DVD umnožavanje"
+
+#: src/k9main.cpp:388
+#: libk9copy/k9burndvd.cpp:173
+msgid "Save image to disk"
+msgstr "Sačuvaj sliku na disk"
+
+#: src/k9main.cpp:395
+msgid ""
+"Insuffisant disk space on %1\n"
+"%2 mb expected."
+msgstr ""
+"Nedovoljno mesta na disku u %1\n"
+"%2 MB očekivano"
+
+#: src/k9main.cpp:399
+msgid "Backup in progress"
+msgstr "Pravljenje rezervne kopije u toku"
+
+#: src/k9main.cpp:429
+#: libk9copy/k9burndvd.cpp:145
+#: libk9copy/k9burndvd.cpp:233
+msgid "Burning DVD"
+msgstr "Upisivanje DVD diska"
+
+#: src/k9main.cpp:450
+#: src/k9main.cpp:558
+#: src/k9main.cpp:1140
+msgid "Ready"
+msgstr "Spremno"
+
+#: src/k9main.cpp:472
+#: src/k9main.cpp:1191
+msgid "ISO Image"
+msgstr "ISO odraz"
+
+#: src/k9main.cpp:516
+msgid "Open DVD"
+msgstr "Otvori DVD"
+
+#: src/k9main.cpp:537
+msgid "Titleset %1"
+msgstr "Niz naslova %1"
+
+#: src/k9main.cpp:597
+msgid "chapters"
+msgstr "poglavlja"
+
+#: src/k9main.cpp:605
+#: src/k9main.cpp:618
+msgid "chapter %1"
+msgstr "poglavlje %1"
+
+#: src/k9main.cpp:606
+#: src/k9main.cpp:621
+msgid "%1 mb"
+msgstr "%1 MB"
+
+#: src/k9main.cpp:658
+msgid "video %1 "
+msgstr "video %1 "
+
+#: src/k9main.cpp:669
+msgid "audio %1 "
+msgstr "audio %1 "
+
+#: src/k9main.cpp:687
+msgid "subpicture %1 "
+msgstr "prevod %1 "
+
+#: src/k9main.cpp:1118
+#: src/k9settings.cpp:42
+#: libk9copy/k9mp4enc.cpp:257
+msgid "MPEG-4 Encoding"
+msgstr "MPEG-4 kodiranje"
+
+#: src/k9main.cpp:1124
+msgid "Transcoding title : %1"
+msgstr "Kodiram naslov : %1"
+
+#: src/k9main.cpp:1289
+#: src/k9playbackoptions.cpp:147
+#: libk9copy/k9burndvd.cpp:167
+#: debug/src/k9mainw.cpp:163
+#: rc.cpp:26
+#: rc.cpp:213
+#, no-c-format
+msgid "default"
+msgstr "podrazumevano"
+
+#: src/k9main.cpp:1299
+msgid "Open ISO Image"
+msgstr "Otvori ISO odraz"
+
+#: src/k9main.cpp:1310
+msgid "Open DVD folder"
+msgstr "Otvori DVD fasciklu"
+
+#: src/k9settings.cpp:27
+msgid "Devices"
+msgstr "Uređaji"
+
+#: src/k9settings.cpp:27
+msgid "Devices not detected by k9copy"
+msgstr "Uređaji nisu pronađeni od strane programa"
+
+#: src/k9settings.cpp:34
+msgid "DVD"
+msgstr "DVD"
+
+#: src/k9settings.cpp:34
+msgid "DVD Backup"
+msgstr "DVD rezervna kopija"
+
+#: src/k9settings.cpp:42
+msgid "MPEG-4"
+msgstr "MPEG-4"
+
+#: src/k9settings.cpp:48
+msgid "MEncoder"
+msgstr "MEncoder"
+
+#: src/k9settings.cpp:48
+msgid "MPEG-4 Codecs"
+msgstr "MPEG-4 kodeci"
+
+#: src/k9settings.cpp:54
+msgid "Title preview"
+msgstr "pregled naslova"
+
+#: src/k9playbackoptions.cpp:149
+msgid "none"
+msgstr "ništa"
+
+#: src/k9langselect.cpp:79
+#: debug/src/playbackoptionsw.cpp:236
+#: debug/src/prefMencoder.cpp:55
+#: debug/src/prefMencoder.cpp:118
+#: debug/k9xine/xineplayer.cpp:586
+#: debug/k9Mplayer/mplayer.cpp:586
+#: rc.cpp:152
+#: rc.cpp:192
+#: rc.cpp:371
+#, no-c-format
+msgid "Audio"
+msgstr "Audio"
+
+#: src/k9langselect.cpp:90
+msgid "Subtitles"
+msgstr "Prevodi"
+
+#: src/k9titlefactor.cpp:99
+msgid "Select a Title in the treeview..."
+msgstr "Obeleži naslov u stablu za pregled..."
+
+#: src/k9titlefactor.cpp:110
+msgid "Shrink Factor for %1"
+msgstr "Faktor suženja za %1"
+
+#: libk9copy/k9dvdauthor.cpp:141
+#: libk9copy/k9dvdauthor.cpp:357
+msgid "'%1' not selected"
+msgstr "'%1' nije obeležen"
+
+#: libk9copy/k9dvdauthor.cpp:142
+#: libk9copy/k9dvdauthor.cpp:358
+#: libk9copy/k9dvdauthor.cpp:381
+#: libk9copy/k9dvdauthor.cpp:426
+#: libk9copy/k9dvdauthor.cpp:435
+#: libk9copy/k9dvdauthor.cpp:438
+#: libk9copy/k9burndvd.cpp:193
+#: libk9copy/k9burndvd.cpp:210
+msgid "authoring"
+msgstr "autorizujem"
+
+#: libk9copy/k9dvdauthor.cpp:381
+#: libk9copy/k9mp4enc.cpp:65
+msgid "Unable to run %1"
+msgstr "Ne mogu da pokrenem %1"
+
+#: libk9copy/k9dvdauthor.cpp:396
+#: libk9copy/k9dvdauthor.cpp:462
+#: libk9copy/k9dvdauthor.cpp:500
+msgid "Authoring"
+msgstr "Autorizujem"
+
+#: libk9copy/k9dvdauthor.cpp:397
+#: debug/libk9copy/backupdlg.cpp:162
+#: rc.cpp:294
+#, no-c-format
+msgid "k9Copy - Backup progression"
+msgstr "k9Copy - Napredak pravljenja kopije"
+
+#: libk9copy/k9dvdauthor.cpp:426
+msgid "Dvdauthor error :\n"
+msgstr "Greška u programu Dvdauthor :\n"
+
+#: libk9copy/k9dvdauthor.cpp:435
+msgid "Authoring cancelled"
+msgstr "Autorizacija prekinuta"
+
+#: libk9copy/k9dvdauthor.cpp:438
+msgid "An error occured while running DVDAuthor:\n"
+msgstr "Greška je nastala pri radu sa DVDAuthor:\n"
+
+#: libk9copy/k9dvdauthor.cpp:501
+msgid "Fixing VOBUS"
+msgstr "Popravljanje VOBUS"
+
+#: libk9copy/k9dvdbackup.cpp:147
+#: libk9copy/k9dvdbackup.cpp:161
+#: libk9copy/k9dvdbackup.cpp:506
+#: libk9copy/k9dvdbackup.cpp:592
+msgid "DVD backup cancelled"
+msgstr "Pravljenje DVD rezervne kopije prekinuto"
+
+#: libk9copy/k9dvdbackup.cpp:174
+msgid "unable to open VIDEO_TS.IFO"
+msgstr "Ne mogu da otvorim VIDEO_TS.IFO"
+
+#: libk9copy/k9dvdbackup.cpp:197
+#: libk9copy/k9dvdbackup.cpp:375
+#: libk9copy/k9dvdbackup.cpp:440
+msgid "Unable to open file "
+msgstr "Ne mogu da otvorim datoteku "
+
+#: libk9copy/k9dvdbackup.cpp:272
+msgid "Unable to open titleset %1"
+msgstr "Ne mogu da otvorim niz naslova %1"
+
+#: libk9copy/k9dvdbackup.cpp:278
+#: libk9copy/k9dvdbackup.cpp:564
+msgid "Extracting titleset %1"
+msgstr "Čupam niz naslova %1"
+
+#: libk9copy/k9dvdbackup.cpp:447
+msgid "Unable to open menu for titleset %1"
+msgstr "Ne mogu da otvorim meni za niz naslova %1"
+
+#: libk9copy/k9dvdbackup.cpp:473
+msgid "Extracting menu for titleset %1"
+msgstr "Čupam meni za niz naslova %1"
+
+#: libk9copy/k9dvdbackup.cpp:556
+msgid "Unable to open ifo file for titleset %1"
+msgstr "Ne mogu da otvorim ifo datoteku za niz naslova %1"
+
+#: libk9copy/k9dvdbackup.cpp:568
+#: libk9copy/k9dvdbackup.cpp:1669
+msgid "Unable to open DVD"
+msgstr "Ne mogu da otvorim DVD"
+
+#: libk9copy/k9dvdbackup.cpp:578
+msgid "Unable to open vobs for titleset %1"
+msgstr "Ne mogu da otvorim vob-ove za niz naslova %1"
+
+#: libk9copy/k9dvdbackup.cpp:1341
+msgid "Updating vob %1"
+msgstr "Ažuriram vob %1"
+
+#: libk9copy/k9dvdbackup.cpp:1358
+msgid "DVD backup canceled"
+msgstr "Pravljenje rezervne kopije prekinuto"
+
+#: libk9copy/k9dvd.cpp:189
+msgid "Couldn't open %1 for title\n"
+msgstr "Ne mogu da otvorim %1 za naslov\n"
+
+#: libk9copy/k9dvd.cpp:197
+msgid "Couldn't seek in %1 for title\n"
+msgstr "Ne mogu da tragam u %1 za naslov\n"
+
+#: libk9copy/k9dvd.cpp:224
+msgid "Not Specified"
+msgstr "Nije određeno"
+
+#: libk9copy/k9dvd.cpp:224
+msgid "Afar"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:224
+msgid "Abkhazian"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:224
+msgid "Afrikaans"
+msgstr "Afrički"
+
+#: libk9copy/k9dvd.cpp:224
+msgid "Amharic"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:225
+msgid "Arabic"
+msgstr "Arapski"
+
+#: libk9copy/k9dvd.cpp:225
+msgid "Assamese"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:225
+msgid "Aymara"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:225
+msgid "Azerbaijani"
+msgstr "Azerbejdžanski"
+
+#: libk9copy/k9dvd.cpp:225
+msgid "Bashkir"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:226
+msgid "Byelorussian"
+msgstr "Beloruski"
+
+#: libk9copy/k9dvd.cpp:226
+msgid "Bulgarian"
+msgstr "Bugarski"
+
+#: libk9copy/k9dvd.cpp:226
+msgid "Bihari"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:226
+msgid "Bislama"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:226
+msgid "Bengali; Bangla"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:227
+msgid "Tibetan"
+msgstr "Tibetanski"
+
+#: libk9copy/k9dvd.cpp:227
+msgid "Breton"
+msgstr "Bretonski"
+
+#: libk9copy/k9dvd.cpp:227
+msgid "Catalan"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:227
+msgid "Corsican"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:227
+msgid "Czech"
+msgstr "Čiški"
+
+#: libk9copy/k9dvd.cpp:228
+msgid "Welsh"
+msgstr "Velški"
+
+#: libk9copy/k9dvd.cpp:228
+msgid "Dansk"
+msgstr "Danski"
+
+#: libk9copy/k9dvd.cpp:228
+msgid "Deutsch"
+msgstr "Nemački"
+
+#: libk9copy/k9dvd.cpp:228
+msgid "Bhutani"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:228
+msgid "Greek"
+msgstr "Grčki"
+
+#: libk9copy/k9dvd.cpp:228
+msgid "English"
+msgstr "Engleski"
+
+#: libk9copy/k9dvd.cpp:229
+msgid "Esperanto"
+msgstr "Esperanto"
+
+#: libk9copy/k9dvd.cpp:229
+msgid "Espanol"
+msgstr "Ešpanjolski"
+
+#: libk9copy/k9dvd.cpp:229
+msgid "Estonian"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:229
+msgid "Basque"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:229
+msgid "Persian"
+msgstr "Persijski"
+
+#: libk9copy/k9dvd.cpp:230
+msgid "Suomi"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:230
+msgid "Fiji"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:230
+msgid "Faroese"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:230
+msgid "Francais"
+msgstr "Francuski"
+
+#: libk9copy/k9dvd.cpp:230
+msgid "Frisian"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:230
+msgid "Gaelic"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:231
+msgid "Scots Gaelic"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:231
+msgid "Galician"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:231
+msgid "Guarani"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:231
+msgid "Gujarati"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:231
+msgid "Hausa"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:232
+#: libk9copy/k9dvd.cpp:234
+msgid "Hebrew"
+msgstr "Hebrejski"
+
+#: libk9copy/k9dvd.cpp:232
+msgid "Hindi"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:232
+msgid "Hrvatski"
+msgstr "Hrvatski"
+
+#: libk9copy/k9dvd.cpp:232
+msgid "Magyar"
+msgstr "Mađarski"
+
+#: libk9copy/k9dvd.cpp:232
+msgid "Armenian"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:233
+msgid "Interlingua"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:233
+msgid "Indonesian"
+msgstr "Indonezijski"
+
+#: libk9copy/k9dvd.cpp:233
+msgid "Interlingue"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:233
+msgid "Inupiak"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:234
+msgid "Islenska"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:234
+msgid "Italiano"
+msgstr "Italijanski"
+
+#: libk9copy/k9dvd.cpp:234
+msgid "Inuktitut"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:234
+msgid "Japanese"
+msgstr "Japanski"
+
+#: libk9copy/k9dvd.cpp:235
+#: libk9copy/k9dvd.cpp:250
+msgid "Yiddish"
+msgstr "Jevrejski"
+
+#: libk9copy/k9dvd.cpp:235
+msgid "Javanese"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:235
+msgid "Georgian"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:235
+msgid "Kazakh"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:235
+msgid "Greenlandic"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:236
+msgid "Cambodian"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:236
+msgid "Kannada"
+msgstr "Kanadski"
+
+#: libk9copy/k9dvd.cpp:236
+msgid "Korean"
+msgstr "Korejski"
+
+#: libk9copy/k9dvd.cpp:236
+msgid "Kashmiri"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:236
+msgid "Kurdish"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:237
+msgid "Kirghiz"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:237
+msgid "Latin"
+msgstr "Latinski"
+
+#: libk9copy/k9dvd.cpp:237
+msgid "Lingala"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:237
+msgid "Laothian"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:237
+msgid "Lithuanian"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:238
+msgid "Latvian, Lettish"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:238
+msgid "Malagasy"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:238
+msgid "Maori"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:238
+msgid "Macedonian"
+msgstr "Makedonski"
+
+#: libk9copy/k9dvd.cpp:238
+msgid "Malayalam"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:239
+msgid "Mongolian"
+msgstr "Mongolski"
+
+#: libk9copy/k9dvd.cpp:239
+msgid "Moldavian"
+msgstr "Moldavski"
+
+#: libk9copy/k9dvd.cpp:239
+msgid "Marathi"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:239
+msgid "Malay"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:239
+msgid "Maltese"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:240
+msgid "Burmese"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:240
+msgid "Nauru"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:240
+msgid "Nepali"
+msgstr "Nepalski"
+
+#: libk9copy/k9dvd.cpp:240
+msgid "Nederlands"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:240
+msgid "Norsk"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:240
+msgid "Occitan"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:241
+msgid "Oromo"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:241
+msgid "Oriya"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:241
+msgid "Punjabi"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:241
+msgid "Polish"
+msgstr "Poljski"
+
+#: libk9copy/k9dvd.cpp:241
+msgid "Pashto, Pushto"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:242
+msgid "Portugues"
+msgstr "Portugalski"
+
+#: libk9copy/k9dvd.cpp:242
+msgid "Quechua"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:242
+msgid "Rhaeto-Romance"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:242
+msgid "Kirundi"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:242
+msgid "Romanian"
+msgstr "Rumunski"
+
+#: libk9copy/k9dvd.cpp:243
+msgid "Russian"
+msgstr "Ruski"
+
+#: libk9copy/k9dvd.cpp:243
+msgid "Kinyarwanda"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:243
+msgid "Sanskrit"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:243
+msgid "Sindhi"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:243
+msgid "Sangho"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:244
+msgid "Serbo-Croatian"
+msgstr "Srpsko-hrvatski"
+
+#: libk9copy/k9dvd.cpp:244
+msgid "Sinhalese"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:244
+msgid "Slovak"
+msgstr "Slovački"
+
+#: libk9copy/k9dvd.cpp:244
+msgid "Slovenian"
+msgstr "Slovenski"
+
+#: libk9copy/k9dvd.cpp:244
+msgid "Samoan"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:245
+msgid "Shona"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:245
+msgid "Somali"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:245
+msgid "Albanian"
+msgstr "Albanski"
+
+#: libk9copy/k9dvd.cpp:245
+msgid "Serbian"
+msgstr "Srpski"
+
+#: libk9copy/k9dvd.cpp:245
+msgid "Siswati"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:246
+msgid "Sesotho"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:246
+msgid "Sundanese"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:246
+msgid "Svenska"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:246
+msgid "Swahili"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:246
+msgid "Tamil"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:247
+msgid "Telugu"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:247
+msgid "Tajik"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:247
+msgid "Thai"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:247
+msgid "Tigrinya"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:247
+msgid "Turkmen"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:247
+msgid "Tagalog"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:248
+msgid "Setswana"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:248
+msgid "Tonga"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:248
+msgid "Turkish"
+msgstr "Turski"
+
+#: libk9copy/k9dvd.cpp:248
+msgid "Tsonga"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:248
+msgid "Tatar"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:248
+msgid "Twi"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:249
+msgid "Uighur"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:249
+msgid "Ukrainian"
+msgstr "Ukrainski"
+
+#: libk9copy/k9dvd.cpp:249
+msgid "Urdu"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:249
+msgid "Uzbek"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:249
+msgid "Vietnamese"
+msgstr "Vijetnamski"
+
+#: libk9copy/k9dvd.cpp:250
+msgid "Volapuk"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:250
+msgid "Wolof"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:250
+msgid "Xhosa"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:250
+msgid "Yoruba"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:250
+msgid "Zhuang"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:251
+msgid "Chinese"
+msgstr "Kineski"
+
+#: libk9copy/k9dvd.cpp:251
+msgid "Zulu"
+msgstr ""
+
+#: libk9copy/k9dvd.cpp:251
+#: libk9copy/k9dvd.cpp:252
+#: libk9copy/k9dvd.cpp:460
+msgid "Unknown"
+msgstr "Nepoznat"
+
+#: libk9copy/k9dvd.cpp:335
+msgid "Can't open disc %1!\n"
+msgstr "Ne mogu da otvorim disk %1!\n"
+
+#: libk9copy/k9dvd.cpp:345
+msgid "Can't open main ifo!\n"
+msgstr "Me mogu da otvorim glavni ifo!\n"
+
+#: libk9copy/k9dvd.cpp:359
+msgid "unknown"
+msgstr "nepoznato"
+
+#: libk9copy/k9dvd.cpp:387
+#: libk9copy/k9dvd.cpp:678
+msgid "Title %1"
+msgstr "Naslov %1"
+
+#: libk9copy/k9dvd.cpp:729
+msgid "reading title"
+msgstr "čitam naslov"
+
+#: libk9copy/k9dvd.cpp:846
+msgid "Error opening vobs for title %1\n"
+msgstr "Greška pri otvaranju vob-ova za naslov %1\n"
+
+#: libk9copy/k9dvd.cpp:857
+msgid "ERROR reading block %1\n"
+msgstr "Greška pri čitanju bloka %1\n"
+
+#: libk9copy/k9mp4enc.cpp:65
+#: libk9copy/k9mp4enc.cpp:260
+msgid "Encoding error"
+msgstr "Greška u kodiranju"
+
+#: libk9copy/k9mp4enc.cpp:121
+msgid "Save file to disk"
+msgstr "Sačuvaj datoteku na disk"
+
+#: libk9copy/k9mp4enc.cpp:167
+#: libk9copy/k9mp4enc.cpp:178
+#: libk9copy/k9mp4enc.cpp:191
+#: libk9copy/k9mp4enc.cpp:209
+msgid "Encoding %1"
+msgstr "Kodiranje %1"
+
+#: libk9copy/k9mp4enc.cpp:257
+msgid "MPEG-4 Encoding cancelled"
+msgstr "MPEG-4 kodiranje prekinuto"
+
+#: libk9copy/k9mp4enc.cpp:260
+msgid "Error while running mencoder :"
+msgstr "Greška pri pokretanju programa mencoder :"
+
+#: libk9copy/k9burndvd.cpp:144
+msgid "k9Copy - Burning DVD"
+msgstr "k9Copy - Upis DVD diska"
+
+#: libk9copy/k9burndvd.cpp:192
+msgid "Insert a recordable DVD"
+msgstr "Ubacite upisiv DVD disk"
+
+#: libk9copy/k9burndvd.cpp:199
+#: libk9copy/k9burndvd.cpp:203
+msgid "DVD burning"
+msgstr "Upisivanje DVD diska"
+
+#: libk9copy/k9burndvd.cpp:199
+msgid "Error burning DVD :\n"
+msgstr "Greška pri upisu na DVD :\n"
+
+#: libk9copy/k9burndvd.cpp:203
+msgid "DVD Burning finished"
+msgstr "Upisivanje DVD diska završeno"
+
+#: libk9copy/k9burndvd.cpp:209
+msgid "An error occured while Burning DVD: %1"
+msgstr "Pojavila se greška pri upisivanju DVD diska: %1"
+
+#: libk9copy/k9burndvd.cpp:209
+msgid "Insert an other DVD"
+msgstr ""
+
+#: libk9copy/k9burndvd.cpp:234
+msgid "Current write speed :%1 x"
+msgstr "Trenutna brzina upisa :%1 x"
+
+#: debug/k9decmpeg/kdecmpeg2.moc.cpp:34
+#: debug/k9decmpeg/kdecmpeg2.moc.cpp:42
+msgid "kDecMPEG2"
+msgstr ""
+
+#: debug/libk9copy/progress.cpp:103
+#: debug/src/progress.cpp:78
+#: debug/src/k9copy.moc.cpp:34
+#: debug/src/k9copy.moc.cpp:42
+#: rc.cpp:322
+#, no-c-format
+msgid "k9Copy"
+msgstr "k9Copy"
+
+#: debug/libk9copy/progress.cpp:106
+#: debug/src/progress.cpp:81
+#: rc.cpp:329
+#, no-c-format
+msgid "Alt+C"
+msgstr "Alt+C"
+
+#: debug/libk9copy/progress.cpp:107
+#: debug/libk9copy/backupdlg.cpp:167
+#: debug/libk9copy/mp4dlg.cpp:129
+#: rc.cpp:309
+#: rc.cpp:332
+#: rc.cpp:356
+#, no-c-format
+msgid "Elapsed Time"
+msgstr "Proteklo vreme"
+
+#: debug/libk9copy/k9dvdsize.moc.cpp:34
+#: debug/libk9copy/k9dvdsize.moc.cpp:42
+msgid "k9DVDSize"
+msgstr "k9DVD veličina"
+
+#: debug/libk9copy/k9dvdtitle.moc.cpp:34
+#: debug/libk9copy/k9dvdtitle.moc.cpp:42
+msgid "k9DVDVideoStream"
+msgstr "k9DVD video tok"
+
+#: debug/libk9copy/k9dvdtitle.moc.cpp:107
+#: debug/libk9copy/k9dvdtitle.moc.cpp:115
+msgid "k9DVDAudioStream"
+msgstr "k9DVD audio tok"
+
+#: debug/libk9copy/k9dvdtitle.moc.cpp:180
+#: debug/libk9copy/k9dvdtitle.moc.cpp:188
+msgid "k9DVDSubtitle"
+msgstr "k9DVD prevod"
+
+#: debug/libk9copy/k9dvdtitle.moc.cpp:253
+#: debug/libk9copy/k9dvdtitle.moc.cpp:261
+msgid "k9DVDTitle"
+msgstr "k9DVD naslov"
+
+#: debug/libk9copy/k9dvd.moc.cpp:34
+#: debug/libk9copy/k9dvd.moc.cpp:42
+msgid "k9DVD"
+msgstr "k9DVD"
+
+#: debug/libk9copy/k9dvdtitleset.moc.cpp:34
+#: debug/libk9copy/k9dvdtitleset.moc.cpp:42
+msgid "k9DVDTitleset"
+msgstr "k9DVD niz naslova"
+
+#: debug/libk9copy/k9dvdprogress.moc.cpp:34
+#: debug/libk9copy/k9dvdprogress.moc.cpp:42
+msgid "k9DVDProgress"
+msgstr "k9DVD napredak"
+
+#: debug/libk9copy/k9dvdauthor.moc.cpp:34
+#: debug/libk9copy/k9dvdauthor.moc.cpp:42
+msgid "k9DVDAuthor"
+msgstr "k9DVD autor"
+
+#: debug/libk9copy/k9ifo2.moc.cpp:34
+#: debug/libk9copy/k9ifo2.moc.cpp:42
+msgid "k9Ifo2"
+msgstr "k9Ifo2"
+
+#: debug/libk9copy/k9dvdchapter.moc.cpp:34
+#: debug/libk9copy/k9dvdchapter.moc.cpp:42
+msgid "k9ChapterCell"
+msgstr "k9 ćelija sa poglavljem"
+
+#: debug/libk9copy/k9dvdchapter.moc.cpp:107
+#: debug/libk9copy/k9dvdchapter.moc.cpp:115
+msgid "k9DVDChapter"
+msgstr "k9DVD poglavlje"
+
+#: debug/libk9copy/k9burndvd.moc.cpp:34
+#: debug/libk9copy/k9burndvd.moc.cpp:42
+msgid "k9BurnDVD"
+msgstr "k9 upis DVD-a"
+
+#: debug/libk9copy/backupdlg.cpp:163
+#: rc.cpp:297
+#, no-c-format
+msgid "A&bort"
+msgstr "Prekini"
+
+#: debug/libk9copy/backupdlg.cpp:164
+#: rc.cpp:300
+#, no-c-format
+msgid "Alt+B"
+msgstr "Alt+B"
+
+#: debug/libk9copy/backupdlg.cpp:165
+#: rc.cpp:303
+#, no-c-format
+msgid "--:--:--"
+msgstr "--:--:--"
+
+#: debug/libk9copy/backupdlg.cpp:166
+#: rc.cpp:306
+#, no-c-format
+msgid "Current step"
+msgstr "Trenutni korak"
+
+#: debug/libk9copy/backupdlg.cpp:168
+#: rc.cpp:312
+#, no-c-format
+msgid "<p align=\"left\"><b>DVD Backup</b></p>"
+msgstr "<p align=\"left\"><b>DVD rezervna kopija</b></p>"
+
+#: debug/libk9copy/dvdprogress.cpp:92
+#: rc.cpp:316
+#, no-c-format
+msgid "k9Copy - DVD Analyze"
+msgstr "k9Copy - DVD analiza"
+
+#: debug/libk9copy/mp4dlg.cpp:120
+#: rc.cpp:337
+#, no-c-format
+msgid "k9Copy - transcoding"
+msgstr "k9Copy - Kodiranje"
+
+#: debug/libk9copy/mp4dlg.cpp:121
+#: rc.cpp:340
+#, no-c-format
+msgid "Encoding"
+msgstr "Kodiranje"
+
+#: debug/libk9copy/mp4dlg.cpp:122
+#: rc.cpp:343
+#, no-c-format
+msgid "Annu&ler"
+msgstr "Nuliraj"
+
+#: debug/libk9copy/mp4dlg.cpp:123
+#: rc.cpp:346
+#, no-c-format
+msgid "Alt+L"
+msgstr "Alt+L"
+
+#: debug/libk9copy/mp4dlg.cpp:128
+#: rc.cpp:353
+#, no-c-format
+msgid "fps"
+msgstr ""
+
+#: debug/libk9copy/mp4dlg.cpp:130
+#: rc.cpp:359
+#, no-c-format
+msgid "Bitrate"
+msgstr "Bitski protok"
+
+#: debug/libk9copy/mp4dlg.cpp:131
+#: debug/src/k9mainw.cpp:66
+#: debug/src/k9mainw.cpp:160
+#: rc.cpp:20
+#: rc.cpp:225
+#: rc.cpp:362
+#, no-c-format
+msgid "Size"
+msgstr "Veličina"
+
+#: debug/src/menupreview.cpp:1084
+msgid "k9Copy - Menu Preview"
+msgstr "k9Copy - pregled menija"
+
+#: debug/src/kcddrive.moc.cpp:34
+#: debug/src/kcddrive.moc.cpp:42
+msgid "kCDDrive"
+msgstr "kCD uređaj"
+
+#: debug/src/kcddrive.moc.cpp:107
+#: debug/src/kcddrive.moc.cpp:115
+msgid "kCDDrives"
+msgstr "kCD uređaji"
+
+#: debug/src/kviewmpeg2.moc.cpp:34
+#: debug/src/kviewmpeg2.moc.cpp:42
+msgid "k9Widget"
+msgstr ""
+
+#: debug/src/kviewmpeg2.moc.cpp:107
+#: debug/src/kviewmpeg2.moc.cpp:115
+msgid "kViewMPEG2"
+msgstr ""
+
+#: debug/src/viewmpeg2.cpp:208
+#: rc.cpp:3
+#, no-c-format
+msgid "k9Copy - Title Preview"
+msgstr "k9Copy - Pregled naslova"
+
+#: debug/src/prefDVD.cpp:93
+#: rc.cpp:63
+#, no-c-format
+msgid "prefDVD"
+msgstr ""
+
+#: debug/src/prefDVD.cpp:94
+#: rc.cpp:66
+#, no-c-format
+msgid "Output directory"
+msgstr "Izlazni direktorijum"
+
+#: debug/src/prefDVD.cpp:95
+#: rc.cpp:69
+#, no-c-format
+msgid "Burn with k3b"
+msgstr "Upiši disk pomoću k3b-a"
+
+#: debug/src/prefDVD.cpp:97
+#: rc.cpp:73
+#, no-c-format
+msgid "Auto burn"
+msgstr "Automatski upiši disk"
+
+#: debug/src/prefDVD.cpp:99
+#: rc.cpp:77
+#, no-c-format
+msgid "DVD size"
+msgstr "Veličina DVD-a"
+
+#: debug/src/prefDVD.cpp:100
+#: rc.cpp:80
+#, no-c-format
+msgid "Quick scan"
+msgstr "Brzo skeniranje"
+
+#: debug/src/prefDVD.cpp:102
+#: rc.cpp:84
+#, no-c-format
+msgid "use dvdAuthor for copy without menus"
+msgstr "koristi dvdAuthor za kopije bez menija"
+
+#: debug/src/configDlg.cpp:42
+#: debug/src/configDlg.cpp:96
+#: rc.cpp:43
+#, no-c-format
+msgid "device"
+msgstr "uređaj"
+
+#: debug/src/configDlg.cpp:44
+#: debug/src/configDlg.cpp:97
+#: rc.cpp:46
+#, no-c-format
+msgid "label"
+msgstr "natpis"
+
+#: debug/src/configDlg.cpp:46
+#: debug/src/configDlg.cpp:98
+#: rc.cpp:49
+#, no-c-format
+msgid "Input"
+msgstr "Ulaz"
+
+#: debug/src/configDlg.cpp:48
+#: debug/src/configDlg.cpp:99
+#: rc.cpp:52
+#, no-c-format
+msgid "Output"
+msgstr "Izlaz"
+
+#: debug/src/configDlg.cpp:95
+#: rc.cpp:40
+#, no-c-format
+msgid "k9Copy - Devices"
+msgstr "k9Copy - Uređaji"
+
+#: debug/src/prefMPEG4.cpp:149
+#: debug/src/prefMencoder.cpp:111
+#: debug/src/prefpreview.cpp:140
+#: rc.cpp:87
+#: rc.cpp:135
+#: rc.cpp:230
+#, no-c-format
+msgid "Form1"
+msgstr ""
+
+#: debug/src/prefMPEG4.cpp:150
+#: rc.cpp:90
+#, no-c-format
+msgid "Video Codec"
+msgstr "Video kodek"
+
+#: debug/src/prefMPEG4.cpp:151
+#: rc.cpp:93
+#, no-c-format
+msgid "Audio bitrate"
+msgstr "Audio bitski protok"
+
+#: debug/src/prefMPEG4.cpp:153
+#: rc.cpp:99
+#, no-c-format
+msgid "File size"
+msgstr "Veličina datoteke"
+
+#: debug/src/prefMPEG4.cpp:155
+#: rc.cpp:105
+#, no-c-format
+msgid " mb"
+msgstr " MB"
+
+#: debug/src/prefMPEG4.cpp:156
+#: rc.cpp:108
+#, no-c-format
+msgid "640"
+msgstr "640"
+
+#: debug/src/prefMPEG4.cpp:160
+#: debug/src/k9mainw.cpp:161
+#: rc.cpp:23
+#: rc.cpp:114
+#: rc.cpp:216
+#, no-c-format
+msgid "X"
+msgstr "X"
+
+#: debug/src/prefMPEG4.cpp:162
+#: rc.cpp:117
+#, no-c-format
+msgid "XviD"
+msgstr "Xvid"
+
+#: debug/src/prefMPEG4.cpp:163
+#: rc.cpp:120
+#, no-c-format
+msgid "lavc MPEG4"
+msgstr "lavc MPEG4"
+
+#: debug/src/prefMPEG4.cpp:164
+#: rc.cpp:123
+#, no-c-format
+msgid "x264"
+msgstr "x264"
+
+#: debug/src/prefMPEG4.cpp:166
+#: rc.cpp:126
+#, no-c-format
+msgid "2 passes"
+msgstr "2 prolaza"
+
+#: debug/src/prefMPEG4.cpp:167
+#: rc.cpp:129
+#, no-c-format
+msgid "&keep aspect ratio"
+msgstr "zadrži razmeru"
+
+#: debug/src/prefMPEG4.cpp:168
+#: debug/src/playbackoptionsw.cpp:230
+#: rc.cpp:132
+#: rc.cpp:178
+#, no-c-format
+msgid "Alt+K"
+msgstr "Alt+K"
+
+#: debug/src/k9mainw.cpp:65
+#: debug/src/k9mainw.cpp:159
+#: rc.cpp:17
+#: rc.cpp:222
+#, no-c-format
+msgid "Title"
+msgstr "Naslov"
+
+#: debug/src/k9mainw.cpp:156
+#: rc.cpp:8
+#: rc.cpp:201
+#, no-c-format
+msgid "MainDlg"
+msgstr "MainDlg"
+
+#: debug/src/k9mainw.cpp:157
+#: rc.cpp:11
+#: rc.cpp:204
+#, no-c-format
+msgid "Output device "
+msgstr "Izlazni uređaj "
+
+#: debug/src/k9mainw.cpp:158
+#: rc.cpp:14
+#: rc.cpp:210
+#, no-c-format
+msgid "Input device "
+msgstr "Ulazni uređaj "
+
+#: debug/src/k9mainw.cpp:164
+#: rc.cpp:29
+#: rc.cpp:207
+#, no-c-format
+msgid "@"
+msgstr "@"
+
+#: debug/src/k9mainw.cpp:166
+#: rc.cpp:33
+#, no-c-format
+msgid "Open a folder"
+msgstr "Otvori fasciklu"
+
+#: debug/src/k9mainw.cpp:168
+#: rc.cpp:37
+#, no-c-format
+msgid "Open an iso image"
+msgstr "Otvori iso odraz"
+
+#: debug/src/playbackoptionsw.cpp:229
+#: rc.cpp:175
+#, no-c-format
+msgid "&Keep original menus"
+msgstr "Zadrži originalne menije"
+
+#: debug/src/playbackoptionsw.cpp:233
+#: rc.cpp:183
+#, no-c-format
+msgid "Selected Titles"
+msgstr "Obeleženi naslovi"
+
+#: debug/src/playbackoptionsw.cpp:234
+#: rc.cpp:186
+#, no-c-format
+msgid "Default language"
+msgstr "Podrazumevani jezik"
+
+#: debug/src/playbackoptionsw.cpp:235
+#: rc.cpp:189
+#, no-c-format
+msgid "Subtitle"
+msgstr "Prevod"
+
+#: debug/src/langselectw.cpp:93
+#: debug/src/langselectw.cpp:121
+#: rc.cpp:198
+#, no-c-format
+msgid "Languages"
+msgstr "Jezici"
+
+#: debug/src/prefMencoder.cpp:51
+#: debug/src/prefMencoder.cpp:116
+#: rc.cpp:146
+#, no-c-format
+msgid "Label"
+msgstr "Oznaka"
+
+#: debug/src/prefMencoder.cpp:53
+#: debug/src/prefMencoder.cpp:117
+#: rc.cpp:149
+#, no-c-format
+msgid "Video"
+msgstr "Video"
+
+#: debug/src/prefMencoder.cpp:119
+#: rc.cpp:155
+#, no-c-format
+msgid "Available variables"
+msgstr "Dostupne varijable"
+
+#: debug/src/prefMencoder.cpp:120
+#: rc.cpp:158
+#, no-c-format
+msgid ""
+"$PASS\n"
+"$WIDTH\n"
+"$HEIGHT\n"
+"$VIDBR\n"
+"$AUDBR"
+msgstr ""
+"$PASS\n"
+"$WIDTH\n"
+"$HEIGHT\n"
+"$VIDBR\n"
+"$AUDBR"
+
+#: debug/src/prefMencoder.cpp:125
+#: rc.cpp:165
+#, no-c-format
+msgid ""
+"pass number\n"
+"video width\n"
+"video height\n"
+"video bitrate\n"
+"audio bitrate"
+msgstr ""
+"broj prolaza\n"
+"širina videa\n"
+"vidina videa\n"
+"bitski protok videa\n"
+"bitski protok audija"
+
+#: debug/src/prefpreview.cpp:142
+#: rc.cpp:234
+#, no-c-format
+msgid "&Internal Player"
+msgstr "Integrisani pregledač"
+
+#: debug/src/prefpreview.cpp:143
+#: rc.cpp:237
+#, no-c-format
+msgid "Alt+I"
+msgstr "Alt+I"
+
+#: debug/src/prefpreview.cpp:144
+#: rc.cpp:240
+#, no-c-format
+msgid "&MPlayer"
+msgstr ""
+
+#: debug/src/prefpreview.cpp:145
+#: rc.cpp:243
+#, no-c-format
+msgid "Alt+M"
+msgstr "Alt+M"
+
+#: debug/src/prefpreview.cpp:146
+#: rc.cpp:246
+#, no-c-format
+msgid "Internal viewer options"
+msgstr "Opcije integrisanog pregledača"
+
+#: debug/src/prefpreview.cpp:147
+#: rc.cpp:249
+#, no-c-format
+msgid "use OpenGL"
+msgstr "koristi OpenGL"
+
+#: debug/src/prefpreview.cpp:148
+#: rc.cpp:252
+#, no-c-format
+msgid "Video output"
+msgstr "Video izlaz"
+
+#: debug/src/prefpreview.cpp:149
+#: rc.cpp:255
+#, no-c-format
+msgid "Audio output"
+msgstr "Audio izlaz"
+
+#: debug/src/prefpreview.cpp:151
+#: rc.cpp:258
+#, no-c-format
+msgid "X11"
+msgstr "X11"
+
+#: debug/src/prefpreview.cpp:152
+#: rc.cpp:261
+#, no-c-format
+msgid "Xv"
+msgstr "Xv"
+
+#: debug/src/prefpreview.cpp:153
+#: rc.cpp:264
+#, no-c-format
+msgid "OpenGL"
+msgstr "OpenGL"
+
+#: debug/src/prefpreview.cpp:154
+#: debug/src/prefpreview.cpp:158
+#: rc.cpp:267
+#: rc.cpp:276
+#, no-c-format
+msgid "SDL"
+msgstr "SDL"
+
+#: debug/src/prefpreview.cpp:156
+#: rc.cpp:270
+#, no-c-format
+msgid "ALSA"
+msgstr "ALSA"
+
+#: debug/src/prefpreview.cpp:157
+#: rc.cpp:273
+#, no-c-format
+msgid "OSS"
+msgstr "OSS"
+
+#: debug/src/prefpreview.cpp:159
+#: rc.cpp:279
+#, no-c-format
+msgid "MPlayer options"
+msgstr "MPlayer opcije"
+
+#: debug/src/titlefactor.cpp:93
+#: rc.cpp:282
+#, no-c-format
+msgid "Shrink Factors"
+msgstr "Faktori suženja"
+
+#: debug/src/titlefactor.cpp:94
+#: rc.cpp:285
+#, no-c-format
+msgid "Shrink Factor for Title %1"
+msgstr "Faktor suženja za naslov %1"
+
+#: debug/src/titlefactor.cpp:95
+#: rc.cpp:288
+#, no-c-format
+msgid "Change Factor"
+msgstr "Promeni faktor"
+
+#: debug/src/titlefactor.cpp:96
+#: rc.cpp:291
+#, no-c-format
+msgid "0.00"
+msgstr "0.00"
+
+#: debug/k9xine/xineplayer.cpp:585
+#: debug/k9Mplayer/mplayer.cpp:585
+#: rc.cpp:368
+#, no-c-format
+msgid "Subpicture"
+msgstr "Prevod"
+
+#: debug/k9xine/xineplayer.cpp:590
+#: debug/k9Mplayer/mplayer.cpp:590
+#: rc.cpp:377
+#, no-c-format
+msgid "-"
+msgstr "-"
+
+#: debug/k9xine/xineplayer.cpp:592
+#: debug/k9Mplayer/mplayer.cpp:592
+#: rc.cpp:381
+#, no-c-format
+msgid "+"
+msgstr "+"
+
+#: debug/k9Mplayer/k9mplayer.moc.cpp:34
+#: debug/k9Mplayer/k9mplayer.moc.cpp:42
+msgid "K9Mplayer"
+msgstr "K9Mplayer"
+
+#: rc.cpp:219
+#, no-c-format
+msgid "D&VD"
+msgstr ""
+
+#: rc.cpp:386
+#, no-c-format
+msgid "A&ctions"
+msgstr ""
+
+#: rc.cpp:389
+#, no-c-format
+msgid "Actions ToolBar"
+msgstr ""
+

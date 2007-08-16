@@ -1,4 +1,4 @@
 POFILES = AUTO
 
-noinst_HEADERS = fr.po k9copy.pot es.po it.po pt_BR.po cs.po de.po ru.po el.po \
-	pl.po ca.po es_AR.po
+noinst_HEADERS = ca.po cs.po de.po el.po es.po es_AR.po fr.po it.po k9copy.pot \
+	pl.po pt_BR.po ru.po sr.po sr@Latn.po
