@@ -25,7 +25,7 @@
 
 
 k9Progress::k9Progress(QWidget* parent, const char* name,const QStringList &args)
-: Progress(parent,name,true,0)
+: Progress(parent,name,0)
 {
   m_process=new k9Process(this,0);
   m_wimage=new k9DrawImage(image,0);

@@ -532,7 +532,7 @@ void k9play::flush(k9SaveImage &_saveImage ) {
     out.open(IO_WriteOnly,stdout);
     while(!m_output->atEnd()) {
         writeOutput(QString("\rINFOPOS: %1 %2").arg(m_pos).arg(m_length));
-        m_pos++;
+        m_pos+=20;
         int l=m_output->readBlock(buffer,20*DVD_VIDEO_LB_LEN);
         if (l>0) {
             out.writeBlock(buffer,l);

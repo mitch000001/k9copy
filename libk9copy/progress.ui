@@ -1,6 +1,6 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>Progress</class>
-<widget class="QDialog">
+<widget class="QWidget">
     <property name="name">
         <cstring>Progress</cstring>
     </property>
@@ -33,12 +33,6 @@
         <string>k9Copy</string>
     </property>
     <property name="mouseTracking">
-        <bool>false</bool>
-    </property>
-    <property name="sizeGripEnabled">
-        <bool>false</bool>
-    </property>
-    <property name="modal">
         <bool>false</bool>
     </property>
     <grid>

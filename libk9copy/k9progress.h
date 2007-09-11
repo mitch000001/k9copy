@@ -14,7 +14,7 @@
 #define K9PROGRESS_H
 
 #include "k9common.h"
-#include "progress.h"
+#include "../libk9copy/progress.h"
 #include <k9process.h>
 #include <qimage.h>
 #include <qtimer.h>

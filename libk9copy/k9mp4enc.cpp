@@ -305,7 +305,7 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
                 KMessageBox::information (qApp->mainWidget(),i18n("MPEG-4 Encoding cancelled"), i18n("MPEG-4 Encoding"));
                 error=true;
             } else if (!m_process->normalExit()) {
-                KMessageBox::error (qApp->mainWidget(),"<b>"+i18n("Error while running mencoder :") +"<b><br>"+m_stderr, i18n("Encoding error"));
+                KMessageBox::error (qApp->mainWidget(),"<b>"+i18n("Error while running mencoder :") +"</b><br>"+m_stderr, i18n("Encoding error"));
                 error=true;
             }
             if (maxPass >0)

@@ -1,4 +1,4 @@
-# translation of K9Copy_tr.po to
+# translation of a.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
@@ -6,10 +6,10 @@
 # Murat Şenel <muratasenel@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: K9Copy_tr\n"
+"Project-Id-Version: a\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-07 21:26+0100\n"
-"PO-Revision-Date: 2007-04-29 00:08+0300\n"
+"POT-Creation-Date: 2007-07-29 23:25+0200\n"
+"PO-Revision-Date: 2007-08-28 15:19+0300\n"
 "Last-Translator: Murat Şenel <muratasenel@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,381 +17,844 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: src/k9copy.cpp:50 debug/src/playbackoptionsw.cpp:228 rc.cpp:172
+#: rc.cpp:3 debug/libk9copy/backupdlg.cpp:156 libk9copy/k9dvdauthor.cpp:404
 #, no-c-format
-msgid "DVD playback options"
-msgstr "DVD oynatma seçenekleri"
+msgid "k9Copy - Backup progression"
+msgstr "k9Copy - Yedekleme seviyesi"
 
-#: src/k9copy.cpp:53 debug/src/langselectw.cpp:120 rc.cpp:195
+#: rc.cpp:6 debug/libk9copy/backupdlg.cpp:157
 #, no-c-format
-msgid "Selection"
-msgstr "Seçim"
+msgid "<p align=\"left\"><b>DVD Backup</b></p>"
+msgstr "<p align=\"left\"><b>DVD Yedekleme</b></p>"
 
-#: src/k9copy.cpp:61 src/k9copy.cpp:204 src/k9settings.cpp:54
-#: debug/k9xine/xineplayer.cpp:584 debug/k9Mplayer/mplayer.cpp:584 rc.cpp:365
+#: rc.cpp:9 debug/libk9copy/backupdlg.cpp:158
 #, no-c-format
-msgid "Preview"
-msgstr "Önizleme"
+msgid "Current step"
+msgstr "Şu anki adım"
 
-#: src/k9copy.cpp:71
-msgid "Shrink Factor"
-msgstr ""
-
-#: src/k9copy.cpp:130
-msgid "Play title"
-msgstr "Oynat"
-
-#: src/k9copy.cpp:144
-msgid "Create MPEG-4"
-msgstr "MPEG-4 yap"
-
-#: src/k9copy.cpp:150
-msgid "Eject"
-msgstr "Çıkar"
-
-#: src/k9copy.cpp:190
-msgid "Settings"
-msgstr "Ayarlar"
-
-#: src/main.cpp:31
-msgid "A DVD Backup tool for KDE"
-msgstr "KDE için yedekleme aracı"
-
-#: src/main.cpp:36
-msgid "input device"
-msgstr "kaynak"
-
-#: src/main.cpp:38
-msgid "output device"
-msgstr "çıktı aygıtı"
-
-#: src/main.cpp:39
-msgid "title to play"
-msgstr "oynatılacak başlık"
-
-#: src/main.cpp:40
-msgid "play title to stdout"
-msgstr "başlığı stdout'ta oynat"
-
-#: src/main.cpp:41
-msgid "start sector"
-msgstr "Başlangıç sektörü"
-
-#: src/main.cpp:42
-msgid "end sector"
-msgstr "Bitiş sektörü"
-
-#: src/main.cpp:43
-msgid "list of audio streams"
-msgstr "ses akışlarının listesi"
-
-#: src/main.cpp:44
-msgid "list of spu streams"
-msgstr "spu akışlarının listesi"
-
-#: src/main.cpp:45
-msgid "shrink factor"
-msgstr ""
-
-#: src/main.cpp:46
-msgid "shrink factor forced"
-msgstr ""
-
-#: src/main.cpp:47
-#, fuzzy
-msgid "size of the cell to be copied"
-msgstr "kopyalanmış hücre büyüklüğü"
-
-#: src/main.cpp:48
-msgid "total size of selected titles"
-msgstr "seçilen başlıkların toplam boyutu"
-
-#: src/main.cpp:49
-msgid "size of the chapters being copied"
-msgstr "kopyalanmış bölümlerin büyüklüğü"
-
-#: src/main.cpp:50
-msgid "new dvd size"
-msgstr "yeni dvd boyutu"
-
-#: src/main.cpp:51
-msgid "selected chapter"
-msgstr "seçilen bölüm"
-
-#: src/main.cpp:52
-msgid "cell number in selected chapter"
-msgstr "seçilmiş bölümdeki hücre sayısı"
-
-#: src/main.cpp:53
-msgid "status file name"
-msgstr ""
-
-#: src/main.cpp:54
-msgid "initialize status file"
-msgstr ""
-
-#: src/main.cpp:55
-msgid "continue playing from last sector"
-msgstr "Oynatmaya kaldığı yerden devam et"
-
-#: src/main.cpp:64
-msgid "k9copy"
-msgstr "k9copy"
-
-#: src/main.cpp:67
-msgid "_: NAME OF TRANSLATORS\\nYour names"
-msgstr "Can Coşkuner"
-
-#: src/main.cpp:68
-msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
-msgstr "fethicanc@gmail.com"
-
-#: src/k9main.cpp:296 src/k9main.cpp:306 src/k9main.cpp:316 src/k9main.cpp:337
-#: src/k9main.cpp:539 src/k9main.cpp:648 src/k9main.cpp:662
-#: src/k9prefmpeg4.cpp:34 src/k9prefdvd.cpp:34 libk9copy/k9mp4enc.cpp:131
-msgid "mb"
-msgstr "mb"
-
-#: src/k9main.cpp:380 src/k9main.cpp:1118
-msgid "DVD is not opened"
-msgstr "DVD açılamadı"
-
-#: src/k9main.cpp:380 src/k9main.cpp:395
-msgid "DVD Copy"
-msgstr "DVD kopyala"
-
-#: src/k9main.cpp:388 libk9copy/k9burndvd.cpp:173
-msgid "Save image to disk"
-msgstr "İmajı diske kaydet"
-
-#: src/k9main.cpp:395
-msgid ""
-"Insuffisant disk space on %1\n"
-"%2 mb expected."
-msgstr ""
-"%1 üzerinde yetersiz disk alanı\n"
-"%2 mb gerekli."
-
-#: src/k9main.cpp:399
-msgid "Backup in progress"
-msgstr "Yedekleme işlemi yapılıyor"
-
-#: src/k9main.cpp:429 libk9copy/k9burndvd.cpp:145 libk9copy/k9burndvd.cpp:233
-msgid "Burning DVD"
-msgstr "DVD yazılıyor"
-
-#: src/k9main.cpp:450 src/k9main.cpp:558 src/k9main.cpp:1140
-msgid "Ready"
-msgstr "Hazır"
-
-#: src/k9main.cpp:472 src/k9main.cpp:1191
-msgid "ISO Image"
-msgstr "ISO imajı"
-
-#: src/k9main.cpp:516
-msgid "Open DVD"
-msgstr "DVD aç"
-
-#: src/k9main.cpp:537
-msgid "Titleset %1"
-msgstr ""
-
-#: src/k9main.cpp:597
-msgid "chapters"
-msgstr "Bölümler"
-
-#: src/k9main.cpp:605 src/k9main.cpp:618
-msgid "chapter %1"
-msgstr "Bölüm %1"
-
-#: src/k9main.cpp:606 src/k9main.cpp:621
-msgid "%1 mb"
-msgstr "%1 mb"
-
-#: src/k9main.cpp:658
-msgid "video %1 "
-msgstr "video %1"
-
-#: src/k9main.cpp:669
-msgid "audio %1 "
-msgstr "ses %1"
-
-#: src/k9main.cpp:687
-msgid "subpicture %1 "
-msgstr ""
-
-#: src/k9main.cpp:1118 src/k9settings.cpp:42 libk9copy/k9mp4enc.cpp:257
-msgid "MPEG-4 Encoding"
-msgstr "MPEG-4 kodlama"
-
-#: src/k9main.cpp:1124
-msgid "Transcoding title : %1"
-msgstr "Başlık %1 kodlanıyor"
-
-#: src/k9main.cpp:1289 src/k9playbackoptions.cpp:147
-#: libk9copy/k9burndvd.cpp:167 debug/src/k9mainw.cpp:163 rc.cpp:26 rc.cpp:213
+#: rc.cpp:12 rc.cpp:29 rc.cpp:47 debug/libk9copy/backupdlg.cpp:159
+#: debug/libk9copy/mp4dlg.cpp:149 debug/libk9copy/progress.cpp:121
 #, no-c-format
-msgid "default"
-msgstr "Öntanımlı"
+msgid "Elapsed Time"
+msgstr "Geçen süre"
 
-#: src/k9main.cpp:1299
-msgid "Open ISO Image"
-msgstr "İSO imajını aç"
+#: rc.cpp:15 debug/libk9copy/backupdlg.cpp:160
+#, no-c-format
+msgid "--:--:--"
+msgstr "--:--:--"
 
-#: src/k9main.cpp:1310
-msgid "Open DVD folder"
-msgstr "DVD dosyasını aç"
+#: rc.cpp:19 debug/libk9copy/dvdprogress.cpp:92
+#, no-c-format
+msgid "k9Copy - DVD Analyze"
+msgstr "k9Copy - DVD Analizi"
 
-#: src/k9settings.cpp:27
-msgid "Devices"
-msgstr "Aygıtlar"
+#: rc.cpp:25 debug/libk9copy/progress.cpp:119 debug/src/progress.cpp:78
+#: debug/src/k9copy.moc.cpp:34 debug/src/k9copy.moc.cpp:42
+#, no-c-format
+msgid "k9Copy"
+msgstr "k9Copy"
 
-#: src/k9settings.cpp:27
-msgid "Devices not detected by k9copy"
-msgstr "K9copy aygıtları bulamadı"
+#: rc.cpp:34 debug/libk9copy/mp4dlg.cpp:142
+#, no-c-format
+msgid "k9Copy - transcoding"
+msgstr "k9Copy - kod çevirimi"
 
-#: src/k9settings.cpp:34
-msgid "DVD"
-msgstr "DVD"
+#: rc.cpp:37 debug/libk9copy/mp4dlg.cpp:143
+#, no-c-format
+msgid "Encoding"
+msgstr "Kodlama"
 
-#: src/k9settings.cpp:34
-msgid "DVD Backup"
-msgstr "DVD yedekleme"
+#: rc.cpp:44 debug/libk9copy/mp4dlg.cpp:148
+#, no-c-format
+msgid "fps"
+msgstr "fps"
 
-#: src/k9settings.cpp:42
-msgid "MPEG-4"
-msgstr "MPEG-4"
+#: rc.cpp:50 rc.cpp:136 rc.cpp:163 debug/libk9copy/mp4dlg.cpp:150
+#: debug/src/prefMPEG4.cpp:337 debug/src/prefMPEG4.cpp:347
+#, no-c-format
+msgid "Bitrate"
+msgstr "Bit Oranı"
 
-#: src/k9settings.cpp:48
-msgid "MEncoder"
-msgstr "MEncoder"
+#: rc.cpp:53 rc.cpp:197 rc.cpp:214 debug/libk9copy/mp4dlg.cpp:151
+#: debug/src/k9mainw.cpp:66 debug/src/k9mainw.cpp:161
+#, no-c-format
+msgid "Size"
+msgstr "Boyut"
 
-#: src/k9settings.cpp:48
-msgid "MPEG-4 Codecs"
-msgstr "MPEG-4 Codecs"
+#: rc.cpp:56 debug/src/mencoderCmdGen.cpp:98 src/k9mencodercmdgen.cpp:55
+#, no-c-format
+msgid "MEncoder options"
+msgstr "MEncoder seçenekleri"
 
-#: src/k9settings.cpp:54
-msgid "Title preview"
-msgstr "Başlık önizleme"
+#: rc.cpp:60 debug/src/mencoderCmdGen.cpp:108 src/k9mencodercmdgen.cpp:68
+#, no-c-format
+msgid "Audio Codec"
+msgstr "Ses Kodeği"
 
-#: src/k9playbackoptions.cpp:149
-msgid "none"
-msgstr "yok"
+#: rc.cpp:63 rc.cpp:151 debug/src/prefMPEG4.cpp:343
+#: debug/src/mencoderCmdGen.cpp:104
+#, no-c-format
+msgid "faac"
+msgstr "faac"
 
-#: src/k9langselect.cpp:79 debug/src/playbackoptionsw.cpp:236
-#: debug/src/prefMencoder.cpp:55 debug/src/prefMencoder.cpp:118
-#: debug/k9xine/xineplayer.cpp:586 debug/k9Mplayer/mplayer.cpp:586 rc.cpp:152
-#: rc.cpp:192 rc.cpp:371
+#: rc.cpp:66 rc.cpp:78 debug/src/mencoderCmdGen.cpp:107
+#: debug/src/mencoderCmdGen.cpp:119
+#, no-c-format
+msgid "lavc"
+msgstr "lavc"
+
+#: rc.cpp:69 debug/src/mencoderCmdGen.cpp:120 src/k9mencodercmdgen.cpp:84
+#, no-c-format
+msgid "Video Codec"
+msgstr "Video Çözücü"
+
+#: rc.cpp:72 rc.cpp:103 rc.cpp:323 debug/src/prefMPEG4.cpp:323
+#: debug/src/prefMencoder.cpp:299 debug/src/mencoderCmdGen.cpp:113
+#, no-c-format
+msgid "x264"
+msgstr "x264"
+
+#: rc.cpp:75 debug/src/mencoderCmdGen.cpp:116
+#, no-c-format
+msgid "xvid"
+msgstr "xvid"
+
+#: rc.cpp:81 rc.cpp:248 rc.cpp:300 debug/src/prefMPEG4.cpp:315
+#: debug/src/prefMencoder.cpp:286 debug/src/prefpreview.cpp:140
+#, no-c-format
+msgid "Form1"
+msgstr "Form1"
+
+#: rc.cpp:85 debug/src/prefMPEG4.cpp:339
+#, no-c-format
+msgid "Video"
+msgstr "Video"
+
+#: rc.cpp:88 debug/src/prefMPEG4.cpp:317
+#, no-c-format
+msgid "2 pass"
+msgstr "2 geçiş"
+
+#: rc.cpp:91 debug/src/prefMPEG4.cpp:318
+#, no-c-format
+msgid "Alt+2"
+msgstr "Alt+2"
+
+#: rc.cpp:94 rc.cpp:145 debug/src/prefMPEG4.cpp:319
+#: debug/src/prefMPEG4.cpp:340
+#, no-c-format
+msgid "Codec"
+msgstr "Kodek"
+
+#: rc.cpp:97 rc.cpp:320 debug/src/prefMPEG4.cpp:321
+#: debug/src/prefMencoder.cpp:298
+#, no-c-format
+msgid "XviD"
+msgstr "XviD"
+
+#: rc.cpp:100 debug/src/prefMPEG4.cpp:322
+#, no-c-format
+msgid "lavc MPEG4"
+msgstr "lavc MPEG4"
+
+#: rc.cpp:112 debug/src/prefMPEG4.cpp:327
+#, no-c-format
+msgid "640"
+msgstr "640"
+
+#: rc.cpp:116 debug/src/prefMPEG4.cpp:329
+#, no-c-format
+msgid "&keep aspect ratio"
+msgstr "&Oranı koru"
+
+#: rc.cpp:119 rc.cpp:428 debug/src/playbackoptionsw.cpp:230
+#: debug/src/prefMPEG4.cpp:330
+#, no-c-format
+msgid "Alt+K"
+msgstr "Alt+K"
+
+#: rc.cpp:123 rc.cpp:188 rc.cpp:220 debug/src/prefMPEG4.cpp:332
+#: debug/src/k9mainw.cpp:163
+#, no-c-format
+msgid "X"
+msgstr "X"
+
+#: rc.cpp:127 debug/src/prefMPEG4.cpp:334
+#, no-c-format
+msgid "File size"
+msgstr "Dosya boyutu"
+
+#: rc.cpp:130 debug/src/prefMPEG4.cpp:335
+#, no-c-format
+msgid "Alt+S"
+msgstr "Alt+S"
+
+#: rc.cpp:133 debug/src/prefMPEG4.cpp:336
+#, no-c-format
+msgid " MB"
+msgstr " MB"
+
+#: rc.cpp:139 rc.cpp:454 debug/src/prefMPEG4.cpp:338 debug/src/prefDVD.cpp:100
+#, no-c-format
+msgid "Alt+B"
+msgstr "Alt+B"
+
+#: rc.cpp:142 rc.cpp:442 rc.cpp:510 debug/src/playbackoptionsw.cpp:236
+#: debug/src/prefMPEG4.cpp:350 debug/k9Mplayer/mplayer.cpp:594
+#: src/k9langselect.cpp:79
 #, no-c-format
 msgid "Audio"
 msgstr "Ses"
 
-#: src/k9langselect.cpp:90
-msgid "Subtitles"
-msgstr "Altyazılar"
-
-#: src/k9titlefactor.cpp:99
-msgid "Select a Title in the treeview..."
-msgstr "Ağaç görünümünden bir başlık seçin..."
-
-#: src/k9titlefactor.cpp:110
-msgid "Shrink Factor for %1"
-msgstr ""
-
-#: libk9copy/k9dvdauthor.cpp:141 libk9copy/k9dvdauthor.cpp:357
-msgid "'%1' not selected"
-msgstr "'%1' seçilmedi"
-
-#: libk9copy/k9dvdauthor.cpp:142 libk9copy/k9dvdauthor.cpp:358
-#: libk9copy/k9dvdauthor.cpp:381 libk9copy/k9dvdauthor.cpp:426
-#: libk9copy/k9dvdauthor.cpp:435 libk9copy/k9dvdauthor.cpp:438
-#: libk9copy/k9burndvd.cpp:193 libk9copy/k9burndvd.cpp:210
-msgid "authoring"
-msgstr ""
-
-#: libk9copy/k9dvdauthor.cpp:381 libk9copy/k9mp4enc.cpp:65
-msgid "Unable to run %1"
-msgstr "%1 çalıştırılamadı"
-
-#: libk9copy/k9dvdauthor.cpp:396 libk9copy/k9dvdauthor.cpp:462
-#: libk9copy/k9dvdauthor.cpp:500
-msgid "Authoring"
-msgstr ""
-
-#: libk9copy/k9dvdauthor.cpp:397 debug/libk9copy/backupdlg.cpp:162 rc.cpp:294
+#: rc.cpp:148 debug/src/prefMPEG4.cpp:342
 #, no-c-format
-msgid "k9Copy - Backup progression"
-msgstr "k9Copy - Yedekleme durumu"
+msgid "mp3"
+msgstr "mp3"
 
-#: libk9copy/k9dvdauthor.cpp:426
-msgid "Dvdauthor error :\n"
-msgstr "Dvdauthor hatası :\n"
+#: rc.cpp:154 debug/src/prefMPEG4.cpp:344
+#, no-c-format
+msgid "mp2"
+msgstr "mp2"
 
-#: libk9copy/k9dvdauthor.cpp:435
-msgid "Authoring cancelled"
+#: rc.cpp:157 debug/src/prefMPEG4.cpp:345
+#, no-c-format
+msgid "ac3"
+msgstr "ac3"
+
+#: rc.cpp:160 debug/src/prefMPEG4.cpp:346
+#, no-c-format
+msgid "adpcm ima"
+msgstr "adpcm ima"
+
+#: rc.cpp:167 debug/src/prefMPEG4.cpp:349
+#, no-c-format
+msgid "Gain"
+msgstr "Gain"
+
+#: rc.cpp:170 debug/src/prefMPEG4.cpp:351
+#, no-c-format
+msgid "use cell cache"
+msgstr "hücre ön belleği kullan"
+
+#: rc.cpp:173 rc.cpp:202 debug/src/k9mainw.cpp:157
+#, no-c-format
+msgid "MainDlg"
+msgstr "Ana Pencere"
+
+#: rc.cpp:176 rc.cpp:205 debug/src/k9mainw.cpp:158
+#, no-c-format
+msgid "Output device "
+msgstr "Çıktı"
+
+#: rc.cpp:179 rc.cpp:226 debug/src/k9mainw.cpp:166
+#, no-c-format
+msgid "@"
+msgstr "@"
+
+#: rc.cpp:182
+#, no-c-format
+msgid "Input device "
+msgstr "Kaynak"
+
+#: rc.cpp:185 rc.cpp:223 debug/src/k9mainw.cpp:165 libk9copy/k9burndvd.cpp:178
+#: libk9copy/k9burndvd.cpp:278 src/k9main.cpp:1363
+#: src/k9playbackoptions.cpp:147
+#, no-c-format
+msgid "default"
+msgstr "Öntanımlı"
+
+#: rc.cpp:191
+#, no-c-format
+msgid "D&VD"
+msgstr "D&VD"
+
+#: rc.cpp:194 rc.cpp:211 debug/src/k9mainw.cpp:65 debug/src/k9mainw.cpp:160
+#, no-c-format
+msgid "Title"
+msgstr "Başlık"
+
+#: rc.cpp:208 debug/src/k9mainw.cpp:159 src/main.cpp:36
+#, no-c-format
+msgid "input device"
+msgstr "kaynak"
+
+#: rc.cpp:217 debug/src/k9mainw.cpp:68 debug/src/k9mainw.cpp:162
+#, no-c-format
+msgid "Content"
+msgstr "İçerik"
+
+#: rc.cpp:230 debug/src/k9mainw.cpp:168
+#, no-c-format
+msgid "Open a folder"
+msgstr "Dosya aç"
+
+#: rc.cpp:234 debug/src/k9mainw.cpp:170
+#, no-c-format
+msgid "Open an iso image"
+msgstr "İso imajı aç"
+
+#: rc.cpp:237 debug/src/viewmpeg2.cpp:205
+#, no-c-format
+msgid "k9Copy - Title Preview"
+msgstr "k9Copy - Başlık Önizleme"
+
+#: rc.cpp:242 debug/src/langselectw.cpp:120 src/k9copy.cpp:56
+#, no-c-format
+msgid "Selection"
+msgstr "Seçim"
+
+#: rc.cpp:245 debug/src/langselectw.cpp:93 debug/src/langselectw.cpp:121
+#, no-c-format
+msgid "Languages"
+msgstr "Diller"
+
+#: rc.cpp:252 debug/src/prefpreview.cpp:142
+#, no-c-format
+msgid "&Internal Player"
+msgstr "&Dahili Oynatıcı"
+
+#: rc.cpp:255 debug/src/prefpreview.cpp:143
+#, no-c-format
+msgid "Alt+I"
+msgstr "Alt+l"
+
+#: rc.cpp:258 debug/src/prefpreview.cpp:144
+#, no-c-format
+msgid "MPlayer"
+msgstr "MPlayer"
+
+#: rc.cpp:261 debug/src/prefpreview.cpp:145
+#, no-c-format
+msgid "Alt+M"
+msgstr "Alt+M"
+
+#: rc.cpp:264 debug/src/prefpreview.cpp:146
+#, no-c-format
+msgid "Internal viewer options"
+msgstr "Dahili görüntüleyici seçenekleri"
+
+#: rc.cpp:267 debug/src/prefpreview.cpp:147
+#, no-c-format
+msgid "use OpenGL"
+msgstr "OpenGL kullan"
+
+#: rc.cpp:270 debug/src/prefpreview.cpp:148
+#, no-c-format
+msgid "Video output"
+msgstr "Video çıktısı"
+
+#: rc.cpp:273 debug/src/prefpreview.cpp:149
+#, no-c-format
+msgid "Audio output"
+msgstr "Ses çıktısı"
+
+#: rc.cpp:276 debug/src/prefpreview.cpp:151
+#, no-c-format
+msgid "X11"
+msgstr "X11"
+
+#: rc.cpp:279 debug/src/prefpreview.cpp:152
+#, no-c-format
+msgid "Xv"
+msgstr "Xv"
+
+#: rc.cpp:282 debug/src/prefpreview.cpp:153
+#, no-c-format
+msgid "OpenGL"
+msgstr "OpenGL"
+
+#: rc.cpp:285 rc.cpp:294 debug/src/prefpreview.cpp:154
+#: debug/src/prefpreview.cpp:158
+#, no-c-format
+msgid "SDL"
+msgstr "SDL"
+
+#: rc.cpp:288 debug/src/prefpreview.cpp:156
+#, no-c-format
+msgid "ALSA"
+msgstr "ALSA"
+
+#: rc.cpp:291 debug/src/prefpreview.cpp:157
+#, no-c-format
+msgid "OSS"
+msgstr "OSS"
+
+#: rc.cpp:297 debug/src/prefpreview.cpp:159
+#, no-c-format
+msgid "MPlayer options"
+msgstr "MPlayer seçenekleri"
+
+#: rc.cpp:303 debug/src/prefMencoder.cpp:287
+#, no-c-format
+msgid ""
+"$PASS\n"
+"$WIDTH\n"
+"$HEIGHT\n"
+"$VIDBR\n"
+"$AUDBR"
 msgstr ""
+"$PASS\n"
+"$WIDTH\n"
+"$HEIGHT\n"
+"$VIDBR\n"
+"$AUDBR"
 
-#: libk9copy/k9dvdauthor.cpp:438
-msgid "An error occured while running DVDAuthor:\n"
-msgstr "DVDAuthor çalışırken bir hata oluştu:\n"
-
-#: libk9copy/k9dvdauthor.cpp:501
-msgid "Fixing VOBUS"
-msgstr "VOBUS onarılıyor"
-
-#: libk9copy/k9dvdbackup.cpp:147 libk9copy/k9dvdbackup.cpp:161
-#: libk9copy/k9dvdbackup.cpp:506 libk9copy/k9dvdbackup.cpp:592
-msgid "DVD backup cancelled"
-msgstr "DVD yedekleme iptal edildi"
-
-#: libk9copy/k9dvdbackup.cpp:174
-msgid "unable to open VIDEO_TS.IFO"
-msgstr "VIDEO_TS.IFO açılamadı"
-
-#: libk9copy/k9dvdbackup.cpp:197 libk9copy/k9dvdbackup.cpp:375
-#: libk9copy/k9dvdbackup.cpp:440
-msgid "Unable to open file "
-msgstr "Dosya açılamadı"
-
-#: libk9copy/k9dvdbackup.cpp:272
-msgid "Unable to open titleset %1"
+#: rc.cpp:310 debug/src/prefMencoder.cpp:292
+#, no-c-format
+msgid ""
+"pass number\n"
+"video width\n"
+"video height\n"
+"video bitrate\n"
+"audio bitrate"
 msgstr ""
+"geçiş numarası\n"
+"video genişliği\n"
+"video yüksekliği\n"
+"video bitrate\n"
+"audio bitrate"
 
-#: libk9copy/k9dvdbackup.cpp:278 libk9copy/k9dvdbackup.cpp:564
-msgid "Extracting titleset %1"
-msgstr "Titleset %1 çıkarılıyor"
+#: rc.cpp:317 debug/src/prefMencoder.cpp:326
+#, no-c-format
+msgid "Video codecs"
+msgstr "Video çözücüler"
 
-#: libk9copy/k9dvdbackup.cpp:447
-msgid "Unable to open menu for titleset %1"
-msgstr "Titleset %1 için menü açılamadı"
+#: rc.cpp:326 debug/src/prefMencoder.cpp:300
+#, no-c-format
+msgid "MJPEG"
+msgstr "MJPEG"
 
-#: libk9copy/k9dvdbackup.cpp:473
-msgid "Extracting menu for titleset %1"
-msgstr "Titleset %1 için menü çıkartılıyor"
+#: rc.cpp:329 debug/src/prefMencoder.cpp:301
+#, no-c-format
+msgid "LJPEG"
+msgstr "LJPEG"
 
-#: libk9copy/k9dvdbackup.cpp:556
-msgid "Unable to open ifo file for titleset %1"
-msgstr "Titleset %1 için ifo dosyası açılamadı"
+#: rc.cpp:332 debug/src/prefMencoder.cpp:302
+#, no-c-format
+msgid "H.261"
+msgstr "H.261"
 
-#: libk9copy/k9dvdbackup.cpp:568 libk9copy/k9dvdbackup.cpp:1669
-msgid "Unable to open DVD"
-msgstr "DVD açılamadı"
+#: rc.cpp:335 debug/src/prefMencoder.cpp:303
+#, no-c-format
+msgid "H.263"
+msgstr "H.263"
 
-#: libk9copy/k9dvdbackup.cpp:578
-msgid "Unable to open vobs for titleset %1"
-msgstr ""
+#: rc.cpp:338 debug/src/prefMencoder.cpp:304
+#, no-c-format
+msgid "MPEG-4 (DivX 4/5)"
+msgstr "MPEG-4 (DivX 4/5)"
 
-#: libk9copy/k9dvdbackup.cpp:1341
-msgid "Updating vob %1"
-msgstr "Vob %1 güncelleniyor"
+#: rc.cpp:341 debug/src/prefMencoder.cpp:305
+#, no-c-format
+msgid "DivX 3"
+msgstr "DivX 3"
 
-#: libk9copy/k9dvdbackup.cpp:1358
-msgid "DVD backup canceled"
-msgstr "DVD yedekleme iptal edildi"
+#: rc.cpp:344 debug/src/prefMencoder.cpp:306
+#, no-c-format
+msgid "MS MPEG-4 v2"
+msgstr "MS MPEG-4 v2"
+
+#: rc.cpp:347 debug/src/prefMencoder.cpp:307
+#, no-c-format
+msgid "WMV7"
+msgstr "WMV7"
+
+#: rc.cpp:350 debug/src/prefMencoder.cpp:308
+#, no-c-format
+msgid "WMV8"
+msgstr "WMV8"
+
+#: rc.cpp:353 debug/src/prefMencoder.cpp:309
+#, no-c-format
+msgid "RealVideo"
+msgstr "RealVideo"
+
+#: rc.cpp:356 debug/src/prefMencoder.cpp:310
+#, no-c-format
+msgid "MPEG-1"
+msgstr "MPEG-1"
+
+#: rc.cpp:359 debug/src/prefMencoder.cpp:311
+#, no-c-format
+msgid "MPEG-2"
+msgstr "MPEG-2"
+
+#: rc.cpp:362 debug/src/prefMencoder.cpp:312
+#, no-c-format
+msgid "HuffYUV"
+msgstr "HuffYUV"
+
+#: rc.cpp:365 debug/src/prefMencoder.cpp:313
+#, no-c-format
+msgid "ffvHuff"
+msgstr "ffvHuff"
+
+#: rc.cpp:368 debug/src/prefMencoder.cpp:314
+#, no-c-format
+msgid "ASUS v1"
+msgstr "ASUS v1"
+
+#: rc.cpp:371 debug/src/prefMencoder.cpp:315
+#, no-c-format
+msgid "ASUS v2"
+msgstr "ASUS v2"
+
+#: rc.cpp:375 rc.cpp:400 rc.cpp:490 debug/src/configDlg.cpp:42
+#: debug/src/configDlg.cpp:95 debug/src/prefMencoder.cpp:317
+#: debug/src/prefMencoder.cpp:329
+#, no-c-format
+msgid "label"
+msgstr "etiket"
+
+#: rc.cpp:378 debug/src/prefMencoder.cpp:318
+#, no-c-format
+msgid "fourcc"
+msgstr "fourcc"
+
+#: rc.cpp:381 debug/src/prefMencoder.cpp:319
+#, no-c-format
+msgid "first pass"
+msgstr "ilk geçiş"
+
+#: rc.cpp:386 debug/src/prefMencoder.cpp:322
+#, no-c-format
+msgid "one pass"
+msgstr "tek geçiş"
+
+#: rc.cpp:391 debug/src/prefMencoder.cpp:325
+#, no-c-format
+msgid "second pass"
+msgstr "ikinci geçiş"
+
+#: rc.cpp:394 debug/src/prefMencoder.cpp:332
+#, no-c-format
+msgid "Audio codecs"
+msgstr "Ses çözücüleri"
+
+#: rc.cpp:397 debug/src/prefMencoder.cpp:328
+#, no-c-format
+msgid "New Item"
+msgstr "Yeni Öğe"
+
+#: rc.cpp:404 debug/src/prefMencoder.cpp:331
+#, no-c-format
+msgid "options"
+msgstr "seçenekler"
+
+#: rc.cpp:407 debug/src/prefMencoder.cpp:333
+#, no-c-format
+msgid "Available variables"
+msgstr "Var olan değişkenler"
+
+#: rc.cpp:410 debug/src/titlefactor.cpp:321
+#, no-c-format
+msgid "Shrink Factors"
+msgstr "Küçültme Etkenleri"
+
+#: rc.cpp:413 debug/src/titlefactor.cpp:322
+#, no-c-format
+msgid "Shrink Factor for Title %1"
+msgstr "Başlık %1 için Küçültme Etkenleri"
+
+#: rc.cpp:416 debug/src/titlefactor.cpp:323
+#, no-c-format
+msgid "Change Factor"
+msgstr "Çarpanı değiştir"
+
+#: rc.cpp:419 debug/src/titlefactor.cpp:324
+#, no-c-format
+msgid "0.00"
+msgstr "0.00"
+
+#: rc.cpp:422 debug/src/playbackoptionsw.cpp:228 src/k9copy.cpp:53
+#, no-c-format
+msgid "DVD playback options"
+msgstr "DVD oynatma seçenekleri"
+
+#: rc.cpp:425 debug/src/playbackoptionsw.cpp:229
+#, no-c-format
+msgid "&Keep original menus"
+msgstr "&Orijinal menüyü koru"
+
+#: rc.cpp:433 debug/src/playbackoptionsw.cpp:233
+#, no-c-format
+msgid "Selected Titles"
+msgstr "Seçili başlıklar"
+
+#: rc.cpp:436 debug/src/playbackoptionsw.cpp:234
+#, no-c-format
+msgid "Default language"
+msgstr "Öntanımlı dil"
+
+#: rc.cpp:439 debug/src/playbackoptionsw.cpp:235
+#, no-c-format
+msgid "Subtitle"
+msgstr "Altyazı"
+
+#: rc.cpp:445 debug/src/prefDVD.cpp:97
+#, no-c-format
+msgid "prefDVD"
+msgstr "prefDVD"
+
+#: rc.cpp:448 debug/src/prefDVD.cpp:98
+#, no-c-format
+msgid "Output directory"
+msgstr "Çıktı dizini"
+
+#: rc.cpp:451 debug/src/prefDVD.cpp:99
+#, no-c-format
+msgid "Burn with k3b"
+msgstr "K3b ile yaz"
+
+#: rc.cpp:457 debug/src/prefDVD.cpp:101
+#, no-c-format
+msgid "Auto burn"
+msgstr "Otomatik yaz"
+
+#: rc.cpp:460 debug/src/prefDVD.cpp:102
+#, no-c-format
+msgid "Alt+T"
+msgstr "Alt+T"
+
+#: rc.cpp:463 debug/src/prefDVD.cpp:103
+#, no-c-format
+msgid "DVD size"
+msgstr "DVD boyutu"
+
+#: rc.cpp:466 debug/src/prefDVD.cpp:104
+#, no-c-format
+msgid "Quick scan"
+msgstr "Çabuk tara"
+
+#: rc.cpp:469 debug/src/prefDVD.cpp:105
+#, no-c-format
+msgid "Alt+Q"
+msgstr "Alt+Q"
+
+#: rc.cpp:472 debug/src/prefDVD.cpp:106
+#, no-c-format
+msgid "use dvdAuthor for copy without menus"
+msgstr "Kopyalama için dvdAuthor'u menüsüz kullan"
+
+#: rc.cpp:475 debug/src/prefDVD.cpp:107
+#, no-c-format
+msgid "Alt+D"
+msgstr "Alt+D"
+
+#: rc.cpp:478 debug/src/prefDVD.cpp:108
+#, no-c-format
+msgid "Clear output directory on exit"
+msgstr "Çıkışta çıktı dizinini temizle"
+
+#: rc.cpp:481 debug/src/prefDVD.cpp:109
+#, no-c-format
+msgid "Alt+Y"
+msgstr "Alt+Y"
+
+#: rc.cpp:484 debug/src/configDlg.cpp:93
+#, no-c-format
+msgid "k9Copy - Devices"
+msgstr "k9Copy - Aygıtlar"
+
+#: rc.cpp:487 debug/src/configDlg.cpp:40 debug/src/configDlg.cpp:94
+#, no-c-format
+msgid "device"
+msgstr "Aygıt"
+
+#: rc.cpp:493 debug/src/configDlg.cpp:44 debug/src/configDlg.cpp:96
+#, no-c-format
+msgid "Input"
+msgstr "Girdi"
+
+#: rc.cpp:496 debug/src/configDlg.cpp:46 debug/src/configDlg.cpp:97
+#, no-c-format
+msgid "Output"
+msgstr "Çıktı"
+
+#: rc.cpp:507 debug/k9Mplayer/mplayer.cpp:593 src/k9settings.cpp:57
+#: src/k9copy.cpp:64 src/k9copy.cpp:248 k9Mplayer/k9mplayer.cpp:97
+#, no-c-format
+msgid "Preview"
+msgstr "Önizleme"
+
+#: rc.cpp:513 debug/k9Mplayer/mplayer.cpp:595
+#, no-c-format
+msgid "Subpicture"
+msgstr "Alt resim"
+
+#: rc.cpp:520 debug/k9Mplayer/mplayer.cpp:600
+#, no-c-format
+msgid "-"
+msgstr "-"
+
+#: rc.cpp:524 debug/k9Mplayer/mplayer.cpp:602
+#, no-c-format
+msgid "+"
+msgstr "+"
+
+#: rc.cpp:529
+#, no-c-format
+msgid "A&ctions"
+msgstr "&Eylemler"
+
+#: rc.cpp:532
+#, no-c-format
+msgid "Actions ToolBar"
+msgstr "Eylemler Araç Çubuğu"
+
+#: debug/libk9copy/k9ifo2.moc.cpp:34 debug/libk9copy/k9ifo2.moc.cpp:42
+msgid "k9Ifo2"
+msgstr "k9Ifo2"
+
+#: debug/libk9copy/k9dvdchapter.moc.cpp:34
+#: debug/libk9copy/k9dvdchapter.moc.cpp:42
+msgid "k9ChapterCell"
+msgstr "k9ChapterCell"
+
+#: debug/libk9copy/k9dvdchapter.moc.cpp:107
+#: debug/libk9copy/k9dvdchapter.moc.cpp:115
+msgid "k9DVDChapter"
+msgstr "k9DVDBölüm"
+
+#: debug/libk9copy/k9burndvd.moc.cpp:34 debug/libk9copy/k9burndvd.moc.cpp:42
+msgid "k9BurnDVD"
+msgstr "k9DVDYaz"
+
+#: debug/libk9copy/k9dvd.moc.cpp:34 debug/libk9copy/k9dvd.moc.cpp:42
+msgid "k9DVD"
+msgstr "k9DVD"
+
+#: debug/libk9copy/k9dvdtitle.moc.cpp:34 debug/libk9copy/k9dvdtitle.moc.cpp:42
+msgid "k9DVDVideoStream"
+msgstr "k9DVDVideoAkışı"
+
+#: debug/libk9copy/k9dvdtitle.moc.cpp:107
+#: debug/libk9copy/k9dvdtitle.moc.cpp:115
+msgid "k9DVDAudioStream"
+msgstr "k9DVDSesAkışı"
+
+#: debug/libk9copy/k9dvdtitle.moc.cpp:180
+#: debug/libk9copy/k9dvdtitle.moc.cpp:188
+msgid "k9DVDSubtitle"
+msgstr "k9DVDAltyazı"
+
+#: debug/libk9copy/k9dvdtitle.moc.cpp:253
+#: debug/libk9copy/k9dvdtitle.moc.cpp:261
+msgid "k9DVDTitle"
+msgstr "k9DVDBaşlık"
+
+#: debug/libk9copy/k9dvdprogress.moc.cpp:34
+#: debug/libk9copy/k9dvdprogress.moc.cpp:42
+msgid "k9DVDProgress"
+msgstr "k9DVDProgress"
+
+#: debug/libk9copy/k9dvdtitleset.moc.cpp:34
+#: debug/libk9copy/k9dvdtitleset.moc.cpp:42
+msgid "k9DVDTitleset"
+msgstr "k9DVDTitlesetx"
+
+#: debug/libk9copy/k9dvdauthor.moc.cpp:34
+#: debug/libk9copy/k9dvdauthor.moc.cpp:42
+msgid "k9DVDAuthor"
+msgstr "k9DVDAuthor"
+
+#: debug/libk9copy/k9dvdsize.moc.cpp:34 debug/libk9copy/k9dvdsize.moc.cpp:42
+msgid "k9DVDSize"
+msgstr "k9DVDBoyutu"
+
+#: debug/src/menupreview.cpp:1084
+msgid "k9Copy - Menu Preview"
+msgstr "k9Copy - Menü önizleme"
+
+#: debug/src/kcddrive.moc.cpp:34 debug/src/kcddrive.moc.cpp:42
+msgid "kCDDrive"
+msgstr "kCDSürücüsü"
+
+#: debug/src/kcddrive.moc.cpp:107 debug/src/kcddrive.moc.cpp:115
+msgid "kCDDrives"
+msgstr "kCDSürücüleri"
+
+#: debug/src/kviewmpeg2.moc.cpp:34 debug/src/kviewmpeg2.moc.cpp:42
+msgid "k9Widget"
+msgstr "k9Widget"
+
+#: debug/src/kviewmpeg2.moc.cpp:107 debug/src/kviewmpeg2.moc.cpp:115
+msgid "kViewMPEG2"
+msgstr "kViewMPEG2"
+
+#: debug/src/progress.cpp:81
+msgid "Alt+C"
+msgstr "Alt+C"
+
+#: debug/k9Mplayer/k9mplayer.moc.cpp:34 debug/k9Mplayer/k9mplayer.moc.cpp:42
+msgid "K9Mplayer"
+msgstr "K9Mplayer"
+
+#: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
+msgid "kDecMPEG2"
+msgstr "kDecMPEG2"
+
+#: libk9copy/k9dvd.cpp:133
+msgid "for visually impaired"
+msgstr "görme engelliler için"
+
+#: libk9copy/k9dvd.cpp:134
+msgid "director's comments"
+msgstr "yönetmen'in yorumları"
+
+#: libk9copy/k9dvd.cpp:135
+msgid "alternate director's comments"
+msgstr "yönetmen'in yorumlarını değiştir"
+
+#: libk9copy/k9dvd.cpp:139
+msgid "Large"
+msgstr "GenişEtiket"
+
+#: libk9copy/k9dvd.cpp:140
+msgid "Children"
+msgstr "Çocuklar"
+
+#: libk9copy/k9dvd.cpp:141 libk9copy/k9dvd.cpp:147 libk9copy/k9dvd.cpp:148
+#: libk9copy/k9dvd.cpp:149
+msgid "reserved"
+msgstr "dolu"
+
+#: libk9copy/k9dvd.cpp:142
+msgid "Normal captions"
+msgstr "Normal başlıklar"
+
+#: libk9copy/k9dvd.cpp:143
+msgid "Large captions"
+msgstr "Geniş yakalamalarMPlayer seçenekleri"
+
+#: libk9copy/k9dvd.cpp:144
+msgid "Children captions"
+msgstr "Çocuk başlıkları"
+
+#: libk9copy/k9dvd.cpp:146
+msgid "Forced"
+msgstr "Güçlendirilmiş"
+
+#: libk9copy/k9dvd.cpp:150
+msgid "Director's comments"
+msgstr "Yönetmenin yorumları"
+
+#: libk9copy/k9dvd.cpp:151
+msgid "Large director's comments"
+msgstr "Yönetmenin yorumlarını genişlet"
+
+#: libk9copy/k9dvd.cpp:152
+msgid "Director's comments for children"
+msgstr "Çocuklar için yönetmenin yorumları"
 
 #: libk9copy/k9dvd.cpp:189
 msgid "Couldn't open %1 for title\n"
 msgstr "Başlık için %1 açılamadı\n"
+
+#: libk9copy/k9dvd.cpp:191 libk9copy/k9dvd.cpp:199 libk9copy/k9dvd.cpp:207
+#: libk9copy/k9dvd.cpp:361 src/k9main.cpp:563
+msgid "unknown"
+msgstr "bilinmeyen"
 
 #: libk9copy/k9dvd.cpp:197
 msgid "Couldn't seek in %1 for title\n"
@@ -411,11 +874,11 @@ msgstr "Abhazca"
 
 #: libk9copy/k9dvd.cpp:224
 msgid "Afrikaans"
-msgstr "Afrikaca"
+msgstr "Afrikalılar"
 
 #: libk9copy/k9dvd.cpp:224
 msgid "Amharic"
-msgstr "Habeşistanca"
+msgstr "Habeşistan"
 
 #: libk9copy/k9dvd.cpp:225
 msgid "Arabic"
@@ -423,23 +886,23 @@ msgstr "Arapça"
 
 #: libk9copy/k9dvd.cpp:225
 msgid "Assamese"
-msgstr ""
+msgstr "Assamese"
 
 #: libk9copy/k9dvd.cpp:225
 msgid "Aymara"
-msgstr ""
+msgstr "Aymara"
 
 #: libk9copy/k9dvd.cpp:225
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Azerice"
 
 #: libk9copy/k9dvd.cpp:225
 msgid "Bashkir"
-msgstr ""
+msgstr "Bashkir"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Byelorussian"
-msgstr ""
+msgstr "Beyaz Rusça"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Bulgarian"
@@ -447,15 +910,15 @@ msgstr "Bulgarca"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Bihari"
-msgstr "Biharca"
+msgstr "Bihari"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Bislama"
-msgstr ""
+msgstr "Bislama"
 
 #: libk9copy/k9dvd.cpp:226
 msgid "Bengali; Bangla"
-msgstr "Bengalice"
+msgstr "Bengali; Bangla"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Tibetan"
@@ -463,7 +926,7 @@ msgstr "Tibetçe"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Breton"
-msgstr "Bretonca"
+msgstr "Breton"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Catalan"
@@ -471,7 +934,7 @@ msgstr "Katalanca"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Corsican"
-msgstr "Korsikaca"
+msgstr "Corsican"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Czech"
@@ -483,7 +946,7 @@ msgstr "Galce"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Dansk"
-msgstr ""
+msgstr "Dansk"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Deutsch"
@@ -491,11 +954,11 @@ msgstr "Almanca"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Bhutani"
-msgstr ""
+msgstr "Bhutani"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Greek"
-msgstr "Yunananca"
+msgstr "Rumca"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "English"
@@ -503,7 +966,7 @@ msgstr "İngilizce"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Espanol"
@@ -515,7 +978,7 @@ msgstr "Estçe"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Basque"
-msgstr ""
+msgstr "Basque"
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Persian"
@@ -523,23 +986,23 @@ msgstr "Farsça"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Suomi"
-msgstr ""
+msgstr "Suomi"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Fiji"
-msgstr ""
+msgstr "Fiji"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Faroese"
-msgstr ""
+msgstr "Faroese"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Francais"
-msgstr ""
+msgstr "Francais"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Frisian"
-msgstr ""
+msgstr "Frisian"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Gaelic"
@@ -551,19 +1014,19 @@ msgstr "İskoçça"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Galician"
-msgstr ""
+msgstr "Galician"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Guarani"
-msgstr ""
+msgstr "Guarani"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Hausa"
-msgstr ""
+msgstr "Hausa"
 
 #: libk9copy/k9dvd.cpp:232 libk9copy/k9dvd.cpp:234
 msgid "Hebrew"
@@ -579,7 +1042,7 @@ msgstr "Hırvatça"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Magyar"
-msgstr ""
+msgstr "Magyar"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Armenian"
@@ -587,23 +1050,23 @@ msgstr "Ermenice"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Interlingua"
-msgstr ""
+msgstr "Interlingua"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Indonesian"
-msgstr ""
+msgstr "Endonezyaca"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Interlingue"
-msgstr ""
+msgstr "Interlingue"
 
 #: libk9copy/k9dvd.cpp:233
 msgid "Inupiak"
-msgstr ""
+msgstr "Inupiak"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Islenska"
-msgstr ""
+msgstr "Islenska"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Italiano"
@@ -611,7 +1074,7 @@ msgstr "İtalyanca"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Inuktitut"
-msgstr ""
+msgstr "Inuktitut"
 
 #: libk9copy/k9dvd.cpp:234
 msgid "Japanese"
@@ -643,7 +1106,7 @@ msgstr "Kampuçça"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Kannada"
-msgstr ""
+msgstr "Kanada"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Korean"
@@ -651,7 +1114,7 @@ msgstr "Korece"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Kashmiri"
-msgstr ""
+msgstr "Kashmiri"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Kurdish"
@@ -667,11 +1130,11 @@ msgstr "Latince"
 
 #: libk9copy/k9dvd.cpp:237
 msgid "Lingala"
-msgstr ""
+msgstr "Lingala"
 
 #: libk9copy/k9dvd.cpp:237
 msgid "Laothian"
-msgstr ""
+msgstr "Laothian"
 
 #: libk9copy/k9dvd.cpp:237
 msgid "Lithuanian"
@@ -687,7 +1150,7 @@ msgstr "Malgaşça"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Maori"
-msgstr ""
+msgstr "Maori"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Macedonian"
@@ -695,7 +1158,7 @@ msgstr "Makedonca"
 
 #: libk9copy/k9dvd.cpp:238
 msgid "Malayalam"
-msgstr ""
+msgstr "Malayalam"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Mongolian"
@@ -707,7 +1170,7 @@ msgstr "Moldavyaca"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Marathi"
-msgstr ""
+msgstr "Marathi"
 
 #: libk9copy/k9dvd.cpp:239
 msgid "Malay"
@@ -723,7 +1186,7 @@ msgstr "Birmanca"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Nauru"
-msgstr ""
+msgstr "Nauru"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Nepali"
@@ -735,19 +1198,19 @@ msgstr "Hollandaca"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Norsk"
-msgstr ""
+msgstr "Norsk"
 
 #: libk9copy/k9dvd.cpp:240
 msgid "Occitan"
-msgstr ""
+msgstr "Occitan"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Oromo"
-msgstr ""
+msgstr "Oromo"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Oriya"
-msgstr ""
+msgstr "Oriya"
 
 #: libk9copy/k9dvd.cpp:241
 msgid "Punjabi"
@@ -767,15 +1230,15 @@ msgstr "Portekizce"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Quechua"
-msgstr ""
+msgstr "Quechua"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Rhaeto-Romance"
-msgstr ""
+msgstr "Rhaeto-Romance"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Kirundi"
-msgstr ""
+msgstr "Kirundi"
 
 #: libk9copy/k9dvd.cpp:242
 msgid "Romanian"
@@ -787,7 +1250,7 @@ msgstr "Rusça"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Kinyarwanda"
-msgstr ""
+msgstr "Kinyarwanda"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Sanskrit"
@@ -795,11 +1258,11 @@ msgstr "Sanskritçe"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Sindhi"
-msgstr ""
+msgstr "Sindhi"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Sangho"
-msgstr ""
+msgstr "Sangho"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Serbo-Croatian"
@@ -807,7 +1270,7 @@ msgstr "Sırpça-Hırvatça"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Sinhalese"
-msgstr ""
+msgstr "Sinhalese"
 
 #: libk9copy/k9dvd.cpp:244
 msgid "Slovak"
@@ -823,11 +1286,11 @@ msgstr "Samoanca"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Shona"
-msgstr ""
+msgstr "Shona"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Somali"
-msgstr ""
+msgstr "Somali"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Albanian"
@@ -839,23 +1302,23 @@ msgstr "Sırpça"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Siswati"
-msgstr ""
+msgstr "Siswati"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Sesotho"
-msgstr ""
+msgstr "Sesotho"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Sundanese"
-msgstr ""
+msgstr "Sundanese"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Svenska"
-msgstr ""
+msgstr "Svenska"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Swahili"
-msgstr ""
+msgstr "Swahili"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Tamil"
@@ -863,7 +1326,7 @@ msgstr "Tamilce"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Telugu"
-msgstr ""
+msgstr "Telugu"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Tajik"
@@ -875,7 +1338,7 @@ msgstr "Tayca"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Tigrinya"
-msgstr ""
+msgstr "Tigrinya"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Turkmen"
@@ -883,15 +1346,15 @@ msgstr "Türkmence"
 
 #: libk9copy/k9dvd.cpp:247
 msgid "Tagalog"
-msgstr ""
+msgstr "Tagalog"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Setswana"
-msgstr ""
+msgstr "Setswana"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Tonga"
-msgstr ""
+msgstr "Tonga"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Turkish"
@@ -899,19 +1362,19 @@ msgstr "Türkçe"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Tsonga"
-msgstr ""
+msgstr "Tsonga"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Tatar"
-msgstr ""
+msgstr "Tatar"
 
 #: libk9copy/k9dvd.cpp:248
 msgid "Twi"
-msgstr ""
+msgstr "Twi"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Uighur"
-msgstr ""
+msgstr "Uighur"
 
 #: libk9copy/k9dvd.cpp:249
 msgid "Ukrainian"
@@ -931,23 +1394,23 @@ msgstr "Vietnamca"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Volapuk"
-msgstr ""
+msgstr "Volapuk"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Wolof"
-msgstr ""
+msgstr "Wolof"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Xhosa"
-msgstr ""
+msgstr "Xhosa"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Yoruba"
-msgstr ""
+msgstr "Yoruba"
 
 #: libk9copy/k9dvd.cpp:250
 msgid "Zhuang"
-msgstr ""
+msgstr "Zhuang"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Chinese"
@@ -955,9 +1418,9 @@ msgstr "Çince"
 
 #: libk9copy/k9dvd.cpp:251
 msgid "Zulu"
-msgstr ""
+msgstr "Zulu"
 
-#: libk9copy/k9dvd.cpp:251 libk9copy/k9dvd.cpp:252 libk9copy/k9dvd.cpp:460
+#: libk9copy/k9dvd.cpp:251 libk9copy/k9dvd.cpp:252 libk9copy/k9dvd.cpp:466
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
@@ -965,615 +1428,450 @@ msgstr "Bilinmeyen"
 msgid "Can't open disc %1!\n"
 msgstr "Disk %1 açılamadı!\n"
 
-#: libk9copy/k9dvd.cpp:345
+#: libk9copy/k9dvd.cpp:347
 msgid "Can't open main ifo!\n"
 msgstr "Ana ifo açılamadı!\n"
 
-#: libk9copy/k9dvd.cpp:359
-msgid "unknown"
-msgstr "bilinmeyen"
-
-#: libk9copy/k9dvd.cpp:387 libk9copy/k9dvd.cpp:678
+#: libk9copy/k9dvd.cpp:389 libk9copy/k9dvd.cpp:682
 msgid "Title %1"
 msgstr "Başlık %1"
 
-#: libk9copy/k9dvd.cpp:729
+#: libk9copy/k9dvd.cpp:733
 msgid "reading title"
 msgstr "başlık okunuyor"
 
-#: libk9copy/k9dvd.cpp:846
+#: libk9copy/k9dvd.cpp:850
 msgid "Error opening vobs for title %1\n"
-msgstr ""
+msgstr "Başlık %1 için vob dosyaları açılamadı\n"
 
-#: libk9copy/k9dvd.cpp:857
+#: libk9copy/k9dvd.cpp:861
 msgid "ERROR reading block %1\n"
 msgstr "Blok %1 okunurken hata oluştu\n"
 
-#: libk9copy/k9mp4enc.cpp:65 libk9copy/k9mp4enc.cpp:260
+#: libk9copy/k9dvdauthor.cpp:148 libk9copy/k9dvdauthor.cpp:366
+msgid "'%1' not selected"
+msgstr "'%1' seçilmedi"
+
+#: libk9copy/k9dvdauthor.cpp:149 libk9copy/k9dvdauthor.cpp:367
+#: libk9copy/k9dvdauthor.cpp:390 libk9copy/k9dvdauthor.cpp:436
+#: libk9copy/k9dvdauthor.cpp:445 libk9copy/k9dvdauthor.cpp:448
+#: libk9copy/k9burndvd.cpp:237 libk9copy/k9burndvd.cpp:321
+msgid "authoring"
+msgstr "yazılıyor"
+
+#: libk9copy/k9dvdauthor.cpp:390 libk9copy/k9mp4enc.cpp:102
+#: libk9copy/k9burndvd.cpp:225 libk9copy/k9burndvd.cpp:309
+#: k9Mplayer/k9mplayer.cpp:97
+msgid "Unable to run %1"
+msgstr "%1 çalıştırılamadı"
+
+#: libk9copy/k9dvdauthor.cpp:403 libk9copy/k9dvdauthor.cpp:476
+#: libk9copy/k9dvdauthor.cpp:514
+msgid "Authoring"
+msgstr "Yazılıyor"
+
+#: libk9copy/k9dvdauthor.cpp:436
+msgid "Dvdauthor error :\n"
+msgstr "Dvdauthor hatası :\n"
+
+#: libk9copy/k9dvdauthor.cpp:445
+msgid "Authoring cancelled"
+msgstr "Yazma işlemi iptal edildi"
+
+#: libk9copy/k9dvdauthor.cpp:448
+msgid "An error occured while running DVDAuthor:\n"
+msgstr "DVDAuthor çalışırken bir hata oluştu:\n"
+
+#: libk9copy/k9dvdauthor.cpp:515
+msgid "Fixing VOBUS"
+msgstr "VOBUS onarılıyor"
+
+#: libk9copy/k9mp4enc.cpp:102 libk9copy/k9mp4enc.cpp:302
 msgid "Encoding error"
 msgstr "Kodlama hatası"
 
-#: libk9copy/k9mp4enc.cpp:121
+#: libk9copy/k9mp4enc.cpp:152 src/k9main.cpp:1180
 msgid "Save file to disk"
 msgstr "Dosyayı diske kaydet"
 
-#: libk9copy/k9mp4enc.cpp:167 libk9copy/k9mp4enc.cpp:178
-#: libk9copy/k9mp4enc.cpp:191 libk9copy/k9mp4enc.cpp:209
+#: libk9copy/k9mp4enc.cpp:161 libk9copy/k9mp4enc.cpp:344
+#: src/k9prefmpeg4.cpp:34 src/k9mp4title.cpp:60 src/k9main.cpp:295
+#: src/k9main.cpp:305 src/k9main.cpp:315 src/k9main.cpp:335 src/k9main.cpp:588
+#: src/k9main.cpp:699 src/k9main.cpp:713 src/k9prefdvd.cpp:35
+msgid "MB"
+msgstr "MB"
+
+#: libk9copy/k9mp4enc.cpp:232 libk9copy/k9mp4enc.cpp:234
 msgid "Encoding %1"
 msgstr "Kodlanıyor %1"
 
-#: libk9copy/k9mp4enc.cpp:257
+#: libk9copy/k9mp4enc.cpp:232
+msgid "pass %1"
+msgstr "%1 geçti"
+
+#: libk9copy/k9mp4enc.cpp:299
 msgid "MPEG-4 Encoding cancelled"
 msgstr "MPEG-4 kodlama iptal edildi"
 
-#: libk9copy/k9mp4enc.cpp:260
+#: libk9copy/k9mp4enc.cpp:299 src/k9settings.cpp:48 src/k9main.cpp:1166
+msgid "MPEG-4 Encoding"
+msgstr "MPEG-4 kodlama"
+
+#: libk9copy/k9mp4enc.cpp:302
 msgid "Error while running mencoder :"
 msgstr "Mencoder çalışırken hata oluştu:"
 
-#: libk9copy/k9burndvd.cpp:144
+#: libk9copy/k9burndvd.cpp:188 libk9copy/k9burndvd.cpp:255
 msgid "k9Copy - Burning DVD"
 msgstr "k9Copy - DVD'ye yazıyor"
 
-#: libk9copy/k9burndvd.cpp:192
+#: libk9copy/k9burndvd.cpp:189 libk9copy/k9burndvd.cpp:256
+#: libk9copy/k9burndvd.cpp:348 src/k9main.cpp:434
+msgid "Burning DVD"
+msgstr "DVD yazılıyor"
+
+#: libk9copy/k9burndvd.cpp:200 libk9copy/k9burndvd.cpp:284 src/k9main.cpp:386
+msgid "Save image to disk"
+msgstr "İmajı diske kaydet"
+
+#: libk9copy/k9burndvd.cpp:215 libk9copy/k9burndvd.cpp:302
 msgid "Insert a recordable DVD"
 msgstr "Yazdırabilir DVD yerleştirin"
 
-#: libk9copy/k9burndvd.cpp:199 libk9copy/k9burndvd.cpp:203
+#: libk9copy/k9burndvd.cpp:215 libk9copy/k9burndvd.cpp:225
+#: libk9copy/k9burndvd.cpp:230 libk9copy/k9burndvd.cpp:303
+#: libk9copy/k9burndvd.cpp:309 libk9copy/k9burndvd.cpp:314
 msgid "DVD burning"
 msgstr "DVD yazılıyor"
 
-#: libk9copy/k9burndvd.cpp:199
+#: libk9copy/k9burndvd.cpp:225 libk9copy/k9burndvd.cpp:309
 msgid "Error burning DVD :\n"
 msgstr "DVD yazma hatası :\n"
 
-#: libk9copy/k9burndvd.cpp:203
+#: libk9copy/k9burndvd.cpp:230 libk9copy/k9burndvd.cpp:314
 msgid "DVD Burning finished"
 msgstr "DVD yazma tamamlandı"
 
-#: libk9copy/k9burndvd.cpp:209
+#: libk9copy/k9burndvd.cpp:236 libk9copy/k9burndvd.cpp:320
 msgid "An error occured while Burning DVD: %1"
 msgstr "DVD yazılırken hata oluştu :%1"
 
-#: libk9copy/k9burndvd.cpp:209
+#: libk9copy/k9burndvd.cpp:236 libk9copy/k9burndvd.cpp:320
 msgid "Insert an other DVD"
 msgstr "Diğer DVD'yi yerleştirin"
 
-#: libk9copy/k9burndvd.cpp:234
+#: libk9copy/k9burndvd.cpp:349
 msgid "Current write speed :%1 x"
 msgstr "Geçerli yazma hızı :%1 x"
 
-#: debug/k9decmpeg/kdecmpeg2.moc.cpp:34 debug/k9decmpeg/kdecmpeg2.moc.cpp:42
-msgid "kDecMPEG2"
-msgstr "kDecMPEG2"
-
-#: debug/libk9copy/progress.cpp:103 debug/src/progress.cpp:78
-#: debug/src/k9copy.moc.cpp:34 debug/src/k9copy.moc.cpp:42 rc.cpp:322
-#, no-c-format
-msgid "k9Copy"
-msgstr "k9Copy"
-
-#: debug/libk9copy/progress.cpp:106 debug/src/progress.cpp:81 rc.cpp:329
-#, no-c-format
-msgid "Alt+C"
-msgstr "Alt+C"
-
-#: debug/libk9copy/progress.cpp:107 debug/libk9copy/backupdlg.cpp:167
-#: debug/libk9copy/mp4dlg.cpp:129 rc.cpp:309 rc.cpp:332 rc.cpp:356
-#, no-c-format
-msgid "Elapsed Time"
-msgstr "Geçen süre"
-
-#: debug/libk9copy/k9dvdsize.moc.cpp:34 debug/libk9copy/k9dvdsize.moc.cpp:42
-msgid "k9DVDSize"
-msgstr "k9DVDBoyutu"
-
-#: debug/libk9copy/k9dvdtitle.moc.cpp:34 debug/libk9copy/k9dvdtitle.moc.cpp:42
-msgid "k9DVDVideoStream"
-msgstr "k9DVDVideoAkışı"
-
-#: debug/libk9copy/k9dvdtitle.moc.cpp:107
-#: debug/libk9copy/k9dvdtitle.moc.cpp:115
-msgid "k9DVDAudioStream"
-msgstr "k9DVDSesAkışı"
-
-#: debug/libk9copy/k9dvdtitle.moc.cpp:180
-#: debug/libk9copy/k9dvdtitle.moc.cpp:188
-msgid "k9DVDSubtitle"
-msgstr "k9DVDAltyazı"
-
-#: debug/libk9copy/k9dvdtitle.moc.cpp:253
-#: debug/libk9copy/k9dvdtitle.moc.cpp:261
-msgid "k9DVDTitle"
-msgstr "k9DVDBaşlık"
-
-#: debug/libk9copy/k9dvd.moc.cpp:34 debug/libk9copy/k9dvd.moc.cpp:42
-msgid "k9DVD"
-msgstr "k9DVD"
-
-#: debug/libk9copy/k9dvdtitleset.moc.cpp:34
-#: debug/libk9copy/k9dvdtitleset.moc.cpp:42
-msgid "k9DVDTitleset"
-msgstr ""
-
-#: debug/libk9copy/k9dvdprogress.moc.cpp:34
-#: debug/libk9copy/k9dvdprogress.moc.cpp:42
-msgid "k9DVDProgress"
-msgstr ""
-
-#: debug/libk9copy/k9dvdauthor.moc.cpp:34
-#: debug/libk9copy/k9dvdauthor.moc.cpp:42
-msgid "k9DVDAuthor"
-msgstr ""
-
-#: debug/libk9copy/k9ifo2.moc.cpp:34 debug/libk9copy/k9ifo2.moc.cpp:42
-msgid "k9Ifo2"
-msgstr ""
-
-#: debug/libk9copy/k9dvdchapter.moc.cpp:34
-#: debug/libk9copy/k9dvdchapter.moc.cpp:42
-msgid "k9ChapterCell"
-msgstr ""
-
-#: debug/libk9copy/k9dvdchapter.moc.cpp:107
-#: debug/libk9copy/k9dvdchapter.moc.cpp:115
-msgid "k9DVDChapter"
-msgstr "k9DVDBölüm"
-
-#: debug/libk9copy/k9burndvd.moc.cpp:34 debug/libk9copy/k9burndvd.moc.cpp:42
-msgid "k9BurnDVD"
-msgstr "k9DVDYaz"
-
-#: debug/libk9copy/backupdlg.cpp:163 rc.cpp:297
-#, no-c-format
-msgid "A&bort"
-msgstr "&Sonlandır"
-
-#: debug/libk9copy/backupdlg.cpp:164 rc.cpp:300
-#, no-c-format
-msgid "Alt+B"
-msgstr "Alt+B"
-
-#: debug/libk9copy/backupdlg.cpp:165 rc.cpp:303
-#, no-c-format
-msgid "--:--:--"
-msgstr "--:--:--"
-
-#: debug/libk9copy/backupdlg.cpp:166 rc.cpp:306
-#, no-c-format
-msgid "Current step"
-msgstr "Şu anki adım"
-
-#: debug/libk9copy/backupdlg.cpp:168 rc.cpp:312
-#, no-c-format
-msgid "<p align=\"left\"><b>DVD Backup</b></p>"
-msgstr "<p align=\"left\"><b>DVD Yedekleme</b></p>"
-
-#: debug/libk9copy/dvdprogress.cpp:92 rc.cpp:316
-#, no-c-format
-msgid "k9Copy - DVD Analyze"
-msgstr "k9Copy - DVD Analizi"
-
-#: debug/libk9copy/mp4dlg.cpp:120 rc.cpp:337
-#, no-c-format
-msgid "k9Copy - transcoding"
-msgstr "k9Copy - kod çevirimi"
-
-#: debug/libk9copy/mp4dlg.cpp:121 rc.cpp:340
-#, no-c-format
-msgid "Encoding"
-msgstr "Kodlama"
-
-#: debug/libk9copy/mp4dlg.cpp:122 rc.cpp:343
-#, no-c-format
-msgid "Annu&ler"
-msgstr ""
-
-#: debug/libk9copy/mp4dlg.cpp:123 rc.cpp:346
-#, no-c-format
-msgid "Alt+L"
-msgstr "Alt+L"
-
-#: debug/libk9copy/mp4dlg.cpp:128 rc.cpp:353
-#, no-c-format
-msgid "fps"
-msgstr "fps"
-
-#: debug/libk9copy/mp4dlg.cpp:130 rc.cpp:359
-#, no-c-format
-msgid "Bitrate"
-msgstr ""
-
-#: debug/libk9copy/mp4dlg.cpp:131 debug/src/k9mainw.cpp:66
-#: debug/src/k9mainw.cpp:160 rc.cpp:20 rc.cpp:225 rc.cpp:362
-#, no-c-format
-msgid "Size"
-msgstr "Boyut"
-
-#: debug/src/menupreview.cpp:1084
-msgid "k9Copy - Menu Preview"
-msgstr "k9Copy - Menü önizleme"
-
-#: debug/src/kcddrive.moc.cpp:34 debug/src/kcddrive.moc.cpp:42
-msgid "kCDDrive"
-msgstr "kCDSürücüsü"
-
-#: debug/src/kcddrive.moc.cpp:107 debug/src/kcddrive.moc.cpp:115
-msgid "kCDDrives"
-msgstr "kCDSürücüleri"
-
-#: debug/src/kviewmpeg2.moc.cpp:34 debug/src/kviewmpeg2.moc.cpp:42
-msgid "k9Widget"
-msgstr "k9Widget"
-
-#: debug/src/kviewmpeg2.moc.cpp:107 debug/src/kviewmpeg2.moc.cpp:115
-msgid "kViewMPEG2"
-msgstr "kViewMPEG2"
-
-#: debug/src/viewmpeg2.cpp:208 rc.cpp:3
-#, no-c-format
-msgid "k9Copy - Title Preview"
-msgstr "k9Copy - Başlık Önizleme"
-
-#: debug/src/prefDVD.cpp:93 rc.cpp:63
-#, no-c-format
-msgid "prefDVD"
-msgstr ""
-
-#: debug/src/k9mainw.cpp:68 debug/src/k9mainw.cpp:162 rc.cpp:23
-#, no-c-format
-msgid "Content"
-msgstr "İçerik"
-
-#: debug/src/prefDVD.cpp:94 rc.cpp:66
-#, no-c-format
-msgid "Output directory"
-msgstr "Çıktı dizini"
-
-#: debug/src/prefDVD.cpp:95 rc.cpp:69
-#, no-c-format
-msgid "Burn with k3b"
-msgstr "K3b ile yaz"
-
-#: debug/src/prefDVD.cpp:97 rc.cpp:73
-#, no-c-format
-msgid "Auto burn"
-msgstr "Otomatik yaz"
-
-#: debug/src/prefDVD.cpp:99 rc.cpp:77
-#, no-c-format
-msgid "DVD size"
-msgstr "DVD boyutu"
-
-#: debug/src/prefDVD.cpp:100 rc.cpp:80
-#, no-c-format
-msgid "Quick scan"
-msgstr "Çabuk tara"
-
-#: debug/src/prefDVD.cpp:102 rc.cpp:84
-#, no-c-format
-msgid "use dvdAuthor for copy without menus"
-msgstr "Kopyalama için dvdAuthor'u menüsüz kullan"
-
-#: debug/src/configDlg.cpp:42 debug/src/configDlg.cpp:96 rc.cpp:43
-#, no-c-format
-msgid "device"
-msgstr "Aygıt"
-
-#: debug/src/configDlg.cpp:44 debug/src/configDlg.cpp:97 rc.cpp:46
-#, no-c-format
-msgid "label"
-msgstr "etiket"
-
-#: debug/src/configDlg.cpp:46 debug/src/configDlg.cpp:98 rc.cpp:49
-#, no-c-format
-msgid "Input"
-msgstr "Girdi"
-
-#: debug/src/configDlg.cpp:48 debug/src/configDlg.cpp:99 rc.cpp:52
-#, no-c-format
-msgid "Output"
-msgstr "Çıktı"
-
-#: debug/src/configDlg.cpp:95 rc.cpp:40
-#, no-c-format
-msgid "k9Copy - Devices"
-msgstr "k9Copy - Aygıtlar"
-
-#: debug/src/prefMPEG4.cpp:149 debug/src/prefMencoder.cpp:111
-#: debug/src/prefpreview.cpp:140 rc.cpp:87 rc.cpp:135 rc.cpp:230
-#, no-c-format
-msgid "Form1"
-msgstr "Form1"
-
-#: debug/src/prefMPEG4.cpp:150 rc.cpp:90
-#, no-c-format
-msgid "Video Codec"
-msgstr ""
-
-#: debug/src/prefMPEG4.cpp:151 rc.cpp:93
-#, no-c-format
-msgid "Audio bitrate"
-msgstr ""
-
-#: debug/src/prefMPEG4.cpp:153 rc.cpp:99
-#, no-c-format
-msgid "File size"
-msgstr "Dosya boyutu"
-
-#: debug/src/prefMPEG4.cpp:155 rc.cpp:105
-#, no-c-format
-msgid " mb"
-msgstr "mb"
-
-#: debug/src/prefMPEG4.cpp:156 rc.cpp:108
-#, no-c-format
-msgid "640"
-msgstr "640"
-
-#: debug/src/prefMPEG4.cpp:160 debug/src/k9mainw.cpp:161 rc.cpp:23 rc.cpp:114
-#: rc.cpp:216
-#, no-c-format
-msgid "X"
-msgstr "X"
-
-#: debug/src/prefMPEG4.cpp:162 rc.cpp:117
-#, no-c-format
-msgid "XviD"
-msgstr "XviD"
-
-#: debug/src/prefMPEG4.cpp:163 rc.cpp:120
-#, no-c-format
-msgid "lavc MPEG4"
-msgstr "lavc MPEG4"
-
-#: debug/src/prefMPEG4.cpp:164 rc.cpp:123
-#, no-c-format
-msgid "x264"
-msgstr "x264"
-
-#: debug/src/prefMPEG4.cpp:166 rc.cpp:126
-#, no-c-format
-msgid "2 passes"
-msgstr ""
-
-#: debug/src/prefMPEG4.cpp:167 rc.cpp:129
-#, no-c-format
-msgid "&keep aspect ratio"
-msgstr "&Oranı koru"
-
-#: debug/src/prefMPEG4.cpp:168 debug/src/playbackoptionsw.cpp:230 rc.cpp:132
-#: rc.cpp:178
-#, no-c-format
-msgid "Alt+K"
-msgstr "Alt+K"
-
-#: debug/src/k9mainw.cpp:65 debug/src/k9mainw.cpp:159 rc.cpp:17 rc.cpp:222
-#, no-c-format
-msgid "Title"
-msgstr "Başlık"
-
-#: debug/src/k9mainw.cpp:156 rc.cpp:8 rc.cpp:201
-#, no-c-format
-msgid "MainDlg"
-msgstr ""
-
-#: debug/src/k9mainw.cpp:157 rc.cpp:11 rc.cpp:204
-#, no-c-format
-msgid "Output device "
-msgstr "Çıktı"
-
-#: debug/src/k9mainw.cpp:158 rc.cpp:14 rc.cpp:210
-#, no-c-format
-msgid "Input device "
-msgstr "Kaynak"
-
-#: debug/src/k9mainw.cpp:164 rc.cpp:29 rc.cpp:207
-#, no-c-format
-msgid "@"
-msgstr "@"
-
-#: debug/src/k9mainw.cpp:166 rc.cpp:33
-#, no-c-format
-msgid "Open a folder"
-msgstr "Dosya aç"
-
-#: debug/src/k9mainw.cpp:168 rc.cpp:37
-#, no-c-format
-msgid "Open an iso image"
-msgstr "İso imajı aç"
-
-#: debug/src/playbackoptionsw.cpp:229 rc.cpp:175
-#, no-c-format
-msgid "&Keep original menus"
-msgstr "&Orijinal menüyü koru"
-
-#: debug/src/playbackoptionsw.cpp:233 rc.cpp:183
-#, no-c-format
-msgid "Selected Titles"
-msgstr "Seçili başlıklar"
-
-#: debug/src/playbackoptionsw.cpp:234 rc.cpp:186
-#, no-c-format
-msgid "Default language"
-msgstr "Öntanımlı dil"
-
-#: debug/src/playbackoptionsw.cpp:235 rc.cpp:189
-#, no-c-format
-msgid "Subtitle"
-msgstr "Altyazı"
-
-#: debug/src/langselectw.cpp:93 debug/src/langselectw.cpp:121 rc.cpp:198
-#, no-c-format
-msgid "Languages"
-msgstr "Diller"
-
-#: debug/src/prefMencoder.cpp:51 debug/src/prefMencoder.cpp:116 rc.cpp:146
-#, no-c-format
-msgid "Label"
-msgstr "Etiket"
-
-#: debug/src/prefMencoder.cpp:53 debug/src/prefMencoder.cpp:117 rc.cpp:149
-#, no-c-format
-msgid "Video"
-msgstr "Video"
-
-#: debug/src/prefMencoder.cpp:119 rc.cpp:155
-#, no-c-format
-msgid "Available variables"
-msgstr "Var olan değişkenler"
-
-#: debug/src/prefMencoder.cpp:120 rc.cpp:158
-#, no-c-format
+#: libk9copy/k9dvdbackup.cpp:149 libk9copy/k9dvdbackup.cpp:163
+#: libk9copy/k9dvdbackup.cpp:513 libk9copy/k9dvdbackup.cpp:599
+msgid "DVD backup cancelled"
+msgstr "DVD yedekleme iptal edildi"
+
+#: libk9copy/k9dvdbackup.cpp:176
+msgid "unable to open VIDEO_TS.IFO"
+msgstr "VIDEO_TS.IFO açılamadı"
+
+#: libk9copy/k9dvdbackup.cpp:198 libk9copy/k9dvdbackup.cpp:381
+#: libk9copy/k9dvdbackup.cpp:446
+msgid "Unable to open file "
+msgstr "Dosya açılamadı"
+
+#: libk9copy/k9dvdbackup.cpp:277
+msgid "Unable to open titleset %1"
+msgstr "Başlık seti %1 açılamıyor"
+
+#: libk9copy/k9dvdbackup.cpp:283 libk9copy/k9dvdbackup.cpp:571
+msgid "Extracting titleset %1"
+msgstr "Titleset %1 çıkarılıyor"
+
+#: libk9copy/k9dvdbackup.cpp:453
+msgid "Unable to open menu for titleset %1"
+msgstr "Titleset %1 için menü açılamadı"
+
+#: libk9copy/k9dvdbackup.cpp:479
+msgid "Extracting menu for titleset %1"
+msgstr "Titleset %1 için menü çıkartılıyor"
+
+#: libk9copy/k9dvdbackup.cpp:563
+msgid "Unable to open ifo file for titleset %1"
+msgstr "Titleset %1 için ifo dosyası açılamadı"
+
+#: libk9copy/k9dvdbackup.cpp:575 libk9copy/k9dvdbackup.cpp:1694
+msgid "Unable to open DVD"
+msgstr "DVD açılamadı"
+
+#: libk9copy/k9dvdbackup.cpp:585
+msgid "Unable to open vobs for titleset %1"
+msgstr "Başlık seti %1 için vob dosyaları açılamıyor"
+
+#: libk9copy/k9dvdbackup.cpp:1381
+msgid "Updating vob %1"
+msgstr "Vob %1 güncelleniyor"
+
+#: libk9copy/k9dvdbackup.cpp:1398
+msgid "DVD backup canceled"
+msgstr "DVD yedekleme iptal edildi"
+
+#: src/k9settings.cpp:27
+msgid "Devices"
+msgstr "Aygıtlar"
+
+#: src/k9settings.cpp:27
+msgid "Devices not detected by k9copy"
+msgstr "K9copy aygıtları bulamadı"
+
+#: src/k9settings.cpp:34
+msgid "DVD"
+msgstr "DVD"
+
+#: src/k9settings.cpp:34
+msgid "DVD Backup"
+msgstr "DVD yedekleme"
+
+#: src/k9settings.cpp:42
+msgid "MEncoder"
+msgstr "MEncoder"
+
+#: src/k9settings.cpp:42
+msgid "MPEG-4 Codecs"
+msgstr "MPEG-4 Codecs"
+
+#: src/k9settings.cpp:48
+msgid "MPEG-4"
+msgstr "MPEG-4"
+
+#: src/k9settings.cpp:57
+msgid "Title preview"
+msgstr "Başlık önizleme"
+
+#: src/k9mp4title.cpp:38 src/k9mp4title.cpp:120 src/k9titlefactor.cpp:99
+msgid "Select a Title in the treeview..."
+msgstr "Ağaç görünümünden bir Başlık seçin..."
+
+#: src/main.cpp:31
+msgid "A DVD Backup tool for KDE"
+msgstr "KDE için yedekleme aracı"
+
+#: src/main.cpp:38
+msgid "output device"
+msgstr "çıktı aygıtı"
+
+#: src/main.cpp:39
+msgid "title to play"
+msgstr "oynatılacak başlık"
+
+#: src/main.cpp:40
+msgid "play title to stdout"
+msgstr "başlığı stdout'ta oynat"
+
+#: src/main.cpp:41
+msgid "start sector"
+msgstr "Başlangıç sektörü"
+
+#: src/main.cpp:42
+msgid "end sector"
+msgstr "Bitiş sektörü"
+
+#: src/main.cpp:43
+msgid "list of audio streams"
+msgstr "ses akışlarının listesi"
+
+#: src/main.cpp:44
+msgid "list of spu streams"
+msgstr "spu akışlarının listesi"
+
+#: src/main.cpp:45
+msgid "shrink factor"
+msgstr "kısaltma faktörü"
+
+#: src/main.cpp:46
+msgid "shrink factor forced"
+msgstr "güçlendirilmiş kısaltma faktörü"
+
+#: src/main.cpp:47
+msgid "size of the cell to be copied"
+msgstr "kopyalanacak hücre büyüklüğü"
+
+#: src/main.cpp:48
+msgid "total size of selected titles"
+msgstr "seçilen başlıkların toplam boyutu"
+
+#: src/main.cpp:49
+msgid "size of the chapters being copied"
+msgstr "kopyalanmış bölümlerin büyüklüğü"
+
+#: src/main.cpp:50
+msgid "selected chapters"
+msgstr "seçilen bölümler"
+
+#: src/main.cpp:51
+msgid "new dvd size"
+msgstr "yeni dvd boyutu"
+
+#: src/main.cpp:52
+msgid "selected chapter"
+msgstr "seçilen bölüm"
+
+#: src/main.cpp:53
+msgid "cell number in selected chapter"
+msgstr "seçilmiş bölümdeki hücre sayısı"
+
+#: src/main.cpp:54
+msgid "status file name"
+msgstr "durum dosya ismi"
+
+#: src/main.cpp:55
+msgid "initialize status file"
+msgstr "durum dosyasını başlat"
+
+#: src/main.cpp:56
+msgid "continue playing from last sector"
+msgstr "Oynatmaya kaldığı yerden devam et"
+
+#: src/main.cpp:57
+msgid "don't save status at end"
+msgstr "işlem sonundaki durumu kaydetme"
+
+#: src/main.cpp:58
+msgid "save cell in a temporary file before encoding"
+msgstr "çözümleme işleminden önce hücreyi geçici bir dosyaya kaydet"
+
+#: src/main.cpp:64
+msgid "k9copy"
+msgstr "k9copy"
+
+#: src/main.cpp:67
+msgid "_: NAME OF TRANSLATORS\\nYour names"
+msgstr "Can Coşkuner"
+
+#: src/main.cpp:68
+msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
+msgstr "fethicanc@gmail.com"
+
+#: src/k9prefmencoder.cpp:105 src/k9prefmencoder.cpp:109
+#: src/k9prefmencoder.cpp:120 src/k9prefmencoder.cpp:122
+msgid "new profile"
+msgstr "yeni profil"
+
+#: src/k9copy.cpp:74
+msgid "Shrink Factor"
+msgstr "Kısaltma Faktörü"
+
+#: src/k9copy.cpp:143
+msgid "Play title"
+msgstr "Oynat"
+
+#: src/k9copy.cpp:159
+msgid "Create MPEG-4"
+msgstr "MPEG-4 yap"
+
+#: src/k9copy.cpp:166
+msgid "Eject"
+msgstr "Çıkar"
+
+#: src/k9copy.cpp:227
+msgid "MPEG4 Encoding options"
+msgstr "MPEG-4 Kodlama Seçenekleri"
+
+#: src/k9copy.cpp:227
+msgid "MPEG4 Encoding Options"
+msgstr "MPEG-4 Kodlama Seçenekleri"
+
+#: src/k9copy.cpp:234
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: src/k9langselect.cpp:90
+msgid "Subtitles"
+msgstr "Altyazılar"
+
+#: src/k9main.cpp:378 src/k9main.cpp:1166
+msgid "DVD is not opened"
+msgstr "DVD açılamadı"
+
+#: src/k9main.cpp:378 src/k9main.cpp:393
+msgid "DVD Copy"
+msgstr "DVD kopyala"
+
+#: src/k9main.cpp:393
 msgid ""
-"$PASS\n"
-"$WIDTH\n"
-"$HEIGHT\n"
-"$VIDBR\n"
-"$AUDBR"
+"Insuffisant disk space on %1\n"
+"%2 mb expected."
 msgstr ""
+"%1 üzerinde yetersiz disk alanı\n"
+"%2 mb gerekli."
 
-#: debug/src/prefMencoder.cpp:125 rc.cpp:165
-#, no-c-format
-msgid ""
-"pass number\n"
-"video width\n"
-"video height\n"
-"video bitrate\n"
-"audio bitrate"
-msgstr ""
-"geçiş numarası\n"
-"video genişliği\n"
-"video yüksekliği\n"
-"video bitrate\n"
-"audio bitrate"
+#: src/k9main.cpp:397
+msgid "Backup in progress"
+msgstr "Yedekleme işlemi yapılıyor"
 
-#: debug/src/prefpreview.cpp:142 rc.cpp:234
-#, no-c-format
-msgid "&Internal Player"
-msgstr "&Dahili Oynatıcı"
+#: src/k9main.cpp:458 src/k9main.cpp:608 src/k9main.cpp:1214
+msgid "Ready"
+msgstr "Hazır"
 
-#: debug/src/prefpreview.cpp:143 rc.cpp:237
-#, no-c-format
-msgid "Alt+I"
-msgstr "Alt+l"
+#: src/k9main.cpp:463
+msgid "processing"
+msgstr "işliyor"
 
-#: debug/src/prefpreview.cpp:144 rc.cpp:240
-#, no-c-format
-msgid "&MPlayer"
-msgstr "&MPlayer"
+#: src/k9main.cpp:498 src/k9main.cpp:1267
+msgid "ISO Image"
+msgstr "ISO imajı"
 
-#: debug/src/prefpreview.cpp:145 rc.cpp:243
-#, no-c-format
-msgid "Alt+M"
-msgstr "Alt+M"
+#: src/k9main.cpp:560
+msgid "Open DVD"
+msgstr "DVD aç"
 
-#: debug/src/prefpreview.cpp:146 rc.cpp:246
-#, no-c-format
-msgid "Internal viewer options"
-msgstr "Dahili görüntüleyici seçenekleri"
+#: src/k9main.cpp:586
+msgid "Titleset %1"
+msgstr "Başlık Seti %1"
 
-#: debug/src/prefpreview.cpp:147 rc.cpp:249
-#, no-c-format
-msgid "use OpenGL"
-msgstr "OpenGL kullan"
+#: src/k9main.cpp:646
+msgid "chapters"
+msgstr "Bölümler"
 
-#: debug/src/prefpreview.cpp:148 rc.cpp:252
-#, no-c-format
-msgid "Video output"
-msgstr "Video çıktısı"
+#: src/k9main.cpp:654 src/k9main.cpp:667
+msgid "chapter %1"
+msgstr "Bölüm %1"
 
-#: debug/src/prefpreview.cpp:149 rc.cpp:255
-#, no-c-format
-msgid "Audio output"
-msgstr "Ses çıktısı"
+#: src/k9main.cpp:655 src/k9main.cpp:670 src/k9main.cpp:729 src/k9main.cpp:746
+msgid "%1 MB"
+msgstr "%1 MB"
 
-#: debug/src/prefpreview.cpp:151 rc.cpp:258
-#, no-c-format
-msgid "X11"
-msgstr "X11"
+#: src/k9main.cpp:709
+msgid "video %1 "
+msgstr "video %1"
 
-#: debug/src/prefpreview.cpp:152 rc.cpp:261
-#, no-c-format
-msgid "Xv"
-msgstr "Xv"
+#: src/k9main.cpp:720
+msgid "audio %1 "
+msgstr "ses %1"
 
-#: debug/src/prefpreview.cpp:153 rc.cpp:264
-#, no-c-format
-msgid "OpenGL"
-msgstr "OpenGL"
+#: src/k9main.cpp:739
+msgid "subpicture %1 "
+msgstr "alt resim %1"
 
-#: debug/src/prefpreview.cpp:154 debug/src/prefpreview.cpp:158 rc.cpp:267
-#: rc.cpp:276
-#, no-c-format
-msgid "SDL"
-msgstr "SDL"
+#: src/k9main.cpp:1174
+msgid "Transcoding title : %1"
+msgstr "Başlık %1 kodlanıyor"
 
-#: debug/src/prefpreview.cpp:156 rc.cpp:270
-#, no-c-format
-msgid "ALSA"
-msgstr "ALSA"
+#: src/k9main.cpp:1374
+msgid "Open ISO Image"
+msgstr "İSO imajını aç"
 
-#: debug/src/prefpreview.cpp:157 rc.cpp:273
-#, no-c-format
-msgid "OSS"
-msgstr "OSS"
+#: src/k9main.cpp:1385
+msgid "Open DVD folder"
+msgstr "DVD dosyasını aç"
 
-#: debug/src/prefpreview.cpp:159 rc.cpp:279
-#, no-c-format
-msgid "MPlayer options"
-msgstr "MPlayer seçenekleri"
+#: src/k9mencodercmdgen.cpp:103
+msgid "Filters"
+msgstr "Filtreler"
 
-#: debug/src/titlefactor.cpp:93 rc.cpp:282
-#, no-c-format
-msgid "Shrink Factors"
-msgstr ""
+#: src/k9playbackoptions.cpp:149
+msgid "none"
+msgstr "yok"
 
-#: debug/src/titlefactor.cpp:94 rc.cpp:285
-#, no-c-format
-msgid "Shrink Factor for Title %1"
-msgstr ""
-
-#: debug/src/titlefactor.cpp:95 rc.cpp:288
-#, no-c-format
-msgid "Change Factor"
-msgstr "Çarpanı değiştir"
-
-#: debug/src/titlefactor.cpp:96 rc.cpp:291
-#, no-c-format
-msgid "0.00"
-msgstr "0.00"
-
-#: debug/k9xine/xineplayer.cpp:585 debug/k9Mplayer/mplayer.cpp:585 rc.cpp:368
-#, no-c-format
-msgid "Subpicture"
-msgstr ""
-
-#: debug/k9xine/xineplayer.cpp:590 debug/k9Mplayer/mplayer.cpp:590 rc.cpp:377
-#, no-c-format
-msgid "-"
-msgstr "-"
-
-#: debug/k9xine/xineplayer.cpp:592 debug/k9Mplayer/mplayer.cpp:592 rc.cpp:381
-#, no-c-format
-msgid "+"
-msgstr "+"
-
-#: debug/k9Mplayer/k9mplayer.moc.cpp:34 debug/k9Mplayer/k9mplayer.moc.cpp:42
-msgid "K9Mplayer"
-msgstr "K9Mplayer"
-
-#: rc.cpp:219
-#, no-c-format
-msgid "D&VD"
-msgstr "D&VD"
-
-#: rc.cpp:386
-#, no-c-format
-msgid "A&ctions"
-msgstr "&Eylemler"
-
-#: rc.cpp:389
-#, no-c-format
-msgid "Actions ToolBar"
-msgstr "Eylemler Araç Çubuğu"
+#: src/k9titlefactor.cpp:110
+msgid "Shrink Factor for %1"
+msgstr "%1 için Kısaltma Faktörü"
 

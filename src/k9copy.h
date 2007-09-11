@@ -1,7 +1,7 @@
 //
 // C++ Interface: k9copy
 //
-// Description: 
+// Description:
 //
 //
 // Author: Jean-Michel PETIT <k9copy@free.fr>, (C) 2005
@@ -19,23 +19,22 @@
 #endif
 
 #include "k9common.h"
-
+#include "k9cddrive.h"
 #include <kapplication.h>
 #include <kmdimainfrm.h>
 
-
 enum eStatusBarId {sbMessage=0,sbFactor=1};
 
-
+class k9Import;
 class k9Main;
 class kViewMPEG2;
 class k9PlaybackOptions;
 class k9LangSelect;
 class k9MP4Title;
 class k9TitleFactor;
+class k9MenuEdit;
 
-class k9Copy : public KMdiMainFrm
-{
+class k9Copy : public KMdiMainFrm {
     Q_OBJECT
 public:
     /**
@@ -46,11 +45,11 @@ public:
     void clone(QString _input,QString _output);
     void setInput(QString _input);
     void setOutput(QString _output);
-    
+
     KDockWidget* getVisibleDock();
     KMdiToolViewAccessor * setToolWindow(QWidget *_widget,KDockWidget::DockPosition _pos,const QString &tabToolTip,const QString &tabCaption) ;
     void removeToolWindow(KMdiToolViewAccessor *toolWin);
-    
+
     /**
      * Default Destructor
      */
@@ -64,8 +63,10 @@ private slots:
     void ActionCopy();
     void ActionMP4();
     void ActionEject();
-
-   void ActionPlayTitle();
+    void ActionBackup();
+    void ActionAuthor();
+    void ActionPlayTitle();
+    void ActionCreate();
     void changeStatusbar(const QString& text,int id);
     void changeCaption(const QString& text);
     void optionsConfigureKeys();
@@ -81,24 +82,34 @@ private:
     void setupAccel();
     void setupActions();
     void initCodecs();
+    void createImportWindows();
+    void createCopyWindows();
+    void removeToolWindows();
+    void saveDock();
     KAction *CopyAction;
     KAction *PlayTitleAction;
     KAction *mkMP4Action;
     KAction *ejectAction;
+    KRadioAction *backupAction;
+    KRadioAction *authorAction;
 private:
-   k9Main  *m_k9Main;
-   KMdiChildView *m_childView;
-   KMdiToolViewAccessor *m_previewAcc;
-   k9PlaybackOptions *m_options;
-   k9TitleFactor *m_factors;
-   k9LangSelect *m_lang;
-   k9MP4Title *m_mp4;
-   QWidget *m_mp2;
-   bool m_useXine;
-   bool m_useDvdAuthor;
-   QMap  <QString,KAction*> m_actions;
+    k9Main  *m_k9Main;
+    KMdiChildView *m_k9MainView,*m_k9ImportView;
+    KMdiToolViewAccessor *m_previewAcc;
+    k9PlaybackOptions *m_options;
+    k9TitleFactor *m_factors;
+    k9LangSelect *m_lang;
+    k9MP4Title *m_mp4;
+    QWidget *m_mp2;
+    k9MenuEdit *m_menuEdit;
+    k9Import *m_k9Import;
+    bool m_useXine;
+    bool m_useDvdAuthor;
+    QMap  <QString,KAction*> m_actions;
+    QPtrList <KMdiToolViewAccessor> m_ToolViews;
+    k9CdDrives m_drives;
 };
 
 
 
-#endif 
+#endif

@@ -40,7 +40,7 @@ public:
     }
     LvItem( QListView *parent,eObjectType _objectType)
             : QListViewItem( parent), obj( NULL ) {
-	    objectType=_objectType;
+        objectType=_objectType;
     }
     eObjectType objectType;
     QObject *obj;
@@ -81,7 +81,7 @@ public:
     }
     eStreamType streamType;
     eObjectType objectType;
-    
+
     k9Main *mainDlg;
     k9DVDTitle *mainTitle;
     QObject *obj;
@@ -115,8 +115,8 @@ class k9Main : public MainDlg {
     Q_OBJECT
 
 public:
-   
-    k9Main(QWidget* parent = 0, const char* name = 0,  const QStringList &sl=0 );
+
+    k9Main(QWidget* parent = 0, const char* name = 0,  k9CdDrives *_drives=0 );
     ~k9Main();
     /*$PUBLIC_FUNCTIONS$*/
     void addTitle(k9DVDTitle *track);
@@ -131,10 +131,18 @@ public:
     void setDVDSize();
     static int compare(double v1,double v2);
     void readSettings();
-    bool getquickScan() {return m_quickScan;};
-    void setPlaybackOptions(k9PlaybackOptions *_value) { m_playbackOptions=_value;};
-    void setLangSelect(k9LangSelect *_value) {m_langSelect=_value;};
-    QObjectList *getItems() {return &items;};
+    bool getquickScan() {
+        return m_quickScan;
+    };
+    void setPlaybackOptions(k9PlaybackOptions *_value) {
+        m_playbackOptions=_value;
+    };
+    void setLangSelect(k9LangSelect *_value) {
+        m_langSelect=_value;
+    };
+    QObjectList *getItems() {
+        return &items;
+    };
     void updateFactor();
     bool withMenus();
     k9DVD *dvd;
@@ -162,6 +170,9 @@ public slots:
     virtual void	   setInput(QString _input);
     virtual void 	   setOutput(QString _output);
     virtual void 	  volumeChanged(const QString &device,const QString &volumeName);
+
+    void setDrives(k9CdDrives* _value);
+
 protected:
     /*$PROTECTED_FUNCTIONS$*/
     QObjectList items;
@@ -175,7 +186,7 @@ protected:
     ckLvItem * root;
     QPtrList <k9CdDrive> driveList;
     QPtrList <k9CdDrive> recorderList;
-    k9CdDrives drives;
+    k9CdDrives *drives;
     QPixmap pxVideo;
     QPixmap pxSound;
     QPixmap pxText;
@@ -199,7 +210,7 @@ protected:
     bool m_prefAutoBurn;
     k9PlaybackOptions *m_playbackOptions;
     k9LangSelect *m_langSelect;
-    
+
     KMdiToolViewAccessor *m_toolView;
     KDockWidget *m_dockWidget;
 protected slots:
@@ -221,7 +232,7 @@ private:
     void setProgressWindow(QWidget *_widget);
     void removeProgressWindow();
 
-	
+
 };
 
 #endif

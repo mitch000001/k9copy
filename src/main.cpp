@@ -26,6 +26,7 @@
 #include "ac.h"
 #include "k9copy.h"
 #include "dvdread.h"
+#include "k9redirect.h"
 
 static const char description[] =
     I18N_NOOP("A DVD Backup tool for KDE");
@@ -56,6 +57,7 @@ static const KCmdLineOptions options[] = {
 	    { "continue" ,I18N_NOOP("continue playing from last sector"),0},
 	    { "firstpass" ,I18N_NOOP("don't save status at end"),0},
 	    { "usecache" ,I18N_NOOP("save cell in a temporary file before encoding"),0},
+            { "redirect" ,I18N_NOOP("for internal use"),0},
             KCmdLineLastOption // End of options.
         };
 
@@ -101,6 +103,7 @@ int main(int argc, char **argv) {
 	QString chapterListArg(args->getOption("chapterlist"));
 	bool ffactor=args->isSet("ffactor");
         bool play= args->isSet("play");
+        bool redirect = args->isSet("redirect");
         if (play) {
             k9play player;
 	    player.setinitStatus( args->isSet("initstatus"));
@@ -124,6 +127,10 @@ int main(int argc, char **argv) {
 	    player.setforcedFactor(ffactor);
 	    player.setchapterList( chapterListArg);
             player.execute();
+            return 0;
+        } else if (redirect) {
+            k9Redirect redirect;
+            redirect.execute();
             return 0;
         } else {
 

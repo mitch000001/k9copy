@@ -1,0 +1,359 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>chapterEdit</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>chapterEdit</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>627</width>
+            <height>300</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>5</hsizetype>
+            <vsizetype>5</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="caption">
+        <string>chapter</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="KTimeWidget" row="1" column="2">
+            <property name="name">
+                <cstring>twstart</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="1">
+            <property name="name">
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="text">
+                <string>start</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="1">
+            <property name="name">
+                <cstring>textLabel3</cstring>
+            </property>
+            <property name="text">
+                <string>video</string>
+            </property>
+        </widget>
+        <widget class="KURLRequester" row="0" column="2" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>urFile</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>1</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>200</width>
+                    <height>0</height>
+                </size>
+            </property>
+            <property name="filter">
+                <string>*.avi
+*.mpeg</string>
+            </property>
+        </widget>
+        <widget class="KPushButton" row="1" column="3">
+            <property name="name">
+                <cstring>bStart</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>set Current Frame</string>
+            </property>
+        </widget>
+        <spacer row="1" column="4" rowspan="2" colspan="1">
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>16</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QCheckBox" row="2" column="2" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>ckBreakStart</cstring>
+            </property>
+            <property name="text">
+                <string>break continuity</string>
+            </property>
+        </widget>
+        <spacer row="6" column="2">
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>21</width>
+                    <height>60</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLabel" row="4" column="1">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="text">
+                <string>end</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="5" column="2" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>ckBreakEnd</cstring>
+            </property>
+            <property name="text">
+                <string>break continuity</string>
+            </property>
+        </widget>
+        <widget class="KTimeWidget" row="4" column="2">
+            <property name="name">
+                <cstring>twend</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+        </widget>
+        <spacer row="3" column="2">
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Fixed</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>31</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget" row="0" column="0" rowspan="7" colspan="1">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel" row="1" column="1">
+                    <property name="name">
+                        <cstring>lPosition</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>--:--:--</string>
+                    </property>
+                </widget>
+                <widget class="QSlider" row="1" column="0">
+                    <property name="name">
+                        <cstring>slider</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>image</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>320</width>
+                            <height>200</height>
+                        </size>
+                    </property>
+                    <property name="paletteBackgroundColor">
+                        <color>
+                            <red>0</red>
+                            <green>0</green>
+                            <blue>0</blue>
+                        </color>
+                    </property>
+                    <property name="scaledContents">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="KPushButton" row="4" column="3">
+            <property name="name">
+                <cstring>bEnd</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>set Current Frame</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="7" column="0">
+            <property name="name">
+                <cstring>bTitleButton</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>set Title button</string>
+            </property>
+        </widget>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>urFile</sender>
+        <signal>urlSelected(const QString&amp;)</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>urlSelected(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>slider</sender>
+        <signal>sliderReleased()</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>sliderReleased()</slot>
+    </connection>
+    <connection>
+        <sender>slider</sender>
+        <signal>valueChanged(int)</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>sliderChanged()</slot>
+    </connection>
+    <connection>
+        <sender>bStart</sender>
+        <signal>clicked()</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>bStartClick()</slot>
+    </connection>
+    <connection>
+        <sender>bEnd</sender>
+        <signal>clicked()</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>bEndClick()</slot>
+    </connection>
+    <connection>
+        <sender>twstart</sender>
+        <signal>valueChanged(const QTime&amp;)</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>startChanged(const QTime&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>twend</sender>
+        <signal>valueChanged(const QTime&amp;)</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>endChanged(const QTime&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>ckBreakEnd</sender>
+        <signal>clicked()</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>ckBreakEndClick()</slot>
+    </connection>
+    <connection>
+        <sender>ckBreakStart</sender>
+        <signal>clicked()</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>ckBreakStartClick()</slot>
+    </connection>
+    <connection>
+        <sender>bTitleButton</sender>
+        <signal>clicked()</signal>
+        <receiver>chapterEdit</receiver>
+        <slot>bTitleButtonClick()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>urlSelected( const QString &amp;)</slot>
+    <slot>sliderReleased()</slot>
+    <slot>sliderChanged()</slot>
+    <slot>bStartClick()</slot>
+    <slot>startChanged(const QTime &amp;)</slot>
+    <slot>endChanged(const QTime &amp;)</slot>
+    <slot>bEndClick()</slot>
+    <slot>ckBreakStartClick()</slot>
+    <slot>ckBreakEndClick()</slot>
+    <slot>bTitleButtonClick()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>ktimewidget.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>ktimewidget.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

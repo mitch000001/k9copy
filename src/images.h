@@ -18,7 +18,7 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 
-static const char* const img_text[] =
+static const char* const img_text[] = 
   {
     "30 30 2 1",
     ". c None",

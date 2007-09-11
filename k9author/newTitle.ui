@@ -1,0 +1,252 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>newTitle</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>newTitle</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>497</width>
+            <height>171</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>New Title</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLabel" row="0" column="0">
+            <property name="name">
+                <cstring>textLabel1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Video file</string>
+            </property>
+        </widget>
+        <widget class="KPushButton" row="2" column="2">
+            <property name="name">
+                <cstring>bAdd</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="text">
+                <string>Add</string>
+            </property>
+            <property name="accel">
+                <string></string>
+            </property>
+            <property name="stdItem" stdset="0">
+                <number>27</number>
+            </property>
+        </widget>
+        <widget class="QButtonGroup" row="1" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>buttonGroup1</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="title">
+                <string></string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KIntNumInput" row="0" column="1">
+                    <property name="name">
+                        <cstring>nbChapters</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minValue">
+                        <number>1</number>
+                    </property>
+                    <property name="maxValue">
+                        <number>99</number>
+                    </property>
+                </widget>
+                <widget class="KTimeWidget" row="1" column="1">
+                    <property name="name">
+                        <cstring>twLength</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                </widget>
+                <widget class="QRadioButton" row="0" column="0">
+                    <property name="name">
+                        <cstring>rbNumber</cstring>
+                    </property>
+                    <property name="text">
+                        <string>number of chapters</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QRadioButton" row="1" column="0">
+                    <property name="name">
+                        <cstring>rbLength</cstring>
+                    </property>
+                    <property name="text">
+                        <string>chapter length</string>
+                    </property>
+                </widget>
+                <spacer row="0" column="2" rowspan="2" colspan="1">
+                    <property name="name">
+                        <cstring>spacer1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>131</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+            </grid>
+        </widget>
+        <widget class="KURLRequester" row="0" column="1" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>urFile</cstring>
+            </property>
+            <property name="mode">
+                <number>25</number>
+            </property>
+        </widget>
+        <spacer row="2" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>411</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <spacer row="3" column="1">
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>21</width>
+                    <height>16</height>
+                </size>
+            </property>
+        </spacer>
+        <spacer row="1" column="3">
+            <property name="name">
+                <cstring>spacer4</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>51</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>urFile</sender>
+        <signal>urlSelected(const QString&amp;)</signal>
+        <receiver>newTitle</receiver>
+        <slot>fileSelected(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>rbNumber</sender>
+        <signal>clicked()</signal>
+        <receiver>newTitle</receiver>
+        <slot>rbNumberClicked()</slot>
+    </connection>
+    <connection>
+        <sender>rbLength</sender>
+        <signal>clicked()</signal>
+        <receiver>newTitle</receiver>
+        <slot>rbLengthClicked()</slot>
+    </connection>
+    <connection>
+        <sender>bAdd</sender>
+        <signal>clicked()</signal>
+        <receiver>newTitle</receiver>
+        <slot>bAddClicked()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>fileSelected(const QString&amp;)</slot>
+    <slot>rbNumberClicked()</slot>
+    <slot>rbLengthClicked()</slot>
+    <slot>bAddClicked()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>ktimewidget.h</includehint>
+    <includehint>kurlrequester.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+</includehints>
+</UI>

@@ -46,16 +46,12 @@
 #include <qstatusbar.h>
 #include <kpushbutton.h>
 #include <kiconloader.h>
-#include <qaction.h>
-#include <ktoolbar.h>
-#include <qframe.h>
 #include <qcheckbox.h>
 #include <qmenubar.h>
 #include <qlabel.h>
 #include <qpixmap.h>
 #include <qspinbox.h>
 #include <qpainter.h>
-#include <qfont.h>
 #include <kdirselectdialog.h>
 #include <kio/global.h>
 #include <kio/job.h>
@@ -63,9 +59,6 @@
 #include <kdiskfreesp.h>
 #include <qvaluelist.h>
 #include <kdeversion.h>
-#include <qlistbox.h>
-#include <qtoolbox.h>
-#include <qregion.h>
 #include <qbitmap.h>
 
 
@@ -95,10 +88,11 @@ k9DVDListItem::k9DVDListItem(QObject *DVD,ckLvItem *List,eStreamType type)
   streamType=type;
 }
 
-k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
+k9Main::k9Main(QWidget* parent, const char* name, k9CdDrives *_drives)
     : MainDlg(parent,name),pxVideo((const char **) img_video), pxSound((const char **) img_sound),
     pxText((const char **) img_text)
 {
+  drives=_drives;
   m_parent=(k9Copy*)parent;
   QImage img;
   img.loadFromData( img_chapter, sizeof( img_chapter ), "PNG" );
@@ -117,8 +111,8 @@ k9Main::k9Main(QWidget* parent, const char* name, const QStringList &sl)
   listView1->setDefaultRenameAction(QListView::Accept);
   //    KStandardDirs kd;
   m_prefOutput=locateLocal("tmp","k9copy/",true); //kd.findResource("tmp","");
-  connect(&drives,SIGNAL(deviceAdded( k9CdDrive*)),this,SLOT(deviceAdded( k9CdDrive* )));
-  connect(&drives,SIGNAL(deviceRemoved( k9CdDrive*)),this,SLOT(deviceRemoved( k9CdDrive* )));
+  connect(drives,SIGNAL(deviceAdded( k9CdDrive*)),this,SLOT(deviceAdded( k9CdDrive* )));
+  connect(drives,SIGNAL(deviceRemoved( k9CdDrive*)),this,SLOT(deviceRemoved( k9CdDrive* )));
 
   readSettings();
   bInputOpen->setPixmap(SmallIcon("fileopen"));
@@ -481,7 +475,7 @@ void k9Main::removeProgressWindow() {
 void k9Main::eject()
 {
   closeDVD();
-  drives.eject( getDevice(cbInputDev));
+  drives->eject( getDevice(cbInputDev));
 }
 
 
@@ -1246,7 +1240,7 @@ void k9Main::readDrives()
   recorderList.clear();
   cbOutputDev->insertItem(i18n("ISO Image"));
   
-  drives.scanDrives();
+  drives->scanDrives();
 
 }
 
@@ -1474,3 +1468,8 @@ bool k9Main::withMenus()
 }
 
 #include "k9main.moc"
+
+
+void k9Main::setDrives(k9CdDrives* _value) {
+    drives = _value;
+}

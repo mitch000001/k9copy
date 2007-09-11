@@ -26,6 +26,8 @@ k9GLWidget::k9GLWidget(QWidget *parent, const char *name):QGLWidget(parent, name
     m_height=0;
     m_width=0;
     library=new QLibrary("GL");
+    if (!library)
+        library=new QLibrary("GL.so.1");
 
     glClear = (glClear_t) library->resolve( "glClear" );
     glRasterPos2i= (glRasterPos2i_t)library->resolve("glRasterPos2i");
