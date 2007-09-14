@@ -30,8 +30,6 @@ k9ImportFiles::k9ImportFiles(QWidget *parent, const char *name)
     k9MenuEdit *menu=new k9MenuEdit(this);
     addToolWindow(menu, KDockWidget::DockRight, getMainDockWidget(),0,i18n("Edit menu"),i18n("Edit Menu"));
 
-    m_k9Import->getNewDVD()->setMenuEdit(menu);
-
     k9ChapterEdit *ch=new k9ChapterEdit(this);
     addToolWindow(ch, KDockWidget::DockBottom, getMainDockWidget(),0,i18n("Chapter properties"),i18n("Chapter properties"));
 

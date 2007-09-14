@@ -11,12 +11,15 @@
 //
 #include "k9title.h"
 #include "k9newdvd.h"
+#include "k9menu.h"
 
 k9Title::k9Title(k9NewDVD *parent, const char *name)
  : QObject(parent, name)
 {
     m_num=parent->getTitles()->count();
     parent->appendTitle(this);
+    m_menu=new k9Menu(this,0);
+    m_menu->setFormat((k9Menu::eFormat)parent->getFormat());
 }
 
 
@@ -53,4 +56,9 @@ k9MenuButton* k9Title::getButton() const {
 
 void k9Title::setButton(k9MenuButton* _value) {
     m_button = _value;
+}
+
+
+k9Menu* k9Title::getMenu() const {
+    return m_menu;
 }

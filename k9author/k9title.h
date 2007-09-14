@@ -21,6 +21,7 @@
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
 class k9NewDVD;
+class k9Menu;
 
 class k9TitleItems : public QPtrList<k9AviFile> {
 protected:
@@ -42,11 +43,15 @@ public:
 
     k9MenuButton* getButton() const;
 
+	k9Menu* getMenu() const;
+	
+
 
 private:
     k9TitleItems m_files;
     int m_num;
     k9MenuButton *m_button;
+    k9Menu *m_menu;
 };
 
 #endif

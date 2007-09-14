@@ -65,6 +65,8 @@ protected slots:
 
 signals:
     void aviFileSelected(k9AviFile *_aviFile);
+    void titleSelected(k9Title *);
+    void rootSelected(k9NewDVD *);
 };
 
 #endif

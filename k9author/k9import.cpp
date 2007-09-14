@@ -126,9 +126,19 @@ void k9Import::buttonUpdated(k9MenuButton *_button, const QImage &_image) {
 
 
 void k9Import::lvDVDItemSelected (QListViewItem *_item) {
-    if (_item->rtti()==1002) {
-        k9LvItemImport *item=(k9LvItemImport*)_item;
+   k9LvItemImport *item=(k9LvItemImport*)_item;
+
+   switch (_item->rtti()) {
+      case 1002:
         emit aviFileSelected(item->getAviFile());
+        emit titleSelected(item->getTitle());
+        break;
+      case 1001:
+        emit titleSelected(item->getTitle());
+        break;
+      default:
+        emit rootSelected(&m_newDVD);
+        break;
     }
 }
 
@@ -195,10 +205,10 @@ void k9Import::execute() {
 void k9Import::cbFormatActivated(const QString &_format) {
     if (_format == "PAL") {
         m_newDVD.setFormat(k9NewDVD::PAL);
-        m_newDVD.getMenuEdit()->setFormat(k9MenuEdit::PAL);
+//        m_newDVD.getMenuEdit()->setFormat(k9MenuEdit::PAL);
     } else {
         m_newDVD.setFormat(k9NewDVD::NTSC);
-        m_newDVD.getMenuEdit()->setFormat(k9MenuEdit::NTSC);
+//        m_newDVD.getMenuEdit()->setFormat(k9MenuEdit::NTSC);
     }
 
 

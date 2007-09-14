@@ -85,14 +85,13 @@ public slots:
     void setTextPosition(const eTextPosition& _value);
     eTextPosition getTextPosition() const;
 
-	QImage getImage() const;
+    QImage getImage() const;
 
-	void setScript(const QString& _value);
-	
+    void setScript(const QString& _value);
+    QString getScript() const;
 
-	QString getScript() const;
-	
-	
+    void setAngle(int _value);
+    int getAngle() const;
 
 private:
     QCanvas *m_canvas;
@@ -105,6 +104,7 @@ private:
     QImage m_image;
     int  m_width;
     int m_height;
+    int m_angle;
     eTextPosition m_textPosition;
     QString m_script;
     void loadImage();

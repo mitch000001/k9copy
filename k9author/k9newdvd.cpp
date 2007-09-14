@@ -21,7 +21,6 @@
 #include <klocale.h>
 #include <qimage.h>
 #include "k9menu.h"
-#include "k9menuedit.h"
 #include "k9menubutton.h"
 
 k9NewDVD::k9NewDVD(QObject *parent, const char *name)
@@ -29,6 +28,8 @@ k9NewDVD::k9NewDVD(QObject *parent, const char *name)
     m_workDir=locateLocal("tmp", "k9copy/" ) ;
     m_rootMenu=new k9Menu(this);
     m_format=PAL;
+
+
 }
 
 
@@ -111,14 +112,12 @@ void k9NewDVD::addTitles (QDomElement &_root) {
         QDomElement titleSet = m_xml->createElement("titleset");
         _root.appendChild(titleSet);
         QDomElement pgc;
-        /* QDomElement titleMenu = m_xml->createElement("menus");
-         titleSet.appendChild(titleMenu);
-         QDomElement pgc = m_xml->createElement("pgc");
-         titleMenu.appendChild(pgc);
-         QDomElement pre = m_xml->createElement("pre");
-         pgc.appendChild(pre);
-         QDomText precmd=m_xml->createTextNode("");
-         */
+        k9Menu *menu=title->getMenu();
+        menu->setWorkDir(m_workDir);
+        QString menuFileName=m_workDir+KApplication::randomString(8)+".mpg";
+        menu->setMenuFileName(menuFileName);
+        menu->createMenus(&titleSet);     
+
         QDomElement eTitle=m_xml->createElement("titles");
         titleSet.appendChild(eTitle);
         QDomElement e=m_xml->createElement("video");
@@ -192,12 +191,12 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
         fps="30000/1001";
         break;
     }
-    m_progress->setTitle(i18n("Encoding %1  %2 - %3").arg(_aviFile->getFileName()).arg(t1).arg(t2));
+    m_progress->setTitle(i18n("Encoding %1").arg(_aviFile->getFileName()));
 
     m_process->clearArguments();
     *m_process << "mencoder" << "-oac" << "lavc" << "-ovc" << "lavc" << "-of" << "mpeg";
     *m_process << "-mpegopts" << "format=dvd" << "-vf" << "scale="+scale+",harddup" << "-srate" << "48000" << "-af" << "lavcresample=48000";
-    *m_process << "-lavcopts" << "vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=15:acodec=ac3:abitrate=192:aspect=16/9";
+    *m_process << "-lavcopts" << "vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=15:acodec=ac3:abitrate=192:aspect=16/9:threads=2";
     *m_process << "-ofps" << fps << "-o" << fileName << "-ss" << t1 << "-endpos" << t2 << _aviFile->getFileName();
     m_progress->execute();
     _cmd=fileName;
@@ -234,62 +233,22 @@ void k9NewDVD::appendTitle(k9Title *_title) {
     btn->setLeft(20);
     btn->setWidth(100);
     btn->setHeight(100);
-    btn->setScript(QString("jump title %1 ;").arg(_title->getNum()+1));
+    btn->setScript(QString("jump titleset %1  menu;").arg(_title->getNum()+1));
     btn->setTextPosition(k9MenuButton::RIGHT);
     btn->setText(i18n("title %1").arg(_title->getNum()+1));
-
-    /*
-    k9MenuButton *button=m_rootMenu->addButton();
-    button->setImage(btn->getImage());
-    button->setTop(btn->getTop());
-    button->setLeft(btn->getLeft());
-    button->setTextPosition(k9MenuButton::RIGHT);
-    button->setWidth(btn->getWidth());
-    button->setHeight(btn->getHeight());
-      
-    button->setText(i18n("title %1").arg(_title->getNum()+1));
-    button->setTextPosition((k9MenuButton::eTextPosition)btn->getTextPosition());
-
-    connect(button,SIGNAL(sigsetLeft(int)),btn,SLOT(setLeft(int)));
-    connect(button,SIGNAL(sigsetTop(int)),btn,SLOT(setTop(int)));
-    connect(button,SIGNAL(sigsetWidth(int)),btn,SLOT(setWidth(int)));
-    connect(button,SIGNAL(sigsetHeight(int)),btn,SLOT(setHeight(int)));
-    connect(btn,SIGNAL(sigsetImage(const QImage&)),button,SLOT(setImage(const QImage&)));
-    connect(button,SIGNAL(sigsetImage(const QImage&)),btn,SLOT(updateImage(const QImage&)));
-    connect(button,SIGNAL(sigsetFont(const QFont&)),btn,SLOT(setFont(const QFont&)));
-    connect(button,SIGNAL(sigsetColor(const QColor&)),btn,SLOT(setColor(const QColor&)));
-    connect(button,SIGNAL(sigsetText(const QString&)),btn,SLOT(setText(const QString&)));
-    connect(button,SIGNAL(sigsetTextPosition(int)),btn,SLOT(setTextPosition(int)));
-*/
 }
-
-
-k9MenuEdit* k9NewDVD::getMenuEdit() const {
-    return m_menuEdit;
-}
-
-
-void k9NewDVD::setMenuEdit(k9MenuEdit* _value) {
-    m_menuEdit = _value;
-    connect (m_menuEdit,SIGNAL(backgroundImageChanged(const QImage&)),m_rootMenu,SLOT(setBackground(const QImage&)));
-    connect (m_menuEdit,SIGNAL(textFontChanged(const QFont&)),m_rootMenu,SLOT(setTextFont(const QFont&)));
-    connect (m_menuEdit,SIGNAL(textColorChanged(const QColor&)),m_rootMenu,SLOT(setTextColor(const QColor&)));
-    connect (m_menuEdit,SIGNAL(textChanged(const QString&)),m_rootMenu,SLOT(setText(const QString&)));
-    connect (m_menuEdit,SIGNAL(updatePos(const QPoint&)),m_rootMenu,SLOT(setTextPos(const QPoint&)));
-    QPixmap pix(720,576);
-    pix.fill(Qt::black);
-    m_menuEdit->setBackgroundImage(pix.convertToImage());
-    m_menuEdit->setText("DVD TITLE");
-    m_menuEdit->setColor(Qt::white);
-    QFont f;
-    f.setPointSize(30);
-    m_menuEdit->setFont(f);
-    m_menuEdit->setFormat((k9MenuEdit::eFormat)m_format);
-    m_rootMenu->setCanvas(m_menuEdit->getCanvas());
-}
-
 
 
 void k9NewDVD::setProgress(k9Progress* _value) {
     m_progress = _value;
+}
+
+
+k9NewDVD::eFormat k9NewDVD::getFormat() const {
+    return m_format;
+}
+
+
+k9Menu* k9NewDVD::getRootMenu() const {
+    return m_rootMenu;
 }

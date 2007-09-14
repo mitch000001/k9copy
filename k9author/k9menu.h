@@ -26,12 +26,6 @@ class k9MenuButton;
 class k9Menu : public QObject {
     Q_OBJECT
 public slots:
-    void setBackground(const QImage& _value);
-    void setBackground(const QString& _fileName);
-    void setText(const QString& _value);
-    void setTextColor(const QColor& _value);
-    void setTextFont(const QFont& _value);
-    void setTextPos(const QPoint &_value);
 public:
     enum eFormat {
         PAL=1,NTSC=2
@@ -40,26 +34,20 @@ public:
     ~k9Menu();
     k9MenuButton *addButton();
     void createMenus(QDomElement *_rootNode);
-    QImage getBackground() const;
     void setWorkDir(const QString& _value);
     QString getWorkDir() const;
     void setFormat(const eFormat& _value);
     void setMenuFileName(const QString& _value);
     QString getMenuFileName() const;
 
-	void setCanvas(QCanvas* _value);
-	
+    void setCanvas(QCanvas* _value);
 
-	QCanvas* getCanvas() const;
-	
+
+    QCanvas* getCanvas() const;
+
 private:
     QPtrList <k9MenuButton> m_buttons;
-    QImage m_Background;
-    QString m_text;
-    QColor m_textColor;
-    QFont m_textFont;
     QString m_workDir;
-    QPoint m_textPos;
     QString m_menuFileName;
     eFormat m_format;
     QCanvas *m_canvas;

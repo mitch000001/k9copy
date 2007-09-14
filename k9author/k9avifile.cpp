@@ -181,4 +181,5 @@ QImage k9AviFile::getImage() const {
 void k9AviFile::setImage(const QImage& _value) {
     m_image = _value;
     emit aviFileUpdated  (this);
+    emit imageChanged(_value);
 }

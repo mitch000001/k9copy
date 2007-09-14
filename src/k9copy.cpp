@@ -38,6 +38,7 @@
 #include "k9menuedit.h"
 #include "k9chapteredit.h"
 #include "k9newtitle.h"
+#include "k9menu.h"
 #include <kdockwidget.h>
 
 k9Copy::k9Copy()
@@ -186,11 +187,13 @@ void k9Copy::createImportWindows() {
     m_k9Import=new k9Import(this,0,&m_drives);
     m_k9ImportView=createWrapper( m_k9Import,"","");
     addWindow(m_k9ImportView, KMdi::StandardAdd);
-
-    m_menuEdit=new k9MenuEdit(this);
+    
+    m_menuEdit=new k9MenuEdit(this,0,m_k9Import->getNewDVD()->getRootMenu()->getCanvas());
     acc=addToolWindow(m_menuEdit, KDockWidget::DockRight, getMainDockWidget(),20,i18n("Edit menu"),i18n("Edit Menu"));
     m_ToolViews.append(acc);
-    m_k9Import->getNewDVD()->setMenuEdit(m_menuEdit);
+
+    connect (m_k9Import,SIGNAL(titleSelected(k9Title*)),m_menuEdit,SLOT(titleSelected(k9Title*)));
+    connect (m_k9Import,SIGNAL(rootSelected(k9NewDVD*)),m_menuEdit,SLOT(rootSelected(k9NewDVD*)));
 
     k9NewTitle *newTitle=new k9NewTitle(this);
     newTitle->setK9Import(m_k9Import);

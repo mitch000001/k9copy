@@ -74,6 +74,7 @@ private:
     void setTitle ( k9Title* _value );
 signals:
     void aviFileUpdated(k9AviFile *_aviFile);
+    void imageChanged(const QImage &);
 };
 
 #endif

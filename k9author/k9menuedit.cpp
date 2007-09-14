@@ -10,8 +10,11 @@
 //
 //
 
-
+#include "k9common.h"
 #include "k9menuedit.h"
+#include "k9menu.h"
+#include "k9title.h"
+#include "k9newdvd.h"
 #include <qwmatrix.h>
 #include <qlayout.h>
 #include <kfontdialog.h>
@@ -78,16 +81,26 @@ void _k9MenuEditor::contentsMouseMoveEvent(QMouseEvent* e) {
         }
     }
 }
+void _k9MenuEditor::resizeEvent ( QResizeEvent * e ) {
+    QWMatrix m;
+    double scalex=(e->size().width()-4.0)/720.0;
+    double scaley=(e->size().height()-4.0)/576.0;
+    m.scale(QMIN(scalex,scaley),QMIN(scalex,scaley));
+    this->setWorldMatrix(m);
 
-k9MenuEdit::k9MenuEdit(QWidget* parent, const char* name, WFlags fl)
-        : menuEdit(parent,name,fl) {
+}
+
+
+k9MenuEdit::k9MenuEdit(QWidget* parent, const char* name,QCanvas *_canvas)
+        : menuEdit(parent,name) {
+    m_canvas=_canvas;
     m_format=PAL;
     m_imageHeight=576;
     QGridLayout *grid=new QGridLayout(frame,1,1);
-    m_menuEditor=new _k9MenuEditor(m_canvas,frame);
+    m_menuEditor=new _k9MenuEditor(*m_canvas,frame);
     grid->addWidget(m_menuEditor,0,0);
-    m_canvas.resize(720,m_imageHeight);
-    m_text=new QCanvasText(&m_canvas);
+    m_canvas->resize(720,m_imageHeight);
+    m_text=new QCanvasText(m_canvas);
     m_menuEditor->setMenu(this);
     m_text->show();
     connect(m_menuEditor,SIGNAL(itemSelected()),this,SLOT(itemSelected()));
@@ -104,18 +117,23 @@ void k9MenuEdit::itemSelected() {
         leTitle->setText(m_menuEditor->getSelected()->getText());
         cbPosTitle->setEnabled(true);
         cbPosTitle->setCurrentItem(m_menuEditor->getSelected()->getTextPosition()-1);
+        urBackground->setEnabled(true);
+    } else if (m_menuEditor->getMoving()) {
+        if (m_menuEditor->getMoving()->rtti()==QCanvasItem::Rtti_Text) {
+            m_text=(QCanvasText*)m_menuEditor->getMoving();
+            leTitle->setText(m_text->text());
+            cbColor->setColor(m_text->color());
+            cbPosTitle->setEnabled(false);
+            urBackground->setEnabled(false);
+        }
     } else {
-        leTitle->setText(m_text->text());
-        cbColor->setColor(m_text->color());
+        urBackground->setEnabled(true);
         cbPosTitle->setEnabled(false);
+
     }
 }
 
-k9MenuButton *k9MenuEdit::addButton() {
-    k9MenuButton *btn= new k9MenuButton(&m_canvas);
 
-    return btn;
-}
 
 
 
@@ -175,7 +193,7 @@ void k9MenuEdit::cbPosTitleActivated(int _value) {
 
 void k9MenuEdit::setBackgroundImage(const QImage &_image) {
     m_background=_image;
-    m_canvas.setBackgroundPixmap(QPixmap(_image));
+    m_canvas->setBackgroundPixmap(QPixmap(_image));
     emit backgroundImageChanged(_image);
 }
 
@@ -203,19 +221,19 @@ k9MenuButton * _k9MenuEditor::getSelected()  {
 
 void k9MenuEdit::setText(const QString &_value) {
     m_text->setText(_value);
-    m_canvas.update();
+    m_canvas->update();
     emit textChanged(_value);
 }
 
 void k9MenuEdit::setFont(const QFont &_value) {
     m_text->setFont(_value);
-    m_canvas.update();
+    m_canvas->update();
     emit textFontChanged(_value);
 }
 
 void k9MenuEdit::setColor(const QColor &_value) {
     m_text->setColor(_value);
-    m_canvas.update();
+    m_canvas->update();
     emit textColorChanged(_value);
 }
 
@@ -235,13 +253,49 @@ void k9MenuEdit::setFormat(const eFormat& _value) {
         m_imageHeight=480;
     else
         m_imageHeight=576;
-    m_canvas.resize(720,m_imageHeight);
+    m_canvas->resize(720,m_imageHeight);
     m_menuEditor->setMaximumSize(QSize(724,m_imageHeight+4));
     QImage img=m_background.smoothScale(720,m_imageHeight,QImage::ScaleMax);
-    m_canvas.setBackgroundPixmap(QPixmap(img));
+    m_canvas->setBackgroundPixmap(QPixmap(img));
 }
 
 
 QCanvas *k9MenuEdit::getCanvas()  {
-    return &m_canvas;
+    return m_canvas;
+}
+
+
+void k9MenuEdit::setCanvas(QCanvas* _value) {
+    m_canvas = _value;
+    m_menuEditor->setCanvas(_value);
+    m_canvas->resize(720,m_imageHeight);
+    m_canvas->update();
+    m_menuEditor->updateContents();
+}
+
+void k9MenuEdit::titleSelected(k9Title *_title) {
+    setCanvas(_title->getMenu()->getCanvas());
+}
+
+void k9MenuEdit::rootSelected(k9NewDVD *_newDVD) {
+    setCanvas(_newDVD->getRootMenu()->getCanvas());
+}
+
+void k9MenuEdit::bAddTextClick() {
+    m_text=new QCanvasText(m_canvas);
+    m_text->show();
+    m_menuEditor->setMoving(m_text);
+    setText(leTitle->text());
+    setColor(cbColor->color());
+}
+
+
+
+QCanvasItem* _k9MenuEditor::getMoving() const {
+    return moving;
+}
+
+
+void _k9MenuEditor::setMoving(QCanvasItem* _value) {
+    moving = _value;
 }

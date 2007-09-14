@@ -245,6 +245,7 @@ KDE_CREATE_SUBDIRSLIST
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ doc/Makefile ])
 AC_CONFIG_FILES([ doc/k9copy/Makefile ])
+AC_CONFIG_FILES([ k9author/Makefile ])
 AC_CONFIG_FILES([ k9decmpeg/Makefile ])
 AC_CONFIG_FILES([ k9devices/Makefile ])
 AC_CONFIG_FILES([ k9Mplayer/Makefile ])

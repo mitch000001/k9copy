@@ -19,6 +19,8 @@
 
 class k9MenuButton;
 class k9MenuEdit;
+class k9Title;
+class k9NewDVD;
 
 class _k9MenuEditor : public QCanvasView {
     Q_OBJECT
@@ -31,10 +33,16 @@ public:
     void setMenu(k9MenuEdit *_menu) {
         m_menu=_menu;
     }
+
+	QCanvasItem* getMoving() const;
+
+	void setMoving(QCanvasItem* _value);
+	
+	
 protected:
     void contentsMousePressEvent(QMouseEvent*);
     void contentsMouseMoveEvent(QMouseEvent*);
-
+    virtual void resizeEvent ( QResizeEvent * e );
 signals:
     void status(const QString&);
     void itemSelected();
@@ -51,10 +59,9 @@ class k9MenuEdit : public menuEdit {
 public:
     enum eFormat {PAL=1,NTSC=2};
 
-    k9MenuEdit(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    k9MenuEdit(QWidget* parent = 0, const char* name = 0,QCanvas *_canvas=0);
     ~k9MenuEdit();
     /*$PUBLIC_FUNCTIONS$*/
-    k9MenuButton *addButton();
     void setBackgroundImage(const QImage &_image);
     void setText(const QString &_value);
     void setFont(const QFont &_value);
@@ -63,13 +70,14 @@ public:
 public slots:
     /*$PUBLIC_SLOTS$*/
     void itemSelected();
-
     QCanvasText* getText() const;
-
     void setFormat(const eFormat& _value);
     k9MenuEdit::eFormat getFormat() const;
     QCanvas *getCanvas();
-	
+    void setCanvas(QCanvas* _value);
+    void titleSelected(k9Title *);
+    void rootSelected(k9NewDVD *);
+
 protected:
     /*$PROTECTED_FUNCTIONS$*/
     virtual void bFontClick();
@@ -77,8 +85,9 @@ protected:
     virtual void cbColorChanged(const QColor &_color);
     virtual void leTitleChanged(const QString &_value);
     virtual void cbPosTitleActivated(int _value);
+    virtual void bAddTextClick();
     _k9MenuEditor *m_menuEditor;
-    QCanvas m_canvas;
+    QCanvas *m_canvas;
     QImage m_background;
     QCanvasText *m_text;
     eFormat m_format;

@@ -21,6 +21,11 @@
 k9Menu::k9Menu(QObject *parent, const char *name)
         : QObject(parent, name),m_format(PAL) {
     m_buttons.setAutoDelete(false);
+    m_canvas=new QCanvas(this);
+    QPixmap pix(720,576);
+    pix.fill(Qt::black);
+    m_canvas->setBackgroundPixmap(pix);
+
 }
 
 
@@ -30,18 +35,6 @@ k9Menu::~k9Menu() {}
 #include "k9menu.moc"
 
 
-QImage k9Menu::getBackground() const {
-    return m_Background;
-}
-
-
-void k9Menu::setBackground(const QImage& _value) {
-    m_Background = _value;
-}
-
-void k9Menu::setBackground(const QString& _fileName) {
-    m_Background.load(_fileName);
-}
 
 k9MenuButton *k9Menu::addButton() {
     k9MenuButton *button=new k9MenuButton(m_canvas);
@@ -317,23 +310,6 @@ void k9Menu::setMenuFileName(const QString& _value) {
 }
 
 
-void k9Menu::setText(const QString& _value) {
-    m_text = _value;
-}
-
-
-void k9Menu::setTextColor(const QColor& _value) {
-    m_textColor = _value;
-}
-
-
-void k9Menu::setTextFont(const QFont& _value) {
-    m_textFont = _value;
-}
-
-void k9Menu::setTextPos(const QPoint &_value) {
-    m_textPos=_value;
-}
 
 
 QCanvas* k9Menu::getCanvas() const {

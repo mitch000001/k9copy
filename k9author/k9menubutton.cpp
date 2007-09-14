@@ -10,6 +10,9 @@
 //
 //
 #include "k9menubutton.h"
+#include <qpainter.h>
+#include <qwmatrix.h>
+#include <qbitmap.h>
 
 k9CanvasSpriteRedim::k9CanvasSpriteRedim (ePosition _position,int _x,int _y,int _w,int _h,QCanvas *canvas,k9MenuButton *button):QCanvasRectangle(_x,_y,_w,_h,canvas) {
     m_position=_position;
@@ -232,7 +235,12 @@ void k9MenuButton::loadImage() {
         y=m_sprite->y();
         delete m_sprite;
     } 
-    m_pixmap=new QCanvasPixmap(tmp);
+    QPixmap pix;
+    pix.convertFromImage(tmp);
+    
+    m_pixmap=new QCanvasPixmap(pix,QPoint(0,0));
+
+
     m_pixmapArray.setImage(0,m_pixmap);
     m_sprite = new k9CanvasSprite(&m_pixmapArray,m_canvas,this);
     m_sprite->move(x,y);
@@ -359,4 +367,14 @@ QString k9MenuButton::getScript() const {
 
 void k9MenuButton::setScript(const QString& _value) {
     m_script = _value;
+}
+
+
+int k9MenuButton::getAngle() const {
+    return m_angle;
+}
+
+
+void k9MenuButton::setAngle(int _value) {
+    m_angle = _value;
 }

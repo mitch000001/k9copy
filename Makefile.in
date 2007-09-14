@@ -319,7 +319,9 @@ x_libraries = @x_libraries@
 xdg_appsdir = @xdg_appsdir@
 xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
-SUBDIRS = k9vamps libdvdnav k9Mplayer k9decmpeg libk9copy k9devices src po doc
+SUBDIRS = doc k9Mplayer k9decmpeg k9devices k9vamps libdvdnav libk9copy \
+	k9author src po
+
 MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 configure.files 
 EXTRA_DIST = admin COPYING configure.in.in
 AM_CXXFLAGS = -O3 -g3
@@ -819,7 +821,7 @@ dist-hook:
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=stamp-h.in subdirs Makefile.in configure.files config.h.in k9copy-1.1.3.tar.gz k9copy-1.1.2.tar.gz k9copy.kdevelop.spec configure.in Makefile.cvs aclocal.m4 k9copy.kdevses Doxyfile k9copy.kdevelop.pcs Makefile.am acinclude.m4 configure k9copy.kdevelop 
+KDE_DIST=stamp-h.in subdirs Makefile.in configure.files config.h.in k9copy.kdevelop.spec configure.in Makefile.cvs aclocal.m4 k9copy.kdevses Doxyfile k9copy.kdevelop.pcs Makefile.am acinclude.m4 configure k9copy.kdevelop 
 
 #>+ 2
 docs-am:

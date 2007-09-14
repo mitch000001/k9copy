@@ -32317,6 +32317,8 @@ ac_config_files="$ac_config_files doc/Makefile"
 
 ac_config_files="$ac_config_files doc/k9copy/Makefile"
 
+ac_config_files="$ac_config_files k9author/Makefile"
+
 ac_config_files="$ac_config_files k9decmpeg/Makefile"
 
 ac_config_files="$ac_config_files k9devices/Makefile"
@@ -32952,6 +32954,7 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "doc/k9copy/Makefile") CONFIG_FILES="$CONFIG_FILES doc/k9copy/Makefile" ;;
+    "k9author/Makefile") CONFIG_FILES="$CONFIG_FILES k9author/Makefile" ;;
     "k9decmpeg/Makefile") CONFIG_FILES="$CONFIG_FILES k9decmpeg/Makefile" ;;
     "k9devices/Makefile") CONFIG_FILES="$CONFIG_FILES k9devices/Makefile" ;;
     "k9Mplayer/Makefile") CONFIG_FILES="$CONFIG_FILES k9Mplayer/Makefile" ;;
