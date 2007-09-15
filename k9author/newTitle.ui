@@ -99,6 +99,9 @@
                     <property name="name">
                         <cstring>twLength</cstring>
                     </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
                     <property name="sizePolicy">
                         <sizepolicy>
                             <hsizetype>0</hsizetype>

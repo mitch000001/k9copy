@@ -104,6 +104,28 @@ k9MenuButton* k9CanvasSprite::getButton() const {
     return m_button;
 }
 
+void k9MenuButton::select(bool _value) {
+    if (_value) {
+        m_lt->show();
+        m_mt->show();
+        m_rt->show();
+        m_lm->show();
+        m_rm->show();
+        m_lb->show();
+        m_mb->show();
+        m_rb->show();
+    } else {
+        m_lt->hide();
+        m_mt->hide();
+        m_rt->hide();
+        m_lm->hide();
+        m_rm->hide();
+        m_lb->hide();
+        m_mb->hide();
+        m_rb->hide();
+    }
+}
+
 void k9MenuButton::update() {
     int x=m_sprite->x()-2;
     int y=m_sprite->y()-2;
@@ -114,35 +136,27 @@ void k9MenuButton::update() {
 
     m_lt->move(x,y);
     m_lt->setZ(count--);
-    m_lt->show();
 
     m_mt->move(x+w/2,y);
     m_mt->setZ(count--);
-    m_mt->show();
 
     m_rt->move(x+w,y);
     m_rt->setZ(count--);
-    m_rt->show();
 
     m_lm->move(x,y+h/2);
     m_lm->setZ(count--);
-    m_lm->show();
 
     m_rm->move(x+w,y+h/2);
     m_rm->setZ(count--);
-    m_rm->show();
 
     m_lb->move(x,y+h);
     m_lb->setZ(count--);
-    m_lb->show();
 
     m_mb->move(x+w/2,y+h);
     m_mb->setZ(count--);
-    m_mb->show();
 
     m_rb->move(x+w,y+h);
     m_rb->setZ(count--);
-    m_rb->show();
 
     switch(m_textPosition) {
         case RIGHT:
@@ -168,39 +182,39 @@ k9MenuButton::k9MenuButton(QCanvas *parent, const char *name)
     m_canvas=parent;
     m_sprite=NULL;
     m_pixmap=NULL;
-    m_rm=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimMiddleRight,0,0,5,5,m_canvas,this);
+    m_rm=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimMiddleRight,0,0,10,10,m_canvas,this);
     m_rm->setPen(Qt::black);
     m_rm->setBrush(Qt::red);
 
-    m_lt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopLeft,0,0,5,5,m_canvas,this);
+    m_lt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopLeft,0,0,10,10,m_canvas,this);
     m_lt->setPen(Qt::black);
     m_lt->setBrush(Qt::red);
 
-    m_mt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopMiddle,0,0,5,5,m_canvas,this);
+    m_mt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopMiddle,0,0,10,10,m_canvas,this);
     m_mt->setPen(Qt::black);
     m_mt->setBrush(Qt::red);
 
-    m_mt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopMiddle,0,0,5,5,m_canvas,this);
+    m_mt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopMiddle,0,0,10,10,m_canvas,this);
     m_mt->setPen(Qt::black);
     m_mt->setBrush(Qt::red);
 
-    m_rt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopRight,0,0,5,5,m_canvas,this);
+    m_rt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopRight,0,0,10,10,m_canvas,this);
     m_rt->setPen(Qt::black);
     m_rt->setBrush(Qt::red);
 
-    m_lm=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimMiddleLeft,0,0,5,5,m_canvas,this);
+    m_lm=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimMiddleLeft,0,0,10,10,m_canvas,this);
     m_lm->setPen(Qt::black);
     m_lm->setBrush(Qt::red);
 
-    m_lb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomLeft,0,0,5,5,m_canvas,this);
+    m_lb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomLeft,0,0,10,10,m_canvas,this);
     m_lb->setPen(Qt::black);
     m_lb->setBrush(Qt::red);
 
-    m_mb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomMiddle,0,0,5,5,m_canvas,this);
+    m_mb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomMiddle,0,0,10,10,m_canvas,this);
     m_mb->setPen(Qt::black);
     m_mb->setBrush(Qt::red);
 
-    m_rb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomRight,0,0,5,5,m_canvas,this);
+    m_rb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomRight,0,0,10,10,m_canvas,this);
     m_rb->setPen(Qt::black);
     m_rb->setBrush(Qt::red);
 

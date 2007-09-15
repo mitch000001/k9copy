@@ -33,6 +33,7 @@ public:
    virtual void setElapsed(const QString _text);
    virtual void setTitle(const QString _text);
    virtual void setImage(QString _fileName) ;
+   virtual void setImage(const QImage &_image);
    virtual void setMovie(QString _fileName);
 
    virtual int execute();

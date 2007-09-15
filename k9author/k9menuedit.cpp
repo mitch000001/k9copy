@@ -35,12 +35,6 @@ void _k9MenuEditor::contentsMousePressEvent(QMouseEvent* e) {
     QPoint p = inverseWorldMatrix().map(e->pos());
     QCanvasItemList l=canvas()->collisions(p);
     for (QCanvasItemList::Iterator it=l.begin(); it!=l.end(); ++it) {
-        if ( (*it)->rtti() == 1000 ) {
-//            ImageItem *item= (ImageItem*)(*it);
-//            if ( !item->hit( p ) )
-//                 continue;
-        }
-
         moving = *it;
         moving_start = p;
         emit itemSelected();
@@ -111,13 +105,29 @@ void k9MenuEdit::updateTextPos(const QPoint &_point) {
 }
 
 void k9MenuEdit::itemSelected() {
+    bool unselect=true;
+    if (m_menuEditor->getMoving())
+        unselect=m_menuEditor->getMoving()->rtti() < 1002;
+
+    if (unselect) {
+        QCanvasItemList l=m_canvas->allItems();
+        for (QCanvasItemList::Iterator it=l.begin(); it!=l.end(); ++it) {
+            if ((*it)->rtti() ==1000) {
+                k9CanvasSprite *s=(k9CanvasSprite *)(*it);
+                s->getButton()->select(false);
+            }
+        }
+        m_canvas->update();
+    }
     urBackground->setURL("");
     if (m_menuEditor->getSelected()) {
+        m_menuEditor->getSelected()->select(true);
         cbColor->setColor(m_menuEditor->getSelected()->getColor());
         leTitle->setText(m_menuEditor->getSelected()->getText());
         cbPosTitle->setEnabled(true);
         cbPosTitle->setCurrentItem(m_menuEditor->getSelected()->getTextPosition()-1);
         urBackground->setEnabled(true);
+        m_canvas->update();
     } else if (m_menuEditor->getMoving()) {
         if (m_menuEditor->getMoving()->rtti()==QCanvasItem::Rtti_Text) {
             m_text=(QCanvasText*)m_menuEditor->getMoving();
@@ -129,7 +139,6 @@ void k9MenuEdit::itemSelected() {
     } else {
         urBackground->setEnabled(true);
         cbPosTitle->setEnabled(false);
-
     }
 }
 

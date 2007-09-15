@@ -23,6 +23,7 @@
 #include <qdir.h>
 #include <kfiledialog.h>
 #include <kcombobox.h>
+#include <kiconloader.h>
 
 k9Import::k9Import(QWidget* parent, const char* name,k9CdDrives *_drives)
         : import(parent,name) {
@@ -37,8 +38,9 @@ k9Import::~k9Import() {}
 /*$SPECIALIZATION$*/
 
 void k9Import::init() {
-    m_root=new QListViewItem(lvDVD,i18n("root"));
+    m_root=new QListViewItem(lvDVD,i18n("Root Menu"));
     m_root->setOpen(true);
+    m_root->setPixmap(0,SmallIcon("dvd_unmount"));
     emit aviFileSelected(NULL);
 
     connect(drives,SIGNAL(deviceAdded( k9CdDrive*)),this,SLOT(deviceAdded( k9CdDrive* )));
@@ -101,7 +103,7 @@ void k9Import::aviFileUpdated(k9AviFile *_aviFile) {
         k9LvItemImport *itemChapter = (k9LvItemImport*)itemTitle->firstChild();
         while (itemChapter) {
             if (itemChapter->getAviFile()==_aviFile) {
-                itemChapter->setText(1,_aviFile->getFileName());
+                itemChapter->setText(1,_aviFile->getStart().toString("hh:mm:ss") +" - "+_aviFile->getEnd().toString("hh:mm:ss"));
                 itemChapter->setPixmap(0,QPixmap(_aviFile->getImage().smoothScale(50,50)));
             }
             itemChapter=(k9LvItemImport*)itemChapter->nextSibling();
@@ -205,13 +207,14 @@ void k9Import::execute() {
 void k9Import::cbFormatActivated(const QString &_format) {
     if (_format == "PAL") {
         m_newDVD.setFormat(k9NewDVD::PAL);
-//        m_newDVD.getMenuEdit()->setFormat(k9MenuEdit::PAL);
+        m_menuEdit->setFormat(k9MenuEdit::PAL);
     } else {
         m_newDVD.setFormat(k9NewDVD::NTSC);
-//        m_newDVD.getMenuEdit()->setFormat(k9MenuEdit::NTSC);
+        m_menuEdit->setFormat(k9MenuEdit::NTSC);
     }
-
-
 
 }
 
+void k9Import::setMenuEdit(k9MenuEdit* _value) {
+    m_menuEdit = _value;
+}

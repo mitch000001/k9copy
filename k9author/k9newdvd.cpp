@@ -45,29 +45,36 @@ int k9NewDVDItems::compareItems(QPtrCollection::Item item1,QPtrCollection::Item 
 }
 
 void k9NewDVD::execute() {
-  
+
     m_process=m_progress->getProcess();
     connect(m_process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
 //            connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
 //            //connect(m_process, SIGNAL(processExited(KProcess*)),this,SLOT(exited(KProcess*)));
     connect(m_progress,SIGNAL(sigCancel()),this,SLOT(slotCancel()));
 
-
+    connect(&m_aviDecode,SIGNAL(drawFrame(QImage*)),this,SLOT(drawImage(QImage*)));
     k9Tools::clearOutput(m_workDir+"dvd");
     createXML();
+    disconnect(&m_aviDecode,SIGNAL(drawFrame(QImage*)),this,SLOT(drawImage(QImage*)));
 }
 
 #include "k9newdvd.moc"
 
 
+void k9NewDVD::drawImage(QImage * _image) {
+  m_progress->setImage(*_image);
+}
+
 void k9NewDVD::setFormat ( const eFormat& _value ) {
     m_format = _value;
     m_rootMenu->setFormat((k9Menu::eFormat)_value);
+    for (k9Title *title=m_titles.first();title;title=m_titles.next()) {
+        title->getMenu()->setFormat((k9Menu::eFormat)_value);
+    }
+
 }
 
 void k9NewDVD::createXML() {
-
- //   m_rootMenu->setBackground("/home/jmp/menusdvd/menu.jpg");
 
     m_rootMenu->setWorkDir(m_workDir);
 
@@ -108,6 +115,7 @@ void k9NewDVD::createXML() {
 }
 
 void k9NewDVD::addTitles (QDomElement &_root) {
+    calcVideoBitrate();
     for (k9Title *title=m_titles.first();title;title=m_titles.next()) {
         QDomElement titleSet = m_xml->createElement("titleset");
         _root.appendChild(titleSet);
@@ -115,8 +123,9 @@ void k9NewDVD::addTitles (QDomElement &_root) {
         k9Menu *menu=title->getMenu();
         menu->setWorkDir(m_workDir);
         QString menuFileName=m_workDir+KApplication::randomString(8)+".mpg";
+        m_tmpFiles << menuFileName,
         menu->setMenuFileName(menuFileName);
-        menu->createMenus(&titleSet);     
+        menu->createMenus(&titleSet);
 
         QDomElement eTitle=m_xml->createElement("titles");
         titleSet.appendChild(eTitle);
@@ -156,6 +165,7 @@ void k9NewDVD::setWorkDir ( const QString& _value ) {
 }
 
 void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_aviFile) {
+    m_aviDecode.open(_aviFile->getFileName());
     m_timer.start();
     QTime end;
     k9AviFile *file=_aviFile;
@@ -196,11 +206,11 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
     m_process->clearArguments();
     *m_process << "mencoder" << "-oac" << "lavc" << "-ovc" << "lavc" << "-of" << "mpeg";
     *m_process << "-mpegopts" << "format=dvd" << "-vf" << "scale="+scale+",harddup" << "-srate" << "48000" << "-af" << "lavcresample=48000";
-    *m_process << "-lavcopts" << "vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=15:acodec=ac3:abitrate=192:aspect=16/9:threads=2";
+    *m_process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=ac3:abitrate=192:aspect=16/9:threads=2").arg(m_videoBitrate);
     *m_process << "-ofps" << fps << "-o" << fileName << "-ss" << t1 << "-endpos" << t2 << _aviFile->getFileName();
     m_progress->execute();
     _cmd=fileName;
-
+    m_aviDecode.close();
 }
 
 
@@ -211,10 +221,16 @@ void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
         QString percent=t.section(' ',3,3);
         QString fps=t.section(' ',4,4);
         QString trem=t.section(' ',6,6);
-        m_progress->setProgress(percent.replace("%","").toLong(),100);
+        long pos=percent.replace("%","").toLong();
+        m_progress->setProgress(pos,100);
         m_progress->setElapsed(trem);
         m_progress->setLabelText(i18n("fps")+ " : "+fps);
-
+        if (m_timer.elapsed() > 5000) {
+            m_timer.restart();
+            if (m_aviDecode.opened()) {
+                m_aviDecode.readFrame(m_aviDecode.getDuration()*pos /100);
+            }
+        }
     }
 }
 
@@ -251,4 +267,19 @@ k9NewDVD::eFormat k9NewDVD::getFormat() const {
 
 k9Menu* k9NewDVD::getRootMenu() const {
     return m_rootMenu;
+}
+
+void k9NewDVD::calcVideoBitrate() {
+    // bitrate video = (MB *8388.608) /SEC    - bitrate audio
+    int length=0;
+    for (k9Title *title=m_titles.first();title;title=m_titles.next()) {
+        k9TitleItems *chapters=title->getFiles();
+        for (k9AviFile *chapter=chapters->first();chapter;chapter=chapters->next()) {
+            length+=chapter->getStart().msecsTo(chapter->getEnd());
+        }
+    }
+    int size=4400;
+    double sec=(double)length/1000.0;
+    m_videoBitrate=(int)( (size * 8388.608)/sec  - 192);
+    m_videoBitrate=QMIN(m_videoBitrate,5000);
 }

@@ -94,27 +94,12 @@ k9Process* k9Progress::getProcess() const {
 
 void k9Progress::setImage(QString _fileName) {
     m_wimage->setImage(_fileName);
-   
-
-/*
-    QPixmap pixmap;
-    pixmap.load(_fileName);
-
-    
-    int top,left;
-    QPainter p(image);
-        
-   double wratio=(double)image->width()/(double)pixmap.width();
-   double hratio=(double)image->height()/(double)pixmap.height();
-   double ratio= wratio < hratio ? wratio:hratio;
-
-   top =(int) (image->height() -pixmap.height()*ratio)/2+1;
-   left =(int) (image->width() -pixmap.width()*ratio)/2 +1;
-
-   p.scale(ratio,ratio);
-   p.drawPixmap((int)(left/ratio),(int)(top/ratio),pixmap);
-*/
 }
+
+void k9Progress::setImage(const QImage &_image) {
+    m_wimage->setImage(_image);
+}
+
 
 void k9Progress::setMovie(QString _fileName) {
     image->setPaletteBackgroundColor(this->paletteBackgroundColor());

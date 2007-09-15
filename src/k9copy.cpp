@@ -194,6 +194,7 @@ void k9Copy::createImportWindows() {
 
     connect (m_k9Import,SIGNAL(titleSelected(k9Title*)),m_menuEdit,SLOT(titleSelected(k9Title*)));
     connect (m_k9Import,SIGNAL(rootSelected(k9NewDVD*)),m_menuEdit,SLOT(rootSelected(k9NewDVD*)));
+    m_k9Import->setMenuEdit(m_menuEdit);
 
     k9NewTitle *newTitle=new k9NewTitle(this);
     newTitle->setK9Import(m_k9Import);

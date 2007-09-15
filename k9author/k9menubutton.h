@@ -72,7 +72,7 @@ public:
     QColor getColor();
     void setText(QString _text);
     QString getText();
-
+    void select(bool);
     int getTop();
     int getLeft();
 

@@ -22,6 +22,7 @@
 
 class k9AviFile;
 class k9MenuButton;
+class k9MenuEdit;
 class k9Import : public import {
     Q_OBJECT
 private:
@@ -32,6 +33,7 @@ private:
     k9Copy *m_parent;
     QPtrList <k9CdDrive> recorderList;
     k9CdDrives *drives;
+    k9MenuEdit *m_menuEdit;
 
 public:
     k9Import(QWidget* parent = 0, const char* name = 0,k9CdDrives *_drives=0 );
@@ -48,6 +50,8 @@ public slots:
     /*$PUBLIC_SLOTS$*/
     void aviFileUpdated(k9AviFile *_aviFile);
     void buttonUpdated(k9MenuButton *_button, const QImage &_image);
+    void setMenuEdit(k9MenuEdit* _value);
+
 protected:
     /*$PROTECTED_FUNCTIONS$*/
     void setProgressWindow(QWidget *_widget);

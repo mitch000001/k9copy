@@ -19,6 +19,7 @@
 #include <qdatetime.h>
 #include "k9process.h"
 #include "k9progress.h"
+#include "k9avidecode.h"
 
 
 /**
@@ -66,11 +67,13 @@ private:
     k9Progress *m_progress;
     QTime m_timer;
     k9Menu *m_rootMenu;
+    int m_videoBitrate;
+    k9AviDecode m_aviDecode;
+    void calcVideoBitrate();
     void createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_aviFile);
-
 protected slots:
     void getStdout(KProcess *, char *, int);	
-
+    void drawImage(QImage * _image);
 };
 
 #endif
