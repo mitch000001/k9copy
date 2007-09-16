@@ -102,6 +102,8 @@ void k9ChapterEdit::setAviFile(k9AviFile *_aviFile) {
         m_noUpdate=true;
         k9AviFile *p=m_aviFile->getPrevious();
         k9AviFile *n=m_aviFile->getNext();
+	m_minTime=m_aviFile->getStart();
+	m_maxTime=m_aviFile->getEnd();
         if (p) {
             if(p->getFileName() !=_aviFile->getFileName()) {
                 ckBreakStart->setEnabled(false);

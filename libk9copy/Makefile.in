@@ -824,11 +824,11 @@ k9mp4dlg.moc: $(srcdir)/k9mp4dlg.h
 mocs: k9mp4dlg.moc
 
 #>+ 3
-k9videocodecs.moc: $(srcdir)/k9videocodecs.h
-	$(MOC) $(srcdir)/k9videocodecs.h -o k9videocodecs.moc
+k9dvdbackup.moc: $(srcdir)/k9dvdbackup.h
+	$(MOC) $(srcdir)/k9dvdbackup.h -o k9dvdbackup.moc
 
 #>+ 2
-mocs: k9videocodecs.moc
+mocs: k9dvdbackup.moc
 
 #>+ 3
 k9dvdchapter.moc.cpp: $(srcdir)/k9dvdchapter.h
@@ -845,15 +845,15 @@ k9process.moc: $(srcdir)/k9process.h
 mocs: k9process.moc
 
 #>+ 3
-k9dvdbackup.moc: $(srcdir)/k9dvdbackup.h
-	$(MOC) $(srcdir)/k9dvdbackup.h -o k9dvdbackup.moc
+k9videocodecs.moc: $(srcdir)/k9videocodecs.h
+	$(MOC) $(srcdir)/k9videocodecs.h -o k9videocodecs.moc
 
 #>+ 2
-mocs: k9dvdbackup.moc
+mocs: k9videocodecs.moc
 
 #>+ 3
 clean-metasources:
-	-rm -f  k9cell.moc k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9titleencopt.moc k9dvdtitleset.moc.cpp k9burndvd.moc k9mp4enc.moc k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9drawimage.moc k9audiocodecs.moc k9saveimage.moc k9progress.moc k9backupdlg.moc k9mp4dlg.moc k9videocodecs.moc k9dvdchapter.moc.cpp k9process.moc k9dvdbackup.moc
+	-rm -f  k9cell.moc k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9titleencopt.moc k9dvdtitleset.moc.cpp k9burndvd.moc k9mp4enc.moc k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9drawimage.moc k9audiocodecs.moc k9saveimage.moc k9progress.moc k9backupdlg.moc k9mp4dlg.moc k9dvdbackup.moc k9dvdchapter.moc.cpp k9process.moc k9videocodecs.moc
 
 #>+ 2
 KDE_DIST=backupdlg.ui progress.ui Makefile.in mp4dlg.ui Makefile.am dvdprogress.ui 
@@ -908,7 +908,7 @@ bcheck-am:
 
 
 #>+ 11
-libk9copy_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/dummy.cpp $(srcdir)/k9audiocodecs.cpp $(srcdir)/k9backupdlg.cpp $(srcdir)/k9burndvd.cpp $(srcdir)/k9cell.cpp $(srcdir)/k9cellcopylist.cpp $(srcdir)/k9config.cpp $(srcdir)/k9drawimage.cpp $(srcdir)/k9dvd.cpp $(srcdir)/k9dvdauthor.cpp $(srcdir)/k9dvdbackup.cpp $(srcdir)/k9dvdchapter.cpp $(srcdir)/k9dvdprogress.cpp $(srcdir)/k9dvdread.cpp $(srcdir)/k9dvdsize.cpp $(srcdir)/k9dvdtitle.cpp $(srcdir)/k9dvdtitleset.cpp $(srcdir)/k9ifo2.cpp $(srcdir)/k9mp4dlg.cpp $(srcdir)/k9mp4enc.cpp $(srcdir)/k9process.cpp $(srcdir)/k9progress.cpp $(srcdir)/k9saveimage.cpp $(srcdir)/k9script.cpp $(srcdir)/k9titleencopt.cpp $(srcdir)/k9tools.cpp $(srcdir)/k9videocodecs.cpp backupdlg.cpp dvdprogress.cpp mp4dlg.cpp progress.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9dvdchapter.moc.cpp  k9cell.moc k9titleencopt.moc dvdprogress.moc k9burndvd.moc k9mp4enc.moc progress.moc backupdlg.moc mp4dlg.moc k9drawimage.moc k9audiocodecs.moc k9saveimage.moc k9backupdlg.moc k9progress.moc k9dvdbackup.moc k9process.moc k9videocodecs.moc k9mp4dlg.moc
+libk9copy_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/dummy.cpp $(srcdir)/k9audiocodecs.cpp $(srcdir)/k9backupdlg.cpp $(srcdir)/k9burndvd.cpp $(srcdir)/k9cell.cpp $(srcdir)/k9cellcopylist.cpp $(srcdir)/k9config.cpp $(srcdir)/k9drawimage.cpp $(srcdir)/k9dvd.cpp $(srcdir)/k9dvdauthor.cpp $(srcdir)/k9dvdbackup.cpp $(srcdir)/k9dvdchapter.cpp $(srcdir)/k9dvdprogress.cpp $(srcdir)/k9dvdread.cpp $(srcdir)/k9dvdsize.cpp $(srcdir)/k9dvdtitle.cpp $(srcdir)/k9dvdtitleset.cpp $(srcdir)/k9ifo2.cpp $(srcdir)/k9mp4dlg.cpp $(srcdir)/k9mp4enc.cpp $(srcdir)/k9process.cpp $(srcdir)/k9progress.cpp $(srcdir)/k9saveimage.cpp $(srcdir)/k9script.cpp $(srcdir)/k9titleencopt.cpp $(srcdir)/k9tools.cpp $(srcdir)/k9videocodecs.cpp backupdlg.cpp dvdprogress.cpp mp4dlg.cpp progress.cpp k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9dvdchapter.moc.cpp  k9cell.moc k9titleencopt.moc dvdprogress.moc k9burndvd.moc k9mp4enc.moc progress.moc backupdlg.moc mp4dlg.moc k9drawimage.moc k9audiocodecs.moc k9saveimage.moc k9backupdlg.moc k9progress.moc k9videocodecs.moc k9process.moc k9dvdbackup.moc k9mp4dlg.moc
 	@echo 'creating libk9copy_la.all_cpp.cpp ...'; \
 	rm -f libk9copy_la.all_cpp.files libk9copy_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9copy_la.all_cpp.final; \

@@ -58,22 +58,10 @@ void k9Menu::createMenus(QDomElement *_rootNode) {
     }
     QPixmap pixbg(720,height);
     QPainter pbg(&pixbg);
+    m_canvas->resize(720,height);
+    m_canvas->update();
     m_canvas->drawArea(QRect(0,0,720,height),&pbg);
-    for (QCanvasItemList::Iterator it=l.begin(); it!=l.end(); ++it) {
-        if ( (*it)->rtti() > 1001 ) 
-            (*it)->show();
-    }
 
-    //draw background
-/*    img=m_Background.smoothScale(720,height,QImage::ScaleMax);
-    pbg.drawImage(0,0,img);
-    //draw Text
-    pbg.setFont(m_textFont);
-    pbg.setPen(m_textColor);
-    QPoint p=m_textPos;
-    p.setY(p.y()+pbg.fontMetrics().height());
-    pbg.drawText(p,m_text);
-*/
     //create the hilite picture
     int lineWidth=2;
     img.create(720,height,8,3,QImage::IgnoreEndian);

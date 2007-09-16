@@ -218,3 +218,7 @@ void k9Import::cbFormatActivated(const QString &_format) {
 void k9Import::setMenuEdit(k9MenuEdit* _value) {
     m_menuEdit = _value;
 }
+
+void k9Import::setEnableCreate(bool _state) {
+    m_parent->setEnabledCreateDVD(true);
+}

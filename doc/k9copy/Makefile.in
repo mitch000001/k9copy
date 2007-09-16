@@ -484,10 +484,10 @@ uninstall-am:
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=playback.png mainwindow.png settingsMencoder.png Makefile.in keepmenus.png btnmp4.png settingsMP4.png btncopy.png index.xml index.docbook open1.png treeview.png Makefile.am open2.png settingsDVD.png 
+KDE_DIST=playback.png mainwindow.png settingsMencoder.png Makefile.in keepmenus.png btnmp4.png settingsMP4.png index.xml btncopy.png index.docbook open1.png treeview.png Makefile.am open2.png settingsDVD.png 
 
 #>+ 24
-index.cache.bz2: $(srcdir)/index.docbook $(KDE_XSL_STYLESHEET) index.docbook open1.png mainwindow.png playback.png btnmp4.png index.xml treeview.png settingsMencoder.png settingsDVD.png settingsMP4.png keepmenus.png btncopy.png open2.png 
+index.cache.bz2: $(srcdir)/index.docbook $(KDE_XSL_STYLESHEET) keepmenus.png btncopy.png treeview.png index.xml settingsMencoder.png settingsDVD.png btnmp4.png settingsMP4.png open1.png playback.png open2.png mainwindow.png index.docbook 
 	@if test -n "$(MEINPROC)"; then echo $(MEINPROC) --check --cache index.cache.bz2 $(srcdir)/index.docbook; $(MEINPROC) --check --cache index.cache.bz2 $(srcdir)/index.docbook; fi
 
 docs-am: index.cache.bz2
@@ -514,20 +514,20 @@ clean-docs:
 #>+ 13
 install-nls:
 	$(mkinstalldirs) $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/k9copy
-	@for base in index.docbook open1.png mainwindow.png playback.png btnmp4.png index.xml treeview.png settingsMencoder.png settingsDVD.png settingsMP4.png keepmenus.png btncopy.png open2.png ; do \
+	@for base in keepmenus.png btncopy.png treeview.png index.xml settingsMencoder.png settingsDVD.png btnmp4.png settingsMP4.png open1.png playback.png open2.png mainwindow.png index.docbook ; do \
 	  echo $(INSTALL_DATA) $$base $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/k9copy/$$base ;\
 	  $(INSTALL_DATA) $(srcdir)/$$base $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/k9copy/$$base ;\
 	done
 
 uninstall-nls:
-	for base in index.docbook open1.png mainwindow.png playback.png btnmp4.png index.xml treeview.png settingsMencoder.png settingsDVD.png settingsMP4.png keepmenus.png btncopy.png open2.png ; do \
+	for base in keepmenus.png btncopy.png treeview.png index.xml settingsMencoder.png settingsDVD.png btnmp4.png settingsMP4.png open1.png playback.png open2.png mainwindow.png index.docbook ; do \
 	  rm -f $(DESTDIR)$(kde_htmldir)/$(KDE_LANG)/k9copy/$$base ;\
 	done
 
 
 #>+ 5
 distdir-nls:
-	for file in index.docbook open1.png mainwindow.png playback.png btnmp4.png index.xml treeview.png settingsMencoder.png settingsDVD.png settingsMP4.png keepmenus.png btncopy.png open2.png ; do \
+	for file in keepmenus.png btncopy.png treeview.png index.xml settingsMencoder.png settingsDVD.png btnmp4.png settingsMP4.png open1.png playback.png open2.png mainwindow.png index.docbook ; do \
 	  cp $(srcdir)/$$file $(distdir); \
 	done
 

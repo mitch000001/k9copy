@@ -39,6 +39,9 @@
             <property name="name">
                 <cstring>bAdd</cstring>
             </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
             <property name="sizePolicy">
                 <sizepolicy>
                     <hsizetype>0</hsizetype>

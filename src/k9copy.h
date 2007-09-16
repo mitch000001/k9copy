@@ -78,6 +78,7 @@ public slots:
     void preferences();
     void quit();
     void setActions(bool enabled);
+    void setEnabledCreateDVD(bool _state);
 private:
     void setupAccel();
     void setupActions();

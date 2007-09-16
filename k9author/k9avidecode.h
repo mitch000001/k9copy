@@ -59,6 +59,9 @@ public:
     void close();
     double getDuration() const;
     bool opened() const;
+
+	QString getFileName() const;
+	
 	
 	
 private:
@@ -89,6 +92,7 @@ private:
     int m_videoStream;
     bool m_opened;
     double m_duration;
+    QString m_fileName;
     void SaveFrame(AVFrame *pFrame, int width, int height);
 signals:
     void drawFrame(QImage*);

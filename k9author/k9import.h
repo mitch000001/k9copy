@@ -51,7 +51,7 @@ public slots:
     void aviFileUpdated(k9AviFile *_aviFile);
     void buttonUpdated(k9MenuButton *_button, const QImage &_image);
     void setMenuEdit(k9MenuEdit* _value);
-
+    void setEnableCreate(bool _state);
 protected:
     /*$PROTECTED_FUNCTIONS$*/
     void setProgressWindow(QWidget *_widget);

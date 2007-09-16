@@ -129,7 +129,7 @@ bool k9AviDecode::open(const QString & _fileName) {
 
     m_duration=(double)m_FormatCtx->duration / AV_TIME_BASE;
     m_opened=true;
-
+    m_fileName=_fileName;
 }
 
 void k9AviDecode::seek(double _seconds) {
@@ -177,6 +177,7 @@ void k9AviDecode::readFrame(double _seconds) {
         // Free the packet that was allocated by av_read_frame
         av_free_packet(&packet);
     }
+
 }
 
 void k9AviDecode::SaveFrame(AVFrame *pFrame, int width, int height) {
@@ -220,4 +221,9 @@ double k9AviDecode::getDuration() const {
 
 bool k9AviDecode::opened() const {
     return m_opened;
+}
+
+
+QString k9AviDecode::getFileName() const {
+    return m_fileName;
 }

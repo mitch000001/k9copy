@@ -179,7 +179,7 @@ void k9Copy::createImportWindows() {
     m_actions["preferences"]->setEnabled(true);
     m_actions["playtitle"]->setEnabled(false);
     m_actions["copy"]->setEnabled(false);
-    m_actions["create"]->setEnabled(true);
+    m_actions["create"]->setEnabled(false);
     m_actions["mp4"]->setEnabled(false);
     m_actions["eject"]->setEnabled(false);
   
@@ -501,5 +501,7 @@ KDockWidget* k9Copy::getVisibleDock() {
     return NULL;
 }
 
-
+void k9Copy::setEnabledCreateDVD(bool _state) {
+	m_actions["create"]->setEnabled(_state);
+}
 

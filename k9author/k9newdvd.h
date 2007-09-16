@@ -66,6 +66,8 @@ private:
     k9Process *m_process;
     k9Progress *m_progress;
     QTime m_timer;
+    QTime m_timer2;
+    QTime m_timer3;
     k9Menu *m_rootMenu;
     int m_videoBitrate;
     k9AviDecode m_aviDecode;

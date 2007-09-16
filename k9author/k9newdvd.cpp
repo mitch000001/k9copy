@@ -13,6 +13,7 @@
 #include "k9title.h"
 #include "k9tools.h"
 #include <qfile.h>
+#include <stdio.h>
 #include <qtextstream.h>
 #include <kstandarddirs.h>
 #include <qapplication.h>
@@ -167,6 +168,8 @@ void k9NewDVD::setWorkDir ( const QString& _value ) {
 void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_aviFile) {
     m_aviDecode.open(_aviFile->getFileName());
     m_timer.start();
+    m_timer2.start();
+    m_timer3.start();
     QTime end;
     k9AviFile *file=_aviFile;
     bool bEnd;
@@ -201,12 +204,12 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
         fps="30000/1001";
         break;
     }
-    m_progress->setTitle(i18n("Encoding %1").arg(_aviFile->getFileName()));
+    m_progress->setTitle(i18n("Encoding file"));
 
     m_process->clearArguments();
     *m_process << "mencoder" << "-oac" << "lavc" << "-ovc" << "lavc" << "-of" << "mpeg";
     *m_process << "-mpegopts" << "format=dvd" << "-vf" << "scale="+scale+",harddup" << "-srate" << "48000" << "-af" << "lavcresample=48000";
-    *m_process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=ac3:abitrate=192:aspect=16/9:threads=2").arg(m_videoBitrate);
+    *m_process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=ac3:abitrate=192:aspect=16/9").arg(m_videoBitrate);
     *m_process << "-ofps" << fps << "-o" << fileName << "-ss" << t1 << "-endpos" << t2 << _aviFile->getFileName();
     m_progress->execute();
     _cmd=fileName;
@@ -215,23 +218,64 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
 
 
 void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
-    QCString c(_buffer,_length);
-    if (c.mid(0,4) == "Pos:") {
-        QString t=c.replace("(","").replace(")","").simplifyWhiteSpace();
-        QString percent=t.section(' ',3,3);
-        QString fps=t.section(' ',4,4);
-        QString trem=t.section(' ',6,6);
-        long pos=percent.replace("%","").toLong();
-        m_progress->setProgress(pos,100);
-        m_progress->setElapsed(trem);
-        m_progress->setLabelText(i18n("fps")+ " : "+fps);
+    QCString tmp(_buffer,_length);
+
+    int pos=tmp.find("Pos:");
+    if (pos!=-1) {
+        QString tmp2=tmp.mid(pos);
+	tmp2=tmp2.replace("(","").replace(")","").simplifyWhiteSpace();
+	QStringList sl=QStringList::split(" ",tmp2);
+	float position;
+	sscanf(sl[1].latin1(),"%fs",&position);
+	int frame;
+	sscanf(sl[2].latin1(),"%df",&frame);
+	int percent;
+	sscanf(sl[3].latin1(),"%d",&percent);
+	int fps;
+	sscanf(sl[4].latin1(),"%d",&fps);
+        
+        if (percent>0 && m_timer3.elapsed() > 1000) {
+	    int elapsed=m_timer2.elapsed();
+	    QTime time2(0,0);
+	    time2=time2.addMSecs(elapsed);
+            QTime time3(0,0);
+  	    float fprc=percent/100.0;
+            time3=time3.addMSecs((uint32_t)(elapsed*(1.0/fprc)));
+            m_progress->setElapsed(time2.toString("hh:mm:ss") +" / " + time3.toString("hh:mm:ss"));
+	    m_timer3.restart();
+        }
+
+	QString text=i18n("filename") + " : " + m_aviDecode.getFileName();
+	text+="\n"+i18n("fps")+ " : "+QString::number(fps);
+
+	m_progress->setLabelText(text);	
         if (m_timer.elapsed() > 5000) {
             m_timer.restart();
             if (m_aviDecode.opened()) {
-                m_aviDecode.readFrame(m_aviDecode.getDuration()*pos /100);
+                m_aviDecode.readFrame(position);
             }
         }
+
     }
+
+
+ /*   if (c.mid(0,4) == "Pos:") {
+	QString stmp(c);
+	stmp=stmp.simplifyWhiteSpace();
+
+        m_progress->setProgress(percent,100);
+	QTime t;
+	t.addSecs(trem);
+        m_progress->setElapsed(t.toString("hh:mm:ss"));
+        m_progress->setLabelText(i18n("fps")+ " : "+QString::number(fps));
+        if (m_timer.elapsed() > 5000) {
+            qDebug("<<< %s",_buffer);
+            m_timer.restart();
+            if (m_aviDecode.opened()) {
+                m_aviDecode.readFrame(m_aviDecode.getDuration()*percent /100);
+            }
+        }
+    }*/
 }
 
 void k9NewDVD::appendTitle(k9Title *_title) {

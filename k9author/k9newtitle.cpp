@@ -20,6 +20,7 @@
 #include <klocale.h>
 #include "k9menu.h"
 #include "k9menubutton.h"
+#include "kpushbutton.h"
 
 k9NewTitle::k9NewTitle(QWidget* parent, const char* name, WFlags fl)
         : newTitle(parent,name,fl) {
@@ -32,6 +33,7 @@ k9NewTitle::~k9NewTitle() {}
 
 void k9NewTitle::fileSelected(const QString &_fileName) {
     m_fileName=_fileName;
+    bAdd->setEnabled(true);
 }
 
 void k9NewTitle::drawImage (QImage *_image) {
@@ -124,6 +126,7 @@ void k9NewTitle::bAddClicked() {
     fileInfo.close();
     m_k9Import->lvDVD->setSortColumn(0);
     m_k9Import->lvDVD->sort();
+    m_k9Import->setEnableCreate(true);
 }
 
 void k9NewTitle::rbNumberClicked() {

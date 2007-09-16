@@ -1,5 +1,5 @@
-SUBDIRS = doc k9Mplayer k9decmpeg k9devices k9vamps libdvdnav libk9copy \
-	k9author src po
+SUBDIRS = doc k9author k9decmpeg k9devices k9vamps libdvdnav k9Mplayer \
+	libk9copy po src
 
 $(top_srcdir)/configure.in: configure.in.in $(top_srcdir)/subdirs
 	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common configure.in ;
