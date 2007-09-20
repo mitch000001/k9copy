@@ -26,6 +26,9 @@ class k9MenuButton;
 class k9Menu : public QObject {
     Q_OBJECT
 public slots:
+    void setStartScript(const QString &);
+    void setEndScript(const QString& _value);
+
 public:
     enum eFormat {
         PAL=1,NTSC=2
@@ -41,16 +44,18 @@ public:
     QString getMenuFileName() const;
 
     void setCanvas(QCanvas* _value);
-
-
     QCanvas* getCanvas() const;
 
+    QString getStartScript() const;
+    QString getEndScript() const;
 private:
     QPtrList <k9MenuButton> m_buttons;
     QString m_workDir;
     QString m_menuFileName;
     eFormat m_format;
     QCanvas *m_canvas;
+    QString m_startScript;
+    QString m_endScript;
     void convertJpegToMpeg(const QString &_imageJpg,const QString &_imageMpg) ;
     void createAudio(const QString & _audioFile);
     void multiplex(const QString &_audio, const QString &_video, const QString _result);

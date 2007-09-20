@@ -40,7 +40,7 @@ int k9NewDVDItems::compareItems(QPtrCollection::Item item1,QPtrCollection::Item 
     k9Title *_i1=(k9Title*) item1;
     k9Title *_i2=(k9Title*) item2;
 
-    return (_i2->getNum() - _i1->getNum());
+    return (_i1->getNum() - _i2->getNum());
 
 
 }
@@ -145,6 +145,12 @@ void k9NewDVD::addTitles (QDomElement &_root) {
 
         pgc=m_xml->createElement("pgc");
         eTitle.appendChild(pgc);
+        QDomElement post=m_xml->createElement("post");
+        pgc.appendChild(post);
+        QDomText txt=m_xml->createTextNode("call vmgm menu;");
+        post.appendChild(txt);
+
+
         for (k9AviFile *aviFile= title->getFiles()->first();aviFile;aviFile=title->getFiles()->next()) {
             if ( aviFile->getPrevious()==NULL || aviFile->getBreakPrevious()) {
                 QString cmd="",chapters="";
@@ -223,7 +229,7 @@ void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
     int pos=tmp.find("Pos:");
     if (pos!=-1) {
         QString tmp2=tmp.mid(pos);
-	tmp2=tmp2.replace("(","").replace(")","").simplifyWhiteSpace();
+	tmp2=tmp2.replace(":",": ").replace("(","").replace(")","").simplifyWhiteSpace();
 	QStringList sl=QStringList::split(" ",tmp2);
 	float position;
 	sscanf(sl[1].latin1(),"%fs",&position);
@@ -234,6 +240,7 @@ void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
 	int fps;
 	sscanf(sl[4].latin1(),"%d",&fps);
         
+        m_progress->setProgress(percent,100);
         if (percent>0 && m_timer3.elapsed() > 1000) {
 	    int elapsed=m_timer2.elapsed();
 	    QTime time2(0,0);
@@ -293,9 +300,10 @@ void k9NewDVD::appendTitle(k9Title *_title) {
     btn->setLeft(20);
     btn->setWidth(100);
     btn->setHeight(100);
-    btn->setScript(QString("jump titleset %1  menu;").arg(_title->getNum()+1));
+    btn->setScript(QString("g1=0;jump titleset %1  menu;").arg(_title->getNum()+1));
     btn->setTextPosition(k9MenuButton::RIGHT);
     btn->setText(i18n("title %1").arg(_title->getNum()+1));
+    emit sigAddTitle();
 }
 
 

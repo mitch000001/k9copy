@@ -25,7 +25,7 @@ k9Menu::k9Menu(QObject *parent, const char *name)
     QPixmap pix(720,576);
     pix.fill(Qt::black);
     m_canvas->setBackgroundPixmap(pix);
-
+    m_startScript=m_endScript="";
 }
 
 
@@ -86,31 +86,10 @@ void k9Menu::createMenus(QDomElement *_rootNode) {
 
     //draw buttons
     for (k9MenuButton *button=m_buttons.first();button;button=m_buttons.next()) {
-  /*      QImage imgBtn;
-        imgBtn= button->getImage().smoothScale(button->getWidth(),button->getHeight(),QImage::ScaleFree);
-        pbg.drawImage(button->getLeft(),button->getTop(),imgBtn);
-        pbg.setPen(button->getColor());
-        pbg.setFont(button->getFont());
-        int top,left,w;
-        switch (button->getTextPosition()) {
-            case k9MenuButton::BOTTOM:
-                w=pbg.fontMetrics().width(button->getText());
-                left=button->getLeft() +button->getWidth() /2 - w/2;
-                top=button->getTop()+button->getHeight()+pbg.fontMetrics().height();
-                break;
-            case k9MenuButton::RIGHT:
-                left=button->getLeft()+button->getWidth();
-                top=button->getTop()+button->getHeight() /2 +pbg.fontMetrics().height()/2;
-
-                break;
-        }
-
-
-        pbg.drawText(left,top,button->getText());
-*/        
         //draw hilight
         phi.drawRect(button->getLeft()+lineWidth,button->getTop()+lineWidth,button->getWidth()-lineWidth,button->getHeight()-lineWidth);
         pmk.drawRect(button->getLeft()+lineWidth,button->getTop()+lineWidth,button->getWidth()-lineWidth,button->getHeight()-lineWidth);
+            
     }
     pbg.end();
     phi.end();
@@ -254,8 +233,14 @@ void k9Menu::appendMenu(QDomElement *_rootNode) {
     } else {
         menus=l.item(0);
     }
+   
     QDomElement pgc=doc.createElement("pgc");
     menus.appendChild(pgc);
+    QDomElement pre=doc.createElement("pre");
+    pgc.appendChild(pre);
+    QDomText txt=doc.createTextNode(m_startScript);
+    pre.appendChild(txt);
+
     QDomElement vob=doc.createElement("vob");
     pgc.appendChild(vob);
     vob.setAttribute("file",m_menuFileName);
@@ -307,4 +292,23 @@ QCanvas* k9Menu::getCanvas() const {
 
 void k9Menu::setCanvas(QCanvas* _value) {
     m_canvas = _value;
+}
+
+void k9Menu::setStartScript(const QString &_value) {
+    m_startScript=_value;
+}
+
+
+QString k9Menu::getStartScript() const {
+    return m_startScript;
+}
+
+
+QString k9Menu::getEndScript() const {
+    return m_endScript;
+}
+
+
+void k9Menu::setEndScript(const QString& _value) {
+    m_endScript = _value;
 }

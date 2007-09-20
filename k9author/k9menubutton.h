@@ -93,6 +93,9 @@ public slots:
     void setAngle(int _value);
     int getAngle() const;
 
+	k9CanvasSprite* getSprite() const;
+	
+
 private:
     QCanvas *m_canvas;
     QCanvasPixmapArray m_pixmapArray;

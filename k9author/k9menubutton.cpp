@@ -392,3 +392,8 @@ int k9MenuButton::getAngle() const {
 void k9MenuButton::setAngle(int _value) {
     m_angle = _value;
 }
+
+
+k9CanvasSprite* k9MenuButton::getSprite() const {
+    return m_sprite;
+}

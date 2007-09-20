@@ -76,6 +76,8 @@ private:
 protected slots:
     void getStdout(KProcess *, char *, int);	
     void drawImage(QImage * _image);
+signals:    
+    void sigAddTitle();
 };
 
 #endif

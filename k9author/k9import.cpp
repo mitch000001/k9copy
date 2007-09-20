@@ -24,11 +24,14 @@
 #include <kfiledialog.h>
 #include <kcombobox.h>
 #include <kiconloader.h>
+#include <kselect.h>
 
 k9Import::k9Import(QWidget* parent, const char* name,k9CdDrives *_drives)
         : import(parent,name) {
     m_parent=(k9Copy*) parent;
     drives=_drives;
+
+    connect(&m_newDVD,SIGNAL(sigAddTitle()),this,SLOT(titleAdded()));
 }
 
 k9Import::~k9Import() {}
@@ -47,7 +50,8 @@ void k9Import::init() {
     connect(drives,SIGNAL(deviceRemoved( k9CdDrive*)),this,SLOT(deviceRemoved( k9CdDrive* )));
 
     readDrives();
-
+    m_root->setSelected(true);
+    emit rootSelected(&m_newDVD);
 }
 
 void k9Import::readDrives() {
@@ -109,8 +113,8 @@ void k9Import::aviFileUpdated(k9AviFile *_aviFile) {
             itemChapter=(k9LvItemImport*)itemChapter->nextSibling();
         }
         itemTitle=(k9LvItemImport*)itemTitle->nextSibling();
-
     }
+    updateTotalTime();
 }
 
 void k9Import::buttonUpdated(k9MenuButton *_button, const QImage &_image) {
@@ -221,4 +225,23 @@ void k9Import::setMenuEdit(k9MenuEdit* _value) {
 
 void k9Import::setEnableCreate(bool _state) {
     m_parent->setEnabledCreateDVD(true);
+}
+
+void k9Import::titleAdded() {
+    emit rootSelected(&m_newDVD);
+}
+
+void k9Import::updateTotalTime() {
+    int total=0;
+    k9NewDVDItems *titles=m_newDVD.getTitles();
+    for (k9Title * title=titles->first();title;title=titles->next()) {
+        k9TitleItems *chapters=title->getFiles();
+        for (k9AviFile *chapter=chapters->first();chapter;chapter=chapters->next()) {
+            total+=chapter->getStart().secsTo(chapter->getEnd());
+        }
+    }
+    gsTotal->setValue(total/60);    
+    QTime t(0,0,0);
+    t=t.addSecs(total);
+    lTotal->setText(t.toString("hh:mm:ss"));
 }

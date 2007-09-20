@@ -34,23 +34,29 @@ public:
         m_menu=_menu;
     }
 
-	QCanvasItem* getMoving() const;
+    QCanvasItem* getMoving() const;
 
-	void setMoving(QCanvasItem* _value);
-	
-	
+    void setMoving(QCanvasItem* _value);
+    QPtrList< k9MenuButton > *getSelection() ;
+    void clearSelection();
+
 protected:
     void contentsMousePressEvent(QMouseEvent*);
     void contentsMouseMoveEvent(QMouseEvent*);
+    void contentsMouseReleaseEvent(QMouseEvent* e);
     virtual void resizeEvent ( QResizeEvent * e );
+    void addSelection(QCanvasItem *_item);
+    bool isSelected(QCanvasItem *_item);
 signals:
     void status(const QString&);
     void itemSelected();
 
 private:
     QCanvasItem* moving;
+    QCanvasRectangle *m_rect;
     QPoint moving_start;
     k9MenuEdit *m_menu;
+    QPtrList <k9MenuButton> m_selection;
 };
 
 class k9MenuEdit : public menuEdit {
@@ -58,6 +64,7 @@ class k9MenuEdit : public menuEdit {
 
 public:
     enum eFormat {PAL=1,NTSC=2};
+    enum eMenuType {ROOTMENU,TITLEMENU};
 
     k9MenuEdit(QWidget* parent = 0, const char* name = 0,QCanvas *_canvas=0);
     ~k9MenuEdit();
@@ -86,17 +93,22 @@ protected:
     virtual void leTitleChanged(const QString &_value);
     virtual void cbPosTitleActivated(int _value);
     virtual void bAddTextClick();
+    virtual void cbStartActivated (int _value);
     _k9MenuEditor *m_menuEditor;
     QCanvas *m_canvas;
     QImage m_background;
     QCanvasText *m_text;
     eFormat m_format;
     int m_imageHeight;
+    eMenuType m_menuType;
+    QStringList m_startScripts;
+    bool m_noUpdate;
 protected slots:
     /*$PROTECTED_SLOTS$*/
 signals:
     void backgroundImageChanged(const QImage &);
     void textChanged(const QString&);
+    void startScriptChanged(const QString&);
     void textColorChanged(const QColor &);
     void textFontChanged(const QFont&);
     void updatePos(const QPoint &);

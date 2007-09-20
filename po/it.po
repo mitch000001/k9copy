@@ -1,3 +1,4 @@
+# traduzione di it.po in
 # translation of it.po to
 # translation of k9copy.po to
 # This file is distributed under the same license as the PACKAGE package.
@@ -9,9 +10,9 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-21 09:09+0200\n"
-"PO-Revision-Date: 2007-06-14 11:20+0200\n"
+"PO-Revision-Date: 2007-09-10 18:21+0200\n"
 "Last-Translator: FiNeX <finex@finex.org>\n"
-"Language-Team:  <it@li.org>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -297,7 +298,7 @@ msgstr "k9copy"
 #: src/main.cpp:65
 msgid "_: NAME OF TRANSLATORS\\nYour names"
 msgstr ""
-"TRANDUTTORI:\n"
+"TRADUTTORI:\n"
 "       Paolo Rampino\n"
 "       Leonardo Finetti"
 

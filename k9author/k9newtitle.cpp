@@ -123,10 +123,12 @@ void k9NewTitle::bAddClicked() {
         connect(file,SIGNAL(imageChanged(const QImage&)),btn,SLOT(setImage(const QImage&)));
 
     }
+    title->getMenu()->setEndScript("call vmgm menu;");
     fileInfo.close();
     m_k9Import->lvDVD->setSortColumn(0);
     m_k9Import->lvDVD->sort();
     m_k9Import->setEnableCreate(true);
+    m_k9Import->updateTotalTime();
 }
 
 void k9NewTitle::rbNumberClicked() {
