@@ -30,14 +30,14 @@ class k9AviFile;
 class k9Menu;
 class k9NewDVDItems : public QPtrList<k9Title> {
 protected:
-    virtual int compareItems(QPtrCollection::Item item1,QPtrCollection::Item item2);
+    virtual int compareItems ( QPtrCollection::Item item1,QPtrCollection::Item item2 );
 };
 
 class k9NewDVD : public QObject {
     Q_OBJECT
 public:
     enum eFormat {NTSC=2,PAL=1};
-    k9NewDVD(QObject *parent = 0, const char *name = 0);
+    k9NewDVD ( QObject *parent = 0, const char *name = 0 );
     ~k9NewDVD();
     k9NewDVDItems* getTitles() {
         return &m_titles;
@@ -46,17 +46,21 @@ public:
 
     void execute();
     void createXML();
-    void addTitles (QDomElement &_root);
+    void addTitles ( QDomElement &_root );
     void setFormat ( const eFormat& _value );
 
     void setWorkDir ( const QString& _value );
-    void appendTitle(k9Title *_title);
+    void appendTitle ( k9Title *_title );
 
-    void setProgress(k9Progress* _value);
+    void setProgress ( k9Progress* _value );
     eFormat getFormat() const;
 
-	k9Menu* getRootMenu() const;
-	
+    int getTotalTime();
+    k9Menu* getRootMenu() const;
+
+    QString getError() const;
+
+
 
 private:
     k9NewDVDItems m_titles;
@@ -69,14 +73,16 @@ private:
     QTime m_timer2;
     QTime m_timer3;
     k9Menu *m_rootMenu;
+    bool m_cancel;
+    QString m_error;
     int m_videoBitrate;
     k9AviDecode m_aviDecode;
     void calcVideoBitrate();
-    void createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_aviFile);
+    void createMencoderCmd ( QString &_cmd,QString &_chapters, k9AviFile *_aviFile );
 protected slots:
-    void getStdout(KProcess *, char *, int);	
-    void drawImage(QImage * _image);
-signals:    
+    void getStdout ( KProcess *, char *, int );
+    void drawImage ( QImage * _image );
+signals:
     void sigAddTitle();
 };
 

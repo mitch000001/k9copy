@@ -33,6 +33,13 @@ k9NewTitle::~k9NewTitle() {}
 
 void k9NewTitle::fileSelected(const QString &_fileName) {
     m_fileName=_fileName;
+    k9AviDecode fileInfo(0,0);
+    fileInfo.open(m_fileName);
+    double duration=fileInfo.getDuration();
+    fileInfo.close();
+    QTime t(0,0,0);
+    t=t.addSecs(duration); 
+    lTotalTime->setText(t.toString("hh:mm:ss"));
     bAdd->setEnabled(true);
 }
 

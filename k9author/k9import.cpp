@@ -183,7 +183,7 @@ void k9Import::execute() {
     m_newDVD.setWorkDir(config.getPrefOutput());
     m_newDVD.execute();
     removeProgressWindow();
-    bool burn=true;
+    bool burn=m_newDVD.getError()=="";
     if (burn) {
         //changeStatusbar(i18n("Burning DVD"),sbMessage);
 
@@ -232,14 +232,7 @@ void k9Import::titleAdded() {
 }
 
 void k9Import::updateTotalTime() {
-    int total=0;
-    k9NewDVDItems *titles=m_newDVD.getTitles();
-    for (k9Title * title=titles->first();title;title=titles->next()) {
-        k9TitleItems *chapters=title->getFiles();
-        for (k9AviFile *chapter=chapters->first();chapter;chapter=chapters->next()) {
-            total+=chapter->getStart().secsTo(chapter->getEnd());
-        }
-    }
+    int total=m_newDVD.getTotalTime();
     gsTotal->setValue(total/60);    
     QTime t(0,0,0);
     t=t.addSecs(total);

@@ -1,7 +1,7 @@
 //
-// C++ Interface: 
+// C++ Interface:
 //
-// Description: 
+// Description:
 //
 //
 // Author: Jean-Michel PETIT <k9copy@free.fr>, (C) 2006
@@ -20,36 +20,38 @@
 #include <qtimer.h>
 #include "k9drawimage.h"
 
-class k9Progress : public Progress
-{
-  Q_OBJECT
+class k9Progress : public Progress {
+    Q_OBJECT
 
 public:
-  k9Progress(QWidget* parent = 0, const char* name = 0, const QStringList &args=0);
-  ~k9Progress();
-   virtual k9Process * getProcess() const;
-   virtual void setProgress(long _position,long _total);
-   virtual void setLabelText(const QString _text);
-   virtual void setElapsed(const QString _text);
-   virtual void setTitle(const QString _text);
-   virtual void setImage(QString _fileName) ;
-   virtual void setImage(const QImage &_image);
-   virtual void setMovie(QString _fileName);
+    k9Progress(QWidget* parent = 0, const char* name = 0, const QStringList &args=0);
+    ~k9Progress();
+    virtual k9Process * getProcess() const;
+    virtual void setProgress(long _position,long _total);
+    virtual void setLabelText(const QString _text);
+    virtual void setElapsed(const QString _text);
+    virtual void setTitle(const QString _text);
+    virtual void setImage(QString _fileName) ;
+    virtual void setImage(const QImage &_image);
+    virtual void setMovie(QString _fileName);
 
-   virtual int execute();
-  /*$PUBLIC_FUNCTIONS$*/
-   
+    virtual int execute();
+
+    bool getCanceled() const;
+
+    /*$PUBLIC_FUNCTIONS$*/
+
 public slots:
-  /*$PUBLIC_SLOTS$*/
+    /*$PUBLIC_SLOTS$*/
 
 protected:
-  /*$PROTECTED_FUNCTIONS$*/
-  k9Process *m_process;
-  k9DrawImage *m_wimage;
-  void bCancelClick();
-  bool m_canceled;
+    /*$PROTECTED_FUNCTIONS$*/
+    k9Process *m_process;
+    k9DrawImage *m_wimage;
+    void bCancelClick();
+    bool m_canceled;
 protected slots:
-  /*$PROTECTED_SLOTS$*/
+    /*$PROTECTED_SLOTS$*/
 };
 
 #endif

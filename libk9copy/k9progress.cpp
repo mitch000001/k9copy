@@ -1,7 +1,7 @@
 //
-// C++ Implementation: 
+// C++ Implementation:
 //
-// Description: 
+// Description:
 //
 //
 // Author: Jean-Michel PETIT <k9copy@free.fr>, (C) 2006
@@ -25,64 +25,62 @@
 
 
 k9Progress::k9Progress(QWidget* parent, const char* name,const QStringList &args)
-: Progress(parent,name,0)
-{
-  m_process=new k9Process(this,0);
-  m_wimage=new k9DrawImage(image,0);
-  QGridLayout *l=new QGridLayout(image,1,1);
-  l->addWidget(m_wimage,0,0);
+        : Progress(parent,name,0) {
+    m_process=new k9Process(this,0);
+    m_wimage=new k9DrawImage(image,0);
+    QGridLayout *l=new QGridLayout(image,1,1);
+    l->addWidget(m_wimage,0,0);
 
-  
+
 }
 
 
-k9Progress::~k9Progress()
-{
-   delete m_process;
+k9Progress::~k9Progress() {
+    delete m_process;
 }
 
 
 void k9Progress::setElapsed(const QString _text) {
-   lblElapsed->setText(_text);
+    lblElapsed->setText(_text);
 }
 
 void k9Progress::setTitle(const QString _text) {
-   lblTitle->setText(_text);
+    lblTitle->setText(_text);
 }
 
 
 void k9Progress::setLabelText(const QString _text) {
-   LabelText->setText(_text);
+    LabelText->setText(_text);
 }
 
 void k9Progress::setProgress(long _position,long _total) {
-   ProgressBar->setRange(0,_total);
-   ProgressBar->setProgress(_position);
+    ProgressBar->setRange(0,_total);
+    ProgressBar->setProgress(_position);
 }
 
 int k9Progress::execute() {
-   if(! m_process->isRunning()) {
-	if (!m_process->start(KProcess::NotifyOnExit,KProcess::All ))
-		return -1;
-	}
-	
+    if (! m_process->isRunning()) {
+        if (!m_process->start(KProcess::NotifyOnExit,KProcess::All ))
+            return -1;
+    }
+
 //   m_timer.start(200,FALSE);
-   show();
-   m_canceled=false;	
-   //the sync method allows to wait for the process end while receiving stdout.
-   m_process->sync();
-  		
+    show();
+    m_canceled=false;
+    //the sync method allows to wait for the process end while receiving stdout.
+    m_process->sync();
+
 //   m_timer.stop();
-   if (!m_canceled && m_process->normalExit())
-   	return 1;
-   else
-	return 0;
+    if (!m_canceled && m_process->normalExit())
+        return 1;
+    else
+        return 0;
 }
 
 
 void k9Progress::bCancelClick() {
-   m_process->kill();
-   m_canceled=true;
+    m_process->kill();
+    m_canceled=true;
 }
 
 k9Process* k9Progress::getProcess() const {
@@ -111,3 +109,8 @@ void k9Progress::setMovie(QString _fileName) {
 
 
 #include "k9progress.moc"
+
+
+bool k9Progress::getCanceled() const {
+    return m_canceled;
+}

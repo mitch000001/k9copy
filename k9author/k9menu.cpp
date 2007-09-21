@@ -17,6 +17,7 @@
 #include <kapplication.h>
 #include <qfile.h>
 #include <qdom.h>
+#include "k9tools.h"
 
 k9Menu::k9Menu(QObject *parent, const char *name)
         : QObject(parent, name),m_format(PAL) {
@@ -144,7 +145,11 @@ void k9Menu::createAudio(const QString & _audioFile) {
     k9Process *process=new k9Process(0,0);
     process->setWorkingDirectory(m_workDir);
     process->setUseShell(true);
-    *process << "dd" << "if=/dev/zero" << "bs=4" << "count=1920" << "|" << "toolame" << "-b" << "128"  << "-s" << "48" << "/dev/stdin" << _audioFile;
+    if (k9Tools::checkProgram("toolame"))
+	    *process << "dd" << "if=/dev/zero" << "bs=4" << "count=1920" << "|" << "toolame"  << "-b" << "128"  << "-s" << "48" << "/dev/stdin" << _audioFile;
+    else
+	    *process << "dd" << "if=/dev/zero" << "bs=4" << "count=1920" << "|" << "twolame" <<"-r" << "-b" << "128"  << "-s" << "48000" << "/dev/stdin" << _audioFile;
+
     process->start();
     process->sync();
     if (!process->normalExit()) {

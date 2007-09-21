@@ -21,6 +21,7 @@
 #include <kapplication.h>
 #include <klocale.h>
 #include <qimage.h>
+#include <kmessagebox.h>
 #include "k9menu.h"
 #include "k9menubutton.h"
 
@@ -46,12 +47,13 @@ int k9NewDVDItems::compareItems(QPtrCollection::Item item1,QPtrCollection::Item 
 }
 
 void k9NewDVD::execute() {
-
+    m_cancel=false;
+    m_error="";
     m_process=m_progress->getProcess();
     connect(m_process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
 //            connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
 //            //connect(m_process, SIGNAL(processExited(KProcess*)),this,SLOT(exited(KProcess*)));
-    connect(m_progress,SIGNAL(sigCancel()),this,SLOT(slotCancel()));
+
 
     connect(&m_aviDecode,SIGNAL(drawFrame(QImage*)),this,SLOT(drawImage(QImage*)));
     k9Tools::clearOutput(m_workDir+"dvd");
@@ -63,7 +65,7 @@ void k9NewDVD::execute() {
 
 
 void k9NewDVD::drawImage(QImage * _image) {
-  m_progress->setImage(*_image);
+    m_progress->setImage(*_image);
 }
 
 void k9NewDVD::setFormat ( const eFormat& _value ) {
@@ -93,31 +95,43 @@ void k9NewDVD::createXML() {
     m_rootMenu->createMenus(&vmgm);
 
     addTitles(root);
-    QString dvdAuthor(m_workDir+"/"+KApplication::randomString(8)+".xml");
-    QFile file( dvdAuthor);
+    if (!m_cancel) {
+        QString dvdAuthor(m_workDir+"/"+KApplication::randomString(8)+".xml");
+        QFile file( dvdAuthor);
 
-    file.open(IO_WriteOnly);
-    QTextStream stream( &file );
-    m_xml->save(stream,1);
-    file.close();
+        file.open(IO_WriteOnly);
+        QTextStream stream( &file );
+        m_xml->save(stream,1);
+        file.close();
 
-    m_process->clearArguments();
-    *m_process << "dvdauthor" << "-x" << dvdAuthor;
-    m_progress->execute();
+        m_process->clearArguments();
+        *m_process << "dvdauthor" << "-x" << dvdAuthor;
+        if (!m_progress->execute()) {
+            m_cancel=true;
+            if (m_progress->getCanceled())
+                m_error=i18n("The dvd authoring was canceled");
+            else
+                m_error=i18n("An error occured while running dvdauthor");
+        }
 
-    file.remove();
+        file.remove();
+    }
     QFile::remove(menuFileName);
     for ( QStringList::Iterator it = m_tmpFiles.begin(); it != m_tmpFiles.end(); ++it ) {
         QFile::remove(*it);
     }
     m_tmpFiles.clear();
+    if (m_error !="") {
+        KMessageBox::error( 0, m_error, i18n("Authoring"));
+    }
     delete m_xml;
     delete m_progress;
+
 }
 
 void k9NewDVD::addTitles (QDomElement &_root) {
     calcVideoBitrate();
-    for (k9Title *title=m_titles.first();title;title=m_titles.next()) {
+    for (k9Title *title=m_titles.first();title && !m_cancel;title=m_titles.next()) {
         QDomElement titleSet = m_xml->createElement("titleset");
         _root.appendChild(titleSet);
         QDomElement pgc;
@@ -151,7 +165,7 @@ void k9NewDVD::addTitles (QDomElement &_root) {
         post.appendChild(txt);
 
 
-        for (k9AviFile *aviFile= title->getFiles()->first();aviFile;aviFile=title->getFiles()->next()) {
+        for (k9AviFile *aviFile= title->getFiles()->first();aviFile && !m_cancel;aviFile=title->getFiles()->next()) {
             if ( aviFile->getPrevious()==NULL || aviFile->getBreakPrevious()) {
                 QString cmd="",chapters="";
                 createMencoderCmd(cmd,chapters,aviFile);
@@ -217,7 +231,15 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
     *m_process << "-mpegopts" << "format=dvd" << "-vf" << "scale="+scale+",harddup" << "-srate" << "48000" << "-af" << "lavcresample=48000";
     *m_process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=ac3:abitrate=192:aspect=16/9").arg(m_videoBitrate);
     *m_process << "-ofps" << fps << "-o" << fileName << "-ss" << t1 << "-endpos" << t2 << _aviFile->getFileName();
-    m_progress->execute();
+    if (!m_progress->execute()) {
+        m_cancel=true;
+        if (m_progress->getCanceled())
+            m_error=i18n("The dvd authoring was canceled");
+        else
+            m_error=i18n("An error occured while transcoding video");
+    }
+
+
     _cmd=fileName;
     m_aviDecode.close();
 }
@@ -229,33 +251,33 @@ void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
     int pos=tmp.find("Pos:");
     if (pos!=-1) {
         QString tmp2=tmp.mid(pos);
-	tmp2=tmp2.replace(":",": ").replace("(","").replace(")","").simplifyWhiteSpace();
-	QStringList sl=QStringList::split(" ",tmp2);
-	float position;
-	sscanf(sl[1].latin1(),"%fs",&position);
-	int frame;
-	sscanf(sl[2].latin1(),"%df",&frame);
-	int percent;
-	sscanf(sl[3].latin1(),"%d",&percent);
-	int fps;
-	sscanf(sl[4].latin1(),"%d",&fps);
-        
+        tmp2=tmp2.replace(":",": ").replace("(","").replace(")","").simplifyWhiteSpace();
+        QStringList sl=QStringList::split(" ",tmp2);
+        float position;
+        sscanf(sl[1].latin1(),"%fs",&position);
+        int frame;
+        sscanf(sl[2].latin1(),"%df",&frame);
+        int percent;
+        sscanf(sl[3].latin1(),"%d",&percent);
+        int fps;
+        sscanf(sl[4].latin1(),"%d",&fps);
+
         m_progress->setProgress(percent,100);
         if (percent>0 && m_timer3.elapsed() > 1000) {
-	    int elapsed=m_timer2.elapsed();
-	    QTime time2(0,0);
-	    time2=time2.addMSecs(elapsed);
+            int elapsed=m_timer2.elapsed();
+            QTime time2(0,0);
+            time2=time2.addMSecs(elapsed);
             QTime time3(0,0);
-  	    float fprc=percent/100.0;
+            float fprc=percent/100.0;
             time3=time3.addMSecs((uint32_t)(elapsed*(1.0/fprc)));
             m_progress->setElapsed(time2.toString("hh:mm:ss") +" / " + time3.toString("hh:mm:ss"));
-	    m_timer3.restart();
+            m_timer3.restart();
         }
 
-	QString text=i18n("filename") + " : " + m_aviDecode.getFileName();
-	text+="\n"+i18n("fps")+ " : "+QString::number(fps);
+        QString text=i18n("filename") + " : " + m_aviDecode.getFileName();
+        text+="\n"+i18n("fps")+ " : "+QString::number(fps);
 
-	m_progress->setLabelText(text);	
+        m_progress->setLabelText(text);
         if (m_timer.elapsed() > 5000) {
             m_timer.restart();
             if (m_aviDecode.opened()) {
@@ -266,23 +288,23 @@ void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
     }
 
 
- /*   if (c.mid(0,4) == "Pos:") {
-	QString stmp(c);
-	stmp=stmp.simplifyWhiteSpace();
+    /*   if (c.mid(0,4) == "Pos:") {
+    QString stmp(c);
+    stmp=stmp.simplifyWhiteSpace();
 
-        m_progress->setProgress(percent,100);
-	QTime t;
-	t.addSecs(trem);
-        m_progress->setElapsed(t.toString("hh:mm:ss"));
-        m_progress->setLabelText(i18n("fps")+ " : "+QString::number(fps));
-        if (m_timer.elapsed() > 5000) {
-            qDebug("<<< %s",_buffer);
-            m_timer.restart();
-            if (m_aviDecode.opened()) {
-                m_aviDecode.readFrame(m_aviDecode.getDuration()*percent /100);
-            }
-        }
-    }*/
+           m_progress->setProgress(percent,100);
+    QTime t;
+    t.addSecs(trem);
+           m_progress->setElapsed(t.toString("hh:mm:ss"));
+           m_progress->setLabelText(i18n("fps")+ " : "+QString::number(fps));
+           if (m_timer.elapsed() > 5000) {
+               qDebug("<<< %s",_buffer);
+               m_timer.restart();
+               if (m_aviDecode.opened()) {
+                   m_aviDecode.readFrame(m_aviDecode.getDuration()*percent /100);
+               }
+           }
+       }*/
 }
 
 void k9NewDVD::appendTitle(k9Title *_title) {
@@ -334,4 +356,19 @@ void k9NewDVD::calcVideoBitrate() {
     double sec=(double)length/1000.0;
     m_videoBitrate=(int)( (size * 8388.608)/sec  - 192);
     m_videoBitrate=QMIN(m_videoBitrate,5000);
+}
+
+int k9NewDVD::getTotalTime() {
+    int total=0;
+    for (k9Title * title=m_titles.first();title;title=m_titles.next()) {
+        k9TitleItems *chapters=title->getFiles();
+        for (k9AviFile *chapter=chapters->first();chapter;chapter=chapters->next()) {
+            total+=chapter->getStart().secsTo(chapter->getEnd());
+        }
+    }
+    return total;
+}
+
+QString k9NewDVD::getError() const {
+    return m_error;
 }
