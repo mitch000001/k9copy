@@ -14,6 +14,9 @@
 #ifndef __STDC_LIMIT_MACROS
 	#define __STDC_LIMIT_MACROS
 #endif
+#ifndef __STDC_CONSTANT_MACROS
+	#define __STDC_CONSTANT_MACROS
+#endif
 
 #if defined(HAVE_INTTYPES_H)
     #include <inttypes.h>
