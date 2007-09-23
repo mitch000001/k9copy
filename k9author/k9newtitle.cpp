@@ -83,7 +83,7 @@ void k9NewTitle::bAddClicked() {
     int left=-80;
     int top=50;
     int width=100;
-    int height=90;
+    int height=80;
     int i=-1;
     while ( pos <fileInfo.getDuration()){    
     //fileInfo.open(m_fileName);
@@ -109,7 +109,7 @@ void k9NewTitle::bAddClicked() {
         itemch->setText(1,file->getStart().toString("hh:mm:ss") +" - "+file->getEnd().toString("hh:mm:ss") );
         itemch->setAviFile(file);
         itemch->setTitle(title);
-        itemch->setPixmap(0,QPixmap(m_image.smoothScale(50,50)));
+        itemch->setPixmap(0,QPixmap(m_image.smoothScale(50,40)));
         connect(file,SIGNAL(aviFileUpdated(k9AviFile*)),m_k9Import,SLOT(aviFileUpdated(k9AviFile*)));
 
         k9MenuButton *btn=title->getMenu()->addButton();

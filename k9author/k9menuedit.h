@@ -21,47 +21,11 @@ class k9MenuButton;
 class k9MenuEdit;
 class k9Title;
 class k9NewDVD;
+class k9MenuEditor;
 
-class _k9MenuEditor : public QCanvasView {
-    Q_OBJECT
-
-public:
-    _k9MenuEditor(QCanvas&, QWidget* parent=0, const char* name=0, WFlags f=0);
-    void clear();
-
-    k9MenuButton* getSelected() ;
-    void setMenu(k9MenuEdit *_menu) {
-        m_menu=_menu;
-    }
-
-    QCanvasItem* getMoving() const;
-
-    void setMoving(QCanvasItem* _value);
-    QPtrList< k9MenuButton > *getSelection() ;
-    void clearSelection();
-
-protected:
-    void contentsMousePressEvent(QMouseEvent*);
-    void contentsMouseMoveEvent(QMouseEvent*);
-    void contentsMouseReleaseEvent(QMouseEvent* e);
-    virtual void resizeEvent ( QResizeEvent * e );
-    void addSelection(QCanvasItem *_item);
-    bool isSelected(QCanvasItem *_item);
-signals:
-    void status(const QString&);
-    void itemSelected();
-
-private:
-    QCanvasItem* moving;
-    QCanvasRectangle *m_rect;
-    QPoint moving_start;
-    k9MenuEdit *m_menu;
-    QPtrList <k9MenuButton> m_selection;
-};
 
 class k9MenuEdit : public menuEdit {
     Q_OBJECT
-
 public:
     enum eFormat {PAL=1,NTSC=2};
     enum eMenuType {ROOTMENU,TITLEMENU};
@@ -94,7 +58,7 @@ protected:
     virtual void cbPosTitleActivated(int _value);
     virtual void bAddTextClick();
     virtual void cbStartActivated (int _value);
-    _k9MenuEditor *m_menuEditor;
+    k9MenuEditor *m_menuEditor;
     QCanvas *m_canvas;
     QImage m_background;
     QCanvasText *m_text;

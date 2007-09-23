@@ -54,9 +54,11 @@ void k9Menu::createMenus(QDomElement *_rootNode) {
     //create menu image
     QCanvasItemList l=m_canvas->allItems();
     for (QCanvasItemList::Iterator it=l.begin(); it!=l.end(); ++it) {
-        if ( (*it)->rtti() > 1001 ) 
+        if ( (*it)->rtti() > 1001  || (*it)->rtti()==QCanvasItem::Rtti_Rectangle ) 
             (*it)->hide();
     }
+
+
     QPixmap pixbg(720,height);
     QPainter pbg(&pixbg);
     m_canvas->resize(720,height);

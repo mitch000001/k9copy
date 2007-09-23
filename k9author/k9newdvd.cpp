@@ -317,11 +317,12 @@ void k9NewDVD::appendTitle(k9Title *_title) {
     px.fill(Qt::black);
     QImage img=px.convertToImage();
     btn->setImage(img);
-
-    btn->setTop(50+(_title->getNum())*120);
-    btn->setLeft(20);
-    btn->setWidth(100);
-    btn->setHeight(100);
+    int top=(int) _title->getNum()/3 ;
+    int left=_title->getNum() %3;
+    btn->setTop(top*150 +50);
+    btn->setLeft(left*200 +50);
+    btn->setWidth(90);
+    btn->setHeight(70);
     btn->setScript(QString("g1=0;jump titleset %1  menu;").arg(_title->getNum()+1));
     btn->setTextPosition(k9MenuButton::RIGHT);
     btn->setText(i18n("title %1").arg(_title->getNum()+1));

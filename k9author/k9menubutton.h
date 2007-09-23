@@ -35,22 +35,6 @@ private:
     k9MenuButton *m_button;
 };
 
-class k9CanvasSpriteRedim : public QCanvasRectangle {
-public:
-    enum ePosition  { RedimTopLeft=1002,RedimTopMiddle=1003,RedimTopRight=1004,RedimMiddleLeft=1005,RedimBottomLeft=1006,RedimBottomMiddle=1007,RedimBottomRight=1008,RedimMiddleRight=1009} ;
-    k9CanvasSpriteRedim (ePosition _position,int _x,int _y,int _w,int _h,QCanvas *canvas,k9MenuButton *button);
-    void update();
-    virtual int rtti() const {
-        return m_position;
-    }
-    virtual void moveBy(double _x,double _y);
-private:
-    k9MenuButton *m_button;
-    ePosition m_position;
-    double m_offsetX,m_offsetY;
-};
-
-
 
 class k9MenuButton : public QObject {
     Q_OBJECT
@@ -102,7 +86,6 @@ private:
     QCanvasPixmap *m_pixmap;
     k9CanvasSprite *m_sprite;
 
-    k9CanvasSpriteRedim *m_lt,*m_mt,*m_rt,*m_lm,*m_rm,*m_lb,*m_mb,*m_rb;
     QCanvasText *m_text;
     QImage m_image;
     int  m_width;

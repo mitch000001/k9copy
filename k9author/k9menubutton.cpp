@@ -14,83 +14,6 @@
 #include <qwmatrix.h>
 #include <qbitmap.h>
 
-k9CanvasSpriteRedim::k9CanvasSpriteRedim (ePosition _position,int _x,int _y,int _w,int _h,QCanvas *canvas,k9MenuButton *button):QCanvasRectangle(_x,_y,_w,_h,canvas) {
-    m_position=_position;
-    m_button=button;
-}
-
-void k9CanvasSpriteRedim::moveBy(double _x,double _y) {
-   m_offsetX=_x;
-   m_offsetY=_y;
-   QCanvasRectangle::moveBy(_x,_y);
-}
-
-void k9CanvasSpriteRedim::update() {
-    int w,h;
-    switch (m_position) {
-        case RedimTopLeft:
-            w=m_button->getWidth()-m_offsetX;
-            h=m_button->getHeight()-m_offsetY;
-            if (w >0 && h >0) {
-                m_button->setWidth(w,false);
-                m_button->setHeight(h,false);
-                m_button->moveBy(m_offsetX,m_offsetY);
-            }
-            break;
-        case RedimMiddleRight :
-            w= m_button->getWidth()+ m_offsetX;
-            if (w>0)
-                m_button->setWidth(w);       
-            break;
-        case RedimTopMiddle:
-            h=m_button->getHeight()-m_offsetY;
-            if (h>0) {
-                m_button->setHeight(h,false);
-                m_button->moveBy(0,m_offsetY);
-            }
-            break;
-        case RedimTopRight:
-            h=m_button->getHeight()-m_offsetY   ;
-            w=m_button->getWidth()+ m_offsetX;
-            if (h>0 && w>0) {
-                m_button->setHeight(h,false);
-                m_button->setWidth( w,false);       
-                m_button->moveBy(0,m_offsetY);
-            }
-            break;
-        case RedimMiddleLeft:
-            w=m_button->getWidth()-m_offsetX;
-            if (w > 0) {
-                m_button->setWidth(w,false);
-                m_button->moveBy(m_offsetX,0);
-            }
-            break;
-        case RedimBottomLeft:
-            w=m_button->getWidth()-m_offsetX;
-            h=m_button->getHeight()+m_offsetY;
-            if (h>0 && w>0) {
-                m_button->setWidth(w,false);
-                m_button->setHeight(h,false);
-                m_button->moveBy(m_offsetX,0);
-            }
-            break;
-        case RedimBottomMiddle:
-            h=m_button->getHeight()+m_offsetY;
-            if (h > 0)
-                m_button->setHeight(h);
-            break;
-
-        case RedimBottomRight:
-            w=m_button->getWidth()+m_offsetX;
-            h=m_button->getHeight()+m_offsetY;
-            if (h>0 && w >0) {
-                m_button->setWidth(w,false);
-                m_button->setHeight(h);
-            }
-            break;
-    }
-}
-
 k9CanvasSprite::k9CanvasSprite (QCanvasPixmapArray *a,QCanvas *canvas,k9MenuButton *button) : QCanvasSprite(a,canvas) {
     m_button=button;
 }
@@ -105,7 +28,7 @@ k9MenuButton* k9CanvasSprite::getButton() const {
 }
 
 void k9MenuButton::select(bool _value) {
-    if (_value) {
+  /*  if (_value) {
         m_lt->show();
         m_mt->show();
         m_rt->show();
@@ -123,17 +46,17 @@ void k9MenuButton::select(bool _value) {
         m_lb->hide();
         m_mb->hide();
         m_rb->hide();
-    }
+    }*/
 }
 
 void k9MenuButton::update() {
-    int x=m_sprite->x()-2;
-    int y=m_sprite->y()-2;
+    int x=m_sprite->x()-5;
+    int y=m_sprite->y()-5;
     int w=m_width;
     int h=m_height;
 
     int count=m_canvas->allItems().count();
-
+/*
     m_lt->move(x,y);
     m_lt->setZ(count--);
 
@@ -157,7 +80,7 @@ void k9MenuButton::update() {
 
     m_rb->move(x+w,y+h);
     m_rb->setZ(count--);
-
+*/
     switch(m_textPosition) {
         case RIGHT:
             m_text->move(x+2+w,y+2+h/2-m_text->boundingRect().height()/2);
@@ -182,42 +105,6 @@ k9MenuButton::k9MenuButton(QCanvas *parent, const char *name)
     m_canvas=parent;
     m_sprite=NULL;
     m_pixmap=NULL;
-    m_rm=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimMiddleRight,0,0,10,10,m_canvas,this);
-    m_rm->setPen(Qt::black);
-    m_rm->setBrush(Qt::red);
-
-    m_lt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopLeft,0,0,10,10,m_canvas,this);
-    m_lt->setPen(Qt::black);
-    m_lt->setBrush(Qt::red);
-
-    m_mt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopMiddle,0,0,10,10,m_canvas,this);
-    m_mt->setPen(Qt::black);
-    m_mt->setBrush(Qt::red);
-
-    m_mt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopMiddle,0,0,10,10,m_canvas,this);
-    m_mt->setPen(Qt::black);
-    m_mt->setBrush(Qt::red);
-
-    m_rt=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimTopRight,0,0,10,10,m_canvas,this);
-    m_rt->setPen(Qt::black);
-    m_rt->setBrush(Qt::red);
-
-    m_lm=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimMiddleLeft,0,0,10,10,m_canvas,this);
-    m_lm->setPen(Qt::black);
-    m_lm->setBrush(Qt::red);
-
-    m_lb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomLeft,0,0,10,10,m_canvas,this);
-    m_lb->setPen(Qt::black);
-    m_lb->setBrush(Qt::red);
-
-    m_mb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomMiddle,0,0,10,10,m_canvas,this);
-    m_mb->setPen(Qt::black);
-    m_mb->setBrush(Qt::red);
-
-    m_rb=new k9CanvasSpriteRedim(k9CanvasSpriteRedim::RedimBottomRight,0,0,10,10,m_canvas,this);
-    m_rb->setPen(Qt::black);
-    m_rb->setBrush(Qt::red);
-
     m_text=new QCanvasText("",m_canvas);
     m_text->setColor(Qt::yellow);
 
