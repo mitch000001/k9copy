@@ -93,7 +93,7 @@ void k9NewTitle::bAddClicked() {
     int width=100;
     int height=80;
     int i=-1;
-    while ( pos <fileInfo.getDuration() && i <maxCh){    
+    while ( pos <fileInfo.getDuration() && i <maxCh-1){    
     //fileInfo.open(m_fileName);
         i++;
         fileInfo.readFrame(pos);
