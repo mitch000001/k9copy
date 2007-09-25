@@ -78,6 +78,12 @@ public slots:
     int getAngle() const;
 
 	k9CanvasSprite* getSprite() const;
+
+	void setNum(int _value);
+	
+
+	int getNum() const;
+	
 	
 
 private:
@@ -85,7 +91,7 @@ private:
     QCanvasPixmapArray m_pixmapArray;
     QCanvasPixmap *m_pixmap;
     k9CanvasSprite *m_sprite;
-
+    int m_num;
     QCanvasText *m_text;
     QImage m_image;
     int  m_width;

@@ -60,9 +60,9 @@ public:
     double getDuration() const;
     bool opened() const;
 
-	QString getFileName() const;
-	
-	
+    QString getFileName() const;
+
+	QString getError() const;
 	
 private:
     av_register_all_t av_register_all;
@@ -93,6 +93,7 @@ private:
     bool m_opened;
     double m_duration;
     QString m_fileName;
+    QString m_error;
     void SaveFrame(AVFrame *pFrame, int width, int height);
 signals:
     void drawFrame(QImage*);

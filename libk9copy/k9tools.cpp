@@ -22,13 +22,13 @@ void k9Tools::clearOutput(QString name) {
     //delete files in directory
     QStringList lst = dir.entryList( "*",QDir::Files |QDir::Hidden );
     for ( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
-        QString c(( *it ).latin1() );
-        dir.remove (c);
+        //QString c(( *it ).latin1() );
+        dir.remove (*it);
     }
     //scanning subdir
     QStringList lstdir = dir.entryList( "*",QDir::Dirs );
     for ( QStringList::Iterator it = lstdir.begin(); it != lstdir.end(); ++it ) {
-        QString c(( *it ).latin1() );
+        QString c=*it;
         if ((c!=".") && c!="..") {
             clearOutput(dir.absFilePath(c));
             dir.rmdir(c);

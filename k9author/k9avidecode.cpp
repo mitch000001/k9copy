@@ -13,6 +13,7 @@
 #include <ffmpeg/avcodec.h>
 #include <qimage.h>
 #include <dlfcn.h>
+#include <klocale.h>
 
 #include "ac.h"
 
@@ -26,7 +27,15 @@ k9AviDecode::k9AviDecode(QObject *parent, const char *name)
         CodecHandle=dlopen("libavcodec.so",RTLD_LAZY | RTLD_GLOBAL);
         FormatHandle=dlopen("libavformat.so",RTLD_LAZY | RTLD_GLOBAL);
     }
-
+    if (!CodecHandle) {
+        m_error =i18n("Cannot open then library %1").arg("libavcodec");
+        return;
+    }
+    if (!FormatHandle) {
+        m_error =i18n("Cannot open then library %1").arg("libavformat");
+        return;
+    }
+    m_error="";
     av_register_all = (av_register_all_t)dlsym(FormatHandle,"av_register_all");
     av_open_input_file = (av_open_input_file_t)dlsym(FormatHandle,"av_open_input_file");
     av_find_stream_info = (av_find_stream_info_t)dlsym(FormatHandle,"av_find_stream_info");
@@ -68,17 +77,20 @@ k9AviDecode::~k9AviDecode() {
 
 
 bool k9AviDecode::open(const QString & _fileName) {
+    m_error="";
     if (m_opened)
         close();
 
     // Open video file
-    if (av_open_input_file(&m_FormatCtx, _fileName.latin1(), NULL, 0, NULL)!=0)
+    if (av_open_input_file(&m_FormatCtx, _fileName.utf8(), NULL, 0, NULL)!=0) {
+        m_error=i18n("Couldn't open the file %1").arg(_fileName);
         return false; // Couldn't open file}
-
+    }
 // Retrieve stream information
-    if (av_find_stream_info(m_FormatCtx)<0)
+    if (av_find_stream_info(m_FormatCtx)<0) {
+        m_error =i18n("Couldn't find stream information");
         return false; // Couldn't find stream information
-
+    }
     int i;
 
 // Find the first video stream
@@ -88,8 +100,10 @@ bool k9AviDecode::open(const QString & _fileName) {
             m_videoStream=i;
             break;
         }
-    if (m_videoStream==-1)
+    if (m_videoStream==-1) {
+        m_error=i18n("The file doesn't contain any video stream");
         return false; // Didn't find a video stream
+    }
 
     // Get a pointer to the codec context for the video stream
     m_CodecCtx=m_FormatCtx->streams[m_videoStream]->codec;
@@ -98,12 +112,14 @@ bool k9AviDecode::open(const QString & _fileName) {
 // Find the decoder for the video stream
     m_Codec=avcodec_find_decoder(m_CodecCtx->codec_id);
     if (m_Codec==NULL) {
-        fprintf(stderr, "Unsupported codec!\n");
+        m_error=i18n("Unsupported codec");
         return false; // Codec not found
     }
 // Open codec
-    if (avcodec_open(m_CodecCtx, m_Codec)<0)
+    if (avcodec_open(m_CodecCtx, m_Codec)<0) {
+        m_error =i18n("Could'nt open the codec");
         return false; // Could not open codec
+    }
 
 
 // Allocate video frame
@@ -111,8 +127,10 @@ bool k9AviDecode::open(const QString & _fileName) {
 
 // Allocate an AVFrame structure
     m_FrameRGB=avcodec_alloc_frame();
-    if (m_FrameRGB==NULL)
+    if (m_FrameRGB==NULL) {
+        m_error =i18n ("Unable to allocate memory for frames");
         return false;
+    }
 
 
     int numBytes;
@@ -130,6 +148,7 @@ bool k9AviDecode::open(const QString & _fileName) {
     m_duration=(double)m_FormatCtx->duration / AV_TIME_BASE;
     m_opened=true;
     m_fileName=_fileName;
+    return true;
 }
 
 void k9AviDecode::seek(double _seconds) {
@@ -226,4 +245,9 @@ bool k9AviDecode::opened() const {
 
 QString k9AviDecode::getFileName() const {
     return m_fileName;
+}
+
+
+QString k9AviDecode::getError() const {
+    return m_error;
 }

@@ -81,6 +81,7 @@ private:
     void createMencoderCmd ( QString &_cmd,QString &_chapters, k9AviFile *_aviFile );
 protected slots:
     void getStdout ( KProcess *, char *, int );
+    void getStderr ( KProcess *, char *, int );
     void drawImage ( QImage * _image );
 signals:
     void sigAddTitle();

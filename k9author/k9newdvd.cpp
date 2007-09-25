@@ -51,7 +51,7 @@ void k9NewDVD::execute() {
     m_error="";
     m_process=m_progress->getProcess();
     connect(m_process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
-//            connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
+    connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
 //            //connect(m_process, SIGNAL(processExited(KProcess*)),this,SLOT(exited(KProcess*)));
 
 
@@ -244,6 +244,26 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
     m_aviDecode.close();
 }
 
+void k9NewDVD::getStderr(KProcess *, char *_buffer, int _length) {
+    QCString tmp(_buffer,_length);
+    int pos;
+    if (tmp.contains("STAT:")) {
+        pos=tmp.find("fixing VOBU");
+        if (pos!=-1) {  
+            QString tmp2=tmp;
+            m_progress->setTitle(i18n("Authoring"));
+            m_progress->setLabelText(i18n("Fixing VOBUS"));
+            int end=tmp2.find("%");
+            if (end!=-1) {
+                pos =end -2;
+                tmp2=tmp2.mid(pos,end-pos);
+                tmp2=tmp2.stripWhiteSpace();
+                m_progress->setProgress(tmp2.toInt(),100);
+            }
+        }
+    }
+
+}
 
 void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
     QCString tmp(_buffer,_length);
@@ -287,24 +307,6 @@ void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
 
     }
 
-
-    /*   if (c.mid(0,4) == "Pos:") {
-    QString stmp(c);
-    stmp=stmp.simplifyWhiteSpace();
-
-           m_progress->setProgress(percent,100);
-    QTime t;
-    t.addSecs(trem);
-           m_progress->setElapsed(t.toString("hh:mm:ss"));
-           m_progress->setLabelText(i18n("fps")+ " : "+QString::number(fps));
-           if (m_timer.elapsed() > 5000) {
-               qDebug("<<< %s",_buffer);
-               m_timer.restart();
-               if (m_aviDecode.opened()) {
-                   m_aviDecode.readFrame(m_aviDecode.getDuration()*percent /100);
-               }
-           }
-       }*/
 }
 
 void k9NewDVD::appendTitle(k9Title *_title) {
@@ -313,6 +315,7 @@ void k9NewDVD::appendTitle(k9Title *_title) {
     //create the menu button
     k9MenuButton *btn=m_rootMenu->addButton();
     _title->setButton(btn);
+    btn->setNum(_title->getNum()+1);
     QPixmap px(50,50);
     px.fill(Qt::black);
     QImage img=px.convertToImage();

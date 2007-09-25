@@ -76,7 +76,7 @@ void k9SaveImage::run() {
     QString sFileName=m_tempFile->name();
     m_image.save(sFileName,"PNG");
     sFileName="\rINFOIMAGE:"+sFileName;
-    fprintf(stderr,sFileName.latin1());
+    fprintf(stderr,sFileName.utf8());
 
     m_mutex.unlock();
 }

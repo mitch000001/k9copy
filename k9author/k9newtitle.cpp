@@ -21,7 +21,8 @@
 #include "k9menu.h"
 #include "k9menubutton.h"
 #include "kpushbutton.h"
-
+#include <kmessagebox.h>
+#include <kcursor.h>
 k9NewTitle::k9NewTitle(QWidget* parent, const char* name, WFlags fl)
         : newTitle(parent,name,fl) {
     m_fileName="";
@@ -48,6 +49,13 @@ void k9NewTitle::drawImage (QImage *_image) {
 }
 
 void k9NewTitle::bAddClicked() {
+    k9AviDecode fileInfo(0,0);
+    if (!fileInfo.open(m_fileName)) {
+        KMessageBox::error(this,fileInfo.getError(),i18n("Add title"));
+        return;
+    }
+    this->setCursor(KCursor::waitCursor());
+
     k9LvItemImport * item=new k9LvItemImport(m_k9Import->getRoot(),k9LvItemImport::TITLE);
     item->setOpen(true);
     k9Title *title=new k9Title( m_k9Import->getNewDVD());
@@ -56,10 +64,10 @@ void k9NewTitle::bAddClicked() {
     connect( title->getButton(),SIGNAL(sigsetImage(k9MenuButton*, const QImage&)),m_k9Import,SLOT(buttonUpdated(k9MenuButton*, const QImage&)));
     item->setTitle(title);
 
-    k9AviDecode fileInfo(0,0);
+
     connect(&fileInfo,SIGNAL(drawFrame(QImage*)),this,SLOT(drawImage(QImage*)));
 
-    fileInfo.open(m_fileName);
+
 
     QTime t;
     m_k9Import->getRoot()->listView()->setColumnWidthMode(0,QListView::Maximum);
@@ -70,7 +78,7 @@ void k9NewTitle::bAddClicked() {
     if (rbLength->isOn()) {
         QTime t;
         increment=t.secsTo(twLength->time());
-        maxCh=fileInfo.getDuration()/increment;
+        maxCh=999;
     }
 
     if (rbNumber->isOn()) {
@@ -85,7 +93,7 @@ void k9NewTitle::bAddClicked() {
     int width=100;
     int height=80;
     int i=-1;
-    while ( pos <fileInfo.getDuration()){    
+    while ( pos <fileInfo.getDuration() && i <maxCh){    
     //fileInfo.open(m_fileName);
         i++;
         fileInfo.readFrame(pos);
@@ -113,6 +121,7 @@ void k9NewTitle::bAddClicked() {
         connect(file,SIGNAL(aviFileUpdated(k9AviFile*)),m_k9Import,SLOT(aviFileUpdated(k9AviFile*)));
 
         k9MenuButton *btn=title->getMenu()->addButton();
+        btn->setNum(i+1);
         //_title->setButton(btn);
         btn->setImage(m_image);
         left +=width+10;
@@ -136,6 +145,7 @@ void k9NewTitle::bAddClicked() {
     m_k9Import->lvDVD->sort();
     m_k9Import->setEnableCreate(true);
     m_k9Import->updateTotalTime();
+    this->setCursor(KCursor::arrowCursor());
 }
 
 void k9NewTitle::rbNumberClicked() {

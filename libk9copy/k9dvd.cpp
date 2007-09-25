@@ -358,7 +358,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
 
     ltitles = ifo_zero->tt_srpt->nr_of_srpts;
     m_titleCount = 0;
-    has_title = get_title_name(device.latin1(), ctitle);
+    has_title = get_title_name(device.utf8(), ctitle);
 
     vmgi_mat = ifo_zero->vmgi_mat;
     m_titlesetCount = vmgi_mat->vmg_nr_of_title_sets;

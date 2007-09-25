@@ -252,7 +252,7 @@ void k9PlayMPEG2::open (dvd_reader_t *dvd,const QString & device,k9DVDTitle * ti
 
     m_startSector=0;
     m_lastSector=0;
-    ret = stat(device.latin1(), &dvd_stat);
+    ret = stat(device.utf8(), &dvd_stat);
   /*  if ( ret < 0 ) {
         c=i18n("Can't find device %1\n").arg(device.latin1());
         setError(c);

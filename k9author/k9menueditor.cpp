@@ -29,6 +29,7 @@ k9MenuEditor::k9MenuEditor(
 
 void k9MenuEditor::contentsMouseReleaseEvent(QMouseEvent* e) {
    m_canvasSelection->release();
+   emit itemSelected();
 }
 
 
@@ -49,6 +50,8 @@ void k9MenuEditor::contentsMousePressEvent(QMouseEvent* e) {
     if (moving)
         return;
     for (QCanvasItemList::Iterator it=l.begin(); it!=l.end(); ++it) {
+//        if ((*it)->rtti()==QCanvasItem::Rtti_Rectangle)
+//            continue;
         moving = *it;
         if (moving->rtti()==1000) {
             if (e->state() & QMouseEvent::ControlButton)
@@ -61,12 +64,11 @@ void k9MenuEditor::contentsMousePressEvent(QMouseEvent* e) {
             }
             m_canvasSelection->setPosition(p);
             m_canvasSelection->drawSelection();
-        } else if (moving->rtti() <1001)
+        } else if (moving->rtti() <1001 )
             clearSelection();
         emit itemSelected();
         return;
     }
-    moving = 0;
     m_canvasSelection->setPosition(p);
     clearSelection();
     emit itemSelected();
@@ -157,16 +159,11 @@ void k9MenuEditor::contentsMouseMoveEvent(QMouseEvent* e) {
 
             } else
                 moving->moveBy(offsetX,offsetY);
-/*
-            if (moving->rtti() >1001 && moving->rtti() <1010) {
-                k9CanvasSpriteRedim *sprr=(k9CanvasSpriteRedim*)moving;
-                sprr->update();
-            }
-*/  
+
             if (moving->rtti() >2001 && moving->rtti() <2010) {
                 k9CanvasSelectionRedim *ssr=(k9CanvasSelectionRedim*)moving;
                 ssr->updateSelection();
-            } else {
+            } else if (moving->rtti() != QCanvasItem::Rtti_Text ){
                 //if selection not resized, move the selection
                 m_canvasSelection->moveBy(offsetX,offsetY);
                 m_canvasSelection->update();
@@ -206,12 +203,15 @@ void k9MenuEditor::resizeEvent ( QResizeEvent * e ) {
 }
 
 k9MenuButton * k9MenuEditor::getSelected()  {
-    if (moving) {
+/*    if (moving) {
         if (moving->rtti()==1000) {
             k9CanvasSprite *s=(k9CanvasSprite *)moving;
             return s->getButton();
         }
     }
+*/
+    if (m_selection.count() >0)
+        return m_selection.first();
     return NULL;
 }
 

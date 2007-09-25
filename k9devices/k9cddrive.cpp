@@ -152,11 +152,11 @@ void k9CdDrives::readConfig() {
     int i=0;
     for ( QStringList::Iterator it = ldev.begin(); it != ldev.end(); ++it ) {
         k9CdDrive *drive=new k9CdDrive;
-        drive->device=(*it).latin1();
+        drive->device=(*it);
         QStringList::Iterator it2=llabels.at(i);
         QStringList::Iterator it3=lIO.at(i);
-        drive->name=(*it2).latin1();
-        QString c=(*it3).latin1();
+        drive->name=(*it2);
+        QString c=(*it3);
         if (c.contains("I")) {
             drive->canReadDVD=true;
         }

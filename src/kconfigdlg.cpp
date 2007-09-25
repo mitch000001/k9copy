@@ -48,9 +48,9 @@ kConfigDlg::kConfigDlg(QWidget *parent)
   for ( QStringList::Iterator it = ldev.begin(); it != ldev.end(); ++it )
   {
     tblDevices->setNumRows(row+1);
-    tblDevices->setText(row,0,(*it).latin1());
+    tblDevices->setText(row,0,(*it));
     QStringList::Iterator it2=llabels.at(row);
-    tblDevices->setText(row,1,(*it2).latin1());
+    tblDevices->setText(row,1,(*it2));
 
     row++;
 
@@ -60,7 +60,7 @@ kConfigDlg::kConfigDlg(QWidget *parent)
     QCheckTableItem *I = new QCheckTableItem( tblDevices, "" );
     QCheckTableItem *O = new  QCheckTableItem( tblDevices, "" ) ;
     QStringList::Iterator it=lIO.at(j);
-    QString c=(*it).latin1();
+    QString c=(*it);
     if((c =="I") || (c =="IO")) I->setChecked(true);
     if((c =="O") || (c =="IO")) O->setChecked(true);
     tblDevices->setItem( j, 2, I );

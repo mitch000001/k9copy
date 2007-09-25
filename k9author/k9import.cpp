@@ -108,7 +108,7 @@ void k9Import::aviFileUpdated(k9AviFile *_aviFile) {
         while (itemChapter) {
             if (itemChapter->getAviFile()==_aviFile) {
                 itemChapter->setText(1,_aviFile->getStart().toString("hh:mm:ss") +" - "+_aviFile->getEnd().toString("hh:mm:ss"));
-                itemChapter->setPixmap(0,QPixmap(_aviFile->getImage().smoothScale(50,50)));
+                itemChapter->setPixmap(0,QPixmap(_aviFile->getImage().smoothScale(50,40)));
             }
             itemChapter=(k9LvItemImport*)itemChapter->nextSibling();
         }
@@ -121,7 +121,7 @@ void k9Import::buttonUpdated(k9MenuButton *_button, const QImage &_image) {
     k9LvItemImport *itemTitle = (k9LvItemImport*)m_root->firstChild();
     while (itemTitle) {
         if (itemTitle->getTitle()->getButton()==_button) {
-            QImage img=_image.smoothScale(50,50,QImage::ScaleFree);
+            QImage img=_image.smoothScale(50,40,QImage::ScaleFree);
             QPixmap pix(img);
             itemTitle->setPixmap(0,pix);
         }

@@ -163,7 +163,8 @@ void k9MenuEdit::leTitleChanged(const QString &_value) {
     if ( m_menuEditor->getSelected() ) {
         QPtrList <k9MenuButton> *l=m_menuEditor->getSelection();
         for (k9MenuButton *b=l->first();b;b=l->next()) {
-            b->setText(_value);
+            QString c=_value;
+            b->setText(c.replace("%n",QString::number(b->getNum())));
         }
         //m_menuEditor->getSelected()->setText(_value);
     } else {

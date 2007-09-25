@@ -358,7 +358,7 @@ const QString& k9DVDTitle::getheight() {
 }
 /** Read property of QString palette. */
 void k9DVDTitle::getpalette(int i,QString & c) {
-    c=(*palette.at(i)).latin1();
+    c=*palette.at(i);
 }
 /** Read property of QString DF. */
 const QString& k9DVDTitle::getDF() {
