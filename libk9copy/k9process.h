@@ -13,7 +13,7 @@
 #define K9PROCESS_H
 
 #include <kprocess.h>
-
+#include <qdatetime.h>
 /**
 	@author Jean-Michel PETIT <k9copy@free.fr>
 */
@@ -25,9 +25,12 @@ public:
     void sync();
     const QString & debug();
     ~k9Process();
+    int getElapsed() const;
+    virtual bool start (RunMode runmode=NotifyOnExit, Communication comm=NoCommunication);
 private:
     bool m_waitSync;
     QString m_debug;
+    QTime m_elapsed;
 private slots:
    void slotProcessExited(KProcess *proc);
 };

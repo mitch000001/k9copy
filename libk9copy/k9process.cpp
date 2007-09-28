@@ -47,4 +47,13 @@ const QString & k9Process::debug() {
     return m_debug;
 }
 
+bool  k9Process::start (RunMode runmode, Communication comm) {
+  m_elapsed.start();
+  return KProcess::start(runmode,comm);
+}
 #include "k9process.moc"
+
+
+int k9Process::getElapsed() const {
+    return m_elapsed.elapsed();
+}

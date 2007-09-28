@@ -25,6 +25,7 @@
 #include <kcombobox.h>
 #include <kiconloader.h>
 #include <kselect.h>
+#include "k9processlist.h"
 
 k9Import::k9Import(QWidget* parent, const char* name,k9CdDrives *_drives)
         : import(parent,name) {
@@ -52,6 +53,8 @@ void k9Import::init() {
     readDrives();
     m_root->setSelected(true);
     emit rootSelected(&m_newDVD);
+
+
 }
 
 void k9Import::readDrives() {
@@ -132,17 +135,17 @@ void k9Import::buttonUpdated(k9MenuButton *_button, const QImage &_image) {
 
 
 void k9Import::lvDVDItemSelected (QListViewItem *_item) {
-   k9LvItemImport *item=(k9LvItemImport*)_item;
+    k9LvItemImport *item=(k9LvItemImport*)_item;
 
-   switch (_item->rtti()) {
-      case 1002:
+    switch (_item->rtti()) {
+    case 1002:
         emit aviFileSelected(item->getAviFile());
         emit titleSelected(item->getTitle());
         break;
-      case 1001:
+    case 1001:
         emit titleSelected(item->getTitle());
         break;
-      default:
+    default:
         emit rootSelected(&m_newDVD);
         break;
     }
@@ -153,7 +156,7 @@ void k9Import::setProgressWindow(QWidget *_widget) {
     m_dockWidget = m_parent->getVisibleDock();
     m_parent->setActions( false);
     m_toolView->show();
-    this->setEnabled(false);
+//    this->setEnabled(false);
 
 }
 
@@ -167,19 +170,19 @@ void k9Import::removeProgressWindow() {
 }
 
 void k9Import::execute() {
-  QString filename;
-  if (cbOutputDev->currentItem() ==0)
-  {
-    filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Save image to disk"));
-    if (filename =="")
-      return;
-  }
-
-
+    QString filename;
+    if (cbOutputDev->currentItem() ==0) {
+        filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Save image to disk"));
+        if (filename =="")
+            return;
+    }
     k9Config config;
-    k9Progress *progress=new k9Progress(m_parent,0);
-    m_newDVD.setProgress(progress);
-    setProgressWindow(progress);
+//    k9Progress *progress=new k9Progress(m_parent,0);
+//    m_newDVD.setProgress(progress);
+//    setProgressWindow(progress);
+    k9ProcessList *p=new k9ProcessList(this,0,0);
+    setProgressWindow(p);
+    m_newDVD.setProcessList(p);
     m_newDVD.setWorkDir(config.getPrefOutput());
     m_newDVD.execute();
     removeProgressWindow();
@@ -233,7 +236,7 @@ void k9Import::titleAdded() {
 
 void k9Import::updateTotalTime() {
     int total=m_newDVD.getTotalTime();
-    gsTotal->setValue(total/60);    
+    gsTotal->setValue(total/60);
     QTime t(0,0,0);
     t=t.addSecs(total);
     lTotal->setText(t.toString("hh:mm:ss"));

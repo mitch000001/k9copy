@@ -24,14 +24,15 @@
 #include <kmessagebox.h>
 #include "k9menu.h"
 #include "k9menubutton.h"
+#include "k9processlist.h"
+#include <qthread.h>
+#include <qfileinfo.h>
 
 k9NewDVD::k9NewDVD(QObject *parent, const char *name)
         : QObject(parent, name) {
     m_workDir=locateLocal("tmp", "k9copy/" ) ;
     m_rootMenu=new k9Menu(this);
     m_format=PAL;
-
-
 }
 
 
@@ -49,11 +50,7 @@ int k9NewDVDItems::compareItems(QPtrCollection::Item item1,QPtrCollection::Item 
 void k9NewDVD::execute() {
     m_cancel=false;
     m_error="";
-    m_process=m_progress->getProcess();
-    connect(m_process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
-    connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
-//            //connect(m_process, SIGNAL(processExited(KProcess*)),this,SLOT(exited(KProcess*)));
-
+  //  connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
 
     connect(&m_aviDecode,SIGNAL(drawFrame(QImage*)),this,SLOT(drawImage(QImage*)));
     k9Tools::clearOutput(m_workDir+"dvd");
@@ -65,7 +62,7 @@ void k9NewDVD::execute() {
 
 
 void k9NewDVD::drawImage(QImage * _image) {
-    m_progress->setImage(*_image);
+//    m_progress->setImage(*_image);
 }
 
 void k9NewDVD::setFormat ( const eFormat& _value ) {
@@ -92,9 +89,23 @@ void k9NewDVD::createXML() {
     // Create vmgm menu
     QDomElement vmgm = m_xml->createElement("vmgm");
     root.appendChild(vmgm);
+    m_processList->addProgress(i18n("Creating root menu"));
     m_rootMenu->createMenus(&vmgm);
 
     addTitles(root);
+    m_processList->execute();
+    m_totalEncodedSize=0;
+    m_offset=0;
+    m_lastvalue=0;
+    for ( QStringList::Iterator it = m_tmpFiles.begin(); it != m_tmpFiles.end(); ++it ) {
+        QString file= *it;
+	if (file.endsWith(".mpeg")) {
+		QFileInfo f(file);
+		m_totalEncodedSize+=f.size();
+	}
+    }
+    m_totalEncodedSize/=1024*1024;
+    m_cancel=m_processList->getCancel();
     if (!m_cancel) {
         QString dvdAuthor(m_workDir+"/"+KApplication::randomString(8)+".xml");
         QFile file( dvdAuthor);
@@ -103,16 +114,17 @@ void k9NewDVD::createXML() {
         QTextStream stream( &file );
         m_xml->save(stream,1);
         file.close();
-
-        m_process->clearArguments();
-        *m_process << "dvdauthor" << "-x" << dvdAuthor;
-        if (!m_progress->execute()) {
-            m_cancel=true;
-            if (m_progress->getCanceled())
-                m_error=i18n("The dvd authoring was canceled");
-            else
-                m_error=i18n("An error occured while running dvdauthor");
-        }
+  
+        m_processList->clear();
+        k9Process *process=m_processList->addProcess(i18n("authoring"));
+        connect(process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
+        *process << "dvdauthor" << "-x" << dvdAuthor;
+        m_processList->execute();
+        m_cancel=m_processList->getCancel();
+        if (m_cancel)
+            m_error=i18n("The dvd authoring was canceled");
+       // else
+       //     m_error=i18n("An error occured while running dvdauthor");
 
         file.remove();
     }
@@ -125,7 +137,6 @@ void k9NewDVD::createXML() {
         KMessageBox::error( 0, m_error, i18n("Authoring"));
     }
     delete m_xml;
-    delete m_progress;
 
 }
 
@@ -140,6 +151,7 @@ void k9NewDVD::addTitles (QDomElement &_root) {
         QString menuFileName=m_workDir+KApplication::randomString(8)+".mpg";
         m_tmpFiles << menuFileName,
         menu->setMenuFileName(menuFileName);
+        m_processList->addProgress(i18n("Creating menu for title %1").arg(title->getNum()+1));
         menu->createMenus(&titleSet);
 
         QDomElement eTitle=m_xml->createElement("titles");
@@ -164,8 +176,8 @@ void k9NewDVD::addTitles (QDomElement &_root) {
         QDomText txt=m_xml->createTextNode("call vmgm menu;");
         post.appendChild(txt);
 
-
-        for (k9AviFile *aviFile= title->getFiles()->first();aviFile && !m_cancel;aviFile=title->getFiles()->next()) {
+        QPtrList <k9AviFile > *l=title->getFiles();
+        for (k9AviFile *aviFile= l->first();aviFile && !m_cancel;aviFile=l->next()) {
             if ( aviFile->getPrevious()==NULL || aviFile->getBreakPrevious()) {
                 QString cmd="",chapters="";
                 createMencoderCmd(cmd,chapters,aviFile);
@@ -176,7 +188,6 @@ void k9NewDVD::addTitles (QDomElement &_root) {
                 m_tmpFiles << cmd;
             }
         }
-
     }
 
 }
@@ -186,7 +197,7 @@ void k9NewDVD::setWorkDir ( const QString& _value ) {
 }
 
 void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_aviFile) {
-    m_aviDecode.open(_aviFile->getFileName());
+ //   m_aviDecode.open(_aviFile->getFileName());
     m_timer.start();
     m_timer2.start();
     m_timer3.start();
@@ -224,13 +235,22 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
         fps="30000/1001";
         break;
     }
-    m_progress->setTitle(i18n("Encoding file"));
 
-    m_process->clearArguments();
-    *m_process << "mencoder" << "-oac" << "lavc" << "-ovc" << "lavc" << "-of" << "mpeg";
-    *m_process << "-mpegopts" << "format=dvd" << "-vf" << "scale="+scale+",harddup" << "-srate" << "48000" << "-af" << "lavcresample=48000";
-    *m_process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=ac3:abitrate=192:aspect=16/9").arg(m_videoBitrate);
-    *m_process << "-ofps" << fps << "-o" << fileName << "-ss" << t1 << "-endpos" << t2 << _aviFile->getFileName();
+    k9Process *process=m_processList->addProcess(i18n("Encoding %1").arg(_aviFile->getFileName()));
+    m_processList->setFileName(process,_aviFile->getFileName());
+
+    QTime t(0,0);
+    t.start();
+    m_timers[process]=t;
+    connect(process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
+    //m_progress->setTitle(i18n("Encoding file"));
+    //m_process->clearArguments();
+    *process << "mencoder" << "-oac" << "lavc" << "-ovc" << "lavc" << "-of" << "mpeg";
+    *process << "-mpegopts" << "format=dvd" << "-vf" << "scale="+scale+",harddup" << "-srate" << "48000" << "-af" << "lavcresample=48000";
+    *process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=ac3:abitrate=192:aspect=16/9").arg(m_videoBitrate);
+    *process << "-ofps" << fps << "-o" << fileName << "-ss" << t1 << "-endpos" << t2 << _aviFile->getFileName();
+   
+/*
     if (!m_progress->execute()) {
         m_cancel=true;
         if (m_progress->getCanceled())
@@ -238,75 +258,94 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
         else
             m_error=i18n("An error occured while transcoding video");
     }
-
+*/
 
     _cmd=fileName;
-    m_aviDecode.close();
+//    m_aviDecode.close();
 }
 
-void k9NewDVD::getStderr(KProcess *, char *_buffer, int _length) {
+void k9NewDVD::getStderr(KProcess *_process, char *_buffer, int _length) {
     QCString tmp(_buffer,_length);
     int pos;
     if (tmp.contains("STAT:")) {
         pos=tmp.find("fixing VOBU");
         if (pos!=-1) {  
             QString tmp2=tmp;
-            m_progress->setTitle(i18n("Authoring"));
-            m_progress->setLabelText(i18n("Fixing VOBUS"));
+//            m_progress->setTitle(i18n("Authoring"));
+//            m_progress->setLabelText(i18n("Fixing VOBUS"));
             int end=tmp2.find("%");
             if (end!=-1) {
                 pos =end -2;
                 tmp2=tmp2.mid(pos,end-pos);
                 tmp2=tmp2.stripWhiteSpace();
-                m_progress->setProgress(tmp2.toInt(),100);
+//                m_progress->setProgress(tmp2.toInt(),100);
             }
-        }
+        } else {
+	   pos=tmp.find("STAT: VOBU ");
+	   if (pos !=-1) {
+	        QCString tmp2(_buffer+pos,_length-pos);
+		int vobu,mb;
+		sscanf(tmp2.data(),"STAT: VOBU %d at %dMB",&vobu,&mb);
+		if (mb <m_lastvalue) 
+		   m_offset+=m_lastvalue;
+		m_lastvalue=mb;
+		m_processList->setProgress((k9Process*)_process,mb+m_offset,m_totalEncodedSize);
+	   }
+	} 
+
+//STAT: VOBU 16 at 3MB, 1 PGCS
+
     }
 
 }
 
-void k9NewDVD::getStdout(KProcess *, char *_buffer, int _length) {
-    QCString tmp(_buffer,_length);
-
-    int pos=tmp.find("Pos:");
-    if (pos!=-1) {
-        QString tmp2=tmp.mid(pos);
-        tmp2=tmp2.replace(":",": ").replace("(","").replace(")","").simplifyWhiteSpace();
-        QStringList sl=QStringList::split(" ",tmp2);
-        float position;
-        sscanf(sl[1].latin1(),"%fs",&position);
-        int frame;
-        sscanf(sl[2].latin1(),"%df",&frame);
-        int percent;
-        sscanf(sl[3].latin1(),"%d",&percent);
-        int fps;
-        sscanf(sl[4].latin1(),"%d",&fps);
-
-        m_progress->setProgress(percent,100);
-        if (percent>0 && m_timer3.elapsed() > 1000) {
-            int elapsed=m_timer2.elapsed();
-            QTime time2(0,0);
-            time2=time2.addMSecs(elapsed);
-            QTime time3(0,0);
-            float fprc=percent/100.0;
-            time3=time3.addMSecs((uint32_t)(elapsed*(1.0/fprc)));
-            m_progress->setElapsed(time2.toString("hh:mm:ss") +" / " + time3.toString("hh:mm:ss"));
-            m_timer3.restart();
-        }
-
-        QString text=i18n("filename") + " : " + m_aviDecode.getFileName();
-        text+="\n"+i18n("fps")+ " : "+QString::number(fps);
-
-        m_progress->setLabelText(text);
-        if (m_timer.elapsed() > 5000) {
-            m_timer.restart();
-            if (m_aviDecode.opened()) {
-                m_aviDecode.readFrame(position);
+void k9NewDVD::getStdout(KProcess *_process, char *_buffer, int _length) {
+    k9Process *process=(k9Process*) _process;
+    if (m_timers[process].elapsed() >500) {
+        QCString tmp(_buffer,_length);
+        int pos=tmp.find("Pos:");
+        if (pos!=-1) {
+            QString tmp2=tmp.mid(pos);
+            tmp2=tmp2.replace(":",": ").replace("(","").replace(")","").simplifyWhiteSpace();
+            QStringList sl=QStringList::split(" ",tmp2);
+            float position;
+            sscanf(sl[1].latin1(),"%fs",&position);
+            int frame;
+            sscanf(sl[2].latin1(),"%df",&frame);
+            int percent;
+            sscanf(sl[3].latin1(),"%d",&percent);
+            int fps;
+            sscanf(sl[4].latin1(),"%d",&fps);
+            m_processList->setProgress(process,percent,100);
+            m_processList->setPos(process,position);
+            //m_progress->setProgress(percent,100);
+    //        if (percent>0 &&m_timer3.elapsed() >1000 ) {
+            if (percent>0 ) {
+                int elapsed=process->getElapsed();
+                QTime time2(0,0);
+                time2=time2.addMSecs(elapsed);
+                QTime time3(0,0);
+                float fprc=percent/100.0;
+                time3=time3.addMSecs((uint32_t)(elapsed*(1.0/fprc)));
+                m_processList->setText(process,time2.toString("hh:mm:ss") +" / " + time3.toString("hh:mm:ss"),1);
+                m_timer3.restart();
             }
+    
+            QString text;//=i18n("filename") + " : " + m_aviDecode.getFileName();
+            text=i18n("fps")+ " : "+QString::number(fps);
+            m_processList->setText(process,text,2);
+    /*
+            m_progress->setLabelText(text);
+            if (m_timer.elapsed() > 5000) {
+                m_timer.restart();
+                if (m_aviDecode.opened()) {
+                    m_aviDecode.readFrame(position);
+                }
+            }
+    */
         }
-
+        m_timers[process].restart();
     }
-
 }
 
 void k9NewDVD::appendTitle(k9Title *_title) {
@@ -333,8 +372,9 @@ void k9NewDVD::appendTitle(k9Title *_title) {
 }
 
 
-void k9NewDVD::setProgress(k9Progress* _value) {
-    m_progress = _value;
+
+void k9NewDVD::setProcessList(k9ProcessList *_value) {
+    m_processList=_value;
 }
 
 

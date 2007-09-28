@@ -28,6 +28,7 @@
 class k9Title;
 class k9AviFile;
 class k9Menu;
+class k9ProcessList;
 class k9NewDVDItems : public QPtrList<k9Title> {
 protected:
     virtual int compareItems ( QPtrCollection::Item item1,QPtrCollection::Item item2 );
@@ -52,7 +53,7 @@ public:
     void setWorkDir ( const QString& _value );
     void appendTitle ( k9Title *_title );
 
-    void setProgress ( k9Progress* _value );
+    void setProcessList(k9ProcessList *_value);
     eFormat getFormat() const;
 
     int getTotalTime();
@@ -60,15 +61,12 @@ public:
 
     QString getError() const;
 
-
-
 private:
     k9NewDVDItems m_titles;
     QStringList m_tmpFiles;
     QDomDocument *m_xml;
     QString m_workDir;
-    k9Process *m_process;
-    k9Progress *m_progress;
+    k9ProcessList *m_processList;
     QTime m_timer;
     QTime m_timer2;
     QTime m_timer3;
@@ -77,6 +75,10 @@ private:
     QString m_error;
     int m_videoBitrate;
     k9AviDecode m_aviDecode;
+    int m_totalEncodedSize;
+    int m_offset;
+    int m_lastvalue;
+    QMap <k9Process*,QTime> m_timers;
     void calcVideoBitrate();
     void createMencoderCmd ( QString &_cmd,QString &_chapters, k9AviFile *_aviFile );
 protected slots:
