@@ -42,6 +42,7 @@ typedef void (*av_free_t)(void *);
 typedef int (*avcodec_close_t)(AVCodecContext *);
 typedef void (*av_close_input_file_t)(AVFormatContext *);
 typedef int (*av_seek_frame_t)(AVFormatContext *,int,int64_t timestamp,int flags); 		typedef int64_t (*av_rescale_q_t)(int64_t , AVRational , AVRational )	;
+typedef void (*avcodec_flush_buffers_t)(AVCodecContext *);
 
 
 
@@ -83,6 +84,8 @@ private:
     av_close_input_file_t av_close_input_file;
     av_rescale_q_t av_rescale_q;
     av_gettime_t av_gettime;
+    avcodec_flush_buffers_t avcodec_flush_buffers;
+
 
     AVFormatContext *m_FormatCtx;
     AVCodecContext *m_CodecCtx;

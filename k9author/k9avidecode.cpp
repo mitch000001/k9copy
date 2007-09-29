@@ -53,6 +53,8 @@ k9AviDecode::k9AviDecode(QObject *parent, const char *name)
     av_close_input_file = (av_close_input_file_t)dlsym(FormatHandle,"av_close_input_file");
     av_seek_frame=(av_seek_frame_t)dlsym(FormatHandle,"av_seek_frame");
     av_rescale_q=(av_rescale_q_t)dlsym(FormatHandle,"av_rescale_q");
+    avcodec_flush_buffers=(avcodec_flush_buffers_t)dlsym(CodecHandle,"avcodec_flush_buffers");
+
     av_gettime=(av_gettime_t)dlsym(FormatHandle,"av_gettime");
     av_register_all();
     m_opened=false;
@@ -164,7 +166,7 @@ void k9AviDecode::readFrame(double _seconds) {
     int64_t fspos = (int64_t)(_seconds * AV_TIME_BASE);
     fspos=av_rescale_q(fspos, AV_TIME_BASE_Q,  time_base);
     int res=av_seek_frame(m_FormatCtx, m_videoStream, fspos, AVSEEK_FLAG_BACKWARD );
-
+    avcodec_flush_buffers(m_CodecCtx);
     int frameFinished=0;
     AVPacket packet;
 

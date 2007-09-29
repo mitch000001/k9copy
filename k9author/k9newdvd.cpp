@@ -121,13 +121,13 @@ void k9NewDVD::createXML() {
         *process << "dvdauthor" << "-x" << dvdAuthor;
         m_processList->execute();
         m_cancel=m_processList->getCancel();
-        if (m_cancel)
-            m_error=i18n("The dvd authoring was canceled");
        // else
        //     m_error=i18n("An error occured while running dvdauthor");
 
         file.remove();
     }
+    if (m_cancel)
+        m_error=i18n("The dvd authoring was canceled");
     QFile::remove(menuFileName);
     for ( QStringList::Iterator it = m_tmpFiles.begin(); it != m_tmpFiles.end(); ++it ) {
         QFile::remove(*it);

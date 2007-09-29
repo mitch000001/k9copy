@@ -53,7 +53,7 @@ private:
     bool m_usecache;
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
     int m_cpt;
-    QTime *time;
+    QTime *time,m_timer3;
     QString replaceParams(QString _input);
     QString round16(QString _wh);
     QString getChapterList(k9DVDTitle *_title);

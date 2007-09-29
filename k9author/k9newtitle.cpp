@@ -97,7 +97,6 @@ void k9NewTitle::bAddClicked() {
     //fileInfo.open(m_fileName);
         i++;
         fileInfo.readFrame(pos);
-        fileInfo.readFrame(pos);
         k9AviFile *file=new k9AviFile(title,0);
         file->setImage(m_image);
         if (i==0)

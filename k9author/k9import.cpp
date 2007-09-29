@@ -186,7 +186,7 @@ void k9Import::execute() {
     m_newDVD.setWorkDir(config.getPrefOutput());
     m_newDVD.execute();
     removeProgressWindow();
-    bool burn=m_newDVD.getError()=="";
+    bool burn=(m_newDVD.getError()=="") ;
     if (burn) {
         //changeStatusbar(i18n("Burning DVD"),sbMessage);
 

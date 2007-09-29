@@ -41,7 +41,7 @@ void k9DrawImage::paintEvent ( QPaintEvent * ) {
         double ratio= wratio < hratio ? wratio:hratio;
 
         top =(int) (height() -m_pixmap.height()*ratio)/2+1;
-        left =(int) (width() -m_pixmap.width()*ratio)/2 +1;
+        left =(int) (width() -m_pixmap.width()*ratio)/2 ;
 
         p.scale(ratio,ratio);
         p.drawPixmap((int)(left/ratio),(int)(top/ratio),m_pixmap);

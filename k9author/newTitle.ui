@@ -19,48 +19,7 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <widget class="QLabel" row="0" column="0">
-            <property name="name">
-                <cstring>textLabel1</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>Video file</string>
-            </property>
-        </widget>
-        <widget class="KPushButton" row="2" column="2" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>bAdd</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>Add</string>
-            </property>
-            <property name="accel">
-                <string></string>
-            </property>
-            <property name="stdItem" stdset="0">
-                <number>27</number>
-            </property>
-        </widget>
-        <widget class="QButtonGroup" row="1" column="0" rowspan="1" colspan="4">
+        <widget class="QButtonGroup" row="1" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>buttonGroup1</cstring>
             </property>
@@ -152,24 +111,7 @@
                 </spacer>
             </grid>
         </widget>
-        <spacer row="2" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>spacer2</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>411</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-        <spacer row="3" column="1">
+        <spacer row="3" column="0">
             <property name="name">
                 <cstring>spacer3</cstring>
             </property>
@@ -186,7 +128,7 @@
                 </size>
             </property>
         </spacer>
-        <spacer row="1" column="4">
+        <spacer row="1" column="2">
             <property name="name">
                 <cstring>spacer4</cstring>
             </property>
@@ -198,22 +140,17 @@
             </property>
             <property name="sizeHint">
                 <size>
-                    <width>51</width>
+                    <width>16</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="KURLRequester" row="0" column="1" rowspan="1" colspan="2">
+        <widget class="KPushButton" row="2" column="1">
             <property name="name">
-                <cstring>urFile</cstring>
+                <cstring>bAdd</cstring>
             </property>
-            <property name="mode">
-                <number>25</number>
-            </property>
-        </widget>
-        <widget class="QLabel" row="0" column="3">
-            <property name="name">
-                <cstring>lTotalTime</cstring>
+            <property name="enabled">
+                <bool>false</bool>
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
@@ -224,8 +161,81 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>--:--:--</string>
+                <string>Add</string>
             </property>
+            <property name="accel">
+                <string></string>
+            </property>
+            <property name="stdItem" stdset="0">
+                <number>27</number>
+            </property>
+        </widget>
+        <spacer row="2" column="0">
+            <property name="name">
+                <cstring>spacer2</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>470</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout1</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>Video file</string>
+                    </property>
+                </widget>
+                <widget class="KURLRequester">
+                    <property name="name">
+                        <cstring>urFile</cstring>
+                    </property>
+                    <property name="mode">
+                        <number>25</number>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>lTotalTime</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>--:--:--</string>
+                    </property>
+                </widget>
+            </hbox>
         </widget>
     </grid>
 </widget>
@@ -263,10 +273,10 @@
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kpushbutton.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>ktimewidget.h</includehint>
+    <includehint>kpushbutton.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
