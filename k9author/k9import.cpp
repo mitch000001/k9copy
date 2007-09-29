@@ -197,7 +197,7 @@ void k9Import::execute() {
         b.setUseK3b(config.getPrefK3b() );
         b.setAutoBurn(config.getPrefAutoBurn());
         b.setvolId("DVD");
-        //b.setSpeed( cbBurnSpeed->currentText());
+        b.setSpeed( i18n("default"));
         if (cbOutputDev->currentItem() !=0) {
             k9CdDrive * drive=(k9CdDrive*)recorderList.at(cbOutputDev->currentItem()-1);
             b.setburnDevice(drive->device);
