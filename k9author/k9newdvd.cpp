@@ -398,8 +398,9 @@ void k9NewDVD::calcVideoBitrate() {
     }
     int size=4400;
     double sec=(double)length/1000.0;
-    m_videoBitrate=(int)( (size * 8388.608)/sec  - 192);
-    m_videoBitrate=QMIN(m_videoBitrate,5000);
+   // m_videoBitrate=(int)( (size * 8388.608)/sec  - 192);
+    m_videoBitrate=8*((size*1024 - (192 * sec/8))/sec);
+    m_videoBitrate=QMIN(m_videoBitrate,9800);
 }
 
 int k9NewDVD::getTotalTime() {

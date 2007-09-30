@@ -277,7 +277,10 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
                 *m_process << "-o" << "/dev/null";
             else
                 *m_process <<"-o" << "'"+path+"'";
-
+            if (path.upper().endsWith("MPEG") || path.upper().endsWith("MPG"))
+                *m_process << "-of" << "mpeg";
+            else
+                *m_process << "-of" << "avi";
 
             QString s="";
             for ( uint i=0; i< m_process->args().count();i++) {

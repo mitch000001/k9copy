@@ -196,17 +196,17 @@ void k9Copy::createImportWindows() {
     connect (m_k9Import,SIGNAL(rootSelected(k9NewDVD*)),m_menuEdit,SLOT(rootSelected(k9NewDVD*)));
     m_k9Import->setMenuEdit(m_menuEdit);
 
-    k9NewTitle *newTitle=new k9NewTitle(this);
-    newTitle->setK9Import(m_k9Import);
-    acc=addToolWindow(newTitle, KDockWidget::DockBottom, getMainDockWidget(),20,i18n("Add new title"),i18n("Add new title"));
+    m_newTitle=new k9NewTitle(this);
+    m_newTitle->setK9Import(m_k9Import);
+    acc=addToolWindow(m_newTitle, KDockWidget::DockBottom, getMainDockWidget(),20,i18n("Add new title"),i18n("Add new title"));
     m_ToolViews.append(acc);
     acc->show();
 
 
-    k9ChapterEdit *ch=new k9ChapterEdit(this);
-    acc=addToolWindow(ch, KDockWidget::DockBottom, getMainDockWidget(),20,i18n("Chapter properties"),i18n("Chapter properties"));
+    m_chapterEdit =new k9ChapterEdit(this);
+    acc=addToolWindow(m_chapterEdit, KDockWidget::DockBottom, getMainDockWidget(),20,i18n("Chapter properties"),i18n("Chapter properties"));
     m_ToolViews.append(acc);
-    connect(m_k9Import,SIGNAL(aviFileSelected(k9AviFile*)),ch,SLOT(setAviFile(k9AviFile*)));
+    connect(m_k9Import,SIGNAL(aviFileSelected(k9AviFile*)),m_chapterEdit,SLOT(setAviFile(k9AviFile*)));
 
 
 
@@ -302,6 +302,7 @@ void k9Copy::setupActions() {
     m_actions["create"]= new KAction(i18n("Create DVD"),0,
                               this, SLOT(ActionCreate()),
                               actionCollection(), "Create");
+    m_actions["create"]->setIcon("author");
 
     createGUI(0);
 
@@ -323,6 +324,10 @@ void k9Copy::setActions( bool enabled) {
         m_options->setEnabled(enabled);
     } else {
         m_actions["create"]->setEnabled(enabled);
+        m_menuEdit->setEnabled(enabled);
+        m_newTitle->setEnabled(enabled);
+        m_chapterEdit->setEnabled(enabled);
+        m_k9Import->setEnabled(enabled);
     }
 
 

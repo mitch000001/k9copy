@@ -176,6 +176,7 @@ void k9Import::execute() {
         if (filename =="")
             return;
     }
+
     k9Config config;
 //    k9Progress *progress=new k9Progress(m_parent,0);
 //    m_newDVD.setProgress(progress);

@@ -228,7 +228,12 @@ void k9Script::updatePGC(pgc_t *_pgc ,int numVTS,int numPGC) {
            numAudio=title->getDefAudio()->getID();
         if (numSubP+numAudio >0) {
            char *c=(char*)command_tbl->pre_cmds;
-           if (*c==0x51) 
+           bool binsert=false;
+           if (c==NULL)
+                binsert=true;
+           else if ( *c==0x51)
+                binsert=true;
+           if (binsert) 
            	memcpy(command_tbl->pre_cmds,setSTN( numAudio,numSubP),8);
            else
                 insertPreCmd(command_tbl,setSTN( numAudio,numSubP)); 

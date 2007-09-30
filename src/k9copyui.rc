@@ -26,7 +26,8 @@
 	<Action name="PlayTitle"/>
 	<Action name="MakeMPEG4"/>	
 	<Action name="Copy"/>
-	<Separator />
+        <Action name="Create"/>	
+        <Separator />
 	<Action name="options_configure" />	
 	<Action name="Eject"/>	
 	<Action name="file_quit"/>

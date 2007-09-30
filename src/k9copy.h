@@ -33,7 +33,8 @@ class k9LangSelect;
 class k9MP4Title;
 class k9TitleFactor;
 class k9MenuEdit;
-
+class k9NewTitle;
+class k9ChapterEdit;
 class k9Copy : public KMdiMainFrm {
     Q_OBJECT
 public:
@@ -103,6 +104,8 @@ private:
     k9MP4Title *m_mp4;
     QWidget *m_mp2;
     k9MenuEdit *m_menuEdit;
+    k9NewTitle *m_newTitle;
+    k9ChapterEdit *m_chapterEdit;
     k9Import *m_k9Import;
     bool m_useXine;
     bool m_useDvdAuthor;
