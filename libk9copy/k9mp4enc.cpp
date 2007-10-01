@@ -350,7 +350,9 @@ int k9MP4Enc::getBitRate(k9DVDTitle *_title) {
         m_progress->setsize(QString::number(size) +i18n("MB") +" X " +QString::number(m_parts));
         QTime t1(0,0);
         int sec=t1.secsTo(_title->getSelectedLength());
-        int bitrate=(int)( ((size*m_parts) * 8388.608)/sec  - m_audioBitrate.toInt());
+        //int bitrate=(int)( ((size*m_parts) * 8388.608)/sec  - m_audioBitrate.toInt());
+        int bitrate=8*(((size*m_parts*1024)-(m_audioBitrate.toInt()*sec/8))/sec);
+
         return bitrate;
     }
 }
