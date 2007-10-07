@@ -21,6 +21,8 @@
 #include <kurlrequester.h>
 #include <qcheckbox.h>
 #include "k9title.h"
+#include <kpushbutton.h>
+#include <kiconloader.h>
 
 k9ChapterEdit::k9ChapterEdit(QWidget* parent, const char* name, WFlags fl)
 : chapterEdit(parent,name,fl)
@@ -30,6 +32,7 @@ k9ChapterEdit::k9ChapterEdit(QWidget* parent, const char* name, WFlags fl)
   l->addWidget(m_wimage,0,0);
   m_wimage->setPaletteBackgroundColor(Qt::black);
   connect(&m_aviDecode,SIGNAL(drawFrame(QImage*)),this,SLOT(drawImage(QImage*)));
+  bTitleButton->setIconSet (SmallIcon("frame_image"));
 
 }
 

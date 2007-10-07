@@ -26,7 +26,7 @@ k9Menu::k9Menu(QObject *parent, const char *name)
     QPixmap pix(720,576);
     pix.fill(Qt::black);
     m_canvas->setBackgroundPixmap(pix);
-    m_startScript=m_endScript="";
+    m_startScript=m_startScript2=m_endScript="";
 }
 
 
@@ -47,6 +47,8 @@ k9MenuButton *k9Menu::addButton() {
 
 
 void k9Menu::createMenus(QDomElement *_rootNode) {
+  
+    m_config=new k9Config();
     int height=m_format==PAL?576:480;
 
     QImage img;
@@ -73,7 +75,7 @@ void k9Menu::createMenus(QDomElement *_rootNode) {
     pixhi.fill(Qt::white);
     QPainter phi(&pixhi);
     QPen penhi;
-    penhi.setColor(Qt::yellow);
+    penhi.setColor(m_config->getPrefButtonHiliteColor());
     penhi.setWidth(lineWidth*2);
     phi.setPen(penhi);
     phi.setBrush(Qt::NoBrush);
@@ -122,6 +124,7 @@ void k9Menu::createMenus(QDomElement *_rootNode) {
     QFile::remove(mpaFileName);
     QFile::remove(mpgFileName);
     QFile::remove(hiFileName);
+    delete m_config;
 }
 
 void k9Menu::convertJpegToMpeg(const QString &_imageJpg,const QString &_imageMpg) {
@@ -245,7 +248,7 @@ void k9Menu::appendMenu(QDomElement *_rootNode) {
     menus.appendChild(pgc);
     QDomElement pre=doc.createElement("pre");
     pgc.appendChild(pre);
-    QDomText txt=doc.createTextNode(m_startScript);
+    QDomText txt=doc.createTextNode(m_startScript +m_startScript2);
     pre.appendChild(txt);
 
     QDomElement vob=doc.createElement("vob");
@@ -308,6 +311,15 @@ void k9Menu::setStartScript(const QString &_value) {
 
 QString k9Menu::getStartScript() const {
     return m_startScript;
+}
+
+void k9Menu::setStartScript2(const QString &_value) {
+    m_startScript2=_value;
+}
+
+
+QString k9Menu::getStartScript2() const {
+    return m_startScript2;
 }
 
 

@@ -95,6 +95,7 @@ int k9ProcessList::getNbRunning() {
 void k9ProcessList::execute() {
     bCancel->setEnabled(true);
     m_cancel=false;
+    m_error=false;
     k9Process *p=NULL;
     for (QPtrListStdIterator <k9Process> it=m_processes.begin() ;it!=m_processes.end() ;++it ) {
         p=(*it);
@@ -104,9 +105,7 @@ void k9ProcessList::execute() {
         if (m_cancel)
             break;
         if (!p->start(KProcess::OwnGroup,KProcess::All))
-            qDebug ("impossible de démarrer " +p->debug());
-        else 
-            qDebug("demarrage process");
+            m_error=true;
      }
      //waiting for processes
         for (p=m_processes.first();p;p=m_processes.next()) {
@@ -155,7 +154,16 @@ k9Process *k9ProcessList::addProcess(const QString &label) {
     QListViewItem *item = new _k9ProcessListItem(lProcess,label);
     m_items[process]=item;
     setProgress(process,0,100);
+    connect(process,SIGNAL(processExited( KProcess* )),this,SLOT(processExited(KProcess*)));
     return process;
+}
+
+void k9ProcessList::processExited(KProcess *_process){
+    if (!_process->normalExit())
+        m_cancel=true;
+    else if (_process->exitStatus() !=0 ) 
+        m_error=true;
+        
 }
 
 #include "k9processlist.moc"
@@ -177,4 +185,9 @@ void k9ProcessList::setMaxProcess(int _value) {
 
 bool k9ProcessList::getCancel() const {
     return m_cancel;
+}
+
+
+bool k9ProcessList::getError() const {
+    return m_error;
 }

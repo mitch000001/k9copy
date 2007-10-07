@@ -57,7 +57,8 @@ protected:
     virtual void leTitleChanged(const QString &_value);
     virtual void cbPosTitleActivated(int _value);
     virtual void bAddTextClick();
-    virtual void cbStartActivated (int _value);
+    virtual void cbStartActivated (int _value); 
+    virtual void cbEndActivated (int _value);
     k9MenuEditor *m_menuEditor;
     QCanvas *m_canvas;
     QImage m_background;
@@ -66,6 +67,7 @@ protected:
     int m_imageHeight;
     eMenuType m_menuType;
     QStringList m_startScripts;
+    QStringList m_endScripts;
     bool m_noUpdate;
 protected slots:
     /*$PROTECTED_SLOTS$*/
@@ -73,6 +75,7 @@ signals:
     void backgroundImageChanged(const QImage &);
     void textChanged(const QString&);
     void startScriptChanged(const QString&);
+    void endScriptChanged(const QString&);
     void textColorChanged(const QColor &);
     void textFontChanged(const QFont&);
     void updatePos(const QPoint &);

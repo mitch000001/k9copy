@@ -49,6 +49,7 @@ void k9NewTitle::drawImage (QImage *_image) {
 }
 
 void k9NewTitle::bAddClicked() {
+    k9Config config;
     k9AviDecode fileInfo(0,0);
     if (!fileInfo.open(m_fileName)) {
         KMessageBox::error(this,fileInfo.getError(),i18n("Add title"));
@@ -88,10 +89,11 @@ void k9NewTitle::bAddClicked() {
 
     double pos=0;
     k9AviFile *last=NULL;
-    int left=-80;
+    int width=config.getPrefButtonWidth();
+    int height=config.getPrefButtonHeight();
+    int left=-width+20;
     int top=50;
-    int width=100;
-    int height=80;
+
     int i=-1;
     while ( pos <fileInfo.getDuration() && i <maxCh-1){    
     //fileInfo.open(m_fileName);
@@ -131,10 +133,11 @@ void k9NewTitle::bAddClicked() {
         btn->setTop(top);
         btn->setLeft(left);
         btn->setWidth(width);
-        btn->setHeight(width);
+        btn->setHeight(height);
         btn->setScript(QString("jump title 1 chapter %1 ;").arg(i+1));
         btn->setTextPosition(k9MenuButton::BOTTOM);
         btn->setText(i18n("chapter %1").arg(i+1));
+        btn->setColor(config.getPrefButtonTextColor());
         connect(file,SIGNAL(imageChanged(const QImage&)),btn,SLOT(setImage(const QImage&)));
 
     }

@@ -59,6 +59,12 @@ k9settings::k9settings(QWidget *parent,const QString &caption):  KDialogBase (Ic
     m_prefPreview =new k9prefPreview(frPreview);
     grid->addWidget(m_prefPreview,0,0);
 
+    QFrame *frAuthor;
+    frAuthor=addPage(i18n("Authoring"),i18n("Authoring"),KGlobal::iconLoader()->loadIcon("author",KIcon::Panel,KIcon::SizeMedium));
+    grid = new QGridLayout(frAuthor, 0, 0, 10 );
+    m_prefAuthor =new k9prefAuthor(frAuthor);
+    grid->addWidget(m_prefAuthor,0,0);
+
 
     connect(this, SIGNAL(okClicked()), SLOT(slotOkClicked()));
     connect(this, SIGNAL(applyClicked()), SLOT(slotApplyClicked()));
@@ -70,6 +76,7 @@ void k9settings::slotOkClicked() {
     m_prefMPEG4->save();
     m_prefMencoder->save();
     m_prefPreview->save();
+    m_prefAuthor->save();
 }
 
 void k9settings::slotApplyClicked() {
@@ -79,11 +86,12 @@ void k9settings::slotApplyClicked() {
 }
 
 k9settings::~k9settings() {
-    delete m_configDlg;
+ /*   delete m_configDlg;
     delete m_prefDVD;
     delete m_prefMPEG4;
     delete m_prefMencoder;
     delete m_prefPreview;
+*/
 }
 
 #include "k9settings.moc"

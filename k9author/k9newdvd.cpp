@@ -50,12 +50,14 @@ int k9NewDVDItems::compareItems(QPtrCollection::Item item1,QPtrCollection::Item 
 void k9NewDVD::execute() {
     m_cancel=false;
     m_error="";
+    m_config=new k9Config();
   //  connect(m_process, SIGNAL(receivedStderr(KProcess *, char *, int)),this, SLOT(getStderr(KProcess *, char *, int) ));
 
     connect(&m_aviDecode,SIGNAL(drawFrame(QImage*)),this,SLOT(drawImage(QImage*)));
     k9Tools::clearOutput(m_workDir+"dvd");
     createXML();
     disconnect(&m_aviDecode,SIGNAL(drawFrame(QImage*)),this,SLOT(drawImage(QImage*)));
+    delete m_config;
 }
 
 #include "k9newdvd.moc"
@@ -106,6 +108,7 @@ void k9NewDVD::createXML() {
     }
     m_totalEncodedSize/=1024*1024;
     m_cancel=m_processList->getCancel();
+    bool error=false;
     if (!m_cancel) {
         QString dvdAuthor(m_workDir+"/"+KApplication::randomString(8)+".xml");
         QFile file( dvdAuthor);
@@ -121,6 +124,7 @@ void k9NewDVD::createXML() {
         *process << "dvdauthor" << "-x" << dvdAuthor;
         m_processList->execute();
         m_cancel=m_processList->getCancel();
+        error=m_processList->getError();
        // else
        //     m_error=i18n("An error occured while running dvdauthor");
 
@@ -128,6 +132,8 @@ void k9NewDVD::createXML() {
     }
     if (m_cancel)
         m_error=i18n("The dvd authoring was canceled");
+    else if (error)
+        m_error=i18n("An error occured while running DVDAuthor:\n")+ m_stdout;
     QFile::remove(menuFileName);
     for ( QStringList::Iterator it = m_tmpFiles.begin(); it != m_tmpFiles.end(); ++it ) {
         QFile::remove(*it);
@@ -173,7 +179,7 @@ void k9NewDVD::addTitles (QDomElement &_root) {
         eTitle.appendChild(pgc);
         QDomElement post=m_xml->createElement("post");
         pgc.appendChild(post);
-        QDomText txt=m_xml->createTextNode("call vmgm menu;");
+        QDomText txt=m_xml->createTextNode(title->getMenu()->getEndScript());
         post.appendChild(txt);
 
         QPtrList <k9AviFile > *l=title->getFiles();
@@ -247,9 +253,9 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
     //m_process->clearArguments();
     *process << "mencoder" << "-oac" << "lavc" << "-ovc" << "lavc" << "-of" << "mpeg";
     *process << "-mpegopts" << "format=dvd" << "-vf" << "scale="+scale+",harddup" << "-srate" << "48000" << "-af" << "lavcresample=48000";
-    *process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=ac3:abitrate=192:aspect=16/9").arg(m_videoBitrate);
+    *process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=%3:abitrate=%2:aspect=16/9").arg(m_videoBitrate).arg(m_config->getPrefAudioBitrate()).arg(m_config->getPrefAudioFormat().lower());
     *process << "-ofps" << fps << "-o" << fileName << "-ss" << t1 << "-endpos" << t2 << _aviFile->getFileName();
-   
+    qDebug(process->debug()); 
 /*
     if (!m_progress->execute()) {
         m_cancel=true;
@@ -266,6 +272,7 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
 
 void k9NewDVD::getStderr(KProcess *_process, char *_buffer, int _length) {
     QCString tmp(_buffer,_length);
+    m_stdout=tmp;
     int pos;
     if (tmp.contains("STAT:")) {
         pos=tmp.find("fixing VOBU");
@@ -349,26 +356,36 @@ void k9NewDVD::getStdout(KProcess *_process, char *_buffer, int _length) {
 }
 
 void k9NewDVD::appendTitle(k9Title *_title) {
+    m_config=new k9Config();
     m_titles.append(_title);
     m_titles.sort();
     //create the menu button
     k9MenuButton *btn=m_rootMenu->addButton();
     _title->setButton(btn);
     btn->setNum(_title->getNum()+1);
-    QPixmap px(50,50);
+    QPixmap px(m_config->getPrefButtonWidth(),m_config->getPrefButtonHeight());
     px.fill(Qt::black);
     QImage img=px.convertToImage();
     btn->setImage(img);
-    int top=(int) _title->getNum()/3 ;
-    int left=_title->getNum() %3;
-    btn->setTop(top*150 +50);
-    btn->setLeft(left*200 +50);
-    btn->setWidth(90);
-    btn->setHeight(70);
+    int nbColumn=(720-50)/(m_config->getPrefButtonWidth()+50);
+    int top=(int) _title->getNum()/nbColumn ;
+    int left=_title->getNum() %nbColumn;
+    btn->setTop(top*(m_config->getPrefButtonHeight()+20) +50);
+    btn->setLeft(left*(m_config->getPrefButtonWidth()+50) +50);
+    btn->setWidth(m_config->getPrefButtonWidth());
+    btn->setHeight(m_config->getPrefButtonHeight());
     btn->setScript(QString("g1=0;jump titleset %1  menu;").arg(_title->getNum()+1));
     btn->setTextPosition(k9MenuButton::RIGHT);
     btn->setText(i18n("title %1").arg(_title->getNum()+1));
+    btn->setColor(m_config->getPrefButtonTextColor());
+
+    QString script="\n";
+    for (k9Title *t = m_titles.first();t;t=m_titles.next()) {
+        script +=QString("if (g6== %1) { g6=0; jump titleset %2 menu;}\n").arg(t->getNum()+1).arg(t->getNum()+1);
+    }
+    m_rootMenu->setStartScript2(script);
     emit sigAddTitle();
+    delete m_config;
 }
 
 
@@ -396,10 +413,10 @@ void k9NewDVD::calcVideoBitrate() {
             length+=chapter->getStart().msecsTo(chapter->getEnd());
         }
     }
-    int size=4400;
+    int size=m_config->getPrefSize();
     double sec=(double)length/1000.0;
    // m_videoBitrate=(int)( (size * 8388.608)/sec  - 192);
-    m_videoBitrate=8*((size*1024 - (192 * sec/8))/sec);
+    m_videoBitrate=8*((size*1024 - (m_config->getPrefAudioBitrate() * sec/8))/sec);
     m_videoBitrate=QMIN(m_videoBitrate,9800);
 }
 

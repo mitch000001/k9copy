@@ -20,6 +20,7 @@
 #include "k9process.h"
 #include "k9progress.h"
 #include "k9avidecode.h"
+#include "k9config.h"
 
 
 /**
@@ -73,6 +74,7 @@ private:
     k9Menu *m_rootMenu;
     bool m_cancel;
     QString m_error;
+    QString m_stdout;
     int m_videoBitrate;
     k9AviDecode m_aviDecode;
     int m_totalEncodedSize;
@@ -81,6 +83,7 @@ private:
     QMap <k9Process*,QTime> m_timers;
     void calcVideoBitrate();
     void createMencoderCmd ( QString &_cmd,QString &_chapters, k9AviFile *_aviFile );
+    k9Config *m_config;
 protected slots:
     void getStdout ( KProcess *, char *, int );
     void getStderr ( KProcess *, char *, int );

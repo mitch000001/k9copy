@@ -239,12 +239,18 @@ void k9MenuEdit::setCanvas(QCanvas* _value) {
 
 void k9MenuEdit::titleSelected(k9Title *_title) {
     disconnect (this,SIGNAL(startScriptChanged(const QString&)),0,0);
+    disconnect (this,SIGNAL(endScriptChanged(const QString&)),0,0);
+    cbEnd->setEnabled(true);
     m_menuEditor->clearSelection();
     lTitle->setText(i18n("Title %1 Menu").arg(_title->getNum()+1));
     setCanvas(_title->getMenu()->getCanvas());
     m_menuType=TITLEMENU;
     cbStart->clear();
+    cbEnd->clear();
     m_startScripts.clear();
+    m_endScripts.clear();
+
+
     cbStart->insertItem(i18n("Play Menu"));
     m_startScripts << "";
     cbStart->insertItem(i18n("Play Title"));
@@ -252,10 +258,30 @@ void k9MenuEdit::titleSelected(k9Title *_title) {
     if (_title->getMenu()->getStartScript() !="")
         cbStart->setCurrentItem(cbStart->count()-1);
     connect (this,SIGNAL(startScriptChanged(const QString&)),_title->getMenu(),SLOT(setStartScript(const QString&)));
+
+    cbEnd->insertItem(i18n("Play Root Menu"));
+    m_endScripts << "g6=0; call vmgm menu;";
+    cbEnd->insertItem(i18n("Play Title Menu"));
+    m_endScripts << "call menu;";
+    k9NewDVD *newDVD=(k9NewDVD*)_title->parent() ;
+    k9NewDVDItems *items=newDVD->getTitles();
+    for (k9Title *title=items->first();title;title=items->next()) {
+        cbEnd->insertItem(i18n("Play Title %1").arg(title->getNum()+1));
+        QString script=QString("g6=%1; call vmgm menu;" ).arg(title->getNum()+1);
+        m_endScripts << script;
+    }
+    for (int i=0;i<m_endScripts.count();i++ ){
+        if (_title->getMenu()->getEndScript()== *(m_endScripts.at(i)))
+            cbEnd->setCurrentItem(i);
+    }
+    connect (this,SIGNAL(endScriptChanged(const QString&)),_title->getMenu(),SLOT(setEndScript(const QString&)));
+
 }
 
 void k9MenuEdit::rootSelected(k9NewDVD *_newDVD) {
     disconnect (this,SIGNAL(startScriptChanged(const QString&)),0,0);
+    disconnect (this,SIGNAL(endScriptChanged(const QString&)),0,0);
+    cbEnd->setEnabled(false);
     m_menuEditor->clearSelection();
     lTitle->setText(i18n("Root Menu"));
     setCanvas(_newDVD->getRootMenu()->getCanvas());
@@ -267,7 +293,8 @@ void k9MenuEdit::rootSelected(k9NewDVD *_newDVD) {
     k9NewDVDItems *items=_newDVD->getTitles();
     for (k9Title *title=items->first();title;title=items->next()) {
         cbStart->insertItem(i18n("Play Title %1").arg(title->getNum()+1));
-        QString script=QString("if (g5==0) {g5=1; jump title %1;}" ).arg(title->getNum()+1);
+       // QString script=QString("if (g5==0) {g5=1; jump title %1;}" ).arg(title->getNum()+1);
+        QString script=QString("g6=%1;" ).arg(title->getNum()+1);
         m_startScripts << script;
         if (script==_newDVD->getRootMenu()->getStartScript())
             cbStart->setCurrentItem(cbStart->count()-1);
@@ -287,3 +314,6 @@ void k9MenuEdit::cbStartActivated (int _value) {
     emit startScriptChanged(m_startScripts[_value]);
 }
 
+void k9MenuEdit::cbEndActivated (int _value) {
+    emit endScriptChanged(m_endScripts[_value]);
+}

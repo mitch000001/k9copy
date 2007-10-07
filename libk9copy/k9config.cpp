@@ -73,6 +73,18 @@ void k9Config::read() {
   m_useGL=m_config->readBoolEntry("useGL",false);
   m_MplayerVout=m_config->readNumEntry("MplayerVout",0);
   m_MplayerAout=m_config->readNumEntry("MplayerAout",0);
+
+  m_config->setGroup("authoring");
+  m_prefAudioFormat=m_config->readEntry("audioFormat","AC3");
+  m_prefAudioBitrate=m_config->readNumEntry("audioBitrate",192);
+  m_prefButtonWidth=m_config->readNumEntry("buttonWidth",50);
+  m_prefButtonHeight=m_config->readNumEntry("buttonHeight",40);
+  m_prefButtonHiliteColor=m_config->readColorEntry("buttonHiliteColor",&QColor(Qt::yellow));
+  m_prefButtonTextColor=m_config->readColorEntry("buttonTextColor",&QColor(Qt::yellow));
+
+  m_prefButtonFont=m_config->readFontEntry("buttonFont");
+
+
 }
 
 void k9Config::save() {
@@ -124,6 +136,15 @@ void k9Config::save() {
   m_config->writeEntry("useGL",m_useGL);
   m_config->writeEntry("MplayerVout",m_MplayerVout);
   m_config->writeEntry("MplayerAout",m_MplayerAout);
+
+  m_config->setGroup("authoring");
+  m_config->writeEntry("audioFormat",m_prefAudioFormat);
+  m_config->writeEntry("audioBitrate",m_prefAudioBitrate);
+  m_config->writeEntry("buttonWidth",m_prefButtonWidth);
+  m_config->writeEntry("buttonHeight",m_prefButtonHeight);
+  m_config->writeEntry("buttonHiliteColor",m_prefButtonHiliteColor);
+  m_config->writeEntry("buttonTextColor",m_prefButtonTextColor);
+  m_config->writeEntry("buttonFont",m_prefButtonFont);
 
 }
 

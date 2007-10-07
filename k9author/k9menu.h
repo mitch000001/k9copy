@@ -13,6 +13,7 @@
 #define K9MENU_H
 
 #include "k9common.h"
+#include "k9config.h"
 #include <qobject.h>
 #include <qptrlist.h>
 #include <qimage.h>
@@ -27,6 +28,7 @@ class k9Menu : public QObject {
     Q_OBJECT
 public slots:
     void setStartScript(const QString &);
+    void setStartScript2(const QString &);
     void setEndScript(const QString& _value);
 
 public:
@@ -48,6 +50,7 @@ public:
 
     QString getStartScript() const;
     QString getEndScript() const;
+    QString getStartScript2() const;
 private:
     QPtrList <k9MenuButton> m_buttons;
     QString m_workDir;
@@ -55,7 +58,9 @@ private:
     eFormat m_format;
     QCanvas *m_canvas;
     QString m_startScript;
+    QString m_startScript2;
     QString m_endScript;
+    k9Config *m_config;
     void convertJpegToMpeg(const QString &_imageJpg,const QString &_imageMpg) ;
     void createAudio(const QString & _audioFile);
     void multiplex(const QString &_audio, const QString &_video, const QString _result);

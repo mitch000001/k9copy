@@ -36,6 +36,9 @@ public:
     int getMaxProcess() const;
     bool getCancel() const;
     void clear();
+
+	bool getError() const;
+	
 public slots:
     /*$PUBLIC_SLOTS$*/
 
@@ -46,6 +49,7 @@ protected:
     QPtrList <k9Process> m_processes;
     QTimer m_timer;
     bool m_cancel;
+    bool m_error;
     bool m_waitSync;
     int getNbRunning();
     void wait(int _msec);
@@ -54,6 +58,7 @@ protected slots:
     /*$PROTECTED_SLOTS$*/
     void timeout();
     virtual void bCancelClick();
+    virtual void processExited(KProcess *);
 };
 
 #endif
