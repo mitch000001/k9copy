@@ -378,6 +378,7 @@ void k9NewDVD::appendTitle(k9Title *_title) {
     btn->setTextPosition(k9MenuButton::RIGHT);
     btn->setText(i18n("title %1").arg(_title->getNum()+1));
     btn->setColor(m_config->getPrefButtonTextColor());
+    btn->setFont(m_config->getPrefButtonFont());
 
     QString script="\n";
     for (k9Title *t = m_titles.first();t;t=m_titles.next()) {

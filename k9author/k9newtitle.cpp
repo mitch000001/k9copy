@@ -138,6 +138,7 @@ void k9NewTitle::bAddClicked() {
         btn->setTextPosition(k9MenuButton::BOTTOM);
         btn->setText(i18n("chapter %1").arg(i+1));
         btn->setColor(config.getPrefButtonTextColor());
+        btn->setFont(config.getPrefButtonFont());
         connect(file,SIGNAL(imageChanged(const QImage&)),btn,SLOT(setImage(const QImage&)));
 
     }
