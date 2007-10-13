@@ -61,6 +61,7 @@ void k9Import::readDrives() {
     cbOutputDev->clear();
     recorderList.clear();
     cbOutputDev->insertItem(i18n("ISO Image"));
+    cbOutputDev->insertItem(i18n("Folder"));
 
     drives->scanDrives();
 
@@ -74,7 +75,7 @@ void k9Import::deviceRemoved(k9CdDrive *_drive) {
 
     int i=recorderList.find(_drive);
     recorderList.remove( i);
-    cbOutputDev->removeItem(i+1);
+    cbOutputDev->removeItem(i+2);
 
 }
 
@@ -171,24 +172,29 @@ void k9Import::removeProgressWindow() {
 
 void k9Import::execute() {
     QString filename;
+    k9Config config;
+    QString outputDir=config.getPrefOutput();
     if (cbOutputDev->currentItem() ==0) {
         filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Save image to disk"));
         if (filename =="")
             return;
+    } else if (cbOutputDev->currentItem()==1) {
+       outputDir= KFileDialog::getExistingDirectory(QDir::homeDirPath());
+       if (outputDir=="")
+       return;
     }
 
-    k9Config config;
 //    k9Progress *progress=new k9Progress(m_parent,0);
 //    m_newDVD.setProgress(progress);
 //    setProgressWindow(progress);
     k9ProcessList *p=new k9ProcessList(this,0,0);
     setProgressWindow(p);
     m_newDVD.setProcessList(p);
-    m_newDVD.setWorkDir(config.getPrefOutput());
+    m_newDVD.setWorkDir(outputDir);
     m_newDVD.execute();
     removeProgressWindow();
     bool burn=(m_newDVD.getError()=="") ;
-    if (burn) {
+    if (burn && cbOutputDev->currentItem()!=1) {
         //changeStatusbar(i18n("Burning DVD"),sbMessage);
 
         k9BurnDVD b;

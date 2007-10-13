@@ -375,12 +375,19 @@ void k9Main::Copy()
   }
   setDVDSize();
   updateSelection();
+  
+  QString outputDir=m_prefOutput;
+  bool burn=false;
 
   if (cbOutputDev->currentItem() ==0)
   {
     filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.iso", 0,i18n("Save image to disk"));
     if (filename =="")
       return;
+  } else if (cbOutputDev->currentItem()==1) {
+    outputDir= KFileDialog::getExistingDirectory(QDir::homeDirPath());
+    if (outputDir=="")
+       return;
   }
 
   if (getFreeSpace( m_prefOutput) <  m_prefSize)
@@ -390,7 +397,6 @@ void k9Main::Copy()
   }
   stopPreview();
   changeStatusbar( i18n("Backup in progress"),sbMessage);
-  bool burn=false;
   if (!m_useDvdAuthor || withMenus())
   {
     //copy with k9DVDBackup
@@ -400,7 +406,7 @@ void k9Main::Copy()
     k9DVDBackup *backup=new k9DVDBackup(dvd,"backup");
     
     setProgressWindow(backup->getDialog());
-    backup->setOutput(m_prefOutput);
+    backup->setOutput(outputDir);
     backup->setDevice(dvd->getDevice());
     backup->setWithMenus( withMenus());
     backup->execute();
@@ -424,7 +430,7 @@ void k9Main::Copy()
     delete b;
   }
 
-  if (burn)
+  if (burn && cbOutputDev->currentItem()!=1)
   {
     changeStatusbar(i18n("Burning DVD"),sbMessage);
 
@@ -436,7 +442,7 @@ void k9Main::Copy()
     b.setAutoBurn(m_prefAutoBurn);
     b.setvolId(dvd->getDVDTitle());
     b.setSpeed( cbBurnSpeed->currentText());
-    if (cbOutputDev->currentItem() !=0)
+    if (cbOutputDev->currentItem() >1)
     {
       k9CdDrive * drive=(k9CdDrive*)recorderList.at(cbOutputDev->currentItem()-1);
       b.setburnDevice(drive->device);
@@ -1204,7 +1210,7 @@ void k9Main::deviceRemoved(k9CdDrive *_drive) {
   
   i=recorderList.find(_drive);
   recorderList.remove( i);
-  cbOutputDev->removeItem(i+1);  
+  cbOutputDev->removeItem(i+2);  
 
 }
 
@@ -1239,6 +1245,7 @@ void k9Main::readDrives()
   driveList.clear();
   recorderList.clear();
   cbOutputDev->insertItem(i18n("ISO Image"));
+  cbOutputDev->insertItem(i18n("Folder"));
   
   drives->scanDrives();
 
@@ -1420,7 +1427,7 @@ void k9Main::setOutput(QString _output)
     //        qDebug ("output=" +c);
     if (c==_output)
     {
-      cbOutputDev->setCurrentItem(i+1);
+      cbOutputDev->setCurrentItem(i+2);
       break;
     }
   }

@@ -200,6 +200,8 @@ void k9NewDVD::addTitles (QDomElement &_root) {
 
 void k9NewDVD::setWorkDir ( const QString& _value ) {
     m_workDir = _value;
+    if (!m_workDir.endsWith("/"))
+        m_workDir +="/";
 }
 
 void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_aviFile) {
