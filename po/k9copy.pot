@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-29 23:25+0200\n"
+"POT-Creation-Date: 2007-10-14 09:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,13 +31,15 @@ msgstr ""
 msgid "Current step"
 msgstr ""
 
-#: rc.cpp:12 rc.cpp:29 rc.cpp:47 debug/libk9copy/backupdlg.cpp:159
-#: debug/libk9copy/mp4dlg.cpp:149 debug/libk9copy/progress.cpp:121
+#: rc.cpp:12 rc.cpp:47 rc.cpp:65 debug/libk9copy/backupdlg.cpp:159
+#: debug/libk9copy/mp4dlg.cpp:148 debug/libk9copy/progress.cpp:116
 #, no-c-format
 msgid "Elapsed Time"
 msgstr ""
 
-#: rc.cpp:15 debug/libk9copy/backupdlg.cpp:160
+#: rc.cpp:15 rc.cpp:612 rc.cpp:640 rc.cpp:666
+#: debug/libk9copy/backupdlg.cpp:160 debug/k9author/newTitle.cpp:131
+#: debug/k9author/chapterEdit.cpp:154 debug/k9author/import.cpp:111
 #, no-c-format
 msgid "--:--:--"
 msgstr ""
@@ -47,343 +49,424 @@ msgstr ""
 msgid "k9Copy - DVD Analyze"
 msgstr ""
 
-#: rc.cpp:25 debug/libk9copy/progress.cpp:119 debug/src/progress.cpp:78
+#: rc.cpp:25 debug/libk9copy/processList.cpp:68
+#, no-c-format
+msgid "Process List"
+msgstr ""
+
+#: rc.cpp:28 debug/libk9copy/processList.cpp:33
+#: debug/libk9copy/processList.cpp:69
+#, no-c-format
+msgid "Processes"
+msgstr ""
+
+#: rc.cpp:31 debug/libk9copy/processList.cpp:34
+#: debug/libk9copy/processList.cpp:70
+#, no-c-format
+msgid "Elapsed"
+msgstr ""
+
+#: rc.cpp:34 rc.cpp:603 debug/libk9copy/processList.cpp:35
+#: debug/libk9copy/processList.cpp:71 debug/k9author/import.cpp:46
+#: debug/k9author/import.cpp:107
+#, no-c-format
+msgid "..."
+msgstr ""
+
+#: rc.cpp:40 debug/libk9copy/processList.cpp:73 debug/src/progress.cpp:81
+#, no-c-format
+msgid "Alt+C"
+msgstr ""
+
+#: rc.cpp:43 debug/libk9copy/progress.cpp:114 debug/src/progress.cpp:78
 #: debug/src/k9copy.moc.cpp:34 debug/src/k9copy.moc.cpp:42
 #, no-c-format
 msgid "k9Copy"
 msgstr ""
 
-#: rc.cpp:34 debug/libk9copy/mp4dlg.cpp:142
+#: rc.cpp:52 debug/libk9copy/mp4dlg.cpp:141
 #, no-c-format
 msgid "k9Copy - transcoding"
 msgstr ""
 
-#: rc.cpp:37 debug/libk9copy/mp4dlg.cpp:143
+#: rc.cpp:55 debug/libk9copy/mp4dlg.cpp:142
 #, no-c-format
 msgid "Encoding"
 msgstr ""
 
-#: rc.cpp:44 debug/libk9copy/mp4dlg.cpp:148
+#: rc.cpp:62 debug/libk9copy/mp4dlg.cpp:147 k9author/k9newdvd.cpp:344
 #, no-c-format
 msgid "fps"
 msgstr ""
 
-#: rc.cpp:50 rc.cpp:136 rc.cpp:163 debug/libk9copy/mp4dlg.cpp:150
-#: debug/src/prefMPEG4.cpp:337 debug/src/prefMPEG4.cpp:347
+#: rc.cpp:68 rc.cpp:154 rc.cpp:181 rc.cpp:284 debug/libk9copy/mp4dlg.cpp:149
+#: debug/src/prefAuthor.cpp:147 debug/src/prefMPEG4.cpp:337
+#: debug/src/prefMPEG4.cpp:347
 #, no-c-format
 msgid "Bitrate"
 msgstr ""
 
-#: rc.cpp:53 rc.cpp:197 rc.cpp:214 debug/libk9copy/mp4dlg.cpp:151
+#: rc.cpp:71 rc.cpp:215 rc.cpp:232 debug/libk9copy/mp4dlg.cpp:150
 #: debug/src/k9mainw.cpp:66 debug/src/k9mainw.cpp:161
 #, no-c-format
 msgid "Size"
 msgstr ""
 
-#: rc.cpp:56 debug/src/mencoderCmdGen.cpp:98 src/k9mencodercmdgen.cpp:55
+#: rc.cpp:74 debug/src/mencoderCmdGen.cpp:98 src/k9mencodercmdgen.cpp:55
 #, no-c-format
 msgid "MEncoder options"
 msgstr ""
 
-#: rc.cpp:60 debug/src/mencoderCmdGen.cpp:108 src/k9mencodercmdgen.cpp:68
+#: rc.cpp:78 debug/src/mencoderCmdGen.cpp:108 src/k9mencodercmdgen.cpp:68
 #, no-c-format
 msgid "Audio Codec"
 msgstr ""
 
-#: rc.cpp:63 rc.cpp:151 debug/src/prefMPEG4.cpp:343
+#: rc.cpp:81 rc.cpp:169 debug/src/prefMPEG4.cpp:343
 #: debug/src/mencoderCmdGen.cpp:104
 #, no-c-format
 msgid "faac"
 msgstr ""
 
-#: rc.cpp:66 rc.cpp:78 debug/src/mencoderCmdGen.cpp:107
+#: rc.cpp:84 rc.cpp:96 debug/src/mencoderCmdGen.cpp:107
 #: debug/src/mencoderCmdGen.cpp:119
 #, no-c-format
 msgid "lavc"
 msgstr ""
 
-#: rc.cpp:69 debug/src/mencoderCmdGen.cpp:120 src/k9mencodercmdgen.cpp:84
+#: rc.cpp:87 debug/src/mencoderCmdGen.cpp:120 src/k9mencodercmdgen.cpp:84
 #, no-c-format
 msgid "Video Codec"
 msgstr ""
 
-#: rc.cpp:72 rc.cpp:103 rc.cpp:323 debug/src/prefMPEG4.cpp:323
+#: rc.cpp:90 rc.cpp:121 rc.cpp:388 debug/src/prefMPEG4.cpp:323
 #: debug/src/prefMencoder.cpp:299 debug/src/mencoderCmdGen.cpp:113
 #, no-c-format
 msgid "x264"
 msgstr ""
 
-#: rc.cpp:75 debug/src/mencoderCmdGen.cpp:116
+#: rc.cpp:93 debug/src/mencoderCmdGen.cpp:116
 #, no-c-format
 msgid "xvid"
 msgstr ""
 
-#: rc.cpp:81 rc.cpp:248 rc.cpp:300 debug/src/prefMPEG4.cpp:315
+#: rc.cpp:99 rc.cpp:313 rc.cpp:365 debug/src/prefMPEG4.cpp:315
 #: debug/src/prefMencoder.cpp:286 debug/src/prefpreview.cpp:140
 #, no-c-format
 msgid "Form1"
 msgstr ""
 
-#: rc.cpp:85 debug/src/prefMPEG4.cpp:339
+#: rc.cpp:103 debug/src/prefMPEG4.cpp:339
 #, no-c-format
 msgid "Video"
 msgstr ""
 
-#: rc.cpp:88 debug/src/prefMPEG4.cpp:317
+#: rc.cpp:106 debug/src/prefMPEG4.cpp:317
 #, no-c-format
 msgid "2 pass"
 msgstr ""
 
-#: rc.cpp:91 debug/src/prefMPEG4.cpp:318
+#: rc.cpp:109 debug/src/prefMPEG4.cpp:318
 #, no-c-format
 msgid "Alt+2"
 msgstr ""
 
-#: rc.cpp:94 rc.cpp:145 debug/src/prefMPEG4.cpp:319
+#: rc.cpp:112 rc.cpp:163 debug/src/prefMPEG4.cpp:319
 #: debug/src/prefMPEG4.cpp:340
 #, no-c-format
 msgid "Codec"
 msgstr ""
 
-#: rc.cpp:97 rc.cpp:320 debug/src/prefMPEG4.cpp:321
+#: rc.cpp:115 rc.cpp:385 debug/src/prefMPEG4.cpp:321
 #: debug/src/prefMencoder.cpp:298
 #, no-c-format
 msgid "XviD"
 msgstr ""
 
-#: rc.cpp:100 debug/src/prefMPEG4.cpp:322
+#: rc.cpp:118 debug/src/prefMPEG4.cpp:322
 #, no-c-format
 msgid "lavc MPEG4"
 msgstr ""
 
-#: rc.cpp:112 debug/src/prefMPEG4.cpp:327
+#: rc.cpp:130 debug/src/prefMPEG4.cpp:327
 #, no-c-format
 msgid "640"
 msgstr ""
 
-#: rc.cpp:116 debug/src/prefMPEG4.cpp:329
+#: rc.cpp:134 debug/src/prefMPEG4.cpp:329
 #, no-c-format
 msgid "&keep aspect ratio"
 msgstr ""
 
-#: rc.cpp:119 rc.cpp:428 debug/src/playbackoptionsw.cpp:230
+#: rc.cpp:137 rc.cpp:493 debug/src/playbackoptionsw.cpp:230
 #: debug/src/prefMPEG4.cpp:330
 #, no-c-format
 msgid "Alt+K"
 msgstr ""
 
-#: rc.cpp:123 rc.cpp:188 rc.cpp:220 debug/src/prefMPEG4.cpp:332
+#: rc.cpp:141 rc.cpp:206 rc.cpp:238 debug/src/prefMPEG4.cpp:332
 #: debug/src/k9mainw.cpp:163
 #, no-c-format
 msgid "X"
 msgstr ""
 
-#: rc.cpp:127 debug/src/prefMPEG4.cpp:334
+#: rc.cpp:145 debug/src/prefMPEG4.cpp:334
 #, no-c-format
 msgid "File size"
 msgstr ""
 
-#: rc.cpp:130 debug/src/prefMPEG4.cpp:335
+#: rc.cpp:148 debug/src/prefMPEG4.cpp:335
 #, no-c-format
 msgid "Alt+S"
 msgstr ""
 
-#: rc.cpp:133 debug/src/prefMPEG4.cpp:336
+#: rc.cpp:151 debug/src/prefMPEG4.cpp:336
 #, no-c-format
 msgid " MB"
 msgstr ""
 
-#: rc.cpp:139 rc.cpp:454 debug/src/prefMPEG4.cpp:338 debug/src/prefDVD.cpp:100
+#: rc.cpp:157 rc.cpp:519 debug/src/prefMPEG4.cpp:338 debug/src/prefDVD.cpp:100
 #, no-c-format
 msgid "Alt+B"
 msgstr ""
 
-#: rc.cpp:142 rc.cpp:442 rc.cpp:510 debug/src/playbackoptionsw.cpp:236
+#: rc.cpp:160 rc.cpp:263 rc.cpp:507 rc.cpp:575
+#: debug/src/playbackoptionsw.cpp:236 debug/src/prefAuthor.cpp:138
 #: debug/src/prefMPEG4.cpp:350 debug/k9Mplayer/mplayer.cpp:594
 #: src/k9langselect.cpp:79
 #, no-c-format
 msgid "Audio"
 msgstr ""
 
-#: rc.cpp:148 debug/src/prefMPEG4.cpp:342
+#: rc.cpp:166 debug/src/prefMPEG4.cpp:342
 #, no-c-format
 msgid "mp3"
 msgstr ""
 
-#: rc.cpp:154 debug/src/prefMPEG4.cpp:344
+#: rc.cpp:172 debug/src/prefMPEG4.cpp:344
 #, no-c-format
 msgid "mp2"
 msgstr ""
 
-#: rc.cpp:157 debug/src/prefMPEG4.cpp:345
+#: rc.cpp:175 debug/src/prefMPEG4.cpp:345
 #, no-c-format
 msgid "ac3"
 msgstr ""
 
-#: rc.cpp:160 debug/src/prefMPEG4.cpp:346
+#: rc.cpp:178 debug/src/prefMPEG4.cpp:346
 #, no-c-format
 msgid "adpcm ima"
 msgstr ""
 
-#: rc.cpp:167 debug/src/prefMPEG4.cpp:349
+#: rc.cpp:185 debug/src/prefMPEG4.cpp:349
 #, no-c-format
 msgid "Gain"
 msgstr ""
 
-#: rc.cpp:170 debug/src/prefMPEG4.cpp:351
+#: rc.cpp:188 debug/src/prefMPEG4.cpp:351
 #, no-c-format
 msgid "use cell cache"
 msgstr ""
 
-#: rc.cpp:173 rc.cpp:202 debug/src/k9mainw.cpp:157
+#: rc.cpp:191 rc.cpp:220 debug/src/k9mainw.cpp:157
 #, no-c-format
 msgid "MainDlg"
 msgstr ""
 
-#: rc.cpp:176 rc.cpp:205 debug/src/k9mainw.cpp:158
+#: rc.cpp:194 rc.cpp:223 debug/src/k9mainw.cpp:158
 #, no-c-format
 msgid "Output device "
 msgstr ""
 
-#: rc.cpp:179 rc.cpp:226 debug/src/k9mainw.cpp:166
+#: rc.cpp:197 rc.cpp:244 debug/src/k9mainw.cpp:166
 #, no-c-format
 msgid "@"
 msgstr ""
 
-#: rc.cpp:182
+#: rc.cpp:200
 #, no-c-format
 msgid "Input device "
 msgstr ""
 
-#: rc.cpp:185 rc.cpp:223 debug/src/k9mainw.cpp:165 libk9copy/k9burndvd.cpp:178
-#: libk9copy/k9burndvd.cpp:278 src/k9main.cpp:1363
-#: src/k9playbackoptions.cpp:147
+#: rc.cpp:203 rc.cpp:241 debug/src/k9mainw.cpp:165 libk9copy/k9burndvd.cpp:178
+#: libk9copy/k9burndvd.cpp:278 src/k9main.cpp:1344
+#: src/k9playbackoptions.cpp:147 k9author/k9import.cpp:207
 #, no-c-format
 msgid "default"
 msgstr ""
 
-#: rc.cpp:191
+#: rc.cpp:209
 #, no-c-format
 msgid "D&VD"
 msgstr ""
 
-#: rc.cpp:194 rc.cpp:211 debug/src/k9mainw.cpp:65 debug/src/k9mainw.cpp:160
+#: rc.cpp:212 rc.cpp:229 debug/src/k9mainw.cpp:65 debug/src/k9mainw.cpp:160
 #, no-c-format
 msgid "Title"
 msgstr ""
 
-#: rc.cpp:208 debug/src/k9mainw.cpp:159 src/main.cpp:36
+#: rc.cpp:226 debug/src/k9mainw.cpp:159 src/main.cpp:37
 #, no-c-format
 msgid "input device"
 msgstr ""
 
-#: rc.cpp:217 debug/src/k9mainw.cpp:68 debug/src/k9mainw.cpp:162
+#: rc.cpp:235 debug/src/k9mainw.cpp:68 debug/src/k9mainw.cpp:162
 #, no-c-format
 msgid "Content"
 msgstr ""
 
-#: rc.cpp:230 debug/src/k9mainw.cpp:168
+#: rc.cpp:248 debug/src/k9mainw.cpp:168
 #, no-c-format
 msgid "Open a folder"
 msgstr ""
 
-#: rc.cpp:234 debug/src/k9mainw.cpp:170
+#: rc.cpp:252 debug/src/k9mainw.cpp:170
 #, no-c-format
 msgid "Open an iso image"
 msgstr ""
 
-#: rc.cpp:237 debug/src/viewmpeg2.cpp:205
+#: rc.cpp:255 debug/src/viewmpeg2.cpp:205
 #, no-c-format
 msgid "k9Copy - Title Preview"
 msgstr ""
 
-#: rc.cpp:242 debug/src/langselectw.cpp:120 src/k9copy.cpp:56
+#: rc.cpp:260 debug/src/prefAuthor.cpp:137
+#, no-c-format
+msgid "Authoring options"
+msgstr ""
+
+#: rc.cpp:266 debug/src/prefAuthor.cpp:140
+#, no-c-format
+msgid "AC3"
+msgstr ""
+
+#: rc.cpp:269 debug/src/prefAuthor.cpp:141
+#, no-c-format
+msgid "MP2"
+msgstr ""
+
+#: rc.cpp:272 debug/src/prefAuthor.cpp:143
+#, no-c-format
+msgid "128"
+msgstr ""
+
+#: rc.cpp:275 debug/src/prefAuthor.cpp:144
+#, no-c-format
+msgid "192"
+msgstr ""
+
+#: rc.cpp:278 debug/src/prefAuthor.cpp:145
+#, no-c-format
+msgid "320"
+msgstr ""
+
+#: rc.cpp:281 debug/src/prefAuthor.cpp:146
+#, no-c-format
+msgid "Format"
+msgstr ""
+
+#: rc.cpp:287 debug/src/prefAuthor.cpp:148
+#, no-c-format
+msgid "Buttons"
+msgstr ""
+
+#: rc.cpp:299 debug/src/prefAuthor.cpp:152
+#, no-c-format
+msgid "Hilite color"
+msgstr ""
+
+#: rc.cpp:303 debug/src/prefAuthor.cpp:154
+#, no-c-format
+msgid "Text color"
+msgstr ""
+
+#: rc.cpp:307 debug/src/langselectw.cpp:120 src/k9copy.cpp:120
 #, no-c-format
 msgid "Selection"
 msgstr ""
 
-#: rc.cpp:245 debug/src/langselectw.cpp:93 debug/src/langselectw.cpp:121
+#: rc.cpp:310 debug/src/langselectw.cpp:93 debug/src/langselectw.cpp:121
 #, no-c-format
 msgid "Languages"
 msgstr ""
 
-#: rc.cpp:252 debug/src/prefpreview.cpp:142
+#: rc.cpp:317 debug/src/prefpreview.cpp:142
 #, no-c-format
 msgid "&Internal Player"
 msgstr ""
 
-#: rc.cpp:255 debug/src/prefpreview.cpp:143
+#: rc.cpp:320 debug/src/prefpreview.cpp:143
 #, no-c-format
 msgid "Alt+I"
 msgstr ""
 
-#: rc.cpp:258 debug/src/prefpreview.cpp:144
+#: rc.cpp:323 debug/src/prefpreview.cpp:144
 #, no-c-format
 msgid "MPlayer"
 msgstr ""
 
-#: rc.cpp:261 debug/src/prefpreview.cpp:145
+#: rc.cpp:326 debug/src/prefpreview.cpp:145
 #, no-c-format
 msgid "Alt+M"
 msgstr ""
 
-#: rc.cpp:264 debug/src/prefpreview.cpp:146
+#: rc.cpp:329 debug/src/prefpreview.cpp:146
 #, no-c-format
 msgid "Internal viewer options"
 msgstr ""
 
-#: rc.cpp:267 debug/src/prefpreview.cpp:147
+#: rc.cpp:332 debug/src/prefpreview.cpp:147
 #, no-c-format
 msgid "use OpenGL"
 msgstr ""
 
-#: rc.cpp:270 debug/src/prefpreview.cpp:148
+#: rc.cpp:335 debug/src/prefpreview.cpp:148
 #, no-c-format
 msgid "Video output"
 msgstr ""
 
-#: rc.cpp:273 debug/src/prefpreview.cpp:149
+#: rc.cpp:338 debug/src/prefpreview.cpp:149
 #, no-c-format
 msgid "Audio output"
 msgstr ""
 
-#: rc.cpp:276 debug/src/prefpreview.cpp:151
+#: rc.cpp:341 debug/src/prefpreview.cpp:151
 #, no-c-format
 msgid "X11"
 msgstr ""
 
-#: rc.cpp:279 debug/src/prefpreview.cpp:152
+#: rc.cpp:344 debug/src/prefpreview.cpp:152
 #, no-c-format
 msgid "Xv"
 msgstr ""
 
-#: rc.cpp:282 debug/src/prefpreview.cpp:153
+#: rc.cpp:347 debug/src/prefpreview.cpp:153
 #, no-c-format
 msgid "OpenGL"
 msgstr ""
 
-#: rc.cpp:285 rc.cpp:294 debug/src/prefpreview.cpp:154
+#: rc.cpp:350 rc.cpp:359 debug/src/prefpreview.cpp:154
 #: debug/src/prefpreview.cpp:158
 #, no-c-format
 msgid "SDL"
 msgstr ""
 
-#: rc.cpp:288 debug/src/prefpreview.cpp:156
+#: rc.cpp:353 debug/src/prefpreview.cpp:156
 #, no-c-format
 msgid "ALSA"
 msgstr ""
 
-#: rc.cpp:291 debug/src/prefpreview.cpp:157
+#: rc.cpp:356 debug/src/prefpreview.cpp:157
 #, no-c-format
 msgid "OSS"
 msgstr ""
 
-#: rc.cpp:297 debug/src/prefpreview.cpp:159
+#: rc.cpp:362 debug/src/prefpreview.cpp:159
 #, no-c-format
 msgid "MPlayer options"
 msgstr ""
 
-#: rc.cpp:303 debug/src/prefMencoder.cpp:287
+#: rc.cpp:368 debug/src/prefMencoder.cpp:287
 #, no-c-format
 msgid ""
 "$PASS\n"
@@ -393,7 +476,7 @@ msgid ""
 "$AUDBR"
 msgstr ""
 
-#: rc.cpp:310 debug/src/prefMencoder.cpp:292
+#: rc.cpp:375 debug/src/prefMencoder.cpp:292
 #, no-c-format
 msgid ""
 "pass number\n"
@@ -403,290 +486,430 @@ msgid ""
 "audio bitrate"
 msgstr ""
 
-#: rc.cpp:317 debug/src/prefMencoder.cpp:326
+#: rc.cpp:382 debug/src/prefMencoder.cpp:326
 #, no-c-format
 msgid "Video codecs"
 msgstr ""
 
-#: rc.cpp:326 debug/src/prefMencoder.cpp:300
+#: rc.cpp:391 debug/src/prefMencoder.cpp:300
 #, no-c-format
 msgid "MJPEG"
 msgstr ""
 
-#: rc.cpp:329 debug/src/prefMencoder.cpp:301
+#: rc.cpp:394 debug/src/prefMencoder.cpp:301
 #, no-c-format
 msgid "LJPEG"
 msgstr ""
 
-#: rc.cpp:332 debug/src/prefMencoder.cpp:302
+#: rc.cpp:397 debug/src/prefMencoder.cpp:302
 #, no-c-format
 msgid "H.261"
 msgstr ""
 
-#: rc.cpp:335 debug/src/prefMencoder.cpp:303
+#: rc.cpp:400 debug/src/prefMencoder.cpp:303
 #, no-c-format
 msgid "H.263"
 msgstr ""
 
-#: rc.cpp:338 debug/src/prefMencoder.cpp:304
+#: rc.cpp:403 debug/src/prefMencoder.cpp:304
 #, no-c-format
 msgid "MPEG-4 (DivX 4/5)"
 msgstr ""
 
-#: rc.cpp:341 debug/src/prefMencoder.cpp:305
+#: rc.cpp:406 debug/src/prefMencoder.cpp:305
 #, no-c-format
 msgid "DivX 3"
 msgstr ""
 
-#: rc.cpp:344 debug/src/prefMencoder.cpp:306
+#: rc.cpp:409 debug/src/prefMencoder.cpp:306
 #, no-c-format
 msgid "MS MPEG-4 v2"
 msgstr ""
 
-#: rc.cpp:347 debug/src/prefMencoder.cpp:307
+#: rc.cpp:412 debug/src/prefMencoder.cpp:307
 #, no-c-format
 msgid "WMV7"
 msgstr ""
 
-#: rc.cpp:350 debug/src/prefMencoder.cpp:308
+#: rc.cpp:415 debug/src/prefMencoder.cpp:308
 #, no-c-format
 msgid "WMV8"
 msgstr ""
 
-#: rc.cpp:353 debug/src/prefMencoder.cpp:309
+#: rc.cpp:418 debug/src/prefMencoder.cpp:309
 #, no-c-format
 msgid "RealVideo"
 msgstr ""
 
-#: rc.cpp:356 debug/src/prefMencoder.cpp:310
+#: rc.cpp:421 debug/src/prefMencoder.cpp:310
 #, no-c-format
 msgid "MPEG-1"
 msgstr ""
 
-#: rc.cpp:359 debug/src/prefMencoder.cpp:311
+#: rc.cpp:424 debug/src/prefMencoder.cpp:311
 #, no-c-format
 msgid "MPEG-2"
 msgstr ""
 
-#: rc.cpp:362 debug/src/prefMencoder.cpp:312
+#: rc.cpp:427 debug/src/prefMencoder.cpp:312
 #, no-c-format
 msgid "HuffYUV"
 msgstr ""
 
-#: rc.cpp:365 debug/src/prefMencoder.cpp:313
+#: rc.cpp:430 debug/src/prefMencoder.cpp:313
 #, no-c-format
 msgid "ffvHuff"
 msgstr ""
 
-#: rc.cpp:368 debug/src/prefMencoder.cpp:314
+#: rc.cpp:433 debug/src/prefMencoder.cpp:314
 #, no-c-format
 msgid "ASUS v1"
 msgstr ""
 
-#: rc.cpp:371 debug/src/prefMencoder.cpp:315
+#: rc.cpp:436 debug/src/prefMencoder.cpp:315
 #, no-c-format
 msgid "ASUS v2"
 msgstr ""
 
-#: rc.cpp:375 rc.cpp:400 rc.cpp:490 debug/src/configDlg.cpp:42
+#: rc.cpp:440 rc.cpp:465 rc.cpp:555 debug/src/configDlg.cpp:42
 #: debug/src/configDlg.cpp:95 debug/src/prefMencoder.cpp:317
 #: debug/src/prefMencoder.cpp:329
 #, no-c-format
 msgid "label"
 msgstr ""
 
-#: rc.cpp:378 debug/src/prefMencoder.cpp:318
+#: rc.cpp:443 debug/src/prefMencoder.cpp:318
 #, no-c-format
 msgid "fourcc"
 msgstr ""
 
-#: rc.cpp:381 debug/src/prefMencoder.cpp:319
+#: rc.cpp:446 debug/src/prefMencoder.cpp:319
 #, no-c-format
 msgid "first pass"
 msgstr ""
 
-#: rc.cpp:386 debug/src/prefMencoder.cpp:322
+#: rc.cpp:451 debug/src/prefMencoder.cpp:322
 #, no-c-format
 msgid "one pass"
 msgstr ""
 
-#: rc.cpp:391 debug/src/prefMencoder.cpp:325
+#: rc.cpp:456 debug/src/prefMencoder.cpp:325
 #, no-c-format
 msgid "second pass"
 msgstr ""
 
-#: rc.cpp:394 debug/src/prefMencoder.cpp:332
+#: rc.cpp:459 debug/src/prefMencoder.cpp:332
 #, no-c-format
 msgid "Audio codecs"
 msgstr ""
 
-#: rc.cpp:397 debug/src/prefMencoder.cpp:328
+#: rc.cpp:462 debug/src/prefMencoder.cpp:328
 #, no-c-format
 msgid "New Item"
 msgstr ""
 
-#: rc.cpp:404 debug/src/prefMencoder.cpp:331
+#: rc.cpp:469 debug/src/prefMencoder.cpp:331
 #, no-c-format
 msgid "options"
 msgstr ""
 
-#: rc.cpp:407 debug/src/prefMencoder.cpp:333
+#: rc.cpp:472 debug/src/prefMencoder.cpp:333
 #, no-c-format
 msgid "Available variables"
 msgstr ""
 
-#: rc.cpp:410 debug/src/titlefactor.cpp:321
+#: rc.cpp:475 debug/src/titlefactor.cpp:321
 #, no-c-format
 msgid "Shrink Factors"
 msgstr ""
 
-#: rc.cpp:413 debug/src/titlefactor.cpp:322
+#: rc.cpp:478 debug/src/titlefactor.cpp:322
 #, no-c-format
 msgid "Shrink Factor for Title %1"
 msgstr ""
 
-#: rc.cpp:416 debug/src/titlefactor.cpp:323
+#: rc.cpp:481 debug/src/titlefactor.cpp:323
 #, no-c-format
 msgid "Change Factor"
 msgstr ""
 
-#: rc.cpp:419 debug/src/titlefactor.cpp:324
+#: rc.cpp:484 debug/src/titlefactor.cpp:324
 #, no-c-format
 msgid "0.00"
 msgstr ""
 
-#: rc.cpp:422 debug/src/playbackoptionsw.cpp:228 src/k9copy.cpp:53
+#: rc.cpp:487 debug/src/playbackoptionsw.cpp:228 src/k9copy.cpp:114
 #, no-c-format
 msgid "DVD playback options"
 msgstr ""
 
-#: rc.cpp:425 debug/src/playbackoptionsw.cpp:229
+#: rc.cpp:490 debug/src/playbackoptionsw.cpp:229
 #, no-c-format
 msgid "&Keep original menus"
 msgstr ""
 
-#: rc.cpp:433 debug/src/playbackoptionsw.cpp:233
+#: rc.cpp:498 debug/src/playbackoptionsw.cpp:233
 #, no-c-format
 msgid "Selected Titles"
 msgstr ""
 
-#: rc.cpp:436 debug/src/playbackoptionsw.cpp:234
+#: rc.cpp:501 debug/src/playbackoptionsw.cpp:234
 #, no-c-format
 msgid "Default language"
 msgstr ""
 
-#: rc.cpp:439 debug/src/playbackoptionsw.cpp:235
+#: rc.cpp:504 debug/src/playbackoptionsw.cpp:235
 #, no-c-format
 msgid "Subtitle"
 msgstr ""
 
-#: rc.cpp:445 debug/src/prefDVD.cpp:97
+#: rc.cpp:510 debug/src/prefDVD.cpp:97
 #, no-c-format
 msgid "prefDVD"
 msgstr ""
 
-#: rc.cpp:448 debug/src/prefDVD.cpp:98
+#: rc.cpp:513 debug/src/prefDVD.cpp:98
 #, no-c-format
 msgid "Output directory"
 msgstr ""
 
-#: rc.cpp:451 debug/src/prefDVD.cpp:99
+#: rc.cpp:516 debug/src/prefDVD.cpp:99
 #, no-c-format
 msgid "Burn with k3b"
 msgstr ""
 
-#: rc.cpp:457 debug/src/prefDVD.cpp:101
+#: rc.cpp:522 debug/src/prefDVD.cpp:101
 #, no-c-format
 msgid "Auto burn"
 msgstr ""
 
-#: rc.cpp:460 debug/src/prefDVD.cpp:102
+#: rc.cpp:525 debug/src/prefDVD.cpp:102
 #, no-c-format
 msgid "Alt+T"
 msgstr ""
 
-#: rc.cpp:463 debug/src/prefDVD.cpp:103
+#: rc.cpp:528 debug/src/prefDVD.cpp:103
 #, no-c-format
 msgid "DVD size"
 msgstr ""
 
-#: rc.cpp:466 debug/src/prefDVD.cpp:104
+#: rc.cpp:531 debug/src/prefDVD.cpp:104
 #, no-c-format
 msgid "Quick scan"
 msgstr ""
 
-#: rc.cpp:469 debug/src/prefDVD.cpp:105
+#: rc.cpp:534 debug/src/prefDVD.cpp:105
 #, no-c-format
 msgid "Alt+Q"
 msgstr ""
 
-#: rc.cpp:472 debug/src/prefDVD.cpp:106
+#: rc.cpp:537 debug/src/prefDVD.cpp:106
 #, no-c-format
 msgid "use dvdAuthor for copy without menus"
 msgstr ""
 
-#: rc.cpp:475 debug/src/prefDVD.cpp:107
+#: rc.cpp:540 debug/src/prefDVD.cpp:107
 #, no-c-format
 msgid "Alt+D"
 msgstr ""
 
-#: rc.cpp:478 debug/src/prefDVD.cpp:108
+#: rc.cpp:543 debug/src/prefDVD.cpp:108
 #, no-c-format
 msgid "Clear output directory on exit"
 msgstr ""
 
-#: rc.cpp:481 debug/src/prefDVD.cpp:109
+#: rc.cpp:546 debug/src/prefDVD.cpp:109
 #, no-c-format
 msgid "Alt+Y"
 msgstr ""
 
-#: rc.cpp:484 debug/src/configDlg.cpp:93
+#: rc.cpp:549 debug/src/configDlg.cpp:93
 #, no-c-format
 msgid "k9Copy - Devices"
 msgstr ""
 
-#: rc.cpp:487 debug/src/configDlg.cpp:40 debug/src/configDlg.cpp:94
+#: rc.cpp:552 debug/src/configDlg.cpp:40 debug/src/configDlg.cpp:94
 #, no-c-format
 msgid "device"
 msgstr ""
 
-#: rc.cpp:493 debug/src/configDlg.cpp:44 debug/src/configDlg.cpp:96
+#: rc.cpp:558 debug/src/configDlg.cpp:44 debug/src/configDlg.cpp:96
 #, no-c-format
 msgid "Input"
 msgstr ""
 
-#: rc.cpp:496 debug/src/configDlg.cpp:46 debug/src/configDlg.cpp:97
+#: rc.cpp:561 rc.cpp:597 debug/src/configDlg.cpp:46 debug/src/configDlg.cpp:97
+#: debug/k9author/import.cpp:105
 #, no-c-format
 msgid "Output"
 msgstr ""
 
-#: rc.cpp:507 debug/k9Mplayer/mplayer.cpp:593 src/k9settings.cpp:57
-#: src/k9copy.cpp:64 src/k9copy.cpp:248 k9Mplayer/k9mplayer.cpp:97
+#: rc.cpp:572 debug/k9Mplayer/mplayer.cpp:593 src/k9settings.cpp:57
+#: src/k9copy.cpp:128 src/k9copy.cpp:390 k9Mplayer/k9mplayer.cpp:97
 #, no-c-format
 msgid "Preview"
 msgstr ""
 
-#: rc.cpp:513 debug/k9Mplayer/mplayer.cpp:595
+#: rc.cpp:578 debug/k9Mplayer/mplayer.cpp:595
 #, no-c-format
 msgid "Subpicture"
 msgstr ""
 
-#: rc.cpp:520 debug/k9Mplayer/mplayer.cpp:600
+#: rc.cpp:585 debug/k9Mplayer/mplayer.cpp:600
 #, no-c-format
 msgid "-"
 msgstr ""
 
-#: rc.cpp:524 debug/k9Mplayer/mplayer.cpp:602
+#: rc.cpp:589 debug/k9Mplayer/mplayer.cpp:602
 #, no-c-format
 msgid "+"
 msgstr ""
 
-#: rc.cpp:529
+#: rc.cpp:594 debug/k9author/import.cpp:104
+#, no-c-format
+msgid "import"
+msgstr ""
+
+#: rc.cpp:600 debug/k9author/import.cpp:44 debug/k9author/import.cpp:106
+#, no-c-format
+msgid "Video files"
+msgstr ""
+
+#: rc.cpp:606 debug/k9author/import.cpp:109
+#, no-c-format
+msgid "PAL"
+msgstr ""
+
+#: rc.cpp:609 debug/k9author/import.cpp:110
+#, no-c-format
+msgid "NTSC"
+msgstr ""
+
+#: rc.cpp:615 debug/k9author/chapterEdit.cpp:145 src/k9copy.cpp:211
+#: k9author/k9importfiles.cpp:34
+#, no-c-format
+msgid "Chapter properties"
+msgstr ""
+
+#: rc.cpp:618 debug/k9author/chapterEdit.cpp:146
+#, no-c-format
+msgid "start"
+msgstr ""
+
+#: rc.cpp:621 debug/k9author/chapterEdit.cpp:147
+#, no-c-format
+msgid "video"
+msgstr ""
+
+#: rc.cpp:624 debug/k9author/chapterEdit.cpp:148
+#, no-c-format
+msgid ""
+"*.avi\n"
+"*.mpeg"
+msgstr ""
+
+#: rc.cpp:628 rc.cpp:643 debug/k9author/chapterEdit.cpp:150
+#: debug/k9author/chapterEdit.cpp:155
+#, no-c-format
+msgid "set Current Frame"
+msgstr ""
+
+#: rc.cpp:631 rc.cpp:637 debug/k9author/chapterEdit.cpp:151
+#: debug/k9author/chapterEdit.cpp:153
+#, no-c-format
+msgid "break continuity"
+msgstr ""
+
+#: rc.cpp:634 debug/k9author/chapterEdit.cpp:152
+#, no-c-format
+msgid "end"
+msgstr ""
+
+#: rc.cpp:646 debug/k9author/chapterEdit.cpp:156
+#, no-c-format
+msgid "set Title button"
+msgstr ""
+
+#: rc.cpp:649 debug/k9author/newTitle.cpp:124 src/k9copy.cpp:204
+#: k9author/k9importfiles.cpp:40 k9author/k9newtitle.cpp:55
+#, no-c-format
+msgid "Add title"
+msgstr ""
+
+#: rc.cpp:653 debug/k9author/newTitle.cpp:126
+#, no-c-format
+msgid "number of chapters"
+msgstr ""
+
+#: rc.cpp:656 debug/k9author/newTitle.cpp:127
+#, no-c-format
+msgid "chapter length"
+msgstr ""
+
+#: rc.cpp:663 debug/k9author/newTitle.cpp:130
+#, no-c-format
+msgid "Video file"
+msgstr ""
+
+#: rc.cpp:669 debug/k9author/menuEdit.cpp:146 src/k9copy.cpp:194
+#: k9author/k9importfiles.cpp:31
+#, no-c-format
+msgid "Edit Menu"
+msgstr ""
+
+#: rc.cpp:672 debug/k9author/menuEdit.cpp:147
+#, no-c-format
+msgid "Text"
+msgstr ""
+
+#: rc.cpp:675 debug/k9author/menuEdit.cpp:148
+#, no-c-format
+msgid "Background picture"
+msgstr ""
+
+#: rc.cpp:690 debug/k9author/menuEdit.cpp:156 k9author/k9menuedit.cpp:286
+#: k9author/k9import.cpp:45
+#, no-c-format
+msgid "Root Menu"
+msgstr ""
+
+#: rc.cpp:693 debug/k9author/menuEdit.cpp:157
+#, no-c-format
+msgid "At start"
+msgstr ""
+
+#: rc.cpp:696 debug/k9author/menuEdit.cpp:159
+#, no-c-format
+msgid "Play menu"
+msgstr ""
+
+#: rc.cpp:699 rc.cpp:711 debug/k9author/menuEdit.cpp:160
+#: debug/k9author/menuEdit.cpp:165
+#, no-c-format
+msgid "Play title 1"
+msgstr ""
+
+#: rc.cpp:702 debug/k9author/menuEdit.cpp:161
+#, no-c-format
+msgid "At End"
+msgstr ""
+
+#: rc.cpp:705 debug/k9author/menuEdit.cpp:163
+#, no-c-format
+msgid "Play root menu"
+msgstr ""
+
+#: rc.cpp:708 debug/k9author/menuEdit.cpp:164
+#, no-c-format
+msgid "Play title menu"
+msgstr ""
+
+#: rc.cpp:717
 #, no-c-format
 msgid "A&ctions"
 msgstr ""
 
-#: rc.cpp:532
+#: rc.cpp:720
 #, no-c-format
 msgid "Actions ToolBar"
 msgstr ""
@@ -771,10 +994,6 @@ msgstr ""
 msgid "kViewMPEG2"
 msgstr ""
 
-#: debug/src/progress.cpp:81
-msgid "Alt+C"
-msgstr ""
-
 #: debug/k9Mplayer/k9mplayer.moc.cpp:34 debug/k9Mplayer/k9mplayer.moc.cpp:42
 msgid "K9Mplayer"
 msgstr ""
@@ -841,7 +1060,7 @@ msgid "Couldn't open %1 for title\n"
 msgstr ""
 
 #: libk9copy/k9dvd.cpp:191 libk9copy/k9dvd.cpp:199 libk9copy/k9dvd.cpp:207
-#: libk9copy/k9dvd.cpp:361 src/k9main.cpp:563
+#: libk9copy/k9dvd.cpp:368 src/k9main.cpp:563
 msgid "unknown"
 msgstr ""
 
@@ -1409,31 +1628,31 @@ msgstr ""
 msgid "Zulu"
 msgstr ""
 
-#: libk9copy/k9dvd.cpp:251 libk9copy/k9dvd.cpp:252 libk9copy/k9dvd.cpp:466
+#: libk9copy/k9dvd.cpp:251 libk9copy/k9dvd.cpp:252 libk9copy/k9dvd.cpp:475
 msgid "Unknown"
 msgstr ""
 
-#: libk9copy/k9dvd.cpp:335
+#: libk9copy/k9dvd.cpp:342
 msgid "Can't open disc %1!\n"
 msgstr ""
 
-#: libk9copy/k9dvd.cpp:347
+#: libk9copy/k9dvd.cpp:354
 msgid "Can't open main ifo!\n"
 msgstr ""
 
-#: libk9copy/k9dvd.cpp:389 libk9copy/k9dvd.cpp:682
+#: libk9copy/k9dvd.cpp:396 libk9copy/k9dvd.cpp:691
 msgid "Title %1"
 msgstr ""
 
-#: libk9copy/k9dvd.cpp:733
+#: libk9copy/k9dvd.cpp:742
 msgid "reading title"
 msgstr ""
 
-#: libk9copy/k9dvd.cpp:850
+#: libk9copy/k9dvd.cpp:859
 msgid "Error opening vobs for title %1\n"
 msgstr ""
 
-#: libk9copy/k9dvd.cpp:861
+#: libk9copy/k9dvd.cpp:870
 msgid "ERROR reading block %1\n"
 msgstr ""
 
@@ -1445,17 +1664,19 @@ msgstr ""
 #: libk9copy/k9dvdauthor.cpp:390 libk9copy/k9dvdauthor.cpp:436
 #: libk9copy/k9dvdauthor.cpp:445 libk9copy/k9dvdauthor.cpp:448
 #: libk9copy/k9burndvd.cpp:237 libk9copy/k9burndvd.cpp:321
+#: k9author/k9newdvd.cpp:122
 msgid "authoring"
 msgstr ""
 
-#: libk9copy/k9dvdauthor.cpp:390 libk9copy/k9mp4enc.cpp:102
+#: libk9copy/k9dvdauthor.cpp:390 libk9copy/k9mp4enc.cpp:103
 #: libk9copy/k9burndvd.cpp:225 libk9copy/k9burndvd.cpp:309
 #: k9Mplayer/k9mplayer.cpp:97
 msgid "Unable to run %1"
 msgstr ""
 
 #: libk9copy/k9dvdauthor.cpp:403 libk9copy/k9dvdauthor.cpp:476
-#: libk9copy/k9dvdauthor.cpp:514
+#: libk9copy/k9dvdauthor.cpp:514 src/k9settings.cpp:63
+#: k9author/k9newdvd.cpp:143
 msgid "Authoring"
 msgstr ""
 
@@ -1467,7 +1688,7 @@ msgstr ""
 msgid "Authoring cancelled"
 msgstr ""
 
-#: libk9copy/k9dvdauthor.cpp:448
+#: libk9copy/k9dvdauthor.cpp:448 k9author/k9newdvd.cpp:136
 msgid "An error occured while running DVDAuthor:\n"
 msgstr ""
 
@@ -1475,38 +1696,39 @@ msgstr ""
 msgid "Fixing VOBUS"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:102 libk9copy/k9mp4enc.cpp:302
+#: libk9copy/k9mp4enc.cpp:103 libk9copy/k9mp4enc.cpp:312
 msgid "Encoding error"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:152 src/k9main.cpp:1180
+#: libk9copy/k9mp4enc.cpp:152 src/k9main.cpp:1155
 msgid "Save file to disk"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:161 libk9copy/k9mp4enc.cpp:344
-#: src/k9prefmpeg4.cpp:34 src/k9mp4title.cpp:60 src/k9main.cpp:295
-#: src/k9main.cpp:305 src/k9main.cpp:315 src/k9main.cpp:335 src/k9main.cpp:588
-#: src/k9main.cpp:699 src/k9main.cpp:713 src/k9prefdvd.cpp:35
+#: libk9copy/k9mp4enc.cpp:161 libk9copy/k9mp4enc.cpp:350
+#: src/k9prefmpeg4.cpp:34 src/k9mp4title.cpp:49 src/k9main.cpp:290
+#: src/k9main.cpp:300 src/k9main.cpp:310 src/k9main.cpp:330 src/k9main.cpp:588
+#: src/k9main.cpp:689 src/k9main.cpp:703 src/k9prefdvd.cpp:35
 msgid "MB"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:232 libk9copy/k9mp4enc.cpp:234
+#: libk9copy/k9mp4enc.cpp:233 libk9copy/k9mp4enc.cpp:235
+#: k9author/k9newdvd.cpp:247
 msgid "Encoding %1"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:232
+#: libk9copy/k9mp4enc.cpp:233
 msgid "pass %1"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:299
+#: libk9copy/k9mp4enc.cpp:309
 msgid "MPEG-4 Encoding cancelled"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:299 src/k9settings.cpp:48 src/k9main.cpp:1166
+#: libk9copy/k9mp4enc.cpp:309 src/k9settings.cpp:48 src/k9main.cpp:1141
 msgid "MPEG-4 Encoding"
 msgstr ""
 
-#: libk9copy/k9mp4enc.cpp:302
+#: libk9copy/k9mp4enc.cpp:312
 msgid "Error while running mencoder :"
 msgstr ""
 
@@ -1515,11 +1737,12 @@ msgid "k9Copy - Burning DVD"
 msgstr ""
 
 #: libk9copy/k9burndvd.cpp:189 libk9copy/k9burndvd.cpp:256
-#: libk9copy/k9burndvd.cpp:348 src/k9main.cpp:434
+#: libk9copy/k9burndvd.cpp:348 src/k9main.cpp:435
 msgid "Burning DVD"
 msgstr ""
 
-#: libk9copy/k9burndvd.cpp:200 libk9copy/k9burndvd.cpp:284 src/k9main.cpp:386
+#: libk9copy/k9burndvd.cpp:200 libk9copy/k9burndvd.cpp:284 src/k9main.cpp:384
+#: k9author/k9import.cpp:178
 msgid "Save image to disk"
 msgstr ""
 
@@ -1615,7 +1838,7 @@ msgstr ""
 msgid "DVD"
 msgstr ""
 
-#: src/k9settings.cpp:34
+#: src/k9settings.cpp:34 src/k9copy.cpp:294
 msgid "DVD Backup"
 msgstr ""
 
@@ -1635,107 +1858,111 @@ msgstr ""
 msgid "Title preview"
 msgstr ""
 
-#: src/k9mp4title.cpp:38 src/k9mp4title.cpp:120 src/k9titlefactor.cpp:99
+#: src/k9mp4title.cpp:36 src/k9mp4title.cpp:109 src/k9titlefactor.cpp:99
 msgid "Select a Title in the treeview..."
 msgstr ""
 
-#: src/main.cpp:31
+#: src/main.cpp:32
 msgid "A DVD Backup tool for KDE"
 msgstr ""
 
-#: src/main.cpp:38
+#: src/main.cpp:39
 msgid "output device"
 msgstr ""
 
-#: src/main.cpp:39
+#: src/main.cpp:40
 msgid "title to play"
 msgstr ""
 
-#: src/main.cpp:40
+#: src/main.cpp:41
 msgid "play title to stdout"
 msgstr ""
 
-#: src/main.cpp:41
+#: src/main.cpp:42
 msgid "start sector"
 msgstr ""
 
-#: src/main.cpp:42
+#: src/main.cpp:43
 msgid "end sector"
 msgstr ""
 
-#: src/main.cpp:43
+#: src/main.cpp:44
 msgid "list of audio streams"
 msgstr ""
 
-#: src/main.cpp:44
+#: src/main.cpp:45
 msgid "list of spu streams"
 msgstr ""
 
-#: src/main.cpp:45
+#: src/main.cpp:46
 msgid "shrink factor"
 msgstr ""
 
-#: src/main.cpp:46
+#: src/main.cpp:47
 msgid "shrink factor forced"
 msgstr ""
 
-#: src/main.cpp:47
+#: src/main.cpp:48
 msgid "size of the cell to be copied"
 msgstr ""
 
-#: src/main.cpp:48
+#: src/main.cpp:49
 msgid "total size of selected titles"
 msgstr ""
 
-#: src/main.cpp:49
+#: src/main.cpp:50
 msgid "size of the chapters being copied"
 msgstr ""
 
-#: src/main.cpp:50
+#: src/main.cpp:51
 msgid "selected chapters"
 msgstr ""
 
-#: src/main.cpp:51
+#: src/main.cpp:52
 msgid "new dvd size"
 msgstr ""
 
-#: src/main.cpp:52
+#: src/main.cpp:53
 msgid "selected chapter"
 msgstr ""
 
-#: src/main.cpp:53
+#: src/main.cpp:54
 msgid "cell number in selected chapter"
 msgstr ""
 
-#: src/main.cpp:54
+#: src/main.cpp:55
 msgid "status file name"
 msgstr ""
 
-#: src/main.cpp:55
+#: src/main.cpp:56
 msgid "initialize status file"
 msgstr ""
 
-#: src/main.cpp:56
+#: src/main.cpp:57
 msgid "continue playing from last sector"
 msgstr ""
 
-#: src/main.cpp:57
+#: src/main.cpp:58
 msgid "don't save status at end"
 msgstr ""
 
-#: src/main.cpp:58
+#: src/main.cpp:59
 msgid "save cell in a temporary file before encoding"
 msgstr ""
 
-#: src/main.cpp:64
+#: src/main.cpp:60
+msgid "for internal use"
+msgstr ""
+
+#: src/main.cpp:66
 msgid "k9copy"
 msgstr ""
 
-#: src/main.cpp:67
+#: src/main.cpp:69
 msgid "_: NAME OF TRANSLATORS\\nYour names"
 msgstr ""
 
-#: src/main.cpp:68
+#: src/main.cpp:70
 msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
 msgstr ""
 
@@ -1744,31 +1971,43 @@ msgstr ""
 msgid "new profile"
 msgstr ""
 
-#: src/k9copy.cpp:74
+#: src/k9copy.cpp:137
 msgid "Shrink Factor"
 msgstr ""
 
-#: src/k9copy.cpp:143
+#: src/k9copy.cpp:194 k9author/k9importfiles.cpp:31
+msgid "Edit menu"
+msgstr ""
+
+#: src/k9copy.cpp:263
 msgid "Play title"
 msgstr ""
 
-#: src/k9copy.cpp:159
+#: src/k9copy.cpp:279
 msgid "Create MPEG-4"
 msgstr ""
 
-#: src/k9copy.cpp:166
+#: src/k9copy.cpp:286
 msgid "Eject"
 msgstr ""
 
-#: src/k9copy.cpp:227
+#: src/k9copy.cpp:300
+msgid "DVD Author"
+msgstr ""
+
+#: src/k9copy.cpp:306
+msgid "Create DVD"
+msgstr ""
+
+#: src/k9copy.cpp:368
 msgid "MPEG4 Encoding options"
 msgstr ""
 
-#: src/k9copy.cpp:227
+#: src/k9copy.cpp:368
 msgid "MPEG4 Encoding Options"
 msgstr ""
 
-#: src/k9copy.cpp:234
+#: src/k9copy.cpp:375
 msgid "Settings"
 msgstr ""
 
@@ -1776,33 +2015,33 @@ msgstr ""
 msgid "Subtitles"
 msgstr ""
 
-#: src/k9main.cpp:378 src/k9main.cpp:1166
+#: src/k9main.cpp:373 src/k9main.cpp:1141
 msgid "DVD is not opened"
 msgstr ""
 
-#: src/k9main.cpp:378 src/k9main.cpp:393
+#: src/k9main.cpp:373 src/k9main.cpp:395
 msgid "DVD Copy"
 msgstr ""
 
-#: src/k9main.cpp:393
+#: src/k9main.cpp:395
 msgid ""
 "Insuffisant disk space on %1\n"
 "%2 mb expected."
 msgstr ""
 
-#: src/k9main.cpp:397
+#: src/k9main.cpp:399
 msgid "Backup in progress"
 msgstr ""
 
-#: src/k9main.cpp:458 src/k9main.cpp:608 src/k9main.cpp:1214
+#: src/k9main.cpp:459 src/k9main.cpp:608 src/k9main.cpp:1194
 msgid "Ready"
 msgstr ""
 
-#: src/k9main.cpp:463
+#: src/k9main.cpp:464 k9author/k9import.cpp:156
 msgid "processing"
 msgstr ""
 
-#: src/k9main.cpp:498 src/k9main.cpp:1267
+#: src/k9main.cpp:499 src/k9main.cpp:1247 k9author/k9import.cpp:63
 msgid "ISO Image"
 msgstr ""
 
@@ -1814,39 +2053,44 @@ msgstr ""
 msgid "Titleset %1"
 msgstr ""
 
-#: src/k9main.cpp:646
+#: src/k9main.cpp:636
 msgid "chapters"
 msgstr ""
 
-#: src/k9main.cpp:654 src/k9main.cpp:667
+#: src/k9main.cpp:644 src/k9main.cpp:657 k9author/k9newtitle.cpp:117
+#: k9author/k9newtitle.cpp:139
 msgid "chapter %1"
 msgstr ""
 
-#: src/k9main.cpp:655 src/k9main.cpp:670 src/k9main.cpp:729 src/k9main.cpp:746
+#: src/k9main.cpp:645 src/k9main.cpp:660 src/k9main.cpp:719 src/k9main.cpp:737
 msgid "%1 MB"
 msgstr ""
 
-#: src/k9main.cpp:709
+#: src/k9main.cpp:699
 msgid "video %1 "
 msgstr ""
 
-#: src/k9main.cpp:720
+#: src/k9main.cpp:710
 msgid "audio %1 "
 msgstr ""
 
-#: src/k9main.cpp:739
+#: src/k9main.cpp:730
 msgid "subpicture %1 "
 msgstr ""
 
-#: src/k9main.cpp:1174
+#: src/k9main.cpp:1149
 msgid "Transcoding title : %1"
 msgstr ""
 
-#: src/k9main.cpp:1374
+#: src/k9main.cpp:1248 k9author/k9import.cpp:64
+msgid "Folder"
+msgstr ""
+
+#: src/k9main.cpp:1355
 msgid "Open ISO Image"
 msgstr ""
 
-#: src/k9main.cpp:1385
+#: src/k9main.cpp:1366
 msgid "Open DVD folder"
 msgstr ""
 
@@ -1860,4 +2104,76 @@ msgstr ""
 
 #: src/k9titlefactor.cpp:110
 msgid "Shrink Factor for %1"
+msgstr ""
+
+#: k9author/k9newdvd.cpp:94
+msgid "Creating root menu"
+msgstr ""
+
+#: k9author/k9newdvd.cpp:134
+msgid "The dvd authoring was canceled"
+msgstr ""
+
+#: k9author/k9newdvd.cpp:160
+msgid "Creating menu for title %1"
+msgstr ""
+
+#: k9author/k9newdvd.cpp:381 k9author/k9newtitle.cpp:63
+msgid "title %1"
+msgstr ""
+
+#: k9author/k9avidecode.cpp:31 k9author/k9avidecode.cpp:35
+msgid "Cannot open then library %1"
+msgstr ""
+
+#: k9author/k9avidecode.cpp:88
+msgid "Couldn't open the file %1"
+msgstr ""
+
+#: k9author/k9avidecode.cpp:93
+msgid "Couldn't find stream information"
+msgstr ""
+
+#: k9author/k9avidecode.cpp:106
+msgid "The file doesn't contain any video stream"
+msgstr ""
+
+#: k9author/k9avidecode.cpp:117
+msgid "Unsupported codec"
+msgstr ""
+
+#: k9author/k9avidecode.cpp:122
+msgid "Could'nt open the codec"
+msgstr ""
+
+#: k9author/k9avidecode.cpp:133
+msgid "Unable to allocate memory for frames"
+msgstr ""
+
+#: k9author/k9menuedit.cpp:245
+msgid "Title %1 Menu"
+msgstr ""
+
+#: k9author/k9menuedit.cpp:254 k9author/k9menuedit.cpp:291
+msgid "Play Menu"
+msgstr ""
+
+#: k9author/k9menuedit.cpp:256
+msgid "Play Title"
+msgstr ""
+
+#: k9author/k9menuedit.cpp:262
+msgid "Play Root Menu"
+msgstr ""
+
+#: k9author/k9menuedit.cpp:264
+msgid "Play Title Menu"
+msgstr ""
+
+#: k9author/k9menuedit.cpp:269 k9author/k9menuedit.cpp:295
+msgid "Play Title %1"
+msgstr ""
+
+#: k9author/k9importfiles.cpp:24
+msgid "Create new DVD"
 msgstr ""
