@@ -206,7 +206,7 @@ void k9Import::execute() {
         b.setvolId("DVD");
         b.setSpeed( i18n("default"));
         if (cbOutputDev->currentItem() !=0) {
-            k9CdDrive * drive=(k9CdDrive*)recorderList.at(cbOutputDev->currentItem()-1);
+            k9CdDrive * drive=(k9CdDrive*)recorderList.at(cbOutputDev->currentItem()-2);
             b.setburnDevice(drive->device);
         } else
             b.makeIso(filename);
