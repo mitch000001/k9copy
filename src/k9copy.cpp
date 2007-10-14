@@ -40,6 +40,7 @@
 #include "k9newtitle.h"
 #include "k9menu.h"
 #include <kdockwidget.h>
+#include <kiconloader.h>
 
 k9Copy::k9Copy()
         : KMdiMainFrm( 0, "k9Copy" ,KMdi::IDEAlMode ) {
@@ -189,6 +190,7 @@ void k9Copy::createImportWindows() {
     addWindow(m_k9ImportView, KMdi::StandardAdd);
     
     m_menuEdit=new k9MenuEdit(this,0,m_k9Import->getNewDVD()->getRootMenu()->getCanvas());
+    m_menuEdit->setIcon(SmallIcon("edit"));
     acc=addToolWindow(m_menuEdit, KDockWidget::DockRight, getMainDockWidget(),20,i18n("Edit menu"),i18n("Edit Menu"));
     m_ToolViews.append(acc);
 
@@ -198,12 +200,14 @@ void k9Copy::createImportWindows() {
 
     m_newTitle=new k9NewTitle(this);
     m_newTitle->setK9Import(m_k9Import);
-    acc=addToolWindow(m_newTitle, KDockWidget::DockBottom, getMainDockWidget(),20,i18n("Add new title"),i18n("Add new title"));
+    m_newTitle->setIcon(SmallIcon("fileimport"));
+    acc=addToolWindow(m_newTitle, KDockWidget::DockBottom, getMainDockWidget(),20,i18n("Add title"),i18n("Add title"));
     m_ToolViews.append(acc);
     acc->show();
 
 
     m_chapterEdit =new k9ChapterEdit(this);
+    m_chapterEdit->setIcon(SmallIcon("title"));
     acc=addToolWindow(m_chapterEdit, KDockWidget::DockBottom, getMainDockWidget(),20,i18n("Chapter properties"),i18n("Chapter properties"));
     m_ToolViews.append(acc);
     connect(m_k9Import,SIGNAL(aviFileSelected(k9AviFile*)),m_chapterEdit,SLOT(setAviFile(k9AviFile*)));
