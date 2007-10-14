@@ -37,7 +37,7 @@ k9ImportFiles::k9ImportFiles(QWidget *parent, const char *name)
     
     m_k9NewTitle=new k9NewTitle(this);
     m_k9NewTitle->setK9Import(m_k9Import);
-    addToolWindow(m_k9NewTitle, KDockWidget::DockBottom, getMainDockWidget(),0,i18n("Add new title"),i18n("Add new title"));
+    addToolWindow(m_k9NewTitle, KDockWidget::DockBottom, getMainDockWidget(),0,i18n("Add title"),i18n("Add title"));
 
     m_k9Import->init();
 
