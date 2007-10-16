@@ -279,8 +279,13 @@ void k9MP4Enc::execute(k9DVDTitle *_title) {
                 *m_process <<"-o" << "'"+path+"'";
             if (path.upper().endsWith("MPEG") || path.upper().endsWith("MPG"))
                 *m_process << "-of" << "mpeg";
-            else
+            else if (path.upper().endsWith("AVI"))
                 *m_process << "-of" << "avi";
+            else {
+                *m_process << "-of" << "lavf";
+                *m_process << "-lavfopts" << "i_certify_that_my_video_stream_does_not_use_b_frames";
+            }
+                //*m_process << "-of" << "avi";
 
             QString s="";
             for ( uint i=0; i< m_process->args().count();i++) {

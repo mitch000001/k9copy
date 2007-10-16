@@ -1152,7 +1152,7 @@ void k9Main::CreateMP4()
     {
       QString name;
       if (filename=="")
-         filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.avi", 0,i18n("Save file to disk"));
+         filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.avi|Audio Video Interleave (*.avi)\n*.mpg|MPEG-1 and MPEG-2 systems (*.mpg)\n*.mp4|MPEG-4 format (*.mp4)\n*.asf|Advanced Streaming Format (*.asf)\n*.swf|Adobe Flash (*.swf)\n*.flv|Adobe Flash video files (*.flv)\n*.rm|RealVideo (*.rm)\n*.mov|QuickTime (*.mov)", 0,i18n("Save file to disk"));
       if (filename=="")
          break;
     
