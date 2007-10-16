@@ -87,7 +87,7 @@ QString k9MP4Enc::getChapterList(k9DVDTitle *_title) {
 int k9MP4Enc::getselectedSubp(k9DVDTitle *_title) {
     for (int i=0;i< _title->getsubPictureCount();i++) {
         if (_title->getsubtitle( i)->getselected()) {
-            return _title->getsubtitle( i)->getID()-1;
+            return _title->getsubtitle(i)->getID().first()-1;
         }
     }
     //nos subtitle selected

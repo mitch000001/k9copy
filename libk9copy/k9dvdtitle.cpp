@@ -153,8 +153,8 @@ k9DVDTitle * k9DVDSubtitle::gettitle() {
 /*!
 \fn k9DVDSubtitle::getID()
 */
-int k9DVDSubtitle::getID() {
-    return(id);
+QValueList<int>& k9DVDSubtitle::getID() {
+    return id;
 }
 
 

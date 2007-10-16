@@ -185,11 +185,11 @@ void k9CellCopyList::addStreams(k9DVDTitle *_title,k9Cell *_cell) {
             QValueList<int>::iterator it;
             bool found=false;
             for ( it = _cell->subpicture.begin(); it != _cell->subpicture.end(); ++it ) {
-                if (*it == l_sub->getID())
+                if (l_sub->getID().contains(*it))
                     found=true;
             }
             if (!found)
-                _cell->subpicture.append(l_sub->getID());
+                _cell->subpicture+=l_sub->getID();
         }
     }
 }

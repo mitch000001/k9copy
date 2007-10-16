@@ -265,6 +265,28 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
                 e.setAttribute("quant",l_auds->getquantization());
                 e.setAttribute("lang",l_auds->getlangCod());
                 t.appendChild(e);
+            }
+        }
+
+        for (i=0;i<l_track->getsubPictureCount();i++) {
+            l_sub=l_track->getsubtitle(i);
+            if (l_sub->getselected()) {
+                e=xml->createElement("subpicture");
+                e.setAttribute("lang",l_sub->getlangCod());
+                t.appendChild(e);
+            }
+        }
+
+        pgc=xml->createElement("pgc");
+        pgc.setAttribute("palette",palette);
+        t.appendChild(pgc);
+
+        for (i=0;i<l_track->getaudioStreamCount();i++) {
+            l_auds=l_track->getaudioStream(i);
+            if (l_auds->getselected()) {
+                e=xml->createElement("audio");
+                e.setAttribute("id",l_auds->getID()-1);
+                t.appendChild(e);
                 if (caud != "")
                     caud+=',';
                 caud+=c.sprintf("%d",l_auds->getID());
@@ -275,17 +297,13 @@ void k9DVDAuthor::addTitle(QDomElement &root, k9DVDTitle *title) {
             l_sub=l_track->getsubtitle(i);
             if (l_sub->getselected()) {
                 e=xml->createElement("subpicture");
-                e.setAttribute("lang",l_sub->getlangCod());
+                e.setAttribute("id",(l_sub->getID()).first()-1);
                 t.appendChild(e);
                 if (csub !="")
                     csub+=',';
-                csub+=c.sprintf("%d",l_sub->getID());
+                csub+=c.sprintf("%d",(l_sub->getID()).first());
             }
         }
-
-        pgc=xml->createElement("pgc");
-        pgc.setAttribute("palette",palette);
-        t.appendChild(pgc);
 
         if (caud !="")
             caud="--audiofilter "+caud;

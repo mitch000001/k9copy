@@ -164,7 +164,7 @@ void k9PlaybackOptions::lbSequenceChanged(QListBoxItem *_item) {
     for (int i=0;i < title->getsubPictureCount();i++) {
 	if (title->getsubtitle(i)->getselected()) {
                 QPixmap icon;
-		cbDefSub->insertItem(QString("%1 - %2").arg(title->getsubtitle(i)->getID()).arg(title->getsubtitle(i)->getlanguage()));
+		cbDefSub->insertItem(QString("%1 - %2").arg(title->getsubtitle(i)->getID().first()).arg(title->getsubtitle(i)->getlanguage()));
 		if (title->getsubtitle(i)==title->getDefSubtitle()) {
 		   cbDefSub->setCurrentItem(cbDefSub->count()-1);
 		}

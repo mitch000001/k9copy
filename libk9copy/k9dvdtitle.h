@@ -114,8 +114,8 @@ private: // Private attributes
   float size_mb;
   /**  */
   bool selected;
-    int id;
-   k9DVDTitle *title;
+  QValueList<int> id;
+  k9DVDTitle *title;
 public: // Public methods
   k9DVDSubtitle();
   /** Read property of QString langCod. */
@@ -133,8 +133,7 @@ public: // Public methods
   /** Read property of bool selected. */
   virtual const bool& getselected();
   virtual k9DVDTitle* gettitle();
-  virtual  int getID();
-	
+  virtual QValueList<int>& getID();
 };
   
 

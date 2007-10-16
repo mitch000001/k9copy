@@ -179,8 +179,8 @@ void K9Mplayer::open( k9DVD *_dvd,k9DVDTitle *_title,int chapter) {
     }
 
     for (int i=0; i< _title->getsubPictureCount();i++) {
-        k9DVDSubtitle *sub=_title->getsubtitle( i);
-        cbSub->insertItem(NULL,QString("%1-%2").arg(sub->getID()).arg(sub->getlanguage()),-1);
+        k9DVDSubtitle *sub=_title->getsubtitle(i);
+        cbSub->insertItem(NULL,QString("%1-%2").arg(sub->getID().first()).arg(sub->getlanguage()),-1);
     }
 
     if(_title->getaspectRatio()=="16:9")

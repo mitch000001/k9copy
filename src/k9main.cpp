@@ -169,7 +169,7 @@ int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const
       }
       if (streamType==SUB)
       {
-        id+=((k9DVDSubtitle*)l->stream)->getID();
+        id+=((k9DVDSubtitle*)l->stream)->getID().first();
       }
 
       if (litem->streamType==AUD)
@@ -178,7 +178,7 @@ int ckLvItem::compare ( QListViewItem * i, int col, bool ascending ) const
       }
       if (litem->streamType==SUB)
       {
-        id2+=((k9DVDSubtitle*)litem->stream)->getID();
+        id2+=((k9DVDSubtitle*)litem->stream)->getID().first();
       }
 
 

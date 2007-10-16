@@ -26,6 +26,7 @@
 #include "k9ifo2.h"
 #include <qapplication.h>
 #include <klocale.h>
+#include <kdebug.h>
 
 #include <sys/stat.h>
 
@@ -111,11 +112,10 @@ k9DVD::k9DVD(QObject  *parent, const char *name,const QStringList args)  {
     m_lvideoWidth.append("352");
     m_lvideoWidth.append("352");
 
-    m_lpermittedDf.append("Pan&Scan");
-    m_lpermittedDf.append("Letterbox");
-    m_lpermittedDf.append("Pan&Scan");
-    m_lpermittedDf.append("Letterbox");
-    m_lpermittedDf.append("?");
+    m_lpermittedDf.append("");
+    m_lpermittedDf.append("noletterbox");
+    m_lpermittedDf.append("nopanscan");
+    m_lpermittedDf.append("noletterbox & nopanscan");
 
     m_laudioFormat.append("ac3");
     m_laudioFormat.append("?");
@@ -593,22 +593,24 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         unsigned char subpc;
                         subpc=pgc->subp_control[i]>>24;
                         if ((subpc & 0x80)==0x80) {
-                            l_sub->id=1;
-                            if ((subpc &0x1F) !=0)
-                                l_sub->id = 1+ (subpc & 0x1F);
-                            subpc=pgc->subp_control[i]>>16;
-                            if ((subpc &0x1F) !=0)
-                                l_sub->id = 1+ (subpc & 0x1F);
-                            subpc=pgc->subp_control[i]>>8;
-                            if ((subpc &0x1F) !=0)
-                                l_sub->id = 1+ (subpc & 0x1F);
-                            subpc=pgc->subp_control[i];
-                            if ((subpc &0x1F) !=0)
-                                l_sub->id = 1+ (subpc & 0x1F);
+                            if (l_track->aspectRatio=="4:3") {
+                                l_sub->id.append(1+ (subpc & 0x1F));
+                            } else {
+                                subpc=(pgc->subp_control[i]>>16) & 0x1F;
+                                l_sub->id.append(1+ subpc);
+                                subpc=(pgc->subp_control[i]>>8) & 0x1F;
+                                if (! l_sub->id.contains(1+ subpc) && ! l_track->DF.contains("noletterbox"))
+                                    l_sub->id.append(1+ subpc);
+                                subpc=pgc->subp_control[i] & 0x1F;
+                                if (! l_sub->id.contains(1+ subpc) && ! l_track->DF.contains("nopanscan"))
+                                    l_sub->id.append(1+ subpc);
+                            }
+                            kdDebug() << "VTS: " << l_track->VTS << " TTN: " << l_track->TTN << \
+                                         " Subtitle " << i+1 << ": " << l_sub->id << " " << l_sub->language << \
+                                         " " << l_sub->content << endl;
                         }
                         l_track->subPictureCount++;
-                        //subp_attr = &vtsi_mat->vts_subp_attr[i];
-                        subp_attr = &vtsi_mat->vts_subp_attr[l_sub->id -1];
+                        subp_attr = &vtsi_mat->vts_subp_attr[i];
                         sprintf(lang_code, "%c%c", subp_attr->lang_code>>8, subp_attr->lang_code & 0xff);
                         if (!lang_code[0]) {
                             lang_code[0] = 'x';
@@ -808,7 +810,7 @@ void k9DVD::calcStreamSize(k9DVDTitle & track) {
                 break;
             int id=streamList[x].id;
             if ( (id >=0x20) && (id <=0x3f)) {
-                if (  (id - 0x20 +1) ==l_sub->id) {
+                if (  l_sub->id.contains(id - 0x20 +1) ) {
                     l_sub->size_mb = streamList[x].size_mb;
                     break;
                 }
