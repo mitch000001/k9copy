@@ -1985,7 +1985,7 @@ msgstr "Création de DVD"
 
 #: src/k9copy.cpp:306
 msgid "Create DVD"
-msgstr "Créer un DVD"
+msgstr "Créer le DVD"
 
 #: src/k9copy.cpp:368
 msgid "MPEG4 Encoding options"
@@ -2142,7 +2142,7 @@ msgstr "Impossible d'allouer la mémoire pour les images"
 
 #: k9author/k9menuedit.cpp:245
 msgid "Title %1 Menu"
-msgstr ""
+msgstr "Menu du titre %1"
 
 #: k9author/k9menuedit.cpp:254 k9author/k9menuedit.cpp:291
 msgid "Play Menu"

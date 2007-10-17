@@ -87,7 +87,6 @@ int k9ProcessList::getNbRunning() {
         if (p->isRunning())
             res++;
     }
-    qDebug(QString("%1 process en cours").arg(res));
     return res;
 }
 
