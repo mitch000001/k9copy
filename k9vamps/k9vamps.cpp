@@ -421,6 +421,7 @@ int k9vamps::check_video_packet (uchar *ptr) {
 // from a very short time) so a dual CPU box does not give an advantage
 // returns size of evaporated GOP
 int k9vamps::requant (uchar *dst, uchar *src, int n, float fact) {
+    if (n==0) return 0;
     int rv;
     if (! m_requant->running()) {
         m_requant->initvar();

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: k9copy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-21 09:09+0200\n"
-"PO-Revision-Date: 2006-08-28 16:15+0100\n"
+"PO-Revision-Date: 2007-10-17 09:40+0100\n"
 "Last-Translator: Zdeněk Štěpánek <zdenek@gavanet.org>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "DVD-ROM"
 #: libk3bdevice.new/k3bdeviceglobals.cpp:38
 #: libk3bdevice.new/k3bdeviceglobals.cpp:115
 msgid "DVD-RAM"
-msgstr "DVA-RAM"
+msgstr "DVD-RAM"
 
 #: libk3bdevice/k3bdeviceglobals.cpp:40 libk3bdevice/k3bdeviceglobals.cpp:104
 #: libk3bdevice.new/k3bdeviceglobals.cpp:40
@@ -344,7 +344,7 @@ msgstr "zvuk %1 "
 
 #: src/k9main.cpp:543
 msgid "subpicture %1 "
-msgstr "titulky %1 "
+msgstr "subpicture %1 "
 
 #: src/k9main.cpp:919 src/k9settings.cpp:40 libk9copy/k9mp4enc.cpp:195
 msgid "MPEG-4 Encoding"
@@ -437,7 +437,7 @@ msgstr "k9Copy - Průběh zálohování"
 
 #: libk9copy/k9dvdauthor.cpp:355
 msgid "Dvdauthor error :\n"
-msgstr "Chyba dvdauthor:\n"
+msgstr "Chyba dvdauthor :\n"
 
 #: libk9copy/k9dvdauthor.cpp:364
 msgid "Authoring cancelled"
@@ -445,7 +445,7 @@ msgstr "Tvorba DVD zrušena"
 
 #: libk9copy/k9dvdauthor.cpp:367
 msgid "An error occured while running DVDAuthor:\n"
-msgstr "Chyba ve spuštěném dvdauthor:\n"
+msgstr "Chyba ve spuštěném DVDAuthor:\n"
 
 #: libk9copy/k9dvdauthor.cpp:430
 msgid "Fixing VOBUS"
@@ -535,7 +535,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Arabic"
-msgstr ""
+msgstr "Arabština"
 
 #: libk9copy/k9dvd.cpp:227
 msgid "Assamese"
@@ -555,11 +555,11 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Byelorussian"
-msgstr ""
+msgstr "Běloruština"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulharština"
 
 #: libk9copy/k9dvd.cpp:228
 msgid "Bihari"
@@ -591,7 +591,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:229
 msgid "Czech"
-msgstr ""
+msgstr "Čeština"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Welsh"
@@ -599,11 +599,11 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Dansk"
-msgstr ""
+msgstr "Dánština"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Deutsch"
-msgstr ""
+msgstr "Němčina"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Bhutani"
@@ -611,11 +611,11 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:230
 msgid "Greek"
-msgstr ""
+msgstr "Řečtina"
 
 #: libk9copy/k9dvd.cpp:230
 msgid "English"
-msgstr ""
+msgstr "Angličtina"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Esperanto"
@@ -623,7 +623,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Espanol"
-msgstr ""
+msgstr "Španělština"
 
 #: libk9copy/k9dvd.cpp:231
 msgid "Estonian"
@@ -651,7 +651,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Francais"
-msgstr ""
+msgstr "Francoužština"
 
 #: libk9copy/k9dvd.cpp:232
 msgid "Frisian"
@@ -723,7 +723,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Italiano"
-msgstr ""
+msgstr "Italština"
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Inuktitut"
@@ -731,7 +731,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:236
 msgid "Japanese"
-msgstr ""
+msgstr "Japonština"
 
 #: libk9copy/k9dvd.cpp:237 libk9copy/k9dvd.cpp:252
 msgid "Yiddish"
@@ -871,7 +871,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Polish"
-msgstr ""
+msgstr "Polština"
 
 #: libk9copy/k9dvd.cpp:243
 msgid "Pashto, Pushto"
@@ -899,7 +899,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Russian"
-msgstr ""
+msgstr "Ruština"
 
 #: libk9copy/k9dvd.cpp:245
 msgid "Kinyarwanda"
@@ -927,7 +927,7 @@ msgstr ""
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Slovak"
-msgstr ""
+msgstr "Slověnština"
 
 #: libk9copy/k9dvd.cpp:246
 msgid "Slovenian"
@@ -1087,7 +1087,7 @@ msgstr "Stopa %1"
 
 #: libk9copy/k9dvd.cpp:723
 msgid "reading title"
-msgstr "Čtení stopy"
+msgstr "čtení stopy"
 
 #: libk9copy/k9mp4enc.cpp:84
 msgid "Save file to disk"

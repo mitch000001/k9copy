@@ -294,7 +294,7 @@ xdg_menudir = @xdg_menudir@
 POFILES = es.po cs.po ru.po sr.po zh_TW.po de.po tr.po ca.po pt_BR.po fr.po pl.po es_AR.po el.po zh_TW.Big5.po it.po sr@Latn.po
 GMOFILES = es.gmo cs.gmo ru.gmo sr.gmo zh_TW.gmo de.gmo tr.gmo ca.gmo pt_BR.gmo fr.gmo pl.gmo es_AR.gmo el.gmo zh_TW.Big5.gmo it.gmo sr@Latn.gmo
 noinst_HEADERS = ca.po cs.po de.po el.po es.po es_AR.po fr.po it.po k9copy.pot \
-	pl.po pt_BR.po ru.po sr.po sr@Latn.po zh_TW.po
+	pl.po pt_BR.po ru.po sr.po sr@Latn.po zh_TW.po tr.po
 
 #>- all: all-am
 #>+ 1
@@ -538,7 +538,7 @@ uninstall-am:
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=ru.gmo tr.po it.gmo de.gmo es.gmo ca.gmo pl.gmo en_GB.gmo el.gmo fr.gmo cs.gmo pt_BR.gmo Makefile.in zh_TW.Big5.po es_ar.gmo Makefile.am 
+KDE_DIST=cs.gmo pt_BR.gmo pl.gmo Makefile.in ru.gmo en_GB.gmo zh_TW.Big5.po it.gmo el.gmo de.gmo es_ar.gmo fr.gmo es.gmo ca.gmo Makefile.am 
 
 #>+ 49
 es.gmo: es.po

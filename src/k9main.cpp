@@ -421,7 +421,7 @@ void k9Main::Copy()
     k9DVDAuthor *b=new k9DVDAuthor(dvd,"dvdauthor");
     setProgressWindow( b->getDialog());
     m_playbackOptions->setSequence();
-    b->setworkDir(m_prefOutput);
+    b->setworkDir(outputDir);
     b->author();
     if (!b->getError())
       burn=true;

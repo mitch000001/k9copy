@@ -48,13 +48,13 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libk9vamps_la_LIBADD =
-am_libk9vamps_la_OBJECTS = k9vamps.lo k9requant.lo cputest.lo \
-	tcmemcpy.lo k9fifo.lo
+am_libk9vamps_la_OBJECTS = cputest.lo k9fifo.lo k9requant.lo \
+	k9vamps.lo tcmemcpy.lo
 #>- libk9vamps_la_OBJECTS = $(am_libk9vamps_la_OBJECTS)
 #>+ 5
 libk9vamps_la_final_OBJECTS = libk9vamps_la.all_cpp.lo 
-libk9vamps_la_nofinal_OBJECTS = k9vamps.lo k9requant.lo cputest.lo \
-	tcmemcpy.lo k9fifo.lo
+libk9vamps_la_nofinal_OBJECTS = cputest.lo k9fifo.lo k9requant.lo \
+	k9vamps.lo tcmemcpy.lo
 @KDE_USE_FINAL_FALSE@libk9vamps_la_OBJECTS = $(libk9vamps_la_nofinal_OBJECTS)
 @KDE_USE_FINAL_TRUE@libk9vamps_la_OBJECTS = $(libk9vamps_la_final_OBJECTS)
 #>- libk9vamps_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -343,8 +343,8 @@ KDE_CXXFLAGS = $(ENABLE_PERMISSIVE_FLAG)
 #>- METASOURCES = AUTO
 libk9vamps_la_LDFLAGS = $(all_libraries)
 noinst_LTLIBRARIES = libk9vamps.la
-libk9vamps_la_SOURCES = getvlc.h k9vamps.cpp k9vamps.h putvlc.h qTable.h \
-	k9requant.cpp cputest.cpp tcmemcpy.cpp k9fifo.cpp
+libk9vamps_la_SOURCES = cputest.cpp getvlc.h k9fifo.cpp k9requant.cpp \
+	k9vamps.cpp k9vamps.h putvlc.h qTable.h tcmemcpy.cpp
 
 INCLUDES = -I$(top_srcdir)/k9vamps -I$(top_srcdir)/libk9copy
 noinst_HEADERS = k9requant.h ac.h k9fifo.h
@@ -633,7 +633,7 @@ uninstall-am:
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=Makefile.in Makefile.am 
+KDE_DIST=Makefile.in k9requant2.cpp k9requant2.h Makefile.am 
 
 #>+ 2
 docs-am:
@@ -677,11 +677,11 @@ bcheck-am:
 
 
 #>+ 11
-libk9vamps_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9vamps.cpp $(srcdir)/k9requant.cpp $(srcdir)/cputest.cpp $(srcdir)/tcmemcpy.cpp $(srcdir)/k9fifo.cpp 
+libk9vamps_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/cputest.cpp $(srcdir)/k9fifo.cpp $(srcdir)/k9requant.cpp $(srcdir)/k9vamps.cpp $(srcdir)/tcmemcpy.cpp 
 	@echo 'creating libk9vamps_la.all_cpp.cpp ...'; \
 	rm -f libk9vamps_la.all_cpp.files libk9vamps_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9vamps_la.all_cpp.final; \
-	for file in k9vamps.cpp k9requant.cpp cputest.cpp tcmemcpy.cpp k9fifo.cpp ; do \
+	for file in cputest.cpp k9fifo.cpp k9requant.cpp k9vamps.cpp tcmemcpy.cpp ; do \
 	  echo "#include \"$$file\"" >> libk9vamps_la.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> libk9vamps_la.all_cpp.final; \
 	done; \

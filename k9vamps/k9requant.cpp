@@ -2456,11 +2456,11 @@ bool k9requant::lock( int64 x) {
 	return false;
       }
     }
-    cbuf       = rqt_rptr;
+    cbuf       = rqt_rptr;    //src buffer
     rbuf =orbuf  = cbuf;
-    rbuf      += rqt_rcnt + 3;
+    rbuf      += rqt_rcnt + 3;  // end of src buffer
     rqt_rcnt   = 0;
-    owbuf      = rqt_wptr;
+    owbuf      = rqt_wptr;   // dest buffer
     inbytecnt  = rqt_inbytes;
     outbytecnt = rqt_outbytes;
     orim2vsize = rqt_visize;
