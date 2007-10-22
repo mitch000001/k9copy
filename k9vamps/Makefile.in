@@ -633,7 +633,7 @@ uninstall-am:
 .NOEXPORT:
 
 #>+ 2
-KDE_DIST=Makefile.in k9requant2.cpp k9requant2.h Makefile.am 
+KDE_DIST=k9requant2.cpp Makefile.in k9requant2.h Makefile.am 
 
 #>+ 2
 docs-am:

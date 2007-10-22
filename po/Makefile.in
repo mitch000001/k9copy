@@ -291,10 +291,10 @@ xdg_directorydir = @xdg_directorydir@
 xdg_menudir = @xdg_menudir@
 #>- POFILES = AUTO
 #>+ 2
-POFILES = es.po cs.po ru.po sr.po zh_TW.po de.po tr.po ca.po pt_BR.po fr.po pl.po es_AR.po el.po zh_TW.Big5.po it.po sr@Latn.po
-GMOFILES = es.gmo cs.gmo ru.gmo sr.gmo zh_TW.gmo de.gmo tr.gmo ca.gmo pt_BR.gmo fr.gmo pl.gmo es_AR.gmo el.gmo zh_TW.Big5.gmo it.gmo sr@Latn.gmo
+POFILES = es.po sr@latin.po cs.po ru.po sr.po zh_TW.po de.po tr.po ca.po pt_BR.po fr.po pl.po es_AR.po el.po zh_TW.Big5.po it.po
+GMOFILES = es.gmo sr@latin.gmo cs.gmo ru.gmo sr.gmo zh_TW.gmo de.gmo tr.gmo ca.gmo pt_BR.gmo fr.gmo pl.gmo es_AR.gmo el.gmo zh_TW.Big5.gmo it.gmo
 noinst_HEADERS = ca.po cs.po de.po el.po es.po es_AR.po fr.po it.po k9copy.pot \
-	pl.po pt_BR.po ru.po sr.po sr@Latn.po zh_TW.po tr.po
+	pl.po pt_BR.po ru.po sr.po zh_TW.po tr.po sr@latin.po
 
 #>- all: all-am
 #>+ 1
@@ -544,6 +544,9 @@ KDE_DIST=cs.gmo pt_BR.gmo pl.gmo Makefile.in ru.gmo en_GB.gmo zh_TW.Big5.po it.g
 es.gmo: es.po
 	rm -f es.gmo; $(GMSGFMT) -o es.gmo $(srcdir)/es.po
 	test ! -f es.gmo || touch es.gmo
+sr@latin.gmo: sr@latin.po
+	rm -f sr@latin.gmo; $(GMSGFMT) -o sr@latin.gmo $(srcdir)/sr@latin.po
+	test ! -f sr@latin.gmo || touch sr@latin.gmo
 cs.gmo: cs.po
 	rm -f cs.gmo; $(GMSGFMT) -o cs.gmo $(srcdir)/cs.po
 	test ! -f cs.gmo || touch cs.gmo
@@ -586,17 +589,14 @@ zh_TW.Big5.gmo: zh_TW.Big5.po
 it.gmo: it.po
 	rm -f it.gmo; $(GMSGFMT) -o it.gmo $(srcdir)/it.po
 	test ! -f it.gmo || touch it.gmo
-sr@Latn.gmo: sr@Latn.po
-	rm -f sr@Latn.gmo; $(GMSGFMT) -o sr@Latn.gmo $(srcdir)/sr@Latn.po
-	test ! -f sr@Latn.gmo || touch sr@Latn.gmo
 
 #>+ 3
 clean-nls:
-	-rm -f  es.gmo cs.gmo ru.gmo sr.gmo zh_TW.gmo de.gmo tr.gmo ca.gmo pt_BR.gmo fr.gmo pl.gmo es_AR.gmo el.gmo zh_TW.Big5.gmo it.gmo sr@Latn.gmo
+	-rm -f  es.gmo sr@latin.gmo cs.gmo ru.gmo sr.gmo zh_TW.gmo de.gmo tr.gmo ca.gmo pt_BR.gmo fr.gmo pl.gmo es_AR.gmo el.gmo zh_TW.Big5.gmo it.gmo
 
 #>+ 10
 install-nls:
-	@for base in es cs ru sr zh_TW de tr ca pt_BR fr pl es_AR el zh_TW.Big5 it sr@Latn ; do \
+	@for base in es sr@latin cs ru sr zh_TW de tr ca pt_BR fr pl es_AR el zh_TW.Big5 it ; do \
 	  echo $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
 	  $(mkinstalldirs) $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES ; \
 	  if test -f $$base.gmo; then $(INSTALL_DATA) $$base.gmo $(DESTDIR)$(kde_locale)/$$base/LC_MESSAGES/$(PACKAGE).mo ;\
@@ -608,6 +608,7 @@ install-nls:
 #>+ 18
 uninstall-nls:
 	rm -f $(DESTDIR)$(kde_locale)/es/LC_MESSAGES/$(PACKAGE).mo
+	rm -f $(DESTDIR)$(kde_locale)/sr@latin/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/cs/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/ru/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/sr/LC_MESSAGES/$(PACKAGE).mo
@@ -622,7 +623,6 @@ uninstall-nls:
 	rm -f $(DESTDIR)$(kde_locale)/el/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/zh_TW.Big5/LC_MESSAGES/$(PACKAGE).mo
 	rm -f $(DESTDIR)$(kde_locale)/it/LC_MESSAGES/$(PACKAGE).mo
-	rm -f $(DESTDIR)$(kde_locale)/sr@Latn/LC_MESSAGES/$(PACKAGE).mo
 
 #>+ 2
 all-nls: $(GMOFILES)

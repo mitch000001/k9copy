@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-14 09:03+0200\n"
-"PO-Revision-Date: 2007-10-17 11:44+0200\n"
+"PO-Revision-Date: 2007-10-22 11:40+0200\n"
 "Last-Translator: FiNeX <finex@finex.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -269,7 +269,7 @@ msgstr "Guadagno"
 #: rc.cpp:188 debug/src/prefMPEG4.cpp:351
 #, no-c-format
 msgid "use cell cache"
-msgstr ""
+msgstr "copia celle nel disco"
 
 #: rc.cpp:191 rc.cpp:220 debug/src/k9mainw.cpp:157
 #, no-c-format
@@ -833,7 +833,7 @@ msgstr "imposta fotogramma corrente"
 #: debug/k9author/chapterEdit.cpp:153
 #, no-c-format
 msgid "break continuity"
-msgstr ""
+msgstr "interrompi continuità"
 
 #: rc.cpp:634 debug/k9author/chapterEdit.cpp:152
 #, no-c-format
