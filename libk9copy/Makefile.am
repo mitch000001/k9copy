@@ -7,7 +7,7 @@ METASOURCES = AUTO
 noinst_LTLIBRARIES = libk9copy.la
 
 
-libk9copy_la_SOURCES = backupdlg.ui dummy.cpp dvdprogress.ui k9audiocodecs.cpp \
+libk9copy_la_SOURCES = backupdlg.ui dvdprogress.ui k9audiocodecs.cpp \
 	k9backupdlg.cpp k9burndvd.cpp k9cell.cpp k9cellcopylist.cpp k9config.cpp \
 	k9drawimage.cpp k9dvd.cpp k9dvdauthor.cpp k9dvdbackup.cpp k9dvdchapter.cpp \
 	k9dvdprogress.cpp k9dvdread.cpp k9dvdsize.cpp k9dvdtitle.cpp k9dvdtitleset.cpp k9ifo2.cpp \
