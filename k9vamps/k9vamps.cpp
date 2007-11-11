@@ -637,9 +637,11 @@ void k9vamps::vap_leader () {
 
             if (14 + data_length != SECT_SIZE - 6)
                 fatal (QString("Bad padding packet length at %1: %2").arg(rtell (ptr)).arg(data_length));
+  	    //JMP:à vérifier 
+  	    skip (SECT_SIZE);
 
             break;
-
+	   
         default:
 	 //   fatal("Encountered stream ID %02x at %llu, "
          //          "probably bad MPEG2 program stream", id, rtell (ptr));
@@ -680,6 +682,7 @@ void k9vamps::vap_trailer (int length) {
 
             if (14 + data_length != SECT_SIZE - 6)
                 fatal (QString("Bad padding packet length at %1: %2").arg(rtell (ptr)).arg(data_length));
+	    skip (SECT_SIZE);
         } else {
             copy (SECT_SIZE);
         }
@@ -936,7 +939,8 @@ void k9vamps::vap_phase2 (int seq_length) {
 
             if (14 + data_length != SECT_SIZE - 6)
                 fatal (QString("Bad padding packet length at %1: %2").arg(rtell (ptr)).arg(data_length));
-
+	    //JMP: à vérifier
+  	    skip (SECT_SIZE);
             break;
 
         default:
