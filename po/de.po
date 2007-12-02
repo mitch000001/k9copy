@@ -209,97 +209,117 @@ msgstr "Kann Medium %1 nicht öffnen\n"
 
 #: src/kviewmpeg2.cpp:135 libk9copy/k9dvd.cpp:848
 msgid "Error opening vobs for title %1\n"
-msgstr "Fehler beim Öffnen der vobs für Titel %1\n"
+msgstr "Fehler beim Öffnen der Vobs für Titel %1\n"
 
 #: src/kviewmpeg2.cpp:149 libk9copy/k9dvd.cpp:859
 msgid "ERROR reading block %1\n"
 msgstr "Fehler beim Lesen von Block %1\n"
 
-#: src/main.cpp:30
+#: src/main.cpp:32
 msgid "A DVD Backup tool for KDE"
 msgstr "Ein DVD-Backup-Werkzeug für KDE"
 
-#: src/main.cpp:35
+#: src/main.cpp:37
 msgid "input device"
 msgstr "Quelllaufwerk "
 
-#: src/main.cpp:37
+#: src/main.cpp:39
 msgid "output device"
 msgstr "Ziellaufwerk"
 
-#: src/main.cpp:38
+#: src/main.cpp:40
 msgid "title to play"
 msgstr "zu spielender Titel"
 
-#: src/main.cpp:39
+#: src/main.cpp:41
 msgid "play title to stdout"
-msgstr "Wiedergabe"
+msgstr "Wiedergabe nach stdout"
 
-#: src/main.cpp:40
+#: src/main.cpp:42
 msgid "start sector"
 msgstr "Anfangssektor"
 
-#: src/main.cpp:41
+#: src/main.cpp:43
 msgid "end sector"
 msgstr "Endsektor"
 
-#: src/main.cpp:42
+#: src/main.cpp:44
 msgid "list of audio streams"
 msgstr "Liste mit Audiospuren"
 
-#: src/main.cpp:43
+#: src/main.cpp:45
 msgid "list of spu streams"
 msgstr "Liste mit Untertiteln"
 
-#: src/main.cpp:44
+#: src/main.cpp:46
 msgid "shrink factor"
 msgstr "Verkleinerungsfaktor"
 
-#: src/main.cpp:45
+#: src/main.cpp:47
+msgid "shrink factor forced"
+msgstr "erzwungener Verkleinerungsfaktor"
+
+#: src/main.cpp:48
 msgid "size of the cell to be copied"
 msgstr "Größe der zu kopierenden Zellen"
 
-#: src/main.cpp:46
+#: src/main.cpp:49
 msgid "total size of selected titles"
 msgstr "Gesamtgröße der ausgewählten Titel"
 
-#: src/main.cpp:47
+#: src/main.cpp:50
 msgid "size of the chapters being copied"
 msgstr "Größe der zu kopierenden Kapitel"
 
-#: src/main.cpp:48
+#: src/main.cpp:51
+msgid "selected chapters"
+msgstr "Liste mit ausgewählten Kapiteln"
+
+#: src/main.cpp:52
 msgid "new dvd size"
 msgstr "Größe der neuen DVD"
 
-#: src/main.cpp:49
+#: src/main.cpp:53
 msgid "selected chapter"
 msgstr "ausgewähltes Kapitel"
 
-#: src/main.cpp:50
+#: src/main.cpp:54
 msgid "cell number in selected chapter"
 msgstr "Zellennummer im ausgewählten Kapitel"
 
-#: src/main.cpp:51
+#: src/main.cpp:55
 msgid "status file name"
 msgstr "Statusdateiname"
 
-#: src/main.cpp:52
+#: src/main.cpp:56
 msgid "initialize status file"
 msgstr "Statusdatei initialisieren"
 
-#: src/main.cpp:53
+#: src/main.cpp:57
 msgid "continue playing from last sector"
 msgstr "Wiedergabe beim letzten Sektor fortsetzen"
 
-#: src/main.cpp:62
+#: src/main.cpp:58
+msgid "don't save status at end"
+msgstr "Status beim Beenden nicht speichern"
+
+#: src/main.cpp:59
+msgid "save cell in a temporary file before encoding"
+msgstr "Zelle vor dem Encodieren in einer temporären Datei speichern"
+
+#: src/main.cpp:60
+msgid "for internal use"
+msgstr "für den internen Gebrauch"
+
+#: src/main.cpp:66
 msgid "k9copy"
 msgstr "k9copy"
 
-#: src/main.cpp:65
+#: src/main.cpp:69
 msgid "_: NAME OF TRANSLATORS\\nYour names"
 msgstr "Jan Berndt"
 
-#: src/main.cpp:66
+#: src/main.cpp:70
 msgid "_: EMAIL OF TRANSLATORS\\nYour emails"
 msgstr "Jan.Berndt@gmx.de"
 
@@ -343,7 +363,7 @@ msgstr "Audio %1 "
 
 #: src/k9main.cpp:543
 msgid "subpicture %1 "
-msgstr "Untertitel"
+msgstr "Untertitel %1 "
 
 #: src/k9main.cpp:919 src/k9settings.cpp:40 libk9copy/k9mp4enc.cpp:195
 msgid "MPEG-4 Encoding"
@@ -466,19 +486,19 @@ msgstr "Die Datei kann nicht geöffnet werden "
 
 #: libk9copy/k9dvdbackup.cpp:257
 msgid "Unable to open titleset %1"
-msgstr "Kann titleset %1 nicht öffnen"
+msgstr "Kann Titelset %1 nicht öffnen"
 
 #: libk9copy/k9dvdbackup.cpp:263 libk9copy/k9dvdbackup.cpp:620
 msgid "Extracting titleset %1"
-msgstr "uAuslesen von titleset %1"
+msgstr "Auslesen von Titelset %1"
 
 #: libk9copy/k9dvdbackup.cpp:436 libk9copy/k9dvdbackup.cpp:564
 msgid "Unable to open menu for titleset %1"
-msgstr "Kann Menü für titleset %1 nicht öffnen"
+msgstr "Kann Menü für Titelset %1 nicht öffnen"
 
 #: libk9copy/k9dvdbackup.cpp:458 libk9copy/k9dvdbackup.cpp:571
 msgid "Extracting menu for titleset %1"
-msgstr "Auslesen des Menüs für titleset %1"
+msgstr "Auslesen des Menüs für Titelset %1"
 
 #: libk9copy/k9dvdbackup.cpp:557
 msgid "Unable to open "
@@ -486,7 +506,7 @@ msgstr "Öffnen fehlgeschlagen"
 
 #: libk9copy/k9dvdbackup.cpp:612
 msgid "Unable to open ifo file for titleset %1"
-msgstr "Kann ifo-Datei für titleset %1 nicht öffnen"
+msgstr "Kann IFO-Datei für Titelset %1 nicht öffnen"
 
 #: libk9copy/k9dvdbackup.cpp:624 libk9copy/k9dvdbackup.cpp:1595
 msgid "Unable to open DVD"
@@ -494,11 +514,11 @@ msgstr "Kann DVD nicht öffnen"
 
 #: libk9copy/k9dvdbackup.cpp:634
 msgid "Unable to open vobs for titleset %1"
-msgstr "Kann vobs für titleset %1 nicht öffnen"
+msgstr "Kann Vobs für Titelset %1 nicht öffnen"
 
 #: libk9copy/k9dvdbackup.cpp:1318
 msgid "Updating vob %1"
-msgstr "uÄndere vob %1"
+msgstr "Ändere Vob %1"
 
 #: libk9copy/k9dvdbackup.cpp:1334
 msgid "DVD backup canceled"
