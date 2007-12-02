@@ -69,8 +69,8 @@ private:
     void updatePTL_MAIT(uchar *_buffer);
     void updateVTS_ATRT(uchar *_buffer);
     void updateTXTDT_MGI(uchar * _buffer);
-    void updateC_ADT(uchar * _buffer);
-    void updateVOBU_ADMAP(uchar * _buffer);
+    void updateC_ADT(uchar * _buffer, bool _isMenu);
+    void updateVOBU_ADMAP(uchar * _buffer, bool _isMenu);
     void updatePGCIT(uchar *_buffer);
     void updatePGCIT_internal(uchar *_buffer, pgcit_t *_pgcit, int offset);
     void updateVTS(uchar *_buffer);

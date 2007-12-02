@@ -57,7 +57,8 @@ k9BackupDlg::k9BackupDlg(QWidget* parent, const char* name, bool modal, WFlags f
     m_wimage=new k9DrawImage(image,0);
     QGridLayout *l=new QGridLayout(image,1,1);
     l->addWidget(m_wimage,0,0);
-
+     m_data=NULL;
+     m_dataSize=0;
 }
 
 void k9BackupDlg::drawPixmap(QImage *_image) {
@@ -65,34 +66,7 @@ void k9BackupDlg::drawPixmap(QImage *_image) {
 	if (m_count ==4) {
   
         m_wimage->setImage(*_image);
-/*
-       QPixmap pix(*_image);
-        //image->setPixmap(pix);
-  	int top,left;
 
-        
-	//QImage img;
-        QPainter p(image);
-        
-        //img=_image->scale(image->width(),image->height(),QImage::ScaleMin);
-        //top =(int) (image->height() -img.height())/2 +1;
-        //left =(int) (image->width() -img.width())/2 +1;
-        
-        double wratio=(double)image->width()/(double)_image->width();
-        double hratio=(double)image->height()/(double)_image->height();
-        double ratio= wratio < hratio ? wratio:hratio;
-
-        top =(int) (image->height() -_image->height()*ratio)/2+1;
-        left =(int) (image->width() -_image->width()*ratio)/2 +1;
-
-        p.scale(ratio,ratio);
-
-        p.drawImage((int)(left/ratio),(int)(top/ratio),*_image);
-
-        
-        //p.drawImage(left,top,img);
-        p.end();
-*/	
 	m_stop=true;
 	}
 }
@@ -102,29 +76,20 @@ void k9BackupDlg::bPlayToggled( bool state) {
 }
 
  void k9BackupDlg::playMovie(uchar *_data,uint32_t _size) {
-	if (!m_playmovie)
+	if (!m_playmovie || m_dataSize)
 		return;
 	m_count=0;
-	uchar *buffer=(uchar*)malloc(_size);
-	tc_memcpy(buffer,_data,_size);	
-
-	if (m_stop)
-		m_decoder.start();
-	m_stop=false;
-	for (uint32_t i=0;i<_size-2048;i+=2048) {
-		if (m_stop) {
-			m_decoder.stop();
-			break;
-		}
-       		m_decoder.decode(buffer +i ,buffer+i+2048,0);
-	}
-	free(buffer);
-	m_playmovie=false;
+	m_dataSize=_size;
+	m_data=(uchar*)malloc(_size);
+	tc_memcpy(m_data,_data,_size);	
 }
+
 
 k9BackupDlg::~k9BackupDlg() {
     delete timer;
     delete time;
+    if  (m_data)
+        free(m_data);
 }
 
 void k9BackupDlg::update(){
@@ -133,6 +98,25 @@ void k9BackupDlg::update(){
     pbStep->setTotalSteps(m_totalSteps);
     lblFactor->setText(m_factor);
     pbStep->setProgress(m_progress);
+
+    if (m_data) {
+	if (m_stop)
+		m_decoder.start();
+	m_stop=false;
+	for (uint32_t i=0;i<m_dataSize-2048;i+=2048) {
+		if (m_stop) {
+			m_decoder.stop();
+			break;
+		}
+		m_decoder.decode(m_data +i ,m_data+i+2048,0);
+	}
+	free(m_data);
+	m_data=NULL;
+	m_dataSize=0;
+	
+	m_playmovie=false;
+     }
+
 }
 
 void k9BackupDlg::timerDone() {

@@ -62,6 +62,8 @@ private :
   bool m_playmovie;
   uint m_cpt;
   k9DrawImage *m_wimage;
+  uchar *m_data;
+  uint32_t m_dataSize;
 protected:
   /*$PROTECTED_FUNCTIONS$*/
   void bAbortClick();
