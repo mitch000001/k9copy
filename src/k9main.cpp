@@ -444,7 +444,7 @@ void k9Main::Copy()
     b.setSpeed( cbBurnSpeed->currentText());
     if (cbOutputDev->currentItem() >1)
     {
-      k9CdDrive * drive=(k9CdDrive*)recorderList.at(cbOutputDev->currentItem()-1);
+      k9CdDrive * drive=(k9CdDrive*)recorderList.at(cbOutputDev->currentItem()-2);
       b.setburnDevice(drive->device);
       closeDVD();
       if (dvd->getDevice()== drive->device)
