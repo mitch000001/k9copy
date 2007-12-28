@@ -234,7 +234,7 @@ void k9Copy::createImportWindows() {
 k9Copy::~k9Copy() {
     k9Config config;
     if (config.getPrefDelTmpFiles())
-        k9Tools::clearOutput(config.getPrefOutput());
+        k9Tools::clearOutput(config.getPrefOutput()+"/dvd");
 }
 
 void k9Copy::initCodecs() {
