@@ -12,6 +12,9 @@
 /* HAL API version 0.4 */
 #undef HAL_0_4
 
+/* Define to 1 if you have the <Carbon/Carbon.h> header file. */
+#undef HAVE_CARBON_CARBON_H
+
 /* Define if you have the CoreAudio API */
 #undef HAVE_COREAUDIO
 
@@ -54,8 +57,11 @@
 /* openGL support */
 #undef HAVE_OPENGL
 
-/* Define if you have the res_init function */
+/* Define if you have res_init */
 #undef HAVE_RES_INIT
+
+/* Define if you have the res_init prototype */
+#undef HAVE_RES_INIT_PROTO
 
 /* Define if you have a STL implementation by SGI */
 #undef HAVE_SGI_STL
@@ -86,6 +92,9 @@
 
 /* Define if you have the strlcpy prototype */
 #undef HAVE_STRLCPY_PROTO
+
+/* Define to 1 if you have the <sys/bitypes.h> header file. */
+#undef HAVE_SYS_BITYPES_H
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
@@ -150,6 +159,9 @@
 /* Version number of package */
 #undef VERSION
 
+/* Defined if compiling without arts */
+#undef WITHOUT_ARTS
+
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */
 #undef WORDS_BIGENDIAN
@@ -180,6 +192,18 @@
 # include <sys/time.h>
 # include <crt_externs.h>
 # define environ (*_NSGetEnviron())
+#endif
+
+
+
+#if !defined(HAVE_RES_INIT_PROTO)
+#ifdef __cplusplus
+extern "C" {
+#endif
+int res_init(void);
+#ifdef __cplusplus
+}
+#endif
 #endif
 
 
@@ -236,8 +260,9 @@ int snprintf(char *str, size_t n, char const *fmt, ...);
 #endif
 
 
-/* Compatibility define */
-#undef ksize_t
+/* type to use in place of socklen_t if not defined */
+#undef kde_socklen_t
 
-/* Define the real type of socklen_t */
-#undef socklen_t
+/* type to use in place of socklen_t if not defined (deprecated, use
+   kde_socklen_t) */
+#undef ksize_t
