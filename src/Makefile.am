@@ -50,7 +50,7 @@ appsdata_DATA = anim.mng mencoder.xml
 AM_CXXFLAGS = -O3 -g3
 
 applnkMultimedia_DATA = k9copy.desktop
-applnkMultimediadir = $(kde_appsdir)/Multimedia
+applnkMultimediadir = $(xdg_appsdir)
 SUBDIRS = icons
 
 konquerorServicesMenusdir = $(kde_datadir)/konqueror/servicemenus

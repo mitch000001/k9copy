@@ -2039,7 +2039,7 @@ msgstr "DVD kopyala"
 
 #: src/k9main.cpp:395
 msgid ""
-"Insuffisant disk space on %1\n"
+"Insufficient disk space on %1\n"
 "%2 mb expected."
 msgstr ""
 "%1 üzerinde yetersiz disk alanı\n"

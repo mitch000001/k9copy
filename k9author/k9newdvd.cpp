@@ -253,7 +253,7 @@ void k9NewDVD::createMencoderCmd(QString &_cmd,QString &_chapters, k9AviFile *_a
     connect(process, SIGNAL(receivedStdout(KProcess *, char *, int)),this, SLOT(getStdout(KProcess *, char *, int) ));
     //m_progress->setTitle(i18n("Encoding file"));
     //m_process->clearArguments();
-    *process << "mencoder" << "-oac" << "lavc" << "-ovc" << "lavc" << "-of" << "mpeg";
+    *process << "mencoder" << "-oac" << "lavc" << "-ovc" << "lavc" << "-of" << "mpeg" <<"-afm" <<"libmad";
     *process << "-mpegopts" << "format=dvd" << "-vf" << "scale="+scale+",harddup" << "-srate" << "48000" << "-af" << "lavcresample=48000";
     *process << "-lavcopts" << QString("vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=%1:keyint=15:acodec=%3:abitrate=%2:aspect=16/9").arg(m_videoBitrate).arg(m_config->getPrefAudioBitrate()).arg(m_config->getPrefAudioFormat().lower());
     *process << "-ofps" << fps << "-o" << fileName << "-ss" << t1 << "-endpos" << t2 << _aviFile->getFileName();

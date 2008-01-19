@@ -288,7 +288,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
     subp_attr_t *subp_attr;
     pgc_t *pgc;
     int i, j,  ltitles, cell, vts_ttn, title_set_nr;
-    char lang_code[2];
+    char lang_code[3];
     int has_title = 0;
     int max_length = 0;
     bool ok;
@@ -465,7 +465,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         if (audio_attr->audio_format==6)
                             l_auds->m_streamId +=8;
                         //JMPaudio_attr = &vtsi_mat->vts_audio_attr[l_auds->id-1];
-                        sprintf(lang_code, "%c%c", audio_attr->lang_code>>8, audio_attr->lang_code & 0xff);
+                        snprintf(lang_code,3, "%c%c", audio_attr->lang_code>>8, audio_attr->lang_code & 0xff);
                         if (!lang_code[0]) {
                             lang_code[0] = 'x';
                             lang_code[1] = 'x';
@@ -500,7 +500,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                 k9DVDChapter *l_pchap=NULL;
                 for (i=0; i<pgc->nr_of_programs; i++) {
                     int second=0, minute=0, hour=0, tmp;
-                    char hex[2];
+                    char hex[3];
                     int next = pgc->program_map[i+1];
                     unsigned long sectors = 0;
                     l_chap = l_track->getChapter(i);
@@ -519,11 +519,11 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         int startSect=pgc->cell_playback[cell].first_sector;
                         l_chap->startSectors.append(startSect);
 
-                        sprintf(hex, "%02x", pgc->cell_playback[cell].playback_time.second);
+                        snprintf(hex,3, "%02x", pgc->cell_playback[cell].playback_time.second);
                         tmp = second + atoi(hex);
                         minute = minute + (tmp / 60);
                         second = tmp % 60;
-                        sprintf(hex, "%02x", pgc->cell_playback[cell].playback_time.minute);
+                        snprintf(hex,3, "%02x", pgc->cell_playback[cell].playback_time.minute);
                         tmp = minute + atoi(hex);
                         hour = hour + (tmp / 60);
                         minute = tmp % 60;
@@ -611,7 +611,7 @@ int k9DVD::scandvd (const QString & device,bool _quickScan) {
                         }
                         l_track->subPictureCount++;
                         subp_attr = &vtsi_mat->vts_subp_attr[i];
-                        sprintf(lang_code, "%c%c", subp_attr->lang_code>>8, subp_attr->lang_code & 0xff);
+                        snprintf(lang_code,3, "%c%c", subp_attr->lang_code>>8, subp_attr->lang_code & 0xff);
                         if (!lang_code[0]) {
                             lang_code[0] = 'x';
                             lang_code[1] = 'x';

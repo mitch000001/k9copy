@@ -392,7 +392,7 @@ void k9Main::Copy()
 
   if (getFreeSpace( m_prefOutput) <  m_prefSize)
   {
-    if (KMessageBox::warningContinueCancel (this, i18n("Insuffisant disk space on %1\n%2 mb expected.").arg(m_prefOutput).arg(m_prefSize),i18n("DVD Copy"))==KMessageBox::Cancel)
+    if (KMessageBox::warningContinueCancel (this, i18n("Insufficient disk space on %1\n%2 mb expected.").arg(m_prefOutput).arg(m_prefSize),i18n("DVD Copy"))==KMessageBox::Cancel)
       return;
   }
   stopPreview();

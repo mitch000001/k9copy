@@ -259,7 +259,7 @@ msgstr "Copia DVD"
 
 #: src/k9main.cpp:322
 msgid ""
-"Insuffisant disk space on %1\n"
+"Insufficient disk space on %1\n"
 "%2 mb expected."
 msgstr ""
 "No hi ha prou espai a %1\n"

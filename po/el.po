@@ -316,7 +316,7 @@ msgstr "Αποθήκευση εικόνας στο δίσκο"
 
 #: src/k9main.cpp:328
 msgid ""
-"Insuffisant disk space on %1\n"
+"Insufficient disk space on %1\n"
 "%2 mb expected."
 msgstr ""
 "Δεν υπάρχει αρκετός χώρος στο %1\n"

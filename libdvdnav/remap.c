@@ -181,20 +181,25 @@ static int parseblock(char *buf, int *dom, int *tt, int *pg,
 
 remap_t* remap_loadmap( char *title) {
     char buf[160];
-    char fname[MAXPATHLEN];
+    char *fname;
     char *home;
     int res;
+    int fname_len=0;
     FILE *fp;
     block_t tmp;
     remap_t *map;
 
     /* Build the map filename */
     home = getenv("HOME"); assert(home);
-    strncpy(fname, home, sizeof(fname));
+    /*strncpy(fname, home, sizeof(fname));
     strncat(fname, "/.dvdnav/", sizeof(fname));
     strncat(fname, title, sizeof(fname));
     strncat(fname, ".map", sizeof(fname));
-
+    */
+    fname_len = strlen(home)+strlen("/.dvdnav/")+strlen(title)+strlen(".map")+1;
+    fname = calloc(fname_len, sizeof(char));
+    snprintf(fname, fname_len, "%s%s%s%s", home, "/.dvdnav/", title, ".map");
+ 
     /* Open the map file */
     fp = fopen( fname, "r");
     if (!fp) {
@@ -219,6 +224,7 @@ remap_t* remap_loadmap( char *title) {
 	}
     }
 
+    free(fname);
     if (map->nblocks == 0 && map->debug == 0) return NULL;
     return map;
 }

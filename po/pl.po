@@ -331,7 +331,7 @@ msgstr "Zapisz obraz na dysk"
 #: src/k9main.cpp:317
 #, fuzzy
 msgid ""
-"Insuffisant disk space on %1\n"
+"Insufficient disk space on %1\n"
 "%2 mb expected."
 msgstr "mb."
 

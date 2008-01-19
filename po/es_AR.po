@@ -332,7 +332,7 @@ msgstr "Guardar imágen al disco"
 
 #: src/k9main.cpp:328
 msgid ""
-"Insuffisant disk space on %1\n"
+"Insufficient disk space on %1\n"
 "%2 mb expected."
 msgstr ""
 "Espacio insuficiente en %1\n"
