@@ -1,3 +1,5 @@
 ./admin/configure.in.min
 configure.in.in
+./debug/k9copy-1.2.2/configure.in.in
+./debug/k9copy-1.2.2/k9devices/configure.in.in
 ./k9devices/configure.in.in

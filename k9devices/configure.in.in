@@ -1,12 +1,12 @@
   have_hal=no
-
   AC_MSG_CHECKING(for the HAL)
 
-  AC_ARG_ENABLE([hal], 
-                AC_HELP_STRING([--disable-hal], 
+  AC_ARG_ENABLE([k3bdevices], 
+                AC_HELP_STRING([--enable-k3bdevices], 
                 [do not activate hal/dbus support (use k3bdevice instead)]),
                 [enable_hal=no], 
                 [enable_hal=yes])
+
 
   if test x"$enable_hal" = xyes; then
 	hal_inc=NOTFOUND

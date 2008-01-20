@@ -876,7 +876,7 @@ clean-metasources:
 	-rm -f  k9cell.moc k9dvdsize.moc.cpp k9dvdtitle.moc.cpp k9processlist.moc k9dvd.moc.cpp k9dvdtitleset.moc.cpp k9titleencopt.moc k9burndvd.moc k9mp4enc.moc k9dvdprogress.moc.cpp k9dvdauthor.moc.cpp k9ifo2.moc.cpp k9drawimage.moc k9audiocodecs.moc k9saveimage.moc k9progress.moc k9backupdlg.moc k9dvdbackup.moc k9mp4dlg.moc k9dvdchapter.moc.cpp k9process.moc k9videocodecs.moc
 
 #>+ 2
-KDE_DIST=backupdlg.ui progress.ui Makefile.in mp4dlg.ui Makefile.am processList.ui dvdprogress.ui 
+KDE_DIST=backupdlg.ui progress.ui processList.ui Makefile.in mp4dlg.ui Makefile.am dvdprogress.ui 
 
 #>+ 8
 clean-ui:
