@@ -14,7 +14,7 @@
 #include <qimage.h>
 #include <dlfcn.h>
 #include <klocale.h>
-
+#include <cstdlib>
 #include "ac.h"
 
 void *CodecHandle=0;
@@ -181,7 +181,10 @@ void k9AviDecode::readFrame(double _seconds) {
             // Did we get a video frame?
             if (frameFinished) {
 //            if (m_Frame->pts >=fspos)
-                if (m_FormatCtx->cur_st->cur_dts >=fspos) {
+		int64_t cur_dts=fspos;
+		if (m_FormatCtx->cur_st)
+		    cur_dts=	m_FormatCtx->cur_st->cur_dts;
+                if (cur_dts >=fspos) {
                     bFound=true;
                     // Convert the image from its native format to RGB
                     img_convert((AVPicture *)m_FrameRGB, PIX_FMT_RGB24,

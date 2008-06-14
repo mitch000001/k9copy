@@ -420,6 +420,7 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
     ifo_handle_t *hifo =kifo->getIFO();
     m_ifo=hifo;
     uint32_t msize=0;
+    uint32_t menuLastSector;
     if (_vts==0)
         msize=hifo->vmgi_mat->vmg_last_sector -1  - 2* hifo->vmgi_mat->vmgi_last_sector;
     else
@@ -429,6 +430,7 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
         //kifo.closeIFO();
         return 0;
     }
+    menuLastSector=msize-1;
 
 
     m_position=0;
@@ -483,9 +485,18 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
     backupDlg->setTotalSteps(ptr[imax-1].last_sector);
 
     k9CadtList cadr;
-
+    
+    uint32_t nbCells=0;
     for (uint32_t i=0;i<imax;i++) {
-        cadr.append(ptr+i);
+	if ((ptr+i)->last_sector > menuLastSector)
+		(ptr+i)->last_sector=menuLastSector;
+
+	if ((ptr+i)->start_sector <=  menuLastSector) {
+        	cadr.append(ptr+i);
+		nbCells++;
+	}
+	else
+		qDebug(QString("cell start sector (%1) exceed menu size (%2)").arg((ptr+i)->start_sector).arg(menuLastSector));
     }
     cadr.sort();
     vamps->reset();
@@ -502,7 +513,7 @@ uint32_t k9DVDBackup::copyMenu2(int _vts) {
     vamps->start(QThread::NormalPriority);
     //	while(!vamps->running() && !vamps->finished());
 
-    for(uint32_t i = 0; i < imax; i++) {
+    for(uint32_t i = 0; i < nbCells; i++) {
         currCell=lstCell->addCell(_vts,1,1);
         dsi_next_vobu=0;
         cell_adr_t * cellAdr=cadr.at(i);

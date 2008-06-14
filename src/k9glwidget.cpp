@@ -16,6 +16,7 @@
 #include <qsize.h>
 #include <qapplication.h>
 #include <qdatetime.h>
+#include <cstdlib>
 #include "ac.h"
 #include <X11/Xlib.h>
 
