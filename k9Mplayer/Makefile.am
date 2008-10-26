@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/libk9copy $(all_includes)
+INCLUDES = -I$(top_srcdir)/dvdread -I$(top_srcdir)/libk9copy $(all_includes)
 METASOURCES = AUTO
 
 noinst_LTLIBRARIES = libk9mplayer.la

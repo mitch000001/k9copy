@@ -164,6 +164,7 @@ public slots:
     /*$PUBLIC_SLOTS$*/
     virtual void          PreviewTitle();
     virtual void          CreateMP4();
+    virtual void	  extractMPEG2();
     virtual void          Copy();
     virtual void          Open();
     virtual void	   Clone(QString _input,QString _output);

@@ -276,6 +276,13 @@ void k9Copy::setupActions() {
     CopyAction->setIcon("dvdcopy");
 
 
+    mkMpeg2Action = new KAction(i18n("Extract MPEG2"),0,
+                              this, SLOT(ActionMpeg2()),
+                              actionCollection(),"MakeMPEG2");
+    m_actions["mp2"]=mkMpeg2Action;
+
+    mkMpeg2Action->setIcon("mpeg");
+
     mkMP4Action = new KAction(i18n("Create MPEG-4"),0,
                               this, SLOT(ActionMP4()),
                               actionCollection(),"MakeMPEG4");
@@ -320,6 +327,7 @@ void k9Copy::setActions( bool enabled) {
         m_actions["playtitle"]->setEnabled(enabled);
         m_actions["copy"]->setEnabled(enabled);
         m_actions["mp4"]->setEnabled(enabled);
+        m_actions["mp2"]->setEnabled(enabled);
         m_actions["eject"]->setEnabled(enabled);
         m_mp2->setEnabled(enabled);
         m_mp4->setEnabled(enabled);
@@ -414,6 +422,10 @@ void k9Copy::ActionPlayTitle() {
 
 void k9Copy::ActionMP4() {
     m_k9Main->CreateMP4();
+}
+
+void k9Copy::ActionMpeg2() {
+    m_k9Main->extractMPEG2();
 }
 
 void k9Copy::ActionEject() {

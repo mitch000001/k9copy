@@ -10,7 +10,14 @@
 //
 //
 #include "k9avidecode.h"
+
+#ifdef OLD_FFMPEG
 #include <ffmpeg/avcodec.h>
+#endif
+#ifdef NEW_FFMPEG
+#include <libavcodec/avcodec.h>
+#endif
+
 #include <qimage.h>
 #include <dlfcn.h>
 #include <klocale.h>

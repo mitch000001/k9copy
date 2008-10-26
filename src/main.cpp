@@ -26,7 +26,7 @@
 #include "ac.h"
 #include "k9copy.h"
 #include "dvdread.h"
-#include "k9redirect.h"
+#include "k9redirect.h" 
 
 static const char description[] =
     I18N_NOOP("A DVD Backup tool for KDE");
@@ -75,7 +75,6 @@ int main(int argc, char **argv) {
     KApplication app;
     //    kMainDlg *mainWin = 0;
 
-    loadDvdread( );
     // see if we are starting with session management
     if (app.isRestored()) {
         RESTORE(k9Copy);
@@ -150,7 +149,6 @@ int main(int argc, char **argv) {
 
 
     int ret= app.exec();
-    unloadDvdread();
     return ret;
 }
 

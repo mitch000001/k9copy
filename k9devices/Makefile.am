@@ -1,5 +1,5 @@
-INCLUDES = -I$(top_srcdir)/libk9copy $(all_includes) $(HAL_INCS) $(DBUS_INCS) \
-	$(K3B_INCS)
+INCLUDES = -I$(top_srcdir)/dvdread -I$(top_srcdir)/libk9copy $(DBUS_INCS) \
+	$(HAL_INCS) $(K3B_INCS) $(all_includes)
 METASOURCES = AUTO
 libk9devices_la_LDFLAGS = $(all_libraries) 
 noinst_LTLIBRARIES = libk9devices.la

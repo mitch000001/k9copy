@@ -1,5 +1,5 @@
-SUBDIRS = doc k9decmpeg k9devices k9vamps libdvdnav libk9copy k9Mplayer \
-	k9author po src
+SUBDIRS = doc dvdread libdvdnav k9Mplayer libk9copy k9author k9decmpeg k9devices k9vamps  \
+	 po src
 
 $(top_srcdir)/configure.in: configure.in.in $(top_srcdir)/subdirs
 	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common configure.in ;
@@ -27,7 +27,7 @@ dist-hook:
 	cd $(top_distdir) && perl admin/am_edit -padmin
 	cd $(top_distdir) && $(MAKE) -f admin/Makefile.common subdirs
 
-AM_CXXFLAGS = -O3 -g3
+AM_CXXFLAGS = -O0 -g3
 
 
 
@@ -36,3 +36,4 @@ AM_CXXFLAGS = -O3 -g3
 
 
 
+INCLUDES = -I$(top_srcdir)/dvdread

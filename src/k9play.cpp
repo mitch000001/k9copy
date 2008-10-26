@@ -554,7 +554,7 @@ bool k9play::readNavPack (k9DVDFile *fh, dsi_t *dsi,int sector,uchar *_buffer)
       /* read Ok */
       if (k9Cell::isNavPack (_buffer))
          /* parse contained DSI pack */
-          DvdreadF()->navRead_DSI (dsi, _buffer + DSI_START_BYTE);
+          navRead_DSI (dsi, _buffer + DSI_START_BYTE);
           if (sector == dsi -> dsi_gi.nv_pck_lbn) {
                return true;
           }

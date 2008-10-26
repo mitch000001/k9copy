@@ -137,7 +137,7 @@ vm_cmd_t *k9Script::setSTN(char numAngle) {
 
 void k9Script::updatePGCIUT() {
    //first, free the old PGCIUT
-  DvdreadF()->ifoFree_PGCI_UT(m_ifo);
+  ifoFree_PGCI_UT(m_ifo);
   
   m_ifo->pgci_ut = (pgci_ut_t*) malloc(sizeof(pgci_ut_t));
   pgci_ut_t* pgci_ut = m_ifo->pgci_ut;
@@ -176,7 +176,7 @@ void k9Script::updatePGCIUT() {
 }
 
 void k9Script::updateFPPGC() {
-  DvdreadF()->ifoFree_FP_PGC(m_ifo);
+  ifoFree_FP_PGC(m_ifo);
   pgc_t*pgc=(pgc_t*)malloc(sizeof(pgc_t));
   m_ifo->first_play_pgc=pgc;
   memset(pgc,0,sizeof(pgc_t));

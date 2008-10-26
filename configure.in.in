@@ -42,10 +42,12 @@ AC_CHECK_HEADER([GL/gl.h], \
 [AC_DEFINE(HAVE_OPENGL, 1, [openGL support]) have_gl=yes], \
 [AC_DEFINE(NO_OPENGL, 1, [No openGL support])])
 
-AC_CHECK_HEADERS([dvdread/dvd_reader.h],\
-[], \
-[AC_MSG_ERROR([libdvdread may be missing]) ])
 
+AC_CHECK_HEADER([ffmpeg/avcodec.h], \
+[AC_DEFINE(OLD_FFMPEG,1, [old ffmpeg])], \
+  [AC_CHECK_HEADER([libavcodec/avcodec.h], \
+   [AC_DEFINE(NEW_FFMPEG,1, [new ffmpeg])], \
+   [AC_MSG_ERROR([libavcodec may be missing]) ])])
 
 
 

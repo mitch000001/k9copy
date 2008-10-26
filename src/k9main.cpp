@@ -1183,6 +1183,7 @@ void k9Main::CreateMP4()
       mp4->setHeight(opt->getHeight());
       mp4->set2Passes( opt->get2Passes());
       mp4->setUseCache(opt->getUseCache());
+      mp4->setMpeg2(false);
       mp4->execute(t);
       bool bStop=mp4->isCanceled();
       delete mp4;
@@ -1194,6 +1195,55 @@ void k9Main::CreateMP4()
   changeStatusbar( i18n("Ready") ,sbMessage);
 
 
+}
+
+void k9Main::extractMPEG2() {
+    if (!dvd->getopened()) {
+        KMessageBox::error( this, i18n("DVD is not opened"), i18n("Extract Mpeg2"));
+	return;
+    }
+    QString filename="";
+    int cpt=0;
+				    
+ 
+    for (int i=0; i < dvd->gettitleCount();i++) {
+        k9DVDTitle *t=dvd->gettitle(i);
+        changeStatusbar( i18n("Extracting title : %1",t->getname()) ,sbMessage);
+								
+        if (t->isSelected() && t->getIndexed() ) {
+            QString name;
+    	    if (filename=="")
+    	    filename=KFileDialog::getSaveFileName (QDir::homeDirPath(),"*.mpg|MPEG-1 and MPEG-2 systems (*.mpg)", 0,i18n("Save file to disk"));
+    	    if (filename=="") {
+        	break;
+    	    }
+
+    	    k9MP4Enc *mp4=new k9MP4Enc();
+	    setProgressWindow( mp4->getDialog());
+    	    mp4->setMpeg2(true);
+            mp4->setUseCache(false);
+
+    	    if (cpt >0) {
+        	QString ext=filename.section(".",-1);
+        	if (ext!="")
+        	ext="."+ext;
+        	QString path=filename.left(filename.length()-ext.length());
+        	path=path+QString::number(cpt)+ext;
+        	mp4->setFilename(path);
+    	    } else
+        	mp4->setFilename(filename);
+    	    cpt++;
+    	    k9TitleEncOpt * opt=t->getEncOpt();
+    	    mp4->setDevice(dvd->getDevice());
+    	    mp4->execute(t);
+	    bool bStop=mp4->isCanceled();
+    	    delete mp4;
+	    removeProgressWindow();
+    	    if (bStop)
+        	break;
+	}
+    }
+    changeStatusbar( i18n("Ready") ,sbMessage);
 }
 
 void k9Main::deviceAdded(k9CdDrive *_drive) {

@@ -24,6 +24,6 @@ noinst_HEADERS = bswap.h k9audiocodecs.h k9backupdlg.h k9burndvd.h k9cell.h \
 	k9saveimage.h k9script.h k9titleencopt.h k9tools.h k9videocodecs.h
 
 
-INCLUDES = -I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9vamps \
-	-I$(top_srcdir)/libdvdnav
+INCLUDES = -I$(top_srcdir)/dvdread -I$(top_srcdir)/k9decmpeg \
+	-I$(top_srcdir)/k9vamps -I$(top_srcdir)/libdvdnav
 libk9copy_la_LDFLAGS = $(all_libraries)

@@ -42,7 +42,7 @@
 static dvdnav_status_t dvdnav_clear(dvdnav_t * this) {
   /* clear everything except file, vm, mutex, readahead */
 
-  if (this->file) DvdreadF()->DVDCloseFile(this->file);
+  if (this->file) DVDCloseFile(this->file);
   this->file = NULL;
 
   memset(&this->pci,0,sizeof(this->pci));
@@ -101,7 +101,7 @@ dvdnav_status_t dvdnav_open(dvdnav_t** dest, const char *path,dvd_reader_t *dvd)
   strncpy(this->path, path, MAX_PATH_LEN);
 
   /* Pre-open and close a file so that the CSS-keys are cached. */
-  this->file = DvdreadF()->DVDOpenFile(vm_get_dvd_reader(this->vm), 0, DVD_READ_MENU_VOBS);
+  this->file = DVDOpenFile(vm_get_dvd_reader(this->vm), 0, DVD_READ_MENU_VOBS);
     
   /* Start the read-ahead cache. */
   this->cache = dvdnav_read_cache_new(this);
@@ -131,7 +131,7 @@ dvdnav_status_t dvdnav_close(dvdnav_t *this) {
   }
 
   if (this->file) {
-    DvdreadF()->DVDCloseFile(this->file);
+    DVDCloseFile(this->file);
 #ifdef LOG_DEBUG
     fprintf(MSG_OUT, "libdvdnav: close:file closing\n");
 #endif
@@ -282,7 +282,7 @@ static int32_t dvdnav_decode_packet(dvdnav_t *this, uint8_t *p, dsi_t *nav_dsi, 
 #endif
 
     if(p[0] == 0x00) {
-      DvdreadF()->navRead_PCI(nav_pci, p+1);
+      navRead_PCI(nav_pci, p+1);
     }
 
     p += nPacketLen;
@@ -291,7 +291,7 @@ static int32_t dvdnav_decode_packet(dvdnav_t *this, uint8_t *p, dsi_t *nav_dsi, 
     if(p[6] == 0x01) {
       nPacketLen = p[4] << 8 | p[5];
       p += 6;
-      DvdreadF()->navRead_DSI(nav_dsi, p+1);
+      navRead_DSI(nav_dsi, p+1);
     } 
 
     return 1;
@@ -522,7 +522,7 @@ dvdnav_status_t dvdnav_get_next_cache_block(dvdnav_t *this, uint8_t **buf,
     dvdnav_vts_change_event_t *vts_event = (dvdnav_vts_change_event_t *)*buf;
     
     if(this->file) {
-      DvdreadF()->DVDCloseFile(this->file);
+      DVDCloseFile(this->file);
       this->file = NULL;
     }
 
@@ -553,7 +553,7 @@ dvdnav_status_t dvdnav_get_next_cache_block(dvdnav_t *this, uint8_t **buf,
     this->position_current.vts = this->position_next.vts; 
     this->position_current.domain = this->position_next.domain;
     dvdnav_read_cache_clear(this->cache);
-    this->file = DvdreadF()->DVDOpenFile(vm_get_dvd_reader(this->vm), vtsN, domain);
+    this->file = DVDOpenFile(vm_get_dvd_reader(this->vm), vtsN, domain);
     vts_event->new_vtsN = this->position_next.vts; 
     vts_event->new_domain = this->position_next.domain; 
 

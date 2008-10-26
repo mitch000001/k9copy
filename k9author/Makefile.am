@@ -14,5 +14,5 @@ noinst_HEADERS = k9avidecode.h k9avifile.h k9canvasselection.h k9chapteredit.h \
 	k9import.h k9importfiles.h k9lvitemimport.h k9menu.h k9menubutton.h k9menuedit.h \
 	k9menueditor.h k9newdvd.h k9newtitle.h k9title.h
 libk9author_la_LIBADD = $(top_builddir)/libk9copy/libk9copy.la $(LIB_KDEUI)
-INCLUDES = -I$(top_srcdir)/k9devices -I$(top_srcdir)/k9vamps \
-	-I$(top_srcdir)/libk9copy -I$(top_srcdir)/src $(all_includes)
+INCLUDES = -I$(top_srcdir)/dvdread -I$(top_srcdir)/k9devices \
+	-I$(top_srcdir)/k9vamps -I$(top_srcdir)/libk9copy -I$(top_srcdir)/src $(all_includes)

@@ -55,7 +55,7 @@ void k9Ifo2::setOutput(QString &_output) {
     \fn k9Ifo2::openIFO(int _num)
  */
 ifo_handle_t * k9Ifo2::openIFO(int _num) {
-    _ifo = DvdreadF()->ifoOpen(m_dvd->getDvd(), _num);
+    _ifo = ifoOpen(m_dvd->getDvd(), _num);
     numIfo=_num;
     return _ifo;
 
@@ -67,7 +67,7 @@ ifo_handle_t * k9Ifo2::openIFO(int _num) {
  */
 void k9Ifo2::closeIFO() {
     if(_ifo!=NULL) {
-        DvdreadF()->ifoClose(_ifo);
+        ifoClose(_ifo);
         _ifo=NULL;
     }
 }
@@ -149,7 +149,7 @@ void k9Ifo2::saveIFO() {
             m_position=0;
             updateVTS(buffer);
             m_position=sizeof(vtsi_mat_t);
-	    _ifo->vtsi_mat->vtsi_last_byte=m_position -1;
+	    //_ifo->vtsi_mat->vtsi_last_byte=m_position -1;
             updateVTS_PTT_SRPT(buffer);
             updatePGCIT(buffer);
             updatePGCI_UT(buffer);

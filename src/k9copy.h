@@ -64,6 +64,7 @@ private slots:
     void ActionCopy();
     void ActionMP4();
     void ActionEject();
+    void ActionMpeg2();
     void ActionBackup();
     void ActionAuthor();
     void ActionPlayTitle();
@@ -91,6 +92,7 @@ private:
     KAction *CopyAction;
     KAction *PlayTitleAction;
     KAction *mkMP4Action;
+    KAction *mkMpeg2Action;
     KAction *ejectAction;
     KRadioAction *backupAction;
     KRadioAction *authorAction;

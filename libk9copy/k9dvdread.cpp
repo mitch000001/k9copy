@@ -39,7 +39,7 @@ k9DVDFile::~k9DVDFile() {
     \fn k9DVDRead::openDevice(const QString & _device)
  */
 void k9DVDRead::openDevice(const QString & _device) {
-	m_dvd=DvdreadF()->DVDOpen(_device.utf8());
+	m_dvd=DVDOpen(_device.utf8());
 	//turn UDF cache off
 	//DVDUDFCacheLevel(m_dvd, 0 );
         if (m_dvd) {
@@ -66,7 +66,7 @@ k9Ifo2 *k9DVDRead::getIfo(int _num) {
 QString k9DVDRead::getDiscId() {
 uchar ID[17];
 QString id="";
-if (DvdreadF()->DVDDiscID(m_dvd,ID) !=-1) {
+if (DVDDiscID(m_dvd,ID) !=-1) {
 	ID[16]=0;
 	id=QString::fromLatin1((const char*)ID);
 }
@@ -77,7 +77,7 @@ return id;
  */
 void k9DVDRead::close()
 {
-	DvdreadF()->DVDClose(m_dvd);
+	DVDClose(m_dvd);
         ifos.clear();
 	files.clear();
 	m_dvd=NULL;
@@ -113,7 +113,7 @@ k9DVDFile *k9DVDRead::openTitle(uint _vts) {
     \fn k9DVDFile::openIfo(uint _vts)
  */
 void k9DVDFile::openIfo(uint _vts) {
-	m_file=DvdreadF()->DVDOpenFile(m_dvd->getDvd(),_vts,DVD_READ_INFO_FILE);
+	m_file=DVDOpenFile(m_dvd->getDvd(),_vts,DVD_READ_INFO_FILE);
 }
 
 
@@ -122,7 +122,7 @@ void k9DVDFile::openIfo(uint _vts) {
  */
 void k9DVDFile::openMenu(uint _vts)
 {
-	m_file=DvdreadF()->DVDOpenFile(m_dvd->getDvd() ,_vts,DVD_READ_MENU_VOBS);
+	m_file=DVDOpenFile(m_dvd->getDvd() ,_vts,DVD_READ_MENU_VOBS);
 }
 
 
@@ -131,7 +131,7 @@ void k9DVDFile::openMenu(uint _vts)
  */
 void k9DVDFile::openTitle(uint _vts)
 {
-    	m_file=DvdreadF()->DVDOpenFile(m_dvd->getDvd(),_vts,DVD_READ_TITLE_VOBS);
+    	m_file=DVDOpenFile(m_dvd->getDvd(),_vts,DVD_READ_TITLE_VOBS);
 }
 
 
@@ -141,7 +141,7 @@ void k9DVDFile::openTitle(uint _vts)
 void k9DVDFile::close()
 {
     if (m_file !=NULL) {
-	DvdreadF()->DVDCloseFile(m_file);
+	DVDCloseFile(m_file);
 	m_file=NULL;
     }
 }
@@ -153,14 +153,14 @@ void k9DVDFile::close()
 int k9DVDFile::readBytes(uchar *_buffer,uint32_t _size)
 {
 	if (m_file !=NULL)
-		return  DvdreadF()->DVDReadBytes(m_file,_buffer,_size);
+		return  DVDReadBytes(m_file,_buffer,_size);
 	else 
 		return -1;
 }
 
 int k9DVDFile::readBlocks(uint32_t _sector,uint32_t _size,uchar*_buffer) {
 	if (m_file !=NULL)  {
-	   return DvdreadF()->DVDReadBlocks(m_file,_sector,_size,_buffer);
+	   return DVDReadBlocks(m_file,_sector,_size,_buffer);
 	}
 	else 
 		return -1;

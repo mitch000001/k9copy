@@ -51,6 +51,9 @@ private:
     int m_codec;
     int m_audioCodec;
     bool m_usecache;
+    bool m_mpeg2;
+    bool m_mpegChapters;
+        
     QStringList m_lstVideo,m_lstAudio,m_lstCodecs;
     int m_cpt;
     QTime *time,m_timer3;
@@ -112,6 +115,10 @@ public:
     	m_usecache=_value;
     }
 
+    virtual void setMpeg2(bool _value) {
+	m_mpeg2=_value;
+    }
+    
     virtual void setCodec(const int& _value) {m_codec = _value;};
 
     virtual void setAudioCodec(const int& _value) {m_audioCodec = _value;};

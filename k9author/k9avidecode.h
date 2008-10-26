@@ -14,7 +14,14 @@
 
 #include "k9common.h"
 #include <qobject.h>
+#ifdef OLD_FFMPEG
 #include <ffmpeg/avformat.h>
+#endif
+#ifdef NEW_FFMPEG
+#include <libavformat/avformat.h>
+#endif
+
+
 #include <qimage.h>
 
 /**

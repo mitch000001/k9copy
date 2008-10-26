@@ -1,7 +1,7 @@
 # set the include path for X, qt and KDE
-INCLUDES = -I$(top_srcdir)/k9Mplayer -I$(top_srcdir)/k9author \
-	-I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9devices -I$(top_srcdir)/k9vamps \
-	-I$(top_srcdir)/libdvdnav -I$(top_srcdir)/libk9copy $(all_includes)
+INCLUDES = -I$(top_srcdir)/dvdread -I$(top_srcdir)/k9Mplayer \
+	-I$(top_srcdir)/k9author -I$(top_srcdir)/k9decmpeg -I$(top_srcdir)/k9devices \
+	-I$(top_srcdir)/k9vamps -I$(top_srcdir)/libdvdnav -I$(top_srcdir)/libk9copy $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS = k9copy.h k9glwidget.h k9langselect.h k9main.h \
@@ -32,9 +32,10 @@ k9copy_SOURCES = configDlg.ui images.h k9copy.cpp k9copy.png k9glwidget.cpp \
 	titlefactor.ui viewmpeg2.ui
 k9copy_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 k9copy_LDADD = $(top_builddir)/k9Mplayer/libk9mplayer.la \
-	$(top_builddir)/k9decmpeg/libk9decmpeg.la $(top_builddir)/k9devices/libk9devices.la \
-	$(top_builddir)/k9vamps/libk9vamps.la $(top_builddir)/libdvdnav/libk9dvdnav.la \
-	$(top_builddir)/libk9copy/libk9copy.la $(top_builddir)/k9author/libk9author.la $(LIB_KDEUI) -lkmdi
+	$(top_builddir)/k9author/libk9author.la $(top_builddir)/k9decmpeg/libk9decmpeg.la \
+	$(top_builddir)/k9devices/libk9devices.la $(top_builddir)/k9vamps/libk9vamps.la \
+	$(top_builddir)/libdvdnav/libk9dvdnav.la $(top_builddir)/libk9copy/libk9copy.la \
+	$(top_builddir)/dvdread/libdvdread.la $(LIB_KDEUI) -lkmdi
 
 # this is where the desktop file will go 
 shelldesktopdir = $(kde_appsdir)/Utilities
