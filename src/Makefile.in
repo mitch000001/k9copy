@@ -393,6 +393,7 @@ target_alias = @target_alias@
 target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
+top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 x_includes = @x_includes@
@@ -971,48 +972,6 @@ k9prefauthor.moc: $(srcdir)/k9prefauthor.h
 mocs: k9prefauthor.moc
 
 #>+ 3
-k9main.moc: $(srcdir)/k9main.h
-	$(MOC) $(srcdir)/k9main.h -o k9main.moc
-
-#>+ 2
-mocs: k9main.moc
-
-#>+ 3
-k9prefdvd.moc: $(srcdir)/k9prefdvd.h
-	$(MOC) $(srcdir)/k9prefdvd.h -o k9prefdvd.moc
-
-#>+ 2
-mocs: k9prefdvd.moc
-
-#>+ 3
-k9playbackoptions.moc: $(srcdir)/k9playbackoptions.h
-	$(MOC) $(srcdir)/k9playbackoptions.h -o k9playbackoptions.moc
-
-#>+ 2
-mocs: k9playbackoptions.moc
-
-#>+ 3
-k9prefpreview.moc: $(srcdir)/k9prefpreview.h
-	$(MOC) $(srcdir)/k9prefpreview.h -o k9prefpreview.moc
-
-#>+ 2
-mocs: k9prefpreview.moc
-
-#>+ 3
-k9updatefactor.moc: $(srcdir)/k9updatefactor.h
-	$(MOC) $(srcdir)/k9updatefactor.h -o k9updatefactor.moc
-
-#>+ 2
-mocs: k9updatefactor.moc
-
-#>+ 3
-k9prefmencoder.moc: $(srcdir)/k9prefmencoder.h
-	$(MOC) $(srcdir)/k9prefmencoder.h -o k9prefmencoder.moc
-
-#>+ 2
-mocs: k9prefmencoder.moc
-
-#>+ 3
 k9mencodercmdgen.moc: $(srcdir)/k9mencodercmdgen.h
 	$(MOC) $(srcdir)/k9mencodercmdgen.h -o k9mencodercmdgen.moc
 
@@ -1025,6 +984,13 @@ k9glwidget.moc: $(srcdir)/k9glwidget.h
 
 #>+ 2
 mocs: k9glwidget.moc
+
+#>+ 3
+k9main.moc: $(srcdir)/k9main.h
+	$(MOC) $(srcdir)/k9main.h -o k9main.moc
+
+#>+ 2
+mocs: k9main.moc
 
 #>+ 3
 k9langselect.moc: $(srcdir)/k9langselect.h
@@ -1062,11 +1028,32 @@ kviewmpeg2.moc.cpp: $(srcdir)/kviewmpeg2.h
 mocs: kviewmpeg2.moc.cpp
 
 #>+ 3
-k9mp4title.moc: $(srcdir)/k9mp4title.h
-	$(MOC) $(srcdir)/k9mp4title.h -o k9mp4title.moc
+k9prefdvd.moc: $(srcdir)/k9prefdvd.h
+	$(MOC) $(srcdir)/k9prefdvd.h -o k9prefdvd.moc
 
 #>+ 2
-mocs: k9mp4title.moc
+mocs: k9prefdvd.moc
+
+#>+ 3
+k9playbackoptions.moc: $(srcdir)/k9playbackoptions.h
+	$(MOC) $(srcdir)/k9playbackoptions.h -o k9playbackoptions.moc
+
+#>+ 2
+mocs: k9playbackoptions.moc
+
+#>+ 3
+k9prefpreview.moc: $(srcdir)/k9prefpreview.h
+	$(MOC) $(srcdir)/k9prefpreview.h -o k9prefpreview.moc
+
+#>+ 2
+mocs: k9prefpreview.moc
+
+#>+ 3
+k9updatefactor.moc: $(srcdir)/k9updatefactor.h
+	$(MOC) $(srcdir)/k9updatefactor.h -o k9updatefactor.moc
+
+#>+ 2
+mocs: k9updatefactor.moc
 
 #>+ 3
 k9prefmpeg4.moc: $(srcdir)/k9prefmpeg4.h
@@ -1076,8 +1063,22 @@ k9prefmpeg4.moc: $(srcdir)/k9prefmpeg4.h
 mocs: k9prefmpeg4.moc
 
 #>+ 3
+k9mp4title.moc: $(srcdir)/k9mp4title.h
+	$(MOC) $(srcdir)/k9mp4title.h -o k9mp4title.moc
+
+#>+ 2
+mocs: k9mp4title.moc
+
+#>+ 3
+k9prefmencoder.moc: $(srcdir)/k9prefmencoder.h
+	$(MOC) $(srcdir)/k9prefmencoder.h -o k9prefmencoder.moc
+
+#>+ 2
+mocs: k9prefmencoder.moc
+
+#>+ 3
 clean-metasources:
-	-rm -f  k9prefauthor.moc k9main.moc k9prefdvd.moc k9playbackoptions.moc k9prefpreview.moc k9updatefactor.moc k9prefmencoder.moc k9mencodercmdgen.moc k9glwidget.moc k9langselect.moc k9titlefactor.moc k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9mp4title.moc k9prefmpeg4.moc
+	-rm -f  k9prefauthor.moc k9mencodercmdgen.moc k9glwidget.moc k9main.moc k9langselect.moc k9titlefactor.moc k9settings.moc k9copy.moc.cpp kviewmpeg2.moc.cpp k9prefdvd.moc k9playbackoptions.moc k9prefpreview.moc k9updatefactor.moc k9prefmpeg4.moc k9mp4title.moc k9prefmencoder.moc
 
 #>+ 2
 KDE_DIST=configDlg.ui prefMPEG4.ui k9copyui.rc prefAuthor.ui anim.mng prefDVD.ui k9copy_open.desktop prefpreview.ui k9copy.desktop viewmpeg2.ui mencoderCmdGen.ui k9mainw.ui titlefactor.ui hi16-app-k9copy.png pellicule.png hi48-app-k9copy.png hi32-app-k9copy.png Makefile.in k9mainwsov.ui prefMencoder.ui langselectw.ui mencoder.xml Makefile.am playbackoptionsw.ui 
@@ -1103,16 +1104,16 @@ docs-am:
 
 #>+ 13
 install-kde-icons:
-	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps
-	$(INSTALL_DATA) $(srcdir)/hi32-app-k9copy.png $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/k9copy.png
 	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps
 	$(INSTALL_DATA) $(srcdir)/hi48-app-k9copy.png $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps/k9copy.png
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps
+	$(INSTALL_DATA) $(srcdir)/hi32-app-k9copy.png $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/k9copy.png
 	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps
 	$(INSTALL_DATA) $(srcdir)/hi16-app-k9copy.png $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/k9copy.png
 
 uninstall-kde-icons:
-	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/k9copy.png
 	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/48x48/apps/k9copy.png
+	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/32x32/apps/k9copy.png
 	-rm -f $(DESTDIR)$(kde_icondir)/hicolor/16x16/apps/k9copy.png
 
 #>+ 15
@@ -1154,7 +1155,7 @@ bcheck-am:
 
 
 #>+ 11
-k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9copy.cpp $(srcdir)/k9glwidget.cpp $(srcdir)/k9langselect.cpp $(srcdir)/k9main.cpp $(srcdir)/k9mencodercmdgen.cpp $(srcdir)/k9mp4title.cpp $(srcdir)/k9play.cpp $(srcdir)/k9playbackoptions.cpp $(srcdir)/k9prefauthor.cpp $(srcdir)/k9prefdvd.cpp $(srcdir)/k9prefmencoder.cpp $(srcdir)/k9prefmpeg4.cpp $(srcdir)/k9prefpreview.cpp $(srcdir)/k9redirect.cpp $(srcdir)/k9settings.cpp $(srcdir)/k9titlefactor.cpp $(srcdir)/k9updatefactor.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp configDlg.cpp k9mainw.cpp langselectw.cpp mencoderCmdGen.cpp playbackoptionsw.cpp prefAuthor.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp prefpreview.cpp titlefactor.cpp viewmpeg2.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp  k9prefauthor.moc prefpreview.moc k9main.moc mencoderCmdGen.moc prefMencoder.moc playbackoptionsw.moc configDlg.moc k9prefdvd.moc viewmpeg2.moc langselectw.moc titlefactor.moc k9playbackoptions.moc prefAuthor.moc k9updatefactor.moc k9prefpreview.moc k9prefmencoder.moc k9mencodercmdgen.moc k9glwidget.moc k9langselect.moc k9titlefactor.moc k9settings.moc prefDVD.moc prefMPEG4.moc k9mainw.moc k9prefmpeg4.moc k9mp4title.moc
+k9copy.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9copy.cpp $(srcdir)/k9glwidget.cpp $(srcdir)/k9langselect.cpp $(srcdir)/k9main.cpp $(srcdir)/k9mencodercmdgen.cpp $(srcdir)/k9mp4title.cpp $(srcdir)/k9play.cpp $(srcdir)/k9playbackoptions.cpp $(srcdir)/k9prefauthor.cpp $(srcdir)/k9prefdvd.cpp $(srcdir)/k9prefmencoder.cpp $(srcdir)/k9prefmpeg4.cpp $(srcdir)/k9prefpreview.cpp $(srcdir)/k9redirect.cpp $(srcdir)/k9settings.cpp $(srcdir)/k9titlefactor.cpp $(srcdir)/k9updatefactor.cpp $(srcdir)/kconfigdlg.cpp $(srcdir)/kviewmpeg2.cpp $(srcdir)/main.cpp configDlg.cpp k9mainw.cpp langselectw.cpp mencoderCmdGen.cpp playbackoptionsw.cpp prefAuthor.cpp prefDVD.cpp prefMPEG4.cpp prefMencoder.cpp prefpreview.cpp titlefactor.cpp viewmpeg2.cpp kviewmpeg2.moc.cpp k9copy.moc.cpp  k9prefauthor.moc prefpreview.moc k9main.moc mencoderCmdGen.moc prefMencoder.moc playbackoptionsw.moc configDlg.moc k9prefdvd.moc viewmpeg2.moc langselectw.moc titlefactor.moc k9playbackoptions.moc prefAuthor.moc k9updatefactor.moc k9prefpreview.moc k9prefmencoder.moc k9mencodercmdgen.moc k9glwidget.moc k9langselect.moc k9titlefactor.moc k9settings.moc prefDVD.moc prefMPEG4.moc k9mainw.moc k9mp4title.moc k9prefmpeg4.moc
 	@echo 'creating k9copy.all_cpp.cpp ...'; \
 	rm -f k9copy.all_cpp.files k9copy.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> k9copy.all_cpp.final; \
@@ -1237,8 +1238,8 @@ $(srcdir)/k9playbackoptions.cpp: configDlg.h k9mainw.h langselectw.h mencoderCmd
 k9main.o: k9main.moc 
 nmcheck: 
 k9prefauthor.lo: k9prefauthor.moc 
-k9updatefactor.lo: k9updatefactor.moc 
 k9glwidget.lo: k9glwidget.moc 
+k9updatefactor.lo: k9updatefactor.moc 
 k9prefmpeg4.o: k9prefmpeg4.moc 
 $(srcdir)/kviewmpeg2.h: configDlg.h k9mainw.h langselectw.h mencoderCmdGen.h playbackoptionsw.h prefAuthor.h prefDVD.h prefMPEG4.h prefMencoder.h prefpreview.h titlefactor.h viewmpeg2.h 
 $(srcdir)/k9mp4title.cpp: configDlg.h k9mainw.h langselectw.h mencoderCmdGen.h playbackoptionsw.h prefAuthor.h prefDVD.h prefMPEG4.h prefMencoder.h prefpreview.h titlefactor.h viewmpeg2.h 

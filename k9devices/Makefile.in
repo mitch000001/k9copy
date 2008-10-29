@@ -324,6 +324,7 @@ target_alias = @target_alias@
 target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
+top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 x_includes = @x_includes@
@@ -632,18 +633,18 @@ k9halconnection.moc: $(srcdir)/k9halconnection.h
 mocs: k9halconnection.moc
 
 #>+ 3
-k9haldevice.moc: $(srcdir)/k9haldevice.h
-	$(MOC) $(srcdir)/k9haldevice.h -o k9haldevice.moc
-
-#>+ 2
-mocs: k9haldevice.moc
-
-#>+ 3
 k9dbusdispatch.moc: $(srcdir)/k9dbusdispatch.h
 	$(MOC) $(srcdir)/k9dbusdispatch.h -o k9dbusdispatch.moc
 
 #>+ 2
 mocs: k9dbusdispatch.moc
+
+#>+ 3
+k9haldevice.moc: $(srcdir)/k9haldevice.h
+	$(MOC) $(srcdir)/k9haldevice.h -o k9haldevice.moc
+
+#>+ 2
+mocs: k9haldevice.moc
 
 #>+ 3
 k9cddrive.moc: $(srcdir)/k9cddrive.h
@@ -654,7 +655,7 @@ mocs: k9cddrive.moc
 
 #>+ 3
 clean-metasources:
-	-rm -f  k9halconnection.moc k9haldevice.moc k9dbusdispatch.moc k9cddrive.moc
+	-rm -f  k9halconnection.moc k9dbusdispatch.moc k9haldevice.moc k9cddrive.moc
 
 #>+ 2
 KDE_DIST=configure.in.in Makefile.in Makefile.am 
@@ -701,7 +702,7 @@ bcheck-am:
 
 
 #>+ 11
-libk9devices_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9halconnection.cpp $(srcdir)/k9haldevice.cpp $(srcdir)/k9cddrive.cpp $(srcdir)/k9dbusdispatch.cpp  k9halconnection.moc k9dbusdispatch.moc k9haldevice.moc k9cddrive.moc
+libk9devices_la.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/k9halconnection.cpp $(srcdir)/k9haldevice.cpp $(srcdir)/k9cddrive.cpp $(srcdir)/k9dbusdispatch.cpp  k9halconnection.moc k9haldevice.moc k9dbusdispatch.moc k9cddrive.moc
 	@echo 'creating libk9devices_la.all_cpp.cpp ...'; \
 	rm -f libk9devices_la.all_cpp.files libk9devices_la.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> libk9devices_la.all_cpp.final; \
